@@ -1,0 +1,137 @@
+<ion-side-menus 
+	enable-menu-with-back-views="true">
+	<ion-side-menu-content>
+		<div 
+			class="bar bar-assertive bar-header">
+			<h3 
+				class="title" 
+				id="appTitle" 
+				name="appTitle">
+				MenuGO
+			</h3>
+		</div>
+		<ion-nav-bar 
+			class="bar-assertive bar-subheader font-family-3-size-large">
+			<ion-nav-buttons 
+				side="left">
+				<button 
+					class="button button-assertive button-small icon ion-navicon" 
+					menu-toggle="left">
+				</button>
+			</ion-nav-buttons>
+		</ion-nav-bar>
+		<ion-nav-view 
+			id="menuContent" 
+			name="menuContent">
+		</ion-nav-view>
+	</ion-side-menu-content>
+
+	<ion-side-menu 
+		side="left">
+		<ion-content 
+			class="app-bg">
+			<div 
+				class="child-content-center fill-parent-x pos-absolute-top-left" 
+				id="userBgImage1Container" 
+				name="userBgImage1Container">
+				<img 
+					class="fill-parent-xy transparent-low" 
+					src="../img/sidemenu/userBgImage1.jpg">
+			</div>
+			<div 
+				class="child-content-center fill-parent-x pos-absolute-top-left" 
+				id="userAvatarContainer" 
+				name="userAvatarContainer">
+				<img 
+					class="fill-parent-y transparent-low" 
+					id="userAvatar" 
+					name="userAvatar" 
+					src="../img/sidemenu/userAvatar.png">
+			</div>
+			<div 
+				class="fill-parent-x font-family-3-size-medium list pos-absolute-top-left" 
+				id="sideRootContainer" 
+				name="sideRootContainer">
+				<div 
+					class="borderless child-content-center item item-divider" 
+					id="userDetailsDivider" 
+					name="userDetailsDivider">
+					USER-DETAILS
+				</div>
+				<div 
+					class="item sideItemValue">
+					<i 
+						class="icon ion-person">
+					</i>
+					{{
+					homeController.customer.customer_name_fname + " " + 
+					homeController.customer.customer_name_mname + ". " + 
+					homeController.customer.customer_name_lname
+					}}
+				</div>
+				<div 
+					class="item sideItemValue">
+					<i 
+						class="icon ion-ios-telephone">
+					</i>
+					{{homeController.customer.customer_mobile}}
+				</div>
+				<div 
+					class="item sideItemValue">
+					<i 
+						class="icon ion-email">
+					</i>
+					{{homeController.customer.customer_email}}
+				</div>
+				<div 
+					class="borderless child-content-center item item-divider" 
+					id="navigationDivider" 
+					name="navigationDivider">
+					MENUS
+				</div>
+				<a 
+					class="styleless-anchor-tag" 
+					href="#/home/menus">
+					<span 
+						class="item sideItemValue">
+						<i 
+							class="icon ion-android-restaurant">
+						</i>
+						Menus
+					</span>
+				</a>
+				<a 
+					class="styleless-anchor-tag" 
+					href="#/home/orders/orders-main" 
+					ng-click="homeController.broadcastEventMessage('reloadCustomerOrders'); homeController.broadcastEventMessage('reloadOrders');">
+					<span 
+						class="item sideItemValue">
+						<i 
+							class="icon ion-ios-cart">
+						</i>
+						Orders
+					</span>
+				</a>
+				<a 
+					class="styleless-anchor-tag" 
+					href="#">
+					<span 
+						class="item sideItemValue">
+						<i 
+							class="icon ion-log-out">
+						</i>
+						Logout
+					</span>
+				</a>
+				<div 
+					class="container-content-center">
+					<button 
+						class="button button-assertive button-small icon ion-ios-bell fill-parent-x font-family-1-size-medium" 
+						ng-click="homeController.doCallWaiter();"> 
+						Call Waiter
+					</button>
+				</div>
+			</div>
+		</ion-content>
+	</ion-side-menu>
+</ion-side-menus>

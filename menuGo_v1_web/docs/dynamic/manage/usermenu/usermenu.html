@@ -1,0 +1,171 @@
+<div 
+	class="row" 
+	ng-controller="usermenuController as usermenuController" 
+	ng-init="usermenuController.initDom();">
+	<div 
+		class="panel panel-success">
+		<div 
+			class="child-content-center font-family-1-size-medium panel-heading">
+			<img 
+				class="avatar  img-responsive" 
+				src="docs/dynamic/manage/usermenu/res/img/userAvatar.png">
+			johnvlim
+		</div>
+		<div 
+			class="font-family-2-size-small panel-body">
+			<div 
+				class="child-content-center font-family-1-size-medium nav-divider">
+				Manage
+			</div>
+			<ul 
+				class="nav nav-list">
+				<!--  *************** 
+						Manage Restaurant (start)
+						*************** -->
+				<li>
+					<a 
+						ui-sref="manage.company">
+						<div 
+							class="lv1-node">
+							<span 
+								class="glyphicon glyphicon-home">
+							</span>
+							Restaurant
+						</div>
+					</a>
+					<ul 
+						class="nav nav-list">
+						<!--  *************** 
+								Manage Branch (start)
+								*************** -->
+						<li 
+							ng-hide="usermenuController.isManageBranchHidden">
+							<a 
+								ui-sref="manage.company.branch({companyName: usermenuController.companyName})">
+								<div 
+									class="lv2-node">
+									<span 
+										class="glyphicon glyphicon-globe">
+									</span>
+									Branch
+								</div>
+							</a>
+							<ul 
+								class="nav nav-list">
+								<!--  *************** 
+										Manage Table (start)
+										*************** -->
+								<li 
+									ng-hide="usermenuController.isManageTableHidden">
+									<a  
+										ui-sref="manage.company.branch.table({companyName: usermenuController.companyName, branchName: usermenuController.branchName})">
+										<div 
+											class="lv3-node">
+											<span 
+												class="glyphicon glyphicon-glass">
+											</span>
+											Table
+										</div>
+									</a>
+								</li>
+								<!--  *************** 
+										Manage Table (end)
+										*************** -->
+							</ul>
+						</li>
+						<!--  *************** 
+								Manage Branch (end)
+								*************** -->
+								
+						<!--  *************** 
+								Manage Menu (start)
+								*************** -->
+						<li 
+							ng-hide="usermenuController.isManageMenuHidden">
+							<a 
+								ui-sref="manage.company.menu({companyName: usermenuController.companyName})">
+								<div 
+									class="lv2-node">
+									<span 
+										class="glyphicon glyphicon-th-list">
+									</span>
+									Menu
+								</div>
+							</a>
+							<ul 
+								class="nav nav-list">
+								<!--  *************** 
+										Manage Menuitem (start)
+										*************** -->
+								<li 
+									ng-hide="usermenuController.isManageMenuitemHidden">
+									<a 
+										ui-sref="manage.company.menu.menuitem({companyName: usermenuController.companyName, menuName: usermenuController.menuName})">
+										<div 
+											class="lv3-node">
+											<span 
+												class="glyphicon glyphicon-cutlery">
+											</span>
+											Menuitem
+										</div>
+									</a>
+								</li>
+								<!--  *************** 
+										Manage Menuitem (end)
+										*************** -->
+							</ul>
+						</li>
+						<!--  *************** 
+								Manage Menu (end)
+								*************** -->
+					</ul>
+				</li>
+				<!--  *************** 
+						Manage Restaurant (end)
+						*************** -->
+						
+				<!--  *************** 
+						Manage User (start)
+						*************** -->
+				<li>
+					<a 
+						ui-sref="manage.customer">
+						<div 
+							class="lv1-node">
+							<span 
+								class="glyphicon glyphicon-user">
+							</span>
+							User
+						</div>
+					</a>
+				</li>
+				<!--  *************** 
+						Manage User (end)
+						*************** -->
+			</ul>			
+		</div>
+	</div>
+</div>
+
+<!--  *************** 
+		About (start)
+		*************** -->
+<div 
+	class="row">
+	<div 
+		class="panel panel-success">
+		<div 
+			class="child-content-center font-family-1-size-medium panel-heading">
+			<img 
+				class="img-responsive logo" 
+				src="docs/dynamic/banner/res/img/zipLogic.png">
+		</div>
+		<div 
+			class="font-family-2-size-small panel-body">
+			[Insert Some Contents Here]
+		</div>
+	</div>
+</div>
+<!--  *************** 
+		About (end)
+		*************** -->

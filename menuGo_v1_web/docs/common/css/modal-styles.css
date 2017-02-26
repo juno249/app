@@ -1,0 +1,21 @@
+div.form-group input.form-control, 
+div.form-group select.form-control, 
+div.form-group textarea.form-control{
+	color: #ff6347;
+}
+
+div.modal-header, 
+span.input-group-addon{
+	background-color: #dff0d8;
+	
+	border-radius: 5px;
+}
+
+div.ui-datepicker{
+	z-index: 1050!important;
+}
+
+.form-control[disabled], 
+.form-control[readonly]{
+	background-color: #fff;	
+}

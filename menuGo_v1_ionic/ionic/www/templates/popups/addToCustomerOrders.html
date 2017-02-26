@@ -1,0 +1,19 @@
+<div 
+	class="child-content-center font-family-1-size-small">
+	{{controller.menuitem.menuitem_name}}
+</div>
+<div 
+	class="child-content-center">
+	<button 
+		class="button button-assertive button-small icon ion-chevron-left" 
+		ng-click="controller.decCustomerOrdersQuantity();">
+	</button>
+	<span 
+		class="font-family-3-size-medium">
+		<b>{{controller.customerOrdersQuantity}}</b>
+	</span>
+	<button 
+		class="button button-assertive button-small icon ion-chevron-right" 
+		ng-click="controller.incCustomerOrdersQuantity();">
+	</button>
+</div>

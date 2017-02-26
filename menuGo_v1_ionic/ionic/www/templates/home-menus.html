@@ -1,0 +1,54 @@
+<ion-view 
+	view-title="{{menusController.company.company_name}} Menus">
+	<ion-content 
+		class="app-bg has-subheader">
+		<div 
+			class="list">
+			<div 
+				class="font-family-1-size-medium item item-thumbnail-left  menuContainer" 
+				ng-repeat="(k,v) in menusController.menus">
+				<img 
+					class="border-rounded" 
+					src={{v.menu_image}}>
+					{{k}}<br>
+				<button 
+					class="button button-assertive button-small icon ion-eye" 
+					ng-click="menusController.toggleViewMenuitems(v);">
+				</button>
+				<div 
+					class="border-rounded floating-panel-style-1 font-family-3-size-medium layer-minus-1 menuitemsContainer transparent-low" 
+					ng-hide="v.isHiddenMenuitems">
+					<div 
+						class="list">
+						<div 
+							class="item item-thumbnail-left" 
+							ng-repeat="(i,j) in v.menuitems">
+							<img 
+								class="border-rounded" 
+								src={{j.menuitem_image}}>
+							<span 
+								class="font-family-1-size-medium white-space-preline">
+								{{j.menuitem_name}}
+							</span><br>
+							<span 
+								class="child-content-justify display-block font-family-3-size-small white-space-preline">
+								<b>{{j.menuitem_desc}}</b>
+							</span>
+							<span 
+								class="font-famly-1-size-medium white-space-preline">
+								{{j.menuitem_price}}
+							</span><br>
+							<button 
+								class="button button-assertive button-small font-family-3-size-medium" 
+								ng-click="menusController.addToCustomerOrders(v,j);">
+								<i 
+									class="icon ion-plus-round">
+								</i> Add to Cart
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

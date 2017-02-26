@@ -1,0 +1,352 @@
+<div 
+	class="modal-content">
+	<div 
+		class="modal-header font-family-1-size-medium">
+		Manage Branch
+	</div>
+	<div 
+		class="modal-body" 
+		id="modalBranchContainer" 
+		name="modalBranchContainer" 
+		ng-init="modalBranchController.initBootstrapValidator(); modalBranchController.initDom();" >
+		<form 
+			class="form-group" 
+			id="modalBranch" 
+			name="modalBranch" >
+			<div 
+				class="container-fluid">
+			<!--  *************** 
+					branchName (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalBranchController.modalHiddenFields['branchName']">
+				<div 
+					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Name
+						</span>
+						<!-- branchName txt -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="branchName" 
+							maxlength="30" 
+							name="branchName" 
+							ng-hide="modalBranchController.modalHiddenFields['branchName']" 
+							ng-model="modalBranchController.branch.branchName" 
+							placeholder="Name" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- branchName help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[0]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					branchName (end)
+					*************** -->
+			
+			<!--  *************** 
+					companyName (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalBranchController.modalHiddenFields['companyName']">
+				<div 
+					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Company name
+						</span>
+						<!-- companyName txt -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="companyName" 
+							maxlength="30" 
+							name="companyName" 
+							ng-hide="modalBranchController.modalHiddenFields['companyName']" 
+							ng-model="modalBranchController.branch.companyName" 
+							placeholder="Company name" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- companyName help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[1]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					companyName (end)
+					*************** -->
+			
+			<!--  *************** 
+					branchAddressHouseBuilding (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalBranchController.modalHiddenFields['branchAddressHouseBuilding']">
+				<div 
+					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Address
+						</span>
+						<!-- branchAddressHouseBuilding txt  -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="branchAddressHouseBuilding" 
+							maxlength="30" 
+							name="branchAddressHouseBuilding" 
+							ng-hide="modalBranchController.modalHiddenFields['branchAddressHouseBuilding']" 
+							ng-model="modalBranchController.branch.branchAddressHouseBuilding" 
+							placeholder="House / Floor, Building" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- branchAddressHouseBuilding help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[2]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					branchAddressHouseBuilding (end)
+					*************** -->
+					
+			<div 
+				class="row">
+				<!--  *************** 
+						branchAddressStreet (start)
+						*************** -->
+				<div 
+					class="col-md-4 col-sm-4 col-xs-12 form-group form-group-required" 
+					ng-hide="modalBranchController.modalHiddenFields['branchAddressStreet']">
+					<!-- branchAddressStreet txt -->
+					<input 
+						class="font-family-2-size-small form-control" 
+						id="branchAddressStreet" 
+						maxlength="30" 
+						name="branchAddressStreet" 
+						ng-hide="modalBranchController.modalHiddenFields['branchAddressStreet']" 
+						ng-model="modalBranchController.branch.branchAddressStreet" 
+						placeholder="Street" 
+						required 
+						type="text">
+					
+					<!-- branchAddressStreet help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[3]}}
+					</div>
+				</div>
+				<!--  *************** 
+						branchAddressStreet (end)
+						*************** -->
+				
+				<!--  *************** 
+						branchAddressDistrict (start)
+						*************** -->
+				<div 
+					class="col-md-4 col-sm-4 col-xs-12 form-group form-group-required" 
+					ng-hide="modalBranchController.modalHiddenFields['branchAddressDistrict']">
+					<!-- branchAddressDistrict txt -->
+					<input 
+						class="font-family-2-size-small form-control" 
+						id="branchAddressDistrict" 
+						maxlength="30" 
+						name="branchAddressDistrict" 
+						ng-hide="modalBranchController.modalHiddenFields['branchAddressDistrict']" 
+						ng-model="modalBranchController.branch.branchAddressDistrict" 
+						placeholder="District" 
+						required 
+						type="text">
+					
+					<!-- branchAddressDistrict help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[4]}}
+					</div>
+				</div>		
+				<!--  *************** 
+						branchAddressDistrict (end)
+						*************** -->
+				
+				<!--  *************** 
+						branchAddressCity (start)
+						*************** -->			
+				<div 
+					class="col-md-4 col-sm-4 col-xs-12 form-group form-group-required" 
+					ng-hide="modalBranchController.modalHiddenFields['branchAddressCity']">
+					<!-- branchAddressCity txt -->
+					<input 
+						class="font-family-2-size-small form-control" 
+						id="branchAddressCity" 
+						maxlength="30" 
+						name="branchAddressCity" 
+						ng-hide="modalBranchController.modalHiddenFields['branchAddressCity']" 
+						ng-model="modalBranchController.branch.branchAddressCity" 
+						placeholder="City" 
+						required 
+						type="text">
+					
+					<!-- branchAddressCity help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[5]}}
+					</div>				
+				</div>
+				<!--  *************** 
+						branchAddressCity (end)
+						*************** -->
+			</div>
+			
+			<div 
+				class="row">
+				<!--  *************** 
+						branchPostalcode (start)
+						*************** -->
+				<div 
+					class="col-md-4 col-sm-4 col-xs-12 form-group form-group-required" 
+					ng-hide="modalBranchController.modalHiddenFields['branchAddressPostalCode']">
+					<!-- branchPostalcode txt -->
+					<input 
+						class="font-family-2-size-small form-control" 
+						id="branchPostalcode" 
+						maxlength="30" 
+						name="branchPostalcode" 
+						ng-hide="modalBranchController.modalHiddenFields['branchAddressPostalCode']" 
+						ng-model="modalBranchController.branch.branchAddressPostalcode" 
+						placeholder="Postalcode" 
+						required 
+						type="text">
+					
+					<!-- branchPostalcode help/err -->
+					<div class="font-family-2-size-small help-block with-errors">
+					{{modalBranchController.validationErr[6]}}
+					</div>
+				</div>
+				<!--  *************** 
+						branchPostalcode (end)
+						*************** -->
+					
+				<!--  *************** 
+						branchCountry (start)
+						*************** -->
+				<div 
+					class="col-md-4 col-sm-4 col-xs-12 form-group" 
+					ng-hide="modalBranchController.modalHiddenFields['branchAddressCountry']">
+					<!-- branchCountry txt -->
+					<input 
+						class="font-family-2-size-small form-control" 
+						id="branchCountry" 
+						maxlength="30" 
+						name="branchCountry" 
+						ng-hide="modalBranchController.modalHiddenFields['branchAddressCountry']" 
+						ng-model="modalBranchController.branch.branchAddressCountry" 
+						placeholder="Country" 
+						required 
+						type="text">
+					
+					<!-- branchCountry help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[7]}}
+					</div>
+				</div>
+				<!--  *************** 
+						branchCountry (end)
+						*************** -->	
+			</div>
+			
+			<!--  *************** 
+					branchHotline (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalBranchController.modalHiddenFields['branchHotline']">	
+				<div 
+					class="col-md-6 col-sm-12 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Hotline
+						</span>
+						<!-- branchHotline txt -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="branchHotline" 
+							maxlength="10" 
+							name="branchHotline" 
+							ng-hide="modalBranchController.modalHiddenFields['branchHotline']" 
+							ng-model="modalBranchController.branch.branchHotline" 
+							placeholder="Hotline" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- branchHotline help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalBranchController.validationErr[8]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					branchHotline (end)
+					*************** -->
+			
+			<!--  *************** 
+					button (start)
+					*************** -->
+			<div 
+				class="row">
+		        <div 
+		        	class="col-md-6 col-sm-6 col-xs-12">
+					<button 
+						class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+						type="submit">
+						<span 
+							ng-if="!modalCustomerController.fromSignup">
+							Submit
+						</span>
+						<span 
+							ng-if="modalCustomerController.fromSignup">
+							Next
+						</span>
+					</button>
+				</div>
+		        
+				<div 
+					class="col-md-6 col-sm-6 col-xs-12">
+					<button 
+						class="btn btn-danger btn-modal-control font-family-1-size-medium fill-parent-x" 
+						ng-click="modalBranchController.doCancel();" 
+						type="button">
+						Cancel
+					</button>
+				</div>
+			</div>
+			<!--  *************** 
+					button (end)
+					*************** -->
+			</div>
+		</form>
+	</div>
+</div>

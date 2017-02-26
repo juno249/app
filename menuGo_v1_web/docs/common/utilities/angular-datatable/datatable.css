@@ -1,0 +1,64 @@
+.btn-control{
+	width: 75px;
+}
+
+#dtWrapper{
+	margin: 0px 0px 0px 0px;
+	overflow-x: scroll;
+}
+
+div.dataTables_filter label{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 15px;
+	color: red;
+}
+
+div.dataTables_filter label input, 
+div.dataTables_info, 
+div.dataTables_paginate, 
+ul li.buttons-columnVisibility{
+	font-family: 'Lora', serif;
+	font-size: 13px;
+}
+
+.table tbody tr td.dt-table-cell{
+	font-family: 'Lora', serif;
+	font-size: 13px;
+	
+	max-width: 125px;
+	min-width: 125px;
+	
+	overflow: hidden;
+	
+	padding: 5px 25px 5px 25px;
+	
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.table thead tr th.dt-table-cell{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 15px;
+	font-weight: normal !important;
+	
+	max-width: 125px;
+	min-width: 125px;
+	
+	text-align: center;	
+	white-space: nowrap;
+}
+
+.table thead tr th input{
+	border: solid 1px #ccc;
+	border-radius: 3px;
+	
+	font-family: 'Lora', serif;
+	font-size: 13px;
+	
+	padding: 3px 5px 3px 5px;
+}
+
+ul.dropdown-menu .active a{
+	background-color: #333;
+}

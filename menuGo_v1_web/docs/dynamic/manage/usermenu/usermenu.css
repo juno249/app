@@ -1,0 +1,42 @@
+div.lv1-node, 
+div.lv2-node, 
+div.lv3-node{
+	font-size: 13px;
+	color: #ffa500;
+}
+
+div.lv1-node{
+}
+
+div.lv2-node{
+	padding-left: 25px;
+}
+
+div.lv3-node{
+	padding-left: 50px;
+}
+
+ul.nav.nav-list li a{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+div.nav-divider{
+	border-bottom: solid 1px #333;
+	
+	margin-bottom: 5px;
+}
+
+img.avatar, 
+img.logo{
+	height: 100px;
+	margin: auto;
+}
+
+ul.nav li a:focus, 
+ul.nav li a:hover, 
+ul.nav li a.active{
+	background-color: #797979;
+	
+	border-radius: 25px;
+}

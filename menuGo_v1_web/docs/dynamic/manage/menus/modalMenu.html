@@ -1,0 +1,225 @@
+<div 
+	class="modal-content">
+	<div 
+		class="modal-header font-family-1-size-medium">
+		Manage Menu
+	</div>
+	<div 
+		class="modal-body" 
+		id="modalMenuContainer" 
+		name="modalMenuContainer" 
+		ng-init="modalMenuController.initBootstrapValidator(); modalMenuController.initDom();">
+		<form 
+			class="form-group" 
+			id="modalMenu" 
+			name="modalMenu">
+			<div 
+				class="container-fluid">
+			<!--  *************** 
+					menuName (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalMenuController.modalHiddenFields['menuName']">
+				<div 
+					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Name
+						</span>	
+						<!-- menuName txt -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="menuName" 
+							maxlength="30" 
+							name="menuName" 
+							ng-hide="modalMenuController.modalHiddenFields['menuName']" 
+							ng-model="modalMenuController.menu.menuName" 
+							placeholder="Name" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- menuName help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalMenuController.validationErr[0]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					menuName (end)
+					*************** -->
+					
+			<!--  *************** 
+					companyName (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalMenuController.modalHiddenFields['companyName']">
+				<div 
+					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Company name
+						</span>	
+						<!-- companyName txt  -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="companyName" 
+							maxlength="30" 
+							name="companyName" 
+							ng-hide="modalMenuController.modalHiddenFields['companyName']" 
+							ng-model="modalMenuController.menu.companyName" 
+							placeholder="Company Name" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- companyName help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalMenuController.validationErr[1]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					companyName (end)
+					*************** -->
+					
+			<!--  *************** 
+					menuDesc (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalMenuController.modalHiddenFields['menuDesc']">
+				<div 
+					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Description
+						</span>
+						<!-- menuDesc txt -->
+						<textarea 
+							class="font-family-2-size-small form-control" 
+							id="menuDesc" 
+							maxlength="500" 
+							name="menuDesc" 
+							ng-hide="modalMenuController.modalHiddenFields['menuDesc']" 
+							ng-model="modalMenuController.menu.menuDesc" 
+							placeholder="Description" 
+							required 
+							rows="5" 
+							type="text">
+						</textarea>
+					</div>
+					
+					<!-- menuDesc help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalMenuController.validationErr[2]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					menuDesc (end)
+					*************** -->
+					
+			<!--  *************** 
+					menuImage (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalMenuController.modalHiddenFields['menuImage']">
+				<div 
+					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Image
+						</span>
+						<!-- menuImage txt -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="menuImage" 
+							maxlength="1000" 
+							name="menuImage" 
+							ng-hide="modalMenuController.modalHiddenFields['menuImage']" 
+							ng-model="modalMenuController.menu.menuImage" 
+							placeholder="Image" 
+							readonly 
+							required 
+							type="url">
+						<span 
+							class="input-group-btn">
+							<label 
+								class="btn btn-primary">
+								<i 
+									class="glyphicon glyphicon-search">
+								</i>
+								<input 
+									class="font-family-2-size-small form-control" 
+									id="menuImageBrowse" 
+									name="menuImageBrowse" 
+									type="file">
+							</label>
+							<button 
+								class="btn btn-primary" 
+								ng-click="modalMenuController.uploadMenuImage();" 
+								type="button">
+								<i 
+									class="glyphicon glyphicon-upload">
+								</i>
+							</button>
+						</span>
+					</div>
+					
+					<!-- menuImage help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalMenuController.validationErr[3]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					menuImage (end)
+					*************** -->
+			
+			<!--  *************** 
+					button (start)
+					*************** -->
+			<div 
+				class="row">
+		        <div 
+		        	class="col-md-6 col-sm-6 col-xs-12">	
+					<button 
+						class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+						type="submit">
+						Submit
+					</button>
+				</div>
+		        
+				<div 
+					class="col-md-6 col-sm-6 col-xs-12">
+					<button 
+						class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+						ng-click="modalMenuController.doCancel();" 
+						type="button">
+						Cancel
+					</button>
+				</div>
+			</div>
+			<!--  *************** 
+					button (end)
+					*************** -->
+			</div>
+		</form>
+	</div>
+</div>

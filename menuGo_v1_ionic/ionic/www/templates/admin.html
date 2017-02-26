@@ -1,0 +1,152 @@
+<ion-view 
+	view-title="Admin">
+	<div 
+		class="bar bar-assertive bar-header">
+		<h3 
+			class="title" 
+			id="appTitle" 
+			name="appTitle">
+			MenuGO
+		</h3>
+	</div>
+	<div 
+		class="bar bar-assertive bar-subheader">
+		<h3 
+			class="title" 
+			id="appTitle" 
+			name="appTitle">
+			Admin
+		</h3>
+	</div>
+
+	<ion-content 
+		class="app-bg has-subheader">
+		<div 
+			class="list">
+			<div 
+				id="adminContainer" 
+				name="adminContainer" 
+				ng-switch="adminController.userRole">
+				<div 
+					ng-switch-when="userAdmin">
+					<div 
+						class="list">
+						<div 
+							class="border-rounded floating-panel-style-1 font-family-1-size-medium layer-minus-1 transparent-low" 
+							id="managerContainer" 
+							name="managerContainer" 
+							ng-repeat="(k,v) in adminController.companyBranchOrders | groupBy: 'table_id'">
+							Table # {{k}}
+							<div 
+								class="borderless font-family-2-size-small item" 
+								ng-repeat="companyBranchOrder in v">
+								<span>
+									Menuitem Code: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_code}}
+								</b><br>
+								<span>
+								Menuitem Name: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_name}}
+								</b><br>
+								<span>
+								Menuitem Price: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_price}}
+								</b><br>
+								<button 
+									class="button button-assertive button-small child-content-center fill-parent-x font-family-1-size-medium" 
+									ng-click="adminController.updateOrderStatus(companyBranchOrder);">
+									Acknowledge
+								</button>
+							</div>
+						</div> 
+					</div>
+				</div>
+
+				<div 
+					ng-switch-when="userCook">
+					<div 
+						class="list">
+						<div 
+							class="child-content-center font-family-1-size-medium item item-divider">
+							Acknowledged
+						</div>
+						<div 
+							class="border-rounded cookContainer floating-panel-style-1 font-family-1-size-medium layer-minus-1 transparent-low" 
+							ng-repeat="(k,v) in adminController.companyBranchOrders.statusAck | groupBy: 'table_id'">
+							Table # {{k}}
+							<div 
+								class="borderless font-family-2-size-small item" 
+								ng-repeat="companyBranchOrder in v">
+								<span>
+								Menuitem Code: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_code}}
+								</b><br>
+								<span>
+								Menuitem Name: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_name}}
+								</b><br>
+								<span>
+								Menuitem Price: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_price}}
+								</b><br>
+								<button 
+									class="button button-assertive button-small child-content-center fill-parent-x font-family-1-size-medium" 
+									ng-click="adminController.updateOrderStatus(companyBranchOrder);">
+									Cook
+								</button>
+							</div>
+						</div>
+						
+						<div 
+							class="child-content-center font-family-1-size-medium item item-divider">
+							Cooking
+						</div>
+						<div 
+							class="border-rounded cookContainer floating-panel-style-1 font-family-1-size-medium layer-minus-1 transparent-low" 
+							ng-repeat="(k,v) in adminController.companyBranchOrders.statusCooking | groupBy: 'table_id'">
+							Table # {{k}}
+							<div 
+								class="borderless font-family-2-size-small item" 
+								ng-repeat="companyBranchOrder in v">
+								<span>
+								Menuitem Code: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_code}}
+								</b><br>
+								<span>
+								Menuitem Name: 
+								</span>
+								<b>
+								{{companyBranchOrder.menuitem.menuitem_name}}
+								</b><br>
+								<span>
+								Menuitem Price: 
+								</span>
+								<b>{{companyBranchOrder.menuitem.menuitem_price}}
+								</b><br>
+								<button 
+									class="button button-assertive button-small child-content-center fill-parent-x font-family-1-size-medium" 
+									ng-click="adminController.updateOrderStatus(companyBranchOrder);">
+									Serve
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>	

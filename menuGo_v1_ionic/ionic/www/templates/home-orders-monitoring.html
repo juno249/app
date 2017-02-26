@@ -1,0 +1,41 @@
+<ion-view 
+	view-title="Orders">
+	<ion-content 
+		class="app-bg has-subheader" 
+		on-swipe-down="ordersController.broadcastEventMessage('reloadOrders');">
+		<div class="list">
+			<div 
+				class="child-content-center font-family-1-size-medium item item-thumbnail-left orderContainerLeft transparent-low" 
+				ng-repeat="(k,v) in ordersController.orders">
+				<img 
+					class="border-rounded" 
+					src={{v.menuitem.menuitem_image}}>
+					{{v.menuitem.menuitem_name}}
+				<div 
+					class="child-content-right fill-parent-x" 
+					ng-switch on="v.order_status">
+					<img 
+						class="orderStatusImage" 
+						ng-switch-when="statusSent" 
+						src="../img/orders/statusSentImage.png">
+					<img 
+						class="orderStatusImage" 
+						ng-switch-when="statusAck" 
+						src="../img/orders/statusAckImage.png">
+					<img 
+						class="orderStatusImage" 
+						ng-switch-when="statusCooking" 
+						src="../img/orders/statusCookingImage.png">
+					<img 
+						class="orderStatusImage" 
+						ng-switch-when="statusServed" 
+						src="../img/orders/statusServedImage.png">
+					<img 
+						class="orderStatusImage" 
+						ng-switch-when="statusHistory" 
+						src="../img/orders/statusHistoryImage.png">
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

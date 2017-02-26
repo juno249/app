@@ -1,0 +1,96 @@
+body{
+	background-color: #333;
+}
+
+.child-content-center{
+	text-align: center;
+}
+
+.child-content-justify{
+	text-align: justify;
+}
+
+.child-content-left{
+	text-align: left;
+}
+
+.child-content-right{
+	text-align: right;
+}
+
+div.dataTables_wrapper{
+	padding: 0px 25px 0px 25px;	
+}
+
+.font-family-1-size-large{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 20px;
+}
+
+.font-family-1-size-medium{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 15px;
+}
+
+.font-family-1-size-small{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 12px;
+}
+
+.font-family-1-size-xsmall{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 10px;
+}
+
+.font-family-2-size-large{
+	font-family: 'Lora', serif;
+	font-size: 20px;
+}
+
+.font-family-2-size-medium{
+	font-family: 'Lora', serif;
+	font-size: 15px;
+}
+
+.font-family-2-size-small{
+	font-family: 'Lora', serif;
+	font-size: 12px;
+}
+
+.font-family-2-size-xsmall{
+	font-family: 'Lora', serif;
+	font-size: 10px;
+}
+
+.font-family-3-size-large{
+	font-family: 'Poiret One', cursive;
+	font-size: 20px;
+}
+
+.font-family-3-size-medium{
+	font-family: 'Poiret One', cursive;
+	font-size: 15px;
+}
+
+.font-family-3-size-small{
+	font-family: 'Poiret One', cursive;
+	font-size: 12px;
+}
+
+.font-family-3-size-xsmall{
+	font-family: 'Poiret One', cursive;
+	font-size: 10px;
+}
+
+.fill-parent-x{
+	width: 100%;
+}
+
+.fill-parent-y{
+	height: 100%;
+}
+
+.fill-parent-xy{
+	height: 100%;
+	width: 100%;
+}

@@ -1,0 +1,78 @@
+<ion-view>
+	<ion-content 
+	class="app-bg">
+		<div 
+			class="fill-parent-xy" 
+			id="loginRootContainer" 
+			name="loginRootContainer">
+			<div 
+				class="border-rounded floating-panel-style-1 layer-minus-1 transparency-low" 
+				id="loginMainContainer" 
+				name="loginMainContainer">
+				<div 
+					class="child-content-center font-family-1-size-large">
+					<img 
+						id="appLogo" 
+						name="appLogo" 
+						src="../img/login/appLogo.jpg"><br>
+					MenuGO
+				</div>
+				<div 
+					class="font-family-2-size-large">
+					<div 
+						class="list">
+						<div 
+							class="borderless item item-input-inset">
+							<label 
+								class="item item-input-wrapper">
+								<i 
+									class="icon ion-person">
+								</i>
+								<input 
+									class="fill-parent-x" 
+									id="loginUsernameTxt" 
+									name="loginUsernameTxt" 
+									ng-model="loginController.loginUsername" 
+									placeholder="Username" 
+									type="text">
+							</label>
+						</div>
+						<div 
+							class="borderless item item-input-inset">
+							<label 
+								class="item item-input-wrapper">
+								<i 
+									class="icon ion-lock-combination">
+								</i>
+								<input 
+									class="fill-parent-x" 
+									id="loginPasswordTxt" 
+									name="loginPasswordTxt" 
+									ng-model="loginController.loginPassword" 
+									placeholder="Password"
+									type="text">
+							</label>
+						</div>
+					</div>
+				</div>
+				<div 
+					class="child-content-center fill-parent-xy">
+					<button 
+						class="button button-positive button-small font-family-1-size-medium" 
+						id="loginLoginBtn" 
+						name="loginLoginBtn" 
+						ng-click="loginController.doLogin();">
+						Log In
+					</button>
+					<button 
+						class="button button-positive button-small font-family-1-size-medium" 
+						id="loginSignupBtn" 
+						name="loginSignupBtn" 
+						ng-click="loginController.doSignup();">
+						Sign Up
+					</button>
+				</div>
+			</div>	
+		</div>
+	</ion-content>
+</ion-view>
