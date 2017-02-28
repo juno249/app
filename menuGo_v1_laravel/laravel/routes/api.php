@@ -319,7 +319,11 @@ Route::get('customers-companies-branches/query', [
 ]);
 
 Route::post('customers-companies-branches', [
-		'uses' => 	'customersCompaniesBranchesController@addCustomerCompanyBranch'
+		'uses' => 'customersCompaniesBranchesController@addCustomerCompanyBranch'
+]);
+
+Route::post('customers-companies-branches-transaction', [
+		'uses' => 'customersCompaniesBranchesController@addCustomerCompanyBranchTransaction'
 ]);
 
 Route::put('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}', [
