@@ -136,7 +136,7 @@ class customersCompaniesBranchesController extends Controller
 		$mySqlWhere = array();
 		
 		if(isset($_GET[customersCompaniesBranchesConstants::reqCustomerUsername])){
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::dbCustomerUsername, 'LIKE', '%' . $_GET[customersCompaniesBranchesConstants::reqCustomerUsername] . '%']);
+			array_push($mySqlWhere, [customersCompaniesBranchesConstants::dbCustomerUsername, '=', $_GET[customersCompaniesBranchesConstants::reqCustomerUsername]]);
 		}
 		if(isset($_GET[customersCompaniesBranchesConstants::reqCompanyName])){
 			array_push($mySqlWhere, [customersCompaniesBranchesConstants::dbCompanyName, 'LIKE', '%' . $_GET[customersCompaniesBranchesConstants::reqCompanyName] . '%']);
@@ -162,10 +162,10 @@ class customersCompaniesBranchesController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(), 
+					$jsonData, 
 					[
 							'*.' . customersCompaniesBranchesConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
 							'*.' . customersCompaniesBranchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
@@ -174,7 +174,7 @@ class customersCompaniesBranchesController extends Controller
 					);	
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . customersCompaniesBranchesConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30',
 							'*.' . customersCompaniesBranchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
@@ -195,15 +195,15 @@ class customersCompaniesBranchesController extends Controller
 	 * URL-->/customers-companies-branches/
 	 * */
 	public function addCustomerCompanyBranch(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$customersCompaniesBranchesResponse = new Response();
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{		DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert((array)$jsonData[$i]);
+				try{		DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbAddCatchMsg);
 					return $customersCompaniesBranchesResponse;
@@ -217,30 +217,56 @@ class customersCompaniesBranchesController extends Controller
 	}
 	
 	/**
-	 * PUT method updateCustomerCompanyBranch
-	 * URL-->/customers-companies-branch/{CustomerUsername}/{CompanyName}/{BranchName}
-	 **/
-	public function updateCustomerCompanyBranch(Request $jsonRequest, $CustomerUsername, $CompanyName, $BranchName){
+	 * POST method addCustomerCompanyBranchTransaction
+	 * URL-->/customers-companies-branches-transaction/
+	 * */
+	public function addCustomerCompanyBranchTransaction(Request $jsonRequest){
 		$jsonData = ((array)json_decode($jsonRequest->getContent()));
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 		
+		$customersController = new customersController();
+		$companiesController = new companiesController();
+		$branchesController = new branchesController();
+		
+		
+		for($i=0; $i<$jsonDataSize; $i++){
+			$customerCompanyBranchRunner = (array)$jsonData[$i];
+			$customer = (array)$customerCompanyBranchRunner['customer'];
+			$company = (array)$customerCompanyBranchRunner['company'];
+			$branch = (array)$customerCompanyBranchRunner['branch'];
+			$customerCompanyBranch = (array)$customerCompanyBranchRunner['customerCompanyBranch'];
+			
+			
+		}
+	}
+	
+	/**
+	 * PUT method updateCustomerCompanyBranch
+	 * URL-->/customers-companies-branch/{CustomerUsername}/{CompanyName}/{BranchName}
+	 **/
+	public function updateCustomerCompanyBranch(Request $jsonRequest, $CustomerUsername, $CompanyName, $BranchName){
+		$jsonData = json_decode($jsonRequest->getContent(), true);
+		$jsonDataSize = sizeof($jsonData);
+		$mySqlWhere = array();
+		$errorMsg = '';
+	
 		$customersCompaniesBranchesResponse = new Response();
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
-		
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+	
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
 			return $customersCompaniesBranchesResponse;
 		}
-		
+	
 		try{
 			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, '=', $CustomerUsername]);
 			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName, '=', $CompanyName]);
 			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbBranchName, '=', $BranchName]);
-			DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
-			$customersCompaniesBranchesResponse->setStatusCode(400, $e->getMessage());
+			$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbUpdateCatchMessage);
 			return $customersCompaniesBranchesResponse;
 		}
 		return customersCompaniesBranchesConstants::dbUpdateSuccessMsg;
@@ -250,10 +276,10 @@ class customersCompaniesBranchesController extends Controller
 	 * DELETE method deleteCustomerCompanyBranch
 	 * URL-->/customers-companies-branch/{CustomerUsername}/{CompanyName}/{BranchName}
 	 **/
-	public function deleteCustomerCompanyBranch(Request $jsonRequest, $CustomerUsername, $CompanyName, $BranchName){
+	public function deleteCustomerCompanyBranch($CustomerUsername, $CompanyName, $BranchName){
 		$mySqlWhere = array();
 		$errorMsg = '';
-		
+	
 		$customersCompaniesBranchesResponse = new Response();
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
 		try{
