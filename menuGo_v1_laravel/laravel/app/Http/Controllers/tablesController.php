@@ -171,10 +171,10 @@ class tablesController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . tablesConstants::dbTableNumber => 'required|numeric',
 							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|numeric',
@@ -184,7 +184,7 @@ class tablesController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . tablesConstants::dbTableNumber => 'sometimes|numeric',
 							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|sometimes|numeric',
@@ -206,29 +206,29 @@ class tablesController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/
 	 **/
 	public function addTable(Request $jsonRequest, $CompanyName, $BranchName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 	
 		$tablesResponse = new Response();
 		$tablesResponse->setStatusCode(400, null);
-		$companyBranch = (array)json_decode((new branchesController())->getCompanyBranch($CompanyName, $BranchName)->getContent());
+		$companyBranch = json_decode((new branchesController())->getCompanyBranch($CompanyName, $BranchName)->getContent(), true);
 		if(sizeof($companyBranch) == 0){
 			$tablesResponse->setStatusCode(400, tablesConstants::inconsistencyValidationErr1);
 			return $tablesResponse;
 		}
-		$branchId = $companyBranch[0]->branch_id;
-		
+		$branchId = $companyBranch[0]['branch_id'];
+	
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(!(isset($jsonData[$i]->branch_id))){
-				$jsonData[$i]->branch_id = $branchId;
+			if(!(isset($jsonData[$i]['branch_id']))){
+				$jsonData[$i]['branch_id'] = $branchId;
 			}
 		}
-		
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+	
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i]->branch_id == $branchId){
-					try{		DB::table(tablesConstants::tablesTable)->insert((array)$jsonData[$i]);
+				if($jsonData[$i]['branch_id'] == $branchId){
+					try{		DB::table(tablesConstants::tablesTable)->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$tablesResponse->setStatusCode(400, tablesConstants::dbAddCatchMsg);
 						return $tablesResponse;
@@ -247,28 +247,28 @@ class tablesController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
 	 **/
 	public function updateTable(Request $jsonRequest, $CompanyName, $BranchName, $TableNumber){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 	
 		$tablesResponse = new Response();
 		$tablesResponse->setStatusCode(400, null);
-		$companyBranchTable = (array)json_decode($this->getCompanyBranchTable($CompanyName, $BranchName, $TableNumber)->getContent());
+		$companyBranchTable = json_decode($this->getCompanyBranchTable($CompanyName, $BranchName, $TableNumber)->getContent(), true);
 		if(sizeof($companyBranchTable) == 0){
 			$tablesResponse->setStatusCode(400, tablesConstants::inconsistencyValidationErr2);
 			return $tablesResponse;
 		}
-		$tableId = $companyBranchTable[0]->table_id;
+		$tableId = $companyBranchTable[0]['table_id'];
 	
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$tablesResponse->setStatusCode(400, $errorMsg);
 			return $tablesResponse;
 		}
 	
 		try{
 			array_push($mySqlWhere, [tablesConstants::dbTableId, '=', $tableId]);
-			DB::table(tablesConstants::tablesTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(tablesConstants::tablesTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$tablesResponse->setStatusCode(400, tablesConstants::dbUpdateCatchMsg);
 			return $tablesResponse;
@@ -286,12 +286,12 @@ class tablesController extends Controller
 	
 		$tablesResponse = new Response();
 		$tablesResponse->setStatusCode(400, null);
-		$companyBranchTable = (array)json_decode($this->getCompanyBranchTable($CompanyName, $BranchName, $TableNumber)->getContent());
+		$companyBranchTable = json_decode($this->getCompanyBranchTable($CompanyName, $BranchName, $TableNumber)->getContent(), true);
 		if(sizeof($companyBranchTable) == 0){
 			$tablesResponse->setStatusCode(400, tablesConstants::inconsistencyValidationErr2);
 			return $tablesResponse;
 		}
-		$tableId = $companyBranchTable[0]->table_id;
+		$tableId = $companyBranchTable[0]['table_id'];
 	
 		try{
 			array_push($mySqlWhere, [tablesConstants::dbTableId, '=', $tableId]);

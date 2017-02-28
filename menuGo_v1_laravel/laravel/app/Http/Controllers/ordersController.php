@@ -299,10 +299,10 @@ class ordersController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30',
 							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric',
@@ -312,7 +312,7 @@ class ordersController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30',
 							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric',
@@ -334,7 +334,7 @@ class ordersController extends Controller
 	 * URL-->/customers/{CustomerUsername}/orders
 	 **/
 	public function addOrder(Request $jsonRequest, $CustomerUsername){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent()), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere_1 = array();
 		$mySqlWhere_2 = array();
@@ -342,10 +342,10 @@ class ordersController extends Controller
 	
 		$ordersResponse = new Response();
 		$ordersResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				$menuitemId = $jsonData[$i]->menuitem_id;
-				$tableId = $jsonData[$i]->table_id;
+				$menuitemId = $jsonData[$i]['menuitem_id'];
+				$tableId = $jsonData[$i]['table_id'];
 				$mySqlWhere_1 = array();
 				$mySqlWhere_2 = array();
 	
@@ -359,7 +359,7 @@ class ordersController extends Controller
 					return $ordersResponse;
 				}
 	
-				try{		DB::table(ordersConstants::ordersTable)->insert((array)$jsonData[$i]);
+				try{		DB::table(ordersConstants::ordersTable)->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$ordersResponse->setStatusCode(400, ordersConstants::dbAddCatchMsg);
 					return $ordersResponse;
@@ -377,7 +377,7 @@ class ordersController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
 	 **/
 	public function updateOrder(Request $jsonRequest, $CompanyName, $BranchName, $TableNumber, $OrderId){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent()), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
@@ -389,13 +389,13 @@ class ordersController extends Controller
 	
 		$ordersResponse = new Response();
 		$ordersResponse->setStatusCode(400, null);
-		$companyBranchTableOrder = (array)json_decode($this->getJoinCompanyBranchTableOrders($mySqlWhere));
+		$companyBranchTableOrder = json_decode($this->getJoinCompanyBranchTableOrders($mySqlWhere), true);
 		if(sizeof($companyBranchTableOrder) == 0){
 			$ordersResponse->setStatusCode(400, ordersConstants::inconsistencyValidationErr2);
 			return $ordersResponse;
 		}
 	
-		if(!($this->isDataValid($jsonRequest, $errorMsg, "UPDATE"))){
+		if(!($this->isDataValid($jsonData, $errorMsg, "UPDATE"))){
 			$ordersResponse->setStatusCode(400, $errorMsg);
 			return $ordersResponse;
 		}
@@ -403,7 +403,7 @@ class ordersController extends Controller
 		try{
 			$mySqlWhere = array();
 			array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderId, '=', $OrderId]);
-			DB::table(ordersConstants::ordersTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(ordersConstants::ordersTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$ordersResponse->setStatusCode(400, ordersConstants::dbUpdateCatchMsg);
 			return $ordersResponse;
@@ -426,7 +426,7 @@ class ordersController extends Controller
 	
 		$ordersResponse = new Response();
 		$ordersResponse->setStatusCode(400, null);
-		$companyBranchTableOrder = (array)json_decode($this->getJoinCompanyBranchTableOrders($mySqlWhere));
+		$companyBranchTableOrder = json_decode($this->getJoinCompanyBranchTableOrders($mySqlWhere), true);
 		if(sizeof($companyBranchTableOrder) == 0){
 			$ordersResponse->setStatusCode(400, ordersConstants::inconsistencyValidationErr2);
 			return $ordersResponse;
@@ -456,7 +456,7 @@ class ordersController extends Controller
 	
 		$ordersResponse = new Response();
 		$ordersResponse->setStatusCode(400, null);
-		$customerOrder = (array)json_decode($this->getJoinCustomerOrders($mySqlWhere));
+		$customerOrder = json_decode($this->getJoinCustomerOrders($mySqlWhere), true);
 		if(sizeof($customerOrder) == 0){
 			$ordersResponse->setStatusCode(400, ordersConstants::inconsistencyValidationErr3);
 			return $ordersResponse;

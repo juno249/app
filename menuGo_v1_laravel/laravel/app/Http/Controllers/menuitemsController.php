@@ -181,10 +181,10 @@ class menuitemsController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . menuitemsConstants::dbMenuitemCode => 'required|string|max:10',
 							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|numeric',
@@ -196,7 +196,7 @@ class menuitemsController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . menuitemsConstants::dbMenuitemCode => 'sometimes|string|max:10',
 							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|sometimes|numeric',
@@ -220,29 +220,29 @@ class menuitemsController extends Controller
 	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/
 	 **/
 	public function addMenuitem(Request $jsonRequest, $CompanyName, $MenuName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$menuitemsResponse = new Response();
 		$menuitemsResponse->setStatusCode(400, null);
-		$companyMenu = (array)json_decode((new menusController())->getCompanyMenu($CompanyName, $MenuName)->getContent());
+		$companyMenu = json_decode((new menusController())->getCompanyMenu($CompanyName, $MenuName)->getContent(), true);
 		if(sizeof($companyMenu) == 0){
 			$menuitemsResponse->setStatusCode(400, menuitemsConstants::inconsistencyValidationErr1);
 			return $menuitemsResponse;
 		}
-		$menuId = $companyMenu[0]->menu_id;
-		
+		$menuId = $companyMenu[0]['menu_id'];
+	
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(!(isset($jsonData[$i]->menu_id))){
-				$jsonData[$i]->menu_id = $menuId;
+			if(!(isset($jsonData[$i]['menu_id']))){
+				$jsonData[$i]['menu_id'] = $menuId;
 			}
 		}
-		
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+	
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i]->menu_id == $menuId){
-					try{		DB::table(menuitemsConstants::menuitemsTable)->insert((array)$jsonData[$i]);
+				if($jsonData[$i]['menu_id'] == $menuId){
+					try{		DB::table(menuitemsConstants::menuitemsTable)->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$menuitemsResponse->setStatusCode(400, $e->getMessage());
 						return $menuitemsResponse;
@@ -261,28 +261,28 @@ class menuitemsController extends Controller
 	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	 **/
 	public function updateMenuitem(Request $jsonRequest, $CompanyName, $MenuName, $MenuitemCode){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent()), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-		
+	
 		$menuitemsResponse = new Response();
 		$menuitemsResponse->setStatusCode(400, null);
-		$companyMenuMenuitem = (array)json_decode($this->getCompanyMenuMenuitem($CompanyName, $MenuName, $MenuitemCode)->getContent());
+		$companyMenuMenuitem = json_decode($this->getCompanyMenuMenuitem($CompanyName, $MenuName, $MenuitemCode)->getContent(), true);
 		if(sizeof($companyMenuMenuitem) == 0){
 			$menuitemsResponse->setStatusCode(400, menuitemsConstants::inconsistencyValidationErr2);
 			return $menuitemsResponse;
 		}
-		$menuitemId = $companyMenuMenuitem[0]->menuitem_id;
-		
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		$menuitemId = $companyMenuMenuitem[0]['menuitem_id'];
+	
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$menuitemsResponse->setStatusCode(400, $errorMsg);
 			return $menuitemsResponse;
 		}
-		
+	
 		try{
 			array_push($mySqlWhere, [menuitemsConstants::dbMenuitemId, '=', $menuitemId]);
-			DB::table(menuitemsConstants::menuitemsTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(menuitemsConstants::menuitemsTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$menuitemsResponse->setStatusCode(400, menuitemsConstants::dbUpdateCatchMsg);
 			return $menuitemsResponse;
@@ -297,16 +297,16 @@ class menuitemsController extends Controller
 	public function deleteMenuitem($CompanyName, $MenuName, $MenuitemCode){
 		$mySqlWhere = array();
 		$errorMsg = '';
-		
+	
 		$menuitemsResponse = new Response();
 		$menuitemsResponse->setStatusCode(400, null);
-		$companyMenuMenuitem = (array)json_decode($this->getCompanyMenuMenuitem($CompanyName, $MenuName, $MenuitemCode)->getContent());
+		$companyMenuMenuitem = json_decode($this->getCompanyMenuMenuitem($CompanyName, $MenuName, $MenuitemCode)->getContent(), true);
 		if(sizeof($companyMenuMenuitem) == 0){
 			$menuitemsResponse->setStatusCode(400, menuitemsConstants::inconsistencyValidationErr2);
 			return $menuitemsResponse;
 		}
-		$menuitemId = $companyMenuMenuitem[0]->menuitem_id;
-		
+		$menuitemId = $companyMenuMenuitem[0]['menuitem_id'];
+	
 		try{
 			array_push($mySqlWhere, [menuitemsConstants::dbMenuitemId, '=', $menuitemId]);
 			DB::table(menuitemsConstants::menuitemsTable)->where($mySqlWhere)->delete();

@@ -187,12 +187,12 @@ class branchesController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
-							'*.' . branchesConstants::dbBranchName => 'unique:branches,branch_name|required|string|max:30',
+							'*.' . branchesConstants::dbBranchName => 'required|string|max:30',
 							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30',
 							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'required|string|max:30',
 							'*.' . branchesConstants::dbBranchAddressStreet => 'required|string|max:30',
@@ -205,9 +205,9 @@ class branchesController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
-							'*.' . branchesConstants::dbBranchName => 'unique:branches,branch_name|sometimes|string|max:30',
+							'*.' . branchesConstants::dbBranchName => 'sometimes|string|max:30',
 							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
 							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'sometimes|string|max:30',
 							'*.' . branchesConstants::dbBranchAddressStreet => 'sometimes|string|max:30',
@@ -232,13 +232,13 @@ class branchesController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/validate
 	 **/
 	public function addBranchValidate(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCodee(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			return branchesConstants::dbAddValidateSuccessMsg;
 		} else {
 			$branchesResponse->setStatusCode(400, $errorMsg);
@@ -251,16 +251,16 @@ class branchesController extends Controller
 	 * URL-->/companies/{CompanyName}/branches
 	 **/
 	public function addBranch(Request $jsonRequest, $CompanyName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-
+	
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i]->company_name == $CompanyName){
-					try{		DB::table(branchesConstants::branchesTable)->insert((array)$jsonData[$i]);
+				if($jsonData[$i]['company_name'] == $CompanyName){
+					try{		DB::table(branchesConstants::branchesTable)->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$branchesResponse->setStatusCode(400, branchesConstants::dbAddCatchMsg);
 						return $branchesResponse;
@@ -279,13 +279,13 @@ class branchesController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/validate
 	 **/
 	public function updateBranchValidate(Request $jsonRequest, $CompanyName, $BranchName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCodee(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if($this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			return branchesConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$branchesResponse->setStatusCode(400, $errorMsg);
@@ -298,22 +298,22 @@ class branchesController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}
 	 **/
 	public function updateBranch(Request $jsonRequest, $CompanyName, $BranchName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-
+	
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$branchesResponse->setStatusCode(400, $errorMsg);
 			return $branchesResponse;
 		}
-
+	
 		try{
 			array_push($mySqlWhere, [branchesConstants::dbCompanyName, '=', $CompanyName]);
 			array_push($mySqlWhere, [branchesConstants::dbBranchName, '=', $BranchName]);
-			DB::table(branchesConstants::branchesTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(branchesConstants::branchesTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$branchesResponse->setStatusCode(400, branchesConstants::dbUpdateCatchMsg);
 			return $branchesResponse;

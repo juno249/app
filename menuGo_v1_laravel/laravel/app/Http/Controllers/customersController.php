@@ -247,10 +247,10 @@ class customersController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . customersConstants::dbCustomerUsername => 'unique:customers,customer_username|required|string|max:30',
 							'*.' . customersConstants::dbCustomerPassword => 'required|string|max:30',
@@ -258,7 +258,7 @@ class customersController extends Controller
 							'*.' . customersConstants::dbCustomerNameMname => 'required|string|max:30',
 							'*.' . customersConstants::dbCustomerNameLname => 'required|string|max:30',
 							'*.' . customersConstants::dbCustomerRole => 'required|string|max:30',
-							'*.' . customersConstants::dbCustomerGender => 'string|max:1',
+							'*.' . customersConstants::dbCustomerGender => 'string|max:10',
 							'*.' . customersConstants::dbCustomerAddressHouseBuilding => 'string|max:30',
 							'*.' . customersConstants::dbCustomerAddressStreet => 'string|max:30',
 							'*.' . customersConstants::dbCustomerAddressDistrict => 'string|max:30',
@@ -274,7 +274,7 @@ class customersController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . customersConstants::dbCustomerUsername => 'unique:customers,customer_username|sometimes|string|max:30',
 							'*.' . customersConstants::dbCustomerPassword => 'sometimes|string|max:30',
@@ -282,7 +282,7 @@ class customersController extends Controller
 							'*.' . customersConstants::dbCustomerNameMname => 'sometimes|string|max:30',
 							'*.' . customersConstants::dbCustomerNameLname => 'sometimes|string|max:30',
 							'*.' . customersConstants::dbCustomerRole => 'sometimes|string|max:30',
-							'*.' . customersConstants::dbCustomerGender => 'sometimes|string|max:1',
+							'*.' . customersConstants::dbCustomerGender => 'sometimes|string|max:10',
 							'*.' . customersConstants::dbCustomerAddressHouseBuilding => 'sometimes|string|max:30',
 							'*.' . customersConstants::dbCustomerAddressStreet => 'sometimes|string|max:30',
 							'*.' . customersConstants::dbCustomerAddressDistrict => 'sometimes|string|max:30',
@@ -310,13 +310,13 @@ class customersController extends Controller
 	 * URL-->/customers/validate
 	 * */
 	public function addCustomerValidate(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			return customersConstants::dbAddValidateSuccessMsg;
 		} else {
 			$customersResponse->setStatusCode(400, $errorMsg);
@@ -329,18 +329,18 @@ class customersController extends Controller
 	 * URL-->/customers/
 	 * */
 	public function addCustomer(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 	
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
 				try{
-					$pwHashed = Hash::make($jsonData[$i]->customer_password);
-					$jsonData[$i]->customer_password = $pwHashed;
-					DB::table(customersConstants::customersTable)->insert((array)$jsonData[$i]);
+					$pwHashed = Hash::make($jsonData[$i]['customer_password']);
+					$jsonData[$i]['customer_password'] = $pwHashed;
+					DB::table(customersConstants::customersTable)->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$customersResponse->setStatusCode(400, customersConstants::dbAddCatchMsg);
 					return $customersResponse;
@@ -358,13 +358,13 @@ class customersController extends Controller
 	 * URL-->/customers/{CustomerUsername}/validate
 	 * */
 	public function updateCustomerValidate(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 	
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if($this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			return customersConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$customersResponse->setStatusCode(400, $errorMsg);
@@ -377,21 +377,21 @@ class customersController extends Controller
 	 * URL-->/customers/{CustomerUsername}
 	 * */
 	public function updateCustomer(Request $jsonRequest, $CustomerUsername){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 	
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$customersResponse->setStatusCode(400, $errorMsg);
 			return $customersResponse;
 		}
 	
 		try{
 			array_push($mySqlWhere, [customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
-			DB::table(customersConstants::customersTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(customersConstants::customersTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$customersResponse->setStatusCode(400, customersConstants::dbUpdateCatchMsg);
 			return $customersResponse;

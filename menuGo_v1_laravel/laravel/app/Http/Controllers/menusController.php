@@ -157,10 +157,10 @@ class menusController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . menusConstants::dbMenuName => 'required|string|max:30',
 							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30',
@@ -170,7 +170,7 @@ class menusController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . menusConstants::dbMenuName => 'sometimes|string|max:30',
 							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
@@ -192,16 +192,16 @@ class menusController extends Controller
 	 * URL-->/companies/{CompanyName}/menus
 	 **/
 	public function addMenu(Request $jsonRequest, $CompanyName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$menusResponse = new Response();
 		$menusResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i]->company_name == $CompanyName){
-					try{		DB::table(menusConstants::menusTable)->insert((array)$jsonData[$i]);
+				if($jsonData[$i]['company_name'] == $CompanyName){
+					try{		DB::table(menusConstants::menusTable)->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$menusResponse->setStatusCode(400, menusConstants::dbAddCatchMsg);
 						return $menusResponse;
@@ -220,22 +220,22 @@ class menusController extends Controller
 	 * URL-->/companies/{CompanyName}/menus/{MenuName}
 	 **/
 	public function updateMenu(Request $jsonRequest, $CompanyName, $MenuName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-		
+	
 		$menusResponse = new Response();
 		$menusResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$menusResponse->setStatusCode(400, $errorMsg);
 			return $menusResponse;
 		}
-		
+	
 		try{
 			array_push($mySqlWhere, [menusConstants::dbCompanyName, '=', $CompanyName]);
 			array_push($mySqlWhere, [menusConstants::dbMenuName, '=', $MenuName]);
-			DB::table(menusConstants::menusTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(menusConstants::menusTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$menusResponse->setStatusCode(400, menusConstants::dbUpdateCatchMsg);
 			return $menusResponse;

@@ -170,10 +170,10 @@ class companiesController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid(Request $jsonRequest, &$errorMsg, $dbOperation){
+	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|required|string|max:30',
 							'*.' . companiesConstants::dbCompanyDesc => 'required|string|max:500',
@@ -182,7 +182,7 @@ class companiesController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonRequest->all(),
+					$jsonData,
 					[
 							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|sometimes|string|max:30',
 							'*.' . companiesConstants::dbCompanyDesc => 'sometimes|string|max:500',
@@ -203,13 +203,13 @@ class companiesController extends Controller
 	 * URL-->/companies/validate
 	 * */
 	public function addCompanyValidate(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			return companiesConstants::dbAddValidateSuccessMsg;
 		} else {
 			$companiesResponse->setStatusCode(400, $errorMsg);
@@ -222,15 +222,15 @@ class companiesController extends Controller
 	 * URL-->/companies/
 	 * */
 	public function addCompany(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 			
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "ADD")){
+		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{		DB::table(companiesConstants::companiesTable)->insert((array)$jsonData[$i]);
+				try{		DB::table(companiesConstants::companiesTable)->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$companiesResponse->setStatusCode(400, companiesConstants::dbAddCatchMsg);
 					return $companiesResponse;
@@ -248,13 +248,13 @@ class companiesController extends Controller
 	 * URL-->/companies/{CompanyName}/validate
 	 * */
 	public function updateCompanyValidate(Request $jsonRequest){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-		
+	
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if($this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			return companiesConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$companiesResponse->setStatusCode(400, $errorMsg);
@@ -267,21 +267,21 @@ class companiesController extends Controller
 	 * URL-->/companies/{CompanyName}
 	 * */
 	public function updateCompany(Request $jsonRequest, $CompanyName){
-		$jsonData = ((array)json_decode($jsonRequest->getContent()));
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 			
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonRequest, $errorMsg, "UPDATE")){
+		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			$companiesResponse->setStatusCode(400, $errorMsg);
 			return $companiesResponse;
 		}
-
+	
 		try{
 			array_push($mySqlWhere, [companiesConstants::dbCompanyName, '=', $CompanyName]);
-			DB::table(companiesConstants::companiesTable)->where($mySqlWhere)->update((array)$jsonData[0]);
+			DB::table(companiesConstants::companiesTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$companiesResponse->setStatusCode(400, companiesConstants::dbUpdateCatchMsg);
 			return $companiesResponse;
