@@ -33,6 +33,9 @@ function usermenuController(
 	vm.companyName = undefined;
 	vm.branchName = undefined;
 	vm.menuName = undefined;
+	var user = localStorage.getItem('User');
+	user = JSON.parse(user);
+	vm.customerUsername = user.username;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -114,14 +117,14 @@ function usermenuController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.toggleBranch, toggleBranch);
+	$scope.$on(BROADCAST_MESSAGE.toggleBranch, toggleBranchCallback);
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: toggleBranch()
+	 * method name: toggleBranchCallback()
 	 * purpose: toggles branch's visibility
 	 * ****************************** */
-	function toggleBranch(e, args){
+	function toggleBranchCallback(e, args){
 		var companyName = vm.companyName;
 		var isManageBranchHidden = vm.isManageBranchHidden;
 		
@@ -132,14 +135,14 @@ function usermenuController(
 		vm.isManageBranchHidden = isManageBranchHidden;
 	}
 	
-	$scope.$on(BROADCAST_MESSAGE.toggleMenu, toggleMenu);
+	$scope.$on(BROADCAST_MESSAGE.toggleMenu, toggleMenuCallback);
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: toggleMenu()
+	 * method name: toggleMenuCallback()
 	 * purpose: toggles menu's visibility
 	 * ****************************** */
-	function toggleMenu(e, args){
+	function toggleMenuCallback(e, args){
 		var companyName = vm.companyName;
 		var isManageMenuHidden = vm.isManageMenuHidden;
 		
@@ -150,14 +153,14 @@ function usermenuController(
 		vm.isManageMenuHidden = isManageMenuHidden;
 	}
 	
-	$scope.$on(BROADCAST_MESSAGE.toggleTable, toggleTable);
+	$scope.$on(BROADCAST_MESSAGE.toggleTable, toggleTableCallback);
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: toggleTable()
+	 * method name: toggleTableCallback()
 	 * purpose: toggles table's visibility
 	 * ****************************** */
-	function toggleTable(e, args){
+	function toggleTableCallback(e, args){
 		var companyName = vm.companyName; 
 		var branchName = vm.branchName;
 		var isManageTableHidden = vm.isManageTableHidden;
@@ -171,14 +174,14 @@ function usermenuController(
 		vm.isManageTableHidden = isManageTableHidden;
 	}
 	
-	$scope.$on(BROADCAST_MESSAGE.toggleMenuitem, toggleMenuitem);
+	$scope.$on(BROADCAST_MESSAGE.toggleMenuitem, toggleMenuitemCallback);
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: toggleMenuitem()
+	 * method name: toggleMenuitemCallback()
 	 * purpose: toggles menuitem's visibility
 	 * ****************************** */
-	function toggleMenuitem(e, args){
+	function toggleMenuitemCallback(e, args){
 		var companyName = vm.companyName; 
 		var menuName = vm.menuName;
 		var isManageMenuitemHidden = vm.isManageMenuitemHidden;
@@ -191,7 +194,6 @@ function usermenuController(
 		vm.menuName = menuName;
 		vm.isManageMenuitemHidden = isManageMenuitemHidden;
 	}
-	
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

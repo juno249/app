@@ -10,6 +10,7 @@ manageCompanyController.$inject = [
 	'BROADCAST_MESSAGE', 
 	'COMPANIES_DB_FIELDS', 
 	'$compile', 
+	'$localStorage', 
 	'$rootScope', 
 	'$scope', 
 	'$uibModal', 
@@ -29,6 +30,7 @@ function manageCompanyController(
 		BROADCAST_MESSAGE, 
 		COMPANIES_DB_FIELDS, 
 		$compile, 
+		$localStorage, 
 		$rootScope, 
 		$scope, 
 		$uibModal, 
@@ -58,8 +60,9 @@ function manageCompanyController(
 			company_desc: 'companyDesc', 
 			company_logo: 'companyLogo'
 	}
-	
-	vm.restApiSource = API_BASE_URL + '/companies';
+	var user = localStorage.getItem('User');
+	user = JSON.parse(user);
+	vm.restApiSource = API_BASE_URL + '/companies/customers/' + user.username;
 	vm.isBranchThumbnailDisabled = true;
 	vm.isMenuThumbnailDisabled = true;
 	/* ******************************

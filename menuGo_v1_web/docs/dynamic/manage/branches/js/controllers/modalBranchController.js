@@ -33,12 +33,6 @@ function modalBranchController(
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */
-	const DIALOG_ADD_HEADER_TITLE = 'ADD-BRANCH';
-	const DIALOG_UPDATE_HEADER_TITLE = 'UPDATE-BRANCH';
-	const DIALOG_DELETE_HEADER_TITLE = 'DELETE_BRANCH';
-	const BRANCH_ADD_SUCCESS_MESSAGE = 'BRANCH ADDED SUCCESSFULLY';
-	const BRANCH_UPDATE_SUCCESS_MESSAGE = 'BRANCH UPDATED SUCCESSFULLY';
-	const BRANCH_DELETE_SUCCESS_MESSAGE = 'BRANCH DELETED SUCCESSFULLY';
 	const BRANCH_ADD_CATCH_MESSAGE = 'UNABLE TO ADD BRANCH, DB EXCEPTION ENCOUNTERED';
 	const BRANCH_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE BRANCH, DB EXCEPTION ENCOUNTERED';
 	const BRANCH_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE BRANCH, DATA IS EMPTY/UNCHANGED';
@@ -91,6 +85,8 @@ function modalBranchController(
 			branch_hotline: 8
 	}
 	vm.validationErr = {};
+	vm.validationErrDB = undefined;
+	vm.isValidationErrDBHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -161,22 +157,42 @@ function modalBranchController(
 		var modalBranchContainerId = '#modalBranchContainer';
 		var modalBranchContainer = $(modalBranchContainerId);
 		var data = [];
+		var validationErr = vm.validationErr;
+		var validationErrDB = vm.validationErrDB;
+		
+		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn());
 		
 		showBootstrapLoader(modalBranchContainer);
 		
 		if('I' == formMode){
-			if(fromSignup){
-				hideBootstrapLoader(modalBranchContainer);
-				
-				$uibModalInstance.close(data);
-				
-				return;
-			}
-
 			var branch = vm.branch;
 			var companyName = branch.companyName;
+			
+			if(fromSignup){
+				branchService.setCompanyName(companyName);
+				branchService.addBranchValidate()
+				.then(addBranchValidateSuccessCallback)
+				.catch(addBranchValidateFailedCallback);
+				
+				/* ******************************
+				 * Callback Implementations (Start)
+				 * ****************************** */
+				function addBranchValidateSuccessCallback(response){
+					hideBootstrapLoader(modalBranchContainer);
+					$uibModalInstance.close(data);
+				}
+				
+				function addBranchValidateFailedCallback(responseError){
+					hideBootstrapLoader(modalBranchContainer);
+					genValidationErrorFromResponse(responseError);
+				}
+				/* ******************************
+				 * Callback Implementations (End)
+				 * ****************************** */
+			}
+			
 			branchService.setCompanyName(companyName);
 			branchService.addBranch(data)
 			.then(addBranchSuccessCallback)
@@ -187,33 +203,17 @@ function modalBranchController(
 			 * ****************************** */
 			function addBranchSuccessCallback(response){
 				hideBootstrapLoader(modalBranchContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_ADD_HEADER_TITLE, 
-						BRANCH_ADD_SUCCESS_MESSAGE
-				);
 			}
 			
 			function addBranchFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalBranchContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_ADD_HEADER_TITLE, 
-							BRANCH_ADD_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(BRANCH_ADD_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -229,13 +229,8 @@ function modalBranchController(
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data[0]).length){
-				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_DANGER, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						BRANCH_UPDATE_CUSTOM_ERR_MESSAGE
-				);
+				hideBootstrapLoader(modalBranchContainer);
+				showBootstrapAlert(BRANCH_UPDATE_CUSTOM_ERR_MESSAGE);
 				return;
 			}
 			
@@ -250,33 +245,17 @@ function modalBranchController(
 			 * ****************************** */
 			function updateBranchSuccessCallback(response){
 				hideBootstrapLoader(modalBranchContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						BRANCH_UPDATE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function updateBranchFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalBranchContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_UPDATE_HEADER_TITLE, 
-							BRANCH_UPDATE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(BRANCH_UPDATE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -337,37 +316,29 @@ function modalBranchController(
 			 * ****************************** */
 			function deleteBranchSuccessCallback(response){
 				hideBootstrapLoader(modalBranchContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_DELETE_HEADER_TITLE, 
-						BRANCH_DELETE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function deleteBranchFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
+				hideBootstrapLoader(modalMenuContainer);
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_DELETE_HEADER_TITLE, 
-							BRANCH_DELETE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(BRANCH_DELETE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
 			 * Callback Implementations (End)
 			 * ****************************** */
 		}
+		
+		validationErr = {};
+		validationErrDB = undefined;
+		
+		vm.validationErr = validationErr;
+		vm.validationErrDB = validationErrDB;
 	}
 	
 	/* ******************************
@@ -471,15 +442,34 @@ function modalBranchController(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: showBootstrapDialog()
-	 * purpose: shows bootstrap dialog box
+	 * method name: showBootstrapAlert()
+	 * purpose: shows bootstrap alert
 	 * ****************************** */
-	function showBootstrapDialog(dialogType, msgTitle, msgString){
-		BootstrapDialog.alert({
-			type: dialogType, 
-			title: msgTitle, 
-			message: msgString
-		});
+	function showBootstrapAlert(arg_validationErrDB){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = arg_validationErrDB;
+		isValidationErrDBHidden = false;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: hideBootstrapAlert()
+	 * purpose: hides bootstrap alert
+	 * ****************************** */
+	function hideBootstrapAlert(){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = undefined;
+		isValidationErrDBHidden = true;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
 	}
 }
 /* ******************************

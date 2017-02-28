@@ -9,6 +9,11 @@
 		id="modalMenuContainer" 
 		name="modalMenuContainer" 
 		ng-init="modalMenuController.initBootstrapValidator(); modalMenuController.initDom();">
+		<div 
+			class="alert alert-danger font-family-2-size-medium" 
+			ng-hide="modalMenuController.isValidationErrDBHidden">
+			{{modalMenuController.validationErrDB}}
+		</div>
 		<form 
 			class="form-group" 
 			id="modalMenu" 

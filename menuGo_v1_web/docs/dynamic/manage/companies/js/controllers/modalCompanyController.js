@@ -37,12 +37,6 @@ function modalCompanyController(
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */
-	const DIALOG_ADD_HEADER_TITLE = 'ADD-COMPANY';
-	const DIALOG_UPDATE_HEADER_TITLE = 'UPDATE-COMPANY';
-	const DIALOG_DELETE_HEADER_TITLE = 'DELETE_COMPANY';
-	const COMPANY_ADD_SUCCESS_MESSAGE = 'COMPANY ADDED SUCCESSFULLY';
-	const COMPANY_UPDATE_SUCCESS_MESSAGE = 'COMPANY UPDATED SUCCESSFULLY';
-	const COMPANY_DELETE_SUCCESS_MESSAGE = 'COMPANY DELETED SUCCESSFULLY';
 	const COMPANY_ADD_CATCH_MESSAGE = 'UNABLE TO ADD COMPANY, DB EXCEPTION ENCOUNTERED';
 	const COMPANY_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE COMPANY, DB EXCEPTION ENCOUNTERED';
 	const COMPANY_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE COMPANY, DATA IS EMPTY/UNCHANGED';
@@ -77,6 +71,8 @@ function modalCompanyController(
 			company_logo: 2
 	}
 	vm.validationErr = {};
+	vm.validationErrDB = undefined;
+	vm.isValidationErrDBHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -217,6 +213,8 @@ function modalCompanyController(
 		var modalCompanyContainer = $(modalCompanyContainerId);
 		var data = [];
 		
+		hideBootstrapAlert();
+		
 		data.push(doDom2DbColumn());
 		
 		showBootstrapLoader(modalCompanyContainer);
@@ -232,13 +230,11 @@ function modalCompanyController(
 				 * ****************************** */
 				function addCompanyValidateSuccessCallback(response){
 					hideBootstrapLoader(modalCompanyContainer);
-
 					$uibModalInstance.close(data);
 				}
 				
 				function addCompanyValidateFailedCallback(responseError){
 					hideBootstrapLoader(modalCompanyContainer);
-					
 					genValidationErrorFromResponse(responseError);
 				}
 				/* ******************************
@@ -256,33 +252,17 @@ function modalCompanyController(
 			 * ****************************** */
 			function addCompanySuccessCallback(response){
 				hideBootstrapLoader(modalCompanyContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_ADD_HEADER_TITLE, 
-						COMPANY_ADD_SUCCESS_MESSAGE
-				);
 			}
 			
 			function addCompanyFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalCompanyContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_ADD_HEADER_TITLE, 
-							COMPANY_ADD_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(COMPANY_ADD_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -297,13 +277,8 @@ function modalCompanyController(
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data[0]).length){
-				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_DANGER, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						COMPANY_UPDATE_CUSTOM_ERR_MESSAGE
-				);
+				hideBootstrapLoader(modalCompanyContainer);
+				showBootstrapAlert(COMPANY_UPDATE_CUSTOM_ERR_MESSAGE);
 				return;
 			}
 			
@@ -317,33 +292,17 @@ function modalCompanyController(
 			 * ****************************** */
 			function updateCompanySuccessCallback(response){
 				hideBootstrapLoader(modalCompanyContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						COMPANY_UPDATE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function updateCompanyFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalCompanyContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_UPDATE_HEADER_TITLE, 
-							COMPANY_UPDATE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(COMPANY_UPDATE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -402,39 +361,29 @@ function modalCompanyController(
 			 * ****************************** */
 			function deleteCompanySuccessCallback(response){
 				hideBootstrapLoader(modalCompanyContainer);
-					
 				$uibModalInstance.close();
-					
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_DELETE_HEADER_TITLE, 
-						COMPANY_DELETE_SUCCESS_MESSAGE
-				);
 			}
 						
 			function deleteCompanyFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalCompanyContainer);
-				
 				try{
-					JSON.parse(statusText);
-					
+					JSON.parse(statusText)
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_DELETE_HEADER_TITLE, 
-							COMPANY_DELETE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(COMPANY_DELETE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
 			 * Callback Implementations (End)
 			 * ****************************** */
 		}
+		
+		validationErr = {};
+		validationErrDB = undefined;
+		
+		vm.validationErr = validationErr;
+		vm.validationErrDB = validationErrDB;
 	}
 
 	/* ******************************
@@ -487,7 +436,6 @@ function modalCompanyController(
 			var dbColumnIndex = undefined;
 			var errorMessage = undefined;
 			
-			
 			if(statusTextKey = (arrIndex + '.' + dbColumnName)){
 				dbColumnIndex = getDbColumnIndex(dbColumnName);
 				errorMessage = statusTextObj[statusTextKey][0];
@@ -539,15 +487,34 @@ function modalCompanyController(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: showBootstrapDialog()
-	 * purpose: shows bootstrap dialog box
+	 * method name: showBootstrapAlert()
+	 * purpose: shows bootstrap alert
 	 * ****************************** */
-	function showBootstrapDialog(dialogType, msgTitle, msgString){
-		BootstrapDialog.alert({
-			type: dialogType, 
-			title: msgTitle, 
-			message: msgString
-		});
+	function showBootstrapAlert(arg_validationErrDB){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = arg_validationErrDB;
+		isValidationErrDBHidden = false;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: hideBootstrapAlert()
+	 * purpose: hides bootstrap alert
+	 * ****************************** */
+	function hideBootstrapAlert(){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = undefined;
+		isValidationErrDBHidden = true;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
 	}
 }
 /* ******************************

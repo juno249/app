@@ -9,6 +9,11 @@
 		id="modalTableContainer" 
 		name="modalTableContainer" 
 		ng-init="modalTableController.initBootstrapValidator(); initDom();">
+		<div 
+			class="alert alert-danger font-family-size-medium" 
+			ng-hide="modalTableController.isValidationErrDBHidden">
+			{{modalTableController.validationErrDB}}
+		</div>
 		<form 
 			class="form-group" 
 			id="modalTable" 

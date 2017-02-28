@@ -10,6 +10,7 @@ modalCustomerController.$inject = [
 	'USER_ROLES', 
 	'$uibModalInstance', 
 	'$timeout', 
+	'customerCompanyBranchService', 
 	'customerService', 
 	'customer', 
 	'formMode', 
@@ -28,6 +29,7 @@ function modalCustomerController(
 		USER_ROLES, 
 		$uibModalInstance, 
 		$timeout, 
+		customerCompanyBranchService, 
 		customerService, 
 		customer, 
 		formMode, 
@@ -37,12 +39,6 @@ function modalCustomerController(
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */
-	const DIALOG_ADD_HEADER_TITLE = 'ADD-CUSTOMER';
-	const DIALOG_UPDATE_HEADER_TITLE = 'UPDATE-CUSTOMER';
-	const DIALOG_DELETE_HEADER_TITLE = 'DELETE_CUSTOMER';
-	const CUSTOMER_ADD_SUCCESS_MESSAGE = 'CUSTOMER ADDED SUCCESSFULLY';
-	const CUSTOMER_UPDATE_SUCCESS_MESSAGE = 'CUSTOMER UPDATED SUCCESSFULLY';
-	const CUSTOMER_DELETE_SUCCESS_MESSAGE = 'CUSTOMER DELETED SUCCESSFULLY';
 	const CUSTOMER_ADD_CATCH_MESSAGE = 'UNABLE TO ADD CUSTOMER, DB EXCEPTION ENCOUNTERED';
 	const CUSTOMER_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DB EXCEPTION ENCOUNTERED';
 	const CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DATA IS EMPTY/UNCHANGED';
@@ -121,6 +117,8 @@ function modalCustomerController(
 	vm.customerRoleOptions = USER_ROLES;
 	vm.customerGenderOptions = USER_GENDERS;
 	vm.validationErr = {};
+	vm.validationErrDB = undefined;
+	vm.isValidationErrDBHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -244,6 +242,8 @@ function modalCustomerController(
 		var modalCustomerContainer = $(modalCustomerContainerId);
 		var data = [];
 		
+		hideBootstrapAlert();
+		
 		data.push(doDom2DbColumn(formMode));
 		
 		showBootstrapLoader(modalCustomerContainer);
@@ -259,13 +259,11 @@ function modalCustomerController(
 				 * ****************************** */
 				function addCustomerValidateSuccessCallback(response){
 					hideBootstrapLoader(modalCustomerContainer);
-					
 					$uibModalInstance.close(data);
 				}
 				
 				function addCustomerValidateFailedCallback(responseError){
 					hideBootstrapLoader(modalCustomerContainer);
-					
 					genValidationErrorFromResponse(responseError);
 				}
 				/* ******************************
@@ -282,34 +280,53 @@ function modalCustomerController(
 			 * Callback Implementations (Start)
 			 * ****************************** */
 			function addCustomerSuccessCallback(response){
-				hideBootstrapLoader(modalCustomerContainer);
+				var user = localStorage.getItem('User');
+				user = JSON.parse(user);
+				var customerCompanyBranch = undefined;
 				
-				$uibModalInstance.close();
+				if(!(USER_ROLES.customer == user.role)){
+					customerCompanyBranch = {
+							customer_username: data.customer_username, 
+							company_name: user.company, 
+							branch_name: user.branch
+					}
+				} else {
+					customerCompanyBranch = {
+							customer_username: data.customer_username, 
+							company_name: '', 
+							branch_name: ''
+					}
+				}
 				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_ADD_HEADER_TITLE, 
-						CUSTOMER_ADD_SUCCESS_MESSAGE
-				);
+				customerCompanyBranchService.addCustomerCompanyBranch([customerCompanyBranch])
+				.then(addCustomerCompanyBranchSuccessCallback)
+				.catch(addCustomerCompanyBranchFailedCallback);
+				
+				
+				/* ******************************
+				 * Callback Implementations (Start)
+				 * ****************************** */
+				function addCustomerCompanyBranchSuccessCallback(response){
+					hideBootstrapLoader(modalCustomerContainer);
+					$uibModalInstance.close();
+				}
+				
+				function addCustomerCompanyBranchFailedCallback(responseError){
+					//do something on failure
+				}
+				/* ******************************
+				 * Callback Implementations (End)
+				 * ****************************** */
 			}
 			
 			function addCustomerFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalCustomerContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_ADD_HEADER_TITLE, 
-							CUSTOMER_ADD_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(CUSTOMER_ADD_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -324,13 +341,9 @@ function modalCustomerController(
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data[0]).length){
-				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_DANGER, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE
-				);
+				hideBootstrapLoader(modalCustomerContainer);
+				showBootstrapAlert(CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE);
+				return;
 			}
 			
 			customerService.setCustomerUsername(customerUsername);
@@ -343,33 +356,17 @@ function modalCustomerController(
 			 * ****************************** */
 			function updateCustomerSuccessCallback(response){
 				hideBootstrapLoader(modalCustomerContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						CUSTOMER_UPDATE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function updateCustomerFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalCustomerContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_UPDATE_HEADER_TITLE, 
-							CUSTOMER_UPDATE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(CUSTOMER_UPDATE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -428,14 +425,7 @@ function modalCustomerController(
 			 * ****************************** */
 			function deleteCustomerSuccessCallback(response){
 				hideBootstrapLoader(modalCustomerContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_DELETE_HEADER_TITLE, 
-						CUSTOMER_DELETE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function deleteCustomerFailedCallback(responseError){
@@ -443,22 +433,20 @@ function modalCustomerController(
 				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_DELETE_HEADER_TITLE, 
-							CUSTOMER_DELETE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(CUSTOMER_DELETE_CATCH_MESSAGE)
 				}
 			}
 			/* ******************************
 			 * Callback Implementations (End)
 			 * ****************************** */
 		}
+		
+		validationErr = {};
+		validationErrDB = undefined;
+		
+		vm.validationErr = validationErr;
+		vm.validationErrDB = validationErrDB;
 	}
 
 	/* ******************************
@@ -567,15 +555,34 @@ function modalCustomerController(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: showBootstrapDialog()
-	 * purpose: shows bootstrap dialog box
+	 * method name: showBootstrapAlert()
+	 * purpose: shows bootstrap alert
 	 * ****************************** */
-	function showBootstrapDialog(dialogType, msgTitle, msgString){
-		BootstrapDialog.alert({
-			type: dialogType, 
-			title: msgTitle, 
-			message: msgString
-		});
+	function showBootstrapAlert(arg_validationErrDB){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = arg_validationErrDB;
+		isValidationErrDBHidden = false;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: hideBootstrapAlert()
+	 * purpose: hides bootstrap alert
+	 * ****************************** */
+	function hideBootstrapAlert(){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = undefined;
+		isValidationErrDBHidden = true;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
 	}
 }
 /* ******************************

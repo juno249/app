@@ -33,12 +33,6 @@ function modalTableController(
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */
-	const DIALOG_ADD_HEADER_TITLE = 'ADD-TABLE';
-	const DIALOG_UPDATE_HEADER_TITLE = 'UPDATE-TABLE';
-	const DIALOG_DELETE_HEADER_TITLE = 'DELETE_TABLE';
-	const TABLE_ADD_SUCCESS_MESSAGE = 'TABLE ADDED SUCCESSFULLY';
-	const TABLE_UPDATE_SUCCESS_MESSAGE = 'TABLE UPDATED SUCCESSFULLY';
-	const TABLE_DELETE_SUCCESS_MESSAGE = 'TABLE DELETED SUCCESSFULLY';
 	const TABLE_ADD_CATCH_MESSAGE = 'UNABLE TO ADD TABLE, DB EXCEPTION ENCOUNTERED';
 	const TABLE_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE TABLE, DB EXCEPTION ENCOUNTERED';
 	const TABLE_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE TABLE, DATA IS EMPTY/UNCHANGED';
@@ -73,6 +67,8 @@ function modalTableController(
 	}
 	vm.tableStatusOptions = TABLE_STATUS;
 	vm.validationErr = {};
+	vm.validationErrDB = undefined;
+	vm.isValidationErrDB = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -142,8 +138,14 @@ function modalTableController(
 		var modalTableContainerId = '#modalTableContainer';
 		var modalTableContainer = $(modalTableContainerId);
 		var data = [];
+		var validationErr = vm.validationErr;
+		var validationErrDB = vm.validationErrDB;
+		
+		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn());
+		
+		showBootstrapLoader(modalTableContainer);
 		
 		if('I' == formMode){
 			var table = vm.table;
@@ -160,33 +162,17 @@ function modalTableController(
 			 * ****************************** */
 			function addTableSuccessCallback(response){
 				hideBootstrapLoader(modalTableContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_ADD_HEADER_TITLE, 
-						TABLE_ADD_SUCCESS_MESSAGE
-				);
 			}
 			
 			function addTableFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalTableContainer);
-			
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_ADD_HEADER_TITLE, 
-							TABLE_ADD_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(TABLE_ADD_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -203,13 +189,8 @@ function modalTableController(
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data).length){
-				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_DANGER, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						TABLE_UPDATE_CUSTOM_ERR_MESSAGE
-				);
+				hideBootstrapLoader(modalTableContainer);
+				showBootstrapAlert(TABLE_UPDATE_CUSTOM_ERR_MESSAGE)
 				return;
 			}
 			
@@ -225,33 +206,17 @@ function modalTableController(
 			 * ****************************** */
 			function updateTableSuccessCallback(response){
 				hideBootstrapLoader(modalTableContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						TABLE_UPDATE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function updateTableFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalTableContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_UPDATE_HEADER_TITLE, 
-							TABLE_UPDATE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(TABLE_UPDATE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -309,40 +274,34 @@ function modalTableController(
 			.then(deleteTableSuccessCallback)
 			.catch(deleteTableFailedCallback);
 			
+			/* ******************************
+			 * Callback Implementations (Start)
+			 * ****************************** */
 			function deleteTableSuccessCallback(response){
 				hideBootstrapLoader(modalTableContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_DELETE_HEADER_TITLE, 
-						TABLE_DELETE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function deleteTableFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalTableContainer);
-				
-				$uibModalInstance.close();
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_DELETE_HEADER_TITLE, 
-							TABLE_DELETE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(TABLE_DELETE_CATCH_MESSAGE);
 				}
 			}
+			/* ******************************
+			 * Callback Implementations (End)
+			 * ****************************** */
 		}
+		
+		validationErr = {};
+		validationErrDB = undefined;
+		
+		vm.validationErr = validationErr;
+		vm.validationErrDB = validationErrDB;
 	}
 	
 	/* ******************************
@@ -446,15 +405,34 @@ function modalTableController(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: showBootstrapDialog()
-	 * purpose: shows bootstrap dialog box
+	 * method name: showBootstrapAlert()
+	 * purpose: shows bootstrap alert
 	 * ****************************** */
-	function showBootstrapDialog(dialogType, msgTitle, msgString){
-		BootstrapDialog.alert({
-			type: dialogType, 
-			title: msgTitle, 
-			message: msgString
-		});
+	function showBootstrapAlert(arg_validationErrDB){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = arg_validationErrDB;
+		isValidationErrDBHidden = false;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: hideBootstrapAlert()
+	 * purpose: hides bootstrap alert
+	 * ****************************** */
+	function hideBootstrapAlert(){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = undefined;
+		isValidationErrDBHidden = true;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
 	}
 }
 /* ******************************

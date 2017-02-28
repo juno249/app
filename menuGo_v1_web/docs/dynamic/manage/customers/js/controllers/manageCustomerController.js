@@ -10,6 +10,7 @@ manageCustomerController.$inject = [
 	'BROADCAST_MESSAGE', 
 	'CUSTOMERS_DB_FIELDS', 
 	'$compile', 
+	'$localStorage', 
 	'$scope', 
 	'$uibModal', 
 	'DTColumnBuilder', 
@@ -28,6 +29,7 @@ function manageCustomerController(
 		BROADCAST_MESSAGE, 
 		CUSTOMERS_DB_FIELDS, 
 		$compile, 
+		$localStorage, 
 		$scope, 
 		$uibModal, 
 		DTColumnBuilder, 
@@ -86,7 +88,9 @@ function manageCustomerController(
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
 	}
-	vm.restApiSource = API_BASE_URL + '/customers';
+	var user = localStorage.getItem('User');
+	user = JSON.parse(user);
+	vm.restApiSource = API_BASE_URL + '/customers/companies/' + user.company;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */

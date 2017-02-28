@@ -9,6 +9,11 @@
 		id="modalBranchContainer" 
 		name="modalBranchContainer" 
 		ng-init="modalBranchController.initBootstrapValidator(); modalBranchController.initDom();" >
+		<div 
+			class="alert alert-danger font-family-2-size-medium" 
+			ng-hide="modalBranchController.isValidationErrDBHidden">
+			{{modalBranchController.validationErrDB}}
+		</div>
 		<form 
 			class="form-group" 
 			id="modalBranch" 

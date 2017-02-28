@@ -37,12 +37,6 @@ function modalMenuitemController(
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */
-	const DIALOG_ADD_HEADER_TITLE = 'ADD-MENUITEM';
-	const DIALOG_UPDATE_HEADER_TITLE = 'UPDATE-MENUITEM';
-	const DIALOG_DELETE_HEADER_TITLE = 'DELETE_MENUITEM';
-	const MENUITEM_ADD_SUCCESS_MESSAGE = 'MENUITEM ADDED SUCCESSFULLY';
-	const MENUITEM_UPDATE_SUCCESS_MESSAGE = 'MENUITEM UPDATED SUCCESSFULLY';
-	const MENUITEM_DELETE_SUCCESS_MESSAGE = 'MENUITEM DELETED SUCCESSFULLY';
 	const MENUITEM_ADD_CATCH_MESSAGE = 'UNABLE TO ADD MENUITEM, DB EXCEPTION ENCOUNTERED';
 	const MENUITEM_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DB EXCEPTION ENCOUNTERED';
 	const MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DATA IS EMPTY/UNCHANGED';
@@ -79,6 +73,8 @@ function modalMenuitemController(
 			menuitem_image: 4
 	}
 	vm.validationErr = {};
+	vm.validationErrDB = undefined;
+	vm.isValidationErrDBHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -219,6 +215,10 @@ function modalMenuitemController(
 		var modalMenuitemContainerId = '#modalMenuitemContainer';
 		var modalMenuitemContainer = $(modalMenuitemContainerId);
 		var data = [];
+		var validationErr = vm.validationErr;
+		var validationErrDB = vm.validationErrDB;
+		
+		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn());
 		
@@ -240,33 +240,17 @@ function modalMenuitemController(
 			 * ****************************** */
 			function addMenuitemSuccessCallback(response){
 				hideBootstrapLoader(modalMenuitemContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_ADD_HEADER_TITLE, 
-						MENUITEM_ADD_SUCCESS_MESSAGE
-				);
 			}
 			
 			function addMenuitemFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalMenuitemContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_ADD_HEADER_TITLE, 
-							MENUITEM_ADD_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(MENUITEM_ADD_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -283,13 +267,8 @@ function modalMenuitemController(
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data).length){
-				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_DANGER, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE
-				);
+				hideBootstrapLoader(modalMenuitemContainer);
+				showBootstrapLoader(MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE);
 				return;
 			}
 			
@@ -305,33 +284,17 @@ function modalMenuitemController(
 			 * ****************************** */
 			function updateMenuitemSuccessCallback(response){
 				hideBootstrapLoader(modalMenuitemContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_UPDATE_HEADER_TITLE, 
-						MENUITEM_UPDATE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function updateMenuitemFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalMenuitemContainer);
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_UPDATE_HEADER_TITLE, 
-							MENUITEM_UPDATE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(MENUITEM_UPDATE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
@@ -394,41 +357,29 @@ function modalMenuitemController(
 			 * ****************************** */
 			function deleteMenuitemSuccessCallback(response){
 				hideBootstrapLoader(modalMenuitemContainer);
-				
 				$uibModalInstance.close();
-				
-				showBootstrapDialog(
-						BootstrapDialog.TYPE_PRIMARY, 
-						DIALOG_DELETE_HEADER_TITLE, 
-						MENUITEM_DELETE_SUCCESS_MESSAGE
-				);
 			}
 			
 			function deleteMenuitemFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalMenuitemContainer);
-				
-				$uibModalInstance.close();
-				
 				try{
 					JSON.parse(statusText);
-					
 					genValidationErrorFromResponse(responseError);
-				} catch(e){
-					$uibModalInstance.close();
-					
-					showBootstrapDialog(
-							BootstrapDialog.TYPE_DANGER, 
-							DIALOG_DELETE_HEADER_TITLE, 
-							MENUITEM_DELETE_CATCH_MESSAGE
-					);
+				} catch(e){	showBootstrapAlert(MENUITEM_DELETE_CATCH_MESSAGE);
 				}
 			}
 			/* ******************************
 			 * Callback Implementations (End)
 			 * ****************************** */
 		}
+		
+		validationErr = {};
+		validationErrDB = undefined;
+		
+		vm.validationErr = validationErr;
+		vm.validationErrDB = validationErrDB;
 	}
 	
 	/* ******************************
@@ -514,33 +465,34 @@ function modalMenuitemController(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: showBootstrapLoader()
-	 * purpose: shows bootstrap loader
+	 * method name: showBootstrapAlert()
+	 * purpose: shows bootstrap alert
 	 * ****************************** */
-	function showBootstrapLoader(target){
-		$(target).LoadingOverlay('show');
+	function showBootstrapAlert(arg_validationErrDB){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = arg_validationErrDB;
+		isValidationErrDBHidden = false;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
 	}
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: hideBootstrapLoader()
-	 * purpose: hides bootstrap loader
+	 * method name: hideBootstrapAlert()
+	 * purpose: hides bootstrap alert
 	 * ****************************** */
-	function hideBootstrapLoader(target){
-		$(target).LoadingOverlay('hide');
-	}
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapDialog()
-	 * purpose: shows bootstrap dialog box
-	 * ****************************** */
-	function showBootstrapDialog(dialogType, msgTitle, msgString){
-		BootstrapDialog.alert({
-			type: dialogType, 
-			title: msgTitle, 
-			message: msgString
-		});
+	function hideBootstrapAlert(){
+		var validationErrDB = vm.validationErrDB;
+		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
+		
+		validationErrDB = undefined;
+		isValidationErrDBHidden = true;
+		
+		vm.validationErrDB = validationErrDB;
+		vm.isValidationErrDBHidden = isValidationErrDBHidden;
 	}
 }
 /* ******************************
