@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_name_mname VARCHAR(30) NOT NULL, 
  	customer_name_lname VARCHAR(30) NOT NULL, 
  	customer_role varchar(30) NOT NULL, 
- 	customer_gender VARCHAR(1), 
+ 	customer_gender VARCHAR(10), 
  	customer_address_house_building VARCHAR(30), 
  	customer_address_street VARCHAR(30), 
  	customer_address_district VARCHAR(30), 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
  );
  
- USE ziplogic;
+USE ziplogic;
 
 # ==========
 # RECORD 1
@@ -146,7 +146,7 @@ SET @customer_name_fname = "John Victor";
 SET @customer_name_mname = "M";
 SET @customer_name_lname = "Lim";
 SET @customer_role = "administrator";
-SET @customer_gender = "M";
+SET @customer_gender = "male";
 SET @customer_address_house_building = "Unit 202, 2F, GKK Building";
 SET @customer_address_street = "Sto. Sepulcro St.";
 SET @customer_address_district = "Paco";
@@ -208,7 +208,7 @@ SET @customer_password = "johnvlim";
 SET @customer_name_fname = "John Victor";
 SET @customer_name_mname = "M";
 SET @customer_name_lname = "Lim";
-SET @customer_role = "user";
+SET @customer_role = "customer";
 SET @customer_gender = null;
 SET @customer_address_house_building = null;
 SET @customer_address_street = null;
