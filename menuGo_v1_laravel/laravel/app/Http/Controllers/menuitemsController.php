@@ -101,7 +101,7 @@ class menuitemsController extends Controller
 		try{
 			$companyMenuMenuitems = $this->getJoinCompanyMenuMenuitems($mySqlWhere);
 			if($companyMenuMenuitems->isEmpty()){
-				$menuitemsResponse->setStatusCode(400, menuitemsConstants::emptyResultSetErr);
+				$menuitemsResponse->setStatusCode(200, menuitemsConstants::emptyResultSetErr);
 			} else {
 				$menuitemsResponse->setContent(json_encode($companyMenuMenuitems));
 			}
@@ -125,7 +125,7 @@ class menuitemsController extends Controller
 		try{
 			$companyMenuMenuitem = $this->getJoinCompanyMenuMenuitems($mySqlWhere);
 			if($companyMenuMenuitem->isEmpty()){
-				$menuitemsResponse->setStatusCode(400, menuitemsConstants::emptyResultSetErr);
+				$menuitemsResponse->setStatusCode(200, menuitemsConstants::emptyResultSetErr);
 			} else {
 				$menuitemsResponse->setContent(json_encode($companyMenuMenuitem));
 			}
@@ -168,7 +168,7 @@ class menuitemsController extends Controller
 		try{
 			$menuitems = DB::table(menuitemsConstants::menuitemsTable)->where($mySqlWhere)->get();
 			if($menuitems->isEmpty()){
-				$menuitemsResponse->setStatusCode(400, menuitemsConstants::emptyResultSetErr);
+				$menuitemsResponse->setStatusCode(200, menuitemsConstants::emptyResultSetErr);
 			} else {
 				$menuitemsResponse->setContent(json_encode($menuitems));
 			}

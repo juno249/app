@@ -99,7 +99,7 @@ class branchesController extends Controller
 		try{
 			$companyBranches = $this->getJoinCompanyBranch($mySqlWhere);
 			if($companyBranches->isEmpty()){
-				$branchesResponse->setStatusCode(400, branchesConstants::emptyResultSetErr);
+				$branchesResponse->setStatusCode(200, branchesConstants::emptyResultSetErr);
 			} else {
 				$branchesResponse->setContent(json_encode($companyBranches));
 			}
@@ -122,7 +122,7 @@ class branchesController extends Controller
 		try{
 			$companyBranch = $this->getJoinCompanyBranch($mySqlWhere);
 			if($companyBranch->isEmpty()){
-				$branchesResponse->setStatusCode(400, branchesConstants::emptyResultSetErr);
+				$branchesResponse->setStatusCode(200, branchesConstants::emptyResultSetErr);
 			} else {
 				$branchesResponse->setContent(json_encode($companyBranch));
 			}
@@ -174,7 +174,7 @@ class branchesController extends Controller
 		try{
 			$companyBranches  = DB::table(branchesConstants::branchesTable)->where($mySqlWhere)->get();
 			if($companyBranches->isEmpty()){
-				$branchesResponse->setStatusCode(400, branchesConstants::emptyResultSetErr);
+				$branchesResponse->setStatusCode(200, branchesConstants::emptyResultSetErr);
 			} else {
 				$branchesResponse->setContent(json_encode($companyBranches));
 			}

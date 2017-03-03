@@ -97,7 +97,7 @@ class tablesController extends Controller
 		try{
 			$companyBranchTables = $this->getJoinCompanyBranchTable($mySqlWhere);
 			if($companyBranchTables->isEmpty()){
-				$tablesResponse->setStatusCode(400, tablesConstants::emptyResultSetErr);
+				$tablesResponse->setStatusCode(200, tablesConstants::emptyResultSetErr);
 			} else {
 				$tablesResponse->setContent(json_encode($companyBranchTables));
 			}
@@ -121,7 +121,7 @@ class tablesController extends Controller
 		try{
 			$companyBranchTable = $this->getJoinCompanyBranchTable($mySqlWhere);
 			if($companyBranchTable->isEmpty()){
-				$tablesResponse->setStatusCode(400, tablesConstants::emptyResultSetErr);
+				$tablesResponse->setStatusCode(200, tablesConstants::emptyResultSetErr);
 			} else {
 				$tablesResponse->setContent(json_encode($companyBranchTable));
 			}
@@ -158,7 +158,7 @@ class tablesController extends Controller
 		try{
 			$tables = DB::table(tablesConstants::tablesTable)->where($mySqlWhere)->get();
 			if($tables->isEmpty()){
-				$tablesResponse->setStatusCode(400, tablesConstants::emptyResultSetErr);
+				$tablesResponse->setStatusCode(200, tablesConstants::emptyResultSetErr);
 			} else {
 				$tablesResponse->setContent(json_encode($tables));
 			}

@@ -84,7 +84,7 @@ class menusController extends Controller
 		try{
 			$companyMenus = $this->getJoinCompanyMenu($mySqlWhere); 
 			if($companyMenus->isEmpty()){
-				$menusResponse->setStatusCode(400, menusConstants::emptyResultSetErr);
+				$menusResponse->setStatusCode(200, menusConstants::emptyResultSetErr);
 			} else {
 				$menusResponse->setContent(json_encode($companyMenus));
 			}
@@ -107,7 +107,7 @@ class menusController extends Controller
 		try{
 			$companyMenu = $this->getJoinCompanyMenu($mySqlWhere);
 			if($companyMenu->isEmpty()){
-				$menusResponse->setStatusCode(400, menusConstants::emptyResultSetErr);
+				$menusResponse->setStatusCode(200, menusConstants::emptyResultSetErr);
 			} else {
 				$menusResponse->setContent(json_encode($companyMenu));
 			}
@@ -144,7 +144,7 @@ class menusController extends Controller
 		try{
 			$companyMenus = DB::table(menusConstants::menusTable)->where($mySqlWhere)->get();
 			if($companyMenus->isEmpty()){
-				$menusResponse->setStatusCode(400, menusConstants::emptyResultSetErr);
+				$menusResponse->setStatusCode(200, menusConstants::emptyResultSetErr);
 			} else {
 				$menusResponse->setContent(json_encode($companyMenus));
 			}

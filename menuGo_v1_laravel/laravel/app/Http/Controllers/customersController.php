@@ -105,10 +105,10 @@ class customersController extends Controller
 	}
 	
 	/**
-	 * GET method getAllCustomersAdmin
+	 * GET method getAllCustomersAdministrator
 	 * URL-->/customers/companies/{CompanyName}
 	 **/
-	public function getAllCustomersAdmin($CompanyName){
+	public function getAllCustomersAdministrator($CompanyName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName,  '=', $CompanyName]);
 		
@@ -116,7 +116,7 @@ class customersController extends Controller
 		try{
 			$customers = $this->getJoinCustomerCustomerCompanyBranch($mySqlWhere);
 			if($customers->isEmpty()){
-				$customersResponse->setStatusCode(400, customersConstants::emptyResultSetErr);
+				$customersResponse->setStatusCode(200, customersConstants::emptyResultSetErr);
 			} else {
 				$customersResponse->setContent(json_encode($customers));
 			}
@@ -136,7 +136,7 @@ class customersController extends Controller
 		try{
 			$customers = DB::table(customersConstants::customersTable)->get();
 			if($customers->isEmpty()){
-				$customersResponse->setStatusCode(400, customersConstants::emptyResultSetErr);
+				$customersResponse->setStatusCode(200, customersConstants::emptyResultSetErr);
 			} else {
 				$customersResponse->setContent(json_encode($customers));
 			}
@@ -158,7 +158,7 @@ class customersController extends Controller
 		try{
 			$customer = DB::table(customersConstants::customersTable)->where($mySqlWhere)->get();
 			if($customer->isEmpty()){
-				$customersResponse->setStatusCode(400, customersConstants::emptyResultSetErr);
+				$customersResponse->setStatusCode(200, customersConstants::emptyResultSetErr);
 			} else {
 				$customersResponse->setContent(json_encode($customer));
 			}
@@ -234,7 +234,7 @@ class customersController extends Controller
 		try{
 			$customers = DB::table(customersConstants::customersTable)->where($mySqlWhere)->get();
 			if($customers->isEmpty()){
-				$customersResponse->setStatusCode(400, customersConstants::emptyResultSetErr);
+				$customersResponse->setStatusCode(200, customersConstants::emptyResultSetErr);
 			} else {
 				$customersResponse->setContent(json_encode($customers));
 			}

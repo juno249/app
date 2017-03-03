@@ -85,7 +85,7 @@ class companiesController extends Controller
 		try{
 			$companies = $this->getJoinCompanyCustomerCompanyBranch($mySqlWhere);
 			if($companies->isEmpty()){
-				$companiesResponse->setStatusCode(400, companiesConstants::emptyResultSetErr);
+				$companiesResponse->setStatusCode(200, companiesConstants::emptyResultSetErr);
 			} else {
 				$companiesResponse->setContent(json_encode($companies));
 			}
@@ -104,7 +104,7 @@ class companiesController extends Controller
 		try{
 			$companies = DB::table(companiesConstants::companiesTable)->get();
 			if($companies->isEmpty()){
-				$companiesResponse->setStatusCode(400, companiesConstants::emptyResultSetErr);
+				$companiesResponse->setStatusCode(200, companiesConstants::emptyResultSetErr);
 			} else {
 				$companiesResponse->setContent(json_encode($companies));
 			}
@@ -126,7 +126,7 @@ class companiesController extends Controller
 		try{
 			$company = DB::table(companiesConstants::companiesTable)->where($mySqlWhere)->get();
 			if($company->isEmpty()){
-				$companiesResponse->setStatusCode(400, companiesConstants::emptyResultSetErr);
+				$companiesResponse->setStatusCode(200, companiesConstants::emptyResultSetErr);
 			} else {
 				$companiesResponse->setContent(json_encode($company));
 			}
@@ -157,7 +157,7 @@ class companiesController extends Controller
 		try{
 			$companies = DB::table(companiesConstants::companiesTable)->where($mySqlWhere)->get();
 			if($companies->isEmpty()){
-				$companiesResponse->setStatusCode(400, companiesConstants::emptyResultSetErr);
+				$companiesResponse->setStatusCode(200, companiesConstants::emptyResultSetErr);
 			} else {
 				$companiesResponse->setContent(json_encode($companies));
 			}

@@ -153,7 +153,7 @@ class ordersController extends Controller
 		try{
 			$companyBranchOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){
-				$ordersResponse->setStatusCode(400, ordersConstants::emptyResultSetErr);
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
 				$ordersResponse->setContent(json_encode($companyBranchOrders));
 			}
@@ -177,7 +177,7 @@ class ordersController extends Controller
 		try{
 			$companyBranchOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){
-				$ordersResponse->setStatusCode(400, ordersConstants::emptyResultSetErr);
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
 				$ordersResponse->setContent(json_encode($companyBranchOrders));
 			}
@@ -201,7 +201,7 @@ class ordersController extends Controller
 		try{
 			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){
-				$ordersResponse->setStatusCode(400, ordersConstants::emptyResultSetErr);
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
 				$ordersResponse->setContent(json_encode($companyBranchTableOrders));
 			} 
@@ -223,7 +223,7 @@ class ordersController extends Controller
 		try{
 			$customerOrders = $this->getJoinCustomerOrders($mySqlWhere);
 			if($customerOrders->isEmpty()){
-				$ordersResponse->setStatusCode(400, ordersConstants::emptyResultSetErr);
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
 				$ordersResponse->setContent(json_encode($customerOrders));
 			}
@@ -246,7 +246,7 @@ class ordersController extends Controller
 		try{
 			$customerOrdersWIP = $this->getJoinCustomerOrders($mySqlWhere);
 			if($customerOrdersWIP->isEmpty()){
-				$ordersResponse->setStatusCode(400, ordersConstants::emptyResultSetErr);
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
 				$ordersResponse->setContent(json_encode($customerOrdersWIP));
 			}
@@ -286,7 +286,7 @@ class ordersController extends Controller
 		try{
 			$orders = DB::table(ordersConstants::ordersTable)->where($mySqlWhere)->get();
 			if($orders->isEmpty()){
-				$ordersResponse->setStatusCode(400, ordersConstants::emptyResultSetErr);
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
 				$ordersResponse->setContent(json_encode($orders));
 			}
@@ -334,7 +334,7 @@ class ordersController extends Controller
 	 * URL-->/customers/{CustomerUsername}/orders
 	 **/
 	public function addOrder(Request $jsonRequest, $CustomerUsername){
-		$jsonData = json_decode($jsonRequest->getContent()), true);
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere_1 = array();
 		$mySqlWhere_2 = array();
@@ -377,7 +377,7 @@ class ordersController extends Controller
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
 	 **/
 	public function updateOrder(Request $jsonRequest, $CompanyName, $BranchName, $TableNumber, $OrderId){
-		$jsonData = json_decode($jsonRequest->getContent()), true);
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
