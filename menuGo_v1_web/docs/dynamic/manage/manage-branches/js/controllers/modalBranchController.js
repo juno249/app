@@ -172,7 +172,7 @@ function modalBranchController(
 			
 			if(fromSignup){
 				branchService.setCompanyName(companyName);
-				branchService.addBranchValidate()
+				branchService.addBranchValidate(data)
 				.then(addBranchValidateSuccessCallback)
 				.catch(addBranchValidateFailedCallback);
 				
