@@ -155,7 +155,7 @@ function manageCompanyController(
 			
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/companies/modalCompany.html', 
+			templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
 			controller: 'modalCompanyController as modalCompanyController', 
 			resolve: {
 				company: function(){	return doDbColumn2Dom(formMode); }, 
@@ -183,7 +183,7 @@ function manageCompanyController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/companies/modalCompany.html', 
+			templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
 			controller: 'modalCompanyController as modalCompanyController', 
 			resolve: {
 				company: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -211,7 +211,7 @@ function manageCompanyController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/companies/modalCompany.html', 
+			templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
 			controller: 'modalCompanyController as modalCompanyController', 
 			resolve: {
 				company: function(){	return doDbColumn2Dom(formMode);	}, 

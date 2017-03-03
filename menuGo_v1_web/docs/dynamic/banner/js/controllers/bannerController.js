@@ -120,7 +120,7 @@ function bannerController(
 		//modalCustomer
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/customers/modalCustomer.html', 
+			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
 			controller: 'modalCustomerController as modalCustomerController', 
 			resolve: {
 				customer: function(){	
@@ -165,7 +165,7 @@ function bannerController(
 			//modalCompany
 			modalInstance =  $uibModal.open({
 				animation: true, 
-				templateUrl: 'docs/dynamic/manage/companies/modalCompany.html', 
+				templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
 				controller: 'modalCompanyController as modalCompanyController', 
 				resolve: {
 					company: function(){	return {};	}, 
@@ -186,7 +186,7 @@ function bannerController(
 				//modalBranch
 				modalInstance = $uibModal.open({
 					animation: true, 
-					templateUrl: 'docs/dynamic/manage/branches/modalBranch.html',
+					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
 					controller: 'modalBranchController as modalBranchController', 
 					resolve: {
 						branch: function(){	

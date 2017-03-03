@@ -144,7 +144,7 @@ function manageCustomerController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/customers/modalCustomer.html', 
+			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
 			controller: 'modalCustomerController as modalCustomerController', 
 			resolve: {
 				customer: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -172,7 +172,7 @@ function manageCustomerController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/customers/modalCustomer.html', 
+			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
 			controller: 'modalCustomerController as modalCustomerController', 
 			resolve: {
 				customer: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -200,7 +200,7 @@ function manageCustomerController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/customers/modalCustomer.html', 
+			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
 			controller: 'modalCustomerController as modalCustomerController', 
 			resolve: {
 				customer: function(){	return doDbColumn2Dom(formMode);	}, 

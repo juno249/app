@@ -121,7 +121,7 @@ function manageMenuitemController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/menuitems/modalMenuitem.html', 
+			templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
 			controller: 'modalMenuitemController as modalMenuitemController', 
 			resolve: {
 				menuitem: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -147,7 +147,7 @@ function manageMenuitemController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/menuitems/modalMenuitem.html', 
+			templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
 			controller: 'modalMenuitemController as modalMenuitemController', 
 			resolve: {
 				menuitem: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -173,7 +173,7 @@ function manageMenuitemController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/menuitems/modalMenuitem.html', 
+			templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
 			controller: 'modalMenuitemController as modalMenuitemController', 
 			resolve: {
 				menuitem: function(){	return doDbColumn2Dom(formMode);	}, 

@@ -117,7 +117,7 @@ function manageTableController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/tables/modalTable.html', 
+			templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
 			controller: 'modalTableController as modalTableController', 
 			resolve: {
 				table: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -143,7 +143,7 @@ function manageTableController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/tables/modalTable.html', 
+			templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
 			controller: 'modalTableController as modalTableController', 
 			resolve: {
 				table: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -169,7 +169,7 @@ function manageTableController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/tables/modalTable.html', 
+			templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
 			controller: 'modalTableController as modalTableController', 
 			resolve: {
 				table: function(){	return doDbColumn2Dom(formMode);	}, 

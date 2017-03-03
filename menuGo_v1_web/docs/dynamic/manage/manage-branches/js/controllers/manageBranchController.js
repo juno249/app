@@ -156,7 +156,7 @@ function manageBranchController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/branches/modalBranch.html',
+			templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
 			controller: 'modalBranchController as modalBranchController', 
 			resolve: {
 				branch: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -184,7 +184,7 @@ function manageBranchController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/branches/modalBranch.html',
+			templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
 			controller: 'modalBranchController as modalBranchController', 
 			resolve: {
 				branch: function(){	return doDbColumn2Dom(formMode);	}, 
@@ -212,7 +212,7 @@ function manageBranchController(
 		
 		modalInstance = $uibModal.open({
 			animation: true, 
-			templateUrl: 'docs/dynamic/manage/branches/modalBranch.html',
+			templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
 			controller: 'modalBranchController as modalBranchController', 
 			resolve: {
 				branch: function(){	return doDbColumn2Dom(formMode);	}, 
