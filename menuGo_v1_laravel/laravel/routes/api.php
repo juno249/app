@@ -171,7 +171,7 @@ Route::delete('companies/{CompanyName}/menus/{MenuName}', [
  * */
 
 Route::get('customers/companies/{CompanyName}', [
-		'uses' => 'customersController@getAllCustomersAdmin'	
+		'uses' => 'customersController@getAllCustomersAdministrator'	
 ]);
 
 Route::get('customers', [
