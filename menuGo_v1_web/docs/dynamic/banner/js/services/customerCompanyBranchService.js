@@ -252,6 +252,29 @@ function customerCompanyBranchService(
 	 * ****************************** */
 	function addCustomerCompanyBranchTransaction(transParams){
 		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/customers-companies-branches-transaction', 
+				data: transParams
+		}
+		$http(httpConfig)
+		.then(addCustomerCompanyBranchTransactionSuccessCallback)
+		.catch(addCustomerCompanyBranchTransactionFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function addCustomerCompanyBranchTransactionSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function addCustomerCompanyBranchTransactionFailedCallback(responseError){
+			deferred.reject(response);
+		}
+		/* ******************************
+		 * Callback Implementationsss (End)
+		 * ****************************** */
+		return deferred.promise;
 	}
 	
 	/* ******************************

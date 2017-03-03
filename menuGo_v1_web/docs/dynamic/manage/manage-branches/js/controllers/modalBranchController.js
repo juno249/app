@@ -171,26 +171,8 @@ function modalBranchController(
 			var companyName = branch.companyName;
 			
 			if(fromSignup){
-				branchService.setCompanyName(companyName);
-				branchService.addBranchValidate(data)
-				.then(addBranchValidateSuccessCallback)
-				.catch(addBranchValidateFailedCallback);
-				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
-				function addBranchValidateSuccessCallback(response){
-					hideBootstrapLoader(modalBranchContainer);
-					$uibModalInstance.close(data);
-				}
-				
-				function addBranchValidateFailedCallback(responseError){
-					hideBootstrapLoader(modalBranchContainer);
-					genValidationErrorFromResponse(responseError);
-				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
+				hideBootstrapLoader(modalBranchContainer);
+				$uibModalInstance.close(data);
 			}
 			
 			branchService.setCompanyName(companyName);

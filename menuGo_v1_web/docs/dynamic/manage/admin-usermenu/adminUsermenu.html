@@ -1,15 +1,15 @@
 <div 
 	class="row" 
-	ng-controller="usermenuController as usermenuController" 
-	ng-init="usermenuController.initDom();">
+	ng-controller="adminUsermenuController as adminUsermenuController" 
+	ng-init="adminUsermenuController.initDom();">
 	<div 
 		class="panel panel-success">
 		<div 
 			class="child-content-center font-family-1-size-medium panel-heading">
 			<img 
 				class="avatar  img-responsive" 
-				src="docs/dynamic/manage/usermenu/res/img/userAvatar.png">
-			{{usermenuController.customerUsername}}
+				src="docs/dynamic/manage/admin-usermenu/res/img/userAvatar.png">
+			{{adminUsermenuController.customerUsername}}
 		</div>
 		<div 
 			class="font-family-2-size-small panel-body">
@@ -39,9 +39,9 @@
 								Manage Branch (start)
 								*************** -->
 						<li 
-							ng-hide="usermenuController.isManageBranchHidden">
+							ng-hide="adminUsermenuController.isManageBranchHidden">
 							<a 
-								ui-sref="manage.company.branch({companyName: usermenuController.companyName})">
+								ui-sref="manage.company.branch({companyName: adminUsermenuController.companyName})">
 								<div 
 									class="lv2-node">
 									<span 
@@ -56,9 +56,9 @@
 										Manage Table (start)
 										*************** -->
 								<li 
-									ng-hide="usermenuController.isManageTableHidden">
+									ng-hide="adminUsermenuController.isManageTableHidden">
 									<a  
-										ui-sref="manage.company.branch.table({companyName: usermenuController.companyName, branchName: usermenuController.branchName})">
+										ui-sref="manage.company.branch.table({companyName: adminUsermenuController.companyName, branchName: adminUsermenuController.branchName})">
 										<div 
 											class="lv3-node">
 											<span 
@@ -81,9 +81,9 @@
 								Manage Menu (start)
 								*************** -->
 						<li 
-							ng-hide="usermenuController.isManageMenuHidden">
+							ng-hide="adminUsermenuController.isManageMenuHidden">
 							<a 
-								ui-sref="manage.company.menu({companyName: usermenuController.companyName})">
+								ui-sref="manage.company.menu({companyName: adminUsermenuController.companyName})">
 								<div 
 									class="lv2-node">
 									<span 
@@ -98,9 +98,9 @@
 										Manage Menuitem (start)
 										*************** -->
 								<li 
-									ng-hide="usermenuController.isManageMenuitemHidden">
+									ng-hide="adminUsermenuController.isManageMenuitemHidden">
 									<a 
-										ui-sref="manage.company.menu.menuitem({companyName: usermenuController.companyName, menuName: usermenuController.menuName})">
+										ui-sref="manage.company.menu.menuitem({companyName: adminUsermenuController.companyName, menuName: adminUsermenuController.menuName})">
 										<div 
 											class="lv3-node">
 											<span 

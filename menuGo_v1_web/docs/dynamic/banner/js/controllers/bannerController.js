@@ -237,7 +237,7 @@ function bannerController(
 							customerCompanyBranch: customerCompanyBranch
 					};
 					
-					customerCompanyBranchService.addCustomerCompanyBranchTransaction(transParams)
+					customerCompanyBranchService.addCustomerCompanyBranchTransaction([transParams])
 					.then(addCustomerCompanyBranchTransactionSuccessCallback)
 					.catch(addCustomerCompanyBranchTransactionFailedCallback);
 					
