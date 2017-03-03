@@ -47,7 +47,7 @@ function doRouteConfig(
 		url: '/company', 
 		views: {
 			'manage-datatable': {
-				templateUrl: 'docs/dynamic/manage/companies/manageCompany.html', 
+				templateUrl: 'docs/dynamic/manage/manage-companies/manageCompany.html', 
 				controller: 'manageCompanyController', 
 				controllerAs: 'manageCompanyController'
 			}
@@ -57,7 +57,7 @@ function doRouteConfig(
 		url: '/customer', 
 		views: {
 			'manage-datatable': {
-				templateUrl: 'docs/dynamic/manage/customers/manageCustomer.html', 
+				templateUrl: 'docs/dynamic/manage/manage-customers/manageCustomer.html', 
 				controller: 'manageCustomerController', 
 				controllerAs: 'manageCustomerController'
 			}
@@ -67,7 +67,7 @@ function doRouteConfig(
 		url: '/:companyName/branch', 
 		views: {
 			'manage-datatable@manage': {
-				templateUrl: 'docs/dynamic/manage/branches/manageBranch.html', 
+				templateUrl: 'docs/dynamic/manage/manage-branches/manageBranch.html', 
 				controller: 'manageBranchController', 
 				controllerAs: 'manageBranchController'
 			}
@@ -77,7 +77,7 @@ function doRouteConfig(
 		url: '/:companyName/menu', 
 		views: {
 			'manage-datatable@manage': {
-				templateUrl: 'docs/dynamic/manage/menus/manageMenu.html', 
+				templateUrl: 'docs/dynamic/manage/manage-menus/manageMenu.html', 
 				controller: 'manageMenuController', 
 				controllerAs: 'manageMenuController'
 			}
@@ -87,7 +87,7 @@ function doRouteConfig(
 		url: '/:branchName/table', 
 		views: {
 			'manage-datatable@manage': {
-				templateUrl: 'docs/dynamic/manage/tables/manageTable.html', 
+				templateUrl: 'docs/dynamic/manage/manage-tables/manageTable.html', 
 				controller: 'manageTableController', 
 				controllerAs: 'manageTableController'
 			}
@@ -97,7 +97,7 @@ function doRouteConfig(
 		url: '/:menuName/menuitem', 
 		views: {
 			'manage-datatable@manage': {
-				templateUrl: 'docs/dynamic/manage/menuitems/manageMenuitem.html', 
+				templateUrl: 'docs/dynamic/manage/manage-menuitems/manageMenuitem.html', 
 				controller: 'manageMenuitemController', 
 				controllerAs: 'manageMenuitemController'
 			}
