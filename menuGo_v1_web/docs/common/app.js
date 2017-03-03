@@ -1,4 +1,7 @@
 angular
+/* ******************************
+ * Module Dependency Injection (Start)
+ * ****************************** */
 .module('starter', [
 	'datatables', 
 	'datatables.bootstrap', 
@@ -11,9 +14,18 @@ angular
 	'ui.bootstrap', 
 	'ui.router'
 	])
+/* ******************************
+ * Controller Dependency Injection (End)
+ * ****************************** */
 	
-.config(doRouteConfig);
+.config(doRouteConfig)
+.run(doRunConfig);
 
+/* ******************************
+ * Method Implementation
+ * method name: doRouteConfig()
+ * purpose: handles routing configuration
+ * ****************************** */
 function doRouteConfig(
 		$stateProvider, 
 		$urlRouterProvider
@@ -94,4 +106,30 @@ function doRouteConfig(
 	
 	$urlRouterProvider
 	.otherwise("/home");
+}
+
+/* ******************************
+ * Method Implementation
+ * method name: doRunConfig()
+ * purpose: handles run configuration
+ * ****************************** */
+function doRunConfig(
+		$rootScope, 
+		$state, 
+		$timeout
+	){
+	$rootScope.$on('$stateChangeStart', function(
+			evnt, 
+			toState, 
+			toStateParams, 
+			fromState, 
+			fromStateParams
+		){
+		var user = localStorage.getItem('User');
+		if(null == user){
+			$timeout(function(){
+				$state.go('home');
+			});
+		}
+	});
 }

@@ -187,5 +187,6 @@ angular
 	toggleBranch: 'toggleBranch', 
 	toggleMenu: 'toggleMenu', 
 	toggleTable: 'toggleTable', 
-	toggleMenuitem: 'toggleMenuitem'
+	toggleMenuitem: 'toggleMenuitem', 
+	authAuthenticated: 'authAuthenticated'
 });

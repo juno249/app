@@ -48,6 +48,7 @@ function customerCompanyBranchService(
 			fetchCustomersCompaniesBranches: fetchCustomersCompaniesBranches, 
 			fetchCustomerCompanyBranch: fetchCustomerCompanyBranch, 
 			addCustomerCompanyBranch: addCustomerCompanyBranch, 
+			addCustomerCompanyBranchTransaction: addCustomerCompanyBranchTransaction, 
 			updateCustomerCompanyBranch: updateCustomerCompanyBranch, 
 			deleteCustomerCompanyBranch: deleteCustomerCompanyBranch
 	}
@@ -242,6 +243,15 @@ function customerCompanyBranchService(
 		 * Callback Implementations (End)
 		 * ****************************** */
 		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: addCustomerCompanyBranchTransaction()
+	 * purpose: adds customer, company, branch & customerCompanyBranch
+	 * ****************************** */
+	function addCustomerCompanyBranchTransaction(transParams){
+		var deferred = $q.defer();
 	}
 	
 	/* ******************************

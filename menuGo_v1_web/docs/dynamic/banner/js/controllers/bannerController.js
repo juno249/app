@@ -6,9 +6,13 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 bannerController.$inject = [
+	'BROADCAST_MESSAGE', 
 	'USER_ROLES', 
 	'$localStorage', 
+	'$rootScope', 
+	'$scope', 
 	'$state', 
+	'$timeout', 
 	'$uibModal', 
 	'branchService', 
 	'customerService', 
@@ -23,10 +27,14 @@ bannerController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function bannerController( 
+function bannerController(
+		BROADCAST_MESSAGE, 
 		USER_ROLES, 
 		$localStorage, 
+		$rootScope, 
+		$scope, 
 		$state, 
+		$timeout, 
 		$uibModal, 
 		branchService, 
 		customerService, 
@@ -41,7 +49,7 @@ function bannerController(
 	vm.user = undefined;
 	vm.loginUsername = undefined;
 	vm.loginPassword = undefined;
-	vm.isAuthenticated = false;
+	vm.isAuthenticated = undefined;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -62,6 +70,29 @@ function bannerController(
 	 * purpose: do login
 	 * ****************************** */
 	function doLogin(){
+		var loginUsername = vm.loginUsername;
+		var loginPassword = vm.loginPassword;
+		
+		loginService.setLoginUsername(loginUsername);
+		loginService.setLoginPassword(loginPassword);
+		loginService.doLogin()
+		.then(doLoginSuccessCallback)
+		.catch(doLoginFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function doLoginSuccessCallback(response){
+			$rootScope.$broadcast(BROADCAST_MESSAGE.authAuthenticated);
+		}
+		
+		function doLoginFailedCallback(responseError){
+			//do something on failure
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
 	}
 	
 	/* ******************************
@@ -194,89 +225,68 @@ function bannerController(
 				 *  & customer_company_branch
 				 * ****************************** */
 				function doAdminCascadedPosts(){
-					//customer
-					customerService.addCustomer([customer])
-					.then(addCustomerSuccessCallback)
-					.catch(addCustomerFailedCallback);
+					var customerCompanyBranch = {
+							customer_username: customer.customer_username, 
+							company_name: company.company_name, 
+							branch_name: branch.branch_name
+					};
+					var transParams = {
+							customer: customer, 
+							company: company, 
+							branch: branch, 
+							customerCompanyBranch: customerCompanyBranch
+					};
+					
+					customerCompanyBranchService.addCustomerCompanyBranchTransaction(transParams)
+					.then(addCustomerCompanyBranchTransactionSuccessCallback)
+					.catch(addCustomerCompanyBranchTransactionFailedCallback);
 					
 					/* ******************************
 					 * Callback Implementations (Start)
 					 * ****************************** */
-					function addCustomerSuccessCallback(response){
-						//company
-						companyService.addCompany([company])
-						.then(addCompanySuccessCallback)
-						.catch(addCompanyFailedCallback);
-						
-						/* ******************************
-						 * Callback Implementations (Start)
-						 * ****************************** */
-						function addCompanySuccessCallback(response){
-							//branch
-							branchService.setCompanyName(company.company_name);
-							branchService.addBranch([branch])
-							.then(addBranchSuccessCallback)
-							.catch(addBranchFailedCallback);
-							
-							/* ******************************
-							 * Callback Implementations (Start)
-							 * ****************************** */
-							function addBranchSuccessCallback(response){
-								//customer_company_branch
-								customerCompanyBranch = {
-									customer_username: customer.customer_username, 
-									company_name: company.company_name, 
-									branch_name: branch.branch_name
-								};
-								customerCompanyBranchService.addCustomerCompanyBranch([customerCompanyBranch])
-								.then(addCustomerCompanyBranchSuccessCallback)
-								.catch(addCustomerCompanyBranchFailedCallback);
-								
-								/* ******************************
-								 * Callback Implementations (Start)
-								 * ****************************** */
-								function addCustomerCompanyBranchSuccessCallback(response){
-									//do somthing on success
-								}
-								
-								function addCustomerCompanyBranchFailedCallback(responseError){
-									//do something on failure
-								}
-								/* ******************************
-								 * Callback Implementations (End)
-								 * ****************************** */
-							}
-							
-							function addBranchFailedCallback(responseError){
-								//do something on failure
-							}
-							/* ******************************
-							 * Callback Implementations (End)
-							 * ****************************** */
-						}
-						
-						function addCompanyFailedCallback(responseError){
-							//do something on failure
-						}
-						/* ******************************
-						 * Callback Implementations (End)
-						 * ****************************** */
+					function addCustomerCompanyBranchTransactionSuccessCallback(response){
+						//do something on success
 					}
 					
-					function addCustomerFailedCallback(responseError){
+					function addCustomerCompanyBranchTransactionFailedCallback(responseError){
 						//do something on failure
 					}
 					/* ******************************
 					 * Callback Implementations (End)
 					 * ****************************** */
-				}
-				
+				}				
 			}
 			/* ******************************
 			 * Callback Implementations (End)
 			 * ****************************** */
 		}
 	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: authAuthenticatedCallback()
+	 * purpose: authAuthenticated message event handler
+	 * ****************************** */
+	function authAuthenticatedCallback(){
+		$timeout(function(){
+			var user = localStorage.getItem('User');
+			var isAuthenticated = vm.isAuthenticated;
+
+			user = JSON.parse(user);
+			isAuthenticated = user.isAuthenticated;
+			
+			vm.isAuthenticated = isAuthenticated;
+			$state.go('manage');
+		})
+	}
+	
+	/* ******************************
+	 * Broadcast Event Handlers (Start)
+	 * ****************************** */
+	$scope.$on(BROADCAST_MESSAGE.authAuthenticated, authAuthenticatedCallback);
+	/* ******************************
+	 * Broadcast Event Handlers (End)
+	 * ****************************** */
 }
 /* ******************************
  * Controller Implementation (End)
