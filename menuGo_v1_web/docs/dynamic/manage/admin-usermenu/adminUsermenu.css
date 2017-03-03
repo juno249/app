@@ -36,7 +36,7 @@ img.logo{
 ul.nav li a:focus, 
 ul.nav li a:hover, 
 ul.nav li a.active{
-	background-color: #797979;
+	background-color: #dff0d8;
 	
 	border-radius: 25px;
 }
