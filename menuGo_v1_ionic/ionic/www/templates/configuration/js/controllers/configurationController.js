@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.controller('configController', configController);
+.controller('configurationController', configurationController);
 
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-configController.$inject = [
+configurationController.$inject = [
 	'LOADING_MESSAGES', 
 	'MQTT_CONFIG', 
 	'USER_ROLES', 
@@ -30,7 +30,7 @@ configController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function configController(
+function configurationController(
 		LOADING_MESSAGES, 
 		MQTT_CONFIG, 
 		USER_ROLES, 

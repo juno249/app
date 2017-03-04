@@ -33,11 +33,11 @@ function doRouteConfig(
 		controller: 'loginController', 
 		controllerAs: 'loginController'
 	})
-	.state('config', {
-		url: '/config', 
-		templateUrl: 'templates/config.html', 
-		controller: 'configController', 
-		controllerAs: 'configController'
+	.state('configuration', {
+		url: '/configuration', 
+		templateUrl: 'templates/configuration/configuration.html', 
+		controller: 'configurationController', 
+		controllerAs: 'configurationController'
 	})
 	.state('home', {
 		url: '/home', 
@@ -89,11 +89,11 @@ function doRouteConfig(
 		controller: 'waiterController', 
 		controllerAs: 'waiterController'
 	})
-	.state('admin', {
-		url: '/admin', 
-		templateUrl: 'templates/admin.html', 
-		controller: 'adminController', 
-		controllerAs: 'adminController'
+	.state('manager', {
+		url: '/manager', 
+		templateUrl: 'templates/manager/manager.html', 
+		controller: 'managerController', 
+		controllerAs: 'managerController'
 	});
 	
 	$urlRouterProvider

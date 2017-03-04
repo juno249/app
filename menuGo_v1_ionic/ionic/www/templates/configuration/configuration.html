@@ -2,32 +2,32 @@
 	<ion-content 
 		class="app-bg">
 		<div 
-			id="configRootContainer" 
-			name="configRootContainer">
+			id="configurationRootContainer" 
+			name="configurationRootContainer">
 			<div 
 				class="border-rounded child-content-center floating-panel-style-1 font-family-1-size-medium layer-minus-1 transparent-low">
 				Configuration
 			</div>
 			<div 
 				class="border-rounded floating-panel-style-1 font-family-2-size-medium layer-minus-1 transparent-low" 
-				id="configMainContainer" 
-				name="configMainContainer">
+				id="configurationMainContainer" 
+				name="configurationMainContainer">
 				<div 
 					class="item" 
-					id="configCompanyItem" 
-					name="configCompanyItem">
+					id="configurationCompanyItem" 
+					name="configurationCompanyItem">
 					<i 
 						class="icon ion-android-restaurant">
 					</i> 
 					Companies<br>
 					<select 
 						class="fill-parent-x" 
-						id="configCompanySelect" 
-						name="configCompanySelect" 
-						ng-change="configController.fetchBranches();" 
-						ng-model="configController.companyName">
+						id="configurationCompanySelect" 
+						name="configurationCompanySelect" 
+						ng-change="configurationurationController.fetchBranches();" 
+						ng-model="configurationurationController.companyName">
 						<option 
-							ng-repeat="(k,v) in configController.companies" 
+							ng-repeat="(k,v) in configurationurationController.companies" 
 							value={{k}}>
 							{{v.company_name}}
 						</option>
@@ -35,20 +35,20 @@
 				</div>
 				<div 
 					class="item" 
-					id="configBranchItem" 
-					name="configBranchItem" 
-					ng-hide="configController.isBranchItemHidden">
+					id="configurationBranchItem" 
+					name="configurationBranchItem" 
+					ng-hide="configurationurationController.isBranchItemHidden">
 					<i 
 						class="icon ion-map">
 					</i>Branches<br>
 					<select 
 						class="fill-parent-x" 
-						id="configBranchSelect" 
-						name="configBranchSelect" 
-						ng-change="configController.fetchTables();" 
-						ng-model="configController.branchName">
+						id="configurationBranchSelect" 
+						name="configurationBranchSelect" 
+						ng-change="configurationurationController.fetchTables();" 
+						ng-model="configurationurationController.branchName">
 						<option 
-							ng-repeat="(k,v) in configController.branches" 
+							ng-repeat="(k,v) in configurationurationController.branches" 
 							value={{k}} >
 							{{v.branch_name}}
 						</option>
@@ -56,21 +56,21 @@
 				</div>
 				<div 
 					class="item" 
-					id="configTableItem" 
-					name="configTableItem" 
-					ng-hide="configController.isTableItemHidden">
+					id="configurationTableItem" 
+					name="configurationTableItem" 
+					ng-hide="configurationurationController.isTableItemHidden">
 					<i 
 						class="icon ion-android-restaurant">
 					</i> 
 					Tables<br>
 					<select 
 						class="fill-parent-x" 
-						id="configTableSelect" 
-						name="configTableSelect" 
-						ng-change="configController.fetchMenus();" 
-						ng-model="configController.tableNumber">
+						id="configurationTableSelect" 
+						name="configurationTableSelect" 
+						ng-change="configurationurationController.fetchMenus();" 
+						ng-model="configurationurationController.tableNumber">
 						<option 
-							ng-repeat="(k,v) in configController.tables" 
+							ng-repeat="(k,v) in configurationurationController.tables" 
 							value={{k}}>{{v.table_number}}
 						</option>
 					</select>
@@ -78,12 +78,12 @@
 			</div>
 			<div 
 				class="border-rounded child-content-center floating-panel-style-1 layer-minus-1 transparent-low" 
-				id="configPanelContainer" 
-				name="configPanelContainer">
+				id="configurationPanelContainer" 
+				name="configurationPanelContainer">
 				<img 
 					id="tap4QRCode" 
 					name="tap4QRCode" 
-					src="../img/config/tap4QRCode.png">
+					src="../img/configuration/tap4QRCode.png">
 			</div>	
 		</div>
 	</ion-content>

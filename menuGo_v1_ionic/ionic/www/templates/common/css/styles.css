@@ -170,25 +170,12 @@ img.orderStatusImage{
 	padding: 20px 0 20px 0;
 }
 
-#configRootContainer{
-	padding: 20% 25px 0px 25px;
-}
-
-#configMainContainer{
-	margin: 15px 0px 15px 0px;
-	padding: 25px 0px 25px 0px;
-}
-
 #sideRootContainer{
 	top: 225px;
 }
 
 #adminContainer{
 	margin: 25px 25px 25px 25px;
-}
-
-#managerContainer, .cookContainer{
-	padding: 25px 0px 25px 0px;
 }
 
 .orderContainerLeft, .orderContainerRight{
@@ -229,10 +216,7 @@ div.menuitemsContainer{
 }
 
 /* Override Ionic Style*/
-#loginUsernameTxt, #loginPasswordTxt, 
-#configCompanyItem, #configCompanySelect, 
-#configBranchItem, #configBranchSelect, 
-#configTableItem, #configTableSelect{
+#loginUsernameTxt, #loginPasswordTxt{
 	font-size: 15px;
 	font-family: 'Lora', serif;
 }
