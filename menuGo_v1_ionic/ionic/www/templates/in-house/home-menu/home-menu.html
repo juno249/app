@@ -1,19 +1,19 @@
 <ion-view 
-	view-title="{{menusController.company.company_name}} Menus">
+	view-title="{{homeMenuController.company.company_name}} Menus">
 	<ion-content 
 		class="app-bg has-subheader">
 		<div 
 			class="list">
 			<div 
 				class="font-family-1-size-medium item item-thumbnail-left  menuContainer" 
-				ng-repeat="(k,v) in menusController.menus">
+				ng-repeat="(k,v) in homeMenuController.menus">
 				<img 
 					class="border-rounded" 
 					src={{v.menu_image}}>
 					{{k}}<br>
 				<button 
 					class="button button-assertive button-small icon ion-eye" 
-					ng-click="menusController.toggleViewMenuitems(v);">
+					ng-click="homeMenuController.toggleViewMenuitems(v);">
 				</button>
 				<div 
 					class="border-rounded floating-panel-style-1 font-family-3-size-medium layer-minus-1 menuitemsContainer transparent-low" 
@@ -40,7 +40,7 @@
 							</span><br>
 							<button 
 								class="button button-assertive button-small font-family-3-size-medium" 
-								ng-click="menusController.addToCustomerOrders(v,j);">
+								ng-click="homeMenuController.addToCustomerOrders(v,j);">
 								<i 
 									class="icon ion-plus-round">
 								</i> Add to Cart

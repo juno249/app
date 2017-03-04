@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.controller('menusController', menusController);
+.controller('homeMenuController', homeMenuController);
 
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-menusController.$inject = [
+homeMenuController.$inject = [
 	'$ionicPopup', 
 	'$localStorage', 
 	'$scope', 
@@ -18,7 +18,7 @@ menusController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function menusController(
+function homeMenuController(
 		$ionicPopup, 
 		$localStorage, 
 		$scope, 

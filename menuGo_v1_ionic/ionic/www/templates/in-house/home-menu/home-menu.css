@@ -1,0 +1,11 @@
+div.menuContainer{
+	background-color: inherit;
+	color: wheat;
+}
+
+div.menuitemsContainer{
+	background-color: #ef473a;
+	
+	margin-top: 10px;
+	padding: 25px 0 25px 0;
+}
