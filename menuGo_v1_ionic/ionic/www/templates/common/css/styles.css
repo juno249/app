@@ -162,13 +162,6 @@ img.orderStatusImage{
 }
 
 /* View-Containers - Component-Specific */
-#loginRootContainer{
-	padding: 35% 25px 0px 25px;
-}
-
-#loginMainContainer{
-	padding: 20px 0 20px 0;
-}
 
 #sideRootContainer{
 	top: 225px;
@@ -200,21 +193,10 @@ div.menuitemsContainer{
 	background-color: #ef473a;
 }
 
-/* View-Components - Component-Specific*/
-#loginLoginBtn, #loginSignupBtn{
-	width: 35%;
-}
-
 #ordersCheckoutBtn{
 	font-size: 15px;
 	font-family: 'Poiret One', cursive;
 	width: 80%;
-}
-
-/* Override Ionic Style*/
-#loginUsernameTxt, #loginPasswordTxt{
-	font-size: 15px;
-	font-family: 'Lora', serif;
 }
 
 #appTitle{
