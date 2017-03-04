@@ -2,11 +2,11 @@
 	view-title="Orders">
 	<ion-content 
 		class="app-bg has-subheader" 
-		on-swipe-down="ordersController.broadcastEventMessage('reloadOrders');">
+		on-swipe-down="homeOrderController.broadcastEventMessage('reloadOrders');">
 		<div class="list">
 			<div 
 				class="child-content-center font-family-1-size-medium item item-thumbnail-left orderContainerLeft transparent-low" 
-				ng-repeat="(k,v) in ordersController.orders">
+				ng-repeat="(k,v) in homeOrderController.orders">
 				<img 
 					class="border-rounded" 
 					src={{v.menuitem.menuitem_image}}>

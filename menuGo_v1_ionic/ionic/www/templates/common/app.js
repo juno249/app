@@ -67,25 +67,25 @@ function doRouteConfig(
 			}
 		}
 	})
-	.state('home.orders.main', {
-		url: '/orders-main', 
+	.state('home.orders.view', {
+		url: '/order-view', 
 		views: {
-			'orders-main': {
-				templateUrl: 'templates/home-orders-main.html', 
+			'order-view': {
+				templateUrl: 'templates/in-house/home-order/home-order-view/home-order-view.html'
 			}
 		}
 	})
 	.state('home.orders.monitoring', {
-		url: '/orders-monitoring', 
+		url: '/order-monitor', 
 		views: {
-			'orders-monitoring': {
-				templateUrl: 'templates/home-orders-monitoring.html'
+			'order-monitor': {
+				templateUrl: 'templates/in-house/home-order/home-order-monitor/home-order-monitor.html'
 			}
 		}
 	})
 	.state('waiter', {
 		url: '/waiter', 
-		templateUrl: 'templates/waiter.html', 
+		templateUrl: 'templates/waiter/waiter.html', 
 		controller: 'waiterController', 
 		controllerAs: 'waiterController'
 	})
