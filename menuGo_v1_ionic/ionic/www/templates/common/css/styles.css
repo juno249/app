@@ -174,10 +174,6 @@ img.orderStatusImage{
 	top: 225px;
 }
 
-#adminContainer{
-	margin: 25px 25px 25px 25px;
-}
-
 .orderContainerLeft, .orderContainerRight{
 	margin: 5px 0 5px 0px;
 	border-radius: 20px;
