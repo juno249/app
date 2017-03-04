@@ -193,8 +193,9 @@ function modalCompanyController(
 		function uploadCompanyLogoSuccessCallback(response){
 			var companyLogoImage = vm.companyLogoImage;
 			var isCompanyLogoImageHidden = vm.isCompanyLogoImageHidden;
+			var appQueryStr = '?timestamp=' + new Date().getTime();
 			
-			company.companyLogo = response.config.url;
+			company.companyLogo = response.config.url + appQueryStr;
 			companyLogoImage = company.companyLogo;
 			isCompanyLogoImageHidden = false;
 			
