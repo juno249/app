@@ -234,21 +234,44 @@ class ordersController extends Controller
 	}
 	
 	/**
-	 * GET method getCustomerOrdersWIP
-	 * URL-->/customers/{CustomerUsername}/orders/WIP
+	 * GET method getCustomerOrdersOrderStatus
+	 * URL-->/customers/{CustomerUsername}/orders/{OrderStatus}
 	 **/
-	public function getCustomerOrdersWIP($CustomerUsername){
+	public function getCustomerOrdersOrderStatus($CustomerUsername, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
-		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', 'statusHistory']);
-		
+		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '=', $OrderStatus]);
+	
 		$ordersResponse = new Response();
 		try{
-			$customerOrdersWIP = $this->getJoinCustomerOrders($mySqlWhere);
-			if($customerOrdersWIP->isEmpty()){
+			$customerOrders = $this->getJoinCustomerOrders($mySqlWhere);
+			if($customerOrders->isEmpty()){
 				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
 			} else {
-				$ordersResponse->setContent(json_encode($customerOrdersWIP));
+				$ordersResponse->setContent(json_encode($customerOrders));
+			}
+		} catch(\PDOException $e){
+			$ordersResponse->setStatusCode(400, ordersConstants::dbReadCatchMsg);
+		}
+		return $ordersResponse;
+	}
+	
+	/**
+	 * GET method getCustomerOrdersNotOrderStatus
+	 * URL-->/customers/{CustomerUsername}/orders/not/{OrderStatus}
+	 **/
+	public function getCustomerOrdersNotOrderStatus($CustomerUsername, $OrderStatus){
+		$mySqlWhere = array();
+		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
+		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', $OrderStatus]);
+	
+		$ordersResponse = new Response();
+		try{
+			$customerOrders = $this->getJoinCustomerOrders($mySqlWhere);
+			if($customerOrders->isEmpty()){
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
+			} else {
+				$ordersResponse->setContent(json_encode($customerOrders));
 			}
 		} catch(\PDOException $e){
 			$ordersResponse->setStatusCode(400, ordersConstants::dbReadCatchMsg);
@@ -412,10 +435,10 @@ class ordersController extends Controller
 	}
 
 	/**
-	 * POST method deleteOrderCompanyDirective
+	 * POST method deleteOrderCompany
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
 	 **/
-	public function deleteOrderCompanyDirective($CompanyName, $BranchName, $TableNumber, $OrderId){
+	public function deleteOrderCompany($CompanyName, $BranchName, $TableNumber, $OrderId){
 		$mySqlWhere = array();
 		$errorMsg = '';
 	
@@ -444,10 +467,10 @@ class ordersController extends Controller
 	}
 
 	/**
-	 * POST method deleteOrderCustomerDirective
+	 * POST method deleteOrderCustomer
 	 * URL-->/customers/{CustomerUsername}/orders/{OrderId}
 	 **/
-	public function deleteOrderCustomerDirective($CustomerUsername, $OrderId){
+	public function deleteOrderCustomer($CustomerUsername, $OrderId){
 		$mySqlWhere = array();
 		$errorMsg = '';
 	

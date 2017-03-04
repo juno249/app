@@ -432,7 +432,7 @@ function modalMenuitemController(
 			var dbColumnIndex = undefined;
 			var errorMessage = undefined;
 			
-			if(statusTextKey = (arrIndex + '.' + dbColumnName)){
+			if(statusTextKey == (arrIndex + '.' + dbColumnName)){
 				dbColumnIndex = getDbColumnIndex(dbColumnName);
 				errorMessage = statusTextObj[statusTextKey][0];
 				errorMessage = errorMessage.replace(statusTextKey, dbColumn2Dom[dbColumnName]);

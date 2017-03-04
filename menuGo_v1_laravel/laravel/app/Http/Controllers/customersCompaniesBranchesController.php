@@ -191,6 +191,29 @@ class customersCompaniesBranchesController extends Controller
 	}
 	
 	/**
+	 * Do basic Laravel validation (transaction)
+	 * */
+	private function isDataValidTransaction($jsonData, &$errorMsg, $dbOperation){
+		$customersController = new customersController();
+		$companiesController = new companiesController();
+		
+		$customer = $jsonData['customer'];
+		$company = $jsonData['company'];
+		
+		if(!(null == $customer)){
+			if(!($customersController->isDataValid([$customer], $errorMsg, $dbOperation))){
+				return false;
+			}
+		}
+		if(!(null == $company)){
+			if(!($companiesController->isDataValid([$company], $errorMsg, $dbOperation))){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
 	 * POST method addCustomerCompanyBranch
 	 * URL-->/customers-companies-branches/
 	 * */
@@ -230,26 +253,27 @@ class customersCompaniesBranchesController extends Controller
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
 		for($i=0; $i<$jsonDataSize; $i++){
 			$customerCompanyBranchRunner = $jsonData[$i];
-			$customer = $customerCompanyBranchRunner['customer'];
-			$company = $customerCompanyBranchRunner['company'];
-			$branch = $customerCompanyBranchRunner['branch'];
-			$customerCompanyBranch = $customerCompanyBranchRunner['customerCompanyBranch'];
+			
+			if(!($this->isDataValidTransaction($customerCompanyBranchRunner, $errorMsg, "ADD"))){
+				$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
+				return $customersCompaniesBranchesResponse;
+			}
 			
 			DB::beginTransaction();
 			try{
 				$pwHashed = Hash::make($customer['customer_password']);
 				if(!(null == $customer)){
 					$customer['customer_password'] = $pwHashed;
-					DB::table(customersConstants::customersTable)->insert($customer);
+					DB::table(customersConstants::customersTable)->insert($customerCompanyBranchRunner['customer']);
 				}
 				if(!(null == $company)){
-					DB::table(companiesConstants::companiesTable)->insert($company);
+					DB::table(companiesConstants::companiesTable)->insert($customerCompanyBranchRunner['company']);
 				}
 				if(!(null == $branch)){
-					DB::table(branchesConstants::branchesTable)->insert($branch);
+					DB::table(branchesConstants::branchesTable)->insert($customerCompanyBranchRunner['branch']);
 				}
 				if(!(null == $customerCompanyBranch)){
-					DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($customerCompanyBranch);
+					DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($customerCompanyBranchRunner['customerCompanyBranch']);
 				}
 				
 				DB::commit();

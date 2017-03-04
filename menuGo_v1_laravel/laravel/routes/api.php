@@ -84,24 +84,64 @@ Route::get('companies/{CompanyName}', [
 		'uses' => 'companiesController@getCompany'
 ]);
 
-Route::post('companies', [
-		'uses' => 'companiesController@addCompany'
-]);
-
 Route::post('companies/validate', [
 		'uses' => 'companiesController@addCompanyValidate'
 ]);
 
-Route::put('companies/{CompanyName}', [
-		'uses' => 'companiesController@updateCompany'
+Route::post('companies', [
+		'uses' => 'companiesController@addCompany'
 ]);
 
 Route::put('companies/{CompanyName}/validate', [
 		'uses' => 'companiesController@updateCompanyValidate'
 ]);
 
+Route::put('companies/{CompanyName}', [
+		'uses' => 'companiesController@updateCompany'
+]);
+
 Route::delete('companies/{CompanyName}', [
 		'uses' => 'companiesController@deleteCompany'
+]);
+
+/*
+ * Routes::customersController
+ * */
+
+Route::get('customers/companies/{CompanyName}', [
+		'uses' => 'customersController@getAllCustomersAdministrator'
+]);
+
+Route::get('customers', [
+		'uses' => 'customersController@getAllCustomers'
+]);
+
+Route::get('customers/query', [
+		'uses' => 'customersController@getByQuery'
+]);
+
+Route::get('customers/{CustomerUsername}', [
+		'uses' => 'customersController@getCustomer'
+]);
+
+Route::post('customers/validate', [
+		'uses' => 'customersController@addCustomerValidate'
+]);
+
+Route::post('customers', [
+		'uses' => 'customersController@addCustomer'
+]);
+
+Route::put('customers/{CustomerUsername}/validate', [
+		'uses' => 'customersController@updateCustomerValidate'
+]);
+
+Route::put('customers/{CustomerUsername}', [
+		'uses' => 'customersController@updateCustomer'
+]);
+
+Route::delete('customers/{CustomerUsername}', [
+		'uses' => 'customersController@deleteCustomer'
 ]);
 
 /*
@@ -164,46 +204,6 @@ Route::put('companies/{CompanyId}/menus/{MenuName}', [
 
 Route::delete('companies/{CompanyName}/menus/{MenuName}', [
 		'uses' => 'menusController@deleteMenu'
-]);
-
-/*
- * Routes::customersController
- * */
-
-Route::get('customers/companies/{CompanyName}', [
-		'uses' => 'customersController@getAllCustomersAdministrator'	
-]);
-
-Route::get('customers', [
-		'uses' => 'customersController@getAllCustomers'
-]);
-
-Route::get('customers/query', [
-		'uses' => 'customersController@getByQuery'
-]);
-
-Route::get('customers/{CustomerUsername}', [
-		'uses' => 'customersController@getCustomer'
-]);
-
-Route::post('customers', [
-		'uses' => 'customersController@addCustomer'
-]);
-
-Route::post('customers/validate', [
-		'uses' => 'customersController@addCustomerValidate'	
-]);
-
-Route::put('customers/{CustomerUsername}', [
-		'uses' => 'customersController@updateCustomer'
-]);
-
-Route::put('customers/{CustomerUsername}/validate', [
-		'uses' => 'customersController@updateCustomerValidate'	
-]);
-
-Route::delete('customers/{CustomerUsername}', [
-		'uses' => 'customersController@deleteCustomer'
 ]);
 
 /*
@@ -279,8 +279,12 @@ Route::get('customers/{CustomerUsername}/orders', [
 		'uses' => 'ordersController@getCustomerOrders'
 ]);
 
-Route::get('customers/{CustomerUsername}/orders/WIP', [
-		'uses' => 'ordersController@getCustomerOrdersWIP'
+Route::get('customers/{CustomerUsername}/orders/{OrderStatus}', [
+		'uses' => 'ordersController@getCustomerOrdersOrderStatus'
+]);
+
+Route::get('customers/{CustomerUsername}/orders/not/{OrderStatus', [
+		'uses' => 'ordersController@getCustomerOrdersNotOrderStatus'
 ]);
 
 Route::get('orders/query', [
@@ -296,11 +300,11 @@ Route::put('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 ]);
 
 Route::delete('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}', [
-		'uses' => 'ordersController@deleteOrderCompanyDirective'
+		'uses' => 'ordersController@deleteOrderCompany'
 ]);
 
 Route::delete('customers/{CustomerUsername}/orders/{OrderId}', [
-		'uses' => 'ordersController@deleteOrderCustomerDirective'
+		'uses' => 'ordersController@deleteOrderCustomer'
 ]);
 
 /**

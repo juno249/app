@@ -236,6 +236,10 @@ function modalCustomerController(
 	 * purpose: handles form-submission (insert/amend)
 	 * ****************************** */
 	function doSubmit(e){
+		var customer = undefined;
+		var customerCompanyBranch = undefined;
+		var user = localStorage.getItem('User');
+		user = JSON.parse(user);
 		var formMode = vm.formMode;
 		var fromSignup = vm.fromSignup;
 		var modalCustomerContainerId = '#modalCustomerContainer';
@@ -245,10 +249,18 @@ function modalCustomerController(
 		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn(formMode));
+		customer = data[0];
+		customerCompanyBranch = {
+				customer_username: customer.customer_username, 
+				company_name: user.company, 
+				branch_name: user.branch
+		};
 		
 		showBootstrapLoader(modalCustomerContainer);
 		
 		if('I' == formMode){
+			var transParams = undefined;
+			
 			if(fromSignup){
 				customerService.addCustomerValidate(data)
 				.then(addCustomerValidateSuccessCallback)
@@ -272,54 +284,25 @@ function modalCustomerController(
 				return;
 			}
 			
-			customerService.addCustomer(data)
-			.then(addCustomerSuccessCallback)
-			.catch(addCustomerFailedCallback);
+			transParams = {
+					customer: customer, 
+					company: null, 
+					branch: null, 
+					customerCompanyBranch : customerCompanyBranch
+			};
+			customerCompanyBranchService.addCustomerCompanyBranchTransaction([transParams])
+			.then(addCustomerCompanyBranchTransactionSuccessCallback)
+			.catch(addCustomerCompanyBranchTransactionFailedCallback);
 			
 			/* ******************************
 			 * Callback Implementations (Start)
 			 * ****************************** */
-			function addCustomerSuccessCallback(response){
-				var user = localStorage.getItem('User');
-				user = JSON.parse(user);
-				var customerCompanyBranch = undefined;
-				
-				if(!(USER_ROLES.customer == user.role)){
-					customerCompanyBranch = {
-							customer_username: data.customer_username, 
-							company_name: user.company, 
-							branch_name: user.branch
-					}
-				} else {
-					customerCompanyBranch = {
-							customer_username: data.customer_username, 
-							company_name: '', 
-							branch_name: ''
-					}
-				}
-				
-				customerCompanyBranchService.addCustomerCompanyBranch([customerCompanyBranch])
-				.then(addCustomerCompanyBranchSuccessCallback)
-				.catch(addCustomerCompanyBranchFailedCallback);
-				
-				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
-				function addCustomerCompanyBranchSuccessCallback(response){
-					hideBootstrapLoader(modalCustomerContainer);
-					$uibModalInstance.close();
-				}
-				
-				function addCustomerCompanyBranchFailedCallback(responseError){
-					//do something on failure
-				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
+			function addCustomerCompanyBranchTransactionSuccessCallback(response){
+				hideBootstrapLoader(modalCustomerContainer);
+				$uibModalInstance.close();
 			}
 			
-			function addCustomerFailedCallback(responseError){
+			function addCustomerCompanyBranchTransactionFailedCallback(responseError){
 				var statusText = responseError.statusText;
 				
 				hideBootstrapLoader(modalCustomerContainer);
@@ -501,7 +484,7 @@ function modalCustomerController(
 			var dbColPassIndex = 1;
 			var domOffset = 1;
 			
-			if(statusTextKey = (arrIndex + '.' + dbColumnName)){
+			if(statusTextKey == (arrIndex + '.' + dbColumnName)){
 				dbColumnIndex = getDbColumnIndex(dbColumnName);
 				errorMessage = statusTextObj[statusTextKey][0];
 				errorMessage = errorMessage.replace(statusTextKey, dbColumn2Dom[dbColumnName]);

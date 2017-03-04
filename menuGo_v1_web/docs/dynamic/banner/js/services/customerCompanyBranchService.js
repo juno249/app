@@ -269,7 +269,7 @@ function customerCompanyBranchService(
 		}
 		
 		function addCustomerCompanyBranchTransactionFailedCallback(responseError){
-			deferred.reject(response);
+			deferred.reject(responseError);
 		}
 		/* ******************************
 		 * Callback Implementationsss (End)
