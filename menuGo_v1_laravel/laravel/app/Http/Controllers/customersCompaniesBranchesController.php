@@ -253,6 +253,10 @@ class customersCompaniesBranchesController extends Controller
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
 		for($i=0; $i<$jsonDataSize; $i++){
 			$customerCompanyBranchRunner = $jsonData[$i];
+			$customer = $customerCompanyBranchRunner['customer'];
+			$company = $customerCompanyBranchRunner['company'];
+			$branch = $customerCompanyBranchRunner['branch'];
+			$customerCompanyBranch = $customerCompanyBranchRunner['customerCompanyBranch'];
 			
 			if(!($this->isDataValidTransaction($customerCompanyBranchRunner, $errorMsg, "ADD"))){
 				$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
@@ -264,16 +268,16 @@ class customersCompaniesBranchesController extends Controller
 				$pwHashed = Hash::make($customer['customer_password']);
 				if(!(null == $customer)){
 					$customer['customer_password'] = $pwHashed;
-					DB::table(customersConstants::customersTable)->insert($customerCompanyBranchRunner['customer']);
+					DB::table(customersConstants::customersTable)->insert($customer);
 				}
 				if(!(null == $company)){
-					DB::table(companiesConstants::companiesTable)->insert($customerCompanyBranchRunner['company']);
+					DB::table(companiesConstants::companiesTable)->insert($company);
 				}
 				if(!(null == $branch)){
-					DB::table(branchesConstants::branchesTable)->insert($customerCompanyBranchRunner['branch']);
+					DB::table(branchesConstants::branchesTable)->insert($branch);
 				}
 				if(!(null == $customerCompanyBranch)){
-					DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($customerCompanyBranchRunner['customerCompanyBranch']);
+					DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($customerCompanyBranch);
 				}
 				
 				DB::commit();
