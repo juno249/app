@@ -133,38 +133,8 @@
 	display: block;
 }
 
-/* Images - Component-Specific */
-#appLogo{
-	width: 200px;
-	height: 125px;
-}
-
-#userBgImage1Container{
-	height: 180px;
-}
-
-#userAvatarContainer{
-	top: 135px; 
-	height: 90px;
-}
-
-#userAvatar{
-	background-color: #ffffff;
-	border-radius: 50%;
-}
-
-#tap4QRCode{
-	width: 50%;
-}
-
 img.orderStatusImage{
 	width: 25%;
-}
-
-/* View-Containers - Component-Specific */
-
-#sideRootContainer{
-	top: 225px;
 }
 
 .orderContainerLeft, .orderContainerRight{
@@ -202,18 +172,6 @@ div.menuitemsContainer{
 #appTitle{
 	font-size: 20px;
 	font-family: 'Kaushan Script', cursive;
-}
-
-#userDetailsDivider, #navigationDivider{
-	margin-top: 10px;
-	color: #ffffff;
-	background-color: inherit;
-}
-
-div.item.sideItemValue, span.item.sideItemValue{
-	padding: 8px 10px 8px 10px;
-	color: #ffffff;
-	background-color: inherit;
 }
 
 .popup-title{
