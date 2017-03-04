@@ -71,6 +71,8 @@ function modalMenuController(
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;
 	vm.isValidationErrDBHidden = true;
+	vm.menuImageImage = undefined;
+	vm.isMenuImageImageHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -129,9 +131,12 @@ function modalMenuController(
 		function menuImageBrowseChangeCallback(e){
 			var eTarg = e.target;
 			var eFiles = e.target.files;
+			var isMenuImageImageHidden = vm.isMenuImageImageHidden;
 			
 			menu.menuImage = eFiles[0].name;
+			isMenuImageImageHidden = true;
 			
+			vm.isMenuImageImageHidden = isMenuImageImageHidden;
 			$timeout(function(){
 				vm.menu = menu;
 			})
@@ -186,10 +191,17 @@ function modalMenuController(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function uploadMenuImageSuccessCallback(response){
-			menu.menuImage = response.config.url;
+			var menuImageImage = vm.menuImageImage;
+			var isMenuImageImageHidden = vm.isMenuImageImageHidden;
+			var appQueryStr = '?timestamp=' + new Date().getTime();
+			
+			menu.menuImage = response.config.url + appQueryStr;
+			menuImageImage = menu.menuImage;
+			isMenuImageImageHidden = false;
 			
 			vm.menu = menu;
-			
+			vm.menuImageImage = menuImageImage;
+			vm.isMenuImageImageHidden = isMenuImageImageHidden;
 			hideBootstrapLoader(modalMenuContainer);
 		}
 		

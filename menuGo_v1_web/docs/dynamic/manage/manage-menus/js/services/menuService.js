@@ -9,7 +9,6 @@ menuService.$inject = [
 	'API_BASE_URL', 
 	'MENUS_DB_FIELDS', 
 	'$http', 
-	'$httpParamSerializerJQLike', 
 	'$localStorage', 
 	'$q' 
 ];
@@ -24,7 +23,6 @@ function menuService(
 		API_BASE_URL, 
 		MENUS_DB_FIELDS, 
 		$http, 
-		$httpParamSerializerJQLike, 
 		$localStorage, 
 		$q 
 	){
@@ -147,7 +145,7 @@ function menuService(
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus', 
-				data: $httpParamSerializerJQLike(menus)
+				data: menus
 		};
 		$http(httpConfig)
 		.then(addMenuSuccessCallback)

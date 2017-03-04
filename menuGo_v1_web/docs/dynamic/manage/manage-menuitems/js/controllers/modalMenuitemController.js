@@ -75,6 +75,8 @@ function modalMenuitemController(
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;
 	vm.isValidationErrDBHidden = true;
+	vm.menuitemImageImage = undefined;
+	vm.isMenuitemImageImageHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -133,9 +135,12 @@ function modalMenuitemController(
 		function menuitemImageBrowseChangeCallback(e){
 			var eTarg = e.target;
 			var eFiles = e.target.files;
+			var isMenuitemImageImageHidden = vm.isMenuitemImageImageHidden;
 			
 			menuitem.menuitemImage = eFiles[0].name;
+			isMenuitemImageImageHidden = true;
 			
+			vm.isMenuitemImageImageHidden = isMenuitemImageImageHidden;
 			$timeout(function(){
 				vm.menuitem = menuitem;
 			})
@@ -190,10 +195,17 @@ function modalMenuitemController(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function uploadMenuitemImageSuccessCallback(response){
-			menuitem.menuitemImage = response.config.url;
+			var menuitemImageImage = vm.menuitemImageImage;
+			var isMenuitemImageImageHidden = vm.isMenuitemImageImageHidden;
+			var appQueryStr = '?timestamp=' + new Date().getTime();
+			
+			menuitem.menuitemImage = response.config.url + appQueryStr;
+			menuitemImageImage = menuitem.menuitemImage;
+			isMenuitemImageImageHidden = false;
 			
 			vm.menuitem = menuitem;
-			
+			vm.menuitemImageImage = menuitemImageImage;
+			vm.isMenuitemImageImageHidden = isMenuitemImageImageHidden;
 			hideBootstrapLoader(modalMenuitemContainer);
 		}
 		
@@ -461,6 +473,24 @@ function modalMenuitemController(
 		}
 		
 		vm.validationErr = validationErr;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: showBootstrapLoader()
+	 * purpose: shows bootstrap loader
+	 * ****************************** */
+	function showBootstrapLoader(target){
+		$(target).LoadingOverlay('show');
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: hideBootstrapLoader()
+	 * purpose: hides bootstrap loader
+	 * ****************************** */
+	function hideBootstrapLoader(target){
+		$(target).LoadingOverlay('hide');
 	}
 	
 	/* ******************************

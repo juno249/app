@@ -261,7 +261,7 @@ class menuitemsController extends Controller
 	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	 **/
 	public function updateMenuitem(Request $jsonRequest, $CompanyName, $MenuName, $MenuitemCode){
-		$jsonData = json_decode($jsonRequest->getContent()), true);
+		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';

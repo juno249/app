@@ -88,8 +88,8 @@ class filesController extends Controller
 		$companyMenuImageResponse = new Response();
 		
 		try{
-			$companyMenuImage  = Storage::disk('public')->get($impFileName);
-			$companyMenuImage->setContent($companyMenuImage);
+			$companyMenuImage  = Storage::disk('public')->get($imgFileName);
+			$companyMenuImageResponse->setContent($companyMenuImage);
 			$companyMenuImageResponse->setStatusCode(200, filesConstants::fileGetSuccessMsg);
 		} catch(\Exception $e){
 			$companyMenuImageResponse->setStatusCode(400, filesConstants::fileGetCatchMsg);
@@ -147,7 +147,7 @@ class filesController extends Controller
 		$companyMenuMenuitemImageResponse = new Response();
 		
 		try{
-			$companyMenuMenuitemImage = Storage::disk('public')->delete($imgFileName);
+			$companyMenuMenuitemImage = Storage::disk('public')->get($imgFileName);
 			$companyMenuMenuitemImageResponse->setContent($companyMenuMenuitemImage);
 			$companyMenuMenuitemImageResponse->setStatusCode(200, filesConstants::fileGetSuccessMsg);
 		} catch(\Exception $e){

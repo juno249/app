@@ -73,6 +73,8 @@ function modalCompanyController(
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;
 	vm.isValidationErrDBHidden = true;
+	vm.companyLogoImage = undefined;
+	vm.isCompanyLogoImageHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -130,9 +132,12 @@ function modalCompanyController(
 		function companyLogoBrowseChangeCallback(e){
 			var eTarg = e.target;
 			var eFiles = e.target.files;
+			var isCompanyLogoImageHidden = vm.isCompanyLogoImageHidden;
 
 			company.companyLogo = eFiles[0].name;
+			isCompanyLogoImageHidden = true;
 			
+			vm.isCompanyLogoImageHidden = isCompanyLogoImageHidden;
 			$timeout(function(){
 				vm.company = company;
 			})
@@ -186,10 +191,16 @@ function modalCompanyController(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function uploadCompanyLogoSuccessCallback(response){
+			var companyLogoImage = vm.companyLogoImage;
+			var isCompanyLogoImageHidden = vm.isCompanyLogoImageHidden;
+			
 			company.companyLogo = response.config.url;
+			companyLogoImage = company.companyLogo;
+			isCompanyLogoImageHidden = false;
 			
 			vm.company = company;
-			
+			vm.companyLogoImage = companyLogoImage;
+			vm.isCompanyLogoImageHidden = isCompanyLogoImageHidden;
 			hideBootstrapLoader(modalCompanyContainer);
 		}
 		

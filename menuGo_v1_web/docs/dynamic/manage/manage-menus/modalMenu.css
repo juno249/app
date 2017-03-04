@@ -1,0 +1,12 @@
+.menuImageImageContainer{
+	height: 150px;
+	width: 150px;
+	
+	margin: auto;
+	padding: 0px 10px 10px 10px;
+}
+
+.menuImageImage{
+	height: 100%; 
+	width: 100%;
+}
