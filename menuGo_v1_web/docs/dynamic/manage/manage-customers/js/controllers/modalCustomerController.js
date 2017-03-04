@@ -249,12 +249,6 @@ function modalCustomerController(
 		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn(formMode));
-		customer = data[0];
-		customerCompanyBranch = {
-				customer_username: customer.customer_username, 
-				company_name: user.company, 
-				branch_name: user.branch
-		};
 		
 		showBootstrapLoader(modalCustomerContainer);
 		
@@ -284,6 +278,12 @@ function modalCustomerController(
 				return;
 			}
 			
+			customer = data[0];
+			customerCompanyBranch = {
+					customer_username: customer.customer_username, 
+					company_name: user.company, 
+					branch_name: user.branch
+			};
 			transParams = {
 					customer: customer, 
 					company: null, 
