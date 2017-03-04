@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.factory('companiesService', companiesService);
+.factory('companyService', companyService);
 
 /* ******************************
  * Service Dependency Injection (Start)
  * ****************************** */
-companiesService.$inject = [
+companyService.$inject = [
 	'API_BASE_URL', 
 	'COMPANIES_DB_FIELDS', 
 	'$http', 
@@ -19,7 +19,7 @@ companiesService.$inject = [
 /* ******************************
  * Service Implementation (Start)
  * ****************************** */
-function companiesService(
+function companyService(
 		API_BASE_URL, 
 		COMPANIES_DB_FIELDS, 
 		$http, 
@@ -29,7 +29,7 @@ function companiesService(
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
-	var companiesServiceObj = {
+	var companyServiceObj = {
 		companies: {}, 
 		company: {}, 
 		companyName: undefined, 
@@ -41,9 +41,12 @@ function companiesService(
 		setCompanyName: setCompanyName, 
 		fetchCompanies: fetchCompanies, 
 		fetchCompany: fetchCompany, 
+		addCompanyValidate: addCompanyValidate, 
 		addCompany: addCompany, 
+		updateCompanyValidate: updateCompanyValidate, 
 		updateCompany: updateCompany, 
-		deleteCompany: deleteCompany
+		deleteCompany: deleteCompany, 
+		uploadCompanyLogo: uploadCompanyLogo
 	}
 	/* ******************************
 	 * Service Return Object (End)
@@ -53,22 +56,22 @@ function companiesService(
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
 	function getCompanies(){
-		return companiesServiceObj.companies;
+		return companyServiceObj.companies;
 	}
 	function getCompany(){
-		return companiesServiceObj.company;
+		return companyServiceObj.company;
 	}
 	function getCompanyName(){
-		return companiesServiceObj.companyName;
+		return companyServiceObj.companyName;
 	}
 	function setCompanies(companies){
-		companiesServiceObj.companies = companies;
+		companyServiceObj.companies = companies;
 	}
 	function setCompany(company){
-		companiesServiceObj.company = company;
+		companyServiceObj.company = company;
 	}
 	function setCompanyName(companyName){
-		companiesServiceObj.companyName = companyName;
+		companyServiceObj.companyName = companyName;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -93,9 +96,9 @@ function companiesService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCompaniesSuccessCallback(response){
-			companiesServiceObj.companies = {};
+			companyServiceObj.companies = {};
 			convertCompaniesResponseToMap(response.data);
-			var companies = companiesServiceObj.companies;
+			var companies = companyServiceObj.companies;
 			companies = JSON.stringify(companies);
 			localStorage.setItem('Companies', companies);
 			deferred.resolve(response);
@@ -129,7 +132,7 @@ function companiesService(
 					companiesDetails[companiesDBFieldRunner] = companiesRunner[companiesDBFieldRunner];
 				}
 				var companiesKeyValue = companiesRunner[companiesKey];
-				companiesServiceObj.companies[companiesKeyValue ] = companiesDetails;
+				companyServiceObj.companies[companiesKeyValue ] = companiesDetails;
 			}
 		}
 		return deferred.promise;
@@ -144,7 +147,7 @@ function companiesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + companiesServiceObj.companyName
+				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
 		};
 		$http(httpConfig)
 		.then(fetchCompanySuccessCallback)
@@ -154,9 +157,9 @@ function companiesService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCompanySuccessCallback(response){
-			companiesServiceObj.company = {};
+			companyServiceObj.company = {};
 			convertCompanyResponseToMap(response.data);
-			var company = companiesServiceObj.company;
+			var company = companyServiceObj.company;
 			company = JSON.stringify(company);
 			localStorage.setItem('Company', company);
 			deferred.resolve(response);
@@ -190,12 +193,44 @@ function companiesService(
 					companyDetails[companyDBFieldRunner] = companyRunner[companyDBFieldRunner];
 				}
 				var companyKeyValue = companyRunner[companyKey];
-				companiesServiceObj.company[companyKeyValue] = companyDetails;
+				companyServiceObj.company[companyKeyValue] = companyDetails;
 			}
 		}
 		return deferred.promise;
 	}
 
+	/* ******************************
+	 * Method Implementation
+	 * method name: addCompanyValidate()
+	 * purpose: validates data for add
+	 * ****************************** */
+	function addCompanyValidate(companies){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/companies/validate', 
+				data: companies
+		}
+		$http(httpConfig)
+		.then(addCompanyValidateSuccessCallback)
+		.catch(addCompanyValidateFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function addCompanyValidateSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function addCompanyValidateFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
 	/* ******************************
 	 * Method Implementation
 	 * method name: addCompany()
@@ -230,6 +265,38 @@ function companiesService(
 	
 	/* ******************************
 	 * Method Implementation
+	 * method name: updateCompanyValidate()
+	 * purpose: validates data for update
+	 * ****************************** */
+	function updateCompanyValidate(company){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'PUT', 
+				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName, 
+				data: company
+		}
+		$http(httpConfig)
+		.then(updateCompanyValidateSuccessCallback)
+		.catch(updateCompanyValidateFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function updateCompanyValidateSuccessCallback(response){
+			deferrred.resolve(response);
+		}
+		
+		function updateCompanyValidateFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
 	 * method name: updateCompany()
 	 * purpose: updates company
 	 * ****************************** */
@@ -237,7 +304,7 @@ function companiesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + companiesServiceObj.companyName, 
+				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName, 
 				data: company
 		};
 		$http(httpConfig)
@@ -268,8 +335,8 @@ function companiesService(
 	function deleteCompany(){
 		var deferred = $q.defer();
 		var httpConfig = {
-				method: "DELETE", 
-				url: API_BASE_URL + '/companies/' + companiesServiceObj.companyName
+				method: 'DELETE', 
+				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
 		}
 		$http(httpConfig)
 		.then(deleteCompanySuccessCallback)
@@ -291,7 +358,42 @@ function companiesService(
 		return deferred.promise;
 	}
 	
-	return companiesServiceObj;
+	/* ******************************
+	 * Method Implementation
+	 * method name: uploadCompanyLogo()
+	 * purpose: uploads company logo
+	 * ****************************** */
+	function uploadCompanyLogo(imgFile){
+		var httpFD = new FormData();
+		httpFD.append('imgFile', imgFile);
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName + '/companyImage', 
+				data: httpFD, 
+				headers: {	'Content-Type': undefined	}
+		}
+		$http(httpConfig)
+		.then(uploadCompanyLogoSuccessCallback)
+		.catch(uploadCompanyLogoFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function uploadCompanyLogoSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function uploadCompanyLogoFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	return companyServiceObj;
 }
 /* ******************************
  * Service Implementation (End)

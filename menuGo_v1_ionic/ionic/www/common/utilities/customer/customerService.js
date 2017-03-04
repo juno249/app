@@ -37,7 +37,9 @@ function customerService(
 			setCustomer: setCustomer, 
 			setCustomerUsername: setCustomerUsername, 
 			fetchCustomer: fetchCustomer, 
+			addCustomerValidate: addCustomerValidate, 
 			addCustomer: addCustomer, 
+			updateCustomerValidate: updateCustomerValidate, 
 			updateCustomer: updateCustomer, 
 			deleteCustomer: deleteCustomer
 	};
@@ -127,15 +129,47 @@ function customerService(
 	
 	/* ******************************
 	 * Method Implementation
+	 * method name: addCustomerValidate()
+	 * purpose: validates data for add
+	 * ****************************** */
+	function addCustomerValidate(customers){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/customers/validate', 
+				data: customers
+		}
+		$http(httpConfig)
+		.then(addCustomerValidateSuccessCallback)
+		.catch(addCustomerValidateFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function addCustomerValidateSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function addCustomerValidateFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
 	 * method name: addCustomer()
 	 * purpose: adds customer
 	 * ****************************** */
-	function addCustomer(customer){
+	function addCustomer(customers){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/customers', 
-				data: customer
+				data: customers
 		}
 		$http(httpConfig)
 		.then(addCustomerSuccessCallback)
@@ -149,6 +183,38 @@ function customerService(
 		}
 		
 		function addCustomerFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: updateCustomerValidate()
+	 * purpose: validates data for update
+	 * ****************************** */
+	function updateCustomerValidate(customer){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'PUT', 
+				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername + '/validate', 
+				data: customer
+		};
+		$http(httpConfig)
+		.then(updateCustomerSuccessCallback)
+		.catch(updateCustomerFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function updateCustomerSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function updateCustomerFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************

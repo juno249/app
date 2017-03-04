@@ -7,6 +7,7 @@ angular
  * ****************************** */
 loginService.$inject = [
 	'API_BASE_URL', 
+	'USER_ROLES', 
 	'$http', 
 	'$localStorage', 
 	'$q' 
@@ -16,6 +17,7 @@ loginService.$inject = [
  * ****************************** */
 function loginService(
 		API_BASE_URL, 
+		USER_ROLES, 
 		$http, 
 		$localStorage, 
 		$q 
@@ -101,11 +103,46 @@ function loginService(
 		
 			$http.defaults.headers.common.Authorization = "bearer " + user.token;
 			
-			user = JSON.stringify(user);
-			loginServiceObj.user = user;
-			localStorage.setItem('User', user);
+			getCustomerCompanyBranch();
 			
-			deferred.resolve(response);
+			/* ******************************
+			 * Method Implementation
+			 * method name: getCustomerCompanyBranch()
+			 * purpose: logs in and gets token from server
+			 * ****************************** */
+			function getCustomerCompanyBranch(){
+				var httpConfig = {
+						method: 'GET', 
+						url: API_BASE_URL + '/customers-companies-branches/query', 
+						params: {customerUsername: user.username}
+				}
+				$http(httpConfig)
+				.then(getCustomerCompanyBranchSuccessCallback)
+				.catch(getCustomerCompanyBranchFailedCallback);
+				
+				/* ******************************
+				 * Callback Implementations (Start)
+				 * ****************************** */
+				function getCustomerCompanyBranchSuccessCallback(response){
+					var responseData = response.data;
+					
+					responseData = responseData[0];
+					user.company = responseData.company_name;
+					user.branch = responseData.branch_name;
+					user.isAuthenticated = true;
+					
+					user = JSON.stringify(user);
+					localStorage.setItem('User', user);
+					deferred.resolve();
+				}
+				
+				function getCustomerCompanyBranchFailedCallback(responseError){
+					deferred.reject(responseError);
+				}
+				/* ******************************
+				 * Callback Implementations (End)
+				 * ****************************** */
+			}
 		}
 		
 		function doLoginFailedCallback(responseError){

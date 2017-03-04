@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.factory('ordersService', ordersService);
+.factory('orderService', orderService);
 
 /* ******************************
  * Service Dependency Injection (Start)
  * ****************************** */
-ordersService.$inject = [
+orderService.$inject = [
 	'API_BASE_URL', 
 	'BROADCAST_MESSAGES', 
 	'ORDER_STATUS', 
@@ -23,7 +23,7 @@ ordersService.$inject = [
 /* ******************************
  * Service Implementation (Start)
  * ****************************** */
-function ordersService(
+function orderService(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
 		ORDER_STATUS, 
@@ -37,7 +37,7 @@ function ordersService(
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
-	var ordersServiceObj = {
+	var orderServiceObj = {
 			orders: {}, 
 			customerOrders: {},  
 			companyName: undefined, 
@@ -89,46 +89,46 @@ function ordersService(
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
 	function getOrders(){
-		return ordersServiceObj.orders;
+		return orderServiceObj.orders;
 	}
 	function getCustomerOrders(){
-		return ordersServiceObj.customerOrders;
+		return orderServiceObj.customerOrders;
 	}
 	function getCompanyName(){
-		return ordersServiceObj.companyName;
+		return orderServiceObj.companyName;
 	}
 	function getBranchName(){
-		return ordersServiceObj.branchName;
+		return orderServiceObj.branchName;
 	}
 	function getTableNumber(){
-		return ordersServiceObj.tableNumber;
+		return orderServiceObj.tableNumber;
 	}
 	function getCustomerUsername(){
-		return ordersServiceObj.customerUsername;
+		return orderServiceObj.customerUsername;
 	}
 	function getOrderId(){
-		return ordersServiceObj.orderId;
+		return orderServiceObj.orderId;
 	}
 	function setOrders(orders){
-		ordersServiceObj.orders = orders;
+		orderServiceObj.orders = orders;
 	}
 	function setCustomerOrders(customerOrders){
-		ordersServiceObj.customerOrders = customerOrders;
+		orderServiceObj.customerOrders = customerOrders;
 	}
 	function setCompanyName(companyName){
-		ordersServiceObj.companyName = companyName;
+		orderServiceObj.companyName = companyName;
 	}
 	function setBranchName(branchName){
-		ordersServiceObj.branchName = branchName;
+		orderServiceObj.branchName = branchName;
 	}
 	function setTableNumber(tableNumber){
-		ordersServiceObj.tableNumber = tableNumber;
+		orderServiceObj.tableNumber = tableNumber;
 	}
 	function setCustomerUsername(customerUsername){
-		ordersServiceObj.customerUsername = customerUsername;
+		orderServiceObj.customerUsername = customerUsername;
 	}
 	function setOrderId(orderId){
-		ordersServiceObj.orderId = orderId;
+		orderServiceObj.orderId = orderId;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -146,47 +146,47 @@ function ordersService(
 		/* ******************************
 		 * Get Orders Selection (Start)
 		 * ****************************** */
-		switch(ordersServiceObj.getOptions[getOption]){
+		switch(orderServiceObj.getOptions[getOption]){
 		case 'getCompanyBranchOrders': 
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/orders'
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders'
 			};
 			break;
 		case 'getCompanyBranchOrdersOrderStatus': 
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/orders/' + getParams //getParams is OrderStatus
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/' + getParams //getParams is OrderStatus
 			};
 			break;
 		case 'getCompanyBranchTableOrders':
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/tables/' + ordersServiceObj.tableNumber + '/orders'
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders'
 			};
 			break;
 		case 'getCustomerOrders': 
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + ordersServiceObj.customerUsername + '/orders'
+				url: API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders'
 			};
 			break;
 		case 'getCompanyBranchOrdersWIP': 
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/orders/WIP'
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/WIP'
 			};
 			break;
 		case 'getCompanyBranchTableOrdersWIP':
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/tables/' + ordersServiceObj.tableNumber + '/orders/WIP'
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/WIP'
 			};
 			break;
 		case 'getCustomerOrdersWIP': 
 			httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + ordersServiceObj.customerUsername + '/orders/WIP'
+				url: API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/WIP'
 			};
 			break;
 		default: break;
@@ -202,9 +202,9 @@ function ordersService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchOrdersSuccessCallback(response){
-			ordersServiceObj.orders = {};
+			orderServiceObj.orders = {};
 			convertOrdersResponseToMap(response.data);
-			var orders = ordersServiceObj.orders;
+			var orders = orderServiceObj.orders;
 			orders = JSON.stringify(orders);
 			localStorage.setItem('Orders', orders);
 			deferred.resolve(response);
@@ -238,7 +238,7 @@ function ordersService(
 					ordersDetails[ordersDBFieldRunner] = ordersRunner[ordersDBFieldRunner];
 				}
 				var ordersKeyValue = ordersRunner[ordersKey];
-				ordersServiceObj.orders[ordersKeyValue] = ordersDetails;
+				orderServiceObj.orders[ordersKeyValue] = ordersDetails;
 			}
 		}
 		return deferred.promise;
@@ -253,7 +253,7 @@ function ordersService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/customers/' + ordersServiceObj.customerUsername + '/orders', 
+				url: API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders', 
 				data: orders
 		};
 		$http(httpConfig)
@@ -264,7 +264,7 @@ function ordersService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function addOrderSuccessCallback(response){
-			ordersServiceObj.customerOrders = {};
+			orderServiceObj.customerOrders = {};
 			localStorage.removeItem('CustomerOrders');
 			deferred.resolve(response);
 		}
@@ -287,7 +287,7 @@ function ordersService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/tables/' + ordersServiceObj.tableNumber + '/orders/' + ordersServiceObj.orderId, 
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId, 
 				data: order
 		};
 		$http(httpConfig)
@@ -322,17 +322,17 @@ function ordersService(
 		/* ******************************
 		 * Delete Orders Selection (Start)
 		 * ****************************** */
-		switch(ordersServiceObj.deleteOptions[deleteOption]){
+		switch(orderServiceObj.deleteOptions[deleteOption]){
 		case 'deleteOrderCompanyDirective':
 			httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/companies/' + ordersServiceObj.companyName + '/branches/' + ordersServiceObj.branchName + '/tables/' + ordersServiceObj.tableNumber + '/orders/' + ordersServiceObj.orderId
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId
 			};
 			break;
 		case 'deleteOrderCustomerDirective':
 			httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/customers/' + ordersServiceObj.customerUsername + '/orders/' + ordersServiceObj.orderId
+				url: API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/' + orderServiceObj.orderId
 			}
 			break;
 		default: break;
@@ -371,7 +371,7 @@ function ordersService(
 			customerOrdersQuantity
 	){
 		var menuitem_code = menuitem.menuitem_code;
-		var customerOrder = ordersServiceObj.customerOrders[menuitem_code];
+		var customerOrder = orderServiceObj.customerOrders[menuitem_code];
 		var customerOrderCount = undefined;
 		
 		if(null == customerOrder){//non-existing
@@ -388,9 +388,9 @@ function ordersService(
 			customerOrder.customerOrderQuantity = customerOrderCount;
 		}
 		
-		ordersServiceObj.customerOrders[menuitem_code] = customerOrder;
+		orderServiceObj.customerOrders[menuitem_code] = customerOrder;
 		//update localStorage;
-		var customerOrders = ordersServiceObj.customerOrders;
+		var customerOrders = orderServiceObj.customerOrders;
 		customerOrders = JSON.stringify(customerOrders);
 		localStorage.setItem('CustomerOrders', customerOrders);
 	}
@@ -402,14 +402,14 @@ function ordersService(
 	 * ****************************** */
 	function incCustomerOrdersQuantity(menuitem){
 		var menuitem_code = menuitem.menuitem_code;
-		var customerOrder = ordersServiceObj.customerOrders[menuitem_code];
+		var customerOrder = orderServiceObj.customerOrders[menuitem_code];
 		var customerOrderCount = customerOrder.customerOrderQuantity;
 		customerOrderCount++;
 		
 		customerOrder.customerOrderQuantity = customerOrderCount;
-		ordersServiceObj.customerOrders[menuitem_code] = customerOrder;
+		orderServiceObj.customerOrders[menuitem_code] = customerOrder;
 		//update localStorage;
-		var customerOrders = ordersServiceObj.customerOrders;
+		var customerOrders = orderServiceObj.customerOrders;
 		customerOrders = JSON.stringify(customerOrders);
 		localStorage.setItem('CustomerOrders', customerOrders);
 		//broadcast message
@@ -423,17 +423,17 @@ function ordersService(
 	 * ****************************** */
 	function decCustomerOrdersQuantity(menuitem){
 		var menuitem_code = menuitem.menuitem_code;
-		var customerOrder = ordersServiceObj.customerOrders[menuitem_code];
+		var customerOrder = orderServiceObj.customerOrders[menuitem_code];
 		var customerOrderCount = customerOrder.customerOrderQuantity;
 		customerOrderCount--;
 		
 		if(0 == customerOrderCount){
-			delete ordersServiceObj.customerOrders[menuitem_code];
+			delete orderServiceObj.customerOrders[menuitem_code];
 		} else {
 			customerOrder.customerOrderQuantity = customerOrderCount;
 		}
 		//update localStorage
-		var customerOrders = ordersServiceObj.customerOrders;
+		var customerOrders = orderServiceObj.customerOrders;
 		customerOrders = JSON.stringify(customerOrders);
 		localStorage.setItem('CustomerOrders', customerOrders);
 		//broadcast message
@@ -446,7 +446,7 @@ function ordersService(
 	 * purpose: converts customer orders to Json format
 	 * ****************************** */
 	function customerOrdersToJson(){
-		var customerOrders = ordersServiceObj.customerOrders;
+		var customerOrders = orderServiceObj.customerOrders;
 		var customerOrdersKeys = Object.keys(customerOrders);
 		var order = {};
 		var orders = [];
@@ -472,7 +472,7 @@ function ordersService(
 		return orders;
 	}
 	
-	return ordersServiceObj;
+	return orderServiceObj;
 }
 /* ******************************
  * Service Implementation (End)

@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.factory('branchesService', branchesService);
+.factory('branchService', branchService);
 
 /* ******************************
  * Service Dependency Injection (Start)
  * ****************************** */
-branchesService.$inject = [
+branchService.$inject = [
 	'API_BASE_URL', 
 	'BRANCHES_DB_FIELDS', 
 	'$http', 
@@ -19,7 +19,7 @@ branchesService.$inject = [
 /* ******************************
  * Service Implementation (Start)
  * ****************************** */
-function branchesService(
+function branchService(
 		API_BASE_URL, 
 		BRANCHES_DB_FIELDS, 
 		$http, 
@@ -29,7 +29,7 @@ function branchesService(
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
-	var branchesServiceObj = {
+	var branchServiceObj = {
 			branches: {}, 
 			branch: {}, 
 			companyName: undefined, 
@@ -44,7 +44,9 @@ function branchesService(
 			setBranchName: setBranchName, 
 			fetchBranches: fetchBranches, 
 			fetchBranch: fetchBranch, 
+			addBranchValidate: addBranchValidate, 
 			addBranch: addBranch, 
+			updateBranchValidate: updateBranchValidate, 
 			updateBranch: updateBranch, 
 			deleteBranch: deleteBranch
 	};
@@ -56,28 +58,28 @@ function branchesService(
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
 	function getBranches(){
-		return branchesServiceObj.branches;
+		return branchServiceObj.branches;
 	}
 	function getBranch(){
-		return branchesServiceObj.branch;
+		return branchServiceObj.branch;
 	}
 	function getCompanyName(){
-		return branchesServiceObj.companyName;
+		return branchServiceObj.companyName;
 	}
 	function getBranchName(){
-		return branchesServiceObj.branchName;
+		return branchServiceObj.branchName;
 	}
 	function setBranches(branches){
-		branchesServiceObj.branches = branches;
+		branchServiceObj.branches = branches;
 	}
 	function setBranch(branch){
-		branchesServiceObj.branch = branch;
+		branchServiceObj.branch = branch;
 	}
 	function setCompanyName(companyName){
-		branchesServiceObj.companyName = companyName;
+		branchServiceObj.companyName = companyName;
 	}
 	function setBranchName(branchName){
-		branchesServiceObj.branchName = branchName;
+		branchServiceObj.branchName = branchName;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -92,7 +94,7 @@ function branchesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + branchesServiceObj.companyName + '/branches'
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches'
 		};
 		$http(httpConfig)
 		.then(fetchBranchesSuccessCallback)
@@ -102,9 +104,9 @@ function branchesService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBranchesSuccessCallback(response){
-			branchesServiceObj.branches = {};
+			branchServiceObj.branches = {};
 			convertBranchesResponseToMap(response.data);
-			var branches = branchesServiceObj.branches;
+			var branches = branchServiceObj.branches;
 			branches = JSON.stringify(branches);
 			localStorage.setItem('Branches', branches);
 			deferred.resolve(response);
@@ -138,7 +140,7 @@ function branchesService(
 					branchesDetails[branchesDBFieldRunner] = branchesRunner[branchesDBFieldRunner];
 				}
 				var branchesKeyValue = branchesRunner[branchesKey];
-				branchesServiceObj.branches[branchesKeyValue] = branchesDetails;
+				branchServiceObj.branches[branchesKeyValue] = branchesDetails;
 			}
 		}
 		return deferred.promise;
@@ -153,7 +155,7 @@ function branchesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + branchesServiceObj.companyName + '/branches/' + branchesServiceObj.branchName
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName
 		};
 		$http(httpConfig)
 		.then(fetchBranchSuccessCallback)
@@ -163,9 +165,9 @@ function branchesService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBranchSuccessCallback(response){
-			branchesServiceObj.branch = {};
+			branchServiceObj.branch = {};
 			convertBranchResponseToMap(response.data);
-			var branch = branchesServiceObj.branch;
+			var branch = branchServiceObj.branch;
 			branch = JSON.stringify(branch);
 			localStorage.setItem('Branch', branch);
 			deferred.resolve(response);
@@ -199,9 +201,41 @@ function branchesService(
 					branchDetails[branchDBFieldRunner] = branchRunner[branchDBFieldRunner];
 				}
 				var branchKeyValue = branchRunner[branchKey];
-				branchesServiceObj.branch[branchKeyValue] = branchDetails;
+				branchServiceObj.branch[branchKeyValue] = branchDetails;
 			}
 		}
+		return deferred.promise;
+	}
+		
+	/* ******************************
+	 * Method Implementation
+	 * method name: addBranchValidate()
+	 * purpose: validates data for add
+	 * ****************************** */
+	function addBranchValidate(branches){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches', 
+				data: branches
+		};
+		$http(httpConfig)
+		.then(addBranchValidateSuccessCallback)
+		.catch(addBranchValidateFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function addBranchValidateSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function addBranchValidateFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
 		return deferred.promise;
 	}
 	
@@ -214,7 +248,7 @@ function branchesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/companies/' + branchesServiceObj.companyName + '/branches', 
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches', 
 				data: branches
 		}
 		$http(httpConfig)
@@ -239,6 +273,38 @@ function branchesService(
 	
 	/* ******************************
 	 * Method Implementation
+	 * method name: updateBranchValidate()
+	 * purpose: validates data for update
+	 * ****************************** */
+	function updateBranchValidate(branch){
+		var deferred = $q.defer();
+		var httpConfig =  {
+				method: 'PUT', 
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName, 
+				data: branch
+		};
+		$http(httpConfig)
+		.then(updateBranchValidateSuccessCallback)
+		.catch(updateBranchValidateFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function updateBranchValidateSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function updateBranchValidateFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
 	 * method name: updateBranch()
 	 * purpose: updates branch
 	 * ****************************** */
@@ -246,7 +312,7 @@ function branchesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + branchesServiceObj.companyName + '/branches/' + branchesServiceObj.branchName, 
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName, 
 				data: branch
 		};
 		$http(httpConfig)
@@ -278,7 +344,7 @@ function branchesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/companies/' + branchesServiceObj.companyName + '/branches/' + branchesServiceObj.branchName
+				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName
 		}
 		$http(httpConfig)
 		.then(deleteBranchSuccessCallback)
@@ -300,7 +366,7 @@ function branchesService(
 		return deferred.promise;
 	}
 	
-	return branchesServiceObj;
+	return branchServiceObj;
 }
 /* ******************************
  * Service Implementation (End)

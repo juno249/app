@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.factory('menusService', menusService);
+.factory('menuService', menuService);
 
 /* ******************************
  * Service Dependency Injection (Start)
  * ****************************** */
-menusService.$inject = [
+menuService.$inject = [
 	'API_BASE_URL', 
 	'MENUS_DB_FIELDS', 
 	'$http', 
@@ -19,7 +19,7 @@ menusService.$inject = [
 /* ******************************
  * Service Implementation (Start)
  * ****************************** */
-function menusService(
+function menuService(
 		API_BASE_URL, 
 		MENUS_DB_FIELDS, 
 		$http, 
@@ -29,7 +29,7 @@ function menusService(
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
-	var menusServiceObj = {
+	var menuServiceObj = {
 		menus: {}, 
 		companyName: undefined, 
 		menuName: undefined, 
@@ -42,7 +42,8 @@ function menusService(
 		fetchMenus: fetchMenus, 
 		addMenu: addMenu, 
 		updateMenu: updateMenu, 
-		deleteMenu: deleteMenu
+		deleteMenu: deleteMenu, 
+		uploadMenuImage: uploadMenuImage
 	};
 	/* ******************************
 	 * Service Return Object (End)
@@ -52,22 +53,22 @@ function menusService(
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
 	function getMenus(){
-		return menusServiceObj.menus;
+		return menuServiceObj.menus;
 	}
 	function getCompanyName(){
-		return menusServiceObj.companyName;
+		return menuServiceObj.companyName;
 	}
 	function getMenuName(){
-		return menusServiceObj.menuName
+		return menuServiceObj.menuName
 	}
 	function setMenus(menus){
-		menusServiceObj.menus = menus;
+		menuServiceObj.menus = menus;
 	}
 	function setCompanyName(companyName){
-		menusServiceObj.companyName = companyName;
+		menuServiceObj.companyName = companyName;
 	}
 	function setMenuName(menuName){
-		menusServiceObj.menuName = menuName;
+		menuServiceObj.menuName = menuName;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -82,7 +83,7 @@ function menusService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + menusServiceObj.companyName + '/menus'
+				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus'
 		}
 		$http(httpConfig)
 		.then(fetchMenusSuccessCallback)
@@ -92,9 +93,9 @@ function menusService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchMenusSuccessCallback(response){
-			menusServiceObj.menus = {};
+			menuServiceObj.menus = {};
 			convertMenusResponseToMap(response.data);
-			var menus = menusServiceObj.menus;
+			var menus = menuServiceObj.menus;
 			menus = JSON.stringify(menus);
 			localStorage.setItem('Menus', menus);
 			deferred.resolve(response);
@@ -128,7 +129,7 @@ function menusService(
 					menusDetails[menusDBFieldRunner] = menusRunner[menusDBFieldRunner];
 				}
 				var menusKeyValue = menusRunner[menusKey];
-				menusServiceObj.menus[menusKeyValue] = menusDetails;
+				menuServiceObj.menus[menusKeyValue] = menusDetails;
 			}
 		}
 		return deferred.promise;
@@ -143,7 +144,7 @@ function menusService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/companies/' + menusServiceObj.companyName + '/menus', 
+				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus', 
 				data: menus
 		};
 		$http(httpConfig)
@@ -175,7 +176,7 @@ function menusService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + menusServiceObj.companyName + '/menus/' + menusServiceObj.menuName, 
+				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus/' + menuServiceObj.menuName, 
 				data: menu
 		}
 		$http(httpConfig)
@@ -207,7 +208,7 @@ function menusService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/companies/' + menusServiceObj.companyName + '/menus/' + menusServiceObj.menuName
+				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus/' + menuServiceObj.menuName
 		}
 		$http(httpConfig)
 		.then(deleteMenuSuccessCallback)
@@ -229,7 +230,42 @@ function menusService(
 		return deferred.promise;
 	}
 	
-	return menusServiceObj;
+	/* ******************************
+	 * Method Implementation
+	 * method name: uploadMenuImage()
+	 * purpose: uploads menu image
+	 * ****************************** */
+	function uploadMenuImage(imgFile){
+		var httpFD = new FormData();
+		httpFD.append('imgFile', imgFile);
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus/' + menuServiceObj.menuName + '/menuImage', 
+				data: httpFD, 
+				headers: {	'Content-Type':	undefined	}
+		}
+		$http(httpConfig)
+		.then(uploadMenuImageSuccessCallback)
+		.catch(uploadMenuImageFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function uploadMenuImageSuccessCallback(response){
+			deferred.resolve(response)
+		}
+		
+		function uploadMenuImageFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	return menuServiceObj;
 }
 /* ******************************
  * Service Implementation (End)

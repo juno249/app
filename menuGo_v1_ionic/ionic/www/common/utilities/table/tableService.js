@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.factory('tablesService', tablesService);
+.factory('tableService', tableService);
 
 /* ******************************
  * Service Dependency Injection (Start)
  * ****************************** */
-tablesService.$inject = [
+tableService.$inject = [
 	'API_BASE_URL', 
 	'TABLES_DB_FIELDS', 
 	'$http', 
@@ -19,7 +19,7 @@ tablesService.$inject = [
 /* ******************************
  * Service Implementation (Start)
  * ****************************** */
-function tablesService(
+function tableService(
 		API_BASE_URL, 
 		TABLES_DB_FIELDS, 
 		$http, 
@@ -29,7 +29,7 @@ function tablesService(
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
-	var tablesServiceObj = {
+	var tableServiceObj = {
 			table: {}, 
 			tables: {}, 
 			companyName: undefined, 
@@ -59,34 +59,34 @@ function tablesService(
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
 	function getTable(){
-		return tablesServiceObj.table;
+		return tableServiceObj.table;
 	}
 	function getTables(){
-		return tablesServiceObj.tables;
+		return tableServiceObj.tables;
 	}
 	function getCompanyName(){
-		return tablesServiceObj.companyName;
+		return tableServiceObj.companyName;
 	}
 	function getBranchName(){
-		return tablesServiceObj.branchName;
+		return tableServiceObj.branchName;
 	}
 	function getTableNumber(){
-		return tablesServiceObj.tableNumber;
+		return tableServiceObj.tableNumber;
 	}
 	function setTable(table){
-		tablesServiceObj.table = table;
+		tableServiceObj.table = table;
 	}
 	function setTables(tables){
-		tablesServiceObj.tables = tables;
+		tableServiceObj.tables = tables;
 	}
 	function setCompanyName(companyName){
-		tablesServiceObj.companyName = companyName;
+		tableServiceObj.companyName = companyName;
 	}
 	function setBranchName(branchName){
-		tablesServiceObj.branchName = branchName;
+		tableServiceObj.branchName = branchName;
 	}
 	function setTableNumber(tableNumber){
-		tablesServiceObj.tableNumber = tableNumber;
+		tableServiceObj.tableNumber = tableNumber;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -101,7 +101,7 @@ function tablesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + tablesServiceObj.companyName + '/branches/' + tablesServiceObj.branchName + '/tables/' + tablesServiceObj.tableNumber
+				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
 		}
 		$http(httpConfig)
 		.then(fetchTableSuccessCallback)
@@ -111,9 +111,9 @@ function tablesService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchTableSuccessCallback(response){
-			tablesServiceObj.table = {};
+			tableServiceObj.table = {};
 			convertTableResponseToMap(response.data);
-			var table = tablesServiceObj.table;
+			var table = tableServiceObj.table;
 			table = JSON.stringify(table);
 			localStorage.setItem('Table', table);
 			deferred.resolve(response);
@@ -147,7 +147,7 @@ function tablesService(
 					tableDetails[tableDBFieldRunner] = tableRunner[tableDBFieldRunner];
 				}
 				var tableKeyValue = tableRunner[tableKey];
-				tablesServiceObj.table[tableKeyValue] = tableDetails;
+				tableServiceObj.table[tableKeyValue] = tableDetails;
 			}
 		}
 		return deferred.promise;
@@ -162,7 +162,7 @@ function tablesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + tablesServiceObj.companyName + '/branches/' + tablesServiceObj.branchName + '/tables'
+				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables'
 		};
 		$http(httpConfig)
 		.then(fetchTablesSuccessCallback)
@@ -172,9 +172,9 @@ function tablesService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchTablesSuccessCallback(response){
-			tablesServiceObj.tables = {};
+			tableServiceObj.tables = {};
 			convertTablesResponseToMap(response.data);
-			var tables = tablesServiceObj.tables;
+			var tables = tableServiceObj.tables;
 			tables = JSON.stringify(tables);
 			localStorage.setItem('Tables', tables);
 			deferred.resolve(response);
@@ -208,7 +208,7 @@ function tablesService(
 					tablesDetails[tablesDBFieldRunner] = tablesRunner[tablesDBFieldRunner];
 				}
 				var tablesKeyValue = tablesRunner[tablesKey];
-				tablesServiceObj.tables[tablesKeyValue] = tablesDetails;
+				tableServiceObj.tables[tablesKeyValue] = tablesDetails;
 			}
 		}
 		return deferred.promise;
@@ -223,7 +223,7 @@ function tablesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/companies/' + tablesServiceObj.companyName + '/branches/' + tablesServiceObj.branchName + '/tables', 
+				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables', 
 				data: tables
 		};
 		$http(httpConfig)
@@ -251,12 +251,12 @@ function tablesService(
 	 * method name: updateTable()
 	 * purpose: updates table
 	 * ****************************** */
-	function updateTable(jsonData){
+	function updateTable(table){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + tablesServiceObj.companyName + '/branches/' + tablesServiceObj.branchName + '/tables/' + tablesServiceObj.tableNumber, 
-				data: jsonData
+				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber, 
+				data: table
 		}
 		$http(httpConfig)
 		.then(updateTableSuccessCallback)
@@ -287,7 +287,7 @@ function tablesService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/companies/' + tablesServiceObj.companyName + '/branches/' + tablesServiceObj.branchName + '/tables/' + tablesServiceObj.tableNumber
+				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
 		}
 		$http(httpConfig)
 		.then(deleteTableSuccessCallback)
@@ -309,7 +309,7 @@ function tablesService(
 		return deferred.promise;
 	}
 	
-	return tablesServiceObj;
+	return tableServiceObj;
 }
 /* ******************************
  * Service Implementation (End)

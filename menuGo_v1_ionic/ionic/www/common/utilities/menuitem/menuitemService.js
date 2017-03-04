@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.factory('menuitemsService', menuitemsService);
+.factory('menuitemService', menuitemService);
 
 /* ******************************
  * Service Dependency Injection (Start)
  * ****************************** */
-menuitemsService.$inject = [
+menuitemService.$inject = [
 	'API_BASE_URL', 
 	'MENUITEMS_DB_FIELDS', 
 	'$http', 
@@ -18,7 +18,7 @@ menuitemsService.$inject = [
 /* ******************************
  * Service Implementation (Start)
  * ****************************** */
-function menuitemsService(
+function menuitemService(
 		API_BASE_URL, 
 		MENUITEMS_DB_FIELDS, 
 		$http, 
@@ -27,7 +27,7 @@ function menuitemsService(
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
-	var menuitemsServiceObj = {
+	var menuitemServiceObj = {
 			menuitems: {}, 
 			companyName: undefined, 
 			menuName: undefined, 
@@ -43,7 +43,8 @@ function menuitemsService(
 			fetchMenuitems: fetchMenuitems, 
 			addMenuitem: addMenuitem, 
 			updateMenuitem: updateMenuitem, 
-			deleteMenuitem: deleteMenuitem
+			deleteMenuitem: deleteMenuitem, 
+			uploadMenuitemImage: uploadMenuitemImage
 	};
 	/* ******************************
 	 * Service Return Object (End)
@@ -53,28 +54,28 @@ function menuitemsService(
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
 	function getMenuitems(){
-		return menuitemsServiceObj.menuitems;
+		return menuitemServiceObj.menuitems;
 	}
 	function getCompanyName(){
-		return menuitemsServiceObj.companyName;
+		return menuitemServiceObj.companyName;
 	}
 	function getMenuName(){
-		return menuitemsServiceObj.menuName;
+		return menuitemServiceObj.menuName;
 	}
 	function getMenuitemCode(){
-		return menuitemsServiceObj.menuitemCode;
+		return menuitemServiceObj.menuitemCode;
 	}
 	function setMenuitems(menuitems){
-		menuitemsServiceObj.menuitems = menuitems;
+		menuitemServiceObj.menuitems = menuitems;
 	}
 	function setCompanyName(companyName){
-		menuitemsServiceObj.companyName = companyName;
+		menuitemServiceObj.companyName = companyName;
 	}
 	function setMenuName(menuName){
-		menuitemsServiceObj.menuName = menuName;
+		menuitemServiceObj.menuName = menuName;
 	}
 	function setMenuitemCode(menuitemCode){
-		menuitemsServiceObj.menuitemCode = menuitemCode;
+		menuitemServiceObj.menuitemCode = menuitemCode;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -89,7 +90,7 @@ function menuitemsService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + menuitemsServiceObj.companyName + '/menus/' + menuitemsServiceObj.menuName + '/menuitems'
+				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems'
 		}
 		$http(httpConfig)
 		.then(fetchMenuitemsSuccessCallback)
@@ -99,9 +100,9 @@ function menuitemsService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchMenuitemsSuccessCallback(response){
-			menuitemsServiceObj.menuitems = {};
+			menuitemServiceObj.menuitems = {};
 			convertMenuitemsResponseToMap(response.data);
-			var menuitems = menuitemsServiceObj.menuitems;
+			var menuitems = menuitemServiceObj.menuitems;
 			response.data = menuitems;
 			deferred.resolve(response);
 		}
@@ -134,7 +135,7 @@ function menuitemsService(
 					menuitemsDetails[menuitemsDBFieldRunner] = menuitemsRunner[menuitemsDBFieldRunner];
 				}
 				var menuitemsKeyValue = menuitemsRunner[menuitemsKey];
-				menuitemsServiceObj.menuitems[menuitemsKeyValue] = menuitemsDetails;
+				menuitemServiceObj.menuitems[menuitemsKeyValue] = menuitemsDetails;
 			}
 		}
 		return deferred.promise;
@@ -149,7 +150,7 @@ function menuitemsService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/companies/' + menuitemsServiceObj.companyName + '/menus/' + menuitemsServiceObj.menuName + '/menuitems', 
+				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems', 
 				data: menuitems
 		};
 		$http(httpConfig)
@@ -181,7 +182,7 @@ function menuitemsService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + menuitemsServiceObj.companyName + '/menus/' + menuitemsServiceObj.menuName + '/menuitems/' + menuitemsServiceObj.menuitemCode, 
+				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode, 
 				data: menuitem
 		};
 		$http(httpConfig)
@@ -213,7 +214,7 @@ function menuitemsService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/companies/' + menuitemsServiceObj.companyName + '/menus/' + menuitemsServiceObj.menuName + '/menuitems/' + menuitemsServiceObj.menuitemCode
+				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode
 		};
 		$http(httpConfig)
 		.then(deleteMenuitemSuccessCallback)
@@ -235,7 +236,42 @@ function menuitemsService(
 		return deferred.promise;
 	}
 	
-	return menuitemsServiceObj;
+	/* ******************************
+	 * Method Implementation
+	 * method name: uploadMenuitemImage()
+	 * purpose: uploads menuitem image
+	 * ****************************** */
+	function uploadMenuitemImage(imgFile){
+		var httpFD = new FormData();
+		httpFD.append('imgFile', imgFile);
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'POST', 
+				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode + '/menuitemImage', 
+				data: httpFD, 
+				headers: {	'Content-Type': undefined	}
+		}
+		$http(httpConfig)
+		.then(uploadMenuitemImageSuccessCallback)
+		.catch(uploadMenuitemImageFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function uploadMenuitemImageSuccessCallback(response){
+			deferred.resolve(response);
+		}
+		
+		function uploadMenuitemImageFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		return deferred.promise;
+	}
+	
+	return menuitemServiceObj;
 }
 /* ******************************
  * Service Implementation (End)
