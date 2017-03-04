@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.controller('adminController', adminController);
+.controller('managerController', managerController);
 
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-adminController.$inject = [
+managerController.$inject = [
 	'LOADING_MESSAGES', 
 	'ORDER_STATUS', 
 	'USER_ROLES', 
@@ -24,7 +24,7 @@ adminController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function adminController(
+function managerController(
 		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		USER_ROLES, 
