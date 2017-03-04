@@ -29,7 +29,7 @@ function doRouteConfig(
 	$stateProvider
 	.state('login', {
 		url: '/', 
-		templateUrl: 'templates/login.html', 
+		templateUrl: 'templates/login/login.html', 
 		controller: 'loginController', 
 		controllerAs: 'loginController'
 	})
