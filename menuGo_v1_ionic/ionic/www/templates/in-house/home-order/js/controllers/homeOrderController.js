@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.controller('ordersController', ordersController);
+.controller('homeOrderController', homeOrderController);
 
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-ordersController.$inject = [
+homeOrderController.$inject = [
 	'BROADCAST_MESSAGES', 
 	'LOADING_MESSAGES', 
 	'MQTT_CONFIG', 
@@ -26,7 +26,7 @@ ordersController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function ordersController(
+function homeOrderController(
 		BROADCAST_MESSAGES, 
 		LOADING_MESSAGES, 
 		MQTT_CONFIG, 

@@ -42,28 +42,28 @@ function doRouteConfig(
 	.state('home', {
 		url: '/home', 
 		abstract: true, 
-		templateUrl: 'templates/home.html', 
+		templateUrl: 'templates/in-house/home.html', 
 		controller: 'homeController', 
 		controllerAs: 'homeController'
 	})
-	.state('home.menus', {
-		url: '/menus', 
+	.state('home.menu', {
+		url: '/menu', 
 		views: {
 			'menuContent': {
-				templateUrl: 'templates/home-menus.html', 
-				controller: 'menusController', 
-				controllerAs: 'menusController'
+				templateUrl: 'templates/in-house/home-menu.html', 
+				controller: 'homeMenuController', 
+				controllerAs: 'homeMenuController'
 			}
 		}
 	})
-	.state('home.orders', {
-		url: '/orders', 
+	.state('home.order', {
+		url: '/order', 
 		abstract: true, 
 		views: {
 			'menuContent': {
-				templateUrl: 'templates/home-orders.html', 
-				controller: 'ordersController',
-				controllerAs: 'ordersController'
+				templateUrl: 'templates/in-house/home-order/home-order.html', 
+				controller: 'homeOrderController',
+				controllerAs: 'homeOrderController'
 			}
 		}
 	})
