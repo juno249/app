@@ -40,13 +40,7 @@
 	    <!--  *************** 
 				controller
 				*************** -->
-		<script src="templates/configuration/js/controllers/configurationController.js"></script>
-	    <script src="templates/in-house/js/controllers/homeController.js"></script>	    
-	    <script src="templates/in-house/home-menu/js/controllers/homeMenuController.js"></script>
-	    <script src="templates/in-house/home-order/js/controllers/homeOrderController.js"></script>
 	    <script src="templates/login/js/controllers/loginController.js"></script>
-	    <script src="templates/manager/js/controllers/managerController.js"></script>
-	    <script src="templates/waiter/js/controllers/waiterController.js"></script>
 		<!--  *************** 
 				services
 				*************** -->
@@ -60,25 +54,21 @@
 		<script src="templates/common/utilities/login/loginService.js"></script>
 		<script src="templates/common/utilities/mqtt/mqttService.js"></script>
 		<!--  *************** 
-				styles
-				*************** -->
-		<link href="templates/common/css/styles.css" rel="stylesheet">
-		<link href="templates/configuration/configuration.css" rel="stylesheet">
-		<link href="templates/in-house/home.css">
-		<link href="templates/in-house/home-menu/home-menu.css">
-		<link href="templates/in-house/home-order/home-order.css">
-		<link href="templates/login/login.css" rel="stylesheet">
-		<link href="templates/manager/manager.css" rel="stylesheet">
-		<!--  *************** 
 				google fonts
 				*************** -->
 		<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Lora|Raleway" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+		<!--  *************** 
+				styles
+				*************** -->
+		<link href="templates/common/css/styles.css" rel="stylesheet">
+		<link href="templates/login/login.css" rel="stylesheet">
   </head>
   
 	<body ng-app="starter">  	  	
-		<ion-nav-view>
+		<ion-nav-view  
+			name="main">
 		</ion-nav-view>
 	</body>
 </html>
