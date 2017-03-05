@@ -97,7 +97,45 @@
 			<!--  *************** 
 					companyDesc (end)
 					*************** -->
-		
+			
+			<!--  *************** 
+					companyCategory (start)
+					*************** -->
+			<div 
+				class="row" 
+				ng-hide="modalCompanyController.modalHiddenFields['companyCategory']">
+				<div 
+					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+					<div 
+						class="input-group">
+						<span 
+							class="font-family-1-size-medium input-group-addon">
+							Category
+						</span>
+						<!-- companyCategory txt -->
+						<input 
+							class="font-family-2-size-small form-control" 
+							id="companyCategory" 
+							maxlength="30" 
+							name="companyCategory" 
+							ng-hide="modalCompanyController.modalHiddenFields['companyCategory']" 
+							ng-model="modalCompanyController.company.companyCategory" 
+							placeholder="Category" 
+							required 
+							type="text">
+					</div>
+					
+					<!-- companyCategory help/err -->
+					<div 
+						class="font-family-2-size-small help-block with-errors">
+						{{modalCompanyController.validationErr[0]}}
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					companyCategory (end)
+					*************** -->
+			
 			<!--  *************** 
 					companyLogo (start)
 					*************** -->

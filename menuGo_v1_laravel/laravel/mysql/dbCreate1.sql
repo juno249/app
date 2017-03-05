@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  CREATE TABLE IF NOT EXISTS ziplogic.companies(
  	company_name VARCHAR(30) NOT NULL, 
  	company_desc VARCHAR(500) NOT NULL, 
+ 	company_category VARCHAR(30) NOT NULL, 
  	company_logo VARCHAR(500) NOT NULL, 
  	PRIMARY KEY(company_name)
  );

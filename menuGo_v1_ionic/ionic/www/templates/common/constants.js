@@ -27,7 +27,8 @@ angular
 .constant('COMPANIES_DB_FIELDS', {
 	0: 'company_name', 
 	1: 'company_desc', 
-	2: 'company_logo'
+	2: 'company_category', 
+	3: 'company_logo'
 })
 
 /* ******************************

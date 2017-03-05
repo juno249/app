@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  CREATE TABLE IF NOT EXISTS ziplogic.companies(
  	company_name VARCHAR(30) NOT NULL, 
  	company_desc VARCHAR(500) NOT NULL, 
+ 	company_category VARCHAR(30) NOT NULL, 
  	company_logo VARCHAR(500) NOT NULL, 
  	PRIMARY KEY(company_name)
  );
@@ -270,16 +271,19 @@ USE ziplogic;
 # ==========
 SET @company_name = "Max's";
 SET @company_desc = "Max's Restaurant";
+SET @company_category = "Fine Dining"; 
 SET @company_logo = "https://upload.wikimedia.org/wikipedia/en/d/de/Max's_Restaurant_logo.jpeg";
 
 INSERT  INTO companies(
 		company_name, 
 		company_desc, 
+		company_category, 
 		company_logo
 )	
 VALUES(
 	@company_name, 
 	@company_desc, 
+	@company_category, 
 	@company_logo
 );
 

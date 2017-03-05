@@ -16,12 +16,14 @@ class companiesConstants{
 	 * */
 	const dbCompanyName = 'company_name';
 	const dbCompanyDesc = 'company_desc';
+	const dbCompanyCategory = 'company_category';
 	const dbCompanyLogo = 'company_logo';
 	/*
 	 * CONSTANTS w/c signify the request_name in HTTP GET request
 	 * */
 	const reqCompanyName = 'CompanyName';
 	const reqCompanyDesc = 'CompanyDesc';
+	const reqCompanyCategory = 'CompanyCategory';
 	const reqCompanyLogo = 'CompanyLogo';
 	/*
 	 * CONSTANTS w/c signify the messages returned on failed DB operation
@@ -149,6 +151,9 @@ class companiesController extends Controller
 		if(isset($_GET[companiesConstants::reqCompanyDesc])){
 			array_push($mySqlWhere, [companiesConstants::dbCompanyDesc, 'LIKE', '%' . $_GET[companiesConstants::reqCompanyDesc] . '%']);
 		}
+		if(isset($_GET[companiesConstants::reqCompanyCategory])){
+			array_push($mySqlWhere, [companiesConstants::dbCompanyCategory, 'LIKE', '%' . $_GET[companiesConstants::reqCompanyCategory] . '%']);
+		}
 		if(isset($_GET[companiesConstants::reqCompanyLogo])){
 			array_push($mySqlWhere, [companiesConstants::dbCompanyLogo, 'LIKE', '%' . $_GET[companiesConstants::reqCompanyLogo] . '%']);
 		}
@@ -177,6 +182,7 @@ class companiesController extends Controller
 					[
 							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|required|string|max:30',
 							'*.' . companiesConstants::dbCompanyDesc => 'required|string|max:500',
+							'*.' . companiesConstants::dbCompanyCategory => 'required|string|max:30',
 							'*.' . companiesConstants::dbCompanyLogo => 'required|string|max:500'
 					]
 					);
@@ -186,6 +192,7 @@ class companiesController extends Controller
 					[
 							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|sometimes|string|max:30',
 							'*.' . companiesConstants::dbCompanyDesc => 'sometimes|string|max:500',
+							'*.' . companiesConstants::dbCompanyCategory => 'sometimes|string|max:30',
 							'*.' . companiesConstants::dbCompanyLogo => 'sometimes|string|max:500'
 					]
 					);

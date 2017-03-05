@@ -58,17 +58,20 @@ function modalCompanyController(
 	vm.dom2DbColumn = {
 			companyName: 'company_name', 
 			companyDesc: 'company_desc', 
+			companyCategory: 'company_category', 
 			companyLogo: 'company_logo'
 	};
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
+			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
 	}
 	vm.dbColumn2DomIndex = {
 			company_name: 0, 
 			company_desc: 1, 
-			company_logo: 2
+			company_category: 2, 
+			company_logo: 3
 	}
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;

@@ -53,11 +53,13 @@ function manageCompanyController(
 	vm.dbColumn2Colheader = {
 			company_name: 'Name', 
 			company_desc: 'Description', 
+			company_category: 'Category', 
 			company_logo: 'Logo'
 	}
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
+			company_category: 'companyCategory'
 			company_logo: 'companyLogo'
 	}
 	var user = localStorage.getItem('User');
