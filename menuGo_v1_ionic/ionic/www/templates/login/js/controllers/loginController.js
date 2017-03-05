@@ -70,6 +70,7 @@ function loginController(
 		loginService.doLogin()
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);
+		
 		doShowIonicLoading(LOADING_MESSAGES.login)
 		
 		/* ******************************
@@ -83,6 +84,7 @@ function loginController(
 			customerService.fetchCustomer()
 			.then(fetchCustomerSuccessCallback)
 			.catch(fetchCustomerFailedCallback);
+			
 			doShowIonicLoading(LOADING_MESSAGES.fetchCustomer);
 			
 			/* ******************************
@@ -93,15 +95,15 @@ function loginController(
 				var role = loginService.getUser().role;
 				
 				switch(role){
-					case USER_ROLES.admin:
-					case USER_ROLES.cook:
-					case USER_ROLES.customer:
-						$state.go('config', {}, {reload: true});
-						break;	
-					case USER_ROLES.waiter: 
-						$state.go('waiter', {}, {reload: true});
-						break;
-					default: break;
+				case USER_ROLES.manager:
+				case USER_ROLES.cook:
+				case USER_ROLES.customer:
+					$state.go('configuration', {}, {reload: true});
+					break;	
+				case USER_ROLES.waiter: 
+					$state.go('waiter', {}, {reload: true});
+					break;
+				default: break;
 				}
 			}
 			
@@ -146,6 +148,7 @@ function loginController(
 			template += '<b>statusCode: ' + message.status + '<br>statusText: ' + message.statusText + '</b>'
 			break;
 		default: break;
+		
 		}
 		$ionicPopup.alert({
 			title: title, 

@@ -5,9 +5,10 @@ angular
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-configurationController.$inject = [
+configurationController.$inject = [	
 	'LOADING_MESSAGES', 
 	'MQTT_CONFIG', 
+	'TABLE_STATUS', 
 	'USER_ROLES', 
 	'$ionicHistory', 
 	'$ionicLoading', 
@@ -33,6 +34,7 @@ configurationController.$inject = [
 function configurationController(
 		LOADING_MESSAGES, 
 		MQTT_CONFIG, 
+		TABLE_STATUS, 
 		USER_ROLES, 
 		$ionicHistory, 
 		$ionicLoading, 
@@ -191,8 +193,10 @@ function configurationController(
 			vm.tables = JSON.parse(localStorage.getItem('Tables'));
 			
 			var userRole = loginService.getUser().role;
-			if(USER_ROLES.admin == userRole ||
-					USER_ROLES.cook == userRole){
+			if(
+					USER_ROLES.manager == userRole ||
+					USER_ROLES.cook == userRole
+					){
 				fetchMenus();
 				return;
 			}
@@ -220,8 +224,10 @@ function configurationController(
 		var companyName = vm.companyName;
 		
 		var userRole = loginService.getUser().role;
-		if(!(USER_ROLES.admin == userRole || 
-				USER_ROLES.cook == userRole)){
+		if(!(
+				USER_ROLES.manager == userRole || 
+				USER_ROLES.cook == userRole
+				)){
 			var tableNumber = vm.tableNumber;
 			table[tableNumber] = vm.tables[tableNumber];
 			tablesService.setTable(table);
@@ -233,6 +239,7 @@ function configurationController(
 		menusService.fetchMenus()
 		.then(fetchMenusSuccessCallback)
 		.catch(fetchMenusFailedCallback);
+		
 		doShowIonicLoading(LOADING_MESSAGES.fetchMenus);
 		
 		/* ******************************
@@ -246,6 +253,7 @@ function configurationController(
 			fetchMenuMenuitems(menus)
 			.then(fetchMenuMenuitemsSuccessCallback)
 			.catch(fetchMenuMenuitemsFailedCallback);
+			
 			doShowIonicLoading(LOADING_MESSAGES.fetchMenuitems);
 			
 			/* ******************************
@@ -253,24 +261,27 @@ function configurationController(
 			 * ****************************** */
 			function fetchMenuMenuitemsSuccessCallback(response){
 				$ionicLoading.hide();
-				
 				var userRole = loginService.getUser().role;
-				if(USER_ROLES.admin == userRole || 
-						USER_ROLES.cook == userRole){
-					$state.go('admin', {}, {reload: true});
+				
+				if(
+						USER_ROLES.manager == userRole || 
+						USER_ROLES.cook == userRole
+						){
+					$state.go('manager', {}, {reload: true});
 					return;
 				}
 				
 				var tableNumber = vm.tableNumber;
 				var amendments = [];
 				var amendment = {};
-				amendment.table_status = 'statusOccupied';
+				amendment.table_status = TABLE_STATUS.occupied;
 				amendments.push(amendment);
 				
 				tablesService.setTableNumber(tableNumber);
 				tablesService.updateTable(amendments)
 				.then(updateTableSuccessCallback)
 				.catch(updateTableFailedCallback);
+				
 				doShowIonicLoading(LOADING_MESSAGES.updateTable);
 				
 				/* ******************************
@@ -366,21 +377,27 @@ function configurationController(
 	 * purpose: configures MQTT based on customer setup
 	 * ****************************** */
 	function doMQTTCustomerConfig(){
+		$ionicLoading.hide();
+		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		var onConnectionLostCallback = function(){
+			//do something on connection lost
 		}
+		
 		var onMessageArrivedCallback = function(response){
 			$ionicLoading.hide();
+			
 			if(MQTT_CONFIG.topicWaiterResponse == response.destinationName){
 				handleMessageArrivalWaiterResponse(response);
 			}
 		}
+		
 		var onSuccessCallback = function(){
 			$ionicLoading.hide();
-			
 			var userRole = loginService.getUser().role;
+			
 			if(USER_ROLES.customer == userRole){
 				$state.go('home.menus', {}, {reload: true});
 			}
@@ -389,7 +406,6 @@ function configurationController(
 		 * Callback Implementations (End)
 		 * ****************************** */
 		
-		$ionicLoading.hide();
 		mqttService.useDefaultConfig();
 		try{
 			doShowIonicLoading(LOADING_MESSAGES.doConnect);
@@ -415,15 +431,16 @@ function configurationController(
 			var tableNumber = msgBody.table_number;
 			var timestamp = msgBody.timestamp;
 			var respondingUser = msgBody.responding_user;
-			
 			var msgString = '';
+			
 			msgString += respondingUser + ' heed your call request';
 			doShowIonicPopup(0, msgString);
 			
 			// unsubscrbe to topicWaiterResponse
 			mqttService.setMqttTopic(MQTT_CONFIG.topicWaiterResponse);
 			try{ 	mqttService.doUnsubscribe();
-			} catch (err){	doShowIonicPopup(1, err);	}
+			} catch (err){	doShowIonicPopup(1, err);
+			}
 		}
 	}
 	
@@ -451,6 +468,7 @@ function configurationController(
 			break;
 		default: break;
 		}
+		
 		$ionicPopup.alert({
 			title: title, 
 			template: template

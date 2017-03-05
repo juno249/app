@@ -76,13 +76,15 @@ function homeOrderController(
 	 * ****************************** */
 	var reloadCustomerOrders = function(){
 		var customerOrders = localStorage.getItem('CustomerOrders');
+		customerOrders = JSON.parse(customerOrders);
+		var customerOrdersKeys = Object.keys(customerOrders);
+		
 		if(null == customerOrders){
 			vm.customerOrders = customerOrders;
 			vm.isCheckoutBtnHidden = true;
 			return;
 		}
-		customerOrders = JSON.parse(customerOrders);
-		var customerOrdersKeys = Object.keys(customerOrders);
+		
 		vm.customerOrders = customerOrders;
 		vm.isCheckoutBtnHidden =
 			(null == customerOrders) || 
@@ -102,6 +104,7 @@ function homeOrderController(
 		ordersService.fetchOrders(getOption, null)
 		.then(fetchOrdersSuccessCallback)
 		.catch(fetchOrdersFailedCallback);
+		
 		doShowIonicLoading(LOADING_MESSAGES.reloadOrders);
 		
 		/* ******************************
@@ -111,7 +114,6 @@ function homeOrderController(
 			$ionicLoading.hide();
 			var orders = localStorage.getItem('Orders');
 			orders = JSON.parse(orders);
-			vm.orders = orders;
 			var ordersKeys = Object.keys(orders);
 			
 			for(var i=0; i<ordersKeys.length; i++){
@@ -120,10 +122,12 @@ function homeOrderController(
 				//get menu & menuitem records
 				var menuKey = Object.keys(menuMenuitem.menu)[0];
 				var menuitemKey = Object.keys(menuMenuitem.menuitem)[0];
+				
 				ordersRunner.menu = menuMenuitem.menu[menuKey];
 				ordersRunner.menuitem = menuMenuitem.menuitem[menuitemKey];
-				vm.orders[ordersKeys[i]] = ordersRunner;
+				orders[ordersKeys[i]] = ordersRunner;
 			}
+			vm.orders = orders;
 		}
 		
 		function fetchOrdersFailedCallback(responseError){
@@ -227,20 +231,12 @@ function homeOrderController(
 	 * ****************************** */
 	function broadcastEventMessage(eventMessage){
 		var timeoutDelay = 100;
+		
 		$timeout(function(){ 
 			$rootScope.$broadcast(eventMessage); 
 			}, timeoutDelay);
 	}
 
-	/* ******************************
-	 * Broadcast Event Handlers (Start)
-	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGES.reloadCustomerOrders, reloadCustomerOrders);
-	$scope.$on(BROADCAST_MESSAGES.reloadOrders, reloadOrders);
-	/* ******************************
-	 * Broadcast Event Handlers (End)
-	 * ****************************** */
-	
 	/* ******************************
 	 * Method Implementation
 	 * method name: doShowIonicPopup()
@@ -265,6 +261,7 @@ function homeOrderController(
 			break;
 		default: break;
 		}
+		
 		$ionicPopup.alert({
 			title: title, 
 			template: template
@@ -281,6 +278,16 @@ function homeOrderController(
 			template: '<ion-spinner icon="spiral"></ion-spinner><p class="font-family-1-size-medium">' + message + '</p>'
 		});
 	}
+	
+	/* ******************************
+	 * Broadcast Event Handlers (Start)
+	 * ****************************** */
+	$scope.$on(BROADCAST_MESSAGES.reloadCustomerOrders, reloadCustomerOrders);
+	
+	$scope.$on(BROADCAST_MESSAGES.reloadOrders, reloadOrders);
+	/* ******************************
+	 * Broadcast Event Handlers (End)
+	 * ****************************** */
 }
 /* ******************************
  * Controller Implementation (End)

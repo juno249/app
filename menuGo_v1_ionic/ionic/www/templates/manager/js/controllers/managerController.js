@@ -46,7 +46,6 @@ function managerController(
 	companyBranchOrders = JSON.parse(companyBranchOrders);
 	vm.companyBranchOrders = companyBranchOrders;
 	vm.interval = undefined;
-	
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */

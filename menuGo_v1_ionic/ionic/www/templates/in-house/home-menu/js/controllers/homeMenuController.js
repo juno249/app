@@ -9,7 +9,7 @@ homeMenuController.$inject = [
 	'$ionicPopup', 
 	'$localStorage', 
 	'$scope', 
-	'ordersService' 
+	'orderService' 
 ];
 /* ******************************
  * Controller Dependency Injection (End)
@@ -22,7 +22,7 @@ function homeMenuController(
 		$ionicPopup, 
 		$localStorage, 
 		$scope, 
-		ordersService
+		orderService
 ){
 	/* ******************************
 	 * Controller Binded Data (Start)
@@ -96,12 +96,9 @@ function homeMenuController(
 		/* ******************************
 		 * Controller Binded Data (Start)
 		 * ****************************** */
-		addToCustomerOrdersController
-			.customerOrdersQuantity = 0;
-		addToCustomerOrdersController
-			.menu = menu;
-		addToCustomerOrdersController
-			.menuitem = menuitem;
+		addToCustomerOrdersController.customerOrdersQuantity = 0;
+		addToCustomerOrdersController.menu = menu;
+		addToCustomerOrdersController.menuitem = menuitem;
 		/* ******************************
 		 * Controller Binded Data (End)
 		 * ****************************** */
@@ -109,16 +106,13 @@ function homeMenuController(
 		/* ******************************
 		 * Controller Binded Methods (Start)
 		 * ****************************** */
-		addToCustomerOrdersController
-			.incCustomerOrdersQuantity = incCustomerOrdersQuantity;
-		addToCustomerOrdersController
-			.decCustomerOrdersQuantity = decCustomerOrdersQuantity;
+		addToCustomerOrdersController.incCustomerOrdersQuantity = incCustomerOrdersQuantity;
+		addToCustomerOrdersController.decCustomerOrdersQuantity = decCustomerOrdersQuantity;
 		/* ******************************
 		 * Controller Binded Methods (End)
 		 * ****************************** */
 		
-		addToCustomerOrdersScope
-			.controller = addToCustomerOrdersController;
+		addToCustomerOrdersScope.controller = addToCustomerOrdersController;
 		
 		/* ******************************
 		 * Method Implementation
@@ -135,15 +129,12 @@ function homeMenuController(
 		 * purpose: decrements customer order quantity
 		 * ****************************** */
 		function decCustomerOrdersQuantity(){
-			var customerOrdersQuantity = addToCustomerOrdersScope
-				.controller
-				.customerOrdersQuantity;
+			var customerOrdersQuantity = addToCustomerOrdersScope.controller.customerOrdersQuantity;
 			customerOrdersQuantity --;
 			if(customerOrdersQuantity < 0){	
 				customerOrdersQuantity = 0;	
 			}
-			addToCustomerOrdersScope
-				.controller.customerOrdersQuantity = customerOrdersQuantity;
+			addToCustomerOrdersScope.controller.customerOrdersQuantity = customerOrdersQuantity;
 		}
 		
 		/* ******************************
@@ -151,18 +142,18 @@ function homeMenuController(
 		 * ****************************** */
 		var componentClassCancel = 'button button-small button-assertive icon ion-android-close font-family-3-size-medium';
 		var componentClassAdd = 'button button-small button-assertive icon ion-android-add font-family-3-size-medium';
-		
 		var cancelBtnConfig = {
 			text:' Cancel', 
 			type: componentClassCancel, 
 			onTap: function(){
+				//do something on cancel
 			}
 		};
 		var addBtnConfig = {
 			text:' Add', 
 			type: componentClassAdd, 
 			onTap: function(){
-				ordersService.addCustomerOrder(
+				orderService.addCustomerOrder(
 					menu, 
 					menuitem, 
 					addToCustomerOrdersScope.controller.customerOrdersQuantity
@@ -209,6 +200,7 @@ function homeMenuController(
 			break;
 		default: break;
 		}
+		
 		$ionicPopup.alert({
 			title: title, 
 			template: template

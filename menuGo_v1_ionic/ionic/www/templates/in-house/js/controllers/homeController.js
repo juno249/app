@@ -70,6 +70,7 @@ function homeController(
 	 * ****************************** */
 	function broadcastEventMessage(eventMessage){
 		var timeoutDelay = 100;
+		
 		$timeout(function(){ 
 			$rootScope.$broadcast(eventMessage); 
 			}, timeoutDelay);
@@ -91,11 +92,13 @@ function homeController(
 		
 		mqttService.setMqttTopic(MQTT_CONFIG.topicWaiterResponse);
 		try{ 	mqttService.doSubscribe();
-		} catch (err){	doShowIonicPopup(1, err);	}
+		} catch (err){	doShowIonicPopup(1, err);	
+		}
 		
 		mqttService.setMqttTopic(MQTT_CONFIG.topicWaiterRequest);
 		try{	mqttService.doSendMessage(mqttMessage);
-		} catch(err){		doShowIonicPopup(1, err);	}
+		} catch(err){		doShowIonicPopup(1, err);	
+		}
 		
 		doShowIonicLoading(LOADING_MESSAGES.doCallWaiter);
 	}
@@ -124,6 +127,7 @@ function homeController(
 			break;
 		default: break;
 		}
+		
 		$ionicPopup.alert({
 			title: title, 
 			template: template
