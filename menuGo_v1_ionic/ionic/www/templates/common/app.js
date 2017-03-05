@@ -3,7 +3,6 @@ angular
  * Module Dependency Injection (Start)
  * ****************************** */
 .module('starter', [
-	'aCarousel', 
 	'angular.filter', 
 	'ionic', 
 	'ngStorage'
