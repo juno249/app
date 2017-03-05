@@ -4,11 +4,6 @@
 	z-index: -3;
 }
 
-#appTitle{
-	font-family: 'Kaushan Script', cursive;
-	font-size: 20px;
-}
-
 .border-rounded{
 	border-radius: 20px;
 }

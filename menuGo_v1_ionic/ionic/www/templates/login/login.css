@@ -1,1 +1,31 @@
-@CHARSET "ISO-8859-1";
+button.loginBtn{
+	width: 40%;
+}
+
+div.buttonContainer{
+	padding-top: 25px;
+}
+
+div.companyLogoContainer{
+	display: block;
+	
+	height: 25%;
+	width: 80%;
+	
+	margin: auto;
+	margin-top: 50px;
+}
+
+div.formContainer{
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+img.companyLogo{
+	height: 100%;
+	width: 100%;
+}
+
+input.loginTxt{
+	width: 60%;	
+}

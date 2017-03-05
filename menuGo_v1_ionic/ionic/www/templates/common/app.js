@@ -35,9 +35,38 @@ function doRouteConfig(
 				}
 			}
 		})
+		.state('customer', {
+			url: '/customer', 
+			abstract: true, 
+			views: {
+				'main': {
+					templateUrl: 'templates/customer/customer.html'
+				}
+			}
+		})
+		.state('customer.home', {
+			url: '/home', 
+			views: {
+				'customer-home': {
+					templateUrl: 'templates/customer/home/customer-home.html', 
+					controller: 'customerHomeController', 
+					controllerAs: 'customerHomeController'
+				}
+			}
+		})
+		.state('customer.nearby', {
+			url: '/nearby', 
+			views: {
+				'customer-nearby': {
+					templateUrl: 'templates/customer/nearby/customer-nearby.html', 
+					controller: 'customerNearbyController', 
+					controllerAs: 'customerNearbyController'
+				}
+			}
+		})
 		
 		$urlRouterProvider
-		.otherwise('/');
+		.otherwise('/customer/nearby');
 	}
 
 /* ******************************
