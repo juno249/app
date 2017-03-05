@@ -67,7 +67,6 @@ function configurationController(
 	var menus = localStorage.getItem('Menus');
 	menus = JSON.parse(menus);
 	vm.menus = menus;
-	
 	vm.isBranchItemHidden = true;
 	vm.isTableItemHidden = true;
 	/* ******************************
@@ -100,6 +99,7 @@ function configurationController(
 		companiesService.fetchCompanies()
 		.then(fetchCompaniesSuccessCallback)
 		.catch(fetchCompaniesFailedCallback);
+		
 		doShowIonicLoading(LOADING_MESSAGES.fetchCompanies);
 		
 		/* ******************************
@@ -127,6 +127,7 @@ function configurationController(
 	function fetchBranches(){
 		var company = {};
 		var companyName = vm.companyName;
+		
 		company[companyName] = vm.companies[companyName];
 		companiesService.setCompany(company);
 		companiesService.setCompanyName(companyName);
@@ -136,6 +137,7 @@ function configurationController(
 		branchesService.fetchBranches()
 		.then(fetchBranchesSuccessCallback)
 		.catch(fetchBranchesFailedCallback);
+		
 		doShowIonicLoading(LOADING_MESSAGES.fetchBranches);
 		
 		/* ******************************
@@ -144,6 +146,7 @@ function configurationController(
 		function fetchBranchesSuccessCallback(response){
 			$ionicLoading.hide();
 			vm.branches = JSON.parse(localStorage.getItem('Branches'));
+			
 			vm.isTableItemHidden = true;
 			vm.isBranchItemHidden = false;
 		}
@@ -166,6 +169,7 @@ function configurationController(
 		var branch = {};
 		var branchName = vm.branchName;
 		var companyName = vm.companyName;
+		
 		branch[branchName] = vm.branches[branchName];
 		branchesService.setBranch(branch);
 		branchesService.setBranchName(branchName);
@@ -176,6 +180,7 @@ function configurationController(
 		tablesService.fetchTables()
 		.then(fetchTablesSuccessCallback)
 		.catch(fetchTablesFailedCallback);
+		
 		doShowIonicLoading(LOADING_MESSAGES.fetchTables);
 		
 		/* ******************************
