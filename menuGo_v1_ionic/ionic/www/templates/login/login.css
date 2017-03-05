@@ -1,12 +1,12 @@
-button.loginBtn{
+div.loginContainer button.loginBtn{
 	width: 40%;
 }
 
-div.buttonContainer{
+div.loginContainer div.buttonContainer{
 	padding-top: 25px;
 }
 
-div.companyLogoContainer{
+div.loginContainer div.companyLogoContainer{
 	display: block;
 	
 	height: 25%;
@@ -16,16 +16,16 @@ div.companyLogoContainer{
 	margin-top: 50px;
 }
 
-div.formContainer{
+div.loginContainer div.formContainer{
 	padding-left: 25px;
 	padding-right: 25px;
 }
 
-img.companyLogo{
+div.loginContainer img.companyLogo{
 	height: 100%;
 	width: 100%;
 }
 
-input.loginTxt{
+div.loginContainer input.loginTxt{
 	width: 60%;	
 }

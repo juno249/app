@@ -1,4 +1,4 @@
-div.companyLogoContainer{
+div.customerHomeContainer div.companyLogoContainer{
 	display: block;
 	
 	height: 20%;
@@ -7,24 +7,33 @@ div.companyLogoContainer{
 	margin: auto;
 }
 
-div.searchContainer{
+div.customerHomeContainer div.searchContainer{
 	width:80%;
 	
 	margin: auto;
 }
 
-div #searchLbl{
+div.customerHomeContainer div #searchLbl{
 	padding: 5px 0px 5px 20px;
 }
 
-div.restaurantAdsSlideBox{
+div.customerHomeContainer img.companyLogo, 
+div.customerHomeContainer div.restaurantAdsSlide, 
+div.customerHomeContainer div.restaurantAdsSlideBox, 
+div.customerHomeContainer div.foodBlogsSlide, 
+div.customerHomeContainer div.foodBlogsSlideBox{
 	height: 100%;
 	width: 100%;
 }
 
-div.restaurantAdsSlideBoxContainer{
-	height: 30%;
+div.customerHomeContainer div.restaurantAdsContainer, 
+div.customerHomeContainer div.foodBlogsContainer{
+	border: solid 1px #333;
+	
+	height: 150px;
 	width: 80%;
 	
 	margin: auto;
+	margin-top: 20px;
+	padding: 10px 10px 0px 10px
 }

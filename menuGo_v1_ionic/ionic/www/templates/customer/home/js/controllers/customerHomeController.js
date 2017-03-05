@@ -21,21 +21,42 @@ function customerHomeController(
 	 * ****************************** */
 	var vm = this;
 	vm.restaurantAds = undefined;
+	vm.foodBlogs = undefined;
 	/* ******************************
 	 * Controller Implementation (End)
 	 * ****************************** */
 	
-	/*
+	/* ******************************
 	 * test-data (Start)
-	 * */
-	vm.restaurantAds = {
-			Ad_1: 'This is Advertisement 1', 
-			Ad_2: 'This is Advertisement 2', 
-			Ad_3: 'This is Advertisement 3'
-	}
-	/*
+	 * ****************************** */
+	vm.restaurantAds = [
+		{
+			companyName: 'Jollibee', 
+			adContent: 'Jollibee Chicken Joy', 
+			price: 97
+		}, {
+			companyName: "Max's", 
+			adContent: "Max's Fried Chicken", 
+			price: 565
+		}, {
+			companyName: 'McDonalds', 
+			adContent: 'McDonalds Fried Chicken', 
+			price: 79
+		}
+	]
+	vm.foodBlogs = [
+		{
+			title: 'title # 1', 
+			content: 'content # 1'
+		}, {
+			title: 'title # 2', 
+			content: 'content # 2'
+		}
+	]
+	/* ******************************
 	 * test-data (End)
-	 * */
+	 * ****************************** */
+	
 }
 /* ******************************
  * Controller Implementation (End)
