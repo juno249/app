@@ -1,3 +1,38 @@
 <ion-view>
-Customer_Home
+	<div 
+		class="companyLogoContainer child-content-center">
+		<img 
+			class="companyLogo" 
+			src="templates/login/res/img/companyLogo.png">
+	</div>
+	<div 
+		class="searchContainer">
+		<!--  *************** 
+				search (start)
+				*************** -->
+		<div 
+			class="item item-input-inset">
+			<label 
+				id="searchLbl" 
+				name="searchLbl" 
+				class="item item-input-wrapper">
+				<i 
+					class="icon ion-ios-search">
+				</i>
+				<input 
+					class="fill-parent-x" 
+					id="searchTxt" 
+					name="searchTxt" 
+					ng-model="customerHomeController.search" 
+					placeholder="Search" 
+					type="text">
+			</label>
+		</div>
+		<!--  *************** 
+				search (end)
+				*************** -->
+	</div>
+	
+	
+	
 </ion-view>

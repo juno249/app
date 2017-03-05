@@ -1,0 +1,30 @@
+div.companyLogoContainer{
+	display: block;
+	
+	height: 20%;
+	width: 60%;
+	
+	margin: auto;
+}
+
+div.searchContainer{
+	width:80%;
+	
+	margin: auto;
+}
+
+div #searchLbl{
+	padding: 5px 0px 5px 20px;
+}
+
+div.restaurantAdsSlideBox{
+	height: 100%;
+	width: 100%;
+}
+
+div.restaurantAdsSlideBoxContainer{
+	height: 30%;
+	width: 80%;
+	
+	margin: auto;
+}

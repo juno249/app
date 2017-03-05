@@ -3,8 +3,9 @@ angular
  * Module Dependency Injection (Start)
  * ****************************** */
 .module('starter', [
-	'ionic', 
+	'aCarousel', 
 	'angular.filter', 
+	'ionic', 
 	'ngStorage'
 	])
 /* ******************************
@@ -66,7 +67,7 @@ function doRouteConfig(
 		})
 		
 		$urlRouterProvider
-		.otherwise('/customer/nearby');
+		.otherwise('/customer/home');
 	}
 
 /* ******************************
