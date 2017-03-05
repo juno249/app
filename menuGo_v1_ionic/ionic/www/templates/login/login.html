@@ -1,0 +1,114 @@
+<ion-view>
+	<div 
+		class="companyLogoContainer child-content-center">
+		<img 
+			class="companyLogo" 
+			src="templates/login/res/img/companyLogo.png">
+	</div>
+	<div 
+		class="child-content-center formContainer">
+		<!--  *************** 
+				loginUsername (start)
+				*************** -->
+		<div 
+			class="item item-input-inset">
+			<label 
+				class="item item-input-wrapper">
+				<i 
+					class="icon ion-person">
+				</i>
+				<input 
+					class="fill-parent-x loginTxt" 
+					id="loginUsernameTxt" 
+					name="loginUsernameTxt" 
+					ng-model="loginController.loginUsername" 
+					placeholder="Username" 
+					type="text">
+			</label>
+		</div>
+		<!--  *************** 
+				loginUsername (end)
+				*************** -->
+					
+		<!--  *************** 
+				loginPassword (start)
+				*************** -->
+		<div 
+			class="item item-input-inset">
+			<label 
+				class="item item-input-wrapper">
+				<i 
+					class="icon ion-lock-combination">
+				</i>
+				<input 
+					class="fill-parent-x loginTxt" 
+					id="loginPasswordTxt" 
+					name="loginPasswordTxt" 
+					ng-model="loginController.loginPassword" 
+					placeholder="Password" 
+					type="text">
+			</label>
+		</div>
+		<!--  *************** 
+				loginPassword (end)
+				*************** -->
+				
+		<!--  *************** 
+				loginButtons (start)
+				*************** -->
+		<div 
+			class="buttonContainer child-content-center fill-parent-x">
+			<button 
+				class="button button-positive button-small loginBtn" 
+				id="signupBtn" 
+				name="signupBtn" 
+				ng-click="loginController.doSignup();">
+				Signup
+			</button>
+			<button 
+				class="button button-positive button-small loginBtn" 
+				id="loginBtn" 
+				name="loginBtn" 
+				ng-click="loginController.doLogin();">
+				Login
+			</button>
+		</div>
+		<!--  *************** 
+				loginButtons (end)
+				*************** -->
+	</div>
+</ion-view>
+
+<style>
+button.loginBtn{
+	width: 40%;
+}
+
+div.buttonContainer{
+	padding-top: 25px;
+}
+
+div.companyLogoContainer{
+	display: block;
+	
+	height: 25%;
+	width: 80%;
+	
+	margin: auto;
+	margin-top: 50px;
+}
+
+div.formContainer{
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+img.companyLogo{
+	height: 100%;
+	width: 100%;
+}
+
+input.loginTxt{
+	width: 60%;	
+}
+</style>

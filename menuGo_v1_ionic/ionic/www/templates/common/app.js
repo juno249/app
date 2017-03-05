@@ -27,72 +27,14 @@ function doRouteConfig(
 		$stateProvider
 		.state('login', {
 			url: '/', 
-			templateUrl: 'templates/login/login.html', 
-			controller: 'loginController', 
-			controllerAs: 'loginController'
-		})
-		.state('configuration', {
-			url: '/configuration', 
-			templateUrl: 'templates/configuration/configuration.html', 
-			controller: 'configurationController', 
-			controllerAs: 'configurationController'
-		})
-		.state('home', {
-			url: '/home', 
-			abstract: true, 
-			templateUrl: 'templates/in-house/home.html', 
-			controller: 'homeController', 
-			controllerAs: 'homeController'
-		})
-		.state('home.menu', {
-			url: '/menu', 
 			views: {
-				'menuContent': {
-					templateUrl: 'templates/in-house/home-menu/home-menu.html', 
-					controller: 'homeMenuController', 
-					controllerAs: 'homeMenuController'
+				'main': {
+					templateUrl: 'templates/login/login.html', 
+					controller: 'loginController', 
+					controllerAs: 'loginController'
 				}
 			}
 		})
-		.state('home.order', {
-			url: '/order', 
-			abstract: true, 
-			views: {
-				'menuContent': {
-					templateUrl: 'templates/in-house/home-order/home-order.html', 
-					controller: 'homeOrderController',
-					controllerAs: 'homeOrderController'
-				}
-			}
-		})
-		.state('home.order.view', {
-			url: '/order-view', 
-			views: {
-				'order-view': {
-					templateUrl: 'templates/in-house/home-order/home-order-view/home-order-view.html'
-				}
-			}
-		})
-		.state('home.order.monitoring', {
-			url: '/order-monitor', 
-			views: {
-				'order-monitor': {
-					templateUrl: 'templates/in-house/home-order/home-order-monitor/home-order-monitor.html'
-				}
-			}
-		})
-		.state('waiter', {
-			url: '/waiter', 
-			templateUrl: 'templates/waiter/waiter.html', 
-			controller: 'waiterController', 
-			controllerAs: 'waiterController'
-		})
-		.state('manager', {
-			url: '/manager', 
-			templateUrl: 'templates/manager/manager.html', 
-			controller: 'managerController', 
-			controllerAs: 'managerController'
-		});
 		
 		$urlRouterProvider
 		.otherwise('/');
