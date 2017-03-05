@@ -127,7 +127,7 @@ class branchesController extends Controller
 				$branchesResponse->setContent(json_encode($companyBranch));
 			}
 		} catch(\PDOException $e){
-			$branchesResponse.setStatusCode(400, branchesConstants::dbReadCatchMsg);
+			$branchesResponse->setStatusCode(400, branchesConstants::dbReadCatchMsg);
 		}
 		return $branchesResponse;
 	}
@@ -179,7 +179,7 @@ class branchesController extends Controller
 				$branchesResponse->setContent(json_encode($companyBranches));
 			}
 		} catch(\PDOException $e){
-			$branchesResponse.setStatusCode(400, branchesConstants::dbReadCatchMsg);
+			$branchesResponse->setStatusCode(400, branchesConstants::dbReadCatchMsg);
 		}
 		return $branchesResponse;
 	}

@@ -111,7 +111,7 @@ class companiesController extends Controller
 				$companiesResponse->setContent(json_encode($companies));
 			}
 		} catch(\PDOException $e){
-			$customersResponse.setStatusCode(400, customersConstants::dbReadCatchMsg);
+			$customersResponse->setStatusCode(400, customersConstants::dbReadCatchMsg);
 		}
 		return $companiesResponse;
 	}
@@ -133,7 +133,7 @@ class companiesController extends Controller
 				$companiesResponse->setContent(json_encode($company));
 			}
 		} catch(\PDOException $e){
-			$customersResponse.setStatusCode(400, customersConstants::dbReadCatchMsg);
+			$customersResponse->setStatusCode(400, customersConstants::dbReadCatchMsg);
 		}
 		return $companiesResponse;
 	}
@@ -167,7 +167,7 @@ class companiesController extends Controller
 				$companiesResponse->setContent(json_encode($companies));
 			}
 		} catch(\PDOException $e){
-			$customersResponse.setStatusCode(400, customersConstants::dbReadCatchMsg);
+			$customersResponse->setStatusCode(400, customersConstants::dbReadCatchMsg);
 		}
 		return $companiesResponse;
 	}

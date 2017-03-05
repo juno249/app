@@ -186,6 +186,30 @@ class ordersController extends Controller
 		}
 		return $ordersResponse;
 	}
+	
+	/**
+	 * GET method getCompanyBranchOrdersNotOrderStatus
+	 * URL-->/companies/{CompanyName}/branches/{BranchName}/orders/not/{OrderStatus}
+	 **/
+	public function getCompanyBranchOrdersNotOrderStatus($CompanyName, $BranchName, $OrderStatus){
+		$mySqlWhere = array();
+		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
+		array_push($mySqlWhere, [branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, '=', $BranchName]);
+		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', $OrderStatus]);
+	
+		$ordersResponse = new Response();
+		try{
+			$companyBranchOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
+			if($companyBranchOrders->isEmpty()){
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
+			} else {
+				$ordersResponse->setContent(json_encode($companyBranchOrders));
+			}
+		} catch(\PDOException $e){
+			$ordersResponse->setStatusCode(400, ordersConstants::dbReadCatchMsg);
+		}
+		return $ordersResponse;
+	}
 
 	/**
 	 * GET method getCompanyBranchTableOrders

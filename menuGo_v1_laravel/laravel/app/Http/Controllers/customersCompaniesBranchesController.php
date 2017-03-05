@@ -154,7 +154,7 @@ class customersCompaniesBranchesController extends Controller
 				$customersCompaniesBranchesResponse->setContent(json_encode($customersCompaniesBranches));
 			}
 		} catch(\PDOException $e){
-			$customersCompaniesBranchesResponse.setStatusCode(400, customersCompaniesBranchesConstants::dbReadCatchMessage);
+			$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbReadCatchMessage);
 		}
 		return $customersCompaniesBranchesResponse;
 	}
