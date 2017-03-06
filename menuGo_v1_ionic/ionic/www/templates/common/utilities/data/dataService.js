@@ -17,6 +17,9 @@ dataService.$inject = [
  * Service Dependency Injection (End)
  * ****************************** */
 
+/* ******************************
+ * Service Implementation (Start)
+ * ****************************** */
 function dataService(
 		$localStorage, 
 		companyService, 
@@ -249,3 +252,6 @@ function dataService(
 	
 	return dataServiceObj;
 }
+/* ******************************
+ * Service Implementation (End)
+ * ****************************** */
