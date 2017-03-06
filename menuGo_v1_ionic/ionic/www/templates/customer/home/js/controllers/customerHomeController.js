@@ -17,13 +17,13 @@ customerHomeController.$inject = [
 function customerHomeController(		
 ){
 	/* ******************************
-	 * Controller Implementation (Start)
+	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
 	vm.restaurantAds = undefined;
 	vm.foodBlogs = undefined;
 	/* ******************************
-	 * Controller Implementation (End)
+	 * Controller Binded Data (End)
 	 * ****************************** */
 	
 	/* ******************************
