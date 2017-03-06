@@ -34,6 +34,7 @@ function customerNearbyController(
 	companies = JSON.parse(companies);
 	vm.companies = companies;
 	vm.companiesMenuitems = undefined;
+	vm.companiesBranches = undefined;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -50,6 +51,7 @@ function customerNearbyController(
 	}
 	
 	loadCompaniesMenuitems();
+	loadCompaniesBranches();
 	
 	/* ******************************
 	 * Method Implementation
@@ -85,6 +87,25 @@ function customerNearbyController(
 	}
 	
 	/* ******************************
+	 * Method Implementation
+//	 * method name: loadCompaniesBranches()
+	 * purpose: loads companies branches
+	 * ****************************** */
+	function loadCompaniesBranches(){
+		var companies = vm.companies;
+		var companiesBranches = {};
+		
+		angular.forEach(companies, function(v, k){
+			var company = v;
+			var companyBranches = company.branches;
+			
+			companiesBranches[k] = companyBranches;
+		});
+		
+		vm.companiesBranches = companiesBranches;
+	}
+	
+	/* ******************************
 	 * Watchers (Start)
 	 * ****************************** */
 	$scope.$watch(
@@ -97,6 +118,7 @@ function customerNearbyController(
 			vm.companies = companies;
 			
 			loadCompaniesMenuitems();
+			loadCompaniesBranches();
 		}
 	);
 	/* ******************************
