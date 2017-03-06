@@ -101,7 +101,8 @@ angular
 	3: 'menuitem_name', 
 	4: 'menuitem_desc', 
 	5: 'menuitem_price', 
-	6: 'menuitem_image'
+	6: 'menuitem_featured', 
+	7: 'menuitem_image'
 })
 
 /* ******************************
@@ -157,6 +158,15 @@ angular
 .constant('TABLE_STATUS', {
 	vacant: 'vacant', 
 	occupied: 'occupied'
+})
+
+/* ******************************
+ * Constants: FEATURED_VALUES
+ * purpose: lists table status
+ * ****************************** */
+.constant('FEATURED_VALUES', {
+	1: 'Y', 
+	0: 'N'
 })
 
 /* ******************************

@@ -7,6 +7,7 @@ angular
  * ****************************** */
 modalMenuitemController.$inject = [
 	'API_BASE_URL', 
+	'FEATURED_VALUES', 
 	'$uibModalInstance', 
 	'$timeout', 
 	'menuitemService', 
@@ -23,6 +24,7 @@ modalMenuitemController.$inject = [
  * ****************************** */
 function modalMenuitemController(
 		API_BASE_URL, 
+		FEATURED_VALUES, 
 		$uibModalInstance, 
 		$timeout, 
 		menuitemService, 
@@ -56,6 +58,7 @@ function modalMenuitemController(
 			menuitemName: 'menuitem_name', 
 			menuitemDesc: 'menuitem_desc', 
 			menuitemPrice: 'menuitem_price', 
+			menuitemFeatured: 'menuitem_featured', 
 			menuitemImage: 'menuitem_image'
 	}
 	vm.dbColumn2Dom = {
@@ -63,6 +66,7 @@ function modalMenuitemController(
 			menuitem_name: 'menuitemName', 
 			menuitem_desc: 'menuitemDesc', 
 			menuitem_price: 'menuitemPrice', 
+			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
 	}
 	vm.dbColumn2DomIndex = {
@@ -70,8 +74,10 @@ function modalMenuitemController(
 			menuitem_name: 1, 
 			menuitem_desc: 2, 
 			menuitem_price: 3, 
-			menuitem_image: 4
+			menuitem_featured: 4, 
+			menuitem_image: 5
 	}
+	vm.featuredOptions = FEATURED_VALUES;
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;
 	vm.isValidationErrDBHidden = true;

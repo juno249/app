@@ -59,7 +59,7 @@ function manageCompanyController(
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
-			company_category: 'companyCategory'
+			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
 	}
 	var user = localStorage.getItem('User');

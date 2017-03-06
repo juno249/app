@@ -9,6 +9,7 @@ menuitemService.$inject = [
 	'API_BASE_URL', 
 	'MENUITEMS_DB_FIELDS', 
 	'$http', 
+	'$localStorage', 
 	'$q' 
 ];
 /* ******************************
@@ -22,6 +23,7 @@ function menuitemService(
 		API_BASE_URL, 
 		MENUITEMS_DB_FIELDS, 
 		$http, 
+		$localStorage, 
 		$q 
 	){
 	/* ******************************
@@ -103,7 +105,8 @@ function menuitemService(
 			menuitemServiceObj.menuitems = {};
 			convertMenuitemsResponseToMap(response.data);
 			var menuitems = menuitemServiceObj.menuitems;
-			response.data = menuitems;
+			menuitems = JSON.stringify(menuitems);
+			localStorage.setItem('Menuitems', menuitems);
 			deferred.resolve(response);
 		}
 		

@@ -1,3 +1,64 @@
 <ion-view>
-Customer_Nearby
+	<div 
+		class="customerNearbyContainer">
+		<div 
+			class="searchContainer">
+			<!--  *************** 
+					search (start)
+					*************** -->
+			<div 
+				class="item item-input-inset">
+				<label 
+					id="searchLbl" 
+					name="searchLbl" 
+					class="item item-input-wrapper">
+					<i 
+						class="icon ion-ios-search">
+					</i>
+					<input 
+						class="fill-parent-x" 
+						id="searchTxt" 
+						name="searchTxt" 
+						ng-model="customerNearbyController.search" 
+						placeholder="Current Location" 
+						type="text">
+				</label>
+			</div>
+			<!--  *************** 
+					search (end)
+					*************** -->
+		</div>
+		
+		<!--  *************** 
+				companies (start)
+				*************** -->
+		<div 
+			class="companiesContainer">
+			<ion-slide-box 
+				auto-play="true" 
+				does-continue="true" 
+				class="companiesSlideBox" 
+				ng-repeat="(k, v) in customerNearbyController.companies">
+				<ion-slide 
+					class="companiesSlide" 
+					ng-repeat="i in customerNearbyController.companiesMenuitems[k]">
+					<div 
+						class="child-content-left companyNameContainer font-family-1-size-large">
+						{{k}}
+					</div>
+					<div 
+						class="child-content-center font-family-2-size-medium menuitemNameContainer">
+						{{i.menuitem_name}}
+					</div>
+					<div 
+						class="child-content-right font-family-2-size-large menuitemPriceContainer">
+						{{i.menuitem_price}}
+					</div>
+				</ion-slide>
+			</ion-slide-box>
+		</div>
+		<!--  *************** 
+				companies (end)
+				*************** -->
+	</div>
 </ion-view>

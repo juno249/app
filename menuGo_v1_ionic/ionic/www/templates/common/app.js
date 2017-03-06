@@ -66,7 +66,7 @@ function doRouteConfig(
 		})
 		
 		$urlRouterProvider
-		.otherwise('/customer/home');
+		.otherwise('/customer/nearby');
 	}
 
 /* ******************************

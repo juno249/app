@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	menuitem_name VARCHAR(30) NOT NULL, 
  	menuitem_desc VARCHAR(500) NOT NULL,
  	menuitem_price DOUBLE NOT NULL, 
+ 	menuitem_featured BOOLEAN NOT NULL, 
  	menuitem_image VARCHAR(500) NOT NULL, 
  	PRIMARY KEY(menuitem_id), 
  	UNIQUE(menuitem_code, menu_id), 

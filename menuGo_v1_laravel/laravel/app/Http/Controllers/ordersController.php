@@ -196,7 +196,7 @@ class ordersController extends Controller
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
 		array_push($mySqlWhere, [branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, '=', $BranchName]);
 		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', $OrderStatus]);
-	
+		
 		$ordersResponse = new Response();
 		try{
 			$companyBranchOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
@@ -229,6 +229,56 @@ class ordersController extends Controller
 			} else {
 				$ordersResponse->setContent(json_encode($companyBranchTableOrders));
 			} 
+		} catch(\PDOException $e){
+			$ordersResponse->setStatusCode(400, ordersConstants::dbReadCatchMsg);
+		}
+		return $ordersResponse;
+	}
+	
+	/**
+	 * GET method getCompanyBranchTableOrdersOrderStatus
+	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}
+	 **/
+	public function getCompanyBranchTableOrdersOrderStatus($CompanyName, $BranchName, $TableNumber, $OrderStatus){
+		$mySqlWhere = array();
+		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
+		array_push($mySqlWhere, [branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, '=', $BranchName]);
+		array_push($mySqlWhere, [tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, '=', $TableNumber]);
+		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', $OrderStatus]);
+		
+		$ordersResponse = new Response();
+		try{
+			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
+			if($companyBranchTableOrders->isEmpty()){
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
+			} else {
+				$ordersResponse->setContent(json_encode($companyBranchTableOrders));
+			}
+		} catch(\PDOException $e){
+			$ordersResponse->setStatusCode(400, ordersConstants::dbReadCatchMsg);
+		}
+		return $ordersResponse;
+	}
+	
+	/**
+	 * GET method getCompanyBranchTableOrdersNotOrderStatus
+	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}
+	 **/
+	public function getCompanyBranchTableOrdersNotOrderStatus($CompanyName, $BranchName, $TableNumber, $OrderStatus){
+		$mySqlWhere = array();
+		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
+		array_push($mySqlWhere, [branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, '=', $BranchName]);
+		array_push($mySqlWhere, [tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, '=', $TableNumber]);
+		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', $OrderStatus]);
+	
+		$ordersResponse = new Response();
+		try{
+			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrders($mySqlWhere);
+			if($companyBranchTableOrders->isEmpty()){
+				$ordersResponse->setStatusCode(200, ordersConstants::emptyResultSetErr);
+			} else {
+				$ordersResponse->setContent(json_encode($companyBranchTableOrders));
+			}
 		} catch(\PDOException $e){
 			$ordersResponse->setStatusCode(400, ordersConstants::dbReadCatchMsg);
 		}

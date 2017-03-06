@@ -58,6 +58,7 @@ function manageMenuitemController(
 			menuitem_name: 'Name', 
 			menuitem_desc: 'Description', 
 			menuitem_price: 'Price', 
+			menuitem_featured: 'Featured', 
 			menuitem_image: 'Image'
 	};
 	vm.dbColumn2Dom = {
@@ -67,6 +68,7 @@ function manageMenuitemController(
 			menuitem_name: 'menuitemName', 
 			menuitem_desc: 'menuitemDesc', 
 			menuitem_price: 'menuitemPrice', 
+			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
 	};
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/menus/' + vm.menuName + '/menuitems';

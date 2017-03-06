@@ -113,7 +113,8 @@ angular
 	3: 'menuitem_name', 
 	4: 'menuitem_desc', 
 	5: 'menuitem_price', 
-	6: 'menuitem_image'
+	6: 'menuitem_featured', 
+	7: 'menuitem_image'
 })
 
 /* ******************************

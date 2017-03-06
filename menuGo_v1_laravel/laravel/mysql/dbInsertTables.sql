@@ -6,7 +6,7 @@ USE ziplogic;
 SET @table_number = 1;
 SET @branch_id = 1;
 SET @table_capacity = 5;
-SET @table_status = "statusVacant";
+SET @table_status = "vacant";
 
 INSERT INTO tables(
 	table_number, 
@@ -27,7 +27,7 @@ VALUES(
 SET @table_number = 2;
 SET @branch_id = 1;
 SET @table_capacity = 5;
-SET @table_status = "statusVacant";
+SET @table_status = "vacant";
 
 INSERT INTO tables(
 	table_number, 

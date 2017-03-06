@@ -21,6 +21,7 @@ class menuitemsConstants{
 	const dbMenuitemName = 'menuitem_name';
 	const dbMenuitemDesc = 'menuitem_desc';
 	const dbMenuitemPrice = 'menuitem_price';
+	const dbMenuitemFeatured = 'menuitem_featured';
 	const dbMenuitemImage = 'menuitem_image';
 	/*
 	 * CONSTANTS w/c signify the request_name in HTTP GET request
@@ -31,6 +32,7 @@ class menuitemsConstants{
 	const reqMenuitemName = 'MenuitemName';
 	const reqMenuitemDesc = 'MenuitemDesc';
 	const reqMenuitemPrice = 'MenuitemPrice';
+	const reqMenuitemFeatured = 'MenuitemFeatured';
 	const reqMenuitemImage = 'MenuitemImage';
 	/*
 	 * CONSTANTS w/c signify the messages returned on failed DB operation
@@ -160,6 +162,9 @@ class menuitemsController extends Controller
 		if(isset($_GET[menuitemsConstants::reqMenuitemPrice])){
 			array_push($mySqlWhere, [menuitemsConstants::dbMenuitemPrice, '=',  $_GET[menuitemsConstants::reqMenuitemPrice]]);
 		}
+		if(isset($_GET[menuitemsConstants::reqMenuitemFeatured])){
+			array_push($mySqlWhere, [menuitemsConstants::dbMenuitemFeatured, '=',  $_GET[menuitemsConstants::reqMenuitemFeatured]]);
+		}
 		if(isset($_GET[menuitemsConstants::reqMenuitemImage])){
 			array_push($mySqlWhere, [menuitemsConstants::dbMenuitemImage, 'LIKE', '%' . $_GET[menuitemsConstants::reqMenuitemImage] . '%']);
 		}
@@ -191,6 +196,7 @@ class menuitemsController extends Controller
 							'*.' . menuitemsConstants::dbMenuitemName => 'required|string|max:30',
 							'*.' . menuitemsConstants::dbMenuitemDesc => 'required|string|max:500',
 							'*.' . menuitemsConstants::dbMenuitemPrice => 'required|numeric',
+							'*.' . menuitemsConstants::dbMenuitemFeatured => 'required|numeric',
 							'*.' . menuitemsConstants::dbMenuitemImage => 'required|string|max:500'
 					]
 					);
@@ -203,6 +209,7 @@ class menuitemsController extends Controller
 							'*.' . menuitemsConstants::dbMenuitemName => 'sometimes|string|max:30',
 							'*.' . menuitemsConstants::dbMenuitemDesc => 'sometimes|string|max:500',
 							'*.' . menuitemsConstants::dbMenuitemPrice => 'sometimes|numeric',
+							'*.' . menuitemsConstants::dbMenuitemFeatured => 'sometimes|numeric',
 							'*.' . menuitemsConstants::dbMenuitemImage => 'sometimes|string|max:500'
 					]
 					);

@@ -279,6 +279,14 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 		'uses' => 'ordersController@getCompanyBranchTableOrders'
 ]);
 
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}', [
+		'uses' => 'ordersController@getCompanyBranchTableOrdersOrderStatus'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}', [
+		'uses' => 'ordersController@getCompanyBranchTableOrdersNotOrderStatus'
+]);
+
 Route::get('customers/{CustomerUsername}/orders', [
 		'uses' => 'ordersController@getCustomerOrders'
 ]);

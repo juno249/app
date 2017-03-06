@@ -1,0 +1,26 @@
+div.customerNearbyContainer div.searchContainer{
+	width: 100%;
+	
+	margin: auto;
+}
+
+div.customerNearbyContainer div #searchLbl{
+	padding: 5px 0px 5px 20px;
+}
+
+div.customerNearbyContainer div.companiesContainer{
+	border: solid 1px #333;
+	
+	height: 150px;
+	width: 80%;
+	
+	margin: auto;
+	margin-top: 20px;
+	padding: 10px 10px 0px 10px
+}
+
+div.customerNearbyContainer div.companiesSlide, 
+div.customerNearbyContainer div.companiesSlideBox{
+	height: 100%;
+	width: 100%;
+}
