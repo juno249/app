@@ -38,6 +38,7 @@
 				auto-play="true" 
 				does-continue="true" 
 				class="companiesSlideBox" 
+				ng-click="customerNearbyController.gotoState('customer.menu', v)" 
 				ng-repeat="(k, v) in customerNearbyController.companies">
 				<ion-slide 
 					class="companiesSlide" 

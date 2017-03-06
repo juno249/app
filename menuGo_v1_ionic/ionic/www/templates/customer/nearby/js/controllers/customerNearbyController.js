@@ -7,6 +7,7 @@ angular
  * ****************************** */
 customerNearbyController.$inject = [
 	'$scope', 
+	'$state', 
 	'dataService'
 ];
 /* ******************************
@@ -18,6 +19,7 @@ customerNearbyController.$inject = [
  * ****************************** */
 function customerNearbyController(
 		$scope, 
+		$state, 
 		dataService
 ){
 	const COMPANIES_KEY = 'Companies';
@@ -35,6 +37,17 @@ function customerNearbyController(
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
+	
+	/* ******************************
+	 * Controller Binded Method (Start)
+	 * ****************************** */
+	vm.gotoState = gotoState;
+	/* ******************************
+	 * Controller Binded Method (End)
+	 * ****************************** */
+	
+	function gotoState(stateName, company){
+	}
 	
 	loadCompaniesMenuitems();
 	

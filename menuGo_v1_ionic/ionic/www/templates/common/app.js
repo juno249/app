@@ -5,7 +5,8 @@ angular
 .module('starter', [
 	'angular.filter', 
 	'ionic', 
-	'ngStorage'
+	'ngStorage', 
+	'ngCordova'
 	])
 /* ******************************
  * Module Dependency Injection (End)
@@ -61,6 +62,16 @@ function doRouteConfig(
 					templateUrl: 'templates/customer/nearby/customer-nearby.html', 
 					controller: 'customerNearbyController', 
 					controllerAs: 'customerNearbyController'
+				}
+			}
+		})
+		.state('customer.menu', {
+			url: '/menu/company/:companyName/branch/:branchName', 
+			views: {
+				'main@': {
+					templateUrl: 'templates/customer/menu/customer-menu.html', 
+					controller: 'customerMenuController', 
+					controllerAs: 'customerMenuController'
 				}
 			}
 		})
