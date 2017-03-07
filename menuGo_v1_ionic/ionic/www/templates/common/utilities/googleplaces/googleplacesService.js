@@ -6,7 +6,8 @@ angular
  * Service Dependency Injection (Start)
  * ****************************** */
 googleplacesService.$inject = [
-	'$q'
+	'$q', 
+	'NgMap'
 ]
 /* ******************************
  * Service Dependency Injection (End)
@@ -16,10 +17,11 @@ googleplacesService.$inject = [
  * Service Implementation (Start)
  * ****************************** */
 function googleplacesService(
-		$q
+		$q, 
+		NgMap
 ){
-	const CONF_NEARBY_RADIUS = 1000;
-	const CONF_NEARBY_TYPE = ['restaurant'];
+	const CONF_NEARBY_RADIUS = 100000;
+	const CONF_NEARBY_TYPE = ['food'];
 	const ERR_MESSAGE = 'Error/Exception Encountered';
 	
 	var googleplacesServiceObj = {
@@ -53,7 +55,7 @@ function googleplacesService(
 				status
 		){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
-				deferred.resolve(predicitions);
+				deferred.resolve(predictions);
 			} else {
 				deferred.resolve([]) //return empty list
 			}
@@ -107,14 +109,37 @@ function googleplacesService(
 	 * method name: getPlacesNearby()
 	 * purpose: returns nearby places
 	 * ****************************** */
-	function getPlacesNearby(location){
+	function getPlacesNearby(
+			location, 
+			mapId
+	){
 		var deferred = $q.defer();
 		var config = {
 				location: location, 
 				radius: CONF_NEARBY_RADIUS, 
 				type: CONF_NEARBY_TYPE
 		}
+		var mapInstance = document.getElementById(mapId);
+		var service = new google.maps.places.PlacesService(mapInstance);
 		
+		service.nearbySearch(
+				config, 
+				nearbySearchCallback
+		);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function nearbySearchCallback(
+				nearby, 
+				status, 
+				pagination
+		){
+			alert('success');
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
 		
 		return deferred.promise;
 	}

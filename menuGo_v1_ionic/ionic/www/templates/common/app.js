@@ -6,7 +6,8 @@ angular
 	'angular.filter', 
 	'ionic', 
 	'ngStorage', 
-	'ngCordova'
+	'ngCordova', 
+	'ngMap'
 	])
 /* ******************************
  * Module Dependency Injection (End)
