@@ -61,5 +61,27 @@
 		<!--  *************** 
 				companies (end)
 				*************** -->
+				
+		<!--  *************** 
+				map (start)
+				*************** -->
+		<div 
+			class="mapContainer" 
+			data-tap-disabled="true">
+			<ng-map 
+				center="[{{customerNearbyController.center.latitude}}, {{customerNearbyController.center.longitude}}]" 
+				class="map" 
+				id="map" 
+				map-type-control={{customerNearbyController.mapTypeControl}} 
+				name="map" 
+				scale-control={{customerNearbyController.scaleControl}} 
+				street-view-control={{customerNearbyController.streetViewControl}} 
+				zoom={{customerNearbyController.zoom}} 
+				zoom-control={{customerNearbyController.zoomControl}}>
+			</ng-map>
+		</div>
+		<!--  *************** 
+				map (end)
+				*************** -->
 	</div>
 </ion-view>

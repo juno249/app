@@ -27,6 +27,17 @@ function customerNearbyController(
 	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
+	vm.mapConfig = {
+			center: {
+				latitude: 200, 
+				longitude: 300
+			}, 
+			mapTypeControl: false, 
+			scaleControl: false, 
+			streetViewControl: false, 
+			zoom: 15, 
+			zoomControl: false
+	}
 	if(null == localStorage.getItem(COMPANIES_KEY)){
 		dataService.fetchCompanies();
 	}
@@ -52,7 +63,7 @@ function customerNearbyController(
 	
 	loadCompaniesMenuitems();
 	loadCompaniesBranches();
-	
+
 	/* ******************************
 	 * Method Implementation
 	 * method name: loadCompaniesMenuitems()

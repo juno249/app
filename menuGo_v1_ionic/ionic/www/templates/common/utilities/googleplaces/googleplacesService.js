@@ -135,7 +135,6 @@ function googleplacesService(
 				status, 
 				pagination
 		){
-			alert('success');
 		}
 		/* ******************************
 		 * Callback Implementations (End)
