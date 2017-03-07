@@ -8,7 +8,8 @@ angular
 customerNearbyController.$inject = [
 	'$scope', 
 	'$state', 
-	'dataService'
+	'dataService', 
+//	'geolocationService'
 ];
 /* ******************************
  * Controller Dependency Injection (End)
@@ -20,7 +21,8 @@ customerNearbyController.$inject = [
 function customerNearbyController(
 		$scope, 
 		$state, 
-		dataService
+		dataService, 
+		geolocationService
 ){
 	const COMPANIES_KEY = 'Companies';
 	/* ******************************
@@ -29,8 +31,8 @@ function customerNearbyController(
 	var vm = this;
 	vm.mapConfig = {
 			center: {
-				latitude: 200, 
-				longitude: 300
+				latitude: vm.mapCenterCoordinates.latitude, 
+				longitude: vm.mapCenterCoordinates.longitude
 			}, 
 			mapTypeControl: false, 
 			scaleControl: false, 
@@ -46,6 +48,12 @@ function customerNearbyController(
 	vm.companies = companies;
 	vm.companiesMenuitems = undefined;
 	vm.companiesBranches = undefined;
+	vm.mapCenterCoordinates = {
+			latitude: undefined, 
+			longitude: undefined
+	}
+	vm.placePredictions = undefined;
+	vm.searchVal = undefined;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -57,13 +65,52 @@ function customerNearbyController(
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
-	
-	function gotoState(stateName, company){
-	}
-	
+
+	initializeMap();
 	loadCompaniesMenuitems();
 	loadCompaniesBranches();
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: gotoState()
+	 * purpose: go to a state
+	 * ****************************** */
+	function gotoState(
+			stateName, 
+			company
+	){
+		//go to a state
+	}
 
+	/* ******************************
+	 * Method Implementation
+	 * method name: initializeMap()
+	 * purpose: initializes map
+	 * ****************************** */
+	function initializeMap(){
+		geolocation.getPosition()
+		.then(getPositionSuccessCallback)
+		.catch(getPositionFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function getPositionSuccessCallback(coordinates){
+			var mapCenterCoordinates = vm.mapCenterCoordinates;
+			
+			mapCenterCoordinates = coordinates;
+			
+			vm.mapCenterCoordinates = mapCenterCoordinates;
+		}
+		
+		function getPositionFailedCallback(){
+			//do something on error
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+	}
+	
 	/* ******************************
 	 * Method Implementation
 	 * method name: loadCompaniesMenuitems()
@@ -99,7 +146,7 @@ function customerNearbyController(
 	
 	/* ******************************
 	 * Method Implementation
-//	 * method name: loadCompaniesBranches()
+	 * method name: loadCompaniesBranches()
 	 * purpose: loads companies branches
 	 * ****************************** */
 	function loadCompaniesBranches(){
@@ -130,6 +177,41 @@ function customerNearbyController(
 			
 			loadCompaniesMenuitems();
 			loadCompaniesBranches();
+		}
+	);
+	
+	$scope.$watch(
+		vm.searchVal, 
+		function(nVal, oVal){
+			var companies = vm.companies;
+			var companiesNames = '';
+			var searchVal = nVal;
+			
+			angular.forEach(companies, function(v, k){
+				companiesNames += k + '|';
+			});
+			
+			googleplacesService.getPlacePredictions(searchVal)
+			.then(getPlacePredictionsSuccessCallback)
+			.catch(getPlacePredictionsFailedCallback);
+			
+			/* ******************************
+			 * Callback Implementations (Start)
+			 * ****************************** */
+			function getPlacePredictionsSuccessCallback(predictions){
+				var placePredictions = vm.placePredictions;
+				
+				placePredictions = predictions;
+				
+				vm.placePredictions = placePredictions;
+			}
+			
+			function getPlacePredictionsFailedCallback(){
+				//do something on error
+			}
+			/* ******************************
+			 * Callback Implementations (End)
+			 * ****************************** */
 		}
 	);
 	/* ******************************

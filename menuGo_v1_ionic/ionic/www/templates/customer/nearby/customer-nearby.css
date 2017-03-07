@@ -19,6 +19,15 @@ div.customerNearbyContainer div.companiesContainer{
 	padding: 10px 10px 0px 10px
 }
 
+div.mapContainer ng-map.map{
+	height: 0px;
+	width: 0px;
+	
+	left: 0px;
+	position: absolute;
+	top: 0px;	
+}
+
 div.customerNearbyContainer div.companiesSlide, 
 div.customerNearbyContainer div.companiesSlideBox{
 	height: 100%;

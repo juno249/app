@@ -53,8 +53,8 @@ function geolocationService(
 	 * ****************************** */
 	function useThisConfig(){
 		var geolocationConfig = {
-				'timeout': CONF_TIMEOUT, 
-				'enableHighAccuracy': CONF_ENABLE_HIGH_ACCURACY
+				timeout: CONF_TIMEOUT, 
+				enableHighAccuracy: CONF_ENABLE_HIGH_ACCURACY
 		};
 		
 		geolocationServiceObj.setGeolocationConfig(geolocationConfig);
@@ -77,12 +77,12 @@ function geolocationService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function getCurrentPositionSuccessCallback(position){
-			var coords = {
-				'latitude': position.coords.latitude, 
-				'lognitude': position.coords.longitude
+			var coordinates = {
+				latitude: position.coords.latitude, 
+				lognitude: position.coords.longitude
 			}
 			
-			deferred.resolve(coords);
+			deferred.resolve(coordinates);
 		}
 		
 		function getCurrentPositionFailedCallback(err){

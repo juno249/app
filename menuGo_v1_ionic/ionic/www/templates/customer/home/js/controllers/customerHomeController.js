@@ -56,7 +56,6 @@ function customerHomeController(
 	/* ******************************
 	 * test-data (End)
 	 * ****************************** */
-	
 }
 /* ******************************
  * Controller Implementation (End)
