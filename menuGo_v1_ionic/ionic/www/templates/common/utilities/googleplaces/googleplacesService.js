@@ -20,7 +20,7 @@ function googleplacesService(
 		$q, 
 		NgMap
 ){
-	const CONF_NEARBY_RADIUS = 100000;
+	const CONF_NEARBY_RADIUS = 1000;
 	const CONF_NEARBY_TYPE = ['food'];
 	const ERR_MESSAGE = 'Error/Exception Encountered';
 	
@@ -110,22 +110,28 @@ function googleplacesService(
 	 * purpose: returns nearby places
 	 * ****************************** */
 	function getPlacesNearby(
-			location, 
-			mapId
+			companiesNames, 
+			location
 	){
 		var deferred = $q.defer();
 		var config = {
 				location: location, 
+				name: companiesNames, 
 				radius: CONF_NEARBY_RADIUS, 
 				type: CONF_NEARBY_TYPE
 		}
-		var mapInstance = document.getElementById(mapId);
-		var service = new google.maps.places.PlacesService(mapInstance);
+		var mapInstance = undefined;
+		var service = undefined;	
 		
-		service.nearbySearch(
-				config, 
-				nearbySearchCallback
-		);
+		NgMap.getMap({id: 'map'}).then(function(map){
+			mapInstance = map;
+			service = new google.maps.places.PlacesService(mapInstance);
+			
+			service.nearbySearch(
+					config, 
+					nearbySearchCallback
+			);
+		})
 		
 		/* ******************************
 		 * Callback Implementations (Start)

@@ -79,7 +79,7 @@ function geolocationService(
 		function getCurrentPositionSuccessCallback(position){
 			var coordinates = {
 				latitude: position.coords.latitude, 
-				lognitude: position.coords.longitude
+				longitude: position.coords.longitude
 			}
 			
 			deferred.resolve(coordinates);
