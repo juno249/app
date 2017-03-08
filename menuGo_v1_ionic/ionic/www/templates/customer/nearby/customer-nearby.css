@@ -33,3 +33,9 @@ div.customerNearbyContainer div.companiesSlideBox{
 	height: 100%;
 	width: 100%;
 }
+
+div.customerNearbyContainer div.searchResultContainer{
+	position: absolute;
+	
+	width: 100%;
+}
