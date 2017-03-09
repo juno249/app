@@ -6,6 +6,7 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 customerNearbyController.$inject = [
+	'$q', 
 	'$scope', 
 	'$state', 
 	'$stateParams', 
@@ -21,6 +22,7 @@ customerNearbyController.$inject = [
  * Controller Implementation (Start)
  * ****************************** */
 function customerNearbyController(
+		$q, 
 		$scope, 
 		$state, 
 		$stateParams, 
@@ -76,9 +78,42 @@ function customerNearbyController(
 	 * Controller Binded Method (End)
 	 * ****************************** */
 
-	initializeMap();
-	loadCompaniesBranches();
-	loadCompaniesMenuitems();
+	if(
+			(
+					null == vm.categoryVal || 
+					0 == vm.categoryVal.trim().length
+			)  && 
+			(
+					null == vm.searchVal || 
+					0 == vm.searchVal.trim().length
+			)
+	){
+		initializeMap();
+		loadCompaniesBranches();
+		loadCompaniesMenuitems();	
+	} else {
+		if(
+				null == vm.searchVal || 
+				0 == vm.searchVal.trim().length
+		){
+			initializeMap()
+			.then(initializeMapSuccessCallback)
+			.catch(initializeMapFailedCallback);
+			
+			/* ******************************
+			 * Callback Implementations (Start)
+			 * ****************************** */
+			function initializeMapSuccessCallback(){
+			}
+			
+			function initializeMapFailedCallback(){
+				//do something on failure
+			}
+			/* ******************************
+			 * Callback Implementations (End)
+			 * ****************************** */
+		}
+	}
 	
 	/* ******************************
 	 * Method Implementation
@@ -116,7 +151,8 @@ function customerNearbyController(
 			
 			googleplacesService.getPlacesNearby(
 					companiesNames, 
-					placeLocation
+					placeLocation, 
+					'map'
 			)
 			.then(getPlacesNearbyCallback);
 			
@@ -124,7 +160,8 @@ function customerNearbyController(
 			 * Callback Implementations (Start)
 			 * ****************************** */
 			function getPlacesNearbyCallback(){
-				//do something on success
+				//to-do, remove companies that are not on search result, 
+				//to-do, change in companies triggers reload companiesBranches & companiesMenuitems
 			}			
 			/* ******************************
 			 * Callback Implementations (End)
@@ -145,6 +182,8 @@ function customerNearbyController(
 	 * purpose: initializes map
 	 * ****************************** */
 	function initializeMap(){
+		var deferred  = $q.defer();
+		
 		geolocationService.getPosition()
 		.then(getPositionSuccessCallback)
 		.catch(getPositionFailedCallback);
@@ -159,6 +198,7 @@ function customerNearbyController(
 			
 			vm.mapCenterCoordinates = mapCenterCoordinates;
 			vm.mapConfig.center = mapCenterCoordinates;
+			deferred.resolve();
 		}
 		
 		function getPositionFailedCallback(){
@@ -167,6 +207,8 @@ function customerNearbyController(
 		/* ******************************
 		 * Callback Implementations (End)
 		 * ****************************** */
+		
+		return deferred.promise;
 	}
 	
 	/* ******************************

@@ -111,7 +111,8 @@ function googleplacesService(
 	 * ****************************** */
 	function getPlacesNearby(
 			companiesNames, 
-			location
+			location, 
+			domMapId
 	){
 		var deferred = $q.defer();
 		var config = {
@@ -123,7 +124,7 @@ function googleplacesService(
 		var mapInstance = undefined;
 		var service = undefined;	
 		
-		NgMap.getMap({id: 'map'}).then(function(map){
+		NgMap.getMap({id: domMapId}).then(function(map){
 			mapInstance = map;
 			service = new google.maps.places.PlacesService(mapInstance);
 			

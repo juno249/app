@@ -38,7 +38,7 @@
 			<ion-list>
 				<ion-item 
 					ng-repeat="i in customerNearbyController.placePredictions" 
-					ng-click="customerNearbyController.getPlacesNearby(i);">
+					ng-click="">
 					{{i.terms[0].value}}
 				</ion-item>
 			</ion-list>
@@ -56,7 +56,7 @@
 				auto-play="true" 
 				does-continue="true" 
 				class="companiesSlideBox" 
-				ng-click="customerNearbyController.gotoState('customer.menu', v)" 
+				ng-click="" 
 				ng-repeat="(k, v) in customerNearbyController.companies">
 				<ion-slide 
 					class="companiesSlide" 
