@@ -57,7 +57,7 @@ function doRouteConfig(
 			}
 		})
 		.state('customer.nearby', {
-			url: '/nearby', 
+			url: '/nearby/place/:place/category/:category', 
 			views: {
 				'customer-nearby': {
 					templateUrl: 'templates/customer/nearby/customer-nearby.html', 
@@ -78,7 +78,7 @@ function doRouteConfig(
 		})
 		
 		$urlRouterProvider
-		.otherwise('/customer/nearby');
+		.otherwise('/customer/nearby/place//category/');
 	}
 
 /* ******************************
