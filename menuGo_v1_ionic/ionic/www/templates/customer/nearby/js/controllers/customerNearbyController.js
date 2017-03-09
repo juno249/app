@@ -8,6 +8,7 @@ angular
 customerNearbyController.$inject = [
 	'$scope', 
 	'$state', 
+	'$stateParams', 
 	'dataService', 
 	'geolocationService', 
 	'googleplacesService'
@@ -22,6 +23,7 @@ customerNearbyController.$inject = [
 function customerNearbyController(
 		$scope, 
 		$state, 
+		$stateParams, 
 		dataService, 
 		geolocationService, 
 		googleplacesService
@@ -31,6 +33,10 @@ function customerNearbyController(
 	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
+	vm.stateParams = {
+			category: $stateParams.category, 
+			place: $stateParams.place
+	}
 	vm.mapConfig = {
 			center: {
 				latitude: undefined, 
@@ -55,7 +61,8 @@ function customerNearbyController(
 			longitude: undefined
 	}
 	vm.placePredictions = undefined;
-	vm.searchVal = undefined;
+	vm.categoryVal = vm.stateParams.category;
+	vm.searchVal = vm.stateParams.place;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -70,8 +77,8 @@ function customerNearbyController(
 	 * ****************************** */
 
 	initializeMap();
-	loadCompaniesMenuitems();
 	loadCompaniesBranches();
+	loadCompaniesMenuitems();
 	
 	/* ******************************
 	 * Method Implementation
@@ -164,6 +171,25 @@ function customerNearbyController(
 	
 	/* ******************************
 	 * Method Implementation
+	 * method name: loadCompaniesBranches()
+	 * purpose: loads companies branches
+	 * ****************************** */
+	function loadCompaniesBranches(){
+		var companies = vm.companies;
+		var companiesBranches = {};
+		
+		angular.forEach(companies, function(v, k){
+			var company = v;
+			var companyBranches = company.branches;
+			
+			companiesBranches[k] = companyBranches;
+		});
+		
+		vm.companiesBranches = companiesBranches;
+	}
+	
+	/* ******************************
+	 * Method Implementation
 	 * method name: loadCompaniesMenuitems()
 	 * purpose: loads companies menuitems
 	 * ****************************** */
@@ -196,25 +222,6 @@ function customerNearbyController(
 	}
 	
 	/* ******************************
-	 * Method Implementation
-	 * method name: loadCompaniesBranches()
-	 * purpose: loads companies branches
-	 * ****************************** */
-	function loadCompaniesBranches(){
-		var companies = vm.companies;
-		var companiesBranches = {};
-		
-		angular.forEach(companies, function(v, k){
-			var company = v;
-			var companyBranches = company.branches;
-			
-			companiesBranches[k] = companyBranches;
-		});
-		
-		vm.companiesBranches = companiesBranches;
-	}
-	
-	/* ******************************
 	 * Watchers (Start)
 	 * ****************************** */
 	$scope.$watch(
@@ -222,18 +229,51 @@ function customerNearbyController(
 			return localStorage.getItem(COMPANIES_KEY);
 		}, 
 		function(nVal, oVal){
-			var companies = nVal;
-			companies = JSON.parse(companies);
-			vm.companies = companies;
+			var companies = vm.companies;
 			
-			loadCompaniesMenuitems();
-			loadCompaniesBranches();
+			companies = localStorage.getItem(COMPANIES_KEY);
+			companies = JSON.parse(companies);
+			
+			vm.companies = companies;
 		}
 	);
 	
 	$scope.$watch(
 		function(){
-			return vm.searchVal
+			return vm.companies;
+		}, 
+		function(nVal, oVal){
+			loadCompaniesBranches();
+			loadCompaniesMenuitems();
+		}
+	);
+	
+	$scope.$watch(
+			function(){
+				return vm.categoryVal;
+			}, 
+			function(nVal, oVal){
+				var companies = vm.companies;
+				var categoryVal = vm.categoryVal;
+				
+				if(
+						null == categoryVal || 
+						0 == categoryVal.trim().length
+				){
+					return;
+				}
+				
+				angular.forEach(companies, function(v, k){
+					if(!(categoryVal == v.company_category)){
+						delete companies[k];
+					}
+				})
+			}
+	);
+	
+	$scope.$watch(
+		function(){
+			return vm.searchVal;
 		}, 
 		function(nVal, oVal){
 			var companies = vm.companies;
