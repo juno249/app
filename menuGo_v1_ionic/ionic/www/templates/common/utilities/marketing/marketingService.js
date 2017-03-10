@@ -109,7 +109,7 @@ function marketingService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/ads/'
+				url: API_BASE_URL + '/ads'
 		}
 		$httpConfig(httpConfig)
 		.then(fetchRestaurantAdsSuccessCallback)
@@ -119,11 +119,16 @@ function marketingService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchRestaurantAdsSuccessCallback(response){
-			//do something on success
+			marketingServiceObj.restaurantAds = {};
+			convertRestaurantAdsResponseToMap(response.data);
+			var restaurantAds = marketingServiceObj.restaurantAds;
+			restaurantAds = JSON.stringify(restaurantAds);
+			localStorage.setItem('Restaurant_Ads', restaurantAds);
+			deferred.resolve(response);
 		}
 		
 		function fetchRestaurantAdsFailedCallback(responseError){
-			//do something on failure
+			deferred.reject(responseError);
 		}
 		/* ******************************
 		 * Callback Implementations (End)
@@ -135,8 +140,25 @@ function marketingService(
 		 * purpose: convert http response to a map
 		 * ****************************** */
 		function convertRestaurantAdsResponseToMap(responseData){
+			var responseDataLength = responseData.length;
+			var restaurantAdsKey = ADVERTISEMENTS_DB_FIELDS[0] //ad_id
+			var restaurantAdsDetails;
 			
+			for(var i=0; i<responseDataLength; i++){
+				var restaurantAdsRunner = responseData[i];
+				var restaurantAdsDBFieldCount = Object.keys(ADVERTISEMENTS_DB_FIELDS);
+				var restaurantAdsDBFieldRunner = null;
+				restaurantAdsDetails = {};
+				
+				for(var j=0; j<restaurantAdsDBFieldCount; j++){
+					restaurantAdsDBFieldRunner = ADVERTISEMENTS_DB_FIELDS[j];
+					restaurantAdsDetails[restaurantAdsDBFieldRunner] = restaurantAdsRunner[restaurantAdsDBFieldRunner];
+				}
+				var restaurantAdsKeyValue = restaurantAdsRunner[restaurantAdsKey];
+				marketingServiceObj.restaurantAds[restaurantAdsKey] = restaurantAdsDetails;
+			}
 		}
+		return deferred.promise;
 	}
 }
 /* ******************************

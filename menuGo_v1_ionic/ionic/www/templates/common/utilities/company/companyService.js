@@ -132,7 +132,7 @@ function companyService(
 					companiesDetails[companiesDBFieldRunner] = companiesRunner[companiesDBFieldRunner];
 				}
 				var companiesKeyValue = companiesRunner[companiesKey];
-				companyServiceObj.companies[companiesKeyValue ] = companiesDetails;
+				companyServiceObj.companies[companiesKeyValue] = companiesDetails;
 			}
 		}
 		return deferred.promise;
