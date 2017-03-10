@@ -37,7 +37,7 @@ function customerNearbyController(
 	var vm = this;
 	vm.stateParams = {
 			category: $stateParams.category, 
-			place: $stateParams.place
+			placeId: $stateParams.placeId
 	}
 	vm.mapConfig = {
 			center: {
@@ -64,7 +64,7 @@ function customerNearbyController(
 	}
 	vm.placePredictions = undefined;
 	vm.categoryVal = vm.stateParams.category;
-	vm.searchVal = vm.stateParams.place;
+	vm.searchVal = vm.stateParams.placeId;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -93,8 +93,10 @@ function customerNearbyController(
 		loadCompaniesMenuitems();	
 	} else {
 		if(
-				null == vm.searchVal || 
-				0 == vm.searchVal.trim().length
+				!(
+						null == vm.searchVal || 
+						0 == vm.searchVal.trim().length
+				)
 		){
 			initializeMap()
 			.then(initializeMapSuccessCallback)
@@ -104,6 +106,25 @@ function customerNearbyController(
 			 * Callback Implementations (Start)
 			 * ****************************** */
 			function initializeMapSuccessCallback(){
+				var searchVal = vm.searchVal;
+				
+				getPlacesNearby(searchVal)
+				.then(getPlacesNearbySuccessCallback)
+				.catch(getPlacesNearbyFailedCallback);
+				
+				/* ******************************
+				 * Callback Implementations (Start)
+				 * ****************************** */
+				function getPlacesNearbySuccessCallback(){
+					//do something on success
+				}
+				
+				function getPlacesNearbyFailedCallback(status){
+					deferred.reject(status);
+				}
+				/* ******************************
+				 * Callback Implementations (End)
+				 * ****************************** */
 			}
 			
 			function initializeMapFailedCallback(){
@@ -122,9 +143,22 @@ function customerNearbyController(
 	 * ****************************** */
 	function gotoState(
 			stateName, 
-			company
+			stateParams
 	){
-		//go to a state
+		if('customer.nearby' == stateName){
+			$state.transitionTo(
+					stateName, 
+					{
+						placeId: stateParams, //stateParams is place_id
+						category: null
+					}, 
+					{
+						reload: true, 
+						inherit: true, 
+						notify: true
+					}
+			);
+		}
 	}
 	
 	/* ******************************
@@ -132,8 +166,10 @@ function customerNearbyController(
 	 * method name: getPlacesNearby()
 	 * purpose: get places nearby
 	 * ****************************** */
-	function getPlacesNearby(place){
-		googleplacesService.getPlaceCoordinates(place.place_id)
+	function getPlacesNearby(placeId){
+		var deferred = $q.defer();
+		
+		googleplacesService.getPlaceCoordinates(placeId)
 		.then(getPlaceCoordinatesSuccessCallback)
 		.catch(getPlaceCoordinatesFailedCallback);
 		
@@ -154,26 +190,32 @@ function customerNearbyController(
 					placeLocation, 
 					'map'
 			)
-			.then(getPlacesNearbyCallback);
+			.then(getPlacesNearbySuccessCallback)
+			.catch(getPlacesNearbyFailedCallback);
 			
 			/* ******************************
 			 * Callback Implementations (Start)
 			 * ****************************** */
-			function getPlacesNearbyCallback(){
-				//to-do, remove companies that are not on search result, 
-				//to-do, change in companies triggers reload companiesBranches & companiesMenuitems
-			}			
+			function getPlacesNearbySuccessCallback(){
+				deferred.resolve();
+			}
+			
+			function getPlacesNearbyFailedCallback(){
+				deferred.reject(status);
+			}
 			/* ******************************
 			 * Callback Implementations (End)
 			 * ****************************** */
 		}
 		
-		function getPlaceCoordinatesFailedCallback(serviceErr){
-			//do something on failure
+		function getPlaceCoordinatesFailedCallback(status){
+			deferred.reject(status);
 		}
 		/* ******************************
 		 * Callback Implementations (End)
 		 * ****************************** */
+		
+		return deferred.promise;
 	}
 
 	/* ******************************
@@ -201,8 +243,8 @@ function customerNearbyController(
 			deferred.resolve();
 		}
 		
-		function getPositionFailedCallback(){
-			//do something on error
+		function getPositionFailedCallback(status){
+			deferred.reject(status);
 		}
 		/* ******************************
 		 * Callback Implementations (End)
@@ -335,17 +377,22 @@ function customerNearbyController(
 			}
 			
 			googleplacesService.getPlacePredictions(searchVal)
-			.then(getPlacePredictionsCallback);
+			.then(getPlacePredictionsSuccessCallback)
+			.catch(getPlacePredictionsFailedCallback);
 			
 			/* ******************************
 			 * Callback Implementations (Start)
 			 * ****************************** */
-			function getPlacePredictionsCallback(predictions){
+			function getPlacePredictionsSuccessCallback(predictions){
 				var placePredictions = vm.placePredictions;
 				
 				placePredictions = predictions;
 				
 				vm.placePredictions = placePredictions;
+			}
+			
+			function getPlacePredictionsFailedCallback(status){
+				//do something on failure
 			}
 			/* ******************************
 			 * Callback Implementations (End)

@@ -85,8 +85,8 @@ function geolocationService(
 			deferred.resolve(coordinates);
 		}
 		
-		function getCurrentPositionFailedCallback(err){
-			deferred.reject(err);
+		function getCurrentPositionFailedCallback(status){
+			deferred.reject(status);
 		}
 		/* ******************************
 		 * Callback Implementations (End)

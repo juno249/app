@@ -38,7 +38,7 @@
 			<ion-list>
 				<ion-item 
 					ng-repeat="i in customerNearbyController.placePredictions" 
-					ng-click="">
+					ng-click="customerNearbyController.gotoState('customer.nearby', i.place_id)">
 					{{i.terms[0].value}}
 				</ion-item>
 			</ion-list>

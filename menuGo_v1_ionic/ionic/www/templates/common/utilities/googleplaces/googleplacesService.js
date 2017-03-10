@@ -20,9 +20,8 @@ function googleplacesService(
 		$q, 
 		NgMap
 ){
-	const CONF_NEARBY_RADIUS = 1000;
+	const CONF_NEARBY_RADIUS = 5000;
 	const CONF_NEARBY_TYPE = ['food'];
-	const ERR_MESSAGE = 'Error/Exception Encountered';
 	
 	var googleplacesServiceObj = {
 			getPlacePredictions: getPlacePredictions, 
@@ -57,7 +56,7 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(predictions);
 			} else {
-				deferred.resolve([]) //return empty list
+				deferred.reject(status);
 			}
 		}
 		/* ******************************
@@ -94,7 +93,7 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(coordinates[0].geometry.location);
 			} else {
-				deferred.reject(ERR_MESSAGE);
+				deferred.reject(status);
 			}
 		}
 		/* ******************************
@@ -142,6 +141,11 @@ function googleplacesService(
 				status, 
 				pagination
 		){
+			if(google.maps.places.PlacesServiceStatus.OK == status){
+				deferred.resolve();
+			} else {
+				deferred.reject(status);
+			}
 		}
 		/* ******************************
 		 * Callback Implementations (End)
