@@ -33,12 +33,22 @@ function dataService(
 	const MENUS_KEY = 'Menus';
 	const TABLES_KEY = 'Tables';
 	const MENUITEMS_KEY = 'Menuitems';
+	const RESTAURANT_ADS_KEY = 'Restaurant_Ads';
+	const FOOD_BLOGS_KEY = 'Food_Blogs';
 	
 	var dataServiceObj = {
 			companies: {}, 
+			restaurantAds: {}, 
+			foodBlogs: {}, 
 			getCompanies: getCompanies, 
+			getRestaurantAds: getRestaurantAds, 
+			getFoodBlogs: getFoodBlogs, 
 			setCompanies: setCompanies, 
-			fetchCompanies: fetchCompanies
+			setRestaurantAds: setRestaurantAds, 
+			setFoodBlogs: setFoodBlogs, 
+			fetchCompanies: fetchCompanies, 
+			fetchRestaurantAds: fetchRestaurantAds, 
+			fetchFoodBlogs: fetchFoodBlogs
 	}
 	
 	/* ******************************
@@ -48,8 +58,24 @@ function dataService(
 		return dataServiceObj.companies;
 	}
 	
+	function getRestaurantAds(){
+		return dataServiceObj.restaurantAds;
+	}
+	
+	function getFoodBlogs(){
+		return dataServiceObj.foodBlogs;
+	}
+	
 	function setCompanies(companies){
 		dataServiceObj.companies = companies;
+	}
+	
+	function setRestaurantAds(restaurantAds){
+		dataServiceObj.restaurantAds = restaurantAds;
+	}
+	
+	function setFoodBlogs(foodBlogs){
+		dataServiceObj.foodBlogs = foodBlogs;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)

@@ -16,12 +16,24 @@ customerHomeController.$inject = [
  * ****************************** */
 function customerHomeController(		
 ){
+	const RESTAURANT_ADS_KEY = "Restaurant_Ads";
+	const FOOD_BLOGS_KEY = "Food Blogs";
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
-	vm.restaurantAds = undefined;
-	vm.foodBlogs = undefined;
+	if(null == localStorage.getItem(RESTAURANT_ADS_KEY)){
+		dataService.fetchRestaurantAds();
+	}
+	var restaurantAds = localStorage.getItem(RESTAURANT_ADS_KEY);
+	restaurantAds = JSON.parse(restaurantAds);
+	vm.restaurantAds = restaurantAds;
+	if(null == localStorage.getItem(FOOD_BLOGS_KEY)){
+		dataService.fetchFoodBlogs();
+	}
+	var foodBlogs = localStorage.getItem(FOOD_BLOGS_KEY);
+	foodBlogs = JSON.parse(foodBlogs);
+	vm.foodBlogs = foodBlogs;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
