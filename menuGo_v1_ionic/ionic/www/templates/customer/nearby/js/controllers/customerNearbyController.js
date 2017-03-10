@@ -108,19 +108,19 @@ function customerNearbyController(
 			function initializeMapSuccessCallback(){
 				var searchVal = vm.searchVal;
 				
-				getPlacesNearby(searchVal)
-				.then(getPlacesNearbySuccessCallback)
-				.catch(getPlacesNearbyFailedCallback);
+				getRadarSearch(searchVal)
+				.then(getRadarSearchSuccessCallback)
+				.catch(getRadarSearchFailedCallback);
 				
 				/* ******************************
 				 * Callback Implementations (Start)
 				 * ****************************** */
-				function getPlacesNearbySuccessCallback(){
+				function getRadarSearchSuccessCallback(){
 					//do something on success
 				}
 				
-				function getPlacesNearbyFailedCallback(status){
-					deferred.reject(status);
+				function getRadarSearchFailedCallback(status){
+					//do something on failure
 				}
 				/* ******************************
 				 * Callback Implementations (End)
@@ -196,7 +196,8 @@ function customerNearbyController(
 			/* ******************************
 			 * Callback Implementations (Start)
 			 * ****************************** */
-			function getPlacesNearbySuccessCallback(){
+			function getPlacesNearbySuccessCallback(nearby){
+				//do something on success callback
 				deferred.resolve();
 			}
 			
@@ -213,6 +214,88 @@ function customerNearbyController(
 		}
 		/* ******************************
 		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: getRadarSearch()
+	 * purpose: get places nearby
+	 * ****************************** */
+	function getRadarSearch(placeId){
+		var deferred = $q.defer();
+		
+		googleplacesService.getPlaceCoordinates(placeId)
+		.then(getPlaceCoordinatesSuccessCallback)
+		.catch(getPlaceCoordinatesFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function getPlaceCoordinatesSuccessCallback(placeLocation){
+			var companies = vm.companies;
+			var companiesNames = '';
+			var placeLocation = placeLocation;
+			
+			angular.forEach(companies, function(v, k){
+				companiesNames += k + '|';
+			});
+			
+			googleplacesService.getRadarSearch(
+					companiesNames, 
+					placeLocation, 
+					'map'
+			)
+			.then(getRadarSearchSuccessCallback)
+			.catch(getRadarSearchFailedCallback);
+			
+			/* ******************************
+			 * Callback Implementations (Start)
+			 * ****************************** */
+			function getRadarSearchSuccessCallback(nearby){
+				var nearby = nearby;
+				
+				for(var i=0; i<nearby.length; i++){
+					var nearbyRunner = nearby[i];
+					
+					googleplacesService.getPlaceDetails(
+							nearbyRunner.place_id, 
+							'map'
+					)
+					.then(getPlaceDetailsSuccessCallback)
+					.catch(getPlaceDetailsFailedCallback);
+					
+					/* ******************************
+					 * Callback Implementations (Start)
+					 * ****************************** */
+					function getPlaceDetailsSuccessCallback(placeDetails){
+						//do someting on success
+					}
+					
+					function getPlaceDetailsFailedCallback(status){
+						deferred.reject(status);
+					}
+					/* ******************************
+					 * Callback Implementations (End)
+					 * ****************************** */
+				}
+			}
+			
+			function getRadarSearchFailedCallback(status){
+				deferred.reject(status);
+			}
+			/* ******************************
+			 * Callback Implementations (End)
+			 * ****************************** */
+		}
+		
+		function getPlaceCoordinatesFailedCallback(status){
+			deferred.reject(status);
+		}
+		/* ******************************
+		 * Callback Implementations (End
 		 * ****************************** */
 		
 		return deferred.promise;

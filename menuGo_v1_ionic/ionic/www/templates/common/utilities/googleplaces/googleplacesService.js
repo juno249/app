@@ -20,13 +20,15 @@ function googleplacesService(
 		$q, 
 		NgMap
 ){
-	const CONF_NEARBY_RADIUS = 5000;
-	const CONF_NEARBY_TYPE = ['food'];
+	const CONF_TYPE = ['food'];
+	const CONF_RADAR_RADIUS = 5000;
 	
 	var googleplacesServiceObj = {
 			getPlacePredictions: getPlacePredictions, 
 			getPlaceCoordinates: getPlaceCoordinates, 
-			getPlacesNearby: getPlacesNearby
+			getPlaceDetails: getPlaceDetails, 
+			getPlacesNearby: getPlacesNearby, 
+			getRadarSearch: getRadarSearch
 	}
 	
 	/* ******************************
@@ -105,6 +107,50 @@ function googleplacesService(
 	
 	/* ******************************
 	 * Method Implementation
+	 * method name: getPlaceDetails()
+	 * purpose: returns place details
+	 * ****************************** */
+	function getPlaceDetails(
+			placeId, 
+			domMapId
+	){
+		var deferred = $q.defer();
+		var config = {
+				placeId: placeId
+		}
+		
+		NgMap.getMap({id: domMapId}).then(function(map){
+			var mapInstance = map;
+			service = new google.maps.places.PlacesService(mapInstance);
+			
+			service.getDetails(
+					config, 
+					getDetailsCallback
+			);
+		});
+			
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function getDetailsCallback(
+				placeDetails, 
+				status
+		){
+			if(google.maps.places.PlacesServiceStatus.OK == status){
+				deferred.resolve(placeDetails);
+			} else {
+				deferred.reject(status);
+			}
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
 	 * method name: getPlacesNearby()
 	 * purpose: returns nearby places
 	 * ****************************** */
@@ -114,11 +160,15 @@ function googleplacesService(
 			domMapId
 	){
 		var deferred = $q.defer();
+		var loc = new google.maps.LatLng(
+				location.lat(), 
+				location.lng()
+		);
 		var config = {
-				location: location, 
+				location: loc, 
 				name: companiesNames, 
-				radius: CONF_NEARBY_RADIUS, 
-				type: CONF_NEARBY_TYPE
+				rankBy: google.maps.places.RankBy.DISTANCE, 
+				type: CONF_TYPE
 		}
 		var mapInstance = undefined;
 		var service = undefined;	
@@ -131,7 +181,7 @@ function googleplacesService(
 					config, 
 					nearbySearchCallback
 			);
-		})
+		});
 		
 		/* ******************************
 		 * Callback Implementations (Start)
@@ -142,7 +192,7 @@ function googleplacesService(
 				pagination
 		){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
-				deferred.resolve();
+				deferred.resolve(nearby);
 			} else {
 				deferred.reject(status);
 			}
@@ -153,6 +203,60 @@ function googleplacesService(
 		
 		return deferred.promise;
 	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: getRadarSearch()
+	 * purpose: returns nearby places
+	 * ****************************** */
+	function getRadarSearch(
+			companiesNames, 
+			location, 
+			domMapId
+	){
+		var deferred = $q.defer();
+		var loc = new google.maps.LatLng(
+				location.lat(), 
+				location.lng()
+		);
+		var config = {
+				location: loc, 
+				name: companiesNames, 
+				radius: CONF_RADAR_RADIUS, 
+				type: CONF_TYPE
+		}
+		var mapInstance = undefined;
+		var service = undefined;
+		
+		NgMap.getMap({id: domMapId}).then(function(map){
+			mapInstance = map;
+			service = new google.maps.places.PlacesService(mapInstance);
+			
+			service.radarSearch(
+					config, 
+					radarSearchCallback
+			);
+		});
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function radarSearchCallback(
+				nearby, 
+				status
+		){
+			if(google.maps.places.PlacesServiceStatus.OK == status){
+				deferred.resolve(nearby);
+			} else {
+				deferred.reject(status);
+			}
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		return deferred.promise;
+	}	
 	
 	return googleplacesServiceObj;
 }
