@@ -94,6 +94,28 @@ class advertisementsController extends Controller{
 	}
 	
 	/**
+	 * GET method getAdvertisement
+	 * URL-->/ads/{AdvertisementId}
+	 **/
+	public function getAdvertisement($AdvertisementId){
+		$mySqlWhere = array();
+		array_push($mySqlWhere, [advertisementsConstants::advertisementsTable . '.' . advertisementsConstants::dbAdvertisementId, '=', $AdvertisementId]);
+		
+		$advertisementsResponse = new Response();
+		try{
+			$advertisement = $this->getJoinCompanyAdvertisement($mySqlWhere);
+			if($advertisement->isEmpty()){
+				$advertisementsResponse->setStatusCode(200, advertisementsConstants::emptyResultSetErr);
+			} else {
+				$advertisementsResponse->setContent(json_encode($advertisement));
+			}
+		} catch(\PDOException $e){
+			$advertisementsResponse->setStatusCode(400, advertisementsConstants::dbReadCatchMsg);
+		}
+		return $advertisementsResponse;
+	}
+	
+	/**
 	 * GET method getCompanyAdvertisements
 	 * URL-->/companies/{CompanyName}/ads
 	 **/
