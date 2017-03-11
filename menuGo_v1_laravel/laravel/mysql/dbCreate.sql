@@ -31,24 +31,24 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_birthday_date INT, 
  	customer_birthday_year INT, 
  	PRIMARY KEY(customer_username)
- );
+);
  
- /*
-  * CREATE ziplogic.companies
-  */
- CREATE TABLE IF NOT EXISTS ziplogic.companies(
- 	company_name VARCHAR(30) NOT NULL, 
+/*
+ * CREATE ziplogic.companies
+ */
+CREATE TABLE IF NOT EXISTS ziplogic.companies(
+	company_name VARCHAR(30) NOT NULL, 
  	company_desc VARCHAR(500) NOT NULL, 
  	company_category VARCHAR(30) NOT NULL, 
  	company_logo VARCHAR(500) NOT NULL, 
  	PRIMARY KEY(company_name)
- );
+);
  
- /*
-  * CREATE ziplogic.branches
-  */
- CREATE TABLE IF NOT EXISTS ziplogic.branches(
- 	branch_id INT NOT NULL AUTO_INCREMENT, 
+/*
+ * CREATE ziplogic.branches
+ */
+CREATE TABLE IF NOT EXISTS ziplogic.branches(
+	branch_id INT NOT NULL AUTO_INCREMENT, 
  	branch_name VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
  	branch_address_house_building VARCHAR(30) NOT NULL, 
@@ -61,26 +61,12 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	PRIMARY KEY(branch_id), 
  	UNIQUE(branch_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
- );
+);
  
- /*
-  * CREATE ziplogic.tables
-  * */
- CREATE TABLE IF NOT EXISTS ziplogic.tables(
- 	table_id INT NOT NULL AUTO_INCREMENT,  
- 	table_number INT NOT NULL, 
- 	branch_id INT NOT NULL, 
- 	table_capacity INT NOT NULL, 
- 	table_status VARCHAR(30), 
- 	PRIMARY KEY(table_id), 
- 	UNIQUE(table_number, branch_id), 
- 	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
- );
- 
- /*
-  * CREATE ziplogic.menus
-  */
- CREATE TABLE IF NOT EXISTS ziplogic.menus(
+/*
+ * CREATE ziplogic.menus
+ */
+CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	menu_id INT NOT NULL AUTO_INCREMENT, 
  	menu_name VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
@@ -89,12 +75,26 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	PRIMARY KEY(menu_id), 
  	UNIQUE(menu_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
- );
+);
  
- /*
-  * CREATE ziplogic.menuitems
-  */
- CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
+/*
+ * CREATE ziplogic.tables
+ * */
+CREATE TABLE IF NOT EXISTS ziplogic.tables(
+ 	table_id INT NOT NULL AUTO_INCREMENT,  
+ 	table_number INT NOT NULL, 
+ 	branch_id INT NOT NULL, 
+ 	table_capacity INT NOT NULL, 
+ 	table_status VARCHAR(30), 
+ 	PRIMARY KEY(table_id), 
+ 	UNIQUE(table_number, branch_id), 
+ 	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
+);
+  
+/*
+ * CREATE ziplogic.menuitems
+ */
+CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	menuitem_id INT NOT NULL AUTO_INCREMENT,
  	menuitem_code VARCHAR(10) NOT NULL, 
  	menu_id INT NOT NULL, 
@@ -105,13 +105,13 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	menuitem_image VARCHAR(500) NOT NULL, 
  	PRIMARY KEY(menuitem_id), 
  	UNIQUE(menuitem_code, menu_id), 
- 	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
- );
+	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
+);
  
- /*
-  * CREATE ziplogic.orders
-  * */
- CREATE TABLE IF NOT EXISTS ziplogic.orders(
+/*
+ * CREATE ziplogic.orders
+ * */
+CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	order_id INT NOT NULL AUTO_INCREMENT, 
 	customer_username VARCHAR(30) NOT NULL, 
 	menuitem_id INT NOT NULL, 
@@ -122,12 +122,12 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
 	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id)
- );
- 
- /*
-  * CREATE ziplogic.customers_companies_branches
-  * */
- CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
+);
+
+/*
+ * CREATE ziplogic.customers_companies_branches
+ * */
+CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	customer_username VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
  	branch_name VARCHAR(30) NOT NULL, 
@@ -135,7 +135,34 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
  	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
- );
+);
+ 
+/*
+ * CREATE ziplogic.advertisements
+ * */
+CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
+ 	advertisement_id INT NOT NULL AUTO_INCREMENT, 
+ 	company_name VARCHAR(30) NOT NULL, 
+ 	advertisement_title VARCHAR(100) NOT NULL, 
+ 	advertisement_content VARCHAR(1000) NOT NULL, 
+ 	advertisement_price DOUBLE NOT NULL, 
+ 	advertisement_image VARCHAR(500) NOT NULL, 
+ 	advertisement_url VARCHAR(500) NOT NULL, 
+ 	PRIMARY KEY(advertisement_id), 
+ 	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
+);
+ 
+/*
+ * CREATE ziplogic.blogs
+ * */
+CREATE TABLE IF NOT EXISTS ziplogic.blogs(
+ 	blog_id INT NOT NULL AUTO_INCREMENT, 
+ 	blog_title VARCHAR (100) NOT NULL, 
+ 	blog_content VARCHAR(1000) NOT NULL, 
+ 	blog_image VARCHAR(500) NOT NULL, 
+ 	blog_url VARCHAR(500) NOT NULL, 
+	PRIMARY KEY(blog_id)
+);
  
 USE ziplogic;
 
@@ -474,6 +501,26 @@ VALUES(
 	@branch_id, 
 	@table_capacity, 
 	@table_status
+);
+
+USE ziplogic;
+
+# ==========
+# RECORD 1
+# ==========
+SET @customer_username = "johnvlim";
+SET @company_name = "Max's";
+SET @branch_name = "Ermita";
+
+INSERT INTO customers_companies_branches(
+	customer_username, 
+	company_name, 
+	branch_name
+)
+VALUES(
+	@customer_username, 
+	@company_name, 
+	@branch_name
 );
 
 USE ziplogic;
@@ -1106,24 +1153,4 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
-
-USE ziplogic;
-
-# ==========
-# RECORD 1
-# ==========
-SET @customer_username = "johnvlim";
-SET @company_name = "Max's";
-SET @branch_name = "Ermita";
-
-INSERT INTO customers_companies_branches(
-	customer_username, 
-	company_name, 
-	branch_name
-)
-VALUES(
-	@customer_username, 
-	@company_name, 
-	@branch_name
 );
