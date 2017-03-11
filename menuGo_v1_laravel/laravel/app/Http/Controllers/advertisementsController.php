@@ -72,7 +72,7 @@ class advertisementsController extends Controller{
 				)
 				->where($mySqlWhere)
 				->get();
-				return $companyAdvertisements;
+				return $companyAdvertisement;
 	}
 	
 	/**
@@ -80,9 +80,11 @@ class advertisementsController extends Controller{
 	 * URL-->/ads
 	 **/
 	public function getAllAdvertisements(){
+		$mySqlWhere = array();
+		
 		$advertisementsResponse = new Response();
 		try{
-			$advertisements = DB::table(advertisementsConstants::advertisementsTable)->get();
+			$advertisements = $this->getJoinCompanyAdvertisement($mySqlWhere);
 			if($advertisements->isEmpty()){
 				$advertisementsResponse->setStatusCode(200, advertisementsConstants::emptyResultSetErr);
 			} else {
