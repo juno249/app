@@ -17,7 +17,7 @@ customerHomeController.$inject = [
 function customerHomeController(		
 ){
 	const RESTAURANT_ADS_KEY = "Restaurant_Ads";
-	const FOOD_BLOGS_KEY = "Food Blogs";
+	const FOOD_BLOGS_KEY = "Food_Blogs";
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */

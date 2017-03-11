@@ -132,6 +132,34 @@ angular
 })
 
 /* ******************************
+ * Constants: ADVERTISEMENTS_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('ADVERTISEMENTS_DB_FIELDS', {
+	0: 'advertisement_id', 
+	1: 'company_name', 
+	2: 'advertisement_title', 
+	3: 'advertisement_content', 
+	4: 'advertisement_price', 
+	5: 'advertisement_image', 
+	6: 'advertisement_url'
+})
+
+/* ******************************
+ * Constants: BLOGS_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('BLOGS_DB_FIELDS', {
+	0: 'blog_id', 
+	1: 'blog_title', 
+	2: 'blog_content', 
+	3: 'blog_image', 
+	4: 'blog_url'
+})
+
+/* ******************************
  * Constants: USER_ROLES
  * purpose: lists users roles/authority
  * ****************************** */
