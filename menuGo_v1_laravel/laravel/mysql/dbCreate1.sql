@@ -158,6 +158,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
 CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  	blog_id INT NOT NULL AUTO_INCREMENT, 
  	blog_title VARCHAR (100) NOT NULL, 
+ 	blog_author VARCHAR(50), 
  	blog_content VARCHAR(1000) NOT NULL, 
  	blog_image VARCHAR(500) NOT NULL, 
  	blog_url VARCHAR(500) NOT NULL, 

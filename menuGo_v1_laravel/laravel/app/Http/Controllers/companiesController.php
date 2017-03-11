@@ -254,7 +254,7 @@ class companiesController extends Controller
 	 * PUT method updateCompanyValidate
 	 * URL-->/companies/{CompanyName}/validate
 	 * */
-	public function updateCompanyValidate(Request $jsonRequest){
+	public function updateCompanyValidate(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';

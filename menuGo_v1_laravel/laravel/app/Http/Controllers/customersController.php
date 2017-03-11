@@ -357,7 +357,7 @@ class customersController extends Controller
 	 * PUT method updateCustomerValidate
 	 * URL-->/customers/{CustomerUsername}/validate
 	 * */
-	public function updateCustomerValidate(Request $jsonRequest){
+	public function updateCustomerValidate(Request $jsonRequest, $CustomerUsername){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';

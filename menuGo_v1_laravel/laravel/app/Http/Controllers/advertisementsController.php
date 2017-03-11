@@ -91,6 +91,7 @@ class advertisementsController extends Controller{
 		} catch(\PDOException $e){
 			$advertisementsResponse->setStatusCode(400, advertisementsConstants::dbReadCatchMsg);
 		}
+		return $advertisementsResponse;
 	}
 	
 	/**
@@ -200,6 +201,7 @@ class advertisementsController extends Controller{
 		} catch(\PDOException $e){
 			$advertisementsResponse->setStatusCode(400, advertisementsConstants::dbReadCatchMsg);
 		}
+		return $advertisementsResponse;
 	}
 	
 	/**
@@ -268,7 +270,7 @@ class advertisementsController extends Controller{
 	 * PUT method updateAdvertisement
 	 * URL-->/ads/{AdvertisementId}
 	 **/
-	public function updateAdvertisement($AdvertisementId){
+	public function updateAdvertisement(Request $jsonRequest, $AdvertisementId){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();

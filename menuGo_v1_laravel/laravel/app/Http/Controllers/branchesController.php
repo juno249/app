@@ -231,7 +231,7 @@ class branchesController extends Controller
 	 * POST method addBranchValidate
 	 * URL-->/companies/{CompanyName}/branches/validate
 	 **/
-	public function addBranchValidate(Request $jsonRequest){
+	public function addBranchValidate(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
