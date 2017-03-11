@@ -396,7 +396,7 @@ Route::get('blogs/{BlogId}', [
 		'uses' => 'blogsController@getBlog'
 ]);
 
-Routes::get('blogs/query', [
+Route::get('blogs/query', [
 		'uses' => 'blogsController@getByQuery'
 ]);
 
