@@ -275,7 +275,7 @@ class branchesController extends Controller
 	}
 
 	/**
-	 * POST method updateBranchValidate
+	 * PUT method updateBranchValidate
 	 * URL-->/companies/{CompanyName}/branches/{BranchName}/validate
 	 **/
 	public function updateBranchValidate(Request $jsonRequest, $CompanyName, $BranchName){
