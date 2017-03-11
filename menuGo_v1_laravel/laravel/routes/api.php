@@ -349,3 +349,65 @@ Route::put('customers-companies-branches/{CustomerUsername}/{CompanyName}/{Branc
 Route::delete('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}', [
 		'uses' => 'customersCompaniesBranchesController@deleteCustomerCompanyBranch'
 ]);
+
+/**
+ * Routes: advertisementsController
+ * */
+Route::get('ads', [
+		'uses' => 'advertisementsController@getAllAdvertisements'
+]);
+
+Route::get('ads/{AdvertisementId}', [
+		'uses' => 'advertisementsController@getAdvertisement'
+]);
+
+Route::get('companies/{CompanyName}/ads', [
+		'uses' => 'advertisementsController@getCompanyAdvertisements'
+]);
+
+Route::get('companies/{CompanyName}/ads/{AdvertisementId}', [
+		'uses' => 'advertisementsController@getCompanyAdvertisement'	
+]);
+
+Route::get('ads/query', [
+		'uses' => 'advertisementsController@getByQuery'
+]);
+
+Route::post('ads', [
+		'uses' => 'advertisementsController@addAdvertisement'
+]);
+
+Route::put('ads/{AdvertisementId}', [
+		'uses' => 'advertisementsController@updateAdvertisement'
+]);
+
+Route::delete('ads/{AdvertisementId', [
+		'uses' => 'advertisementsController@deleteAdvertisement'
+]);
+
+/*
+ * Routes: blogsController
+ * */
+Route::get('blogs', [
+		'uses' => 'blogsController@getAllBlogs'
+]);
+
+Route::get('blogs/{BlogId}', [
+		'uses' => 'blogsController@getBlog'
+]);
+
+Routes::get('blogs/query', [
+		'uses' => 'blogsController@getByQuery'
+]);
+
+Route::post('blogs', [
+		'uses' => 'blogsController@addBlog'
+]);
+
+Route::put('blogs/{BlogId}', [
+		'uses' => 'blogsController@updateBlog'
+]);
+
+Route::delete('blogs/{BlogId}', [
+		'uses' => 'blogsController@deleteBlog'	
+]);
