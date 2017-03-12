@@ -3,11 +3,10 @@ angular
  * Module Dependency Injection (Start)
  * ****************************** */
 .module('starter', [
-	'angular.filter', 
 	'ionic', 
-	'ngStorage', 
 	'ngCordova', 
-	'ngMap'
+	'ngMap', 
+	'ngStorage'
 	])
 /* ******************************
  * Module Dependency Injection (End)
