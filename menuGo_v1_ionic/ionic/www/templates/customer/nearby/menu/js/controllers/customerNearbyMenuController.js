@@ -8,6 +8,7 @@ angular
 customerNearbyMenuController.$inject = [
 	'$localStorage', 
 	'$scope', 
+	'$state', 
 	'$stateParams', 
 	'branchService'
 ];
@@ -21,6 +22,7 @@ customerNearbyMenuController.$inject = [
 function customerNearbyMenuController(
 		$localStorage, 
 		$scope, 
+		$state, 
 		$stateParams, 
 		branchService
 ){
@@ -54,11 +56,26 @@ function customerNearbyMenuController(
 	/* ******************************
 	 * Controller Binded Method (Start)
 	 * ****************************** */
+	vm.gotoState = gotoState;
 	vm.toStringAddress = toStringAddress;
 	vm.incCustomerOrder = incCustomerOrder;
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: gotoState()
+	 * purpose: go to a state
+	 * ****************************** */
+	function gotoState(
+			toStateName, 
+			toStateParams
+	){
+		if('customer.nearby.menu.order' == toStateName){
+			$state.go(toStateName, {}, {reload:true});
+		}
+	}
 	
 	/* ******************************
 	 * Method Implementation
