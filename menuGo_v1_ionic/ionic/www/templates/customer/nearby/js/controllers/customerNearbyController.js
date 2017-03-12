@@ -154,7 +154,7 @@ function customerNearbyController(
 		var stateName = toStateName;
 		var stateParams = {};
 		
-		if('customer.menu' == stateName){
+		if('customer.nearby.menu' == stateName){
 			stateParams['companyName'] = toStateParams.company_name;
 			stateParams['branchName'] = toStateParams.branch_name;
 			

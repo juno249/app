@@ -65,7 +65,7 @@ function doRouteConfig(
 				}
 			}
 		})
-		.state('customer.menu', {
+		.state('customer.nearby.menu', {
 			url: '/menu/company/:companyName/branch/:branchName', 
 			views: {
 				'main@': {
