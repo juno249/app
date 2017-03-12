@@ -1,2 +1,47 @@
 <ion-view>
+	<ion-content>
+		<div 
+			class="customerMenuContainer">
+			<div 
+				class="companyContainer lists">
+				<!--  *************** 
+						company (start)
+						*************** -->
+				<div 
+					class="companyHeader font-family-1-size-medium item item-divider">
+					Company Details
+				</div>
+				<div 
+					class="item item-thumbnail-left">
+					<img 
+						id="companyLogo" 
+						name="companyLogo" 
+						src={{customerMenuController.company.company_logo}}>
+					<div 
+						class="companyNameContainer font-family-1-size-medium">
+						<underline>{{customerMenuController.company.company_name}}</underline>
+					</div>
+					<div 
+						class="branchNameContainer font-family-1-size-medium">
+						{{customerMenuController.branch.branch_name}}
+					</div>
+					<div 
+						class="branchAddressContainer font-family-1-size-small">
+						{{customerMenuController.toStringAddress(customerMenuController.branch);}}	
+					</div>
+				</div>
+				<!--  *************** 
+						company (end)
+						*************** -->
+			</div>
+			
+			<!--  *************** 
+					menus (start)
+					*************** -->
+			
+			<!--  *************** 
+					menus (end)
+					*************** -->
+		</div>
+	</ion-content>
 </ion-view>

@@ -148,23 +148,19 @@ function customerNearbyController(
 	 * purpose: go to a state
 	 * ****************************** */
 	function gotoState(
-			stateName, 
-			stateParams
+			toStateName, 
+			toStateParams
 	){
-		if('customer.nearby' == stateName){
-			$state.transitionTo(
-					stateName, 
-					{
-						placeId: stateParams, //stateParams is place_id
-						category: null
-					}, 
-					{
-						reload: true, 
-						inherit: true, 
-						notify: true
-					}
-			);
+		var stateName = toStateName;
+		var stateParams = {};
+		
+		if('customer.menu' == stateName){
+			stateParams['companyName'] = toStateParams.company_name;
+			stateParams['branchName'] = toStateParams.branch_name;
+			
+			$state.go(stateName, stateParams, {reload: true});
 		}
+		
 	}
 	
 	/* ******************************

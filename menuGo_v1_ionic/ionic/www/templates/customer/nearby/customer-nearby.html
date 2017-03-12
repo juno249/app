@@ -2,11 +2,11 @@
 	<ion-content>
 		<div 
 			class="customerNearbyContainer">
+			<!--  *************** 
+					search (start)
+					*************** -->
 			<div 
 				class="searchContainer">
-				<!--  *************** 
-						search (start)
-						*************** -->
 				<div 
 					class="item item-input-inset">
 					<label 
@@ -23,17 +23,17 @@
 							type="text">
 					</label>
 				</div>
-				<!--  *************** 
-						search (end)
-						*************** -->
 			</div>
+			<!--  *************** 
+					search (end)
+					*************** -->
 			
+			<!--  *************** 
+					search result (start)
+					*************** -->
 			<div 
 				class="searchResultContainer" 
 				ng-search="customerNearbyController.placePredictions.length > 0">
-				<!--  *************** 
-						search result (start)
-						*************** -->
 				<ion-list>
 					<ion-item 
 						ng-repeat="i in customerNearbyController.placePredictions">
@@ -50,10 +50,10 @@
 						</span>
 					</ion-item>
 				</ion-list>
-				<!--  *************** 
-						search result (end)
-						*************** -->
 			</div>
+			<!--  *************** 
+					search result (end)
+					*************** -->
 			
 			<!--  *************** 
 					category (start)
@@ -89,6 +89,7 @@
 				</div>
 				<div 
 					class="branchesContainer child-content-center font-family-1-size-small" 
+					ng-click="customerNearbyController.gotoState('customer.menu', j)" 
 					ng-repeat="(i,j) in customerNearbyController.companiesBranches[k]">
 					{{customerNearbyController.toStringAddress(j);}}
 					<div 
@@ -119,12 +120,14 @@
 			<!--  *************** 
 					companies (end)
 					*************** -->
+					
+			<!--  *************** 
+					map (start)
+					*************** -->
 			<div 
 				class="mapContainer" 
 				data-tap-disabled="true">
-				<!--  *************** 
-						map (start)
-						*************** -->
+				
 				<ng-map 
 					center="[{{customerNearbyController.mapConfig.center.latitude}}, {{customerNearbyController.mapConfig.center.longitude}}]" 
 					class="map" 
@@ -136,10 +139,10 @@
 					zoom={{customerNearbyController.zoom}} 
 					zoom-control={{customerNearbyController.zoomControl}}>
 				</ng-map>
-				<!--  *************** 
-						map (end)
-						*************** -->
 			</div>
+			<!--  *************** 
+					map (end)
+					*************** -->	
 		</div>
 	</ion-content>
 </ion-view>

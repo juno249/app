@@ -1,0 +1,18 @@
+div.customerMenuContainer{
+	height: 100%;
+	width: 100%;
+}
+
+div.customerMenuContainer div.companyHeader, 
+div.customerMenuContainer div.menuitemsHeader{
+	background-color: #333;
+	color: #fff;
+}
+
+div.customerMenuContainer #companyLogo{
+	object-fit: cover;
+}
+
+div.customerMenuContainer div.item{
+	white-space: normal;
+}
