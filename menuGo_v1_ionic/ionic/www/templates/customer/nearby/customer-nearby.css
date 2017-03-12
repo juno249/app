@@ -20,21 +20,8 @@ div.customerNearbyContainer div.categoryContainer button{
 	min-width: 70px;
 }
 
-
-div.customerNearbyContainer div.companiesContainer div.companiesHeader{
-	background-color: #333;
-	color: #fff;
-	
-	border-radius: 25px;
-}
-
-
 div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer{
 	height: 200px;
-}
-
-div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div #menuitemsImage{
-	height: 100%;
 }
 
 div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div.menuitemsImageContainer{
@@ -54,6 +41,17 @@ div.customerNearbyContainer div.companiesContainer div.branchesContainer div.men
 	padding-right: 20px;
 }
 
+div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer img.menuitemsImage{
+	height: 100%;
+}
+
+div.customerNearbyContainer div.companiesContainer div.companiesHeader{
+	background-color: #333;
+	color: #fff;
+	
+	border-radius: 25px;
+}
+
 div.customerNearbyContainer div.mapContainer{
 	height: 0px;
 	width: 0px;
@@ -67,7 +65,7 @@ div.customerNearbyContainer div.searchContainer div.item.item-input-inset{
 	background-color: #333;
 }
 
-div.customerNearbyContainer div.searchContainer #searchLbl{
+div.customerNearbyContainer div.searchContainer label#searchLbl{
 	background-color: #fff;
 	
 	border: solid 1px #333;

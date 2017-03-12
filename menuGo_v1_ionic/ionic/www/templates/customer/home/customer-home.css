@@ -1,24 +1,18 @@
 div.customerHomeContainer, 
-div.customerHomeContainer img.companyLogo, 
 div.customerHomeContainer div.restaurantAdsSlide, 
 div.customerHomeContainer div.restaurantAdsSlideBox, 
 div.customerHomeContainer div.foodBlogsSlide, 
-div.customerHomeContainer div.foodBlogsSlideBox{
+div.customerHomeContainer div.foodBlogsSlideBox, 
+div.customerHomeContainer img#companyLogo{
 	height: 100%;
 	width: 100%;
 }
 
 div.customerHomeContainer div.companyLogoContainer{
 	display: block;
-	
-	height: 20%;
 	width: 60%;
 	
 	margin: auto;
-}
-
-div.customerHomeContainer div.item{
-	border: none;
 }
 
 div.customerHomeContainer div.foodBlogsContainer, 
@@ -31,6 +25,14 @@ div.customerHomeContainer div.restaurantAdsContainer{
 	padding: 10px 10px 0px 10px
 }
 
+div.customerHomeContainer div.foodBlogsContainer div.blogsImageContainer, 
+div.customerHomeContainer div.restaurantAdsContainer div.adsImageContainer{
+	background-color: #333;
+	
+	height: 70%;
+}
+
+
 div.customerHomeContainer div.foodBlogsContainer div.blogsTitleContainer{
 	font-weight: bold;
 	
@@ -39,16 +41,26 @@ div.customerHomeContainer div.foodBlogsContainer div.blogsTitleContainer{
 	white-space: nowrap;
 }
 
-div.customerHomeContainer div.foodBlogsContainer div #blogsImage, 
-div.customerHomeContainer div.restaurantAdsContainer div #adsImage{
+div.customerHomeContainer div.foodBlogsContainer img.blogsImage, 
+div.customerHomeContainer div.restaurantAdsContainer img.adsImage{
 	height: 100%;
 }
 
-div.customerHomeContainer div.foodBlogsContainer div.blogsImageContainer, 
-div.customerHomeContainer div.restaurantAdsContainer div.adsImageContainer{
+div.customerHomeContainer div.foodBlogsHeader, 
+div.customerHomeContainer div.restaurantAdsHeader{
 	background-color: #333;
+	color: #fff;
 	
-	height: 70%;
+	border-radius: 25px;
+	
+	margin: auto;
+	margin-top: 10px;
+	
+	width: 80%;
+}
+
+div.customerHomeContainer div.item{
+	border: none;
 }
 
 div.customerHomeContainer div.restaurantAdsContainer div.adsPriceContainer{
@@ -73,26 +85,13 @@ div.customerHomeContainer div.restaurantAdsContainer div.companyNameContainer{
 	padding-left: 20px;
 }
 
-div.customerHomeContainer div.foodBlogsHeader, 
-div.customerHomeContainer div.restaurantAdsHeader{
-	background-color: #333;
-	color: #fff;
-	
-	border-radius: 25px;
-	
-	margin: auto;
-	margin-top: 10px;
-	
-	width: 80%;
-}
-
 div.customerHomeContainer div.searchContainer{
 	width: 90%;
 	
 	margin: auto;
 }
 
-div.customerHomeContainer div.searchContainer div #searchLbl{
+div.customerHomeContainer div.searchContainer label#searchLbl{
 	background-color: #fff;
 	
 	border: solid 1px #333;

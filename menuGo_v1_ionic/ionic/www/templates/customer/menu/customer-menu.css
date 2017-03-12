@@ -9,10 +9,37 @@ div.customerMenuContainer div.menuitemsHeader{
 	color: #fff;
 }
 
-div.customerMenuContainer #companyLogo{
+div.customerMenuContainer div #companyLogo, 
+div.customerMenuContainer div.menusContainer div.menuitemsContainer img.menuitemImage{
+	border-radius: 25px;
+	
 	object-fit: cover;
 }
 
 div.customerMenuContainer div.item{
 	white-space: normal;
+}
+
+div.customerMenuContainer div.menusContainer{
+	background-color: #333;
+	color: #fff;
+	
+	border-radius: 25px;
+	
+	margin: auto;
+	margin-top: 10px;
+	
+	width: 80%;
+}
+
+div.customerMenuContainer div.menusContainer div.menuitemsContainer div.formContainer{
+	border: none;
+}
+
+div.customerMenuContainer div.menusContainer div.menuitemsContainer label.countLbl{
+	background-color: #fff;
+	
+	margin-left: 10px;
+	
+	padding: 5px 0px 5px 0px;
 }
