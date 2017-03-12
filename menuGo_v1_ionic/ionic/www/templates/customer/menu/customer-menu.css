@@ -1,15 +1,22 @@
-div.customerMenuContainer{
+div.customerMenuContainer, 
+div.customerMenuContainer div.menusContainer div.menuitemsContainer div.formContainer input.countTxt{
 	height: 100%;
 	width: 100%;
 }
 
-div.customerMenuContainer div.companyHeader, 
+div.customerMenuContainer div.buttonContainer{
+	margin: auto;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+div.customerMenuContainer div.companyContainer div.companyHeader, 
 div.customerMenuContainer div.menuitemsHeader{
 	background-color: #333;
 	color: #fff;
 }
 
-div.customerMenuContainer div #companyLogo, 
+div.customerMenuContainer div.companyContainer img#companyLogo, 
 div.customerMenuContainer div.menusContainer div.menuitemsContainer img.menuitemImage{
 	border-radius: 25px;
 	

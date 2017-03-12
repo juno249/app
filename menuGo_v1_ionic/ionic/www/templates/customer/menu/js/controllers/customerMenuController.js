@@ -25,6 +25,7 @@ function customerMenuController(
 		branchService
 ){
 	const COMPANIES_KEY = 'Companies';
+	const MY_ORDERS_KEY= 'My_Orders';
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
@@ -39,6 +40,13 @@ function customerMenuController(
 	vm.branch = undefined;
 	vm.companyName = $stateParams['companyName'];
 	vm.branchName = $stateParams['branchName'];
+	if (null == localStorage.getItem(MY_ORDERS_KEY)) {
+		vm.myOrders = {};
+	} else {
+		var myOrders = localStorage.getItem(MY_ORDERS_KEY);
+		myOrders = JSON.parse(myOrders);
+		vm.myOrders = myOrders;
+	}
 	/* ******************************
 	 * Cont roller Binded Data (End)
 	 * ****************************** */
@@ -47,6 +55,7 @@ function customerMenuController(
 	 * Controller Binded Method (Start)
 	 * ****************************** */
 	vm.toStringAddress = toStringAddress;
+	vm.incCustomerOrder = incCustomerOrder;
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
@@ -60,6 +69,52 @@ function customerMenuController(
 		branchService.setBranch(branch);
 		
 		return branchService.toStringAddress();
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: incCustomerOrder()
+	 * purpose: increase customer order quantity
+	 * ****************************** */
+	function incCustomerOrder(menuitemCode){
+		var myOrders = vm.myOrders;
+		
+		myOrders[menuitemCode].menuitem_quantity++;
+		myOrders[menuitemCode].menuitem_total = 
+				myOrders[menuitemCode].menuitem_price * 
+				myOrders[menuitemCode].menuitem_quantity;
+		
+		vm.myOrders = myOrders;
+		myOrders = JSON.stringify(myOrders);
+		localStorage.setItem(MY_ORDERS_KEY, myOrders);
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: initializeMyOrders()
+	 * purpose: initializes myOrders
+	 * ****************************** */
+	function initializeMyOrders() {
+		var myOrders = vm.myOrders;
+		var company = vm.company;
+		var companyMenus = company.menus;
+
+		angular.forEach(companyMenus, function(v, k) {
+			var companyMenuMenuitems = v.menuitems;
+
+			angular.forEach(companyMenuMenuitems, function(j, i) {
+				myOrders[j.menuitem_code] = {
+						'menu_name': k, 
+						'menuitem_quantity': 0, 
+						'menuitem_price': j.menuitem_price, 
+						'menuitem_total': 0
+				}
+			});
+		});
+		
+		vm.myOrders = myOrders;
+		myOrders = JSON.stringify(myOrders);
+		localStorage.setItem(MY_ORDERS_KEY, myOrders);
 	}
 	
 	/* ******************************
@@ -94,6 +149,8 @@ function customerMenuController(
 				
 				vm.company = company;
 				vm.branch = branch;
+				
+				initializeMyOrders();
 			}
 	);
 	/* ******************************

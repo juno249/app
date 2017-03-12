@@ -67,23 +67,46 @@
 								{{j.menuitem_desc}}
 							</div>
 							<div 
+								class="child-content-right font-family-1-size-medium menuitemPrice">
+								{{j.menuitem_price}}
+							</div>
+							<div 
 								class="child-content-right formContainer item item-input-inset">
 								<button 
-									class="button button-positive button-small">
+									class="button button-positive button-small" 
+									ng-click="customerMenuController.incCustomerOrder(j.menuitem_code);">
 									+
 								</button>
 								<label 
 									class="countLbl item item-input-wrapper">
 									<input 
+										class="child-content-center countTxt" 
+										ng-model="customerMenuController.myOrders[j.menuitem_code].menuitem_quantity"
 										placeholder="count" 
 										type="text">
 								</label>
 							</div>
 					</div>
-				</div>
+				</div>	
 			</div>
 			<!--  *************** 
 					menus (end)
+					*************** -->
+					
+			<!--  *************** 
+					button (start)
+					*************** -->
+			<div 
+				class="buttonContainer child-content-center">
+				<button 
+					class="button button-assertive button-small fill-parent-x font-family-1-size-medium" 
+					id="makeReservationBtn" 
+					name="makeReservationBtn">
+					Reserve
+				</button>
+			</div>
+			<!--  *************** 
+					button (end)
 					*************** -->
 		</div>
 	</ion-content>
