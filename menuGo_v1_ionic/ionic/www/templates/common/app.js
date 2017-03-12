@@ -69,7 +69,7 @@ function doRouteConfig(
 			url: '/menu/company/:companyName/branch/:branchName', 
 			views: {
 				'main@': {
-					templateUrl: 'templates/customer/menu/customer-menu.html', 
+					templateUrl: 'templates/customer/nearby/menu/customer-menu.html', 
 					controller: 'customerMenuController', 
 					controllerAs: 'customerMenuController'
 				}
