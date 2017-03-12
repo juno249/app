@@ -1,97 +1,115 @@
 <ion-view>
-	<div 
-		class="customerHomeContainer">
+	<ion-content>
 		<div 
-			class="companyLogoContainer child-content-center">
-			<img 
-				class="companyLogo" 
-				src="templates/login/res/img/companyLogo.png">
-		</div>
-		<div 
-			class="searchContainer">
+			class="customerHomeContainer">
+			<div 
+				class="companyLogoContainer child-content-center">
+				<img 
+					class="companyLogo" 
+					src="templates/login/res/img/companyLogo.png">
+			</div>
+			<div 
+				class="searchContainer">
+				<!--  *************** 
+						search (start)
+						*************** -->
+				<div 
+					class="item item-input-inset">
+					<label 
+						id="searchLbl" 
+						name="searchLbl" 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-ios-search">
+						</i>
+						<input 
+							class="fill-parent-x" 
+							ng-model="customerHomeController.searchVal" 
+							placeholder="Search" 
+							type="text">
+					</label>
+				</div>
+				<!--  *************** 
+						search (end)
+						*************** -->
+			</div>
+			
 			<!--  *************** 
-					search (start)
+					restaurant ads (start)
 					*************** -->
 			<div 
-				class="item item-input-inset">
-				<label 
-					id="searchLbl" 
-					name="searchLbl" 
-					class="item item-input-wrapper">
-					<i 
-						class="icon ion-ios-search">
-					</i>
-					<input 
-						class="fill-parent-x" 
-						id="searchTxt" 
-						name="searchTxt" 
-						ng-model="customerHomeController.search" 
-						placeholder="Search" 
-						type="text">
-				</label>
+				class="child-content-center font-family-1-size-medium restaurantAdsHeader">
+				ADVERTISEMENTS
+			</div>
+			<div 
+				class="restaurantAdsContainer">
+				<ion-slide-box 
+					auto-play="true" 
+					does-continue="true" 
+					class="restaurantAdsSlideBox">
+					<ion-slide 
+						class="restaurantAdsSlide" 
+						ng-repeat="k in customerHomeController.restaurantAds">
+						<div 
+							class="child-content-left companyNameContainer font-family-3-size-medium">
+							{{k.company_name}}
+						</div>
+						<div 
+							class="adsImageContainer child-content-center">
+							<img 
+								id="adsImage" 
+								name="adsImage" 
+								src={{k.advertisement_image}}>
+						</div>
+						<div 
+							class="child-content-right adsPriceContainer font-family-3-size-medium">
+							{{k.advertisement_price}}
+						</div>
+					</ion-slide>
+				</ion-slide-box>
 			</div>
 			<!--  *************** 
-					search (end)
+					restaurant ads (end)
+					*************** -->
+					
+			<!--  *************** 
+					food blogs (start)
+					*************** -->
+			<div 
+				class="child-content-center font-family-1-size-medium foodBlogsHeader">
+				FEATURED BLOGS
+			</div>
+			<div 
+				class="foodBlogsContainer">
+				<ion-slide-box 
+					auto-play="true" 
+					does-continue="true" 
+					class="foodBlogsSlideBox">
+					<ion-slide 
+						class="foodBlogsSlide" 
+						ng-click="" 
+						ng-repeat="k in customerHomeController.foodBlogs">
+						<div 
+							class="blogsImageContainer child-content-center">
+							<img 
+								id="blogsImage" 
+								name="blogsImage" 
+								src={{k.blog_image}}>
+						</div>
+						<div 
+							class="blogsTitleContainer child-content-center font-family-1-size-small">
+							<underline>{{k.blog_title}}</underline>
+						</div>
+						<div 
+							class="blogsAuthorContainer child-content-right font-family-1-size-small">
+							From: {{k.blog_author}}
+						</div>
+					</ion-slide>
+				</ion-slide-box>
+			</div>
+			<!--  *************** 
+					food blogs (end)
 					*************** -->
 		</div>
-		
-		<!--  *************** 
-				restaurant ads (start)
-				*************** -->
-		<div 
-			class="restaurantAdsContainer">
-			<ion-slide-box 
-				auto-play="true" 
-				does-continue="true" 
-				class="restaurantAdsSlideBox">
-				<ion-slide 
-					class="restaurantAdsSlide" 
-					ng-repeat="k in customerHomeController.restaurantAds">
-					<div 
-						class="child-content-left companyNameContainer font-family-1-size-large">
-						{{k.companyName}}
-					</div>
-					<div 
-						class="adContentContainer child-content-center font-family-2-size-medium">
-						{{k.adContent}}
-					</div>
-					<div 
-						class="child-content-right font-family-2-size-large priceContainer">
-						{{k.price}}
-					</div>
-				</ion-slide>
-			</ion-slide-box>
-		</div>
-		<!--  *************** 
-				restaurant ads (end)
-				*************** -->
-				
-		<!--  *************** 
-				food blogs (start)
-				*************** -->
-		<div 
-			class="foodBlogsContainer">
-			<ion-slide-box 
-				auto-play="true" 
-				does-continue="true" 
-				class="foodBlogsSlideBox">
-				<ion-slide 
-					class="foodBlogsSlide" 
-					ng-click="" 
-					ng-repeat="k in customerHomeController.foodBlogs">
-					<div 
-						class="child-content-center font-family-1-size-large foodBlogTitleContainer">
-						{{k.title}}
-					</div>
-					<div 
-						class="child-content-center font-family-2-size-small foodBlogContentContainer">
-						{{k.content}}
-					</div>
-				</ion-slide>
-			</ion-slide-box>
-		</div>
-		<!--  *************** 
-				food blogs (end)
-				*************** -->
-	</div>
+	</ion-content>
 </ion-view>

@@ -6,6 +6,8 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 customerHomeController.$inject = [
+	'dataService', 
+	'$scope'
 ];
 /* ******************************
  * Controller Dependency Injection (End)
@@ -14,7 +16,9 @@ customerHomeController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function customerHomeController(		
+function customerHomeController(
+		dataService, 
+		$scope
 ){
 	const RESTAURANT_ADS_KEY = "Restaurant_Ads";
 	const FOOD_BLOGS_KEY = "Food_Blogs";
@@ -39,34 +43,37 @@ function customerHomeController(
 	 * ****************************** */
 	
 	/* ******************************
-	 * test-data (Start)
+	 * Watchers (Start)
 	 * ****************************** */
-	vm.restaurantAds = [
-		{
-			companyName: 'Jollibee', 
-			adContent: 'Jollibee Chicken Joy', 
-			price: 97
-		}, {
-			companyName: "Max's", 
-			adContent: "Max's Fried Chicken", 
-			price: 565
-		}, {
-			companyName: 'McDonalds', 
-			adContent: 'McDonalds Fried Chicken', 
-			price: 79
-		}
-	]
-	vm.foodBlogs = [
-		{
-			title: 'title # 1', 
-			content: 'content # 1'
-		}, {
-			title: 'title # 2', 
-			content: 'content # 2'
-		}
-	]
+	$scope.$watch(
+			function(){
+				return localStorage.getItem(RESTAURANT_ADS_KEY);
+			}, 
+			function(nVal, oVal){
+				var restaurantAds = vm.restaurantAds;
+				
+				restaurantAds = localStorage.getItem(RESTAURANT_ADS_KEY);
+				restaurantAds = JSON.parse(restaurantAds);
+				
+				vm.restaurantAds = restaurantAds;
+			}
+	);
+	
+	$scope.$watch(
+			function(){
+				return localStorage.getItem(FOOD_BLOGS_KEY);
+			}, 
+			function(nVal, oVal){
+				var foodBlogs = vm.foodBlogs;
+				
+				foodBlogs = localStorage.getItem(FOOD_BLOGS_KEY);
+				foodBlogs = JSON.parse(foodBlogs);
+				
+				vm.foodBlogs = foodBlogs;
+			}
+	);
 	/* ******************************
-	 * test-data (End)
+	 * Watchers (End)
 	 * ****************************** */
 }
 /* ******************************

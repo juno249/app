@@ -1,22 +1,4 @@
-div.customerHomeContainer div.companyLogoContainer{
-	display: block;
-	
-	height: 20%;
-	width: 60%;
-	
-	margin: auto;
-}
-
-div.customerHomeContainer div.searchContainer{
-	width: 90%;
-	
-	margin: auto;
-}
-
-div.customerHomeContainer div #searchLbl{
-	padding: 5px 0px 5px 20px;
-}
-
+div.customerHomeContainer, 
 div.customerHomeContainer img.companyLogo, 
 div.customerHomeContainer div.restaurantAdsSlide, 
 div.customerHomeContainer div.restaurantAdsSlideBox, 
@@ -26,14 +8,94 @@ div.customerHomeContainer div.foodBlogsSlideBox{
 	width: 100%;
 }
 
-div.customerHomeContainer div.restaurantAdsContainer, 
-div.customerHomeContainer div.foodBlogsContainer{
-	border: solid 1px #333;
+div.customerHomeContainer div.companyLogoContainer{
+	display: block;
 	
-	height: 150px;
+	height: 20%;
+	width: 60%;
+	
+	margin: auto;
+}
+
+div.customerHomeContainer div.item{
+	border: none;
+}
+
+div.customerHomeContainer div.foodBlogsContainer div.blogsTitleContainer{
+	font-weight: bold;
+	
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+div.customerHomeContainer div.foodBlogsContainer, 
+div.customerHomeContainer div.restaurantAdsContainer{
+	height: 200px;
 	width: 80%;
 	
 	margin: auto;
 	margin-top: 20px;
 	padding: 10px 10px 0px 10px
+}
+
+div.customerHomeContainer div.foodBlogsContainer div #blogsImage, 
+div.customerHomeContainer div.restaurantAdsContainer div #adsImage{
+	height: 100%;
+}
+
+div.customerHomeContainer div.foodBlogsContainer div.blogsImageContainer, 
+div.customerHomeContainer div.restaurantAdsContainer div.adsImageContainer{
+	background-color: #333;
+	
+	height: 70%;
+}
+
+div.customerHomeContainer div.restaurantAdsContainer div.adsPriceContainer{
+	background-color: #333;
+	color: #fff;
+	
+	border-top: solid 1px #fff;
+	
+	height: 10%;
+	
+	padding-right: 20px;
+}
+
+div.customerHomeContainer div.restaurantAdsContainer div.companyNameContainer{
+	background-color: #333;
+	color: #fff;
+	
+	border-bottom: solid 1px #fff;
+	
+	height: 10%;
+	
+	padding-left: 20px;
+}
+
+div.customerHomeContainer div.foodBlogsHeader, 
+div.customerHomeContainer div.restaurantAdsHeader{
+	background-color: #333;
+	color: #fff;
+	
+	margin-top: 10px;
+}
+
+div.customerHomeContainer div.searchContainer{
+	width: 90%;
+	
+	margin: auto;
+}
+
+div.customerHomeContainer div.searchContainer div #searchLbl{
+	background-color: #fff;
+	
+	border: solid 1px #333;
+	border-radius: 25px;
+	
+	padding: 5px 0px 5px 20px;
+}
+
+div.slider-pager{
+	position: relative;
 }

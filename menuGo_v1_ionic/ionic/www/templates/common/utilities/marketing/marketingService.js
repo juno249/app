@@ -141,7 +141,7 @@ function marketingService(
 				method: 'GET', 
 				url: API_BASE_URL + '/ads'
 		}
-		$httpConfig(httpConfig)
+		$http(httpConfig)
 		.then(fetchRestaurantAdsSuccessCallback)
 		.catch(fetchRestaurantAdsFailedCallback);
 		
@@ -185,7 +185,7 @@ function marketingService(
 					restaurantAdsDetails[restaurantAdsDBFieldRunner] = restaurantAdsRunner[restaurantAdsDBFieldRunner];
 				}
 				var restaurantAdsKeyValue = restaurantAdsRunner[restaurantAdsKey];
-				marketingServiceObj.restaurantAds[restaurantAdsKey] = restaurantAdsDetails;
+				marketingServiceObj.restaurantAds[restaurantAdsKeyValue] = restaurantAdsDetails;
 			}
 		}
 		return deferred.promise;
@@ -398,7 +398,7 @@ function marketingService(
 				
 				for(var j=0; j<foodBlogsDBFieldCount; j++){
 					foodBlogsDBFieldRunner = BLOGS_DB_FIELDS[j];
-					foodBlogsDetails[foodBlogsDBFieldRunner] = foodBlogsRunners[foodBlogsDBFieldRunner];
+					foodBlogsDetails[foodBlogsDBFieldRunner] = foodBlogsRunner[foodBlogsDBFieldRunner];
 				}
 				var foodBlogsKeyValue = foodBlogsRunner[foodBlogsKey];
 				marketingServiceObj.foodBlogs[foodBlogsKeyValue] = foodBlogsDetails;

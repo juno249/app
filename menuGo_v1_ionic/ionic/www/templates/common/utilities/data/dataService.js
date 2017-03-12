@@ -11,7 +11,8 @@ dataService.$inject = [
 	'branchService', 
 	'menuService', 
 	'tableService', 
-	'menuitemService'
+	'menuitemService', 
+	'marketingService'
 ]
 /* ******************************
  * Service Dependency Injection (End)
@@ -26,7 +27,8 @@ function dataService(
 		branchService, 
 		menuService, 
 		tableService, 
-		menuitemService
+		menuitemService, 
+		marketingService
 ){
 	const COMPANIES_KEY = 'Companies';
 	const BRANCHES_KEY = 'Branches'; 
@@ -257,6 +259,56 @@ function dataService(
 		
 		function fetchCompaniesFailedCallback(responseError){
 			reset();
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: fetchRestaurantAds()
+	 * purpose: fetch restaurant ads from server
+	 * ****************************** */
+	function fetchRestaurantAds(){
+		marketingService.fetchRestaurantAds()
+		.then(fetchRestaurantAdsSuccessCallback)
+		.catch(fetchRestaurantAdsFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function fetchRestaurantAdsSuccessCallback(response){
+			//do something on success
+		}
+		
+		function fetchRestaurantAdsFailedCallback(responseError){
+			//do something on failure
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: fetchFoodBlogs()
+	 * purpose: fetch food blogs from server
+	 * ****************************** */
+	function fetchFoodBlogs(){
+		marketingService.fetchFoodBlogs()
+		.then(fetchFoodBlogsSuccessCallback)
+		.catch(fetchFoodBlogsFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function fetchFoodBlogsSuccessCallback(response){
+			//do something on success
+		}
+		
+		function fetchFoodBlogsFailedCallback(responseError){
+			//do something on failure
 		}
 		/* ******************************
 		 * Callback Implementations (End)

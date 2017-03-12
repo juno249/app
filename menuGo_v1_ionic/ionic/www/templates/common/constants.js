@@ -154,9 +154,10 @@ angular
 .constant('BLOGS_DB_FIELDS', {
 	0: 'blog_id', 
 	1: 'blog_title', 
-	2: 'blog_content', 
-	3: 'blog_image', 
-	4: 'blog_url'
+	2: 'blog_author', 
+	3: 'blog_content', 
+	4: 'blog_image', 
+	5: 'blog_url'
 })
 
 /* ******************************

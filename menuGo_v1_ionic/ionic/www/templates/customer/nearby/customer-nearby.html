@@ -1,105 +1,100 @@
 <ion-view>
-	<div 
-		class="customerNearbyContainer">
+	<ion-content>
 		<div 
-			class="searchContainer">
+			class="customerNearbyContainer">
+			<div 
+				class="searchContainer">
+				<!--  *************** 
+						search (start)
+						*************** -->
+				<div 
+					class="item item-input-inset">
+					<label 
+						id="searchLbl" 
+						name="searchLbl" 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-ios-search">
+						</i>
+						<input 
+							class="fill-parent-x" 
+							ng-model="customerNearbyController.searchVal" 
+							placeholder="Current Location" 
+							type="text">
+					</label>
+				</div>
+				<!--  *************** 
+						search (end)
+						*************** -->
+			</div>
+			
+			<div 
+				class="searchResultContainer" 
+				ng-search="customerNearbyController.placePredictions.length > 0">
+				<!--  *************** 
+						search result (start)
+						*************** -->
+				<ion-list>
+					<ion-item 
+						ng-repeat="i in customerNearbyController.placePredictions">
+						<i 
+							class="icon ion-location">
+						</i>
+						<span 
+							class="font-family-1-size-medium">
+							{{i.structured_formatting.main_text}}
+						</span><br>
+						<span 
+							class="font-family-1-size-small">
+							{{i.description}}
+						</span>
+					</ion-item>
+				</ion-list>
+				<!--  *************** 
+						search result (end)
+						*************** -->
+			</div>
+			
 			<!--  *************** 
-					search (start)
+					category (start)
 					*************** -->
 			<div 
-				class="item item-input-inset">
-				<label 
-					id="searchLbl" 
-					name="searchLbl" 
-					class="item item-input-wrapper">
-					<i 
-						class="icon ion-ios-search">
-					</i>
-					<input 
-						class="fill-parent-x" 
-						id="searchTxt" 
-						name="searchTxt" 
-						ng-model="customerNearbyController.searchVal" 
-						placeholder="Current Location" 
-						type="text">
-				</label>
+				class="categoryContainer">
+				<button 
+					class="button button-assertive button-small font-family-1-size-small">
+					All
+				</button>
+				<button 
+					class="button button-assertive button-small font-family-1-size-small" 
+					ng-repeat="i in customerNearbyController.companiesCategories">
+					{{i}}
+				</button>
 			</div>
 			<!--  *************** 
-					search (end)
+					category (end)
 					*************** -->
+			
+			<div 
+				class="mapContainer" 
+				data-tap-disabled="true">
+				<!--  *************** 
+						map (start)
+						*************** -->
+				<ng-map 
+					center="[{{customerNearbyController.mapConfig.center.latitude}}, {{customerNearbyController.mapConfig.center.longitude}}]" 
+					class="map" 
+					id="map" 
+					map-type-control={{customerNearbyController.mapTypeControl}} 
+					name="map" 
+					scale-control={{customerNearbyController.scaleControl}} 
+					street-view-control={{customerNearbyController.streetViewControl}} 
+					zoom={{customerNearbyController.zoom}} 
+					zoom-control={{customerNearbyController.zoomControl}}>
+				</ng-map>
+				<!--  *************** 
+						map (end)
+						*************** -->
+			</div>
 		</div>
-		
-		<div 
-			class="searchResultContainer" 
-			ng-show="customerNearbyController.placePredictions.length > 0">
-			<!--  *************** 
-					search result (start)
-					*************** -->
-			<ion-list>
-				<ion-item 
-					ng-repeat="i in customerNearbyController.placePredictions" 
-					ng-click="customerNearbyController.gotoState('customer.nearby', i.place_id)">
-					{{i.terms[0].value}}
-				</ion-item>
-			</ion-list>
-			<!--  *************** 
-					search result (end)
-					*************** -->
-		</div>
-		
-		<!--  *************** 
-				companies (start)
-				*************** -->
-		<div 
-			class="companiesContainer">
-			<ion-slide-box 
-				auto-play="true" 
-				does-continue="true" 
-				class="companiesSlideBox" 
-				ng-click="" 
-				ng-repeat="(k, v) in customerNearbyController.companies">
-				<ion-slide 
-					class="companiesSlide" 
-					ng-repeat="i in customerNearbyController.companiesMenuitems[k]">
-					<div 
-						class="child-content-left companyNameContainer font-family-1-size-large">
-						{{k}}
-					</div>
-					<div 
-						class="child-content-center font-family-2-size-medium menuitemNameContainer">
-						{{i.menuitem_name}}
-					</div>
-					<div 
-						class="child-content-right font-family-2-size-large menuitemPriceContainer">
-						{{i.menuitem_price}}
-					</div>
-				</ion-slide>
-			</ion-slide-box>
-		</div>
-		<!--  *************** 
-				companies (end)
-				*************** -->
-				
-		<!--  *************** 
-				map (start)
-				*************** -->
-		<div 
-			class="mapContainer" 
-			data-tap-disabled="true">
-			<ng-map 
-				center="[{{customerNearbyController.mapConfig.center.latitude}}, {{customerNearbyController.mapConfig.center.longitude}}]" 
-				class="map" 
-				id="map" 
-				map-type-control={{customerNearbyController.mapTypeControl}} 
-				name="map" 
-				scale-control={{customerNearbyController.scaleControl}} 
-				street-view-control={{customerNearbyController.streetViewControl}} 
-				zoom={{customerNearbyController.zoom}} 
-				zoom-control={{customerNearbyController.zoomControl}}>
-			</ng-map>
-		</div>
-		<!--  *************** 
-				map (end)
-				*************** -->		
-	</div>
+	</ion-content>
 </ion-view>

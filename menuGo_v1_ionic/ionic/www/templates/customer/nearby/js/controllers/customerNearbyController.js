@@ -58,6 +58,7 @@ function customerNearbyController(
 	vm.companies = companies;
 	vm.companiesMenuitems = undefined;
 	vm.companiesBranches = undefined;
+	vm.companiesCategories = undefined;
 	vm.mapCenterCoordinates = {
 			latitude: undefined, 
 			longitude: undefined
@@ -90,7 +91,8 @@ function customerNearbyController(
 	){
 		initializeMap();
 		loadCompaniesBranches();
-		loadCompaniesMenuitems();	
+		loadCompaniesMenuitems();
+		loadCompaniesCategories();
 	} else {
 		if(
 				!(
@@ -389,6 +391,25 @@ function customerNearbyController(
 	}
 	
 	/* ******************************
+	 * Method Implementation
+	 * method name: loadlCompaniesCategories()
+	 * purpose: loads companies categories
+	 * ****************************** */
+	function loadCompaniesCategories(){
+		var companies = vm.companies;
+		var companiesCategories = [];
+		
+		angular.forEach(companies, function(v, k){
+			var company = v;
+			if(-1 == companiesCategories.indexOf(v.company_category)){
+				companiesCategories.push(v.company_category);
+			}
+		});
+		
+		vm.companiesCategories = companiesCategories;
+	}
+	
+	/* ******************************
 	 * Watchers (Start)
 	 * ****************************** */
 	$scope.$watch(
@@ -412,6 +433,7 @@ function customerNearbyController(
 		function(nVal, oVal){
 			loadCompaniesBranches();
 			loadCompaniesMenuitems();
+			loadCompaniesCategories();
 		}
 	);
 	
