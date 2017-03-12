@@ -48,7 +48,8 @@ function branchService(
 			addBranch: addBranch, 
 			updateBranchValidate: updateBranchValidate, 
 			updateBranch: updateBranch, 
-			deleteBranch: deleteBranch
+			deleteBranch: deleteBranch, 
+			toStringAddress: toStringAddress
 	};
 	/* ******************************
 	 * Service Return Object (End)
@@ -364,6 +365,34 @@ function branchService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: toStringAddress()
+	 * purpose: returns an address string
+	 * ****************************** */
+	function toStringAddress(){
+		var branch = branchServiceObj.branch;
+		var newBranch = [];
+		var newBranchString = '';
+		var indexStart = 3;
+		var indexEnd = 9;
+		
+		angular.forEach(BRANCHES_DB_FIELDS, function(v,k){
+			if(!(k < 3 || k > 9)){
+				newBranch[k-indexStart] = branch[BRANCHES_DB_FIELDS[k]];
+			}
+		});
+		
+		for(var i=0; i<newBranch.length; i++){
+			newBranchString += newBranch[i];
+			newBranchString += ', ';
+		}
+		
+		newBranchString = newBranchString.substring(0, newBranchString.length-2);
+		
+		return newBranchString;
 	}
 	
 	return branchServiceObj;

@@ -1,12 +1,57 @@
-div.customerNearbyContainer{
+div.customerNearbyContainer, 
+div.customerNearbyContainer div.companiesContainer div.menuitemsContainer div.menuitemsSlide, 
+div.customerNearbyContainer div.companiesContainer div.menuitemsContainer div.menuitemsSlideBox{
 	height: 100%;
 	width: 100%;
 }
 
-div.customerNearbyContainer div.categoryContainer button{
-	margin: 5px 5px 5px 5px;
+div.customerNearbyContainer div.categoryContainer, 
+div.customerNearbyContainer div.companiesContainer{
+	width: 80%;
 	
-	min-width: 75px;
+	margin: auto;
+	margin-top: 20px;
+	padding: 10px 10px 0px 10px;
+}
+
+div.customerNearbyContainer div.categoryContainer button{
+	margin: 5px;
+	
+	min-width: 70px;
+}
+
+
+div.customerNearbyContainer div.companiesContainer div.companiesHeader{
+	background-color: #333;
+	color: #fff;
+	
+	border-radius: 25px;
+}
+
+
+div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer{
+	height: 200px;
+}
+
+div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div #menuitemsImage{
+	height: 100%;
+}
+
+div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div.menuitemsImageContainer{
+	background-color: #333;
+	
+	height: 80%;
+}
+
+div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div.menuitemsPrice{
+	background-color: #333;
+	color: #fff;
+	
+	border-top: solid 1px #fff;
+	
+	height: 10%;
+	
+	padding-right: 20px;
 }
 
 div.customerNearbyContainer div.mapContainer{

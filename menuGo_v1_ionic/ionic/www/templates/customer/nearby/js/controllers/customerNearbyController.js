@@ -10,6 +10,7 @@ customerNearbyController.$inject = [
 	'$scope', 
 	'$state', 
 	'$stateParams', 
+	'branchService', 
 	'dataService', 
 	'geolocationService', 
 	'googleplacesService'
@@ -26,6 +27,7 @@ function customerNearbyController(
 		$scope, 
 		$state, 
 		$stateParams, 
+		branchService, 
 		dataService, 
 		geolocationService, 
 		googleplacesService
@@ -75,6 +77,8 @@ function customerNearbyController(
 	 * ****************************** */
 	vm.gotoState = gotoState;
 	vm.getPlacesNearby = getPlacesNearby;
+	vm.setCategoryVal = setCategoryVal;
+	vm.toStringAddress = toStringAddress;
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
@@ -219,6 +223,26 @@ function customerNearbyController(
 		 * ****************************** */
 		
 		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: setCategoryVal()
+	 * purpose: sets categoryVal
+	 * ****************************** */
+	function setCategoryVal(categoryVal){
+		vm.categoryVal = categoryVal;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: toStringAddress()
+	 * purpose: returns an address string
+	 * ****************************** */
+	function toStringAddress(branch){
+		branchService.setBranch(branch);
+		
+		return branchService.toStringAddress();
 	}
 	
 	/* ******************************
@@ -435,29 +459,6 @@ function customerNearbyController(
 			loadCompaniesMenuitems();
 			loadCompaniesCategories();
 		}
-	);
-	
-	$scope.$watch(
-			function(){
-				return vm.categoryVal;
-			}, 
-			function(nVal, oVal){
-				var companies = vm.companies;
-				var categoryVal = vm.categoryVal;
-				
-				if(
-						null == categoryVal || 
-						0 == categoryVal.trim().length
-				){
-					return;
-				}
-				
-				angular.forEach(companies, function(v, k){
-					if(!(categoryVal == v.company_category)){
-						delete companies[k];
-					}
-				})
-			}
 	);
 	
 	$scope.$watch(

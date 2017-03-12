@@ -21,14 +21,6 @@ div.customerHomeContainer div.item{
 	border: none;
 }
 
-div.customerHomeContainer div.foodBlogsContainer div.blogsTitleContainer{
-	font-weight: bold;
-	
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
 div.customerHomeContainer div.foodBlogsContainer, 
 div.customerHomeContainer div.restaurantAdsContainer{
 	height: 200px;
@@ -37,6 +29,14 @@ div.customerHomeContainer div.restaurantAdsContainer{
 	margin: auto;
 	margin-top: 20px;
 	padding: 10px 10px 0px 10px
+}
+
+div.customerHomeContainer div.foodBlogsContainer div.blogsTitleContainer{
+	font-weight: bold;
+	
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 div.customerHomeContainer div.foodBlogsContainer div #blogsImage, 
@@ -78,7 +78,12 @@ div.customerHomeContainer div.restaurantAdsHeader{
 	background-color: #333;
 	color: #fff;
 	
+	border-radius: 25px;
+	
+	margin: auto;
 	margin-top: 10px;
+	
+	width: 80%;
 }
 
 div.customerHomeContainer div.searchContainer{

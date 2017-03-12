@@ -59,13 +59,15 @@
 					category (start)
 					*************** -->
 			<div 
-				class="categoryContainer">
+				class="categoryContainer child-content-center">
 				<button 
-					class="button button-assertive button-small font-family-1-size-small">
+					class="button button-assertive button-small font-family-1-size-small" 
+					ng-click="customerNearbyController.setCategoryVal('');">
 					All
 				</button>
 				<button 
 					class="button button-assertive button-small font-family-1-size-small" 
+					ng-click="customerNearbyController.setCategoryVal(i);" 
 					ng-repeat="i in customerNearbyController.companiesCategories">
 					{{i}}
 				</button>
@@ -73,7 +75,50 @@
 			<!--  *************** 
 					category (end)
 					*************** -->
-			
+					
+			<!--  *************** 
+					companies (start)
+					*************** -->
+			<div 
+				class="companiesContainer" 
+				ng-repeat="(k,v) in customerNearbyController.companies" 
+				ng-show="(customerNearbyController.categoryVal == '') || (customerNearbyController.categoryVal == v.company_category)">
+				<div 
+					class="child-content-center companiesHeader font-family-1-size-medium">
+					{{k}}
+				</div>
+				<div 
+					class="branchesContainer child-content-center font-family-1-size-small" 
+					ng-repeat="(i,j) in customerNearbyController.companiesBranches[k]">
+					{{customerNearbyController.toStringAddress(j);}}
+					<div 
+						class="child-content center menuitemsContainer">
+						<ion-slide-box 
+							auto-play="true" 
+							does-continue="true" 
+							class="menuitemsSlideBox">
+							<ion-slide 
+								class="menuitemsSlide" 
+								ng-repeat="(a,b) in customerNearbyController.companiesMenuitems[k]">
+								<div 
+									class="menuitemsImageContainer child-content-center">
+									<img 
+										id="menuitemsImage" 
+										name="menuitemsImage" 
+										src={{b.menuitem_image}}>
+								</div>
+								<div 
+									class="menuitemsPrice child-content-right font-family-1-size-small">
+									{{b.menuitem_price}}
+								</div>
+							</ion-slide>
+						</ion-slide-box>
+					</div>
+				</div>
+			</div>
+			<!--  *************** 
+					companies (end)
+					*************** -->
 			<div 
 				class="mapContainer" 
 				data-tap-disabled="true">
