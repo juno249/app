@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.controller('customerMenuController', customerMenuController);
+.controller('customerNearbyMenuController', customerNearbyMenuController);
 
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-customerMenuController.$inject = [
+customerNearbyMenuController.$inject = [
 	'$localStorage', 
 	'$scope', 
 	'$stateParams', 
@@ -18,7 +18,7 @@ customerMenuController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function customerMenuController(
+function customerNearbyMenuController(
 		$localStorage, 
 		$scope, 
 		$stateParams, 

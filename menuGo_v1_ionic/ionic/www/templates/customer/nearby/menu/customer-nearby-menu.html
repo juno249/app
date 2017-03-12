@@ -16,18 +16,18 @@
 					<img 
 						id="companyLogo" 
 						name="companyLogo" 
-						src={{customerMenuController.company.company_logo}}>
+						src={{customerNearbyMenuController.company.company_logo}}>
 					<div 
 						class="companyNameContainer font-family-1-size-medium">
-						<underline>{{customerMenuController.company.company_name}}</underline>
+						<underline>{{customerNearbyMenuController.company.company_name}}</underline>
 					</div>
 					<div 
 						class="branchNameContainer font-family-1-size-medium">
-						{{customerMenuController.branch.branch_name}}
+						{{customerNearbyMenuController.branch.branch_name}}
 					</div>
 					<div 
 						class="branchAddressContainer font-family-1-size-small">
-						{{customerMenuController.toStringAddress(customerMenuController.branch);}}	
+						{{customerNearbyMenuController.toStringAddress(customerNearbyMenuController.branch);}}	
 					</div>
 				</div>
 				<!--  *************** 
@@ -44,7 +44,7 @@
 			</div>
 			<div 
 				class="menusContainer" 
-				ng-repeat="(k,v) in customerMenuController.company.menus">
+				ng-repeat="(k,v) in customerNearbyMenuController.company.menus">
 				<div 
 					class="child-content-center font-family-1-size-medium menuTitleContainer">
 					{{k}}
@@ -74,14 +74,14 @@
 								class="child-content-right formContainer item item-input-inset">
 								<button 
 									class="button button-positive button-small" 
-									ng-click="customerMenuController.incCustomerOrder(j.menuitem_code);">
+									ng-click="customerNearbyMenuController.incCustomerOrder(j.menuitem_code);">
 									+
 								</button>
 								<label 
 									class="countLbl item item-input-wrapper">
 									<input 
 										class="child-content-center countTxt" 
-										ng-model="customerMenuController.myOrders[j.menuitem_code].menuitem_quantity"
+										ng-model="customerNearbyMenuController.myOrders[j.menuitem_code].menuitem_quantity"
 										placeholder="count" 
 										type="text">
 								</label>

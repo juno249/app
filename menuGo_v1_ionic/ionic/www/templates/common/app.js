@@ -69,9 +69,9 @@ function doRouteConfig(
 			url: '/menu/company/:companyName/branch/:branchName', 
 			views: {
 				'main@': {
-					templateUrl: 'templates/customer/nearby/menu/customer-menu.html', 
-					controller: 'customerMenuController', 
-					controllerAs: 'customerMenuController'
+					templateUrl: 'templates/customer/nearby/menu/customer-nearby-menu.html', 
+					controller: 'customerNearbyMenuController', 
+					controllerAs: 'customerNearbyMenuController'
 				}
 			}
 		})
