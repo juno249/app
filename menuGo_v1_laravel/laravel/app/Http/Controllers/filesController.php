@@ -48,12 +48,11 @@ class filesController extends Controller
 			$imgFile = $formRequest->file('imgFile');
 			$imgFileName = $imgDirectory . $CompanyName . '.jpg';
 			$companyImageResponse = new Response();
-			
 			try{
 				Storage::disk('public')->put($imgFileName, File::get($imgFile));
 				$companyImageResponse->setStatusCode(200, filesConstants::fileUploadSuccessMsg);
 			} catch(\Exception $e){
-				$companyImageResponse->setStatusCode(400, $e->getMessage());
+				$companyImageResponse->setStatusCode(400, filesConstants::fileUploadCatchMsg);
 			}
 
 			return $companyImageResponse;
