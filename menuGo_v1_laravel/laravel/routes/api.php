@@ -151,12 +151,12 @@ Route::get('companies/{CompanyName}/branches', [
 		'uses' => 'branchesController@getAllCompanyBranches'
 ]);
 
-Route::get('branches/query', [
-		'uses' => 'branchesController@getByQuery'
-]);
-
 Route::get('companies/{CompanyName}/branches/{BranchName}', [
 		'uses' => 'branchesController@getCompanyBranch'
+]);
+
+Route::get('branches/query', [
+		'uses' => 'branchesController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/branches/validate', [
@@ -186,12 +186,12 @@ Route::get('companies/{CompanyName}/menus', [
 		'uses' => 'menusController@getAllCompanyMenus'
 ]);
 
-Route::get('menus/query', [
-		'uses' => 'menusController@getByQuery'
-]);
-
 Route::get('companies/{CompanyName}/menus/{MenuName}', [
 		'uses' => 'menusController@getCompanyMenu'
+]);
+
+Route::get('menus/query', [
+		'uses' => 'menusController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/menus', [
@@ -240,12 +240,12 @@ Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems', [
 		'uses' => 'menuitemsController@getAllCompanyMenuMenuitems'
 ]);
 
-Route::get('menuitems/query', [
-		'uses' => 'menuitemsController@getByQuery'
-]);
-
 Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}', [
 		'uses' => 'menuitemsController@getCompanyMenuMenuitem'
+]);
+
+Route::get('menuitems/query', [
+		'uses' => 'menuitemsController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/menus/{MenuName}/menuitems', [

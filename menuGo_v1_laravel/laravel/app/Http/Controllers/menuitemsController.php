@@ -251,7 +251,7 @@ class menuitemsController extends Controller
 				if($jsonData[$i]['menu_id'] == $menuId){
 					try{		DB::table(menuitemsConstants::menuitemsTable)->insert($jsonData[$i]);
 					} catch(\PDOException $e){
-						$menuitemsResponse->setStatusCode(400, $e->getMessage());
+						$menuitemsResponse->setStatusCode(400, menuitemsConstants::dbAddCatchMsg);
 						return $menuitemsResponse;
 					}
 				}

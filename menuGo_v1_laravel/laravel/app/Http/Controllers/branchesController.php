@@ -237,7 +237,7 @@ class branchesController extends Controller
 		$errorMsg = '';
 	
 		$branchesResponse = new Response();
-		$branchesResponse->setStatusCodee(400, null);
+		$branchesResponse->setStatusCode(400, null);
 		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
 			return branchesConstants::dbAddValidateSuccessMsg;
 		} else {
@@ -284,7 +284,7 @@ class branchesController extends Controller
 		$errorMsg = '';
 	
 		$branchesResponse = new Response();
-		$branchesResponse->setStatusCodee(400, null);
+		$branchesResponse->setStatusCode(400, null);
 		if($this->isDataValid($jsonData, $errorMsg, "UPDATE")){
 			return branchesConstants::dbUpdateValidateSuccessMsg;
 		} else {
