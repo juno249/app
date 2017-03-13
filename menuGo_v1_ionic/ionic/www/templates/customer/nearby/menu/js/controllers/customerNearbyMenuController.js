@@ -121,6 +121,7 @@ function customerNearbyMenuController(
 
 			angular.forEach(companyMenuMenuitems, function(j, i) {
 				myOrders[j.menuitem_code] = {
+						'menuitem_name': j.menuitem_name, 
 						'menu_name': k, 
 						'menuitem_quantity': 0, 
 						'menuitem_price': j.menuitem_price, 
