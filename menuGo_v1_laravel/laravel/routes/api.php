@@ -53,15 +53,15 @@ Route::delete('companies/{CompanyName}/menus/{MenuName}/menuImage', [
 		'uses' => 'filesController@deleteCompanyMenuImage'
 ]);
 
-Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemName}/menuitemImage', [
+Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage', [
 		'uses' => 'filesController@getCompanyMenuMenuitemImage'
 ]);
 
-Route::post('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemName}/menuitemImage', [
+Route::post('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage', [
 		'uses' => 'filesController@uploadCompanyMenuMenuitemImage'
 ]);
 
-Route::delete('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemName}/menuitemImage', [
+Route::delete('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage', [
 		'uses' => 'filesController@deleteCompanyMenuMenuitemImage'
 ]);
 
