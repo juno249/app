@@ -6,7 +6,8 @@ angular
 	'ionic', 
 	'ngCordova', 
 	'ngMap', 
-	'ngStorage'
+	'ngStorage', 
+	'ion-datetime-picker'
 	])
 /* ******************************
  * Module Dependency Injection (End)

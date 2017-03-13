@@ -3,7 +3,8 @@ div.customerNearbyMenuOrderContainer{
 	width: 100%;
 }
 
-div.customerNearbyMenuOrderContainer div.ordersContainer{
+div.customerNearbyMenuOrderContainer div.ordersContainer, 
+div.customerNearbyMenuOrderContainer div.reservationFormContainer{
 	width: 100%;
 	
 	margin: auto;
@@ -15,7 +16,8 @@ div.customerNearbyMenuOrderContainer div.ordersContainer div.ordersDetailsCell{
 	line-height: 12px;
 }
 
-div.customerNearbyMenuOrderContainer div.ordersContainer div.ordersHeader{
+div.customerNearbyMenuOrderContainer div.ordersContainer div.ordersHeader, 
+div.customerNearbyMenuOrderContainer div.reservationFormContainer div.reservationHeader{
 	background-color: #333;
 	color: #fff;
 	
@@ -25,4 +27,8 @@ div.customerNearbyMenuOrderContainer div.ordersContainer div.ordersHeader{
 	margin-top: 10px;
 	
 	width: 80%;
+}
+
+div.customerNearbyMenuOrderContainer div.totalContainer{
+	border-top: solid 1px #333;
 }

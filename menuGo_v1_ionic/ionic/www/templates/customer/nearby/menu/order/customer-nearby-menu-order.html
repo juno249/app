@@ -2,11 +2,11 @@
 	<ion-content>
 		<div 
 			class="customerNearbyMenuOrderContainer">
+			<!--  *************** 
+					orders (start)
+					*************** -->
 			<div 
 				class="ordersContainer">
-				<!--  *************** 
-						orders (start)
-						*************** -->
 				<div 
 					class="child-content-center font-family-1-size-medium ordersHeader">
 					My Orders
@@ -51,10 +51,77 @@
 						{{v.menuitem_total}}
 					</div>
 				</div>
-				<!--  *************** 
-						orders (end)
-						*************** -->
+				<div 
+					class="font-family-1-size-small row totalContainer">
+					<div 
+						class="col">
+					</div>
+					<div 
+						class="col">
+					</div>
+					<div 
+						class="col">
+					</div>
+					<div 
+						class="child-content-center col">
+						{{customerNearbyMenuOrderController.total}}
+					</div>
+				</div>
 			</div>
+			<!--  *************** 
+					orders (start)
+					*************** -->
+			
+			<!--  *************** 
+					reservation form (start)
+					*************** -->
+			<div 
+				class="reservationFormContainer">
+				<div 
+					class="child-content-center font-family-1-size-medium reservationHeader">
+					Reservation Details
+				</div>
+				<div 
+					class="list">
+					<label 
+						class="item item-input tableCapacityLbl">
+						<span 
+							class="font-family-1-size-small input-label">
+							<i 
+								class="icon ion-person-stalker">
+							</i>
+							Number of diners
+						</span>
+						<input 
+							class="child-content-center font-family-1-size-small" 
+							ng-model="customerNearbyMenuOrderController.myReservation.tableCapacity"
+							placeholder="e.g. 7" 
+							type="text">
+					</label>
+					<label 
+						class="item item-input etaLbl">
+						<span 
+							class="font-family-1-size-small input-label">
+							<i 
+								class="icon ion-ios-clock">
+							</i>
+							Estimated Time of Arrival (ETA)
+						</span>
+					</label>
+					<div 
+							class="item" 
+							ion-datetime-picker 
+							ng-model="customerNearbyMenuOrderController.myReservation.eta">
+							<div 
+								class="child-content-center font-family-1-size-medium">
+								{{customerNearbyMenuOrderController.myReservation.eta|date: "yyyy-MM-dd H:mm a"}}
+							</div>
+						</div>
+				</div>
+			</div>
+			<!--  *************** 
+					reservation form (end)
+					*************** -->
 		</div>
 	</ion-content>
 </ion-view>

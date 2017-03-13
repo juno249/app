@@ -194,31 +194,10 @@ angular
 ])
 
 /* ******************************
- * Constants: LOADING_MESSAGES
- * purpose: lists loading messages
+ * Constants: PAYMENT_METHODS
+ * purpose: lists payment methods
  * ****************************** */
-.constant('LOADING_MESSAGES', {
-	login: 'logging in', 
-	fetchCustomer: 'getting Customer', 
-	fetchCompanies: 'getting Companies', 
-	fetchBranches: 'getting Branches', 
-	fetchTables: 'getting Tables', 
-	fetchMenus: 'getting Menus', 
-	fetchMenuitems: 'getting Menuitems', 
-	addOrder: 'adding order', 
-	reloadTableOrders: 'reloading table orders', 
-	reloadOrders: 'reloading orders', 
-	reloadCompanyBranchOrders: 'relaoding company branch orders', 
-	doConnect: 'connecting to MQTT service', 
-	doCallWaiter: 'calling waiter', 
-	updateTable: 'updating table'
-})
-
-/* ******************************
- * Constants: BROADCAST_MESSAGES
- * purpose: lists broadcast messages
- * ****************************** */
-.constant('BROADCAST_MESSAGES', {
-	reloadCustomerOrders: 'reloadCustomerOrders', 
-	reloadOrders: 'reloadOrders'
-});
+.constant('PAYMENT_METHODS', [
+	'cash', 
+	'credit card'
+])
