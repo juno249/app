@@ -36,9 +36,9 @@ class customersCompaniesBranchesConstants{
 	/*
 	 * CONSTANTS w/c signify the messages returned on successful DB operation
 	 * */
-	const dbAddSuccessMsg = 'DB UPDATED W/NEW CUSTOMER RECORD';
-	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING CUSTOMER RECORD';
-	const dbDeleteSuccessMsg = 'DB DELETED EXISTING CUSTOMER RECORD';
+	const dbAddSuccessMsg = 'DB UPDATED W/NEW CUSTOMER, COMPANY, BRANCH RECORDS';
+	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING CUSTOMER, COMPANY, BRANCH RECORDS';
+	const dbDeleteSuccessMsg = 'DB DELETED EXISTING CUSTOMER, COMPANY, BRANCH RECORDS';
 	/*
 	 * CONSTANTS w/c signify the messages returned on custom validation errors
 	 * */

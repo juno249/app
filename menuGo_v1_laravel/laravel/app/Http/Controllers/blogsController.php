@@ -37,9 +37,9 @@ class blogsConstants{
 	/*
 	 * CONSTANTS w/c signify the messages returned on successful DB operation
 	 * */
-	const dbAddSuccessMsg = 'DB UPDATED W/NEW BRANCH RECORD';
-	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING BRANCH RECORD';
-	const dbDeleteSuccessMsg = 'DB DELETED EXISTING BRANCH RECORD';
+	const dbAddSuccessMsg = 'DB UPDATED W/NEW BLOG RECORD';
+	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING BLOG RECORD';
+	const dbDeleteSuccessMsg = 'DB DELETED EXISTING BLOG RECORD';
 	/*
 	 * CONSTANTS w/c signify the messages returned on custom validation errors
 	 * */
@@ -113,7 +113,7 @@ class blogsController extends Controller
 		if(isset($_GET[blogsConstants::reqBlogAuthor])){
 			array_push($mySqlWhere, [blogsConstants::dbBlogAuthor, 'LIKE', '%' . $_GET[blogsConstants::reqBlogAuthor] . '%']);
 		}
-		if(isset($_GET[blogsConstans::reqBlogContent])){
+		if(isset($_GET[blogsConstants::reqBlogContent])){
 			array_push($mySqlWhere, [blogsConstans::dbBlogContent, 'LIKE', '%' . $_GET[blogsConstans::reqBlogContents] . '%']);
 		}
 		if(isset($_GET[blogsConstants::reqBlogImage])){
@@ -145,15 +145,16 @@ class blogsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . blogsConstants::dbBlogTitle => 'require|string|max:100', 
+							'*.' . blogsConstants::dbBlogTitle => 'required|string|max:100', 
 							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50', 
-							'*.' . blogsConstants::dbBlogContent => 'require|string|max:1000', 
-							'*.' . blogsConstants::dbBlogImage => 'require|string|max:500', 
-							'*.' . blogsConstants::dbBlogUrl => 'require|string|max:500'
+							'*.' . blogsConstants::dbBlogContent => 'required|string|max:1000', 
+							'*.' . blogsConstants::dbBlogImage => 'required|string|max:500', 
+							'*.' . blogsConstants::dbBlogUrl => 'required|string|max:500'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
+					$jsonData, 
 					[
 							'*.' . blogsConstants::dbBlogTitle => 'sometimes|string|max:100',
 							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50',
@@ -204,6 +205,7 @@ class blogsController extends Controller
 	public function updateBlog(Request $jsonRequest, $BlogId){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
+		$mySqlWhere = array();
 		$errorMsg = '';
 		
 		$blogsResponse = new Response();

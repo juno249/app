@@ -41,9 +41,9 @@ class advertisementsConstants{
 	/*
 	 * CONSTANTS w/c signify the messages returned on successful DB operation
 	 * */
-	const dbAddSuccessMsg = 'DB UPDATED W/NEW BRANCH RECORD';
-	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING BRANCH RECORD';
-	const dbDeleteSuccessMsg = 'DB DELETED EXISTING BRANCH RECORD';
+	const dbAddSuccessMsg = 'DB UPDATED W/NEW ADVERTISEMENT RECORD';
+	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING ADVERTISEMENT RECORD';
+	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ADVERTISEMENT RECORD';
 	/*
 	 * CONSTANTS w/c signify the messages returned on custom validation errors
 	 * */
