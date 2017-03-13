@@ -6,6 +6,7 @@
     "ngCordova": "0.1.27-alpha", 
     "ngmap": "1.18.4", 
     "ngstorage": "0.3.11", 
-    "paho-mqtt": ""
+    "paho-mqtt": "", 
+    "ion-datetime-picker": "0.5.1"
   }
 }
