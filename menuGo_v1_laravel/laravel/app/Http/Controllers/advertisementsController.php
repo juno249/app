@@ -77,7 +77,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * GET method getAllAdvertisements
-	 * URL-->/ads
+	 * URL-->/advertisements
 	 **/
 	public function getAllAdvertisements(){
 		$mySqlWhere = array();
@@ -98,7 +98,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * GET method getAdvertisement
-	 * URL-->/ads/{AdvertisementId}
+	 * URL-->/advertisements/{AdvertisementId}
 	 **/
 	public function getAdvertisement($AdvertisementId){
 		$mySqlWhere = array();
@@ -120,7 +120,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * GET method getCompanyAdvertisements
-	 * URL-->/companies/{CompanyName}/ads
+	 * URL-->/companies/{CompanyName}/advertisements
 	 **/
 	public function getCompanyAdvertisements($CompanyName){
 		$mySqlWhere = array();
@@ -142,7 +142,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * GET method getCompanyAdvertisements
-	 * URL-->/companies/{CompanyName}/ads/{AdvertisementId}
+	 * URL-->/companies/{CompanyName}/advertisements/{AdvertisementId}
 	 **/
 	public function getCompanyAdvertisement($CompanyName, $AdvertisementId){
 		$mySqlWhere = array();
@@ -165,11 +165,10 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * GET method getByQuery
-	 * URL-->/ads/query
+	 * URL-->/advertisements/query
 	 **/
 	public function getByQuery(){
 		$mySqlWhere = array();
-		
 		if(isset($_GET[advertisementsConstants::reqAdvertisementId])){
 			array_push($mySqlWhere, [advertisementsConstants::dbAdvertisementId, '=', $_GET[advertisementsConstants::reqAdvertisementId]]);
 		}
@@ -219,18 +218,19 @@ class advertisementsController extends Controller{
 							'*.' . advertisementsConstants::dbAdvertisementContent => 'required|string|max:1000', 
 							'*.' . advertisementsConstants::dbAdvertisementPrice => 'required|numeric', 
 							'*.' . advertisementsConstants::dbAdvertisementImage => 'required|string|max:500', 
-							'*.' . advertismenetsConstants::dbAdvertisementUrl => 'required|string|max:500'
+							'*.' . advertisementsConstants::dbAdvertisementUrl => 'required|string|max:500'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
+					$jsonData, 
 					[
 							'*.' . advertisementsConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
 							'*.' . advertisementsConstants::dbAdvertisementTitle => 'sometimes|string|max:100',
 							'*.' . advertisementsConstants::dbAdvertisementContent => 'sometimes|string|max:1000',
 							'*.' . advertisementsConstants::dbAdvertisementPrice => 'sometimes|numeric',
 							'*.' . advertisementsConstants::dbAdvertisementImage => 'sometimes|string|max:500',
-							'*.' . advertismenetsConstants::dbAdvertisementUrl => 'sometimes|string|max:500'
+							'*.' . advertisementsConstants::dbAdvertisementUrl => 'sometimes|string|max:500'
 					]
 					);
 		}
@@ -244,7 +244,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * POST method addAdvertisement
-	 * URL-->/ads
+	 * URL-->/advertisements
 	 **/
 	public function addAdvertisement(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
@@ -270,7 +270,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * PUT method updateAdvertisement
-	 * URL-->/ads/{AdvertisementId}
+	 * URL-->/advertisements/{AdvertisementId}
 	 **/
 	public function updateAdvertisement(Request $jsonRequest, $AdvertisementId){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
@@ -297,7 +297,7 @@ class advertisementsController extends Controller{
 	
 	/**
 	 * DELETE method deleteAdvertisement
-	 * URL-->/ads/{AdvertisementId}
+	 * URL-->/advertisements/{AdvertisementId}
 	 * */
 	public function deleteAdvertisement($AdvertisementId){
 		$mySqlWhere = array();

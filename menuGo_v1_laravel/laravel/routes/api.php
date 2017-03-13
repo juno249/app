@@ -341,35 +341,35 @@ Route::post('customers-companies-branches', [
 /**
  * Routes: advertisementsController
  * */
-Route::get('ads', [
+Route::get('advertisements', [
 		'uses' => 'advertisementsController@getAllAdvertisements'
 ]);
 
-Route::get('ads/{AdvertisementId}', [
+Route::get('advertisements/{AdvertisementId}', [
 		'uses' => 'advertisementsController@getAdvertisement'
 ]);
 
-Route::get('companies/{CompanyName}/ads', [
+Route::get('companies/{CompanyName}/advertisements', [
 		'uses' => 'advertisementsController@getCompanyAdvertisements'
 ]);
 
-Route::get('companies/{CompanyName}/ads/{AdvertisementId}', [
+Route::get('companies/{CompanyName}/advertisements/{AdvertisementId}', [
 		'uses' => 'advertisementsController@getCompanyAdvertisement'	
 ]);
 
-Route::get('ads/query', [
+Route::get('advertisements/query', [
 		'uses' => 'advertisementsController@getByQuery'
 ]);
 
-Route::post('ads', [
+Route::post('advertisements', [
 		'uses' => 'advertisementsController@addAdvertisement'
 ]);
 
-Route::put('ads/{AdvertisementId}', [
+Route::put('advertisements/{AdvertisementId}', [
 		'uses' => 'advertisementsController@updateAdvertisement'
 ]);
 
-Route::delete('ads/{AdvertisementId', [
+Route::delete('advertisements/{AdvertisementId}', [
 		'uses' => 'advertisementsController@deleteAdvertisement'
 ]);
 
@@ -397,5 +397,5 @@ Route::put('blogs/{BlogId}', [
 ]);
 
 Route::delete('blogs/{BlogId}', [
-		'uses' => 'blogsController@deleteBlog'	
+		'uses' => 'blogsController@deleteBlog'
 ]);
