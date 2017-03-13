@@ -130,11 +130,11 @@ CREATE TABLE IF NOT EXISTS ziplogic.orders(
 CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	customer_username VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
- 	branch_name VARCHAR(30) NOT NULL, 
+ 	branch_id INT NOT NULL, 
  	PRIMARY KEY(customer_username), 
  	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
- 	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
+ 	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
 );
  
 /*
@@ -502,26 +502,6 @@ VALUES(
 	@branch_id, 
 	@table_capacity, 
 	@table_status
-);
-
-USE ziplogic;
-
-# ==========
-# RECORD 1
-# ==========
-SET @customer_username = "johnvlim";
-SET @company_name = "Max's";
-SET @branch_name = "Ermita";
-
-INSERT INTO customers_companies_branches(
-	customer_username, 
-	company_name, 
-	branch_name
-)
-VALUES(
-	@customer_username, 
-	@company_name, 
-	@branch_name
 );
 
 USE ziplogic;

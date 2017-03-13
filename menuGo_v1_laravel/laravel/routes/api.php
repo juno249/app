@@ -295,7 +295,7 @@ Route::get('customers/{CustomerUsername}/orders/{OrderStatus}', [
 		'uses' => 'ordersController@getCustomerOrdersOrderStatus'
 ]);
 
-Route::get('customers/{CustomerUsername}/orders/not/{OrderStatus', [
+Route::get('customers/{CustomerUsername}/orders/not/{OrderStatus}', [
 		'uses' => 'ordersController@getCustomerOrdersNotOrderStatus'
 ]);
 
@@ -336,18 +336,6 @@ Route::get('customers-companies-branches/query', [
 
 Route::post('customers-companies-branches', [
 		'uses' => 'customersCompaniesBranchesController@addCustomerCompanyBranch'
-]);
-
-Route::post('customers-companies-branches-transaction', [
-		'uses' => 'customersCompaniesBranchesController@addCustomerCompanyBranchTransaction'
-]);
-
-Route::put('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}', [
-		'uses' => 'customersCompaniesBranchesController@updateCustomerCompanyBranch'
-]);
-
-Route::delete('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}', [
-		'uses' => 'customersCompaniesBranchesController@deleteCustomerCompanyBranch'
 ]);
 
 /**

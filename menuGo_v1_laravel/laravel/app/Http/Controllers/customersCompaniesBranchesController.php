@@ -160,184 +160,118 @@ class customersCompaniesBranchesController extends Controller
 	}
 	
 	/**
-	 * Do basic Laravel validation
-	 * */
-	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
-		if("ADD" == $dbOperation){
-			$jsonValidation = Validator::make(
-					$jsonData, 
-					[
-							'*.' . customersCompaniesBranchesConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbBranchName => 'exists:branches,branch_name|required|string|max:30'
-					]
-					);	
-		} else if("UPDATE" == $dbOperation){
-			$jsonValidation = Validator::make(
-					$jsonData,
-					[
-							'*.' . customersCompaniesBranchesConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30',
-							'*.' . customersCompaniesBranchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
-							'*.' . customersCompaniesBranchesConstants::dbBranchName => 'exists:branches,branch_name|sometimes|string|max:30'
-					]
-					);
-		}
-		if($jsonValidation->fails()){
-			$errorMsg .= $jsonValidation->messages();
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
-	/**
-	 * Do basic Laravel validation (transaction)
-	 * */
-	private function isDataValidTransaction($jsonData, &$errorMsg, $dbOperation){
-		$customersController = new customersController();
-		$companiesController = new companiesController();
-		
-		$customer = $jsonData['customer'];
-		$company = $jsonData['company'];
-		
-		if(!(null == $customer)){
-			if(!($customersController->isDataValid([$customer], $errorMsg, $dbOperation))){
-				return false;
-			}
-		}
-		if(!(null == $company)){
-			if(!($companiesController->isDataValid([$company], $errorMsg, $dbOperation))){
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	/**
 	 * POST method addCustomerCompanyBranch
 	 * URL-->/customers-companies-branches/
 	 * */
 	public function addCustomerCompanyBranch(Request $jsonRequest){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
-		$jsonDataSize = sizeof($jsonData);
-		$errorMsg = '';
-	
-		$customersCompaniesBranchesResponse = new Response();
-		$customersCompaniesBranchesResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
-			for($i=0; $i<$jsonDataSize; $i++){
-				try{		DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($jsonData[$i]);
-				} catch(\PDOException $e){
-					$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbAddCatchMsg);
-					return $customersCompaniesBranchesResponse;
-				}
-			}
-		} else {
-			$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
-			return $customersCompaniesBranchesResponse;
-		}
-		return customersCompaniesBranchesConstants::dbAddSuccessMsg;
-	}
-	
-	/**
-	 * POST method addCustomerCompanyBranchTransaction
-	 * URL-->/customers-companies-branches-transaction/
-	 * */
-	public function addCustomerCompanyBranchTransaction(Request $jsonRequest){
+		$customerCompanyBranch = [];
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 		
+		$customersController = new customersController();
+		$companiesController = new companiesController();
+		$branchesController = new branchesController();
+		
+		$customerDbWrite = false;
+		$companyDbWrite = false;
+		$branchDbWrite = false;
+		
 		$customersCompaniesBranchesResponse = new Response();
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
+		
 		for($i=0; $i<$jsonDataSize; $i++){
 			$customerCompanyBranchRunner = $jsonData[$i];
-			$customer = $customerCompanyBranchRunner['customer'];
-			$company = $customerCompanyBranchRunner['company'];
-			$branch = $customerCompanyBranchRunner['branch'];
-			$customerCompanyBranch = $customerCompanyBranchRunner['customerCompanyBranch'];
-			
-			if(!($this->isDataValidTransaction($customerCompanyBranchRunner, $errorMsg, "ADD"))){
-				$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
-				return $customersCompaniesBranchesResponse;
-			}
 			
 			DB::beginTransaction();
 			try{
-				$pwHashed = Hash::make($customer['customer_password']);
-				if(!(null == $customer)){
-					$customer['customer_password'] = $pwHashed;
-					DB::table(customersConstants::customersTable)->insert($customer);
+				/*
+				 * db_transaction: add_customer
+				 * */
+				if(array_key_exists('customer', $customerCompanyBranchRunner)){
+					$customer = $customerCompanyBranchRunner['customer'];
+					if($customersController->isDataValid([$customer], $errorMsg, "ADD")){
+						$pwHashed = Hash::make($customer['customer_password']);
+						$customer['customer_password'] = $pwHashed;
+						
+						try{	DB::table(customersConstants::customersTable)->insert($customer);
+						} catch(\PDOException $e){	throw $e;
+						}
+						
+						$customerCompanyBranch['customer_username'] = $customer['customer_username'];
+						$customerDbWrite = true;
+					} else {
+						$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
+						return $customersCompaniesBranchesResponse;
+					}
 				}
-				if(!(null == $company)){
-					DB::table(companiesConstants::companiesTable)->insert($company);
+					
+				/*
+				 * db_transaction: add_company
+				 * */
+				if(array_key_exists('company', $customerCompanyBranchRunner)){
+					$company = $customerCompanyBranchRunner['company'];
+					if($companiesController->isDataValid([$company], $errorMsg, "ADD")){
+						try{	DB::table(companiesConstants::companiesTable)->insert($company);
+						} catch(\PDOException $e){	throw $e;
+						}
+						
+						$customerCompanyBranch['company_name'] = $company['company_name'];
+						$companyDbWrite = true;
+					} else {
+						$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
+						return $customersCompaniesBranchesResponse;
+					}
 				}
-				if(!(null == $branch)){
-					DB::table(branchesConstants::branchesTable)->insert($branch);
+					
+				/*
+				 * db_transaction: add_branch
+				 * */
+				if(array_key_exists('branch', $customerCompanyBranchRunner)){
+					$branch = $customerCompanyBranchRunner['branch'];
+					if($branchesController->isDataValid([$branch], $errorMsg, "ADD")){
+						try{	DB::table(branchesConstants::branchesTable)->insert($branch);
+						} catch(\PDOException $e){	throw $e;
+						}
+					}
 				}
-				if(!(null == $customerCompanyBranch)){
-					DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($customerCompanyBranch);
+				
+				DB::commit();
+				
+				/*
+				 * db_transaction: add_customerCompanyBranch
+				 * */
+				if(array_key_exists('branch', $customerCompanyBranchRunner)){
+					$companyName = $company['company_name'];
+					$branchName = $branch['branch_name'];
+					$branch = json_decode($branchesController->getCompanyBranch($companyName, $branchName)->original, true)[0];
+					
+					var_dump($branch);
+					
+					$customerCompanyBranch['branch_id'] = $branch['branch_id'];
+					$branchDbWrite = true;
+				}
+				
+				/*
+				 * db_transaction: add_customers_companies_branches
+				 * */
+				if(
+						$customerDbWrite && 
+						$companyDbWrite && 
+						$branchDbWrite
+						){
+					try{	DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->insert($customerCompanyBranch);
+					} catch(\PDOException $e){	throw $e;
+					}
 				}
 				
 				DB::commit();
 			} catch(\PDOException $e){
 				DB::rollback();
-				$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbAddCatchMsg);
+				$customersCompaniesBranchesResponse->setStatusCode(400, $e->getMessage());
+				return $customersCompaniesBranchesResponse;
 			}
 		}
-		return customersCompaniesBranchesConstants::dbAddSuccessMsg;
-	}
-	
-	/**
-	 * PUT method updateCustomerCompanyBranch
-	 * URL-->/customers-companies-branch/{CustomerUsername}/{CompanyName}/{BranchName}
-	 **/
-	public function updateCustomerCompanyBranch(Request $jsonRequest, $CustomerUsername, $CompanyName, $BranchName){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
-		$jsonDataSize = sizeof($jsonData);
-		$mySqlWhere = array();
-		$errorMsg = '';
-	
-		$customersCompaniesBranchesResponse = new Response();
-		$customersCompaniesBranchesResponse->setStatusCode(400, null);
-	
-		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
-			$customersCompaniesBranchesResponse->setStatusCode(400, $errorMsg);
-			return $customersCompaniesBranchesResponse;
-		}
-	
-		try{
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, '=', $CustomerUsername]);
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName, '=', $CompanyName]);
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbBranchName, '=', $BranchName]);
-			DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->where($mySqlWhere)->update($jsonData[0]);
-		} catch(\PDOException $e){
-			$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbUpdateCatchMessage);
-			return $customersCompaniesBranchesResponse;
-		}
-		return customersCompaniesBranchesConstants::dbUpdateSuccessMsg;
-	}
-	
-	/**
-	 * DELETE method deleteCustomerCompanyBranch
-	 * URL-->/customers-companies-branch/{CustomerUsername}/{CompanyName}/{BranchName}
-	 **/
-	public function deleteCustomerCompanyBranch($CustomerUsername, $CompanyName, $BranchName){
-		$mySqlWhere = array();
-		$errorMsg = '';
-	
-		$customersCompaniesBranchesResponse = new Response();
-		$customersCompaniesBranchesResponse->setStatusCode(400, null);
-		try{
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, '=', $CustomerUsername]);
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName, '=', $CompanyName]);
-			array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbBranchName, '=', $BranchName]);
-			DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->where($mySqlWhere)->delete();
-		} catch(\PDOException $e){
-			$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbDeleteCatchMsg);
-			return $customersCompaniesBranchesResponse;
-		}
-		return customersCompaniesBranchesConstants::dbDeleteSuccessMsg;
 	}
 }

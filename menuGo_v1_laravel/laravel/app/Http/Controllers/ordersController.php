@@ -244,7 +244,7 @@ class ordersController extends Controller
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
 		array_push($mySqlWhere, [branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, '=', $BranchName]);
 		array_push($mySqlWhere, [tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, '=', $TableNumber]);
-		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '!=', $OrderStatus]);
+		array_push($mySqlWhere, [ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, '=', $OrderStatus]);
 		
 		$ordersResponse = new Response();
 		try{
