@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  * CREATE ziplogic.orderreferences
  */
 CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
-	orderreference_code VARCHAR(30) NOT NULL, 
+	orderreference_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
 	PRIMARY KEY(orderreference_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username)
@@ -180,9 +180,9 @@ CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
  * CREATE ziplogic.reservations
  */
 CREATE TABLE IF NOT EXISTS ziplogic.reservations(
-	reservation_code VARCHAR(30) NOT NULL, 
+	reservation_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
-	orderreference_code VARCHAR(30) NOT NULL, 
+	orderreference_code VARCHAR(40) NOT NULL, 
 	reservation_eta DATETIME NOT NULL, 
 	reservation_paymentmode VARCHAR(30) NOT NULL, 
 	reservation_servicetime DATETIME NOT NULL, 
@@ -1284,4 +1284,36 @@ INSERT INTO orderreferences(
 VALUES(
 	@orderreference_code, 
 	@customer_username
+);
+
+USE ziplogic;
+
+# ==========
+# RECORD 1
+# ==========
+SET @reservation_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
+SET @customer_username = "johnvlim";
+SET @orderreference_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
+SET @reservation_eta = "2017-03-14 12:37:00";
+SET @reservation_paymentmode = "cash";
+SET @reservation_servicetime = "2017-03-14 12:37:00";
+SET @reservation_status = "pending";
+
+INSERT INTO reservations(
+	reservation_code, 
+	customer_username, 
+	orderreference_code, 
+	reservation_eta, 
+	reservation_paymentmode, 
+	reservation_servicetime, 
+	reservation_status
+)
+VALUES(
+	@reservation_code, 
+	@customer_username, 
+	@orderreference_code, 
+	@reservation_eta, 
+	@reservation_paymentmode, 
+	@reservation_servicetime, 
+	@reservation_status
 );

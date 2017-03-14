@@ -422,3 +422,34 @@ Route::post('customers/{CustomerUsername}/orderreferences', [
 Route::put('customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}', [
 		'uses' => 'orderreferencesController@updateOrderreference'	
 ]);
+
+Route::delete('customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}', [
+		'uses' => 'orderreferencesController@deleteOrderreference'
+]);
+
+/*
+ * Routes; reservationsController
+ * */
+Route::get('customers/{CustomerUsername}/reservations', [
+		'uses' => 'reservationsController@getAllCustomerReservations'
+]);
+
+Route::get('customers/{CustomerUsername}/reservations/{ReservationCode}', [
+		'uses' => 'reservationsController@getCustomerReservation'
+]);
+
+Route::get('reservations/query', [
+		'uses' => 'reservationsController@getByQuery'	
+]);
+
+Route::post('customers/{CustomerUsername}/reservations', [
+		'uses' => 'reservationsController@addReservation'	
+]);
+
+Route::put('customers/{CustomerUsername}/reservations/{ReservationCode}', [
+		'uses' => 'reservationsController@updateReservation'
+]);
+
+Route::delete('customers/{CustomerUsername}/reservations/{ReservationCode}', [
+		'uses' => 'reservationsController@deleteReservation'
+]);

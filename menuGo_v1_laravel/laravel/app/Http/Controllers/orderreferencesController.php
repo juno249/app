@@ -54,7 +54,7 @@ class orderreferencesController extends Controller
 	/**
 	 * getJoinCustomerOrderreference: joins customers_table & orderreferences_table w/a variable $mySqlWhere
 	 * */
-	function getJoinCustomerOrderreference($mySqlWhere){
+	public function getJoinCustomerOrderreference($mySqlWhere){
 		$customerOrderreference = DB::table(orderreferencesConstants::orderreferencesTable)
 		->join(
 				customersConstants::customersTable, 
@@ -71,7 +71,7 @@ class orderreferencesController extends Controller
 	 * GET method getAllCustomerOrderreferences
 	 * URL-->/customers/{CustomerUsername}/orderreferences
 	 **/
-	function getAllCustomerOrderreferences($CustomerUsername){
+	public function getAllCustomerOrderreferences($CustomerUsername){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
 		
@@ -93,7 +93,7 @@ class orderreferencesController extends Controller
 	 * GET method getCustomerOrderreference
 	 * URL-->/customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}
 	 **/
-	function getCustomerOrderreference($CustomerUsername, $OrderreferenceCode){
+	public function getCustomerOrderreference($CustomerUsername, $OrderreferenceCode){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
 		array_push($mySqlWhere, [orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbOrderreferenceCode, '=', $OrderreferenceCode]);
@@ -116,7 +116,7 @@ class orderreferencesController extends Controller
 	 * GET method getByQuery
 	 * URL-->/orderreferences/query
 	 **/
-	function getByQuery(){
+	public function getByQuery(){
 		$mySqlWhere = array();
 		
 		if(isset($_GET[orderreferencesConstants::reqOrderreferenceCode])){
@@ -203,7 +203,7 @@ class orderreferencesController extends Controller
 	 * PUT method updateOrderreference
 	 * URL-->/customer/{CustomerUsername}/orderreferences/{OrderreferenceCode}
 	 **/
-	function updateOrderreference(Request $jsonRequest, $CustomerUsername, $OrderreferenceCode){
+	public function updateOrderreference(Request $jsonRequest, $CustomerUsername, $OrderreferenceCode){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
@@ -217,7 +217,7 @@ class orderreferencesController extends Controller
 		}
 		
 		try{
-			array_push($mySqlWhere, [customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
+			array_push($mySqlWhere, [orderreferencesConstants::dbCustomerUsername, '=', $CustomerUsername]);
 			array_push($mySqlWhere, [orderreferencesConstants::dbOrderreferenceCode, '=', $OrderreferenceCode]);
 			DB::table(orderreferencesConstants::orderreferencesTable)->where($mySqlWhere)->update($jsonData[0]);
 		} catch(\PDOExceptin $e){
@@ -225,5 +225,26 @@ class orderreferencesController extends Controller
 			return $orderreferencesResponse;
 		}
 		return orderreferencesConstants::dbUpdateSuccessMsg;
+	}
+	
+	/**
+	 * DELETE method deleteOrderreference
+	 * URL-->/customer/{CustomerUsername}/orderreferences/{OrderreferenceCode}
+	 **/
+	public function deleteOrderreference($CustomerUsername, $OrderreferenceCode){
+		$mySqlWhere = array();
+		$errorMsg = '';
+		
+		$orderreferencesResponse = new Response();
+		$orderreferencesResponse->setStatusCode(400, null);
+		try{
+			array_push($mySqlWhere, [orderreferencesConstants::dbCustomerUsername, '=', $CustomerUsername]);
+			array_push($mySqlWhere, [orderreferencesConstants::dbOrderreferenceCode, '=', $OrderreferenceCode]);
+			DB::table(orderreferencesConstants::orderreferencesTable)->where($mySqlWhere)->delete();
+		} catch(\PDOException $e){
+			$orderreferencesResponse->setStatusCode(400, orderreferencesConstants::dbDeleteCatchMsg);
+			return $orderreferencesResponse;
+		}
+		return orderreferencesConstants::dbDeleteSuccessMsg;
 	}
 }
