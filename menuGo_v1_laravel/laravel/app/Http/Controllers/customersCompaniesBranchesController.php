@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 include_once "customersController.php";
@@ -247,15 +246,10 @@ class customersCompaniesBranchesController extends Controller
 					$branchName = $branch['branch_name'];
 					$branch = json_decode($branchesController->getCompanyBranch($companyName, $branchName)->original, true)[0];
 					
-					var_dump($branch);
-					
 					$customerCompanyBranch['branch_id'] = $branch['branch_id'];
 					$branchDbWrite = true;
 				}
 				
-				/*
-				 * db_transaction: add_customers_companies_branches
-				 * */
 				if(
 						$customerDbWrite && 
 						$companyDbWrite && 
