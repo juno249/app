@@ -338,6 +338,10 @@ Route::post('customers-companies-branches', [
 		'uses' => 'customersCompaniesBranchesController@addCustomerCompanyBranch'
 ]);
 
+Route::delete('customers-companies-branches/{CustomerUsername}', [
+		'uses' => 'customersCompaniesBranchesController@deleteCustomerCompanyBranch'	
+]);
+
 /**
  * Routes: advertisementsController
  * */

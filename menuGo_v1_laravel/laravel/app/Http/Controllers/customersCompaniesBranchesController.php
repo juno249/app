@@ -263,9 +263,30 @@ class customersCompaniesBranchesController extends Controller
 				DB::commit();
 			} catch(\PDOException $e){
 				DB::rollback();
-				$customersCompaniesBranchesResponse->setStatusCode(400, $e->getMessage());
+				$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbAddCatchMsg);
 				return $customersCompaniesBranchesResponse;
 			}
 		}
+		return customersCompaniesBranchesConstants::dbAddSuccessMsg;
+	}
+	
+	/**
+	 * DELETE method deleteCustomerCompanyBranch
+	 * URL-->/customers-companies-branches/{CustomerUsername}
+	 **/
+	function deleteCustomerCompanyBranch($CustomerUsername){
+		$mySqlWhere = array();
+		$errorMsg = '';
+		
+		$customersCompaniesBranchesResponse = new Response();
+		$customersCompaniesBranchesResponse->setStatusCode(400, null);
+		try{
+			array_push($mySqlWhere, [customersCompaniesBranchesConstants::dbCustomerUsername, '=', $CustomerUsername]);
+			DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)->where($mySqlWhere)->delete();
+		} catch(\PDOException $e){
+			$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::dbDeleteCatchMsg);
+			return $customersCompaniesBranchesResponse;
+		}
+		return customersCompaniesBranchesConstants::dbDeleteSuccessMsg;
 	}
 }
