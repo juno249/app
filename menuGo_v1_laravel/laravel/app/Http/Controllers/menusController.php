@@ -149,7 +149,7 @@ class menusController extends Controller
 				$menusResponse->setContent(json_encode($companyMenus));
 			}
 		} catch(\PDOException $e){
-			$menusResponse->setStatusCode(``, menusConstants::dbReadCatchMsg);
+			$menusResponse->setStatusCode(400, menusConstants::dbReadCatchMsg);
 		}
 		return $menusResponse;
 	}

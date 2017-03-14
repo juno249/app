@@ -399,3 +399,26 @@ Route::put('blogs/{BlogId}', [
 Route::delete('blogs/{BlogId}', [
 		'uses' => 'blogsController@deleteBlog'
 ]);
+
+/*
+ * Routes; orderreferenceController
+ * */
+Route::get('customers/{CustomerUsername}/orderreferences', [
+		'uses' => 'orderreferencesController@getAllCustomerOrderreferences'
+]);
+
+Route::get('customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}', [
+		'uses' => 'orderreferencesController@getCustomerOrderreference'
+]);
+
+Route::get('orderreferences/query', [
+		'uses' => 'orderreferencesController@getByQuery'
+]);
+
+Route::post('customers/{CustomerUsername}/orderreferences', [
+		'uses' => 'orderreferencesController@addOrderreference'
+]);
+
+Route::put('customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}', [
+		'uses' => 'orderreferencesController@updateOrderreference'	
+]);
