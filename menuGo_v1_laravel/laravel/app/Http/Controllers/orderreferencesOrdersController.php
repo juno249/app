@@ -132,12 +132,12 @@ class orderreferencesOrdersController extends Controller
 						}
 					}
 				}
-				
 			} catch(\PDOException $e){
 				DB::rollback();
 				$orderreferencesOrdersResponse->setStatusCode(400, orderreferencesOrdersConstants::dbAddCatchMsg);
 				return $orderreferencesOrdersResponse;
 			}
 		}
+		return orderreferencesOrdersConstants::dbAddSuccessMsg;
 	}
 }

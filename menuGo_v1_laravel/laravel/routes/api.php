@@ -464,3 +464,10 @@ Route::delete('customers/{CustomerUsername}/reservations/{ReservationCode}', [
 Route::post('orderreferences-orders', [
 		'uses' => 'orderreferencesOrdersController@addOrderreferenceOrder'
 ]);
+
+/*
+ * Routes:: reservationsOrderreferencesOrdersController
+ * */
+Route::post('reservations-orderreferences-orders', [
+		'uses' => 'reservationsOrderreferencesOrdersController@addReservationOrderreferenceOrder'
+]);
