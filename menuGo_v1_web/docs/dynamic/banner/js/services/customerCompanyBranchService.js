@@ -48,8 +48,6 @@ function customerCompanyBranchService(
 			fetchCustomersCompaniesBranches: fetchCustomersCompaniesBranches, 
 			fetchCustomerCompanyBranch: fetchCustomerCompanyBranch, 
 			addCustomerCompanyBranch: addCustomerCompanyBranch, 
-			addCustomerCompanyBranchTransaction: addCustomerCompanyBranchTransaction, 
-			updateCustomerCompanyBranch: updateCustomerCompanyBranch, 
 			deleteCustomerCompanyBranch: deleteCustomerCompanyBranch
 	}
 	/* ******************************
@@ -217,40 +215,9 @@ function customerCompanyBranchService(
 	/* ******************************
 	 * Method Implementation
 	 * method name: addCustomerCompanyBranch()
-	 * purpose: adds customerCompanyBranch
-	 * ****************************** */
-	function addCustomerCompanyBranch(customerCompanyBranch){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'POST', 
-				url: API_BASE_URL + '/customers-companies-branches', 
-				data: customerCompanyBranch
-		}
-		$http(httpConfig)
-		.then(addCustomerCompanyBranchSuccessCallback)
-		.catch(addCustomerCompanyBranchFailedCallback);
-		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function addCustomerCompanyBranchSuccessCallback(response){
-			deferred.resolve(response);
-		}
-		function addCustomerCompanyBranchFailedCallback(responseError){
-			deferred.reject(responseError);
-		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
-		return deferred.promise;
-	}
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: addCustomerCompanyBranchTransaction()
 	 * purpose: adds customer, company, branch & customerCompanyBranch
 	 * ****************************** */
-	function addCustomerCompanyBranchTransaction(transParams){
+	function addCustomerCompanyBranch(transParams){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
@@ -276,38 +243,7 @@ function customerCompanyBranchService(
 		 * ****************************** */
 		return deferred.promise;
 	}
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: updateCustomerCompanyBranch()
-	 * purpose: updates customerCompanyBranch
-	 * ****************************** */
-	function updateCustomerCompanyBranch(customerCompanyBranch){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'PUT', 
-				url: API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchName, 
-				data: customerCompanyBranch
-		}
-		$http(httpConfig)
-		.then(updateCustomerCompanyBranchSuccessCallback)
-		.catch(updateCustomerCompanyBranchFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function updateCustomerCompanyBranchSuccessCallback(response){
-			deferred.resolve(response);
-		}
-		function updateCustomerCompanyBranchFailedCallback(responseError){
-			deferred.reject(responsError);
-		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
-		return deferred.promise;
-	}
-	
 	/* ******************************
 	 * Method Implementation
 	 * method name: deleteCustomerCompanyBranch()
