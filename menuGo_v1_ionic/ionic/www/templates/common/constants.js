@@ -118,6 +118,16 @@ angular
 })
 
 /* ******************************
+ * Constants: ORDERREFERENCES_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('ORDERREFERENCES_DB_FIELDS', {
+	0: 'orderreference_code', 
+	1: 'customer_username'
+})
+
+/* ******************************
  * Constants: ORDERS_DB_FIELDS
  * purpose: lists db fields along w/ their
  * 				corresponding column index

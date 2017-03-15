@@ -338,7 +338,7 @@ function branchService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: updateBranch()
+	 * method name: deleteBranch()
 	 * purpose: deletes branch
 	 * ****************************** */
 	function deleteBranch(){
