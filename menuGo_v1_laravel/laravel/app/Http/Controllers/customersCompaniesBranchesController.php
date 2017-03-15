@@ -41,6 +41,10 @@ class customersCompaniesBranchesConstants{
 	/*
 	 * CONSTANTS w/c signify the messages returned on custom validation errors
 	 * */
+	const inconsistencyValidationErr1 = 'KEYS COMPANY_NAME DO NOT MATCH';
+	/*
+	 * CONSTANTS w/c signify the messages returned on custom validation errors
+	 * */
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 		
@@ -166,7 +170,6 @@ class customersCompaniesBranchesController extends Controller
 		$customerCompanyBranch = [];
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
-		$mySqlWhere = array();
 		$errorMsg = '';
 		
 		$customersController = new customersController();
@@ -179,7 +182,6 @@ class customersCompaniesBranchesController extends Controller
 		
 		$customersCompaniesBranchesResponse = new Response();
 		$customersCompaniesBranchesResponse->setStatusCode(400, null);
-		
 		for($i=0; $i<$jsonDataSize; $i++){
 			$customerCompanyBranchRunner = $jsonData[$i];
 			
@@ -230,6 +232,11 @@ class customersCompaniesBranchesController extends Controller
 				if(array_key_exists('branch', $customerCompanyBranchRunner)){
 					$branch = $customerCompanyBranchRunner['branch'];
 					if($branchesController->isDataValid([$branch], $errorMsg, "ADD")){
+						if(!($branch['company_name'] == $company['company_name'])){
+							$customersCompaniesBranchesResponse->setStatusCode(400, customersCompaniesBranchesConstants::inconsistencyValidationErr1);
+							return $customersCompaniesBranchesResponse;
+						}
+						
 						try{	DB::table(branchesConstants::branchesTable)->insert($branch);
 						} catch(\PDOException $e){	throw $e;
 						}

@@ -22,6 +22,7 @@ class ordersConstants{
 	const dbCustomerUsername = 'customer_username';
 	const dbMenuitemId = 'menuitem_id';
 	const dbTableId = 'table_id';
+	const dbOrderreferenceCode = 'orderreference_code';
 	const dbOrderTimestamp = 'order_timestamp';
 	const dbOrderStatus = 'order_status';
 	/*
@@ -31,6 +32,7 @@ class ordersConstants{
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqMenuitemId = 'MenuitemId';
 	const reqTableId = 'TableId';
+	const reqOrderreferenceCode = 'OrderreferenceCode';
 	const reqOrderTimestamp = 'OrderTimestamp';
 	const reqOrderStatus = 'OrderStatus';
 	/*
@@ -372,6 +374,9 @@ class ordersController extends Controller
 		if(isset($_GET[ordersConstants::reqTableId])){
 			array_push($mySqlWhere, [ordersConstants::dbTableId, '=', $_GET[ordersConstants::reqTableId]]);
 		}
+		if(isset($_GET[ordersConstants::reqOrderreferenceCode])){
+			array_push($mySqlWhere, [ordersConstants::dbOrderreferenceCode, '=', $_GET[ordersConstants::reqOrderreferenceCode]]);
+		}
 		if(isset($_GET[ordersConstants::reqOrderTimestamp])){
 			array_push($mySqlWhere, [ordersConstants::dbOrderTimestamp, 'LIKE', '%' . $_GET[ordersConstants::reqOrderTimestamp] . '%']);
 		}
@@ -396,7 +401,7 @@ class ordersController extends Controller
 	/**
 	 * Do basic Laravel validation
 	 * */
-	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
+	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData,
@@ -404,6 +409,7 @@ class ordersController extends Controller
 							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30',
 							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric',
 							'*.' . ordersConstants::dbTableId => 'exists:tables,table_id|required|numeric',
+							'*.' . ordersConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|required|string|max:40', 
 							'*.' . ordersConstants::dbOrderStatus => 'required|string|max:30',
 					]
 					);
@@ -414,6 +420,7 @@ class ordersController extends Controller
 							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30',
 							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric',
 							'*.' . ordersConstants::dbTableId => 'exists:tables,table_id|sometimes|numeric',
+							'*.' . ordersConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40',
 							'*.' . ordersConstants::dbOrderStatus => 'sometimes|string|max:30',
 					]
 					);

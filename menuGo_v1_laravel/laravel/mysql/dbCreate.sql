@@ -107,7 +107,17 @@ CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	UNIQUE(menuitem_code, menu_id), 
 	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
 );
- 
+
+/*
+ * CREATE ziplogic.orderreferences
+ */
+CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
+	orderreference_code VARCHAR(40) NOT NULL, 
+	customer_username VARCHAR(30) NOT NULL, 
+	PRIMARY KEY(orderreference_code), 
+	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username)
+);
+
 /*
  * CREATE ziplogic.orders
  * */
@@ -122,7 +132,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	PRIMARY KEY(order_id), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
-	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id)
+	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id), 
+	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 );
 
 /*
@@ -164,16 +175,6 @@ CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  	blog_image VARCHAR(500) NOT NULL, 
  	blog_url VARCHAR(500) NOT NULL, 
 	PRIMARY KEY(blog_id)
-);
-
-/*
- * CREATE ziplogic.orderreferences
- */
-CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
-	orderreference_code VARCHAR(40) NOT NULL, 
-	customer_username VARCHAR(30) NOT NULL, 
-	PRIMARY KEY(orderreference_code), 
-	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username)
 );
 
 /*

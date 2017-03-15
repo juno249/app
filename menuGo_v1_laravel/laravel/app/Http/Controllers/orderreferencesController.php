@@ -143,7 +143,7 @@ class orderreferencesController extends Controller
 	/**
 	 * Do basic laravel validation
 	 * */
-	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
+	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
