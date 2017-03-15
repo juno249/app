@@ -30,23 +30,23 @@ function tableService(
 	 * Service Return Object (Start)
 	 * ****************************** */
 	var tableServiceObj = {
-			table: {}, 
 			tables: {}, 
+			table: {}, 
 			companyName: undefined, 
 			branchName: undefined, 
 			tableNumber: undefined, 
-			getTable: getTable, 
 			getTables: getTables, 
+			getTable: getTable, 
 			getCompanyName: getCompanyName, 
 			getBranchName: getBranchName, 
 			getTableNumber: getTableNumber, 
-			setTable: setTable, 
 			setTables: setTables, 
+			setTable: setTable, 
 			setCompanyName: setCompanyName, 
 			setBranchName: setBranchName, 
 			setTableNumber: setTableNumber, 
-			fetchTable: fetchTable, 
 			fetchTables: fetchTables, 
+			fetchTable: fetchTable, 
 			addTable: addTable, 
 			updateTable: updateTable, 
 			deleteTable: deleteTable
@@ -58,11 +58,11 @@ function tableService(
 	/* ******************************
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
-	function getTable(){
-		return tableServiceObj.table;
-	}
 	function getTables(){
 		return tableServiceObj.tables;
+	}
+	function getTable(){
+		return tableServiceObj.table;
 	}
 	function getCompanyName(){
 		return tableServiceObj.companyName;
@@ -73,11 +73,11 @@ function tableService(
 	function getTableNumber(){
 		return tableServiceObj.tableNumber;
 	}
-	function setTable(table){
-		tableServiceObj.table = table;
-	}
 	function setTables(tables){
 		tableServiceObj.tables = tables;
+	}
+	function setTable(table){
+		tableServiceObj.table = table;
 	}
 	function setCompanyName(companyName){
 		tableServiceObj.companyName = companyName;
@@ -91,67 +91,6 @@ function tableService(
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
 	 * ****************************** */
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchTable()
-	 * purpose: fetch table from server
-	 * ****************************** */
-	function fetchTable(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
-		}
-		$http(httpConfig)
-		.then(fetchTableSuccessCallback)
-		.catch(fetchTableFailedCallback);
-		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function fetchTableSuccessCallback(response){
-			tableServiceObj.table = {};
-			convertTableResponseToMap(response.data);
-			var table = tableServiceObj.table;
-			table = JSON.stringify(table);
-			localStorage.setItem('Table', table);
-			deferred.resolve(response);
-		}
-		
-		function fetchTableFailedCallback(responseError){
-			deferred.reject(responseError);
-		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
-		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertTableResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
-		function convertTableResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var tableKey = TABLES_DB_FIELDS[2]; //table_number
-			var tableDetails = {};
-			
-			for(var i=0; i<responseDataLength; i++){
-				var tableRunner = responseData[i];
-				var tableDBFieldCount = Object.keys(TABLES_DB_FIELDS).length;
-				var tableDBFieldRunner = null;
-				tableDetails = {};
-				
-				for(var j=0; j<tableDBFieldCount; j++){
-					tableDBFieldRunner = TABLES_DB_FIELDS[j];
-					tableDetails[tableDBFieldRunner] = tableRunner[tableDBFieldRunner];
-				}
-				var tableKeyValue = tableRunner[tableKey];
-				tableServiceObj.table[tableKeyValue] = tableDetails;
-			}
-		}
-		return deferred.promise;
-	}
 	
 	/* ******************************
 	 * Method Implementation
@@ -195,7 +134,7 @@ function tableService(
 		function convertTablesResponseToMap(responseData){
 			var responseDataLength = responseData.length;
 			var tablesKey = TABLES_DB_FIELDS[2]; //table_number
-			var tablesDetails = {};
+			var tablesDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
 				var tablesRunner = responseData[i];
@@ -209,6 +148,67 @@ function tableService(
 				}
 				var tablesKeyValue = tablesRunner[tablesKey];
 				tableServiceObj.tables[tablesKeyValue] = tablesDetails;
+			}
+		}
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: fetchTable()
+	 * purpose: fetch table from server
+	 * ****************************** */
+	function fetchTable(){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'GET', 
+				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
+		}
+		$http(httpConfig)
+		.then(fetchTableSuccessCallback)
+		.catch(fetchTableFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function fetchTableSuccessCallback(response){
+			tableServiceObj.table = {};
+			convertTableResponseToMap(response.data);
+			var table = tableServiceObj.table;
+			table = JSON.stringify(table);
+			localStorage.setItem('Table', table);
+			deferred.resolve(response);
+		}
+		
+		function fetchTableFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		/* ******************************
+		 * Method Implementation
+		 * method name: convertTableResponseToMap()
+		 * purpose: convert http response to a map
+		 * ****************************** */
+		function convertTableResponseToMap(responseData){
+			var responseDataLength = responseData.length;
+			var tableKey = TABLES_DB_FIELDS[2]; //table_number
+			var tableDetails;
+			
+			for(var i=0; i<responseDataLength; i++){
+				var tableRunner = responseData[i];
+				var tableDBFieldCount = Object.keys(TABLES_DB_FIELDS).length;
+				var tableDBFieldRunner = null;
+				tableDetails = {};
+				
+				for(var j=0; j<tableDBFieldCount; j++){
+					tableDBFieldRunner = TABLES_DB_FIELDS[j];
+					tableDetails[tableDBFieldRunner] = tableRunner[tableDBFieldRunner];
+				}
+				var tableKeyValue = tableRunner[tableKey];
+				tableServiceObj.table[tableKeyValue] = tableDetails;
 			}
 		}
 		return deferred.promise;

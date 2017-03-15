@@ -30,12 +30,16 @@ function customerService(
 	 * Service Return Object (Start)
 	 * ****************************** */
 	var customerServiceObj = {
+			customers: {}, 
 			customer: {}, 
 			customerUsername: undefined, 
+			getCustomers: getCustomers, 
 			getCustomer: getCustomer, 
 			getCustomerUsername: getCustomerUsername, 
+			setCustomers: setCustomers, 
 			setCustomer: setCustomer, 
 			setCustomerUsername: setCustomerUsername, 
+			fetchCustomers: fetchCustomers, 
 			fetchCustomer: fetchCustomer, 
 			addCustomerValidate: addCustomerValidate, 
 			addCustomer: addCustomer, 
@@ -50,11 +54,17 @@ function customerService(
 	/* ******************************
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
+	function getCustomers(){
+		return customerServiceObj.customers;
+	}
 	function getCustomer(){
 		return customerServiceObj.customer;
 	}
 	function getCustomerUsername(){
 		return customerServiceObj.customerUsername;
+	}
+	function setCustomers(customers){
+		customerServiceObj.customers = customers;
 	}
 	function setCustomer(customer){
 		customerServiceObj.customer = customer;
@@ -68,8 +78,69 @@ function customerService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchCompanies()
-	 * purpose: fetch companies from server
+	 * method name: fetchCustomers()
+	 * purpose: fetch customers from server
+	 * ****************************** */
+	function fetchCustomers(){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'GET', 
+				url: API_BASE_URL + '/customers'
+		}
+		$http(httpConfig)
+		.then(fetchCustomersSuccessCallback)
+		.catch(fetchCustomersFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function fetchCustomersSuccessCallback(response){
+			customerServiceObj.customers = {};
+			convertCustomersResponseToMap(response.data);
+			var customers = customerServiceObj.customers;
+			customers = JSON.stringify(customers);
+			localStorage.setItem('Customers', customers);
+			deferred.resolve(response);
+		}
+		
+		function fetchCustomersFailedCallback(responseError){
+			return deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		/* ******************************
+		 * Method Implementation
+		 * method name: convertCustomersResponseToMap()
+		 * purpose: convert http response to a map
+		 * ****************************** */
+		function convertCustomersResponseToMap(responseData){
+			var responseDataLength = responseData.length;
+			var customersKey = CUSTOMERS_DB_FIELDS[0]; //customer_username
+			var customersDetails;
+			
+			for(var i=0; i<responseDataLength; i++){
+				var customersRunner = responseData[i];
+				var customersDBFieldCount = Object.keys(CUSTOMERS_DB_FIELDS).length;
+				var customersDBFieldRunner = null;
+				customersDetails = {};
+				
+				for(var j=0; j<customersDBFieldCount; j++){
+					customersDBFIeldRunner = CUSTOMERS_DB_FIELDS[j];
+					customersDetails[customersDBFIeldRunner] = customersRunner[customersDBFIeldRunner];
+				}
+				var customersKeyValue = customersRunner[customersKey];
+				customerServiceObj.customers[customersKeyValue] = customersDetails;
+			}
+		}
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: fetchCustomer()
+	 * purpose: fetch customer from server
 	 * ****************************** */
 	function fetchCustomer(){
 		var deferred = $q.defer();
@@ -102,7 +173,7 @@ function customerService(
 		
 		/* ******************************
 		 * Method Implementation
-		 * method name: convertCompanyResponseToMap()
+		 * method name: convertCustomerResponseToMap()
 		 * purpose: convert http response to a map
 		 * ****************************** */
 		function convertCustomerResponseToMap(responseData){

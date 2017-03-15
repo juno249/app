@@ -31,15 +31,19 @@ function menuService(
 	 * ****************************** */
 	var menuServiceObj = {
 		menus: {}, 
+		menu: {}, 
 		companyName: undefined, 
 		menuName: undefined, 
 		getMenus: getMenus, 
+		getMenu: getMenu, 
 		getCompanyName: getCompanyName, 
 		getMenuName: getMenuName, 
 		setMenus: setMenus, 
+		setMenu: setMenu, 
 		setCompanyName: setCompanyName, 
 		setMenuName: setMenuName, 
 		fetchMenus: fetchMenus, 
+		fetchMenu: fetchMenu, 
 		addMenu: addMenu, 
 		updateMenu: updateMenu, 
 		deleteMenu: deleteMenu, 
@@ -55,6 +59,9 @@ function menuService(
 	function getMenus(){
 		return menuServiceObj.menus;
 	}
+	function getMenu(){
+		return menuServiceObj.menu;
+	}
 	function getCompanyName(){
 		return menuServiceObj.companyName;
 	}
@@ -63,6 +70,9 @@ function menuService(
 	}
 	function setMenus(menus){
 		menuServiceObj.menus = menus;
+	}
+	function setMenu(menu){
+		menuServiceObj.menu = menu;
 	}
 	function setCompanyName(companyName){
 		menuServiceObj.companyName = companyName;
@@ -115,7 +125,7 @@ function menuService(
 		 * ****************************** */
 		function convertMenusResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var menusKey = MENUS_DB_FIELDS[2] //menu_name
+			var menusKey = MENUS_DB_FIELDS[2]; //menu_name
 			var menusDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
@@ -133,6 +143,67 @@ function menuService(
 			}
 		}
 		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: fetchMenu()
+	 * purpose: fetch menu from server
+	 * ****************************** */
+	function fetchMenu(){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'GET', 
+				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus/' + menuServiceObj.menuName
+		}
+		$http(httpConfig)
+		.then(fetchMenuSuccessCallback)
+		.catch(fetchMenuFailedCallback);
+
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function fetchMenuSuccessCallback(response){
+			menuServiceObj.menu = {};
+			convertMenuResponseToMap(response.data);
+			var menu = menuServiceObj.menu;
+			menu = JSON.stringify(menu);
+			localStorage.setItem('Menu', menu);
+			deferred.resolve(response);
+		}
+		
+		function fetchMenuFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		/* ******************************
+		 * Method Implementation
+		 * method name: convertMenuResponseToMap()
+		 * purpose: convert http response to a map
+		 * ****************************** */
+		function convertMenuResponseToMap(responseData){
+			var responseDataLength = responseData.length;
+			var menuKey = MENUS_DB_FIELDS[2]; //menu_name
+			var menuDetails;
+			
+			for(var i=0; i<responseDataLength; i++){
+				var menuRunner = responseData[i];
+				var menuDBFieldCount = Object.keys(MENUS_DB_FIELDS).length;
+				var menuDBFieldRunner = null;
+				menuDetails = {};
+				
+				for(var j=0; j<menuDBFieldCount; j++){
+					menuDBFieldRunner = MENUS_DB_FIELDS[j];
+					menuDetails[menuDBFieldRunner] = menuRunner[menuDBFieldRunner];
+				}
+				var menuKeyValue = menuRunner[menuKey];
+				menuServiceObj.menu[menuKeyValue] = menuDetails;
+			}
+		}
+		return deferred.promise;	
 	}
 	
 	/* ******************************

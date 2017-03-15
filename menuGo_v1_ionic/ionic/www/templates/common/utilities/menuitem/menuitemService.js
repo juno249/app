@@ -31,14 +31,17 @@ function menuitemService(
 	 * ****************************** */
 	var menuitemServiceObj = {
 			menuitems: {}, 
+			menuitem: {}, 
 			companyName: undefined, 
 			menuName: undefined, 
 			menuitemCode: undefined, 
 			getMenuitems: getMenuitems, 
+			getMenuitem: getMenuitem, 
 			getCompanyName: getCompanyName, 
 			getMenuName: getMenuName, 
 			getMenuitemCode: getMenuitemCode, 
 			setMenuitems: setMenuitems, 
+			setMenuitem: setMenuitem, 
 			setCompanyName: setCompanyName, 
 			setMenuName: setMenuName, 
 			setMenuitemCode: setMenuitemCode, 
@@ -58,6 +61,9 @@ function menuitemService(
 	function getMenuitems(){
 		return menuitemServiceObj.menuitems;
 	}
+	function getMenuitem(){
+		return menuitemServiceObj.menuitem;
+	}
 	function getCompanyName(){
 		return menuitemServiceObj.companyName;
 	}
@@ -69,6 +75,9 @@ function menuitemService(
 	}
 	function setMenuitems(menuitems){
 		menuitemServiceObj.menuitems = menuitems;
+	}
+	function setMenuitem(menuitem){
+		menuitemServiceObj.menuitem = menuitem;
 	}
 	function setCompanyName(companyName){
 		menuitemServiceObj.companyName = companyName;
@@ -125,7 +134,7 @@ function menuitemService(
 		function convertMenuitemsResponseToMap(responseData){
 			var responseDataLength = responseData.length;
 			var menuitemsKey = MENUITEMS_DB_FIELDS[1]; //menuitem_code
-			var menuitemsDetails = {};
+			var menuitemsDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
 				var menuitemsRunner = responseData[i];
@@ -139,6 +148,67 @@ function menuitemService(
 				}
 				var menuitemsKeyValue = menuitemsRunner[menuitemsKey];
 				menuitemServiceObj.menuitems[menuitemsKeyValue] = menuitemsDetails;
+			}
+		}
+		return deferred.promise;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: fetchMenuitem()
+	 * purpose: fetch menuitems from server
+	 * ****************************** */
+	function fetchMenuitem(){
+		var deferred = $q.defer();
+		var httpConfig = {
+				method: 'GET', 
+				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode
+		}
+		$http(httpConfig)
+		.then(fetchMenuitemSuccessCallback)
+		.catch(fetchMenuitemFailedCallback);
+		
+		/* ******************************
+		 * Callback Implementations (Start)
+		 * ****************************** */
+		function fetchMenuitemSuccessCallback(response){
+			menuitemServiceObj.menuitem = {};
+			convertMenuitemResponseToMap(response.data);
+			var menuitem = menuitemServiceObj.menuitem;
+			menuitem = JSON.stringify(menuitem);
+			localStorage.setItem('Menuitem', menuitem);
+			deferred.resolve(response);
+		}
+		
+		function fetchMenuitemFailedCallback(responseError){
+			deferred.reject(responseError);
+		}
+		/* ******************************
+		 * Callback Implementations (End)
+		 * ****************************** */
+		
+		/* ******************************
+		 * Method Implementation
+		 * method name: convertMenuitemResponseToMap()
+		 * purpose: convert http response to a map
+		 * ****************************** */
+		function convertMenuitemResponseToMap(responseData){
+			var responseDataLength = responseData.length;
+			var menuitemKey = MENUITEMS_DB_FIELDS[1]; //menuitem_code
+			var menuitemDetails;
+			
+			for(var i=0; i<responseDataLength; i++){
+				var menuitemRunner = responseData[i];
+				var menuitemDBFieldCount = Object.keys(MENUITEMS_DB_FIELDS).length;
+				var menuitemDBFieldRunner = null
+				menuitemDetails = {};
+				
+				for(var j=0; j<menuitemDBFieldCount; j++){
+					menuitemDBFieldRunner = MENUITEMS_DB_FIELDS[j];
+					menuitemDetails[menuitemDBFieldRunner] = menuitemRunner[menuitemsDBFieldRunner];
+				}
+				var menuitemKeyValue = menuitemRunner[menuitemKey];
+				menuitemServiceObj.menuitem[menuitemKeyValue] = menuitemDetails;
 			}
 		}
 		return deferred.promise;
