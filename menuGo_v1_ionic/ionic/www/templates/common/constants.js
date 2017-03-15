@@ -171,6 +171,21 @@ angular
 })
 
 /* ******************************
+ * Constants: RESERVATIONS_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('RESERVATIONS_DB_FIELDS', {
+	0: 'reservation_code', 
+	1: 'customer_username', 
+	2: 'orderreference_code', 
+	3: 'reservation_eta', 
+	4: 'reservation_paymentmode', 
+	5: 'reservation_servicetime', 
+	6: 'reservation_status'
+})
+
+/* ******************************
  * Constants: USER_ROLES
  * purpose: lists users roles/authority
  * ****************************** */
