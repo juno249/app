@@ -1,4 +1,4 @@
-.companyLogoImageContainer{
+div.company-logo-image-container{
 	height: 150px;
 	width: 150px;
 	
@@ -6,7 +6,7 @@
 	padding: 0px 10px 10px 10px;
 }
 
-.companyLogoImage{
+div.company-logo-image-container img.company-logo-image{
 	height: 100%; 
 	width: 100%;
 }

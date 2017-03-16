@@ -1,11 +1,20 @@
-div.form-group input.form-control, 
-div.form-group select.form-control, 
-div.form-group textarea.form-control{
+div.form-group div.input-group input.form-control, 
+div.form-group div.input-group select.form-control, 
+div.form-group div.input-group textarea.form-control{
 	color: #ff6347;
 }
 
-div.modal-header, 
-span.input-group-addon{
+div.form-group div.input-group input.form-control[disabled], 
+div.form-group div.input-group select.form-control[disabled], 
+div.form-group div.input-group textarea.form-control[disabled], 
+div.form-group div.input-group input.form-control[readonly], 
+div.form-group div.input-group select.form-control[readonly], 
+div.form-group div.input-group textarea.form-control[readonly]{
+	background-color: #fff;
+}
+
+div.form-group div.input-group span.input-group-addon, 
+div.modal-header{
 	background-color: #dff0d8;
 	
 	border-radius: 5px;
@@ -13,9 +22,4 @@ span.input-group-addon{
 
 div.ui-datepicker{
 	z-index: 1050!important;
-}
-
-.form-control[disabled], 
-.form-control[readonly]{
-	background-color: #fff;	
 }
