@@ -124,8 +124,6 @@ class reservationsOrderreferencesOrdersController extends Controller
 					}
 				}
 				
-				DB::commit();
-				
 				/*
 				 * db_transaction: add_order
 				 * */
@@ -136,7 +134,6 @@ class reservationsOrderreferencesOrdersController extends Controller
 						$orderRunner = $order[$j];
 						if($ordersController->isDataValid([$orderRunner], $errorMsg, "ADD")){
 							if(!($orderRunner['customer_username'] == $orderreference['customer_username'])){
-								DB::rollback();
 								$reservationsOrderreferencesOrdersResponse->setStatusCode(400, reservationsOrderreferencesOrdersConstants::inconsistencyValidationErr1);
 								return $reservationsOrderreferencesOrdersResponse;
 							}
@@ -158,7 +155,6 @@ class reservationsOrderreferencesOrdersController extends Controller
 					$reservation = $reservationOrderreferenceOrderRunner['reservation'];
 					if($reservationsController->isDataValid([$reservation], $errorMsg, "ADD")){
 						if(!($reservation['customer_username'] == $orderreference['customer_username'])){
-							DB::rollback();
 							$reservationsOrderreferencesOrdersResponse->setStatusCode(400, reservationsOrderreferencesOrdersConstants::inconsistencyValidationErr1);
 							return $reservationsOrderreferencesOrdersResponse;
 						}
@@ -171,6 +167,8 @@ class reservationsOrderreferencesOrdersController extends Controller
 						return $reservationsOrderreferencesOrdersResponse;
 					}
 				}
+				
+				DB::commit();
 			} catch(\PDOException $e){
 				DB::rollback();
 				$reservationsOrderreferencesOrdersResponse->setStatusCode(400, reservationsOrderreferencesOrdersConstants::dbAddCatchMsg);

@@ -116,7 +116,6 @@ class orderreferencesOrdersController extends Controller
 						$orderRunner = $order[$j];
 						if($ordersController->isDataValid([$orderRunner], $errorMsg, "ADD")){
 							if(!($orderRunner['customer_username'] == $orderreference['customer_username'])){
-								DB::rollback();
 								$orderreferencesOrdersResponse->setStatusCode(400, orderreferencesConstants::inconsistencyValidationErr1);
 								return $orderreferencesOrdersResponse;
 							}
