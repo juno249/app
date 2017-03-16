@@ -105,9 +105,7 @@ class orderreferencesOrdersController extends Controller
 						return $orderreferencesOrdersResponse;
 					}
 				}
-				
-				DB::commit();
-				
+			
 				/*
 				 * db_transaction: add_order
 				 * */
@@ -132,6 +130,8 @@ class orderreferencesOrdersController extends Controller
 						}
 					}
 				}
+				
+				DB::commit();
 			} catch(\PDOException $e){
 				DB::rollback();
 				$orderreferencesOrdersResponse->setStatusCode(400, orderreferencesOrdersConstants::dbAddCatchMsg);

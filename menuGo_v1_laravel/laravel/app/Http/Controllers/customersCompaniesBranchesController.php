@@ -243,8 +243,6 @@ class customersCompaniesBranchesController extends Controller
 					}
 				}
 				
-				DB::commit();
-				
 				/*
 				 * db_transaction: add_customerCompanyBranch
 				 * */
