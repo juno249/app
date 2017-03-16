@@ -221,7 +221,7 @@ function customerCompanyBranchService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/customers-companies-branches-transaction', 
+				url: API_BASE_URL + '/customers-companies-branches', 
 				data: transParams
 		}
 		$http(httpConfig)

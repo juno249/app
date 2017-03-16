@@ -237,18 +237,18 @@ function bannerController(
 							customerCompanyBranch: customerCompanyBranch
 					};
 					
-					customerCompanyBranchService.addCustomerCompanyBranchTransaction([transParams])
-					.then(addCustomerCompanyBranchTransactionSuccessCallback)
-					.catch(addCustomerCompanyBranchTransactionFailedCallback);
+					customerCompanyBranchService.addCustomerCompanyBranch([transParams])
+					.then(addCustomerCompanyBranchSuccessCallback)
+					.catch(addCustomerCompanyBranchFailedCallback);
 					
 					/* ******************************
 					 * Callback Implementations (Start)
 					 * ****************************** */
-					function addCustomerCompanyBranchTransactionSuccessCallback(response){
+					function addCustomerCompanyBranchSuccessCallback(response){
 						//do something on success
 					}
 					
-					function addCustomerCompanyBranchTransactionFailedCallback(responseError){
+					function addCustomerCompanyBranchFailedCallback(responseError){
 						//do something on failure
 					}
 					/* ******************************
