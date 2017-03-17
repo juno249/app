@@ -8,18 +8,6 @@ angular
 .constant('API_BASE_URL', 'http://localhost/api')
 
 /* ******************************
- * Constants: MQTT_CONFIG
- * purpose: identifies & lists MQTT configurations
- * ****************************** */
-.constant('MQTT_CONFIG', {
-	host: 'localhost', 
-	port: 1884, 
-	topicWaiterRequest: 'topicWaiterRequest', 
-	topicWaiterResponse: 'topicWaiterResponse', 
-	topicOrderSentAck: 'topicOrderSentAck'
-})
-
-/* ******************************
  * Constants: COMPANIES_DB_FIELDS
  * purpose: lists db fields along w/ their
  * 				corresponding column index
@@ -143,6 +131,17 @@ angular
 })
 
 /* ******************************
+ * Constants: CUSTOMERCOMPANYBRANCH_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('CUSTOMERCOMPANYBRANCH_DB_FIELDS', {
+	0: 'customer_username', 
+	1: 'company_name', 
+	2: 'branch_name'
+})
+
+/* ******************************
  * Constants: ADVERTISEMENTS_DB_FIELDS
  * purpose: lists db fields along w/ their
  * 				corresponding column index
@@ -199,6 +198,15 @@ angular
 })
 
 /* ******************************
+ * Constants: USER_GENDERS
+ * purpose: lists users gender
+ * ****************************** */
+.constant('USER_GENDERS', {
+	male: 'male', 
+	female: 'female'
+})
+
+/* ******************************
  * Constants: TABLE_STATUS
  * purpose: lists table status
  * ****************************** */
@@ -227,3 +235,12 @@ angular
 	'cash', 
 	'credit card'
 ])
+
+/* ******************************
+ * Constants: ISFEATURED_VALUES
+ * purpose: lists is featured values
+ * ****************************** */
+.constant('IS_FEATURED_VALUES', {
+	1: 'Y', 
+	0: 'N'
+})

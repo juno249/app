@@ -106,6 +106,16 @@ angular
 })
 
 /* ******************************
+ * Constants: ORDERREFERENCES_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('ORDERREFERENCES_DB_FIELDS', {
+	0: 'orderreference_code', 
+	1: 'customer_username'
+})
+
+/* ******************************
  * Constants: ORDERS_DB_FIELDS
  * purpose: lists db fields along w/ their
  * 				corresponding column index
@@ -115,8 +125,9 @@ angular
 	1: 'customer_username', 
 	2: 'menuitem_id', 
 	3: 'table_id', 
-	4: 'order_timestamp', 
-	5: 'order_status'
+	4: 'orderreference_code', 
+	5: 'order_timestamp', 
+	6: 'order_status'
 })
 
 /* ******************************
@@ -128,6 +139,50 @@ angular
 	0: 'customer_username', 
 	1: 'company_name', 
 	2: 'branch_name'
+})
+
+/* ******************************
+ * Constants: ADVERTISEMENTS_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('ADVERTISEMENTS_DB_FIELDS', {
+	0: 'advertisement_id', 
+	1: 'company_name', 
+	2: 'advertisement_title', 
+	3: 'advertisement_content', 
+	4: 'advertisement_price', 
+	5: 'advertisement_image', 
+	6: 'advertisement_url'
+})
+
+/* ******************************
+ * Constants: BLOGS_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('BLOGS_DB_FIELDS', {
+	0: 'blog_id', 
+	1: 'blog_title', 
+	2: 'blog_author', 
+	3: 'blog_content', 
+	4: 'blog_image', 
+	5: 'blog_url'
+})
+
+/* ******************************
+ * Constants: RESERVATIONS_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('RESERVATIONS_DB_FIELDS', {
+	0: 'reservation_code', 
+	1: 'customer_username', 
+	2: 'orderreference_code', 
+	3: 'reservation_eta', 
+	4: 'reservation_paymentmode', 
+	5: 'reservation_servicetime', 
+	6: 'reservation_status'
 })
 
 /* ******************************
@@ -161,43 +216,31 @@ angular
 })
 
 /* ******************************
- * Constants: FEATURED_VALUES
- * purpose: lists table status
+ * Constants: ORDER_STATUS
+ * purpose: lists order status
  * ****************************** */
-.constant('FEATURED_VALUES', {
+.constant('ORDER_STATUS', [
+	'sent', 
+	'acknowledged', 
+	'cooking', 
+	'served', 
+	'history'
+])
+
+/* ******************************
+ * Constants: PAYMENT_METHODS
+ * purpose: lists payment methods
+ * ****************************** */
+.constant('PAYMENT_METHODS', [
+	'cash', 
+	'credit card'
+])
+
+/* ******************************
+ * Constants: ISFEATURED_VALUES
+ * purpose: lists is featured values
+ * ****************************** */
+.constant('IS_FEATURED_VALUES', {
 	1: 'Y', 
 	0: 'N'
 })
-
-/* ******************************
- * Constants: BROADCAST_MESSAGE
- * purpose: lists broadcast messages
- * ****************************** */
-.constant('BROADCAST_MESSAGE', {
-	addCompany: 'addCompany', 
-	addCustomer: 'addCustomer', 
-	addBranch: 'addBranch', 
-	addMenu: 'addMenu', 
-	addTable: 'addTable', 
-	addOrder: 'addOrder', 
-	addMenuitem: 'addMenuitem', 
-	updateCompany: 'updateCompany', 
-	updateCustomer: 'updateCustomer', 
-	updateBranch: 'updateBranch', 
-	updateMenu: 'updateMenu', 
-	updateTable: 'updateTable', 
-	updateMenuitem: 'updateMenuitem', 
-	updateOrder: 'updateOrder', 
-	deleteCompany: 'deleteCompany', 
-	deleteCustomer: 'deleteCustomer', 
-	deleteBranch: 'deleteBranch', 
-	deleteMenu: 'deleteMenu', 
-	deleteTable: 'deleteTable', 
-	deleteMenuitem: 'deleteMenuitem', 
-	deleteOrder: 'deleteOrder', 
-	toggleBranch: 'toggleBranch', 
-	toggleMenu: 'toggleMenu', 
-	toggleTable: 'toggleTable', 
-	toggleMenuitem: 'toggleMenuitem', 
-	authAuthenticated: 'authAuthenticated'
-});
