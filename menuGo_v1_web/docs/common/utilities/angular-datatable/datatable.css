@@ -50,7 +50,7 @@ table.table thead tr th.dt-table-cell{
 	white-space: nowrap;
 }
 
-.table thead tr th input{
+table.table thead tr th input{
 	border: solid 1px #ccc;
 	border-radius: 3px;
 	
