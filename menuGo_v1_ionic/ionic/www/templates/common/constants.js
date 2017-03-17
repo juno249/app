@@ -137,8 +137,9 @@ angular
 	1: 'customer_username', 
 	2: 'menuitem_id', 
 	3: 'table_id', 
-	4: 'order_timestamp', 
-	5: 'order_status'
+	4: 'orderreference_code', 
+	5: 'order_timestamp', 
+	6: 'order_status'
 })
 
 /* ******************************
