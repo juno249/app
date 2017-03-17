@@ -133,7 +133,7 @@ function tableService(
 		 * ****************************** */
 		function convertTablesResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var tablesKey = TABLES_DB_FIELDS[2]; //table_number
+			var tablesKey = TABLES_DB_FIELDS[1]; //table_number
 			var tablesDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
@@ -194,7 +194,7 @@ function tableService(
 		 * ****************************** */
 		function convertTableResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var tableKey = TABLES_DB_FIELDS[2]; //table_number
+			var tableKey = TABLES_DB_FIELDS[1]; //table_number
 			var tableDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
