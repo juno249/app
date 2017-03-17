@@ -125,7 +125,7 @@ function menuService(
 		 * ****************************** */
 		function convertMenusResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var menusKey = MENUS_DB_FIELDS[2]; //menu_name
+			var menusKey = MENUS_DB_FIELDS[1]; //menu_name
 			var menusDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
@@ -186,7 +186,7 @@ function menuService(
 		 * ****************************** */
 		function convertMenuResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var menuKey = MENUS_DB_FIELDS[2]; //menu_name
+			var menuKey = MENUS_DB_FIELDS[1]; //menu_name
 			var menuDetails;
 			
 			for(var i=0; i<responseDataLength; i++){

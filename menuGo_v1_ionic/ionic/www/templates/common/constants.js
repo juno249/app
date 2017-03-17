@@ -82,8 +82,8 @@ angular
  * ****************************** */
 .constant('MENUS_DB_FIELDS', {
 	0: 'menu_id', 
-	1: 'company_name', 
-	2: 'menu_name', 
+	1: 'menu_name', 
+	2: 'company_name', 
 	3: 'menu_desc', 
 	4: 'menu_image'
 })
@@ -95,8 +95,8 @@ angular
  * ****************************** */
 .constant('TABLES_DB_FIELDS', {
 	0: 'table_id', 
-	1: 'branch_id', 
-	2: 'table_number', 
+	1: 'table_number', 
+	2: 'branch_id', 
 	3: 'table_capacity', 
 	4: 'table_status'
 })
