@@ -7,7 +7,7 @@ angular
  * ****************************** */
 modalMenuitemController.$inject = [
 	'API_BASE_URL', 
-	'FEATURED_VALUES', 
+	'IS_FEATURED_VALUES', 
 	'$uibModalInstance', 
 	'$timeout', 
 	'menuitemService', 
@@ -24,7 +24,7 @@ modalMenuitemController.$inject = [
  * ****************************** */
 function modalMenuitemController(
 		API_BASE_URL, 
-		FEATURED_VALUES, 
+		IS_FEATURED_VALUES, 
 		$uibModalInstance, 
 		$timeout, 
 		menuitemService, 
@@ -77,7 +77,7 @@ function modalMenuitemController(
 			menuitem_featured: 4, 
 			menuitem_image: 5
 	}
-	vm.featuredOptions = FEATURED_VALUES;
+	vm.featuredOptions = IS_FEATURED_VALUES;
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;
 	vm.isValidationErrDBHidden = true;
