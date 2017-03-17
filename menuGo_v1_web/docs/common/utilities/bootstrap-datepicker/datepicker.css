@@ -1,14 +1,14 @@
-div.ui-datepicker-header{
+div#ui-datepicker-div div.ui-datepicker-header{
 	background: #dff0d8;
 	font-family: 'Kaushan Script', cursive;
 	font-size: 15px;
 }
 
-table.ui-datepicker-calendar{
+div#ui-datepicker-div table.ui-datepicker-calendar{
 	font-family: 'Lora', serif;
 	font-size: 12px;
 }
 
-.ui-widget-content a.ui-state-default{
+div#ui-datepicker-div table.ui-datepicker-calendar a.ui-state-default{
 	background: #fff;
 }
