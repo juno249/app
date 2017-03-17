@@ -1,27 +1,28 @@
-.btn-control{
+div.btn-group a.btn-control{
 	width: 75px;
 }
 
-#dtWrapper{
+div#dtWrapper{
 	margin: 0px 0px 0px 0px;
+	
 	overflow-x: scroll;
 }
 
 div.dataTables_filter label{
+	color: red;
 	font-family: 'Kaushan Script', cursive;
 	font-size: 15px;
-	color: red;
 }
 
 div.dataTables_filter label input, 
 div.dataTables_info, 
 div.dataTables_paginate, 
-ul li.buttons-columnVisibility{
+ul.dt-button-collection li.dt-button{
 	font-family: 'Lora', serif;
 	font-size: 13px;
 }
 
-.table tbody tr td.dt-table-cell{
+table.table tbody tr td.dt-table-cell{
 	font-family: 'Lora', serif;
 	font-size: 13px;
 	
@@ -37,7 +38,7 @@ ul li.buttons-columnVisibility{
 	white-space: nowrap;
 }
 
-.table thead tr th.dt-table-cell{
+table.table thead tr th.dt-table-cell{
 	font-family: 'Kaushan Script', cursive;
 	font-size: 15px;
 	font-weight: normal !important;
@@ -59,6 +60,6 @@ ul li.buttons-columnVisibility{
 	padding: 3px 5px 3px 5px;
 }
 
-ul.dropdown-menu .active a{
+ul.dt-button-collection li.dt-button.active a{
 	background-color: #333;
 }
