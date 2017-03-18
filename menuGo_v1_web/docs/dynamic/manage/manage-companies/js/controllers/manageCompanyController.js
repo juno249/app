@@ -7,7 +7,7 @@ angular
  * ****************************** */
 manageCompanyController.$inject = [
 	'API_BASE_URL', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'COMPANIES_DB_FIELDS', 
 	'$compile', 
 	'$localStorage', 
@@ -27,7 +27,7 @@ manageCompanyController.$inject = [
  * ****************************** */
 function manageCompanyController(	
 		API_BASE_URL, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		COMPANIES_DB_FIELDS, 
 		$compile, 
 		$localStorage, 
@@ -106,13 +106,13 @@ function manageCompanyController(
 			 * Broadcast (Start)
 			 * ****************************** */
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleBranch, 
+					BROADCAST_MESSAGES.toggleBranch, 
 					{	
 						companyName: company.company_name
 					}
 			);
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleMenu, 
+					BROADCAST_MESSAGES.toggleMenu, 
 					{
 						companyName: company.company_name
 					}
@@ -126,13 +126,13 @@ function manageCompanyController(
 			 * Broadcast (Start)
 			 * ****************************** */
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleBranch, 
+					BROADCAST_MESSAGES.toggleBranch, 
 					{	
 						companyName: company.company_name
 					}
 			);
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleMenu, 
+					BROADCAST_MESSAGES.toggleMenu, 
 					{	
 						companyName: company.company_name
 					}
@@ -292,13 +292,13 @@ function manageCompanyController(
 		 * Broadcast (Start)
 		 * ****************************** */
 		$rootScope.$broadcast(
-				BROADCAST_MESSAGE.toggleBranch, 
+				BROADCAST_MESSAGES.toggleBranch, 
 				{	
 					companyName: company.company_name
 				}
 		);
 		$rootScope.$broadcast(
-				BROADCAST_MESSAGE.toggleMenu, 
+				BROADCAST_MESSAGES.toggleMenu, 
 				{	
 					companyName: company.company_name
 				}
@@ -351,9 +351,9 @@ function manageCompanyController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addCompany, 
-				BROADCAST_MESSAGE.updateCompany, 
-				BROADCAST_MESSAGE.deleteCompany
+				BROADCAST_MESSAGES.addCompany, 
+				BROADCAST_MESSAGES.updateCompany, 
+				BROADCAST_MESSAGES.deleteCompany
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -397,11 +397,11 @@ function manageCompanyController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addCompany, addCompany);
+	$scope.$on(BROADCAST_MESSAGES.addCompany, addCompany);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateCompany, updateCompany);
+	$scope.$on(BROADCAST_MESSAGES.updateCompany, updateCompany);
 	
-	$scope.$on(BROADCAST_MESSAGE.deleteCompany, deleteCompany);
+	$scope.$on(BROADCAST_MESSAGES.deleteCompany, deleteCompany);
 	/* ******************************
 	 * ****************************** */
 }

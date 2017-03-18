@@ -7,7 +7,7 @@ angular
  * ****************************** */
 manageTableController.$inject = [
 	'API_BASE_URL', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'TABLES_DB_FIELDS', 
 	'$compile', 
 	'$scope', 
@@ -26,7 +26,7 @@ manageTableController.$inject = [
  * ****************************** */
 function manageTableController(
 		API_BASE_URL, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		TABLES_DB_FIELDS, 
 		$compile, 
 		$scope, 
@@ -291,9 +291,9 @@ function manageTableController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addTable, 
-				BROADCAST_MESSAGE.updateTable, 
-				BROADCAST_MESSAGE.deleteTable
+				BROADCAST_MESSAGES.addTable, 
+				BROADCAST_MESSAGES.updateTable, 
+				BROADCAST_MESSAGES.deleteTable
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -337,11 +337,11 @@ function manageTableController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addTable, addTable);
+	$scope.$on(BROADCAST_MESSAGES.addTable, addTable);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateTable, updateTable);
+	$scope.$on(BROADCAST_MESSAGES.updateTable, updateTable);
 
-	$scope.$on(BROADCAST_MESSAGE.deleteTable, deleteTable);
+	$scope.$on(BROADCAST_MESSAGES.deleteTable, deleteTable);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

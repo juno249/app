@@ -7,7 +7,7 @@ angular
  * ****************************** */
 manageCustomerController.$inject = [
 	'API_BASE_URL', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'CUSTOMERS_DB_FIELDS', 
 	'$compile', 
 	'$localStorage', 
@@ -26,7 +26,7 @@ manageCustomerController.$inject = [
  * ****************************** */
 function manageCustomerController(
 		API_BASE_URL, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		CUSTOMERS_DB_FIELDS, 
 		$compile, 
 		$localStorage, 
@@ -316,9 +316,9 @@ function manageCustomerController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addCustomer, 
-				BROADCAST_MESSAGE.updateCustomer, 
-				BROADCAST_MESSAGE.deleteCustomer
+				BROADCAST_MESSAGES.addCustomer, 
+				BROADCAST_MESSAGES.updateCustomer, 
+				BROADCAST_MESSAGES.deleteCustomer
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -363,11 +363,11 @@ function manageCustomerController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addCustomer, addCustomer);
+	$scope.$on(BROADCAST_MESSAGES.addCustomer, addCustomer);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateCustomer, updateCustomer);
+	$scope.$on(BROADCAST_MESSAGES.updateCustomer, updateCustomer);
 
-	$scope.$on(BROADCAST_MESSAGE.deleteCustomer, deleteCustomer);
+	$scope.$on(BROADCAST_MESSAGES.deleteCustomer, deleteCustomer);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

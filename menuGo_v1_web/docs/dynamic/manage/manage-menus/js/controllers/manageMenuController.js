@@ -7,7 +7,7 @@ angular
  * ****************************** */
 manageMenuController.$inject = [
 	'API_BASE_URL', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'MENUS_DB_FIELDS', 
 	'$compile', 
 	'$rootScope', 
@@ -27,7 +27,7 @@ manageMenuController.$inject = [
  * ****************************** */
 function manageMenuController(
 		API_BASE_URL, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		MENUS_DB_FIELDS, 
 		$compile, 
 		$rootScope, 
@@ -105,7 +105,7 @@ function manageMenuController(
 			 * Broadcast (Start)
 			 * ****************************** */
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleMenuitem, 
+					BROADCAST_MESSAGES.toggleMenuitem, 
 					{
 						companyName: vm.companyName, 
 						menuName: menu.menu_name
@@ -120,7 +120,7 @@ function manageMenuController(
 			 * Broadcast (Start)
 			 * ****************************** */
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleMenuitem, 
+					BROADCAST_MESSAGES.toggleMenuitem, 
 					{
 						companyName: vm.companyName, 
 						menuName: menu.menu_name
@@ -277,7 +277,7 @@ function manageMenuController(
 		 * Broadcast (Start)
 		 * ****************************** */
 		$rootScope.$broadcast(
-				BROADCAST_MESSAGE.toggleMenuitem, 
+				BROADCAST_MESSAGES.toggleMenuitem, 
 				{
 					companyName: vm.companyName, 
 					menuName: menu.menu_name
@@ -331,9 +331,9 @@ function manageMenuController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addMenu, 
-				BROADCAST_MESSAGE.updateMenu, 
-				BROADCAST_MESSAGE.deleteMenu
+				BROADCAST_MESSAGES.addMenu, 
+				BROADCAST_MESSAGES.updateMenu, 
+				BROADCAST_MESSAGES.deleteMenu
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -377,11 +377,11 @@ function manageMenuController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addMenu, addMenu);
+	$scope.$on(BROADCAST_MESSAGES.addMenu, addMenu);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateMenu, updateMenu);
+	$scope.$on(BROADCAST_MESSAGES.updateMenu, updateMenu);
 
-	$scope.$on(BROADCAST_MESSAGE.deleteMenu, deleteMenu);
+	$scope.$on(BROADCAST_MESSAGES.deleteMenu, deleteMenu);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

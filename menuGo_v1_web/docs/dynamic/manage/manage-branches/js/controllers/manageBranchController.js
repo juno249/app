@@ -8,7 +8,7 @@ angular
 manageBranchController.$inject = [
 	'API_BASE_URL', 
 	'BRANCHES_DB_FIELDS', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'$compile', 
 	'$rootScope', 
 	'$scope', 
@@ -28,7 +28,7 @@ manageBranchController.$inject = [
 function manageBranchController(
 		API_BASE_URL, 
 		BRANCHES_DB_FIELDS, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		$compile, 
 		$rootScope, 
 		$scope, 
@@ -115,7 +115,7 @@ function manageBranchController(
 			 * Broadcast (Start)
 			 * ****************************** */
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleTable, 
+					BROADCAST_MESSAGES.toggleTable, 
 					{
 						companyName: vm.companyName, 
 						branchName: branch.branch_name
@@ -130,7 +130,7 @@ function manageBranchController(
 			 * Broadcast (Start)
 			 * ****************************** */
 			$rootScope.$broadcast(
-					BROADCAST_MESSAGE.toggleTable, 
+					BROADCAST_MESSAGES.toggleTable, 
 					{
 						companyName: vm.companyName, 
 						branchName: branch.branch_name
@@ -293,7 +293,7 @@ function manageBranchController(
 		 * Broadcast (Start)
 		 * ****************************** */
 		$rootScope.$broadcast(
-				BROADCAST_MESSAGE.toggleTable, 
+				BROADCAST_MESSAGES.toggleTable, 
 				{
 					companyName: vm.companyName, 
 					branchName: branch.branch_name
@@ -347,9 +347,9 @@ function manageBranchController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addBranch, 
-				BROADCAST_MESSAGE.updateBranch, 
-				BROADCAST_MESSAGE.deleteBranch
+				BROADCAST_MESSAGES.addBranch, 
+				BROADCAST_MESSAGES.updateBranch, 
+				BROADCAST_MESSAGES.deleteBranch
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -393,11 +393,11 @@ function manageBranchController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addBranch, addBranch);
+	$scope.$on(BROADCAST_MESSAGES.addBranch, addBranch);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateBranch, updateBranch);
+	$scope.$on(BROADCAST_MESSAGES.updateBranch, updateBranch);
 
-	$scope.$on(BROADCAST_MESSAGE.deleteBranch, deleteBranch);
+	$scope.$on(BROADCAST_MESSAGES.deleteBranch, deleteBranch);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

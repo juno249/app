@@ -7,7 +7,7 @@ angular
  * ****************************** */
 manageOrderController.$inject = [
 	'API_BASE_URL', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'ORDERS_DB_FIELDS', 
 	'$compile', 
 	'$scope', 
@@ -25,7 +25,7 @@ manageOrderController.$inject = [
  * ****************************** */
 function manageOrderController(
 		API_BASE_URL, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		ORDERS_DB_FIELDS, 
 		$compile, 
 		$scope, 
@@ -237,9 +237,9 @@ function manageOrderController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addOrder, 
-				BROADCAST_MESSAGE.updateOrder, 
-				BROADCAST_MESSAGE.deleteOrder
+				BROADCAST_MESSAGES.addOrder, 
+				BROADCAST_MESSAGES.updateOrder, 
+				BROADCAST_MESSAGES.deleteOrder
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -283,11 +283,11 @@ function manageOrderController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addOrder, addOrder);
+	$scope.$on(BROADCAST_MESSAGES.addOrder, addOrder);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateOrder, updateOrder);
+	$scope.$on(BROADCAST_MESSAGES.updateOrder, updateOrder);
 
-	$scope.$on(BROADCAST_MESSAGE.deleteOrder, deleteOrder);
+	$scope.$on(BROADCAST_MESSAGES.deleteOrder, deleteOrder);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

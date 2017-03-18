@@ -6,7 +6,7 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 manageNavigationController.$inject = [
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'$scope', 
 	'$state'
 ];
@@ -18,7 +18,7 @@ manageNavigationController.$inject = [
  * Controller Implementation (Start)
  * ****************************** */
 function manageNavigationController(
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		$scope, 
 		$state
 ){
@@ -117,7 +117,7 @@ function manageNavigationController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.toggleBranch, toggleBranchCallback);
+	$scope.$on(BROADCAST_MESSAGES.toggleBranch, toggleBranchCallback);
 	
 	/* ******************************
 	 * Method Implementation
@@ -135,7 +135,7 @@ function manageNavigationController(
 		vm.isManageBranchHidden = isManageBranchHidden;
 	}
 	
-	$scope.$on(BROADCAST_MESSAGE.toggleMenu, toggleMenuCallback);
+	$scope.$on(BROADCAST_MESSAGES.toggleMenu, toggleMenuCallback);
 	
 	/* ******************************
 	 * Method Implementation
@@ -153,7 +153,7 @@ function manageNavigationController(
 		vm.isManageMenuHidden = isManageMenuHidden;
 	}
 	
-	$scope.$on(BROADCAST_MESSAGE.toggleTable, toggleTableCallback);
+	$scope.$on(BROADCAST_MESSAGES.toggleTable, toggleTableCallback);
 	
 	/* ******************************
 	 * Method Implementation
@@ -174,7 +174,7 @@ function manageNavigationController(
 		vm.isManageTableHidden = isManageTableHidden;
 	}
 	
-	$scope.$on(BROADCAST_MESSAGE.toggleMenuitem, toggleMenuitemCallback);
+	$scope.$on(BROADCAST_MESSAGES.toggleMenuitem, toggleMenuitemCallback);
 	
 	/* ******************************
 	 * Method Implementation

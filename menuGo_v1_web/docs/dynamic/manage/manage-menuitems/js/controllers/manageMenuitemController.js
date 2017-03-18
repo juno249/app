@@ -7,7 +7,7 @@ angular
  * ****************************** */
 manageMenuitemController.$inject = [
 	'API_BASE_URL', 
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'MENUITEMS_DB_FIELDS', 
 	'$compile', 
 	'$scope', 
@@ -26,7 +26,7 @@ manageMenuitemController.$inject = [
  * ****************************** */
 function manageMenuitemController(
 		API_BASE_URL, 
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		MENUITEMS_DB_FIELDS, 
 		$compile, 
 		$scope, 
@@ -295,9 +295,9 @@ function manageMenuitemController(
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				restApiSource, 
-				BROADCAST_MESSAGE.addMenuitem, 
-				BROADCAST_MESSAGE.updateMenuitem, 
-				BROADCAST_MESSAGE.deleteMenuitem
+				BROADCAST_MESSAGES.addMenuitem, 
+				BROADCAST_MESSAGES.updateMenuitem, 
+				BROADCAST_MESSAGES.deleteMenuitem
 		);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, vm
@@ -341,11 +341,11 @@ function manageMenuitemController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.addMenuitem, addMenuitem);
+	$scope.$on(BROADCAST_MESSAGES.addMenuitem, addMenuitem);
 	
-	$scope.$on(BROADCAST_MESSAGE.updateMenuitem, updateMenuitem);
+	$scope.$on(BROADCAST_MESSAGES.updateMenuitem, updateMenuitem);
 
-	$scope.$on(BROADCAST_MESSAGE.deleteMenuitem, deleteMenuitem);
+	$scope.$on(BROADCAST_MESSAGES.deleteMenuitem, deleteMenuitem);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */
