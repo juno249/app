@@ -1,0 +1,49 @@
+div.loginContainer button.loginBtn{
+	width: 40%;
+}
+
+div.loginContainer div.buttonContainer{
+	padding-top: 25px;
+}
+
+div.loginContainer div.companyLogoContainer{
+	display: block;
+	
+	height: 25%;
+	width: 75%;
+	
+	margin: auto;
+	margin-top: 50px;
+}
+
+div.loginContainer div.formContainer{
+	padding-left: 25px;
+	padding-right: 25px;
+}
+
+div.loginContainer img.companyLogo{
+	height: 100%;
+	width: 100%;
+}
+
+div.loginContainer i{
+	padding-left: 10px;	
+}
+
+div.loginContainer label{
+	padding: 5px 0px 5px 0px;
+}
+
+div.loginContainer div.formContainer label #loginUsernameTxt, 
+div.loginContainer div.formContainer label #loginPasswordTxt{
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 15px;
+	
+	padding-left: 10px;
+}
+
+div.loginContainer div.buttonContainer #signupBtn, 
+div.loginContainer div.buttonContainer #loginBtn{
+	font-family: 'Alegreya Sans', sans-serif;
+	font-size: 15px;
+}
