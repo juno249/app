@@ -1,17 +1,5 @@
-.app-bg{
-	background-color: gray;
-	
-	z-index: -3;
-}
-
-.border-rounded{
-	border-radius: 20px;
-}
-
-.borderless{
-	border-style: none;
-	
-	margin: 0px 0px 0px 0px;
+body{
+	background-color: #333;
 }
 
 .child-content-center{
@@ -30,8 +18,68 @@
 	text-align: right;
 }
 
-.display-block{
-	display: block;
+div.dataTables_wrapper{
+	padding: 0px 25px 0px 25px;	
+}
+
+.font-family-1-size-large{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 20px;
+}
+
+.font-family-1-size-medium{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 15px;
+}
+
+.font-family-1-size-small{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 12px;
+}
+
+.font-family-1-size-xsmall{
+	font-family: 'Kaushan Script', cursive;
+	font-size: 10px;
+}
+
+.font-family-2-size-large{
+	font-family: 'Lora', serif;
+	font-size: 20px;
+}
+
+.font-family-2-size-medium{
+	font-family: 'Lora', serif;
+	font-size: 15px;
+}
+
+.font-family-2-size-small{
+	font-family: 'Lora', serif;
+	font-size: 12px;
+}
+
+.font-family-2-size-xsmall{
+	font-family: 'Lora', serif;
+	font-size: 10px;
+}
+
+.font-family-3-size-large{
+	font-family: 'Poiret One', cursive;
+	font-size: 20px;
+}
+
+.font-family-3-size-medium{
+	font-family: 'Poiret One', cursive;
+	font-size: 15px;
+}
+
+.font-family-3-size-small{
+	font-family: 'Poiret One', cursive;
+	font-size: 12px;
+}
+
+.font-family-3-size-xsmall{
+	font-family: 'Poiret One', cursive;
+	font-size: 10px;
 }
 
 .fill-parent-x{
@@ -43,109 +91,6 @@
 }
 
 .fill-parent-xy{
-	width: 100%;
 	height: 100%;
-}
-
-.floating-panel-style-1{
-	background-color: #ffffff;
-	
-	margin: 20px 10px 20px 10px;
-}
-
-.font-family-1-size-small{
-	font-family: 'Titillium Web', sans-serif;
-	font-size: 12px;
-}
-
-.font-family-1-size-medium{
-	font-family: 'Titillium Web', sans-serif;
-	font-size: 15px;
-}
-
-.font-family-1-size-large{
-	font-family: 'Titillium Web', sans-serif;
-	font-size: 20px;
-}
-
-.font-family-2-size-small{
-	font-family: 'Dosis', sans-serif;
-	font-size: 12px;
-}
-
-.font-family-2-size-medium{
-	font-family: 'Dosis', sans-serif;
-	font-size: 15px;
-}
-
-.font-family-2-size-large{
-	font-family: 'Dosis', sans-serif;
-	font-size: 20px;
-}
-
-.font-family-3-size-small{
-	font-family: 'Alegreya Sans', sans-serif;
-	font-size: 12px;
-}
-
-.font-family-3-size-medium{
-	font-family: 'Alegreya Sans', sans-serif;
-	font-size: 15px;
-}
-
-.font-family-3-size-large{
-	font-family: 'Alegreya Sans', sans-serif;
-	font-size: 20px;
-}
-
-.layer-minus-1{
-	z-index: -1;
-}
-
-.layer-minus-2{
-	z-index: -2;
-}
-
-.layer-minus-3{
-	z-index: -3;
-}
-
-.pos-absolute-top-left{
-	position: absolute;
-	 
-	left: 0px;
-	top: 0px;
-}
-
-.popup-body{
-	font-family: 'Poiret One', cursive;
-	font-size: 12px;
-}
-
-.popup-title{
-	font-family: 'Kaushan Script', cursive;
-}
-
-.styleless-anchor-tag{
-	text-decoration: none;
-}
-
-.transparent-high{
-	opacity: 0.9
-}
-
-.transparent-low{
-	opacity: 0.9;
-}
-
-.transparent-medium{
-	opacity: 0.6;
-}
-
-underline{
-	text-decoration: underline;
-}
-
-.white-space-preline{
-	white-space: pre-line;
+	width: 100%;
 }

@@ -1,5 +1,5 @@
 angular
-.modue('starter')
+.module('starter')
 .factory('orderreferenceService', orderreferenceService);
 
 /* ******************************
