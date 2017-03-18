@@ -237,7 +237,7 @@ angular
 ])
 
 /* ******************************
- * Constants: IS_FEATURED_VALUES
+ * Constants: ISFEATURED_VALUES
  * purpose: lists is featured values
  * ****************************** */
 .constant('IS_FEATURED_VALUES', {
