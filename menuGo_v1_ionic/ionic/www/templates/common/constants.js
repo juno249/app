@@ -8,18 +8,6 @@ angular
 .constant('API_BASE_URL', 'http://localhost/api')
 
 /* ******************************
- * Constants: COMPANIES_DB_FIELDS
- * purpose: lists db fields along w/ their
- * 				corresponding column index
- * ****************************** */
-.constant('COMPANIES_DB_FIELDS', {
-	0: 'company_name', 
-	1: 'company_desc', 
-	2: 'company_category', 
-	3: 'company_logo'
-})
-
-/* ******************************
  * Constants: CUSTOMERS_DB_FIELDS
  * purpose: lists db fields along w/ their
  * 				corresponding column index
@@ -43,6 +31,18 @@ angular
 	15: 'customer_birthday_month', 
 	16: 'customer_birthday_date', 
 	17: 'customer_birthday_year'
+})
+
+/* ******************************
+ * Constants: COMPANIES_DB_FIELDS
+ * purpose: lists db fields along w/ their
+ * 				corresponding column index
+ * ****************************** */
+.constant('COMPANIES_DB_FIELDS', {
+	0: 'company_name', 
+	1: 'company_desc', 
+	2: 'company_category', 
+	3: 'company_logo'
 })
 
 /* ******************************
@@ -250,5 +250,29 @@ angular
  * purpose: lists is featured values
  * ****************************** */
 .constant('BROADCAST_MESSAGES', {
-	authAuthenticated: 'authAuthenticated'
+	authAuthenticated: 'authAuthenticated', 
+	toggleMenu: 'toggleMenu', 
+	toggleTable: 'toggleTable', 
+	toggleMenuitem: 'toggleMenuitem', 
+	addCustomer: 'addCustomer', 
+	updateCustomer: 'updateCustomer', 
+	deleteCustomer: 'deleteCustomer', 
+	addCompany: 'addCompany', 
+	updateCompany: 'updateCompany', 
+	deleteCompany: 'deleteCompany', 
+	addBranch: 'addBranch', 
+	updateBranch: 'updateBranch', 
+	deleteBranch: 'deleteBranch', 
+	addMenu: 'addMenu', 
+	updateMenu: 'updateMenu', 
+	deleteMenu: 'deleteMenu', 
+	addMenuitem: 'addMenuitem', 
+	updateMenuitem: 'updateMenuitem', 
+	deleteMenuitem: 'deleteMenuitem', 
+	addTable: 'addTable', 
+	updateTable: 'updateTable', 
+	deleteTable: 'deleteTable', 
+	addOrder: 'addOrder', 
+	updateOrder: 'updateOrder', 
+	deleteOrder: 'deleteOrder'
 })

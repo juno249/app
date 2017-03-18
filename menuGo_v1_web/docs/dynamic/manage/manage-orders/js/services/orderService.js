@@ -143,17 +143,6 @@ function orderService(
 				method: 'GET'
 		}
 		
-		getOptions: {
-			1: 'getCompanyBranchOrders', 
-			2: 'getCompanyBranchOrdersOrderStatus', 
-			3: 'getCompanyBranchOrdersNotOrderStatus', 
-			4: 'getCompanyBranchTableOrders', 
-			5: 'getCompanyBranchTableOrdersOrderStatus', 
-			6: 'getCompanyBranchTableOrdersNotOrderStatus', 
-			7: 'getCustomerOrders', 
-			8: 'getCustomerOrdersOrderStatus', 
-			9: 'getCustomerOrdersNotOrderStatus'
-		
 		/* ******************************
 		 * Get Orders Selection (Start)
 		 * ****************************** */
