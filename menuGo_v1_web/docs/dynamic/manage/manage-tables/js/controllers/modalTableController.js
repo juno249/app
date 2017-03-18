@@ -68,7 +68,7 @@ function modalTableController(
 	vm.tableStatusOptions = TABLE_STATUS;
 	vm.validationErr = {};
 	vm.validationErrDB = undefined;
-	vm.isValidationErrDB = true;
+	vm.isValidationErrDBHidden = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */

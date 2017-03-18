@@ -88,8 +88,11 @@ function manageCustomerController(
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
 	}
-	var user = localStorage.getItem('User');
-	user = JSON.parse(user);
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/customers/companies/' + user.company;
 	/* ******************************
 	 * Controller Binded Data (End)

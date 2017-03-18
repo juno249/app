@@ -64,6 +64,11 @@ function manageOrderController(
 			order_timestamp: 'orderTimestamp', 
 			order_status: 'orderStatus'
 	}
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orders';
 	/* ******************************
 	 * Controller Binded Data (End)

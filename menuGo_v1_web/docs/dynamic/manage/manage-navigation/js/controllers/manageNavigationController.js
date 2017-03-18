@@ -33,8 +33,11 @@ function manageNavigationController(
 	vm.companyName = undefined;
 	vm.branchName = undefined;
 	vm.menuName = undefined;
-	var user = localStorage.getItem('User');
-	user = JSON.parse(user);
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.customerUsername = user.username;
 	/* ******************************
 	 * Controller Binded Data (End)

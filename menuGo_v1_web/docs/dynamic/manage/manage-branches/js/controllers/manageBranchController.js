@@ -75,6 +75,11 @@ function manageBranchController(
 			branch_address_country: 'branchAddressCountry', 
 			branch_hotline: 'branchHotline' 
 	};
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches';
 	/* ******************************
 	 * Controller Binded Data (End)

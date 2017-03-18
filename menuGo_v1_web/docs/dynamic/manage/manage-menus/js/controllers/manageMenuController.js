@@ -65,6 +65,11 @@ function manageMenuController(
 			menu_desc: 'menuDesc', 
 			menu_image: 'menuImage'
 	};
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/menus';
 	/* ******************************
 	 * Controller Binded Data (End)

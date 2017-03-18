@@ -71,6 +71,11 @@ function manageMenuitemController(
 			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
 	};
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/menus/' + vm.menuName + '/menuitems';
 	/* ******************************
 	 * Controller Binded Data (End)

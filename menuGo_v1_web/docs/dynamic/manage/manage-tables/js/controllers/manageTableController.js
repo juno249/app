@@ -65,6 +65,11 @@ function manageTableController(
 			table_capacity: 'tableCapacity', 
 			table_status: 'tableStatus'
 	};
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables';
 	/* ******************************
 	 * Controller Binded Data (End)

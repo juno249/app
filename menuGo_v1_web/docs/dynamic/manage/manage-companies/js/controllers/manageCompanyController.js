@@ -62,11 +62,12 @@ function manageCompanyController(
 			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
 	}
-	var user = localStorage.getItem('User');
-	user = JSON.parse(user);
+	var user = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+	}
 	vm.restApiSource = API_BASE_URL + '/companies/customers/' + user.username;
-	vm.isBranchThumbnailDisabled = true;
-	vm.isMenuThumbnailDisabled = true;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
