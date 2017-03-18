@@ -1,11 +1,11 @@
 angular
 .module('starter')
-.controller('adminUsermenuController', adminUsermenuController);
+.controller('manageNavigationController', manageNavigationController);
 
 /* ******************************
  * Controller Dependency Injection (Start)
  * ****************************** */
-adminUsermenuController.$inject = [
+manageNavigationController.$inject = [
 	'BROADCAST_MESSAGE', 
 	'$scope', 
 	'$state'
@@ -17,7 +17,7 @@ adminUsermenuController.$inject = [
 /* ******************************
  * Controller Implementation (Start)
  * ****************************** */
-function adminUsermenuController(
+function manageNavigationController(
 		BROADCAST_MESSAGE, 
 		$scope, 
 		$state
