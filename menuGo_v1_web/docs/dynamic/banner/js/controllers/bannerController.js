@@ -47,9 +47,15 @@ function bannerController(
 	 * ****************************** */
 	var vm = this;
 	vm.user = undefined;
-	vm.loginUsername = undefined;
-	vm.loginPassword = undefined;
-	vm.isAuthenticated = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		user = localStorage.getItem('User');
+		user= JSON.parse(user);
+		vm.isAuthenticated = user.isAuthenticated;
+	} else {
+		vm.loginUsername = undefined;
+		vm.loginPassword = undefined;
+		vm.isAuthenticated = undefined;
+	}
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
