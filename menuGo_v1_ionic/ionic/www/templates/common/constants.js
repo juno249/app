@@ -244,3 +244,11 @@ angular
 	1: 'Y', 
 	0: 'N'
 })
+
+/* ******************************
+ * Constants: BROADCAST_MESSAGES
+ * purpose: lists is featured values
+ * ****************************** */
+.constant('BROADCAST_MESSAGES', {
+	authAuthenticated: 'authAuthenticated'
+})

@@ -6,7 +6,7 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 bannerController.$inject = [
-	'BROADCAST_MESSAGE', 
+	'BROADCAST_MESSAGES', 
 	'USER_ROLES', 
 	'$localStorage', 
 	'$rootScope', 
@@ -28,7 +28,7 @@ bannerController.$inject = [
  * Controller Implementation (Start)
  * ****************************** */
 function bannerController(
-		BROADCAST_MESSAGE, 
+		BROADCAST_MESSAGES, 
 		USER_ROLES, 
 		$localStorage, 
 		$rootScope, 
@@ -83,7 +83,7 @@ function bannerController(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function doLoginSuccessCallback(response){
-			$rootScope.$broadcast(BROADCAST_MESSAGE.authAuthenticated);
+			$rootScope.$broadcast(BROADCAST_MESSAGES.authAuthenticated);
 		}
 		
 		function doLoginFailedCallback(responseError){
@@ -283,7 +283,7 @@ function bannerController(
 	/* ******************************
 	 * Broadcast Event Handlers (Start)
 	 * ****************************** */
-	$scope.$on(BROADCAST_MESSAGE.authAuthenticated, authAuthenticatedCallback);
+	$scope.$on(BROADCAST_MESSAGES.authAuthenticated, authAuthenticatedCallback);
 	/* ******************************
 	 * Broadcast Event Handlers (End)
 	 * ****************************** */

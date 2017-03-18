@@ -237,10 +237,18 @@ angular
 ])
 
 /* ******************************
- * Constants: ISFEATURED_VALUES
+ * Constants: IS_FEATURED_VALUES
  * purpose: lists is featured values
  * ****************************** */
 .constant('IS_FEATURED_VALUES', {
 	1: 'Y', 
 	0: 'N'
+})
+
+/* ******************************
+ * Constants: BROADCAST_MESSAGES
+ * purpose: lists is featured values
+ * ****************************** */
+.constant('BROADCAST_MESSAGES', {
+	authAuthenticated: 'authAuthenticated'
 })
