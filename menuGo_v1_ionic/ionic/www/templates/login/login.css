@@ -1,49 +1,50 @@
-div.loginContainer button.loginBtn{
-	width: 40%;
+ion-view#login{
+	background-color: #add8e6;
+	
+	padding-top: 50px;
 }
 
-div.loginContainer div.buttonContainer{
-	padding-top: 25px;
+div.login-container div.company-logo-image-container, 
+div.login-container div.login-form-container{
+	background-color: #f9f9f9;
+	
+	margin: 20px;
+	margin-bottom: 0px;
+	margin-top: 0px;
 }
 
-div.loginContainer div.companyLogoContainer{
-	display: block;
+div.login-container div.company-logo-image-container{
+	border-bottom-right-radius: 35px;
+	border-top-left-radius: 35px;
 	
-	height: 25%;
-	width: 75%;
+	height: 250px;
+}
+
+div.login-container div.company-logo-image-container img{
+	height: 70%;
 	
-	margin: auto;
 	margin-top: 50px;
 }
 
-div.loginContainer div.formContainer{
-	padding-left: 25px;
-	padding-right: 25px;
-}
-
-div.loginContainer img.companyLogo{
-	height: 100%;
-	width: 100%;
-}
-
-div.loginContainer i{
-	padding-left: 10px;	
-}
-
-div.loginContainer label{
-	padding: 5px 0px 5px 0px;
-}
-
-div.loginContainer div.formContainer label #loginUsernameTxt, 
-div.loginContainer div.formContainer label #loginPasswordTxt{
-	font-family: 'Titillium Web', sans-serif;
-	font-size: 15px;
+div.login-container div.login-form-container{
+	border-bottom-left-radius: 25px;
+	border-top-right-radius: 25px;
 	
-	padding-left: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 
-div.loginContainer div.buttonContainer #signupBtn, 
-div.loginContainer div.buttonContainer #loginBtn{
-	font-family: 'Alegreya Sans', sans-serif;
-	font-size: 15px;
+div.login-container div.login-form-container div.item{
+	border: none;
+	
+	margin: 20px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+div.login-container div.login-form-container label{
+	background-color: #f9f9f9;
+	
+	padding-top: 5px;
+	padding-bottom: 5px;
 }

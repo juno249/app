@@ -23,9 +23,16 @@ function loginController(
 	 * ****************************** */
 	var vm = this;
 	vm.user = undefined;
-	vm.loginUsername = undefined;
-	vm.loginPassword = undefined;
-	vm.isAuthenticated = undefined;
+	if(!(null == localStorage.getItem('User'))){
+		var user = localStorage.getItem('User');
+		user = JSON.parse(user);
+		vm.user = user;
+		vm.isAuthenticated = user.isAuthenticated;
+	} else {
+		vm.loginUsername = undefined;
+		vm.loginPassword = undefined;
+		vm.isAuthenticated = undefined;
+	}
 	/* ******************************
 	 * Controller Implementation (End)
 	 * ****************************** */

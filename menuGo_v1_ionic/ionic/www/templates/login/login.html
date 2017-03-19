@@ -1,83 +1,71 @@
-<ion-view>
+<ion-view 
+	id="login" 
+	name="login">
 	<div 
-		class="loginContainer">
+		class="login-container">
 		<div 
-			class="companyLogoContainer child-content-center">
+			class="child-content-center company-logo-image-container">
 			<img 
-				class="companyLogo" 
+				class="company-logo-image" 
 				src="templates/login/res/img/companyLogo.png">
 		</div>
 		<div 
-			class="child-content-center formContainer">
-			<!--  *************** 
-					loginUsername (start)
-					*************** -->
+			class="login-form-container">
 			<div 
-				class="item item-input-inset">
-				<label 
-					class="item item-input-wrapper">
-					<i 
-						class="icon ion-person">
-					</i>
-					<input 
-						class="fill-parent-x" 
-						id="loginUsernameTxt" 
-						name="loginUsernameTxt" 
-						ng-model="loginController.loginUsername" 
-						placeholder="Username" 
-						type="text">
-				</label>
+				class="list">
+				<div 
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-person">
+						</i>
+						<input 
+							class="fill-parent-x font-family-2-size-medium login-username"
+							id="loginUsername" 
+							name="loginUsername" 
+							ng-model="loginController.loginUsername" 
+							placeholder="Username" 
+							type="text">
+					</label>
+				</div>
+				<div 
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-lock-combination">
+						</i>
+						<input 
+							class="font-family-2-size-medium fill-parent-x login-password" 
+							id="loginPassword" 
+							name="loginPassword" 
+							ng-model="loginController.loginPassword" 
+							placeholder="Password" 
+							type="password">
+					</label>
+				</div>
+				<div 
+					class="item item-input-inset">
+					<div 
+						class="row">
+						<div 
+							class="col">
+							<button 
+								class="button button-small button-positive fill-parent-x font-family-3-size-medium">
+								Sign in
+							</button>
+						</div>
+						<div 
+							class="col">
+							<button 
+								class="button button-small button-positive fill-parent-x font-family-3-size-medium">
+								Sign Up
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
-			<!--  *************** 
-					loginUsername (end)
-					*************** -->
-						
-			<!--  *************** 
-					loginPassword (start)
-					*************** -->
-			<div 
-				class="item item-input-inset">
-				<label 
-					class="item item-input-wrapper">
-					<i 
-						class="icon ion-lock-combination">
-					</i>
-					<input 
-						class="fill-parent-x" 
-						id="loginPasswordTxt" 
-						name="loginPasswordTxt" 
-						ng-model="loginController.loginPassword" 
-						placeholder="Password" 
-						type="password">
-				</label>
-			</div>
-			<!--  *************** 
-					loginPassword (end)
-					*************** -->
-					
-			<!--  *************** 
-					loginButtons (start)
-					*************** -->
-			<div 
-				class="buttonContainer child-content-center fill-parent-x">
-				<button 
-					class="button button-positive button-small loginBtn" 
-					id="signupBtn" 
-					name="signupBtn" 
-					ng-click="loginController.doSignup();">
-					Signup
-				</button>
-				<button 
-					class="button button-positive button-small loginBtn" 
-					id="loginBtn" 
-					name="loginBtn" 
-					ng-click="loginController.doLogin();">
-					Login
-				</button>
-			</div>
-			<!--  *************** 
-					loginButtons (end)
-					*************** -->
 		</div>
 	</div>
 </ion-view>

@@ -103,7 +103,13 @@ function loginService(
 		
 			$http.defaults.headers.common.Authorization = "bearer " + user.token;
 			
-			getCustomerCompanyBranch();
+			if(USER_ROLES.customer == user.role){
+				user = JSON.stringify(user);
+				localStorage.setItem('User', user);
+				deferred.resolve();
+			} else {
+				getCustomerCompanyBranch();
+			}
 			
 			/* ******************************
 			 * Method Implementation
@@ -128,7 +134,7 @@ function loginService(
 					
 					responseData = responseData[0];
 					user.company = responseData.company_name;
-					user.branch = responseData.branch_name;
+					user.branch = responseData.branch_id;
 					user.isAuthenticated = true;
 					
 					user = JSON.stringify(user);

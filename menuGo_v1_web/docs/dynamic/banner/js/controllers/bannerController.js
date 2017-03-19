@@ -48,8 +48,9 @@ function bannerController(
 	var vm = this;
 	vm.user = undefined;
 	if(!(null == localStorage.getItem('User'))){
-		user = localStorage.getItem('User');
+		var user = localStorage.getItem('User');
 		user= JSON.parse(user);
+		vm.user = user;
 		vm.isAuthenticated = user.isAuthenticated;
 	} else {
 		vm.loginUsername = undefined;
