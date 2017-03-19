@@ -7,6 +7,7 @@ angular
  * ****************************** */
 dataService.$inject = [
 	'$localStorage', 
+	'$q', 
 	'companyService', 
 	'branchService', 
 	'menuService', 
@@ -23,6 +24,7 @@ dataService.$inject = [
  * ****************************** */
 function dataService(
 		$localStorage, 
+		$q, 
 		companyService, 
 		branchService, 
 		menuService, 
@@ -35,19 +37,19 @@ function dataService(
 	const MENUS_KEY = 'Menus';
 	const TABLES_KEY = 'Tables';
 	const MENUITEMS_KEY = 'Menuitems';
-	const RESTAURANT_ADS_KEY = 'Restaurant_Ads';
-	const FOOD_BLOGS_KEY = 'Food_Blogs';
+	const ADVERTISEMENTS_KEY = 'Advertisements';
+	const BLOGS_KEY = 'Blogs';
 	
 	var dataServiceObj = {
 			companies: {}, 
-			restaurantAds: {}, 
-			foodBlogs: {}, 
+			advertisements: {}, 
+			blogs: {}, 
 			getCompanies: getCompanies, 
-			getRestaurantAds: getRestaurantAds, 
-			getFoodBlogs: getFoodBlogs, 
+			getAdvertisements: getAdvertisements, 
+			getBlogs: getBlogs, 
 			setCompanies: setCompanies, 
-			setRestaurantAds: setRestaurantAds, 
-			setFoodBlogs: setFoodBlogs, 
+			setAdvertisements: setAdvertisements, 
+			setBlogs: setBlogs, 
 			fetchCompanies: fetchCompanies, 
 			fetchAdvertisements: fetchAdvertisements, 
 			fetchBlogs: fetchBlogs
@@ -60,24 +62,24 @@ function dataService(
 		return dataServiceObj.companies;
 	}
 	
-	function getRestaurantAds(){
-		return dataServiceObj.restaurantAds;
+	function getAdvertisements(){
+		return dataServiceObj.advertisements;
 	}
 	
-	function getFoodBlogs(){
-		return dataServiceObj.foodBlogs;
+	function getBlogs(){
+		return dataServiceObj.blogs;
 	}
 	
 	function setCompanies(companies){
 		dataServiceObj.companies = companies;
 	}
 	
-	function setRestaurantAds(restaurantAds){
-		dataServiceObj.restaurantAds = restaurantAds;
+	function setAdvertisements(advertisements){
+		dataServiceObj.advertisements = advertisements;
 	}
 	
-	function setFoodBlogs(foodBlogs){
-		dataServiceObj.foodBlogs = foodBlogs;
+	function setBlogs(blogs){
+		dataServiceObj.blogs = blogs;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -89,11 +91,11 @@ function dataService(
 	 * purpose: fetch companies from server
 	 * ****************************** */
 	function fetchCompanies(){
+		reset();
+		
 		companyService.fetchCompanies()
 		.then(fetchCompaniesSuccessCallback)
 		.catch(fetchCompaniesFailedCallback);
-		
-		reset();
 		
 		/* ******************************
 		 * Callback Implementations (Start)
@@ -162,7 +164,7 @@ function dataService(
 							}
 							companies[companyName]['branches'][branchName]['tables'] = tables;
 							companies = JSON.stringify(companies);
-							localStorage.setItem('Companies', companies);
+							localStorage.setItem(COMPANIES_KEY, companies);
 						}
 						
 						function fetchTablesFailedCallback(responseError){
@@ -236,7 +238,7 @@ function dataService(
 							}
 							companies[companyName]['menus'][menuName]['menuitems'] = menuitems;
 							companies = JSON.stringify(companies);
-							localStorage.setItem('Companies', companies);
+							localStorage.setItem(COMPANIES_KEY, companies);
 						}
 						
 						function fetchMenuitemsFailedCallback(responseError){
