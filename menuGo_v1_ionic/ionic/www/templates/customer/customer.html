@@ -1,11 +1,18 @@
 <ion-view 
 	view-title="Customer">
 	<ion-pane>
+		<ion-nav-bar 
+			class="bar-assertive font-family-1-size-medium">
+			<ion-nav-back-button 
+				class="button-clear">
+				<i 
+					class="ion-arrow-left-c">
+				</i>
+			</ion-nav-back-button>
+		</ion-nav-bar>
+		
 		<ion-tabs 
 			class="tabs-assertive tabs-icon-top">
-			<!--  *************** 
-					Home tab (start)
-					*************** -->
 			<ion-tab 
 				href="#/customer/home" 
 				icon="icon ion-ios-home" 
@@ -14,13 +21,7 @@
 					name="customer-home">
 				</ion-nav-view>
 			</ion-tab>
-			<!--  *************** 
-					Home tab (end)
-					*************** -->
-					
-			<!--  *************** 
-					Nearby tab (start)
-					*************** -->
+			
 			<ion-tab 
 				href="#/customer/nearby/placeId//category/" 
 				icon="icon ion-location" 
@@ -29,9 +30,6 @@
 					name="customer-nearby">
 				</ion-nav-view>
 			</ion-tab>
-			<!--  *************** 
-					Nearby tab (start)
-					*************** -->
 		</ion-tabs>
 	</ion-pane>
 </ion-view>
