@@ -20,24 +20,24 @@ function customerHomeController(
 		dataService, 
 		$scope
 ){
-	const RESTAURANT_ADS_KEY = "Restaurant_Ads";
-	const FOOD_BLOGS_KEY = "Food_Blogs";
+	const ADVERTISEMENTS_KEY = "Advertisements";
+	const BLOGS_KEY = "Blogs";
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
-	if(null == localStorage.getItem(RESTAURANT_ADS_KEY)){
-		dataService.fetchRestaurantAds();
+	if(null == localStorage.getItem(ADVERTISEMENTS_KEY)){
+		dataService.fetchAdvertisements();
 	}
-	var restaurantAds = localStorage.getItem(RESTAURANT_ADS_KEY);
-	restaurantAds = JSON.parse(restaurantAds);
-	vm.restaurantAds = restaurantAds;
-	if(null == localStorage.getItem(FOOD_BLOGS_KEY)){
-		dataService.fetchFoodBlogs();
+	var advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
+	advertisements = JSON.parse(advertisements);
+	vm.advertisements = advertisements;
+	if(null == localStorage.getItem(BLOGS_KEY)){
+		dataService.fetchBlogs();
 	}
-	var foodBlogs = localStorage.getItem(FOOD_BLOGS_KEY);
-	foodBlogs = JSON.parse(foodBlogs);
-	vm.foodBlogs = foodBlogs;
+	var blogs = localStorage.getItem(BLOGS_KEY);
+	blogs = JSON.parse(blogs);
+	vm.blogs = blogs;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -47,29 +47,29 @@ function customerHomeController(
 	 * ****************************** */
 	$scope.$watch(
 			function(){
-				return localStorage.getItem(RESTAURANT_ADS_KEY);
+				return localStorage.getItem(ADVERTISEMENTS_KEY);
 			}, 
 			function(nVal, oVal){
-				var restaurantAds = vm.restaurantAds;
+				var advertisements = vm.advertisements;
 				
-				restaurantAds = localStorage.getItem(RESTAURANT_ADS_KEY);
-				restaurantAds = JSON.parse(restaurantAds);
+				advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
+				advertisements = JSON.parse(advertisements);
 				
-				vm.restaurantAds = restaurantAds;
+				vm.advertisements = advertisements;
 			}
 	);
 	
 	$scope.$watch(
 			function(){
-				return localStorage.getItem(FOOD_BLOGS_KEY);
+				return localStorage.getItem(BLOGS_KEY);
 			}, 
 			function(nVal, oVal){
-				var foodBlogs = vm.foodBlogs;
+				var blogs = vm.blogs;
 				
-				foodBlogs = localStorage.getItem(FOOD_BLOGS_KEY);
-				foodBlogs = JSON.parse(foodBlogs);
+				blogs = localStorage.getItem(BLOGS_KEY);
+				blogs = JSON.parse(blogs);
 				
-				vm.foodBlogs = foodBlogs;
+				vm.blogs = blogs;
 			}
 	);
 	/* ******************************
