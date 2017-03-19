@@ -4,6 +4,9 @@
 		class="modal-header font-family-1-size-medium">
 		Manage Table
 	</div>
+	<!--  *************** 
+			modalTableContainer (start)
+			*************** -->
 	<div 
 		class="modal-body" 
 		id="modalTableContainer" 
@@ -14,151 +17,145 @@
 			ng-hide="modalTableController.isValidationErrDBHidden">
 			{{modalTableController.validationErrDB}}
 		</div>
+		<!--  *************** 
+				modalTable (start)
+				*************** -->
 		<form 
 			class="form-group" 
 			id="modalTable" 
 			name="modalTable">
 			<div 
 				class="container-fluid">
-			<!--  *************** 
-					tableNumber (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalTableController.modalHiddenFields['tableNumber']">
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+					class="row" 
+					ng-hide="modalTableController.modalHiddenFields['tableNumber']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Number
-						</span>
-						<!-- tableNumber txt -->
-						<input 
-							class="font-family-2-size-small form-control" 
-							id="tableNumber" 
-							name="tableNumber" 
-							ng-hide="modalTableController.modalHiddenFields['tableNumber']" 
-							ng-model="modalTableController.table.tableNumber" 
-							placeholder="Number" 
-							required 
-							type="number">
-					</div>
-					
-					<!-- tableNumber help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalTableController.validationErr[0]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Number
+							</span>
+							<!--  *************** 
+									tableNumber (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="tableNumber" 
+								name="tableNumber" 
+								ng-hide="modalTableController.modalHiddenFields['tableNumber']" 
+								ng-model="modalTableController.table.tableNumber" 
+								placeholder="Number" 
+								required 
+								type="number">
+							<!--  *************** 
+									tableNumber (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalTableController.validationErr[0]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					tableNumber (end)
-					*************** -->
-						
-			<!--  *************** 
-					tableCapacity (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalTableController.modalHiddenFields['tableCapacity']">
+				
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+					class="row" 
+					ng-hide="modalTableController.modalHiddenFields['tableCapacity']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Capacity
-						</span>
-						<!-- tableCapacity txt -->
-						<input 
-							class="font-family-2-size-small form-control" 
-							id="tableCapacity" 
-							name="tableCapacity" 
-							ng-hide="modalTableController.modalHiddenFields['tableCapacity']" 
-							ng-model="modalTableController.table.tableCapacity" 
-							placeholder="Capacity" 
-							required 
-							type="number">
-					</div>
-					
-					<!-- tableCapacity help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalTableController.validationErr[1]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Capacity
+							</span>
+							<!--  *************** 
+									tableCapacity (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="tableCapacity" 
+								name="tableCapacity" 
+								ng-hide="modalTableController.modalHiddenFields['tableCapacity']" 
+								ng-model="modalTableController.table.tableCapacity" 
+								placeholder="Capacity" 
+								required 
+								type="number">
+							<!--  *************** 
+									tableCapacity (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalTableController.validationErr[1]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					tableCapacity (end)
-					*************** -->
-					
-			<!--  *************** 
-					tableStatus (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalTableController.modalHiddenFields['tableStatus']">
+				
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+					class="row" 
+					ng-hide="modalTableController.modalHiddenFields['tableStatus']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Status
-						</span>
-						<!-- tableStatus txt -->
-						<select 
-							class="font-family-2-size-small form-control" 
-							id="tableStatus" 
-							name="tableStatus" 
-							ng-hide="modalTableController.modalHiddenFields['tableStatus']" 
-							ng-model="modalTableController.table.tableStatus" 
-							ng-options="k as v for (k,v) in modalTableController.tableStatusOptions" 
-							required>
-						</select>
-					</div>
-					
-					<!-- tableStatus help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalTableController.validationErr[2]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Status
+							</span>
+							<!--  *************** 
+									tableStatus (start)
+									*************** -->
+							<select 
+								class="font-family-2-size-small form-control" 
+								id="tableStatus" 
+								name="tableStatus" 
+								ng-hide="modalTableController.modalHiddenFields['tableStatus']" 
+								ng-model="modalTableController.table.tableStatus" 
+								ng-options="k as v for (k,v) in modalTableController.tableStatusOptions" 
+								required>
+							</select>
+							<!--  *************** 
+									tableStatus (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalTableController.validationErr[2]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					tableStatus (end)
-					*************** -->
-			
-			<!--  *************** 
-					button (start)
-					*************** -->
-			<div 
-				class="row">
-		        <div 
-		        	class="col-md-6 col-sm-6 col-xs-12">
-					<button 
-						class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
-						type="submit">
-						Submit
-					</button>
-				</div>
-		        
+				
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12">
-					<button 
-						class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
-						ng-click="modalTableController.doCancel();" 
-						type="button">
-						Cancel
-					</button>
+					class="row">
+			        <div 
+			        	class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							type="submit">
+							Submit
+						</button>
+					</div>
+			        
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							ng-click="modalTableController.doCancel();" 
+							type="button">
+							Cancel
+						</button>
+					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					button (end)
-					*************** -->
 			</div>
 		</form>
+		<!--  *************** 
+				modalTable (end)
+				*************** -->
 	</div>
+	<!--  *************** 
+			modalTableContainer (end)
+			*************** -->
 </div>

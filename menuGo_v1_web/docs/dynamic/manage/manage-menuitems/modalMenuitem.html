@@ -4,6 +4,9 @@
 		class="modal-header font-family-1-size-medium">
 		Manage Menuitem
 	</div>
+	<!--  *************** 
+			modalMenuitemContainer (start)
+			*************** -->
 	<div 
 		class="modal-body" 
 		id="modalMenuitemContainer" 
@@ -14,298 +17,290 @@
 			ng-hide="modalMenuitemController.isValidationErrDBHidden">
 			{{modalMenuitemController.validationErrDB}}
 		</div>
+		<!--  *************** 
+				modalMenuitem (start)
+				*************** -->
 		<form 
 			class="form-group" 
 			id="modalMenuitem" 
 			name="modalMenuitem" >
 			<div 
 				class="container-fluid">
-			<!--  *************** 
-					menuitemCode (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalMenuitemController.modalHiddenFields['menuitemCode']">
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
-					<!-- menuitemCode txt -->
+					class="row" 
+					ng-hide="modalMenuitemController.modalHiddenFields['menuitemCode']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Code
-						</span>
-						<input 
-							class="font-family-2-size-small form-control" 
-							id="menuitemCode" 
-							maxlength="10" 
-							name="menuitemCode" 
-							ng-hide="modalMenuitemController.modalHiddenFields['menuitemCode']" 
-							ng-model="modalMenuitemController.menuitem.menuitemCode" 
-							placeholder="Code" 
-							required 
-							type="text">
-					</div>
-					
-					<!-- menuitemCode help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalMenuitemController.validationErr[0]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Code
+							</span>
+							<!--  *************** 
+									menuitemCode (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="menuitemCode" 
+								maxlength="10" 
+								name="menuitemCode" 
+								ng-hide="modalMenuitemController.modalHiddenFields['menuitemCode']" 
+								ng-model="modalMenuitemController.menuitem.menuitemCode" 
+								placeholder="Code" 
+								required 
+								type="text">
+							<!--  *************** 
+									menuitemCode (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalMenuitemController.validationErr[0]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					menuitemCode (end)
-					*************** -->
-					
-			<!--  *************** 
-					menuitemName (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalMenuitemController.modalHiddenFields['menuitemName']">
+				
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
-					<!-- menuitemName txt -->
+					class="row" 
+					ng-hide="modalMenuitemController.modalHiddenFields['menuitemName']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Name
-						</span>
-						<input 
-							class="font-family-2-size-small form-control" 
-							id="menuitemName" 
-							maxlength="30" 
-							name="menuitemName" 
-							ng-hide="modalMenuitemController.modalHiddenFields['menuitemName']" 
-							ng-model="modalMenuitemController.menuitem.menuitemName" 
-							placeholder="Name" 
-							required 
-							type="text">
-					</div>
-					
-					<!-- menuitemName help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalMenuitemController.validationErr[1]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Name
+							</span>
+							<!--  *************** 
+									menuitemName (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="menuitemName" 
+								maxlength="30" 
+								name="menuitemName" 
+								ng-hide="modalMenuitemController.modalHiddenFields['menuitemName']" 
+								ng-model="modalMenuitemController.menuitem.menuitemName" 
+								placeholder="Name" 
+								required 
+								type="text">
+							<!--  *************** 
+									menuitemName (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalMenuitemController.validationErr[1]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					menuitemName (end)
-					*************** -->
-					
-			<!--  *************** 
-					menuitemDesc (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalMenuitemController.modalHiddenFields['menuitemDesc']">
+				
 				<div 
-					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
-					<!-- menuitemDesc txt -->
+					class="row" 
+					ng-hide="modalMenuitemController.modalHiddenFields['menuitemDesc']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Description
-						</span>
-						<textarea 
-							class="font-family-2-size-small form-control" 
-							id="menuitemDesc" 
-							maxlength="500" 
-							name="menuitemDesc" 
-							ng-hide="modalMenuitemController.modalHiddenFields['menuitemDesc']" 
-							ng-model="modalMenuitemController.menuitem.menuitemDesc" 
-							placeholder="Description" 
-							required 
-							rows="5" 
-							type="text">
-						</textarea>
-					</div>
-					
-					<!-- menuitemDesc help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalMenuitemController.validationErr[2]}}
+						class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Description
+							</span>
+							<!--  *************** 
+									menuitemDesc (start)
+									*************** -->
+							<textarea 
+								class="font-family-2-size-small form-control" 
+								id="menuitemDesc" 
+								maxlength="500" 
+								name="menuitemDesc" 
+								ng-hide="modalMenuitemController.modalHiddenFields['menuitemDesc']" 
+								ng-model="modalMenuitemController.menuitem.menuitemDesc" 
+								placeholder="Description" 
+								required 
+								rows="5" 
+								type="text">
+							</textarea>
+							<!--  *************** 
+									menuitemDesc (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalMenuitemController.validationErr[2]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					menuitemDesc (end)
-					*************** -->
-					
-			<!--  *************** 
-					menuitemPrice (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalMenuitemController.modalHiddenFields['menuitemPrice']">
+				
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
-					<!-- menuitemPrice txt -->
+					class="row" 
+					ng-hide="modalMenuitemController.modalHiddenFields['menuitemPrice']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Price
-						</span>
-						<input 
-							class="font-family-2-size-small form-control" 
-							id="menuitemPrice" 
-							name="menuitemPrice" 
-							ng-hide="modalMenuitemController.modalHiddenFields['menuitemPrice']" 
-							ng-model="modalMenuitemController.menuitem.menuitemPrice" 
-							placeholder="Price" 
-							required 
-							type="number">
-					</div>
-					
-					<!-- menuitemPrice help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalMenuitemController.validationErr[3]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Price
+							</span>
+							<!--  *************** 
+									menuitemPrice (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="menuitemPrice" 
+								name="menuitemPrice" 
+								ng-hide="modalMenuitemController.modalHiddenFields['menuitemPrice']" 
+								ng-model="modalMenuitemController.menuitem.menuitemPrice" 
+								placeholder="Price" 
+								required 
+								type="number">
+							<!--  *************** 
+									menuitemPrice (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalMenuitemController.validationErr[3]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					menuitemPrice (end)
-					*************** -->
-					
-			<!--  *************** 
-					menuitemFeatured (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalMenuitemController.modalHiddenFields['menuitemFeatured']">
+				
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
-					<!-- menuitemFeatured txt -->
+					class="row" 
+					ng-hide="modalMenuitemController.modalHiddenFields['menuitemFeatured']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Featured
-						</span>
-						<select 
-							class="font-family-2-size-small form-control" 
-							id="menuitemFeatured" 
-							name="menuitemFeatured" 
-							ng-hide="modalMenuitemController.modalHiddenFields['menuitemFeatured']" 
-							ng-model="modalMenuitemController.menuitem.menuitemFeatured" 
-							ng-options="k as v for (k,v) in modalMenuitemController.featuredOptions" 
-							required>
-						</select>
-					</div>
-					
-					<!-- menuitemFeatured help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalMenuitemController.validationErr[3]}}
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Featured
+							</span>
+							<!--  *************** 
+									menuitemFeatured (start)
+									*************** -->
+							<select 
+								class="font-family-2-size-small form-control" 
+								id="menuitemFeatured" 
+								name="menuitemFeatured" 
+								ng-hide="modalMenuitemController.modalHiddenFields['menuitemFeatured']" 
+								ng-model="modalMenuitemController.menuitem.menuitemFeatured" 
+								ng-options="k as v for (k,v) in modalMenuitemController.featuredOptions" 
+								required>
+							</select>
+							<!--  *************** 
+									menuitemFeatured (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalMenuitemController.validationErr[3]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<!--  *************** 
-					menuitemFeatured (end)
-					*************** -->
-			
-			<!--  *************** 
-					menuitemImage (start)
-					*************** -->
-			<div 
-				class="row" 
-				ng-hide="modalMenuitemController.modalHiddenFields['menuitemImage']">
+				
+				
 				<div 
-					class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+					class="row" 
+					ng-hide="modalMenuitemController.modalHiddenFields['menuitemImage']">
 					<div 
-						class="input-group">
-						<span 
-							class="font-family-1-size-medium input-group-addon">
-							Image
-						</span>
-						<!-- menuitemImage txt -->
-						<input 
-							class="form-control font-family-2-size-small" 
-							id="menuitemImage" 
-							maxlength="500" 
-							name="menuitemImage" 
-							ng-hide="modalMenuitemController.modalHiddenFields['menuitemImage']" 
-							ng-model="modalMenuitemController.menuitem.menuitemImage" 
-							placeholder="Image" 
-							readonly 
-							required 
-							type="url">
-						<span 
-							class="input-group-btn">
-							<label 
-								class="btn btn-primary">
-								<i 
-									class="glyphicon glyphicon-search">
-								</i>
-								<input 
-									class="font-family-2-size-small form-control" 
-									id="menuitemImageBrowse" 
-									name="menuitemImageBrowse" 
-									type="file">
-							</label>
-							<button 
-								class="btn btn-primary" 
-								ng-click="modalMenuitemController.uploadMenuitemImage();" 
-								type="button">
-								<i 
-									class="glyphicon glyphicon-upload">
-								</i>
-							</button>
-						</span>
-					</div>
-					
-					<!-- menuitemImage help/err -->
-					<div 
-						class="font-family-2-size-small help-block with-errors">
-						{{modalMenuitemController.validationErr[4]}}
+						class="col-md-12 col-sm-12 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Image
+							</span>
+							<!--  *************** 
+									menuitemImage (start)
+									*************** -->
+							<input 
+								class="form-control font-family-2-size-small" 
+								id="menuitemImage" 
+								maxlength="500" 
+								name="menuitemImage" 
+								ng-hide="modalMenuitemController.modalHiddenFields['menuitemImage']" 
+								ng-model="modalMenuitemController.menuitem.menuitemImage" 
+								placeholder="Image" 
+								readonly 
+								required 
+								type="url">
+							<!--  *************** 
+									menuitemImage (end)
+									*************** -->
+							<span 
+								class="input-group-btn">
+								<label 
+									class="btn btn-primary">
+									<i 
+										class="glyphicon glyphicon-search">
+									</i>
+									<!--  *************** 
+											menuitemImageBrowse (start)
+											*************** -->
+									<input 
+										class="font-family-2-size-small form-control" 
+										id="menuitemImageBrowse" 
+										name="menuitemImageBrowse" 
+										type="file">
+									<!--  *************** 
+											menuitemImageBrowse (end)
+											*************** -->
+								</label>
+								<button 
+									class="btn btn-primary" 
+									ng-click="modalMenuitemController.uploadMenuitemImage();" 
+									type="button">
+									<i 
+										class="glyphicon glyphicon-upload">
+									</i>
+								</button>
+							</span>
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalMenuitemController.validationErr[4]}}
+						</div>
 					</div>
 				</div>
-			</div>
-			<div 
-				class="child-content-center menuitem-image-image-container" 
-				ng-hide="modalMenuitemController.isMenuitemImageImageHidden">
-				<img 
-					class="menuitem-image-image" 
-					src={{modalMenuitemController.menuitemImageImage}}>
-			</div>
-			<!--  *************** 
-					menuitemImage (end)
-					*************** -->
-			
-			<!--  *************** 
-					button (start)
-					*************** -->
-			<div 
-				class="row">
-		        <div 
-		        	class="col-md-6 col-sm-6 col-xs-12">	
-					<button 
-						class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
-						type="submit">
-						Submit
-					</button>
-				</div>
-		        
 				<div 
-					class="col-md-6 col-sm-6 col-xs-12">	
-					<button 
-						class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
-						ng-click="modalMenuitemController.doCancel();" 
-						type="button">
-						Cancel
-					</button>
+					class="child-content-center menuitem-image-image-container" 
+					ng-hide="modalMenuitemController.isMenuitemImageImageHidden">
+					<img 
+						class="menuitem-image-image" 
+						src={{modalMenuitemController.menuitemImageImage}}>
 				</div>
-			</div>
-			<!--  *************** 
-					button (end)
-					*************** -->
+				
+				<div 
+					class="row">
+			        <div 
+			        	class="col-md-6 col-sm-6 col-xs-12">	
+						<button 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							type="submit">
+							Submit
+						</button>
+					</div>
+			        
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12">	
+						<button 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							ng-click="modalMenuitemController.doCancel();" 
+							type="button">
+							Cancel
+						</button>
+					</div>
+				</div>
 			</div>
 		</form>
+		<!--  *************** 
+				modalMenuitem (end)
+				*************** -->
 	</div>
+	<!--  *************** 
+			modalMenuitemContainer (end)
+			*************** -->
 </div>

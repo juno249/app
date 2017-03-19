@@ -20,9 +20,11 @@
 			<ul 
 				class="nav nav-list">
 				<!--  *************** 
-						Manage Restaurant (start)
+						manageRestaurantListItem (start)
 						*************** -->
-				<li>
+				<li 
+					id="manageRestaurantListItem" 
+					name="manageRestaurantListItem">
 					<a 
 						ui-sref="manage.company">
 						<div 
@@ -36,9 +38,11 @@
 					<ul 
 						class="nav nav-list">
 						<!--  *************** 
-								Manage Branch (start)
+								manageBranchListItem (start)
 								*************** -->
 						<li 
+							id="manageBranchListItem" 
+							name="manageBranchListItem" 
 							ng-hide="manageNavigationController.isManageBranchHidden">
 							<a 
 								ui-sref="manage.company.branch({companyName: manageNavigationController.companyName})">
@@ -53,9 +57,11 @@
 							<ul 
 								class="nav nav-list">
 								<!--  *************** 
-										Manage Table (start)
+										manageTableListItem (start)
 										*************** -->
 								<li 
+									id="manageTableListItem" 
+									name="manageTableListItem" 
 									ng-hide="manageNavigationController.isManageTableHidden">
 									<a  
 										ui-sref="manage.company.branch.table({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName})">
@@ -69,18 +75,20 @@
 									</a>
 								</li>
 								<!--  *************** 
-										Manage Table (end)
+										manageTableListItem (end)
 										*************** -->
 							</ul>
 						</li>
 						<!--  *************** 
-								Manage Branch (end)
+								manageBranchListItem (end)
 								*************** -->
 								
 						<!--  *************** 
-								Manage Menu (start)
+								manageMenuListItem (start)
 								*************** -->
 						<li 
+							id="manageMenuListItem" 
+							name="manageMenuListItem" 
 							ng-hide="manageNavigationController.isManageMenuHidden">
 							<a 
 								ui-sref="manage.company.menu({companyName: manageNavigationController.companyName})">
@@ -95,9 +103,11 @@
 							<ul 
 								class="nav nav-list">
 								<!--  *************** 
-										Manage Menuitem (start)
+										manageMenuitemListItem (start)
 										*************** -->
 								<li 
+									id="manageMenuitemListItem" 
+									name="manageMenuitemListItem" 
 									ng-hide="manageNavigationController.isManageMenuitemHidden">
 									<a 
 										ui-sref="manage.company.menu.menuitem({companyName: manageNavigationController.companyName, menuName: manageNavigationController.menuName})">
@@ -111,23 +121,25 @@
 									</a>
 								</li>
 								<!--  *************** 
-										Manage Menuitem (end)
+										manageMenuitemListItem (end)
 										*************** -->
 							</ul>
 						</li>
 						<!--  *************** 
-								Manage Menu (end)
+								manageMenuListItem (end)
 								*************** -->
 					</ul>
 				</li>
 				<!--  *************** 
-						Manage Restaurant (end)
+						manageRestaurantListItem (end)
 						*************** -->
 						
 				<!--  *************** 
-						Manage User (start)
+						manageUserListItem (start)
 						*************** -->
-				<li>
+				<li 
+					id="manageUserListItem" 
+					name="manageUserListItem">
 					<a 
 						ui-sref="manage.customer">
 						<div 
@@ -140,7 +152,7 @@
 					</a>
 				</li>
 				<!--  *************** 
-						Manage User (end)
+						manageUserListItem (end)
 						*************** -->
 			</ul>			
 		</div>
