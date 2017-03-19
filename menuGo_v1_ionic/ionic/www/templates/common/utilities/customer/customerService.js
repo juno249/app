@@ -95,11 +95,15 @@ function customerService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCustomersSuccessCallback(response){
-			customerServiceObj.customers = {};
-			convertCustomersResponseToMap(response.data);
 			var customers = customerServiceObj.customers;
+			customers = {};
+			customerServiceObj.customers = customers;
+			
+			convertCustomersResponseToMap(response.data);
+			customers = customerServiceObj.customers;
 			customers = JSON.stringify(customers);
 			localStorage.setItem('Customers', customers);
+			
 			deferred.resolve(response);
 		}
 		
@@ -156,11 +160,15 @@ function customerService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCustomerSuccessCallback(response){
-			customerServiceObj.customer = {};
-			convertCustomerResponseToMap(response.data);
 			var customer = customerServiceObj.customer;
+			customer = {};
+			customerServiceObj.customer = customer;
+			
+			convertCustomerResponseToMap(response.data);
+			customer = customerServiceObj.customer;
 			customer = JSON.stringify(customer);
 			localStorage.setItem('Customer', customer);
+			
 			deferred.resolve(response);
 		}
 		

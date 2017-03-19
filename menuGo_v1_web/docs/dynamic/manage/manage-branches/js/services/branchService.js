@@ -105,11 +105,15 @@ function branchService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBranchesSuccessCallback(response){
-			branchServiceObj.branches = {};
-			convertBranchesResponseToMap(response.data);
 			var branches = branchServiceObj.branches;
+			branches = {};
+			branchServiceObj.branches = branches;
+			
+			convertBranchesResponseToMap(response.data);
+			branches = branchServiceObj.branches;
 			branches = JSON.stringify(branches);
 			localStorage.setItem('Branches', branches);
+			
 			deferred.resolve(response);
 		}
 		
@@ -166,11 +170,15 @@ function branchService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBranchSuccessCallback(response){
-			branchServiceObj.branch = {};
-			convertBranchResponseToMap(response.data);
 			var branch = branchServiceObj.branch;
+			branch = {};
+			branchServiceObj.branch = branch;
+			
+			convertBranchResponseToMap(response.data);
+			branch = branchServiceObj.branch;
 			branch = JSON.stringify(branch);
 			localStorage.setItem('Branch', branch);
+			
 			deferred.resolve(response);
 		}
 		

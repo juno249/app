@@ -102,11 +102,15 @@ function reservationService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchReservationsSuccessCallback(response){
-			reservationServiceObj.reservations = {};
-			convertReservationsResponseToMap(response.data);
 			var reservations = reservationServiceObj.reservations;
+			reservations = {};
+			reservationServiceObj.reservations = reservations;
+			
+			convertReservationsResponseToMap(response.data);
+			reservations = reservationServiceObj.reservations;
 			reservations = JSON.stringify(reservations);
 			localStorage.setItem('Reservations', reservations);
+			
 			deferred.resolve(response);
 		}
 		
@@ -163,11 +167,15 @@ function reservationService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchReservationSuccessCallback(response){
-			reservationServiceObj.reservation = {};
-			convertReservationResponseToMap(response.data);
 			var reservation = reservationServiceObj.reservation;
+			reservation = {};
+			reservationServiceObj.reservation = reservation;
+			
+			convertReservationResponseToMap(response.data);
+			reservation = reservationServiceObj.reservation;
 			reservation = JSON.stringify(reservation);
 			localStorage.setItem('Reservation', reservation);
+			
 			deferred.resolve(response);
 		}
 		

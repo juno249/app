@@ -96,11 +96,15 @@ function companyService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCompaniesSuccessCallback(response){
-			companyServiceObj.companies = {};
-			convertCompaniesResponseToMap(response.data);
 			var companies = companyServiceObj.companies;
+			companies = {};
+			companyServiceObj.companies = companies;
+			
+			convertCompaniesResponseToMap(response.data);
+			companies = companyServiceObj.companies;
 			companies = JSON.stringify(companies);
 			localStorage.setItem('Companies', companies);
+			
 			deferred.resolve(response);
 		}
 		
@@ -157,11 +161,15 @@ function companyService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCompanySuccessCallback(response){
-			companyServiceObj.company = {};
-			convertCompanyResponseToMap(response.data);
 			var company = companyServiceObj.company;
+			company = {};
+			companyServiceObj.company = company;
+			
+			convertCompanyResponseToMap(response.data);
+			company = companyServiceObj.company;
 			company = JSON.stringify(company);
 			localStorage.setItem('Company', company);
+			
 			deferred.resolve(response);
 		}
 		

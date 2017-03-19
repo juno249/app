@@ -110,11 +110,15 @@ function customerCompanyBranchService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCustomersCompaniesBranchesSuccessCallback(response){
-			customerCompanyBranchServiceObj.customersCompaniesBranches = {};
-			convertCustomersCompaniesBranchesResponseToMap(response.data);
 			var customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
+			customersCompaniesBranches = {};
+			customerCompanyBranchServiceObj.customersCompaniesBranches = customersCompaniesBranches; 
+			
+			convertCustomersCompaniesBranchesResponseToMap(response.data);
+			customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
 			customersCompaniesBranches = JSON.stringify(customersCompaniesBranches);
 			localStorage.setItem('CustomersCompaniesBranches', customersCompaniesBranches);
+			
 			deferred.resolve(response);
 		}
 		function fetchCustomersCompaniesBranchesFailedCallback(responseError){
@@ -170,13 +174,16 @@ function customerCompanyBranchService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchCustomerCompanyBranchSuccessCallback(response){
-			customerCompanyBranchServiceObj.customerCompanyBranch = {};
-			convertCustomerCompanyBranchResponseToMap(response.data);
 			var customerCompanyBranch = customerCompanyBranchServiceObj.customerCompanyBranch;
+			customerCompanyBranch = {};
+			customerCompanyBranchServiceObj.customerCompanyBranch = customerCompanyBranch;
+			
+			convertCustomerCompanyBranchResponseToMap(response.data);
+			customerCompanyBranch = customerCompanyBranchServiceObj.customerCompanyBranch;
 			customerCompanyBranch  = JSON.stringify(customerCompanyBranch);
 			localStorage.setItem('CustomerCompanyBranch', customerCompanyBranch);
-			deferred.resolve(response);
 			
+			deferred.resolve(response);
 		}
 		function fetchCustomerCompanyBranchFailedCallback(responseError){
 			deferred.reject(responseError);

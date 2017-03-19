@@ -187,11 +187,15 @@ function orderService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchOrdersSuccessCallback(response){
-			orderServiceObj.orders = {};
-			convertOrdersResponseToMap(response.data);
 			var orders = orderServiceObj.orders;
+			orders = {};
+			orderServiceObj.orders = orders;
+			
+			convertOrdersResponseToMap(response.data);
+			orders = orderServiceObj.orders;
 			orders = JSON.stringify(orders);
 			localStorage.setItem('Orders', orders);
+			
 			deferred.resolve(response);
 		}
 		

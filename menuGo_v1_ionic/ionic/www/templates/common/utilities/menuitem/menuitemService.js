@@ -111,11 +111,15 @@ function menuitemService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchMenuitemsSuccessCallback(response){
-			menuitemServiceObj.menuitems = {};
-			convertMenuitemsResponseToMap(response.data);
 			var menuitems = menuitemServiceObj.menuitems;
+			menuitems = {};
+			menuitemServiceObj.menuitems = menuitems;
+			
+			convertMenuitemsResponseToMap(response.data);
+			menuitems = menuitemServiceObj.menuitems;
 			menuitems = JSON.stringify(menuitems);
 			localStorage.setItem('Menuitems', menuitems);
+			
 			deferred.resolve(response);
 		}
 		
@@ -172,11 +176,15 @@ function menuitemService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchMenuitemSuccessCallback(response){
-			menuitemServiceObj.menuitem = {};
-			convertMenuitemResponseToMap(response.data);
 			var menuitem = menuitemServiceObj.menuitem;
+			menuitem = {};
+			menuitemServiceObj.menuitem = menuitem;
+			
+			convertMenuitemResponseToMap(response.data);
+			menuitem = menuitemServiceObj.menuitem;
 			menuitem = JSON.stringify(menuitem);
 			localStorage.setItem('Menuitem', menuitem);
+			
 			deferred.resolve(response);
 		}
 		

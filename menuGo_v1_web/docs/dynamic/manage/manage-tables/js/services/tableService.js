@@ -111,11 +111,15 @@ function tableService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchTablesSuccessCallback(response){
-			tableServiceObj.tables = {};
-			convertTablesResponseToMap(response.data);
 			var tables = tableServiceObj.tables;
+			tables = {};
+			tableServiceObj.tables = tables;
+			
+			convertTablesResponseToMap(response.data);
+			tables = tableServiceObj.tables;
 			tables = JSON.stringify(tables);
 			localStorage.setItem('Tables', tables);
+			
 			deferred.resolve(response);
 		}
 		
@@ -172,11 +176,15 @@ function tableService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchTableSuccessCallback(response){
-			tableServiceObj.table = {};
-			convertTableResponseToMap(response.data);
 			var table = tableServiceObj.table;
+			table = {};
+			tableServiceObj.table = table;
+			
+			convertTableResponseToMap(response.data);
+			table = tableServiceObj.table;
 			table = JSON.stringify(table);
 			localStorage.setItem('Table', table);
+			
 			deferred.resolve(response);
 		}
 		

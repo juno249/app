@@ -102,11 +102,15 @@ function orderreferenceService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchOrderreferencesSuccessCallback(response){
-			orderreferenceServiceObj.orderreferences = {};
-			convertOrderreferencesResponseToMap(response.data);
 			var orderreferences = orderreferenceServiceObj.orderreferences;
+			orderreferences = {};
+			orderreferenceServiceObj.orderreferences = orderreferences;
+			
+			convertOrderreferencesResponseToMap(response.data);
+			orderreferences = orderreferenceServiceObj.orderreferences;
 			orderreferences = JSON.stringify(orderreferences);
 			localStorage.setItem('Orderreferences', orderreferences);
+			
 			deferred.resolve(response);
 		}
 		
@@ -163,11 +167,15 @@ function orderreferenceService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchOrderreferenceSuccessCallback(response){
-			orderreferenceServiceObj.orderreference = {};
-			convertOrderreferenceResponseToMap(response.data);
 			var orderreference = orderreferenceServiceObj.orderreference;
+			orderreference = {};
+			orderreferenceServiceObj.orderreference = orderreference;
+			
+			convertOrderreferenceResponseToMap(response.data);
+			orderreference = orderreferenceServiceObj.orderreference;
 			orderreference = JSON.stringify(orderreference);
 			localStorage.setItem('Orderreference', orderreference);
+			
 			deferred.resolve(response);
 		}
 		

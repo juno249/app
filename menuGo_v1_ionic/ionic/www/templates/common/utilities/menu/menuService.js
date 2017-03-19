@@ -103,11 +103,15 @@ function menuService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchMenusSuccessCallback(response){
-			menuServiceObj.menus = {};
-			convertMenusResponseToMap(response.data);
 			var menus = menuServiceObj.menus;
+			menus = {};
+			menuServiceObj.menus = menus;
+			
+			convertMenusResponseToMap(response.data);
+			menus = menuServiceObj.menus;
 			menus = JSON.stringify(menus);
 			localStorage.setItem('Menus', menus);
+			
 			deferred.resolve(response);
 		}
 		
@@ -164,11 +168,15 @@ function menuService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchMenuSuccessCallback(response){
-			menuServiceObj.menu = {};
-			convertMenuResponseToMap(response.data);
 			var menu = menuServiceObj.menu;
+			menu = {};
+			menuServiceObj.menu = menu;
+			
+			convertMenuResponseToMap(response.data);
+			menu = menuServiceObj.menu;
 			menu = JSON.stringify(menu);
 			localStorage.setItem('Menu', menu);
+			
 			deferred.resolve(response);
 		}
 		

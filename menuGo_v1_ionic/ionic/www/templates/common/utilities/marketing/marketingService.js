@@ -149,11 +149,15 @@ function marketingService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchAdvertisementsSuccessCallback(response){
-			marketingServiceObj.advertisements = {};
-			convertAdvertisementsResponseToMap(response.data);
 			var advertisements = marketingServiceObj.advertisements;
+			advertisements = {};
+			marketingServiceObj.advertisements = advertisements;
+			
+			convertAdvertisementsResponseToMap(response.data);
+			advertisements = marketingServiceObj.advertisements;
 			advertisements = JSON.stringify(advertisements);
 			localStorage.setItem('Advertisements', advertisements);
+			
 			deferred.resolve(response);
 		}
 		
@@ -210,11 +214,15 @@ function marketingService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchAdvertisementSuccessCallback(response){
-			marketingServiceObj.advertisement = {};
-			convertAdvertisementResponseToMap(response.data);
 			var advertisement = marketingServiceObj.advertisement;
+			advertisement = {};
+			marketingServiceObj.advertisement = advertisement;
+			
+			convertAdvertisementResponseToMap(response.data);
+			advertisement = marketingServiceObj.advertisement;
 			advertisement = JSON.stringify(advertisement);
 			localStorage.setItem('Advertisement', advertisement);
+			
 			deferred.resolve(response);
 		}
 		
@@ -365,11 +373,15 @@ function marketingService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBlogsSuccessCallback(response){
-			marketingServiceObj.blogs = {};
+			var blogs = marketingServiceObj.blogs;
+			blogs = {};
+			marketingServiceObj.blogs = blogs;
+			
 			convertBlogsResponseToMap(response.data);
-			var blogs  = marketingServiceObj.blogs;
+			blogs  = marketingServiceObj.blogs;
 			blogs = JSON.stringify(blogs);
 			localStorage.setItem('Blogs', blogs);
+			
 			deferred.resolve(response);
 		}
 		
@@ -426,11 +438,15 @@ function marketingService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBlogSuccessCallback(response){
-			marketingServiceObj.blog = {};
-			convertBlogResponseToMap(response.data);
 			var blog = marketingServiceObj.blog;
+			blog = {};
+			marketingServiceObj.blog = blog;
+			
+			convertBlogResponseToMap(response.data);
+			blog = marketingServiceObj.blog;
 			blog = JSON.stringify(blog);
 			localStorage.setItem('Blog', blog);
+			
 			deferred.resolve(response);
 		}
 		
