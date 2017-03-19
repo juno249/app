@@ -1,7 +1,10 @@
+<!--  *************** 
+		home (start)
+		*************** -->
 <ion-view 
-	id="Home" 
-	name="Home" 
-	view-title="Home">
+	id="home" 
+	name="home" 
+	view-title="home">
 	<ion-content 
 		class="has-header">
 		<div 
@@ -23,12 +26,18 @@
 							<i 
 								class="icon ion-ios-search">
 							</i>
+							<!--  *************** 
+									search (start)
+									*************** -->
 							<input 
 								class="fill-parent-x font-family-2-size-medium" 
 								id="search" 
 								name="search" 
 								placeholder="Search" 
 								type="text">
+							<!--  *************** 
+									search (end)
+									*************** -->
 						</label>
 					</div>
 				</div>
@@ -40,19 +49,33 @@
 					class="child-content-center container-header font-family-1-size-medium">
 					<b>ADVERTISEMENTS</b>
 				</div>
+				<!--  *************** 
+						advertisements-slidebox (start)
+						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
+					delegate-handle="advertisements-slidebox" 
 					does-continue="true" 
 					id="advertisements-slidebox" 
 					name="advertisements-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.advertisements">
+						<!--  *************** 
+								advertisements-title-container (start)
+								*************** -->
 						<div 
 							class="child-content-center font-family-2-size-small" 
 							id="advertisements-title-container" 
 							name="advertisements-title-container">
 							{{k.advertisement_title}}
 						</div>
+						<!--  *************** 
+								advertisements-title-container (end)
+								*************** -->
+								
+						<!--  *************** 
+								advertisements-image-container (start)
+								*************** -->
 						<div 
 							class="child-content-center" 
 							id="advertisements-image-container" 
@@ -60,14 +83,27 @@
 							<img 
 								src={{k.advertisement_image}}>
 						</div>
+						<!--  *************** 
+								advertisements-image-container (end)
+								*************** -->
+								
+						<!--  *************** 
+								advertisements-price-container (start)
+								*************** -->
 						<div 
 							class="child-content-center font-family-2-size-small" 
 							id="advertisements-price-container" 
 							name="advertisements-price-container">
 							{{k.advertisement_price}}
 						</div>
+						<!--  *************** 
+								advertisements-price-container (end)
+								*************** -->
 					</ion-slide>
 				</ion-slide-box>
+				<!--  *************** 
+						advertisements-slidebox (end)
+						*************** -->
 			</div>
 			
 			<div 
@@ -76,19 +112,33 @@
 					class="child-content-center container-header font-family-1-size-medium">
 					<b>BLOGS</b>
 				</div>
+				<!--  *************** 
+						blogs-slidebox (start)
+						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
+					delegate-handle="blogs-slidebox" 
 					does-continue="true" 
 					id="blogs-slidebox" 
 					name="blogs-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.blogs">
+						<!--  *************** 
+								blogs-title-container (start)
+								*************** -->
 						<div 
 							class="child-content-center font-family-2-size-small" 
 							id="blogs-title-container" 
 							name=blogs-title-container>
 							{{k.blog_title}}
 						</div>
+						<!--  *************** 
+								blogs-title-container (end)
+								*************** -->
+								
+						<!--  *************** 
+								blogs-image-container (start)
+								*************** -->
 						<div 
 							class="child-content-center" 
 							id="blogs-image-container" 
@@ -96,9 +146,18 @@
 							<img 
 								src={{k.blog_image}}>
 						</div>
+						<!--  *************** 
+								blogs-image-container (end)
+								*************** -->
 					</ion-slide>
 				</ion-slide-box>
+				<!--  *************** 
+						blogs-slidebox (end)
+						*************** -->
 			</div>
 		</div>
 	</ion-content>
 </ion-view>
+<!--  *************** 
+		home (end)
+		*************** -->
