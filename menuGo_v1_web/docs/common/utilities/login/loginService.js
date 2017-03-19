@@ -128,7 +128,7 @@ function loginService(
 					
 					responseData = responseData[0];
 					user.company = responseData.company_name;
-					user.branch_id = responseData.branch_id;
+					user.branch = responseData.branch_id;
 					user.isAuthenticated = true;
 					
 					user = JSON.stringify(user);
