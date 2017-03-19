@@ -32,37 +32,37 @@ function marketingService(
 	 * Service Return Object (Start)
 	 * ****************************** */
 	var marketingServiceObj = {
-			restaurantAds: {}, 
-			restaurantAd: {}, 
-			foodBlogs: {}, 
-			foodBlog: {}, 
-			restaurantAdId: undefined, 
-			foodBlogId: undefined, 
+			advertisements: {}, 
+			advertisement: {}, 
+			blogs: {}, 
+			blog: {}, 
+			advertisementId: undefined, 
+			blogId: undefined, 
 			companyName: undefined, 
-			getRestaurantAds: getRestaurantAds, 
-			getRestaurantAd: getRestaurantAd, 
-			getFoodBlogs: getFoodBlogs, 
-			getFoodBlog: getFoodBlog, 
-			getRestaurantAdId: getRestaurantAdId, 
-			getFoodBlogId: getFoodBlogId, 
+			getAdvertisements: getAdvertisements, 
+			getAdvertisement: getAdvertisement, 
+			getBlogs: getBlogs, 
+			getBlog: getBlog, 
+			getAdvertisementId: getAdvertisementId, 
+			getBlogId: getBlogId, 
 			getCompanyName: getCompanyName, 
-			setRestaurantAds: setRestaurantAds, 
-			setRestaurantAd: setRestaurantAd, 
-			setFoodBlogs: setFoodBlogs, 
-			setFoodBlog: setFoodBlog, 
-			setRestaurantAdId: setRestaurantAdId, 
-			setFoodBlogId: setFoodBlogId, 
+			setAdvertisements: setAdvertisements, 
+			setAdvertisement: setAdvertisement, 
+			setBlogs: setBlogs, 
+			setBlog: setBlog, 
+			setAdvertisementId: setAdvertisementId, 
+			setBlogId: setBlogId, 
 			setCompanyName: setCompanyName, 
-			fetchRestaurantAds: fetchRestaurantAds, 
-			fetchRestaurantAd: fetchRestaurantAd, 
-			addRestaurantAd: addRestaurantAd, 
-			updateRestaurantAd: updateRestaurantAd, 
-			deleteRestaurantAd: deleteRestaurantAd, 
-			fetchFoodBlogs: fetchFoodBlogs, 
-			fetchFoodBlog: fetchFoodBlog, 
-			addFoodBlog: addFoodBlog, 
-			updateFoodBlog: updateFoodBlog, 
-			deleteFoodBlog: deleteFoodBlog
+			fetchAdvertisements: fetchAdvertisements, 
+			fetchAdvertisement: fetchAdvertisement, 
+			addAdvertisement: addAdvertisement, 
+			updateAdvertisement: updateAdvertisement, 
+			deleteAdvertisement: deleteAdvertisement, 
+			fetchBlogs: fetchBlogs, 
+			fetchBlog: fetchBlog, 
+			addBlog: addBlog, 
+			updateBlog: updateBlog, 
+			deleteBlog: deleteBlog
 	}
 	/* ******************************
 	 * Service Return Object (End)
@@ -71,56 +71,56 @@ function marketingService(
 	/* ******************************
 	 * Accessors: Getters & Setters (Start)
 	 * ****************************** */
-	function getRestaurantAds(){
-		return marketingServiceObj.restaurantAds;
+	function getAdvertisements(){
+		return marketingServiceObj.advertisements;
 	}
 	
-	function getRestaurantAd(){
-		return marketingServiceObj.restaurantAd;
+	function getAdvertisement(){
+		return marketingServiceObj.advertisement;
 	}
 	
-	function getFoodBlogs(){
-		return marketingServiceObj.foodBlogs;
+	function getBlogs(){
+		return marketingServiceObj.blogs;
 	}
 	
-	function getFoodBlog(){
-		return marketingServiceObj.foodBlog;
+	function getBlog(){
+		return marketingServiceObj.blog;
 	}
 	
-	function getRestaurantAdId(){
-		return marketingServiceObj.restaurantAdId;
+	function getAdvertisementId(){
+		return marketingServiceObj.advertisementId;
 	}
 	
-	function getFoodBlogId(){
-		return marketingServiceObj.foodBlogId;
+	function getBlogId(){
+		return marketingServiceObj.blogId;
 	}
 	
 	function getCompanyName(){
 		return marketingServiceObj.companyName;
 	}
 	
-	function setRestaurantAds(restaurantAds){
-		marketingServiceObj.restaurantAds = restaurantAds;
+	function setAdvertisements(advertisements){
+		marketingServiceObj.advertisements = advertisements;
 	}
 	
-	function setRestaurantAd(restaurantAd){
-		marketingServiceObj.restaurantAd = restaurantAd;
+	function setAdvertisement(advertisement){
+		marketingServiceObj.advertisement = advertisement;
 	}
 	
-	function setFoodBlogs(foodBlogs){
-		marketingServiceObj.foodBlogs = foodBlogs;
+	function setBlogs(blogs){
+		marketingServiceObj.blogs = blogs;
 	}
 	
-	function setFoodBlog(foodBlog){
-		marketingServiceObj.foodBlog = foodBlog;
+	function setBlog(blog){
+		marketingServiceObj.blog = blog;
 	}
 	
-	function setRestaurantAdId(restaurantAdId){
-		marketingServiceObj.restaurantAdId = restaurantAdId;
+	function setAdvertisementId(advertisementId){
+		marketingServiceObj.advertisementId = advertisementId;
 	}
 	
-	function setFoodBlogId(foodBlogId){
-		marketingServiceObj.foodBlogId = foodBlogId;
+	function setBlogId(blogId){
+		marketingServiceObj.blogId = blogId;
 	}
 	
 	function setCompanyName(companyName){
@@ -132,32 +132,32 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchRestaurantAds()
-	 * purpose: fetch restaurant ads from server
+	 * method name: fetchAdvertisements()
+	 * purpose: fetch advertisements from server
 	 * ****************************** */
-	function fetchRestaurantAds(){
+	function fetchAdvertisements(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/ads'
+				url: API_BASE_URL + '/advertisements'
 		}
 		$http(httpConfig)
-		.then(fetchRestaurantAdsSuccessCallback)
-		.catch(fetchRestaurantAdsFailedCallback);
+		.then(fetchAdvertisementsSuccessCallback)
+		.catch(fetchAdvertisementsFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function fetchRestaurantAdsSuccessCallback(response){
-			marketingServiceObj.restaurantAds = {};
-			convertRestaurantAdsResponseToMap(response.data);
-			var restaurantAds = marketingServiceObj.restaurantAds;
-			restaurantAds = JSON.stringify(restaurantAds);
-			localStorage.setItem('Restaurant_Ads', restaurantAds);
+		function fetchAdvertisementsSuccessCallback(response){
+			marketingServiceObj.advertisements = {};
+			convertAdvertisementsResponseToMap(response.data);
+			var advertisements = marketingServiceObj.advertisements;
+			advertisements = JSON.stringify(advertisements);
+			localStorage.setItem('Advertisements', advertisements);
 			deferred.resolve(response);
 		}
 		
-		function fetchRestaurantAdsFailedCallback(responseError){
+		function fetchAdvertisementsFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -166,26 +166,26 @@ function marketingService(
 		
 		/* ******************************
 		 * Method Implementation
-		 * method name: convertRestaurantAdsResponseToMap()
+		 * method name: convertAdvertisementsResponseToMap()
 		 * purpose: convert http response to a map
 		 * ****************************** */
-		function convertRestaurantAdsResponseToMap(responseData){
+		function convertAdvertisementsResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var restaurantAdsKey = ADVERTISEMENTS_DB_FIELDS[0] //advertisement_id
-			var restaurantAdsDetails;
+			var advertisementsKey = ADVERTISEMENTS_DB_FIELDS[0] //advertisement_id
+			var advertisementsDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
-				var restaurantAdsRunner = responseData[i];
-				var restaurantAdsDBFieldCount = Object.keys(ADVERTISEMENTS_DB_FIELDS).length;
-				var restaurantAdsDBFieldRunner = null;
-				restaurantAdsDetails = {};
+				var advertisementsRunner = responseData[i];
+				var advertisementsDBFieldCount = Object.keys(ADVERTISEMENTS_DB_FIELDS).length;
+				var advertisementsDBFieldRunner = null;
+				advertisementsDetails = {};
 				
-				for(var j=0; j<restaurantAdsDBFieldCount; j++){
-					restaurantAdsDBFieldRunner = ADVERTISEMENTS_DB_FIELDS[j];
-					restaurantAdsDetails[restaurantAdsDBFieldRunner] = restaurantAdsRunner[restaurantAdsDBFieldRunner];
+				for(var j=0; j<advertisementsDBFieldCount; j++){
+					advertisementsDBFieldRunner = ADVERTISEMENTS_DB_FIELDS[j];
+					advertisementsDetails[advertisementsDBFieldRunner] = advertisementsRunner[advertisementsDBFieldRunner];
 				}
-				var restaurantAdsKeyValue = restaurantAdsRunner[restaurantAdsKey];
-				marketingServiceObj.restaurantAds[restaurantAdsKeyValue] = restaurantAdsDetails;
+				var advertisementsKeyValue = advertisementsRunner[advertisementsKey];
+				marketingServiceObj.advertisements[advertisementsKeyValue] = advertisementsDetails;
 			}
 		}
 		return deferred.promise;
@@ -193,32 +193,32 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchRestaurantAd()
-	 * purpose: fetch restaurant ad from server
+	 * method name: fetchAdvertisement()
+	 * purpose: fetch advertisement from server
 	 * ****************************** */
-	function fetchRestaurantAd(){
+	function fetchAdvertisement(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/ads/' + marketingServiceObj.restaurantAdId
+				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId
 		}
 		$http(httpConfig)
-		.then(fetchRestaurantAdSuccessCallback)
-		.catch(fetchRestaurantAdFailedCallback);
+		.then(fetchAdvertisementSuccessCallback)
+		.catch(fetchAdvertisementFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function fetchRestaurantAdSuccessCallback(response){
-			marketingServiceObj.restaurantAd = {};
-			convertRestaurantAdResponseToMap(response.data);
-			var restaurantAd = marketingServiceObj.restaurantAd;
-			restaurantAd = JSON.stringify(restaurantAd);
-			localStorage.setItem('Restaurant_Ad', restaurantAd);
+		function fetchAdvertisementSuccessCallback(response){
+			marketingServiceObj.advertisement = {};
+			convertAdvertisementResponseToMap(response.data);
+			var advertisement = marketingServiceObj.advertisement;
+			advertisement = JSON.stringify(advertisement);
+			localStorage.setItem('Advertisement', advertisement);
 			deferred.resolve(response);
 		}
 		
-		function fetchRestaurantAdFailedCallback(responseError){
+		function fetchAdvertisementFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -227,54 +227,54 @@ function marketingService(
 		
 		/* ******************************
 		 * Method Implementation
-		 * method name: convertRestaurantAdResponseToMap()
+		 * method name: convertAdvertisementResponseToMap()
 		 * purpose: convert http response to a map
 		 * ****************************** */
-		function convertRestaurantAdResponseToMap(responseData){
+		function convertAdvertisementResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var restaurantAdKey = ADVERTISEMENTS_DB_FIELDS[0]; //advertisement_id
-			var restaurantAdDetails;
+			var advertisementKey = ADVERTISEMENTS_DB_FIELDS[0]; //advertisement_id
+			var advertisementDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
-				var restaurantAdRunner = responseData[i];
-				var restaurantAdDBFieldCount = Object.keys(ADVERTISEMENTS_DB_FIELDS).length;
-				var restaurantAdDBFieldRunner = null;
-				var restaurantAdDetails = {};
+				var advertisementRunner = responseData[i];
+				var advertisementFieldCount = Object.keys(ADVERTISEMENTS_DB_FIELDS).length;
+				var advertisementFieldRunner = null;
+				var advertisementDetails = {};
 				
-				for(var j=0; j<restaurantAdDBFieldCount; j++){
-					restaurantAdDBFieldRunner = ADVERTISEMENTS_DB_FIELDS[j];
-					restaurantAdDetails[restaurantAdDBFieldRunner] = restaurantAdRunner[restaurantAdDBFieldRunner];
+				for(var j=0; j<advertisementDBFieldCount; j++){
+					advertisementDBFieldRunner = ADVERTISEMENTS_DB_FIELDS[j];
+					advertisementDetails[advertisementDBFieldRunner] = advertisementRunner[advertisementDBFieldRunner];
 				}
-				var restaurantAdKeyValue = restaurantAdRunner[restaurantAdKey];
-				marketingServiceObj.restaurantAd[restaurantAdKeyValue] = restaurantAdDetails;
+				var advertisementKeyValue = advertisementRunner[advertisementKey];
+				marketingServiceObj.advertisement[advertisementKeyValue] = advertisementDetails;
 			}
 		}
 	}
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: addRestaurantAd()
-	 * purpose: adds restaurantAd
+	 * method name: addAdvertisement()
+	 * purpose: adds advertisement
 	 * ****************************** */
-	function addRestaurantAd(restaurnatAd){
+	function addAdvertisement(advertisements){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/ads', 
-				data: restaurantAd
+				url: API_BASE_URL + '/advertisements', 
+				data: advertisements
 		}
 		$http(httpConfig)
-		.then(addRestaurantAdSuccessCallback)
-		.catch(addRestaurantAdFailedCallback);
+		.then(addAdvertisementSuccessCallback)
+		.catch(addAdvertisementFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function addRestaurantAdSuccessCallback(response){
+		function addAdvertisementSuccessCallback(response){
 			deferred.resolve(response);
 		}
 		
-		function addRestaurantAdFailedCallback(responseError){
+		function addAdvertisementFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -285,28 +285,28 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: updateRestaurantAd()
-	 * purpose: updates restaurantAd
+	 * method name: updateAdvertisement()
+	 * purpose: updates advertisement
 	 * ****************************** */
-	function updateRestaurantAd(restaurantAd){
+	function updateAdvertisement(advertisement){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/ads/' + marketingServiceObj.restaurantAdId, 
-				data: restaurantAd
+				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId, 
+				data: advertisement
 		}
 		$http(httpConfig)
-		.then(updateRestaurantAdSuccessCallback)
-		.catch(updateRestaurantAdFailedCallback);
+		.then(updateAdvertisementSuccessCallback)
+		.catch(updateAdvertisementFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function updateRestaurantAdSuccessCallback(response){
+		function updateAdvertisementSuccessCallback(response){
 			deferred.resolve(response);
 		}
 		
-		function updateRestaurantAdFailedCallback(responseError){
+		function updateAdvertisementFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -317,27 +317,27 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: deleteRestaurantAd()
-	 * purpose: deletes restaurantAd
+	 * method name: deleteAdvertisement()
+	 * purpose: deletes advertisement
 	 * ****************************** */
-	function deleteRestaurantAd(){
+	function deleteAdvertisement(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/ads/' + marketingServiceObj.restaurantAdId
+				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId
 		}
 		$http(httpConfig)
-		.then(deleteRestaurantAdSuccessCallback)
-		.catch(deleteRestaurantAdFailedCallback);
+		.then(deleteAdvertisementSuccessCallback)
+		.catch(deleteAdvertisementFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function deleteRestaurantAdSuccessCallback(response){
+		function deleteAdvertisementSuccessCallback(response){
 			deferred.resolve(response);
 		}
 		
-		function deleteRestaurantAdFailedCallback(responseError){
+		function deleteAdvertisementFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -348,32 +348,32 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchFoodBlogs()
-	 * purpose: fetch food blogs from server
+	 * method name: fetchBlogs()
+	 * purpose: fetch blogs from server
 	 * ****************************** */
-	function fetchFoodBlogs(){
+	function fetchBlogs(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/blogs'
 		}
 		$http(httpConfig)
-		.then(fetchFoodBlogsSuccessCallback)
-		.catch(fetchFoodBlogsFailedCallback);
+		.then(fetchBlogsSuccessCallback)
+		.catch(fetchBlogsFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function fetchFoodBlogsSuccessCallback(response){
-			marketingServiceObj.foodBlogs = {};
-			convertFoodBlogsResponseToMap(response.data);
-			var foodBlogs  = marketingServiceObj.foodBlogs;
-			foodBlogs = JSON.stringify(foodBlogs);
-			localStorage.setItem('Food_Blogs', foodBlogs);
+		function fetchBlogsSuccessCallback(response){
+			marketingServiceObj.blogs = {};
+			convertBlogsResponseToMap(response.data);
+			var blogs  = marketingServiceObj.blogs;
+			blogs = JSON.stringify(blogs);
+			localStorage.setItem('Blogs', blogs);
 			deferred.resolve(response);
 		}
 		
-		function fetchFoodBlogsFailedCallback(responseError){
+		function fetchBlogsFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -382,26 +382,26 @@ function marketingService(
 		
 		/* ******************************
 		 * Method Implementation
-		 * method name: convertFoodBlogsResponseToMap()
+		 * method name: convertBlogsResponseToMap()
 		 * purpose: convert http response to a map
 		 * ****************************** */
-		function convertFoodBlogsResponseToMap(responseData){
+		function convertBlogsResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var foodBlogsKey = BLOGS_DB_FIELDS[0]; //blog_id
-			var foodBlogsDetails;
+			var blogsKey = BLOGS_DB_FIELDS[0]; //blog_id
+			var blogsDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
-				var foodBlogsRunner = responseData[i];
-				var foodBlogsDBFieldCount = Object.keys(BLOGS_DB_FIELDS).length;
-				var foodBlogsDBFieldRunner = null;
-				foodBlogsDetails = {};
+				var blogsRunner = responseData[i];
+				var blogsDBFieldCount = Object.keys(BLOGS_DB_FIELDS).length;
+				var blogsDBFieldRunner = null;
+				blogsDetails = {};
 				
-				for(var j=0; j<foodBlogsDBFieldCount; j++){
-					foodBlogsDBFieldRunner = BLOGS_DB_FIELDS[j];
-					foodBlogsDetails[foodBlogsDBFieldRunner] = foodBlogsRunner[foodBlogsDBFieldRunner];
+				for(var j=0; j<blogsDBFieldCount; j++){
+					blogsDBFieldRunner = BLOGS_DB_FIELDS[j];
+					blogsDetails[blogsDBFieldRunner] = blogsRunner[blogsDBFieldRunner];
 				}
-				var foodBlogsKeyValue = foodBlogsRunner[foodBlogsKey];
-				marketingServiceObj.foodBlogs[foodBlogsKeyValue] = foodBlogsDetails;
+				var blogsKeyValue = blogsRunner[blogsKey];
+				marketingServiceObj.blogs[blogsKeyValue] = blogsDetails;
 			}
 		}
 		return deferred.promise;
@@ -409,32 +409,32 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchFoodBlog()
-	 * purpose: fetch food blog from server
+	 * method name: fetchBlog()
+	 * purpose: fetch blog from server
 	 * ****************************** */
-	function fetchFoodBlog(){
+	function fetchBlog(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
-				url: API_BASE_URL + '/blogs/' + marketingServiceObj.foodBlogId
+				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId
 		}
 		$http(httpConfig)
-		.then(fetchFoodBlogSuccessCallback)
-		.catch(fetchFoodBlogFailedCallback);
+		.then(fetchBlogSuccessCallback)
+		.catch(fetchBlogFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function fetchFoodBlogSuccessCallback(response){
-			marketingServiceObj.foodBlog = {};
-			convertFoodBlogResponseToMap(response.data);
-			var foodBlog = marketingServiceObj.foodBlog;
-			foodBlog = JSON.stringify(foodBlog);
-			localStorage.setItem('Food_Blog', foodBlog);
+		function fetchBlogSuccessCallback(response){
+			marketingServiceObj.blog = {};
+			convertBlogResponseToMap(response.data);
+			var blog = marketingServiceObj.blog;
+			blog = JSON.stringify(blog);
+			localStorage.setItem('Blog', blog);
 			deferred.resolve(response);
 		}
 		
-		function fetchFoodBlogFailedCallback(responseError){
+		function fetchBlogFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -443,26 +443,26 @@ function marketingService(
 		
 		/* ******************************
 		 * Method Implementation
-		 * method name: convertFoodBlogResponseToMap()
+		 * method name: convertBlogResponseToMap()
 		 * purpose: convert http response to a map
 		 * ****************************** */
-		function convertFoodBlogResponseToMap(responseData){
+		function convertBlogResponseToMap(responseData){
 			var responseDataLength = responseData.length;
-			var foodBlogKey = BLOGS_DB_FIELDS[0]; //blog_id
-			var foodBlogDetails;
+			var blogKey = BLOGS_DB_FIELDS[0]; //blog_id
+			var blogDetails;
 			
 			for(var i=0; i<responseDataLength; i++){
-				var foodBlogRunner = responseData[i];
-				var foodBlogDBFieldCount = Object.keys(BLOGS_DB_FIELDS).length;
-				var foodBlogDBFieldRunner = null;
-				foodBlogDetails = {};
+				var blogRunner = responseData[i];
+				var blogDBFieldCount = Object.keys(BLOGS_DB_FIELDS).length;
+				var blogDBFieldRunner = null;
+				blogDetails = {};
 				
-				for(var j=0; j<foodBlogDBFieldCount; j++){
-					foodBlogDBFieldRunner = BLOGS_DB_FIELDS[j];
-					foodBlogDetails[foodBlogDBFieldRunner] = foodBlogRunner[foodBlogDBFieldRunner];
+				for(var j=0; j<blogDBFieldCount; j++){
+					blogDBFieldRunner = BLOGS_DB_FIELDS[j];
+					blogDetails[blogDBFieldRunner] = blogRunner[blogDBFieldRunner];
 				}
-				var foodBlogKeyValue = foodBlogRunner[foodBlogKey];
-				marketingServiceObj.foodBlog[foodBlogKeyValue] = foodBlogDetails;
+				var blogKeyValue = blogRunner[blogKey];
+				marketingServiceObj.blog[blogKeyValue] = blogDetails;
 			}
 		}
 		return deferred.promise;
@@ -470,28 +470,28 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: addFoodBlog()
-	 * purpose: adds food blog
+	 * method name: addBlog()
+	 * purpose: adds blog
 	 * ****************************** */
-	function addFoodBlog(foodBlog){
+	function addBlog(blogs){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/blogs', 
-				data: foodBlog
+				data: blogs
 		}
 		$http(httpConfig)
-		.then(addFoodBlogSuccessCallback)
-		.catch(addFoodBlogFailedCallback);
+		.then(addBlogSuccessCallback)
+		.catch(addBlogFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function addFoodBlogSuccessCallback(response){
+		function addBlogSuccessCallback(response){
 			deferred.resolve(response);
 		}
 		
-		function addFoodBlogFailedCallback(responseError){
+		function addBlogFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -502,28 +502,28 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: updateFoodBlog()
-	 * purpose: updates food blog
+	 * method name: updateBlog()
+	 * purpose: updates blog
 	 * ****************************** */
-	function updateFoodBlog(foodBlog){
+	function updateBlog(blog){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/blogs/' + marketingServiceObj.foodBlogId, 
-				data: foodBlog
+				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId, 
+				data: blog
 		}
 		$http(httpConfig)
-		.then(updateFoodBlogSuccessCallback)
-		.catch(updateFoodBlogFailedCallback);
+		.then(updateBlogSuccessCallback)
+		.catch(updateBlogFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function updateFoodBlogSuccessCallback(response){
+		function updateBlogSuccessCallback(response){
 			deferred.resolve(response);
 		}
 		
-		function updateFoodBlogFailedCallback(responseError){
+		function updateBlogFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************
@@ -534,27 +534,27 @@ function marketingService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: deleteFoodBlog()
-	 * purpose: deletes food blog
+	 * method name: deleteBlog()
+	 * purpose: deletes blog
 	 * ****************************** */
-	function deleteFoodBlog(foodBlog){
+	function deleteBlog(blog){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/blogs/' + marketingServiceObj.foodBlogId
+				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId
 		}
 		$http(httpConfig)
-		.then(deleteFoodBlogSuccessCallback)
-		.catch(deleteFoodBlogFailedCallback);
+		.then(deleteBlogSuccessCallback)
+		.catch(deleteBlogFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function deleteFoodBlogSuccessCallback(response){
+		function deleteBlogSuccessCallback(response){
 			deferred.resolve(response);
 		}
 		
-		function deleteFoodBlogFailedCallback(responseError){
+		function deleteBlogFailedCallback(responseError){
 			deferred.reject(responseError);
 		}
 		/* ******************************

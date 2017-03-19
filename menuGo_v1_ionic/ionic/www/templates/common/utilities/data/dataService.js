@@ -49,8 +49,8 @@ function dataService(
 			setRestaurantAds: setRestaurantAds, 
 			setFoodBlogs: setFoodBlogs, 
 			fetchCompanies: fetchCompanies, 
-			fetchRestaurantAds: fetchRestaurantAds, 
-			fetchFoodBlogs: fetchFoodBlogs
+			fetchAdvertisements: fetchAdvertisements, 
+			fetchBlogs: fetchBlogs
 	}
 	
 	/* ******************************
@@ -267,22 +267,22 @@ function dataService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchRestaurantAds()
-	 * purpose: fetch restaurant ads from server
+	 * method name: fetchAdvertisements()
+	 * purpose: fetch advertisements from server
 	 * ****************************** */
-	function fetchRestaurantAds(){
-		marketingService.fetchRestaurantAds()
-		.then(fetchRestaurantAdsSuccessCallback)
-		.catch(fetchRestaurantAdsFailedCallback);
+	function fetchAdvertisements(){
+		marketingService.fetchAdvertisements()
+		.then(fetchAdvertisementsSuccessCallback)
+		.catch(fetchAdvertisementsFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function fetchRestaurantAdsSuccessCallback(response){
+		function fetchAdvertisementsSuccessCallback(response){
 			//do something on success
 		}
 		
-		function fetchRestaurantAdsFailedCallback(responseError){
+		function fetchAdvertisementsFailedCallback(responseError){
 			//do something on failure
 		}
 		/* ******************************
@@ -292,22 +292,22 @@ function dataService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchFoodBlogs()
-	 * purpose: fetch food blogs from server
+	 * method name: fetchBlogs()
+	 * purpose: fetch blogs from server
 	 * ****************************** */
-	function fetchFoodBlogs(){
-		marketingService.fetchFoodBlogs()
-		.then(fetchFoodBlogsSuccessCallback)
-		.catch(fetchFoodBlogsFailedCallback);
+	function fetchBlogs(){
+		marketingService.fetchBlogs()
+		.then(fetchBlogsSuccessCallback)
+		.catch(fetchBlogsFailedCallback);
 		
 		/* ******************************
 		 * Callback Implementations (Start)
 		 * ****************************** */
-		function fetchFoodBlogsSuccessCallback(response){
+		function fetchBlogsSuccessCallback(response){
 			//do something on success
 		}
 		
-		function fetchFoodBlogsFailedCallback(responseError){
+		function fetchBlogsFailedCallback(responseError){
 			//do something on failure
 		}
 		/* ******************************
