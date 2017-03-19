@@ -1,5 +1,5 @@
 ion-view#login{
-	background-color: #add8e6;
+	background-color: #ff5d5d;
 	
 	padding-top: 50px;
 }
@@ -27,8 +27,8 @@ div.login-container div.company-logo-image-container img{
 }
 
 div.login-container div.login-form-container{
-	border-bottom-left-radius: 25px;
-	border-top-right-radius: 25px;
+	border-bottom-left-radius: 35px;
+	border-top-right-radius: 35px;
 	
 	padding-top: 20px;
 	padding-bottom: 20px;
