@@ -1,3 +1,6 @@
+<!--  *************** 
+		login (start)
+		*************** -->
 <ion-view 
 	id="login" 
 	name="login">
@@ -20,6 +23,9 @@
 						<i 
 							class="icon ion-person">
 						</i>
+						<!--  *************** 
+								loginUsername (start)
+								*************** -->
 						<input 
 							class="fill-parent-x font-family-2-size-medium login-username"
 							id="loginUsername" 
@@ -27,6 +33,9 @@
 							ng-model="loginController.loginUsername" 
 							placeholder="Username" 
 							type="text">
+						<!--  *************** 
+								loginUsername (end)
+								*************** -->
 					</label>
 				</div>
 				<div 
@@ -36,6 +45,9 @@
 						<i 
 							class="icon ion-lock-combination">
 						</i>
+						<!--  *************** 
+								loginPassword (start)
+								*************** -->
 						<input 
 							class="font-family-2-size-medium fill-parent-x login-password" 
 							id="loginPassword" 
@@ -43,6 +55,9 @@
 							ng-model="loginController.loginPassword" 
 							placeholder="Password" 
 							type="password">
+						<!--  *************** 
+								loginPassword (end)
+								*************** -->
 					</label>
 				</div>
 				<div 
@@ -52,6 +67,7 @@
 						<div 
 							class="col">
 							<button 
+								ng-click="loginController.doLogin();"
 								class="button button-small button-positive fill-parent-x font-family-3-size-medium">
 								Sign in
 							</button>
@@ -69,3 +85,6 @@
 		</div>
 	</div>
 </ion-view>
+<!--  *************** 
+		login (end)
+		*************** -->

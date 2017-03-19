@@ -6,6 +6,8 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 loginController.$inject = [
+	'USER_ROLES', 
+	'$state', 
 	'loginService'
 ];
 /* ******************************
@@ -16,6 +18,8 @@ loginController.$inject = [
  * Controller Implementation (Start)
  * ****************************** */
 function loginController(
+		USER_ROLES, 
+		$state, 
 		loginService
 ){
 	/* ******************************
@@ -67,6 +71,14 @@ function loginController(
 		function doLoginSuccessCallback(response){
 			var user = localStorage.getItem('User');
 			user = JSON.parse(user);
+			
+			if(USER_ROLES.customer == user.role){
+				$state.go(
+					'customer.home', 
+					{}, 
+					{reload: true}
+				);
+			}
 		}
 		
 		function doLoginFailedCallback(responseError){
