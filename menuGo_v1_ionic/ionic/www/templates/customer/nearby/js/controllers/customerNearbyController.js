@@ -31,7 +31,7 @@ function customerNearbyController(
 		dataService, 
 		geolocationService, 
 		googleplacesService
-){
+	){
 	const COMPANIES_KEY = 'Companies';
 	/* ******************************
 	 * Controller Binded Data (Start)
@@ -65,12 +65,16 @@ function customerNearbyController(
 	vm.companiesMenuitems = undefined;
 	vm.companiesCategoriesSelection = undefined;
 	vm.placePredictions = undefined;
-	if(!(null == vm.stateParams.category) || !(0 == vm.stateParams.category.trim().length)){
+	if(
+			!(null == vm.stateParams.category) || 
+			!(0 == vm.stateParams.category.trim().length)
+		){
 		vm.category = vm.stateParams.category;
 	} else {
 		vm.category = new String('');
 	}
 	vm.search = undefined;
+	vm.companyBranch = undefined;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -80,6 +84,7 @@ function customerNearbyController(
 	 * ****************************** */
 	vm.initializeMapCoordinates = initializeMapCoordinates;
 	vm.setCategory = setCategory;
+	vm.toStringAddress = toStringAddress;
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
@@ -128,6 +133,17 @@ function customerNearbyController(
 		category = arg_category;
 		
 		vm.category = category;
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: toStringAddress()
+	 * purpose: returns an address string
+	 * ****************************** */
+	function toStringAddress(branch){
+		branchService.setBranch(branch);
+		
+		return branchService.toStringAddress();
 	}
 	
 	/* ******************************
@@ -208,7 +224,10 @@ function customerNearbyController(
 			function(){
 				return localStorage.getItem(COMPANIES_KEY);
 			}, 
-			function(nVal, oVal){
+			function(
+					nVal, 
+					oVal
+				){
 				var companies = vm.companies;
 				
 				companies = localStorage.getItem(COMPANIES_KEY);
@@ -233,7 +252,10 @@ function customerNearbyController(
 			function(){
 				return vm.search;
 			}, 
-			function(nVal, oVal){
+			function(
+					nVal, 
+					oVal
+				){
 				var companies = vm.companies;
 				var companiesNames = '';
 				var search = nVal;

@@ -19,7 +19,7 @@ mqttService.$inject = [
 function mqttService(
 		MQTT_CONFIG, 
 		loginService
-){
+	){
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */

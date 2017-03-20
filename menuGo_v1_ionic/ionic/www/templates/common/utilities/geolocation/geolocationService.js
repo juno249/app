@@ -19,7 +19,7 @@ geolocationService.$inject = [
 function geolocationService(
 		$cordovaGeolocation, 
 		$q
-){
+	){
 	const CONF_TIMEOUT = 10000;
 	const CONF_ENABLE_HIGH_ACCURACY = false;
 	

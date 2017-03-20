@@ -21,7 +21,7 @@ function customerHomeController(
 		dataService, 
 		$ionicSlideBoxDelegate, 
 		$scope
-){
+	){
 	const ADVERTISEMENTS_KEY = 'Advertisements';
 	const BLOGS_KEY = 'Blogs';
 	/* ******************************
@@ -57,7 +57,10 @@ function customerHomeController(
 			function(){
 				return localStorage.getItem(ADVERTISEMENTS_KEY);
 			}, 
-			function(nVal, oVal){
+			function(
+					nVal, 
+					oVal
+				){
 				var advertisements = vm.advertisements;
 				var advertisementsSlidebox = 'advertisements-slidebox';
 				
@@ -73,7 +76,10 @@ function customerHomeController(
 			function(){
 				return localStorage.getItem(BLOGS_KEY);
 			}, 
-			function(nVal, oVal){
+			function(
+					nVal, 
+					oVal
+				){
 				var blogs = vm.blogs;
 				var blogsSlidebox = 'blogs-slidebox';
 				

@@ -19,7 +19,7 @@ googleplacesService.$inject = [
 function googleplacesService(
 		$q, 
 		NgMap
-){
+	){
 	const CONF_TYPE = ['food'];
 	const CONF_RADAR_RADIUS = 5000;
 	
@@ -57,7 +57,7 @@ function googleplacesService(
 		function getPlacePredictionsCallback(
 				predictions, 
 				status
-		){
+			){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(predictions);
 			} else {
@@ -94,7 +94,7 @@ function googleplacesService(
 		function geocodeCallback(
 				coordinates, 
 				status
-		){
+			){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(coordinates[0].geometry.location);
 			} else {
@@ -116,7 +116,7 @@ function googleplacesService(
 	function getPlaceDetails(
 			placeId, 
 			domMapId
-	){
+		){
 		var deferred = $q.defer();
 		var config = {
 				placeId: placeId
@@ -138,7 +138,7 @@ function googleplacesService(
 		function getDetailsCallback(
 				placeDetails, 
 				status
-		){
+			){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(placeDetails);
 			} else {
@@ -161,7 +161,7 @@ function googleplacesService(
 			companiesNames, 
 			location, 
 			domMapId
-	){
+		){
 		var deferred = $q.defer();
 		var loc = new google.maps.LatLng(
 				location.lat(), 
@@ -193,7 +193,7 @@ function googleplacesService(
 				nearby, 
 				status, 
 				pagination
-		){
+			){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(nearby);
 			} else {
@@ -216,7 +216,7 @@ function googleplacesService(
 			companiesNames, 
 			location, 
 			domMapId
-	){
+		){
 		var deferred = $q.defer();
 		var loc = new google.maps.LatLng(
 				location.lat(), 
@@ -247,7 +247,7 @@ function googleplacesService(
 		function radarSearchCallback(
 				nearby, 
 				status
-		){
+			){
 			if(google.maps.places.PlacesServiceStatus.OK == status){
 				deferred.resolve(nearby);
 			} else {

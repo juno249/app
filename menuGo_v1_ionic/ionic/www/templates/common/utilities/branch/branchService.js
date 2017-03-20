@@ -387,10 +387,12 @@ function branchService(
 		var indexStart = 3;
 		var indexEnd = 9;
 		
-		angular.forEach(BRANCHES_DB_FIELDS, function(v,k){
-			if(!(k < 3 || k > 9)){
-				newBranch[k-indexStart] = branch[BRANCHES_DB_FIELDS[k]];
-			}
+		angular.forEach(
+				BRANCHES_DB_FIELDS, 
+				function(v, k){
+					if(!(k < 3 || k > 9)){
+						newBranch[k-indexStart] = branch[BRANCHES_DB_FIELDS[k]];
+					}
 		});
 		
 		for(var i=0; i<newBranch.length; i++){

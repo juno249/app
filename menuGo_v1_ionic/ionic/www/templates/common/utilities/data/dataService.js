@@ -31,7 +31,7 @@ function dataService(
 		tableService, 
 		menuitemService, 
 		marketingService
-){
+	){
 	const COMPANIES_KEY = 'Companies';
 	const BRANCHES_KEY = 'Branches'; 
 	const MENUS_KEY = 'Menus';

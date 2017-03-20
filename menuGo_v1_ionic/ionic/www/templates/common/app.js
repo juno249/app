@@ -105,8 +105,11 @@ function doIonicConfig($ionicConfigProvider){
  * method name: doRunConfig()
  * purpose: handles run configuration
  * ****************************** */
-function doRunConfig($ionicPlatform){
-	$ionicPlatform.ready(function() {
+function doRunConfig(
+		$ionicPlatform, 
+		$rootScope
+	){
+	$ionicPlatform.ready(function(){
 	    if(window.cordova && window.cordova.plugins.Keyboard) {
 	    	cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 	    	cordova.plugins.Keyboard.disableScroll(true);
@@ -115,4 +118,6 @@ function doRunConfig($ionicPlatform){
 	    	StatusBar.styleDefault();
 	    }
 	});
+	
+	$rootScope.keys = Object.keys;
 }

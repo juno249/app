@@ -21,7 +21,7 @@ function loginController(
 		USER_ROLES, 
 		$state, 
 		loginService
-){
+	){
 	/* ******************************
 	 * Controller Implementation (Start)
 	 * ****************************** */

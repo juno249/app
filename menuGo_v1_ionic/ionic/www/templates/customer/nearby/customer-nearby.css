@@ -1,8 +1,8 @@
 div.nearby-container div.categories-container, 
-div.nearby-container div.companies-container{
+div.nearby-container div.container-header{
 	border-bottom: solid 1px #d3d3d3;
 	
-	margin-top: 20px;
+	margin-top: 40px;
 }
 
 div.nearby-container div.categories-container button{
@@ -11,41 +11,35 @@ div.nearby-container div.categories-container button{
 	min-width: 100px;
 }
 
-div.nearby-container div.categories-container div.container-header, 
-div.nearby-container div.container-header{
-	border-bottom: solid 1px #d3d3d3;
-}
-
-div.nearby-container div.companies-container{
+div.nearby-container div.companies-branches-container div.companies-container{
 	height: 350px;
 }
 
-div.nearby-container div.companies-container div#companies-logo-image-container{
-	height: 50%;
+div.nearby-container div.companies-branches-container div.companies-container div#companies-logo-image-container{
+	height: 55%;
 }
 
-div.nearby-container div.companies-container div#companies-logo-image-container img, 
-div.nearby-container div.companies-container ion-scroll#featured-menus-image-container div.scroll, 
-div.nearby-container div.companies-container ion-scroll#featured-menus-image-container img, 
+div.nearby-container div.companies-branches-container div.companies-container div#companies-logo-image-container img, 
+div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-image-container img, 
+div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container div.scroll, 
+div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container img, 
 div.nearby-container div.map-container ng-map#nearby-map{
 	height: 100%;
 }
 
-div.nearby-container div.companies-container div#companies-name-container{
+div.nearby-container div.companies-branches-container div.companies-container div#companies-name-container{
 	background-color: #303030;
 	color: #f0f0f0;
 	
 	height: 7%;
 }
 
-div.nearby-container div.companies-container div#featured-menus-header{
-	border-bottom: solid 1px #d3d3d3;
-	border-top: solid 1px #d3d3d3;
-	
+div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-header{
 	height: 7%;
 }
 
-div.nearby-container div.companies-container ion-scroll#featured-menus-image-container{
+div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-image-container, 
+div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container{
 	background-color: #303030;
 	
 	height: 30%;
@@ -53,7 +47,8 @@ div.nearby-container div.companies-container ion-scroll#featured-menus-image-con
 	white-space: nowrap;	
 }
 
-div.nearby-container div.companies-container ion-scroll#featured-menus-image-container img{
+div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-image-container img, 
+div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container img{
 	border-radius: 20px;
 	
 	padding: 10px;
