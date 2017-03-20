@@ -1,3 +1,13 @@
+button#gotoMenusBtn{
+	bottom: 100px;
+	right: 10px;
+}
+
+button#gotoMenusBtn, 
+div.nearby-container div.search-result-container{
+	position: absolute;
+}
+
 div.nearby-container div.categories-container, 
 div.nearby-container div.container-header{
 	border-bottom: solid 1px #d3d3d3;
@@ -70,8 +80,4 @@ div.nearby-container div.search-result-container ion-item{
 	
 	padding-bottom: 5px;
 	padding-top: 5px;
-}
-
-div.nearby-container div.search-result-container{
-	position: absolute;
 }

@@ -195,6 +195,16 @@
 			</div>
 		</div>
 	</ion-content>
+	<button 
+				class="button button-medium button-positive child-content-center" 
+				id="gotoMenusBtn" 
+				name="gotoMenusBtn" 
+				ng-if="customerNearbyController.companyBranch != undefined" 
+				ng-click="customerNearbyController.gotoState('customer.menus')">
+				<i 
+					class="icon ion-arrow-right-a">
+				</i>
+			</button>
 </ion-view>
 <!--  *************** 
 		nearby (end)
