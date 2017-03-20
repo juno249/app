@@ -35,7 +35,7 @@ function manageTableController(
 		DTColumnBuilder, 
 		DTOptionsBuilder, 
 		datatableService
-){
+	){
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
@@ -97,7 +97,10 @@ function manageTableController(
 	 * method name: dtAssignOnSelect()
 	 * purpose: assigns table on select
 	 * ****************************** */
-	function dtAssignOnSelect(data, $event){
+	function dtAssignOnSelect(
+			data, 
+			$event
+		){
 		var eSrc = $event.currentTarget; //div
 		var eSrcParent = eSrc.parentElement; //td
 		var eSrcParentParent = eSrcParent.parentElement; //tr

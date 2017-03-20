@@ -33,7 +33,7 @@ function modalCompanyController(
 		formMode, 
 		fromSignup, 
 		modalHiddenFields
-){	
+	){	
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */

@@ -29,7 +29,7 @@ function modalTableController(
 		table, 
 		formMode, 
 		modalHiddenFields
-){
+	){
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */

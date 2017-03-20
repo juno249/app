@@ -127,7 +127,10 @@ function manageNavigationController(
 	 * method name: toggleBranchCallback()
 	 * purpose: toggles branch's visibility
 	 * ****************************** */
-	function toggleBranchCallback(e, args){
+	function toggleBranchCallback(
+			e, 
+			args
+		){
 		var companyName = vm.companyName;
 		var isManageBranchHidden = vm.isManageBranchHidden;
 		
@@ -145,7 +148,10 @@ function manageNavigationController(
 	 * method name: toggleMenuCallback()
 	 * purpose: toggles menu's visibility
 	 * ****************************** */
-	function toggleMenuCallback(e, args){
+	function toggleMenuCallback(
+			e, 
+			args
+		){
 		var companyName = vm.companyName;
 		var isManageMenuHidden = vm.isManageMenuHidden;
 		
@@ -163,7 +169,10 @@ function manageNavigationController(
 	 * method name: toggleTableCallback()
 	 * purpose: toggles table's visibility
 	 * ****************************** */
-	function toggleTableCallback(e, args){
+	function toggleTableCallback(
+			e, 
+			args
+		){
 		var companyName = vm.companyName; 
 		var branchName = vm.branchName;
 		var isManageTableHidden = vm.isManageTableHidden;
@@ -184,7 +193,10 @@ function manageNavigationController(
 	 * method name: toggleMenuitemCallback()
 	 * purpose: toggles menuitem's visibility
 	 * ****************************** */
-	function toggleMenuitemCallback(e, args){
+	function toggleMenuitemCallback(
+			e, 
+			args
+		){
 		var companyName = vm.companyName; 
 		var menuName = vm.menuName;
 		var isManageMenuitemHidden = vm.isManageMenuitemHidden;

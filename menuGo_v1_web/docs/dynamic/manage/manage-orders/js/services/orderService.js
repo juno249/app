@@ -137,7 +137,10 @@ function orderService(
 	 * method name: fetchOrders()
 	 * purpose: fetch orders from server
 	 * ****************************** */
-	function fetchOrders(getOption, getParams){
+	function fetchOrders(
+			getOption, 
+			getParams
+		){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET'

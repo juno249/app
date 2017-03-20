@@ -21,7 +21,7 @@ function datatableService(
 		$http, 
 		$q, 
 		$rootScope
-){
+	){
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */
@@ -92,7 +92,7 @@ function datatableService(
 			broadcastMsgAdd, 
 			broadcastMsgUpdate, 
 			broadcastMsgDelete
-	){	
+		){	
 		var dtOptions = datatableServiceObj.dtOptions;
 		
 		dtOptions = dtOptionsBuilder
@@ -155,7 +155,7 @@ function datatableService(
 	function doDTInitColumns(
 			dtColumnBuilder, 
 			controllerObj
-	){
+		){
 		var dtColumns = [];
 		var dbColumnFields = datatableServiceObj.dbColumnFields;
 		var dbColumnFieldsLength = Object.keys(dbColumnFields);
@@ -209,7 +209,7 @@ function datatableService(
 			broadcastMsgAdd, 
 			broadcastMsgUpdate, 
 			broadcastMsgDelete
-	){
+		){
 		var colVis = {
 				extend: 'colvis', 
 				text: 'Columns', 

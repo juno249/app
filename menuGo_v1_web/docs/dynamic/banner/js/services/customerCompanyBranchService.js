@@ -25,7 +25,7 @@ function customerCompanyBranchService(
 		$http, 
 		$localStorage, 
 		$q
-){
+	){
 	/* ******************************
 	 * Service Return Object (Start)
 	 * ****************************** */

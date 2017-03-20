@@ -35,7 +35,7 @@ function modalCustomerController(
 		formMode, 
 		fromSignup, 
 		modalHiddenFields
-){
+	){
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */

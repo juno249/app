@@ -29,7 +29,7 @@ function modalBranchController(
 		formMode, 
 		fromSignup, 
 		modalHiddenFields
-){
+	){
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */

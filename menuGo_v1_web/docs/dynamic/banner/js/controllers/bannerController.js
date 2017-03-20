@@ -41,7 +41,7 @@ function bannerController(
 		companyService, 
 		customerCompanyBranchService, 
 		loginService
-){
+	){
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
