@@ -29,7 +29,7 @@ function modalMenuController(
 		menu, 
 		formMode, 
 		modalHiddenFields
-){
+	){
 	/* ******************************
 	 * Messages Constants (Start)
 	 * ****************************** */
