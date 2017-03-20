@@ -39,7 +39,10 @@ function googleplacesService(
 	function getPlacePredictions(query){
 		var deferred = $q.defer();
 		var config = {
-				input: query
+				input: query, 
+				componentRestrictions: {
+					country: 'ph'
+				}
 		}
 		var service = new google.maps.places.AutocompleteService();
 		

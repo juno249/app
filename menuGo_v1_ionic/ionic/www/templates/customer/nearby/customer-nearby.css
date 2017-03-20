@@ -1,81 +1,82 @@
-div.customerNearbyContainer, 
-div.customerNearbyContainer div.companiesContainer div.menuitemsContainer div.menuitemsSlide, 
-div.customerNearbyContainer div.companiesContainer div.menuitemsContainer div.menuitemsSlideBox{
-	height: 100%;
-	width: 100%;
-}
-
-div.customerNearbyContainer div.categoryContainer, 
-div.customerNearbyContainer div.companiesContainer{
-	width: 80%;
+div.nearby-container div.categories-container, 
+div.nearby-container div.companies-container{
+	border-bottom: solid 1px #d3d3d3;
 	
-	margin: auto;
 	margin-top: 20px;
-	padding: 10px 10px 0px 10px;
 }
 
-div.customerNearbyContainer div.categoryContainer button{
-	margin: 5px;
+div.nearby-container div.categories-container button{
+	margin: 10px;
 	
-	min-width: 70px;
+	min-width: 100px;
 }
 
-div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer{
-	height: 200px;
+div.nearby-container div.categories-container div.container-header, 
+div.nearby-container div.container-header{
+	border-bottom: solid 1px #d3d3d3;
 }
 
-div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div.menuitemsImageContainer{
-	background-color: #333;
-	
-	height: 80%;
+div.nearby-container div.companies-container{
+	height: 350px;
 }
 
-div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer div.menuitemsPrice{
-	background-color: #333;
-	color: #fff;
-	
-	border-top: solid 1px #fff;
-	
-	height: 10%;
-	
-	padding-right: 20px;
+div.nearby-container div.companies-container div#companies-logo-image-container{
+	height: 50%;
 }
 
-div.customerNearbyContainer div.companiesContainer div.branchesContainer div.menuitemsContainer img.menuitemsImage{
+div.nearby-container div.companies-container div#companies-logo-image-container img, 
+div.nearby-container div.companies-container ion-scroll#featured-menus-image-container div.scroll, 
+div.nearby-container div.companies-container ion-scroll#featured-menus-image-container img, 
+div.nearby-container div.map-container ng-map#nearby-map{
 	height: 100%;
 }
 
-div.customerNearbyContainer div.companiesContainer div.companiesHeader{
-	background-color: #333;
-	color: #fff;
+div.nearby-container div.companies-container div#companies-name-container{
+	background-color: #303030;
+	color: #f0f0f0;
 	
-	border-radius: 25px;
+	height: 7%;
 }
 
-div.customerNearbyContainer div.mapContainer{
-	height: 0px;
-	width: 0px;
+div.nearby-container div.companies-container div#featured-menus-header{
+	border-bottom: solid 1px #d3d3d3;
+	border-top: solid 1px #d3d3d3;
 	
-	left: 0px;
+	height: 7%;
+}
+
+div.nearby-container div.companies-container ion-scroll#featured-menus-image-container{
+	background-color: #303030;
+	
+	height: 30%;
+	
+	white-space: nowrap;	
+}
+
+div.nearby-container div.companies-container ion-scroll#featured-menus-image-container img{
+	border-radius: 20px;
+	
+	padding: 10px;
+}
+
+div.nearby-container div.map-container{
+	height: 250px;
+}
+
+div.nearby-container div.search-container div.item{
+	background-color: #303030;
+	
+	border: none;
+}
+
+div.nearby-container div.search-container label, 
+div.nearby-container div.search-result-container ion-item{
+	background-color: #f9f9f9;
+	
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+div.nearby-container div.search-result-container{
 	position: absolute;
-	top: 0px;
-}
-
-div.customerNearbyContainer div.searchContainer div.item.item-input-inset{
-	background-color: #333;
-}
-
-div.customerNearbyContainer div.searchContainer label#searchLbl{
-	background-color: #fff;
-	
-	border: solid 1px #333;
-	border-radius: 25px;
-	
-	padding: 5px 0px 5px 20px;
-}
-
-div.customerNearbyContainer div.searchResultContainer{
-	position: absolute;
-	
-	width: 100%;
 }

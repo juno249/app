@@ -57,7 +57,7 @@ function doRouteConfig(
 			}
 		})
 		.state('customer.nearby', {
-			url: '/nearby/placeId/:placeId/category/:category', 
+			url: '/nearby/search/:search/category/:category', 
 			views: {
 				'customer-nearby': {
 					templateUrl: 'templates/customer/nearby/customer-nearby.html', 
