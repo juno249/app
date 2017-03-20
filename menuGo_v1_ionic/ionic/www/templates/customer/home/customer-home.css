@@ -1,4 +1,5 @@
-div.home-container div.advertisements-container{
+div.home-container div.advertisements-container, 
+div.home-container div.blogs-container{
 	margin: 10px;
 }
 
