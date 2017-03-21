@@ -7,6 +7,7 @@ angular
  * ****************************** */
 customerHomeController.$inject = [
 	'dataService', 
+	'$ionicHistory', 
 	'$ionicSlideBoxDelegate', 
 	'$scope', 
 	'$timeout'
@@ -20,10 +21,13 @@ customerHomeController.$inject = [
  * ****************************** */
 function customerHomeController(
 		dataService, 
+		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
 		$scope, 
 		$timeout
 	){
+	$ionicHistory.clearHistory();
+	
 	const ADVERTISEMENTS_KEY = 'Advertisements';
 	const BLOGS_KEY = 'Blogs';
 	/* ******************************

@@ -13,18 +13,20 @@
 		<ion-tabs 
 			class="tabs-assertive tabs-icon-top">
 			<ion-tab 
-				href="#/customer/home" 
 				icon="icon ion-ios-home" 
-				title="Home">
+				title="Home" 
+				ui-sref="customer.home" 
+				ui-sref-opts="{reload: true, notify: true}">
 				<ion-nav-view 
 					name="customer-home">
 				</ion-nav-view>
 			</ion-tab>
 			
 			<ion-tab 
-				href="#/customer/nearby" 
 				icon="icon ion-location" 
-				title="Nearby">
+				title="Nearby" 
+				ui-sref="customer.nearby" 
+				ui-sref-opts="{reload: true, notify: true}">
 				<ion-nav-view 
 					name="customer-nearby">
 				</ion-nav-view>

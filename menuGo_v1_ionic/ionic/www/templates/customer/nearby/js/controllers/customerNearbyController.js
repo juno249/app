@@ -6,6 +6,7 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 customerNearbyController.$inject = [
+	'$ionicHistory', 
 	'$ionicSlideBoxDelegate', 
 	'$q', 
 	'$scope', 
@@ -24,6 +25,7 @@ customerNearbyController.$inject = [
  * Controller Implementation (Start)
  * ****************************** */
 function customerNearbyController(
+		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
 		$q, 
 		$scope, 
@@ -34,6 +36,8 @@ function customerNearbyController(
 		geolocationService, 
 		googleplacesService
 	){
+	$ionicHistory.clearHistory();
+	
 	const COMPANIES_KEY = 'Companies';
 	/* ******************************
 	 * Controller Binded Data (Start)
