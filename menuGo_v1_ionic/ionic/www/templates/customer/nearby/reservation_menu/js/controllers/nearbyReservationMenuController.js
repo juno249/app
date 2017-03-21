@@ -117,10 +117,7 @@ function nearbyReservationMenuController(
 			function(){
 				return localStorage.getItem(COMPANIES_KEY);
 			}, 
-			function(
-					nVal, 
-					oVal
-				){
+			function(){
 				var companies = vm.companies;
 				
 				companies = localStorage.getItem(COMPANIES_KEY);
@@ -134,10 +131,7 @@ function nearbyReservationMenuController(
 			function(){
 				return vm.companies;
 			}, 
-			function(
-					nVal, 
-					oVal
-				){
+			function(){
 				var companies = vm.companies;
 				var company = vm.company;
 				var companyName = vm.companyName;
