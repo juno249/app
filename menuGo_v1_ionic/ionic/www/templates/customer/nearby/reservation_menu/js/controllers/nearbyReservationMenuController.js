@@ -8,6 +8,7 @@ angular
 nearbyReservationMenuController.$inject = [
 	'$scope', 
 	'$stateParams', 
+	'branchService', 
 	'dataService'
 ];
 /* ******************************
@@ -20,6 +21,7 @@ nearbyReservationMenuController.$inject = [
 function nearbyReservationMenuController(
 		$scope, 
 		$stateParams, 
+		branchService, 
 		dataService
 	){
 	const COMPANIES_KEY = 'Companies';
@@ -56,6 +58,27 @@ function nearbyReservationMenuController(
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
+	
+	/* ******************************
+	 * Controller Binded Method (Start)
+	 * ****************************** */
+	vm.toStringAddress = toStringAddress;
+	/* ******************************
+	 * Controller Binded Method (End)
+	 * ****************************** */
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: toStringAddress()
+	 * purpose: returns an address string
+	 * ****************************** */
+	function toStringAddress(){
+		var branch = vm.branch;
+		
+		branchService.setBranch(branch);
+		
+		return branchService.toStringAddress();
+	}
 	
 	/* ******************************
 	 * Watchers (Start)

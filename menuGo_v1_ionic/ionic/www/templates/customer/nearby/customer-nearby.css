@@ -47,6 +47,8 @@ div.nearby-container div.companies-branches-container div#featured-menus-contain
 
 div.nearby-container div.companies-branches-container div#featured-menus-container img#featured-menus-image{
 	border-radius: 20px;
+	
+	object-fit: cover;
 }
 
 div.nearby-container div.companies-branches-container ion-list{

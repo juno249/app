@@ -2,7 +2,40 @@
 	id="reservation_menu" 
 	name="reservation_menu" 
 	view-title="reservation_menu">
-	<ion-content>
-		
+	<ion-content 
+		class="has-header">
+		<div 
+			class="reservation_menu-container">
+			<div 
+				class="child-content-center divider item item-divider">
+				<span 
+					class="font-family-1-size-medium">
+					Company Details
+				</span>
+			</div>
+			<div 
+				class="company-details-container item item-thumbnail-left">
+				<img 
+					src={{nearbyReservationMenuController.company.company_logo}}>
+				<span 
+					class="font-family-1-size-small">
+					<underline><b>{{nearbyReservationMenuController.company.company_name}}</b></underline>
+				</span><br>
+				<div 
+					class="branch-container">
+					<span 
+						class="font-family-2-size-small">
+						{{nearbyReservationMenuController.toStringAddress();}}
+					</span>
+				</div>
+			</div>
+			<div 
+				class="child-content-center divider item item-divider">
+				<span 
+					class="font-family-1-size-medium">
+					Menu Details
+				</span>
+			</div>
+		</div>
 	</ion-content>
 </ion-view>
