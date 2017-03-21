@@ -91,7 +91,7 @@
 						class="icon ion-pizza">
 					</i>
 					{{k}}
-				</button>				
+				</button>
 			</div>
 			<div 
 				class="child-content-center container-header font-family-1-size-medium">
@@ -210,21 +210,27 @@
 							{{customerNearbyController.toStringAddress(j);}}
 						</span>
 					</ion-radio>
-				</ion-list>		
-				
+				</ion-list>
 			</div>
 		</div>
 	</ion-content>
+	
+	<!--  *************** 
+			branches-header (start)
+			*************** -->
 	<button 
-				class="button button-medium button-positive child-content-center" 
-				id="gotoMenusBtn" 
-				name="gotoMenusBtn" 
-				ng-if="customerNearbyController.companyBranch != undefined" 
-				ng-click="customerNearbyController.gotoState('customer.menus')">
-				<i 
-					class="icon ion-arrow-right-a">
-				</i>
-			</button>
+		class="button button-medium button-positive child-content-center" 
+		id="gotoMenusBtn" 
+		name="gotoMenusBtn" 
+		ng-if="customerNearbyController.companyBranch != undefined" 
+		ng-click="customerNearbyController.gotoState('customer.menus')">
+		<i 
+			class="icon ion-arrow-right-a">
+		</i>
+	</button>
+	<!--  *************** 
+			branches-header (start)
+			*************** -->
 </ion-view>
 <!--  *************** 
 		nearby (end)
