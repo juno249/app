@@ -18,12 +18,15 @@ div.home-container div.blogs-container div#blogs-image-container img{
 div.home-container div.advertisements-container div#advertisements-price-container{
 	border-bottom: solid 1px #d3d3d3;
 	
-	height: 7%;
+	height: 6%;
 }
 
 div.home-container div.advertisements-container div#advertisements-title-container, 
 div.home-container div.blogs-container div#blogs-title-container{
 	height: 10%;
+	
+	padding-left: 10px;
+	padding-right: 10px;
 	
 	overflow: hidden;
 	text-overflow: ellipsis;
