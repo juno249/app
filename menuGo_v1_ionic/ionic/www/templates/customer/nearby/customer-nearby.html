@@ -80,7 +80,7 @@
 				class="categories-container child-content-center">
 				<button 
 					class="button button-assertive button-small font-family-1-size-small" 
-					ng-click="customerNearbyController.setCategory('')">
+					ng-click="customerNearbyController.setCategory(undefined)">
 					All
 				</button>
 				<button 
@@ -100,7 +100,7 @@
 			<div 
 				class="card companies-branches-container" 
 				ng-repeat="(k, v) in customerNearbyController.companies" 
-				ng-show="(customerNearbyController.category == '') || (customerNearbyController.category == v.company_category)">
+				ng-show="(customerNearbyController.category == undefined) || (customerNearbyController.category == v.company_category)">
 				<!--  *************** 
 						companies-name-container (start)
 						*************** -->

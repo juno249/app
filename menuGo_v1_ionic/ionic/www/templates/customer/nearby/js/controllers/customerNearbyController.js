@@ -10,7 +10,6 @@ customerNearbyController.$inject = [
 	'$q', 
 	'$scope', 
 	'$state', 
-	'$stateParams', 
 	'$timeout', 
 	'branchService', 
 	'dataService', 
@@ -29,7 +28,6 @@ function customerNearbyController(
 		$q, 
 		$scope, 
 		$state, 
-		$stateParams, 
 		$timeout, 
 		branchService, 
 		dataService, 
@@ -41,10 +39,6 @@ function customerNearbyController(
 	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
-	vm.stateParams = {
-			category: $stateParams.category, 
-			search: $stateParams.search
-	}
 	vm.mapConfig = {
 			center: {
 				latitude: undefined, 
@@ -69,14 +63,8 @@ function customerNearbyController(
 	vm.companiesMenuitems = undefined;
 	vm.companiesCategoriesSelection = undefined;
 	vm.placePredictions = undefined;
-	if(
-			!(null == vm.stateParams.category) || 
-			!(0 == vm.stateParams.category.trim().length)
-		){
-		vm.category = vm.stateParams.category;
-	} else {
-		vm.category = new String('');
-	}
+	
+	vm.category = undefined;
 	vm.search = undefined;
 	vm.companyBranch = undefined;
 	/* ******************************
