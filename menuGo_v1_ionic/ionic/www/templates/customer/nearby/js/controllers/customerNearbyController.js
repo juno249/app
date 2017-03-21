@@ -271,13 +271,10 @@ function customerNearbyController(
 			function(){
 				return vm.search;
 			}, 
-			function(
-					nVal, 
-					oVal
-				){
+			function(){
+				var search = vm.search;
 				var companies = vm.companies;
 				var companiesNames = '';
-				var search = nVal;
 				
 				if(
 						null == search ||
