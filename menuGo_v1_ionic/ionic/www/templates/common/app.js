@@ -66,9 +66,19 @@ function doRouteConfig(
 				}
 			}
 		})
-		
+		.state('customer.nearby.reservation_menu', {
+			url: 'reservation_menu/:companyName/:branchName', 
+			views: {
+				'customer-nearby@customer': {
+					templateUrl: 'templates/customer/nearby/reservation_menu/nearby-reservation_menu.html', 
+					controller: 'nearbyReservationMenuController', 
+					controllerAs: 'nearbyReservationMenuController'
+				}
+			}
+		})
+
 		$urlRouterProvider
-		.otherwise('/customer/home');
+		.otherwise('/customer/nearby');
 	}
 
 /* ******************************

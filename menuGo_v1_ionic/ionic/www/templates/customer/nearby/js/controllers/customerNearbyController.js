@@ -74,13 +74,35 @@ function customerNearbyController(
 	/* ******************************
 	 * Controller Binded Method (Start)
 	 * ****************************** */
+	vm.gotoState = gotoState;
 	vm.initializeMapCoordinates = initializeMapCoordinates;
 	vm.setCategory = setCategory;
 	vm.toStringAddress = toStringAddress;
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
-
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: gotoState()
+	 * purpose: goes to a state
+	 * ****************************** */
+	function gotoState(
+			stateName
+		){
+		var companyBranch = vm.companyBranch;
+		if('customer.nearby.reservation_menu' == stateName){
+			$state.go(
+				stateName, 
+				{
+					companyName: companyBranch.companyName, 
+					branchName: companyBranch.branchName
+				}, 
+				{reload: true}
+				);
+		}
+	}
+	
 	/* ******************************
 	 * Method Implementation
 	 * method name: initializeMapCoordinates()
