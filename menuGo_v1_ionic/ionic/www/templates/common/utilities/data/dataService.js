@@ -165,6 +165,9 @@ function dataService(
 							companies[companyName]['branches'][branchName]['tables'] = tables;
 							companies = JSON.stringify(companies);
 							localStorage.setItem(COMPANIES_KEY, companies);
+							
+							localStorage.removeItem(BRANCHES_KEY);
+							localStorage.removeItem(TABLES_KEY);
 						}
 						
 						function fetchTablesFailedCallback(responseError){
@@ -239,6 +242,9 @@ function dataService(
 							companies[companyName]['menus'][menuName]['menuitems'] = menuitems;
 							companies = JSON.stringify(companies);
 							localStorage.setItem(COMPANIES_KEY, companies);
+							
+							localStorage.removeItem(MENUS_KEY);
+							localStorage.removeItem(MENUITEMS_KEY);
 						}
 						
 						function fetchMenuitemsFailedCallback(responseError){

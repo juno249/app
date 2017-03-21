@@ -11,6 +11,7 @@ customerNearbyController.$inject = [
 	'$scope', 
 	'$state', 
 	'$stateParams', 
+	'$timeout', 
 	'branchService', 
 	'dataService', 
 	'geolocationService', 
@@ -29,6 +30,7 @@ function customerNearbyController(
 		$scope, 
 		$state, 
 		$stateParams, 
+		$timeout, 
 		branchService, 
 		dataService, 
 		geolocationService, 
@@ -198,7 +200,9 @@ function customerNearbyController(
 			companiesMenuitems[k] = companyMenuitems;
 		});
 		
-		$ionicSlideBoxDelegate.$getByHandle(companiesMenuitemsSlidebox).update();
+		$timeout(function(){
+			$ionicSlideBoxDelegate.$getByHandle(companiesMenuitemsSlidebox).update();	
+		});
 		vm.companiesMenuitems = companiesMenuitems;
 	}
 	

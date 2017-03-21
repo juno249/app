@@ -8,7 +8,8 @@ angular
 customerHomeController.$inject = [
 	'dataService', 
 	'$ionicSlideBoxDelegate', 
-	'$scope'
+	'$scope', 
+	'$timeout'
 ];
 /* ******************************
  * Controller Dependency Injection (End)
@@ -20,7 +21,8 @@ customerHomeController.$inject = [
 function customerHomeController(
 		dataService, 
 		$ionicSlideBoxDelegate, 
-		$scope
+		$scope, 
+		$timeout
 	){
 	const ADVERTISEMENTS_KEY = 'Advertisements';
 	const BLOGS_KEY = 'Blogs';
@@ -67,7 +69,9 @@ function customerHomeController(
 				advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
 				advertisements = JSON.parse(advertisements);
 				
-				$ionicSlideBoxDelegate.$getByHandle(advertisementsSlidebox).update();
+				$timeout(function(){
+					$ionicSlideBoxDelegate.$getByHandle(advertisementsSlidebox).update();
+				});
 				vm.advertisements = advertisements;
 			}
 	);
@@ -86,7 +90,9 @@ function customerHomeController(
 				blogs = localStorage.getItem(BLOGS_KEY);
 				blogs = JSON.parse(blogs);
 				
-				$ionicSlideBoxDelegate.$getByHandle(blogsSlidebox).update();
+				$timeout(function(){
+					$ionicSlideBoxDelegate.$getByHandle(blogsSlidebox).update();
+				});
 				vm.blogs = blogs;
 			}
 	);
