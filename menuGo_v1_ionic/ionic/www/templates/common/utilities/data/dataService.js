@@ -37,22 +37,15 @@ function dataService(
 	const MENUS_KEY = 'Menus';
 	const TABLES_KEY = 'Tables';
 	const MENUITEMS_KEY = 'Menuitems';
+	const MARKETING_KEY = 'Marketing';
 	const ADVERTISEMENTS_KEY = 'Advertisements';
 	const BLOGS_KEY = 'Blogs';
 	
 	var dataServiceObj = {
 			companies: {}, 
-			advertisements: {}, 
-			blogs: {}, 
-			getCompanies: getCompanies, 
-			getAdvertisements: getAdvertisements, 
-			getBlogs: getBlogs, 
-			setCompanies: setCompanies, 
-			setAdvertisements: setAdvertisements, 
-			setBlogs: setBlogs, 
+			marketing: {}, 
 			fetchCompanies: fetchCompanies, 
-			fetchAdvertisements: fetchAdvertisements, 
-			fetchBlogs: fetchBlogs
+			fetchMarketing: fetchMarketing
 	}
 	
 	/* ******************************
@@ -62,24 +55,16 @@ function dataService(
 		return dataServiceObj.companies;
 	}
 	
-	function getAdvertisements(){
-		return dataServiceObj.advertisements;
-	}
-	
-	function getBlogs(){
-		return dataServiceObj.blogs;
+	function getMarketing(){
+		return dataServiceObj.marketing;
 	}
 	
 	function setCompanies(companies){
 		dataServiceObj.companies = companies;
 	}
 	
-	function setAdvertisements(advertisements){
-		dataServiceObj.advertisements = advertisements;
-	}
-	
-	function setBlogs(blogs){
-		dataServiceObj.blogs = blogs;
+	function setMarketing(marketing){
+		dataServiceObj.marketing = marketing;
 	}
 	/* ******************************
 	 * Accessors: Getters & Setters (End)
@@ -275,10 +260,10 @@ function dataService(
 	
 	/* ******************************
 	 * Method Implementation
-	 * method name: fetchAdvertisements()
-	 * purpose: fetch advertisements from server
+	 * method name: fetchMarketing()
+	 * purpose: fetch advertisements and blogs from server
 	 * ****************************** */
-	function fetchAdvertisements(){
+	function fetchMarketing(){
 		marketingService.fetchAdvertisements()
 		.then(fetchAdvertisementsSuccessCallback)
 		.catch(fetchAdvertisementsFailedCallback);
@@ -287,23 +272,33 @@ function dataService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchAdvertisementsSuccessCallback(response){
-			//do something on success
+			var advertisements = undefined;
+			var marketing = undefined;
+			
+			advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
+			advertisements = JSON.parse(advertisements);
+			
+			if(!(null == localStorage.getItem(MARKETING_KEY))){
+				marketing = localStorage.getItem(MARKETING_KEY);
+				marketing = JSON.parse(marketing);
+			} else {
+				marketing = {};
+			}
+			
+			marketing['advertisements'] = advertisements;
+			marketing = JSON.stringify(marketing);
+			localStorage.setItem(MARKETING_KEY, marketing);
+			
+			localStorage.removeItem(ADVERTISEMENTS_KEY);
 		}
 		
 		function fetchAdvertisementsFailedCallback(responseError){
-			//do something on failure
+			reset();
 		}
 		/* ******************************
 		 * Callback Implementations (End)
 		 * ****************************** */
-	}
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchBlogs()
-	 * purpose: fetch blogs from server
-	 * ****************************** */
-	function fetchBlogs(){
+		
 		marketingService.fetchBlogs()
 		.then(fetchBlogsSuccessCallback)
 		.catch(fetchBlogsFailedCallback);
@@ -312,11 +307,28 @@ function dataService(
 		 * Callback Implementations (Start)
 		 * ****************************** */
 		function fetchBlogsSuccessCallback(response){
-			//do something on success
+			var blogs = undefined;
+			var marketing = undefined;
+			
+			blogs = localStorage.getItem(BLOGS_KEY);
+			blogs = JSON.parse(blogs);
+			
+			if(!(null == localStorage.getItem(MARKETING_KEY))){
+				marketing = localStorage.getItem(MARKETING_KEY);
+				marketing = JSON.parse(marketing);
+			} else {
+				marketing = {};
+			}
+			
+			marketing['blogs'] = blogs;
+			marketing = JSON.stringify(marketing);
+			localStorage.setItem(MARKETING_KEY, marketing);
+			
+			localStorage.removeItem(BLOGS_KEY);
 		}
 		
 		function fetchBlogsFailedCallback(responseError){
-			//do something on failure
+			reset();
 		}
 		/* ******************************
 		 * Callback Implementations (End)
@@ -334,6 +346,8 @@ function dataService(
 		localStorage.removeItem(MENUS_KEY);
 		localStorage.removeItem(TABLES_KEY);
 		localStorage.removeItem(MENUITEMS_KEY);
+		localStorage.removeItem(ADVERTISEMENTS_KEY);
+		localStorage.removeItem(BLOGS_KEY);
 	}
 	
 	return dataServiceObj;

@@ -28,30 +28,22 @@ function customerHomeController(
 	){
 	$ionicHistory.clearHistory();
 	
-	const ADVERTISEMENTS_KEY = 'Advertisements';
-	const BLOGS_KEY = 'Blogs';
+	const MARKETING_KEY = 'Marketing';
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
 	var vm = this;
-	var advertisements = undefined;
-	if(null == localStorage.getItem(ADVERTISEMENTS_KEY)){
-		dataService.fetchAdvertisements();
-		vm.advertisements = undefined;
+	var marketing = undefined;
+	if(null == localStorage.getItem(MARKETING_KEY)){
+		dataService.fetchMarketing();
+		vm.marketing = undefined;
 	} else {
-		advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
-		advertisements = JSON.parse(advertisements);
-		vm.advertisements = advertisements;
+		marketing = localStorage.getItem(MARKETING_KEY);
+		marketing = JSON.parse(marketing);
+		vm.marketing = marketing;
 	}
-	var blogs = undefined;
-	if(null == localStorage.getItem(BLOGS_KEY)){
-		dataService.fetchBlogs();
-		vm.blogs = undefined;
-	} else {
-		blogs = localStorage.getItem(BLOGS_KEY);
-		blogs = JSON.parse(blogs);
-		vm.blogs = blogs;
-	}
+	vm.advertisements = undefined;
+	vm.blogs = undefined;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -61,43 +53,43 @@ function customerHomeController(
 	 * ****************************** */
 	$scope.$watch(
 			function(){
-				return localStorage.getItem(ADVERTISEMENTS_KEY);
+				return localStorage.getItem(MARKETING_KEY);
 			}, 
-			function(
-					nVal, 
-					oVal
-				){
-				var advertisements = vm.advertisements;
-				var advertisementsSlidebox = 'advertisements-slidebox';
+			function(){
+				var marketing = undefined;
 				
-				advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
-				advertisements = JSON.parse(advertisements);
+				marketing = localStorage.getItem(MARKETING_KEY);
+				marketing = JSON.parse(marketing);
 				
-				$timeout(function(){
-					$ionicSlideBoxDelegate.$getByHandle(advertisementsSlidebox).update();
-				});
-				vm.advertisements = advertisements;
+				vm.marketing = marketing;
 			}
 	);
 	
 	$scope.$watch(
 			function(){
-				return localStorage.getItem(BLOGS_KEY);
+				return vm.marketing;
 			}, 
-			function(
-					nVal, 
-					oVal
-				){
+			function(){
+				var marketing = vm.marketing;
+				var advertisements = vm.advertisements;
 				var blogs = vm.blogs;
+				var advertisementsSlidebox = 'advertisements-slidebox';
 				var blogsSlidebox = 'blogs-slidebox';
 				
-				blogs = localStorage.getItem(BLOGS_KEY);
-				blogs = JSON.parse(blogs);
+				if(null == marketing){
+					return;
+				}
+				
+				advertisements = marketing.advertisements;
+				blogs = marketing.blogs;
+				
+				vm.advertisements = advertisements;
+				vm.blogs = blogs;
 				
 				$timeout(function(){
+					$ionicSlideBoxDelegate.$getByHandle(advertisementsSlidebox).update();
 					$ionicSlideBoxDelegate.$getByHandle(blogsSlidebox).update();
 				});
-				vm.blogs = blogs;
 			}
 	);
 	/* ******************************
