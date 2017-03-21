@@ -142,7 +142,7 @@
 						*************** -->
 				
 				<!--  *************** 
-						featured-menus-image-container (start)
+						featured-menus-slidebox (start)
 						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
@@ -156,14 +156,23 @@
 					show-pager="false">
 					<ion-slide 
 						ng-repeat="(i, j) in customerNearbyController.companiesMenuitems[k]">
+						<!--  *************** 
+								featured-menus-container (start)
+								*************** -->
 						<div 
 							id="featured-menus-container" 
 							name="featured-menus-container" 
 							class="item item-thumbnail-left">
+							<!--  *************** 
+									featured-menus-image (start)
+									*************** -->
 							<img 
 								id="featured-menus-image" 
 								name="featured-menus-image" 
 								src={{j.menuitem_image}}>
+							<!--  *************** 
+									featured-menus-image (end)
+									*************** -->
 							<span 
 								class="font-family-1-size-small">
 								<underline><b>{{j.menuitem_name}}</b><br></underline>
@@ -173,10 +182,13 @@
 								{{j.menuitem_desc}}
 							</span>
 						</div>
+						<!--  *************** 
+								featured-menus-container (end)
+								*************** -->
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 
-						featured-menus-image-container (end)
+						featured-menus-slidebox (end)
 						*************** -->
 				
 				<!--  *************** 
@@ -216,7 +228,7 @@
 	</ion-content>
 	
 	<!--  *************** 
-			branches-header (start)
+			gotoMenusBtn (start)
 			*************** -->
 	<button 
 		class="button button-medium button-positive child-content-center" 
@@ -229,7 +241,7 @@
 		</i>
 	</button>
 	<!--  *************** 
-			branches-header (start)
+			gotoMenusBtn (end)
 			*************** -->
 </ion-view>
 <!--  *************** 
