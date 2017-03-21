@@ -1,8 +1,3 @@
-div.home-container div.advertisements-container, 
-div.home-container div.blogs-container{
-	margin: 10px;
-}
-
 div.home-container div.advertisements-container div#advertisements-image-container, 
 div.home-container div.blogs-container div#blogs-image-container{
 	background-color: #303030;
