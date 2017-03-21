@@ -25,7 +25,7 @@ function nearbyReservationMenuController(
 		dataService
 	){
 	const COMPANIES_KEY = 'Companies';
-	
+	const ORDERS_KEY = 'Orders';
 	/* ******************************
 	 * Controller Binded Data (Start)
 	 * ****************************** */
@@ -55,6 +55,7 @@ function nearbyReservationMenuController(
 		vm.branchName = branchName;
 	}
 	vm.branch = undefined;
+	vm.companyMenus = undefined;
 	/* ******************************
 	 * Controller Binded Data (End)
 	 * ****************************** */
@@ -62,10 +63,22 @@ function nearbyReservationMenuController(
 	/* ******************************
 	 * Controller Binded Method (Start)
 	 * ****************************** */
+	vm.toggleVis = toggleVis;
 	vm.toStringAddress = toStringAddress;
 	/* ******************************
 	 * Controller Binded Method (End)
 	 * ****************************** */
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: toggleVis()
+	 * purpose: toggles visibility
+	 * ****************************** */
+	function toggleVis(menu){
+		resetVis(menu);
+		
+		menu.isCompanyMenuHidden = !menu.isCompanyMenuHidden;
+	}
 	
 	/* ******************************
 	 * Method Implementation
@@ -78,6 +91,23 @@ function nearbyReservationMenuController(
 		branchService.setBranch(branch);
 		
 		return branchService.toStringAddress();
+	}
+	
+	/* ******************************
+	 * Method Implementation
+	 * method name: resetVis()
+	 * purpose: returns an address string
+	 * ****************************** */
+	function resetVis(exemptMenu){
+		var companyMenus = vm.companyMenus;
+		
+		angular.forEach(companyMenus, function(v, k){
+			if(!(exemptMenu.menu_name == v.menu_name)){
+				v['isCompanyMenuHidden'] = true;
+			}
+		});
+		
+		vm.companyMenus = companyMenus;
 	}
 	
 	/* ******************************
@@ -113,12 +143,17 @@ function nearbyReservationMenuController(
 				var companyName = vm.companyName;
 				var branch = vm.branch;
 				var branchName = vm.branchName;
+				var companyMenus = vm.companyMenus;
 				
 				company = companies[companyName];
 				branch = company.branches[branchName];
+				companyMenus = company.menus;
 				
 				vm.company = company;
 				vm.branch = branch;
+				vm.companyMenus = companyMenus;
+				
+				resetVis(new String(''));
 			}
 	);
 	/* ******************************

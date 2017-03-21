@@ -7,7 +7,7 @@
 		<div 
 			class="reservation_menu-container">
 			<div 
-				class="child-content-center divider item item-divider">
+				class="child-content-center container-header item item-divider">
 				<span 
 					class="font-family-1-size-medium">
 					Company Details
@@ -30,11 +30,50 @@
 				</div>
 			</div>
 			<div 
-				class="child-content-center divider item item-divider">
+				class="child-content-center container-header item item-divider">
 				<span 
 					class="font-family-1-size-medium">
 					Menu Details
 				</span>
+			</div>
+			<div 
+				class="list" 
+				ng-repeat="(k, v) in nearbyReservationMenuController.companyMenus">
+				<div 
+					class="menus-container" 
+					ng-click="nearbyReservationMenuController.toggleVis(v);">
+					<i 
+						class="icon" 
+						ng-class="v.isCompanyMenuHidden?'ion-plus':'ion-minus'">
+					</i>
+					<span 
+						class="font-family-1-size-small">
+						{{v.menu_name}}
+					</span>
+				</div>
+				<div 
+					class="menuitems-container" 
+					ng-repeat="(i, j) in nearbyReservationMenuController.companyMenus[k].menuitems" 
+					ng-show="!v.isCompanyMenuHidden">
+					<div 
+						class="item item-thumbnail-left">
+						<img 
+							id="menuitems-image" 
+							name="menuitem-image" 
+							src={{j.menuitem_image}}>
+						<span 
+							class="font-family-1-size-small">
+							<underline><b>{{j.menuitem_name}}</b></underline>
+						</span>
+						<div 
+							class='menuitems-desc-container'>
+							<span 
+								class="font-family-2-size-small">
+								{{j.menuitem_desc}}
+							</span>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</ion-content>

@@ -56,7 +56,7 @@ function customerHomeController(
 				return localStorage.getItem(MARKETING_KEY);
 			}, 
 			function(){
-				var marketing = undefined;
+				var marketing = vm.marketing;
 				
 				marketing = localStorage.getItem(MARKETING_KEY);
 				marketing = JSON.parse(marketing);

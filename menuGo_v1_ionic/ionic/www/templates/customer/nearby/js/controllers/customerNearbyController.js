@@ -246,10 +246,7 @@ function customerNearbyController(
 			function(){
 				return localStorage.getItem(COMPANIES_KEY);
 			}, 
-			function(
-					nVal, 
-					oVal
-				){
+			function(){
 				var companies = vm.companies;
 				
 				companies = localStorage.getItem(COMPANIES_KEY);
