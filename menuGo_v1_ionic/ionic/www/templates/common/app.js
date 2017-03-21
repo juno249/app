@@ -66,26 +66,6 @@ function doRouteConfig(
 				}
 			}
 		})
-		.state('customer.nearby.menu', {
-			url: '/menu/company/:companyName/branch/:branchName', 
-			views: {
-				'main@': {
-					templateUrl: 'templates/customer/nearby/menu/customer-nearby-menu.html', 
-					controller: 'customerNearbyMenuController', 
-					controllerAs: 'customerNearbyMenuController'
-				}
-			}
-		})
-		.state('customer.nearby.menu.order', {
-			url: '/order', 
-			views: {
-				'main@': {
-					templateUrl: 'templates/customer/nearby/menu/order/customer-nearby-menu-order.html', 
-					controller: 'customerNearbyMenuOrderController', 
-					controllerAs: 'customerNearbyMenuOrderController'
-				}
-			}
-		});
 		
 		$urlRouterProvider
 		.otherwise('/customer/home');
