@@ -78,10 +78,6 @@
 			</div>
 			<div 
 				class="categories-container child-content-center">
-				<div 
-					class="child-content-center container-header font-family-1-size-medium">
-					<b>FOOD CATEGORIES</b>
-				</div>
 				<button 
 					class="button button-assertive button-small font-family-1-size-small" 
 					ng-click="customerNearbyController.setCategory('')">
@@ -98,100 +94,124 @@
 				</button>				
 			</div>
 			<div 
-					class="child-content-center container-header font-family-1-size-medium">
-					<b>RESTAURANTS</b>
-				</div>
+				class="child-content-center container-header font-family-1-size-medium">
+				<b>RESTAURANTS</b>
+			</div>
 			<div 
 				class="card companies-branches-container" 
 				ng-repeat="(k, v) in customerNearbyController.companies" 
 				ng-show="(customerNearbyController.category == '') || (customerNearbyController.category == v.company_category)">
+				<!--  *************** 
+						companies-name-container (start)
+						*************** -->
 				<div 
-					class="companies-container">
-					<!--  *************** 
-							companies-name-container (start)
-							*************** -->
-					<div 
-						class="child-content-center font-family-1-size-small" 
-						id="companies-name-container" 
-						name="companies-name-container">
-						{{v.company_name}}
-					</div>
-					<!--  *************** 
-							companies-name-container (end)
-							*************** -->
-					
-					<!--  *************** 
-							companies-logo-image-container (start)
-							*************** -->
-					<div 
-						class="child-content-center" 
-						id="companies-logo-image-container" 
-						name="companies-logo-image-container">
-						<img  
-							src={{v.company_logo}}>
-					</div>
-					<!--  *************** 
-							companies-logo-image-container (end)
-							*************** -->
-					
-					<!--  *************** 
-							featured-menus-header (start)
-							*************** -->
-					<div 
-						class="child-content-center font-family-2-size-small" 
-						id="featured-menus-header" 
-						name="featured-menus-header">
-						Featured Menus
-					</div>
-					<!--  *************** 
-							featured-menus-header (end)
-							*************** -->
-					
-					<!--  *************** 
-							featured-menus-image-container (start)
-							*************** -->
-					<div 
-						class="child-content-center" 
-						id="featured-menus-image-container" 
-						name="featured-menus-image-container" 
-						ng-if="keys(customerNearbyController.companiesMenuitems[k]).length == 0">
-						<img 
-							src="templates/customer/nearby/res/img/null.png">
-					</div>
-					<ion-scroll 
-						direction="x" 
-						id="featured-menus-image-container" 
-						name="featured-menus-image-container" 
-						ng-if="keys(customerNearbyController.companiesMenuitems[k]).length > 0">
-						<img 
-							ng-repeat="(i, j) in customerNearbyController.companiesMenuitems[k]" 
-							src={{j.menuitem_image}}>
-					</ion-scroll>
-					<!--  *************** 
-							featured-menus-image-container (end)
-							*************** -->
+					class="child-content-center font-family-1-size-medium item item-divider" 
+					id="companies-name-container" 
+					name="companies-name-container">
+					{{v.company_name}}
 				</div>
+				<!--  *************** 
+						companies-name-container (end)
+						*************** -->
+				
+				<!--  *************** 
+						companies-logo-image-container (start)
+						*************** -->
 				<div 
-					class="branches-container">
-					<ion-list>
-						<ion-radio 
-							ng-model="customerNearbyController.companyBranch" 
-							ng-value="{'companyName': v.company_name, 'branchName': j.branch_name}" 
-							ng-repeat="(i, j) in customerNearbyController.companiesBranches[k]">
-							<i 
-								class="icon ion-map">
-							</i>
+					class="child-content-center item" 
+					id="companies-logo-image-container" 
+					name="companies-logo-image-container">
+					<img 
+						src={{v.company_logo}}>
+				</div>
+				<!--  *************** 
+						companies-logo-image-container (end)
+						*************** -->
+				
+				<!--  *************** 
+						featured-menus-header (start)
+						*************** -->
+				<div 
+					class="child-content-center font-family-1-size-small item" 
+					id="featured-menus-header" 
+					name="featured-menus-header">
+					<b>Featured Menus</b>
+				</div>
+				<!--  *************** 
+						featured-menus-header (end)
+						*************** -->
+				
+				<!--  *************** 
+						featured-menus-image-container (start)
+						*************** -->
+				<ion-slide-box 
+					auto-play="true" 
+					class="item" 
+					delegate-handle="featured-menus-slidebox" 
+					direction="x" 
+					does-continue="true" 
+					id="featured-menus-slidebox" 
+					name="featured-menus-slidebox" 
+					ng-if="keys(customerNearbyController.companiesMenuitems[k]).length > 0" 
+					show-pager="false">
+					<ion-slide 
+						ng-repeat="(i, j) in customerNearbyController.companiesMenuitems[k]">
+						<div 
+							id="featured-menus-container" 
+							name="featured-menus-container" 
+							class="item item-thumbnail-left">
+							<img 
+								id="featured-menus-image" 
+								name="featured-menus-image" 
+								src={{j.menuitem_image}}>
 							<span 
-								class="font-family-1-size-medium">
-								<b>{{i}}</b><br>
+								class="font-family-1-size-small">
+								<underline><b>{{j.menuitem_name}}</b><br></underline>
 							</span>
 							<span 
 								class="font-family-2-size-small">
-								<underline>{{customerNearbyController.toStringAddress(j);}}</underline>
+								{{j.menuitem_desc}}
 							</span>
-						</ion-radio>
-					</ion-list>
+						</div>
+					</ion-slide>
+				</ion-slide-box>
+				<!--  *************** 
+						featured-menus-image-container (end)
+						*************** -->
+				
+				<!--  *************** 
+						branches-header (start)
+						*************** -->
+				<div 
+					class="child-content-center font-family-1-size-small item" 
+					id="branches-header" 
+					name="branches-header">
+					<b>Branches</b>
 				</div>
+				<!--  *************** 
+						branches-header (end)
+						*************** -->
+						
+				<ion-list 
+					class="item">
+					<ion-radio 
+						ng-model="customerNearbyController.companyBranch" 
+						ng-value="{'companyName': v.company_name, 'branchName': j.branch_name}" 
+						ng-repeat="(i, j) in customerNearbyController.companiesBranches[k]">
+						<i 
+							class="icon ion-map">
+						</i>
+						<span 
+							class="font-family-1-size-medium">
+							<b>{{j.branch_name}}</b><br>
+						</span>
+						<span 
+							class="font-family-2-size-small">
+							{{customerNearbyController.toStringAddress(j);}}
+						</span>
+					</ion-radio>
+				</ion-list>		
+				
 			</div>
 		</div>
 	</ion-content>

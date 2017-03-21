@@ -6,7 +6,8 @@ div.home-container div.blogs-container div#blogs-image-container{
 }
 
 div.home-container div.advertisements-container div#advertisements-image-container img, 
-div.home-container div.blogs-container div#blogs-image-container img{
+div.home-container div.blogs-container div#blogs-image-container img, 
+div.home-container div.company-logo-image-container img{
 	height: 100%;
 }
 
@@ -42,12 +43,9 @@ div.home-container div.company-logo-image-container{
 	height: 100px;
 }
 
-div.home-container div.company-logo-image-container img{
-	height: 100%;
-}
-
 div.home-container div.search-container div.item{
-	border: none;
+	background-color: #303030;
+	color: #f0f0f0;
 }
 
 div.home-container div.search-container label{

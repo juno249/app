@@ -9,10 +9,10 @@ div.nearby-container div.search-result-container{
 }
 
 div.nearby-container div.categories-container, 
-div.nearby-container div.container-header{
-	border-bottom: solid 1px #d3d3d3;
-	
-	margin-top: 40px;
+div.nearby-container div.companies-branches-container div#companies-name-container, 
+div.nearby-container div.search-container div.item{
+	background-color: #303030;
+	color: #f0f0f0;
 }
 
 div.nearby-container div.categories-container button{
@@ -21,63 +21,46 @@ div.nearby-container div.categories-container button{
 	min-width: 100px;
 }
 
-div.nearby-container div.companies-branches-container div.companies-container{
-	height: 350px;
+div.nearby-container div.companies-branches-container div#branches-header, 
+div.nearby-container div.companies-branches-container div#featured-menus-header, 
+div.nearby-container div.companies-branches-container div#featured-menus-slidebox, 
+div.nearby-container div.search-container label, 
+div.nearby-container div.search-result-container ion-item{
+	padding-bottom: 5px;
+	padding-top: 5px;
 }
 
-div.nearby-container div.companies-branches-container div.companies-container div#companies-logo-image-container{
-	height: 55%;
+div.nearby-container div.companies-branches-container div#companies-logo-image-container{
+	height: 100px;
 }
 
-div.nearby-container div.companies-branches-container div.companies-container div#companies-logo-image-container img, 
-div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-image-container img, 
-div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container div.scroll, 
-div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container img, 
+div.nearby-container div.companies-branches-container div#companies-logo-image-container img, 
 div.nearby-container div.map-container ng-map#nearby-map{
 	height: 100%;
 }
 
-div.nearby-container div.companies-branches-container div.companies-container div#companies-name-container{
-	background-color: #303030;
-	color: #f0f0f0;
+div.nearby-container div.companies-branches-container div#featured-menus-container{
+	line-height: 13px;
 	
-	height: 7%;
+	white-space: normal;
 }
 
-div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-header{
-	height: 7%;
-}
-
-div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-image-container, 
-div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container{
-	background-color: #303030;
-	
-	height: 30%;
-	
-	white-space: nowrap;	
-}
-
-div.nearby-container div.companies-branches-container div.companies-container div#featured-menus-image-container img, 
-div.nearby-container div.companies-branches-container div.companies-container ion-scroll#featured-menus-image-container img{
+div.nearby-container div.companies-branches-container div#featured-menus-container img#featured-menus-image{
 	border-radius: 20px;
+}
+
+div.nearby-container div.companies-branches-container ion-list{
+	padding: 0px;
+}
+
+div.nearby-container div.container-header{
+	border-bottom: solid 1px #d3d3d3;
+	border-top: solid 1px #d3d3d3;
 	
-	padding: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
 }
 
 div.nearby-container div.map-container{
 	height: 250px;
-}
-
-div.nearby-container div.search-container div.item{
-	background-color: #303030;
-	
-	border: none;
-}
-
-div.nearby-container div.search-container label, 
-div.nearby-container div.search-result-container ion-item{
-	background-color: #f9f9f9;
-	
-	padding-bottom: 5px;
-	padding-top: 5px;
 }

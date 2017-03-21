@@ -6,6 +6,7 @@ angular
  * Controller Dependency Injection (Start)
  * ****************************** */
 customerNearbyController.$inject = [
+	'$ionicSlideBoxDelegate', 
 	'$q', 
 	'$scope', 
 	'$state', 
@@ -23,6 +24,7 @@ customerNearbyController.$inject = [
  * Controller Implementation (Start)
  * ****************************** */
 function customerNearbyController(
+		$ionicSlideBoxDelegate, 
 		$q, 
 		$scope, 
 		$state, 
@@ -173,6 +175,7 @@ function customerNearbyController(
 	function loadCompaniesMenuitems(){
 		var companies = vm.companies;
 		var companiesMenuitems = {};
+		var companiesMenuitemsSlidebox = 'featured-menus-slidebox';
 		
 		angular.forEach(companies, function(v, k){
 			var company = v;
@@ -195,6 +198,7 @@ function customerNearbyController(
 			companiesMenuitems[k] = companyMenuitems;
 		});
 		
+		$ionicSlideBoxDelegate.$getByHandle(companiesMenuitemsSlidebox).update();
 		vm.companiesMenuitems = companiesMenuitems;
 	}
 	
