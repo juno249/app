@@ -67,7 +67,7 @@ function doRouteConfig(
 			}
 		})
 		.state('customer.nearby.reservation_menu', {
-			url: 'reservation_menu/:companyName/:branchName', 
+			url: '/reservation_menu/:companyName/:branchName', 
 			views: {
 				'customer-nearby@customer': {
 					templateUrl: 'templates/customer/nearby/reservation_menu/nearby-reservation_menu.html', 
@@ -78,7 +78,7 @@ function doRouteConfig(
 		})
 
 		$urlRouterProvider
-		.otherwise('/customer/nearby');
+		.otherwise('/customer/home');
 	}
 
 /* ******************************
@@ -110,4 +110,16 @@ function doRunConfig(
 	});
 	
 	$rootScope.keys = Object.keys;
+	
+	$rootScope.$on(
+			'$stateChangeStart', 
+			function(
+				e, 
+				toState, 
+				toStateParams, 
+				fromState, 
+				fromStateParams
+				){
+			}
+		)
 }
