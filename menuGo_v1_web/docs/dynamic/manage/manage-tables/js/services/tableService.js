@@ -74,6 +74,7 @@ function tableService(
 
 		function fetchTablesSuccessCallback(response){
 			var tables = undefined;
+			tableServiceObj.tables = {};
 			
 			convertTablesResponseToMap(response.data);
 			tables = tableServiceObj.tables;
@@ -115,6 +116,7 @@ function tableService(
 		
 		function fetchTableSuccessCallback(response){
 			var table = undefined;
+			tableServiceObj.table = {};
 			
 			convertTableResponseToMap(response.data);
 			table = tableServiceObj.table;

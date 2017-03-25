@@ -70,6 +70,7 @@ function branchService(
 		
 		function fetchBranchesSuccessCallback(response){
 			var branches = undefined;
+			branchServiceObj.branches = {};
 			
 			convertBranchesResponseToMap(response.data);
 			branches = branchServiceObj.branches;
@@ -111,6 +112,7 @@ function branchService(
 		
 		function fetchBranchSuccessCallback(response){
 			var branch = undefined;
+			branchServiceObj.branch = {};
 			
 			convertBranchResponseToMap(response.data);
 			branch = branchServiceObj.branch;

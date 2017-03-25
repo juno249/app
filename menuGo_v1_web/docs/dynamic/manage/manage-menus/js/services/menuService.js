@@ -68,6 +68,7 @@ function menuService(
 		
 		function fetchMenusSuccessCallback(response){
 			var menus = undefined;
+			menuServiceObj.menus = {};
 			
 			convertMenusResponseToMap(response.data);
 			menus = menuServiceObj.menus;
@@ -109,6 +110,7 @@ function menuService(
 
 		function fetchMenuSuccessCallback(response){
 			var menu = undefined;
+			menuServiceObj.menu = {};
 			
 			convertMenuResponseToMap(response.data);
 			menu = menuServiceObj.menu;
