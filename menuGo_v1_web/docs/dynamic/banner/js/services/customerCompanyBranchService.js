@@ -37,7 +37,7 @@ function customerCompanyBranchService(
 			fetchCustomerCompanyBranch: fetchCustomerCompanyBranch, 
 			addCustomerCompanyBranch: addCustomerCompanyBranch, 
 			deleteCustomerCompanyBranch: deleteCustomerCompanyBranch
-	}
+	};
 	
 	function getCustomersCompaniesBranches(){	return customerCompanyBranchServiceObj.customersCompaniesBranches;
 	}
@@ -73,6 +73,7 @@ function customerCompanyBranchService(
 		
 		function fetchCustomersCompaniesBranchesSuccessCallback(response){
 			var customersCompaniesBranches = undefined;
+			customerCompanyBranchServiceObj.customersCompaniesBranches = {};
 			
 			convertCustomersCompaniesBranchesResponseToMap(response.data);
 			customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
@@ -113,6 +114,7 @@ function customerCompanyBranchService(
 		
 		function fetchCustomerCompanyBranchSuccessCallback(response){
 			var customerCompanyBranch = undefined;
+			customerCompanyBranchServiceObj.customerCompanyBranch = {};
 			
 			convertCustomerCompanyBranchResponseToMap(response.data);
 			customerCompanyBranch = customerCompanyBranchServiceObj.customerCompanyBranch;
@@ -137,6 +139,8 @@ function customerCompanyBranchService(
 				customerCompanyBranchServiceObj.customerCompanyBranch[key] = customerCompanyBranchDetails;
 			}
 		}
+		return deferred.promise;
+	}
 	
 	function addCustomerCompanyBranch(transParams){
 		var deferred = $q.defer();
@@ -144,7 +148,7 @@ function customerCompanyBranchService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers-companies-branches', 
 				data: transParams
-		}
+		};
 		
 		$http(httpConfig)
 		.then(addCustomerCompanyBranchTransactionSuccessCallback)
@@ -163,7 +167,7 @@ function customerCompanyBranchService(
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchName
-		}
+		};
 		
 		$http(httpConfig)
 		.then(deleteCustomerCompanyBranchSuccessCallback)
@@ -174,6 +178,7 @@ function customerCompanyBranchService(
 		
 		function deleteCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
+		return deferred.promise;
 	}
 	
 	return customerCompanyBranchServiceObj;
