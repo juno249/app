@@ -11,43 +11,27 @@ include_once "orderreferencesController.php";
 include_once "ordersController.php";
 
 class orderreferencesOrdersConstants{
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW ORDERREFERENCE ORDER RECORDS';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING ORDERREFERENCE ORDER RECORDS';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ORDERREFERENCE ORDER RECORDS';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const inconsistencyValidationErr1  = 'KEYS CUSTOMER_USERNAME DO NOT MATCH';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class orderreferencesOrdersController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to customersController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth', ['except' => ['addCustomerCompanyBranch']]);
 	}
 	
-	/**
-	 * POST method addOrderreferenceOrder
-	 * URL-->/orderreferences-orders/
-	 * */
+	//URL-->>/orderreferences-orders/
 	public function addOrderreferenceOrder(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);

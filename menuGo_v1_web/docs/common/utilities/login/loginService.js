@@ -2,29 +2,21 @@ angular
 .module('starter')
 .factory('loginService', loginService);
 
-/* ******************************
- * Service Dependency Injection (Start)
- * ****************************** */
 loginService.$inject = [
 	'API_BASE_URL', 
 	'USER_ROLES', 
 	'$http', 
 	'$localStorage', 
 	'$q' 
-];
-/* ******************************
- * Service Dependency Injection (End)
- * ****************************** */
+	];
+
 function loginService(
 		API_BASE_URL, 
 		USER_ROLES, 
 		$http, 
 		$localStorage, 
-		$q 
-	){
-	/* ******************************
-	 * Service Return Object (Start)
-	 * ****************************** */
+		$q
+		){
 	var loginServiceObj = {
 		loginUsername: undefined, 
 		loginPassword: undefined, 
@@ -32,7 +24,10 @@ function loginService(
 			username: undefined, 
 			token: undefined, 
 			role: undefined, 
-			name: undefined
+			name: undefined, 
+			company: undefined, 
+			branch: undefined, 
+			isAuthenticated: undefined
 		}, 
 		getLoginUsername: getLoginUsername, 
 		getLoginPassword: getLoginPassword, 
@@ -42,120 +37,80 @@ function loginService(
 		setUser: setUser, 
 		doLogin: doLogin
 	};
-	/* ******************************
-	 * Service Return Object (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Accessors: Getters & Setters (Start)
-	 * ****************************** */
-	function getLoginUsername(){
-		return loginServiceObj.loginUsername;
+	function getLoginUsername(){	return loginServiceObj.loginUsername;
 	}
-	function getLoginPassword(){
-		return loginServiceObj.loginPassword;
+	function getLoginPassword(){	return loginServiceObj.loginPassword;
 	}
-	function getUser(){
-		return loginServiceObj.user;
+	function getUser(){	return loginServiceObj.user;
 	}
-	function setLoginUsername(loginUsername){
-		loginServiceObj.loginUsername = loginUsername;
+	function setLoginUsername(loginUsername){	loginServiceObj.loginUsername = loginUsername;
 	}
-	function setLoginPassword(loginPassword){
-		loginServiceObj.loginPassword = loginPassword;
+	function setLoginPassword(loginPassword){	loginServiceObj.loginPassword = loginPassword;
 	}
-	function setUser(user){
-		loginServiceObj.user = user;
+	function setUser(user){	loginServiceObj.user = user;
 	}
-	/* ******************************
-	 * Accessors: Getters & Setters (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doLogin()
-	 * purpose: logs in and gets token from server
-	 * ****************************** */
 	function doLogin(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/login?customer_username=' + loginServiceObj.loginUsername + '&customer_password=' + loginServiceObj.loginPassword
 		};
+		
 		$http(httpConfig)
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function doLoginSuccessCallback(response){
-			var user = {};
 			var userResponseData = response.data.User;
 			
-			user.username = userResponseData.customer_username;
-			user.token = response.data.Token;
-			user.role = userResponseData.customer_role;
-			user.name = 
+			loginServiceObj.user.username = userResponseData.customer_username;
+			loginServiceObj.user.token = response.data.Token;
+			loginServiceObj.user.role = userResponseData.customer_role;
+			loginServiceObj.user.name = 
 				userResponseData.customer_name_fname + " " + 
 				userResponseData.customer_name_mname + ". " + 
 				userResponseData.customer_name_lname
 		
-			$http.defaults.headers.common.Authorization = "bearer " + user.token;
+			$http.defaults.headers.common.Authorization = "bearer " + loginServiceObj.user.token;
 			
 			getCustomerCompanyBranch();
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: getCustomerCompanyBranch()
-			 * purpose: logs in and gets token from server
-			 * ****************************** */
 			function getCustomerCompanyBranch(){
 				var httpConfig = {
 						method: 'GET', 
 						url: API_BASE_URL + '/customers-companies-branches/query', 
-						params: {customerUsername: user.username}
+						params: {	customerUsername: loginServiceObj.user.username	}
 				}
+				
 				$http(httpConfig)
 				.then(getCustomerCompanyBranchSuccessCallback)
 				.catch(getCustomerCompanyBranchFailedCallback);
 				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
 				function getCustomerCompanyBranchSuccessCallback(response){
-					var responseData = response.data;
+					var userResponseData = response.data;
+					userResponseData = userResponseData[0];
 					
-					responseData = responseData[0];
-					user.company = responseData.company_name;
-					user.branch = responseData.branch_id;
-					user.isAuthenticated = true;
+					loginServiceObj.user.company = userResponseData.company_name;
+					loginServiceObj.user.branch = userResponseData.branch_id;
+					loginServiceObj.user.isAuthenticated = true;
 					
-					user = JSON.stringify(user);
-					localStorage.setItem('User', user);
+					loginServiceObj.user = JSON.stringify(loginServiceObj.user);
+					localStorage.setItem('User', loginServiceObj.user);
+					
 					deferred.resolve();
 				}
 				
-				function getCustomerCompanyBranchFailedCallback(responseError){
-					deferred.reject(responseError);
+				function getCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
 				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
 			}
 		}
 		
-		function doLoginFailedCallback(responseError){
-			deferred.reject(responseError);
+		function doLoginFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
 	return loginServiceObj;
 }
-/* ******************************
- * Service Implementation (End)
- * ****************************** */

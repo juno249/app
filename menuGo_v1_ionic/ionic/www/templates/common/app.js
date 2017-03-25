@@ -1,7 +1,4 @@
 angular
-/* ******************************
- * Module Dependency Injection (Start)
- * ****************************** */
 .module('starter', [
 	'ionic', 
 	'ngCordova', 
@@ -9,23 +6,15 @@ angular
 	'ngStorage', 
 	'ion-datetime-picker'
 	])
-/* ******************************
- * Module Dependency Injection (End)
- * ****************************** */
 
 .config(doRouteConfig)
 .config(doIonicConfig)
 .run(doRunConfig);
 
-/* ******************************
- * Method Implementation
- * method name: doRouteConfig()
- * purpose: handles routing configuration
- * ****************************** */
 function doRouteConfig( 
 		$stateProvider, 
 		$urlRouterProvider
-	){
+		){
 		$stateProvider
 		.state('login', {
 			url: '/', 
@@ -36,7 +25,8 @@ function doRouteConfig(
 					controllerAs: 'loginController'
 				}
 			}
-		})
+		}
+		)
 		.state('customer', {
 			url: '/customer', 
 			abstract: true, 
@@ -45,7 +35,8 @@ function doRouteConfig(
 					templateUrl: 'templates/customer/customer.html'
 				}
 			}
-		})
+		}
+		)
 		.state('customer.home', {
 			url: '/home', 
 			views: {
@@ -55,7 +46,8 @@ function doRouteConfig(
 					controllerAs: 'customerHomeController'
 				}
 			}
-		})
+		}
+		)
 		.state('customer.nearby', {
 			url: '/nearby', 
 			views: {
@@ -65,7 +57,8 @@ function doRouteConfig(
 					controllerAs: 'customerNearbyController'
 				}
 			}
-		})
+		}
+		)
 		.state('customer.nearby.reservation_menu', {
 			url: '/reservation_menu/:companyName/:branchName', 
 			views: {
@@ -75,51 +68,45 @@ function doRouteConfig(
 					controllerAs: 'nearbyReservationMenuController'
 				}
 			}
-		})
+		}
+		)
 
 		$urlRouterProvider
 		.otherwise('/customer/home');
 	}
 
-/* ******************************
- * Method Implementation
- * method name: doIonicConfig()
- * purpose: handles ionic configuration
- * ****************************** */
 function doIonicConfig($ionicConfigProvider){
 	$ionicConfigProvider.tabs.position('bottom');
 }
 
-/* ******************************
- * Method Implementation
- * method name: doRunConfig()
- * purpose: handles run configuration
- * ****************************** */
 function doRunConfig(
 		$ionicPlatform, 
 		$rootScope
-	){
-	$ionicPlatform.ready(function(){
-	    if(window.cordova && window.cordova.plugins.Keyboard) {
-	    	cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-	    	cordova.plugins.Keyboard.disableScroll(true);
-	    }
-	    if(window.StatusBar) {
-	    	StatusBar.styleDefault();
-	    }
-	});
+		){
+	$ionicPlatform.ready(
+			function(){
+				if(window.cordova && window.cordova.plugins.Keyboard) {
+			    	cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			    	cordova.plugins.Keyboard.disableScroll(true);
+			    }
+				
+				if(window.StatusBar) {
+			    	StatusBar.styleDefault();
+			    }
+			}
+			);
 	
 	$rootScope.keys = Object.keys;
-	
 	$rootScope.$on(
 			'$stateChangeStart', 
 			function(
-				e, 
-				toState, 
-				toStateParams, 
-				fromState, 
-				fromStateParams
-				){
+					e, 
+					toState, 
+					toStateParams, 
+					fromState, 
+					fromStateParams
+					){
+				//do something here
 			}
-		)
+			);
 }

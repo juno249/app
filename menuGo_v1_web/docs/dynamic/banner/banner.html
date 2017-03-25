@@ -12,7 +12,7 @@
 		</div>
 		<ul 
 			class="font-family-1-size-medium nav navbar-nav navbar-right" 
-			ng-if="!bannerController.isAuthenticated">
+			ng-if="!bannerController.user.isAuthenticated">
 			<li>
 				<a 
 					ng-click="bannerController.doSignup();" 
@@ -26,7 +26,7 @@
 		</ul>
 		<form 
 			class="form-inline navbar-form navbar-right" 
-			ng-if="!bannerController.isAuthenticated">
+			ng-if="!bannerController.user.isAuthenticated">
 			<div 
 				class="form-group required">
 				<div 
@@ -96,7 +96,7 @@
 		</form>
 		<ul 
 			class="font-family-1-size-medium nav navbar-nav navbar-right" 
-			ng-if="bannerController.isAuthenticated">
+			ng-if="bannerController.user.isAuthenticated">
 			<li>
 				<a 
 					href="#">

@@ -12,59 +12,40 @@ include_once "branchesController.php";
 
 class tablesConstants{
 	const tablesTable = 'tables';
-	/*
-	 * CONSTANTS w/c signify the column_name in tables table
-	 * */
+	
 	const dbTableId = 'table_id';
 	const dbBranchId = 'branch_id';
 	const dbTableNumber = 'table_number';
 	const dbTableCapacity = 'table_capacity';
 	const dbTableStatus = 'table_status';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqTableId = 'TableId';
 	const reqBranchId = 'BranchId';
 	const reqTableNumber = 'TableNumber';
 	const reqTableCapacity = 'TableCapacity';
 	const reqTableStatus = 'TableStatus';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW TABLE RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING TABLE RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING TABLE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const inconsistencyValidationErr1 = 'KEY-COMBINATION COMPANY_NAME & BRANCH_NAME IS NON-EXISTING';
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & BRANCH_NAME & TABLE_NUMBER IS NON-EXISTING';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class tablesController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to tablesController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
 
-	/**
-	 * getJoinCompanyBranchTable: joins companies_table & branches_table & tables_table w/a variable $mySqlWhere
-	 * */
 	public function getJoinCompanyBranchTable($mySqlWhere){
 		$companyBranchTable = DB::table(tablesConstants::tablesTable)
 		->join(
@@ -84,10 +65,7 @@ class tablesController extends Controller
 						return $companyBranchTable;
 	}
 
-	/**
-	 * GET method getAllCompanyBranchTables
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables
 	public function getAllCompanyBranchTables($CompanyName, $BranchName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -106,11 +84,8 @@ class tablesController extends Controller
 		}
 		return $tablesResponse;
 	}
-
-	/**
-	 * GET method getCompanyBranchTable
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
-	 **/
+	
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber} 
 	public function getCompanyBranchTable($CompanyName, $BranchName, $TableNumber){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -130,11 +105,8 @@ class tablesController extends Controller
 		}
 		return $tablesResponse;
 	}
-
-	/**
-	 * GET method getByQuery
-	 * URL-->/tables/query
-	 **/
+	
+	//URL-->>/tables/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 
@@ -168,9 +140,6 @@ class tablesController extends Controller
 		return $tablesResponse;
 	}
 
-	/**
-	 * Do basic Laravel validation
-	 * */
 	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -201,10 +170,7 @@ class tablesController extends Controller
 		}
 	}
 
-	/**
-	 * POST method addTable
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/
 	public function addTable(Request $jsonRequest, $CompanyName, $BranchName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -242,10 +208,7 @@ class tablesController extends Controller
 		return tablesConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * PUT method updateTable
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
 	public function updateTable(Request $jsonRequest, $CompanyName, $BranchName, $TableNumber){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -276,10 +239,7 @@ class tablesController extends Controller
 		return tablesConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * DELETE method deleteTable
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
 	public function deleteTable($CompanyName, $BranchName, $TableNumber){
 		$mySqlWhere = array();
 		$errorMsg = '';

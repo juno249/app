@@ -2,33 +2,21 @@ angular
 .module('starter')
 .factory('customerService', customerService);
 
-/* ******************************
- * Service Dependency Injection (Start)
- * ****************************** */
 customerService.$inject = [
 	'API_BASE_URL', 
 	'CUSTOMERS_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
 	'$q' 
-];
-/* ******************************
- * Service Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Service Implementation (Start)
- * ****************************** */
 function customerService(
 		API_BASE_URL, 
 		CUSTOMERS_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q 
-	){
-	/* ******************************
-	 * Service Return Object (Start)
-	 * ****************************** */
+		){
 	var customerServiceObj = {
 			customers: {}, 
 			customer: {}, 
@@ -47,34 +35,19 @@ function customerService(
 			updateCustomer: updateCustomer, 
 			deleteCustomer: deleteCustomer
 	};
-	/* ******************************
-	 * Service Return Object (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Accessors: Getters & Setters (Start)
-	 * ****************************** */
-	function getCustomers(){
-		return customerServiceObj.customers;
+	function getCustomers(){	return customerServiceObj.customers;
 	}
-	function getCustomer(){
-		return customerServiceObj.customer;
+	function getCustomer(){	return customerServiceObj.customer;
 	}
-	function getCustomerUsername(){
-		return customerServiceObj.customerUsername;
+	function getCustomerUsername(){	return customerServiceObj.customerUsername;
 	}
-	function setCustomers(customers){
-		customerServiceObj.customers = customers;
+	function setCustomers(customers){	customerServiceObj.customers = customers;
 	}
-	function setCustomer(customer){
-		customerServiceObj.customer = customer;
+	function setCustomer(customer){	customerServiceObj.customer = customer;
 	}
-	function setCustomerUsername(customerUsername){
-		customerServiceObj.customerUsername = customerUsername;
+	function setCustomerUsername(customerUsername){	customerServiceObj.customerUsername = customerUsername;
 	}
-	/* ******************************
-	 * Accessors: Getters & Setters (End)
-	 * ****************************** */
 	
 	/* ******************************
 	 * Method Implementation
@@ -86,18 +59,14 @@ function customerService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers'
-		}
+		};
+		
 		$http(httpConfig)
 		.then(fetchCustomersSuccessCallback)
 		.catch(fetchCustomersFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function fetchCustomersSuccessCallback(response){
-			var customers = customerServiceObj.customers;
-			customers = {};
-			customerServiceObj.customers = customers;
+			var customers = undefined;
 			
 			convertCustomersResponseToMap(response.data);
 			customers = customerServiceObj.customers;
@@ -107,62 +76,38 @@ function customerService(
 			deferred.resolve(response);
 		}
 		
-		function fetchCustomersFailedCallback(responseError){
-			return deferred.reject(responseError);
+		function fetchCustomersFailedCallback(responseError){	return deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertCustomersResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
 		function convertCustomersResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var customersKey = CUSTOMERS_DB_FIELDS[0]; //customer_username
-			var customersDetails;
-			
-			for(var i=0; i<responseDataLength; i++){
-				var customersRunner = responseData[i];
-				var customersDBFieldCount = Object.keys(CUSTOMERS_DB_FIELDS).length;
-				var customersDBFieldRunner = null;
-				customersDetails = {};
+			for(var i=0; i<responseData.length; i++){
+				var customersDetails = {};
+				var key = undefined;
 				
-				for(var j=0; j<customersDBFieldCount; j++){
-					customersDBFIeldRunner = CUSTOMERS_DB_FIELDS[j];
-					customersDetails[customersDBFIeldRunner] = customersRunner[customersDBFIeldRunner];
+				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
+					customersDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
 				}
-				var customersKeyValue = customersRunner[customersKey];
-				customerServiceObj.customers[customersKeyValue] = customersDetails;
+				
+				key = responseData[i][CUSTOMERS_DB_FIELDS[0]]; //customer_username
+				customerServiceObj.customers[key] = customersDetails;
 			}
 		}
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchCustomer()
-	 * purpose: fetch customer from server
-	 * ****************************** */
 	function fetchCustomer(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername
 		};
+		
 		$http(httpConfig)
 		.then(fetchCustomerSuccessCallback)
 		.catch(fetchCustomerFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function fetchCustomerSuccessCallback(response){
-			var customer = customerServiceObj.customer;
-			customer = {};
-			customerServiceObj.customer = customer;
+			var customer = undefined;
 			
 			convertCustomerResponseToMap(response.data);
 			customer = customerServiceObj.customer;
@@ -172,109 +117,65 @@ function customerService(
 			deferred.resolve(response);
 		}
 		
-		function fetchCustomerFailedCallback(responseError){
-			deferred.reject(responseError);
+		function fetchCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertCustomerResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
 		function convertCustomerResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var customerKey = CUSTOMERS_DB_FIELDS[0]; //customer_username
-			var customerDetails;
-			
-			for(var i=0; i<responseDataLength; i++){
-				var customerRunner = responseData[i];
-				var customerDBFieldCount = Object.keys(CUSTOMERS_DB_FIELDS).length;
-				var customerDBFieldRunner = null;
-				customerDetails = {};
+			for(var i=0; i<responseData.length; i++){
+				var customerDetails = {};
+				var key = undefined;
 				
-				for(var j=0; j<customerDBFieldCount; j++){
-					customerDBFieldRunner = CUSTOMERS_DB_FIELDS[j];
-					customerDetails[customerDBFieldRunner] = customerRunner[customerDBFieldRunner];
+				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
+					customerDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
 				}
-				var customerKeyValue = customerRunner[customerKey];
-				customerServiceObj.customer[customerKeyValue] = customerDetails;
+				
+				key = responseData[i][CUSTOMERS_DB_FIELDS[0]]; //customer_username
+				customerServiceObj.customer[key] = customerDetails;
 			}
 		}
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: addCustomerValidate()
-	 * purpose: validates data for add
-	 * ****************************** */
 	function addCustomerValidate(customers){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/customers/validate', 
 				data: customers
-		}
+		};
+		
 		$http(httpConfig)
 		.then(addCustomerValidateSuccessCallback)
 		.catch(addCustomerValidateFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function addCustomerValidateSuccessCallback(response){
-			deferred.resolve(response);
+		function addCustomerValidateSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function addCustomerValidateFailedCallback(responseError){
-			deferred.reject(responseError);
+		function addCustomerValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: addCustomer()
-	 * purpose: adds customer
-	 * ****************************** */
 	function addCustomer(customers){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/customers', 
 				data: customers
-		}
+		};
+		
 		$http(httpConfig)
 		.then(addCustomerSuccessCallback)
 		.catch(addCustomerFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function addCustomerSuccessCallback(response){
-			deferred.resolve(response);
+		function addCustomerSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function addCustomerFailedCallback(responseError){
-			deferred.reject(responseError);
+		function addCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: updateCustomerValidate()
-	 * purpose: validates data for update
-	 * ****************************** */
 	function updateCustomerValidate(customer){
 		var deferred = $q.defer();
 		var httpConfig = {
@@ -282,31 +183,19 @@ function customerService(
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername + '/validate', 
 				data: customer
 		};
+		
 		$http(httpConfig)
 		.then(updateCustomerSuccessCallback)
 		.catch(updateCustomerFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function updateCustomerSuccessCallback(response){
-			deferred.resolve(response);
+		function updateCustomerSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function updateCustomerFailedCallback(responseError){
-			deferred.reject(responseError);
+		function updateCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: updateCustomer()
-	 * purpose: updates customer
-	 * ****************************** */
 	function updateCustomer(customer){
 		var deferred = $q.defer();
 		var httpConfig = {
@@ -314,59 +203,37 @@ function customerService(
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername, 
 				data: customer
 		};
+		
 		$http(httpConfig)
 		.then(updateCustomerSuccessCallback)
 		.catch(updateCustomerFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function updateCustomerSuccessCallback(response){
-			deferred.resolve(response);
+		function updateCustomerSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function updateCustomerFailedCallback(responseError){
-			deferred.reject(responseError);
+		function updateCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: deleteCustomer()
-	 * purpose: deletes customer
-	 * ****************************** */
 	function deleteCustomer(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername
-		}
+		};
+		
 		$http(httpConfig)
 		.then(deleteCustomerSuccessCallback)
 		.catch(deleteCustomerFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function deleteCustomerSuccessCallback(response){
-			deferred.resolve(response);
+		function deleteCustomerSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function deleteCustomerFailedCallback(responseError){
-			deferred.reject(responseError);
+		function deleteCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
 	return customerServiceObj;
 }
-/* ******************************
- * Service Implementation (End)
- * ****************************** */

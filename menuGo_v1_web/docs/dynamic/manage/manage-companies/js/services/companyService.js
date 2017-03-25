@@ -2,33 +2,21 @@ angular
 .module('starter')
 .factory('companyService', companyService);
 
-/* ******************************
- * Service Dependency Injection (Start)
- * ****************************** */
 companyService.$inject = [
 	'API_BASE_URL', 
 	'COMPANIES_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
 	'$q' 
-];
-/* ******************************
- * Service Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Service Implementation (Start)
- * ****************************** */
 function companyService(
 		API_BASE_URL, 
 		COMPANIES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q 
-	){
-	/* ******************************
-	 * Service Return Object (Start)
-	 * ****************************** */
+		){
 	var companyServiceObj = {
 		companies: {}, 
 		company: {}, 
@@ -48,57 +36,33 @@ function companyService(
 		deleteCompany: deleteCompany, 
 		uploadCompanyLogo: uploadCompanyLogo
 	}
-	/* ******************************
-	 * Service Return Object (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Accessors: Getters & Setters (Start)
-	 * ****************************** */
-	function getCompanies(){
-		return companyServiceObj.companies;
+	function getCompanies(){	return companyServiceObj.companies;
 	}
-	function getCompany(){
-		return companyServiceObj.company;
+	function getCompany(){	return companyServiceObj.company;
 	}
-	function getCompanyName(){
-		return companyServiceObj.companyName;
+	function getCompanyName(){	return companyServiceObj.companyName;
 	}
-	function setCompanies(companies){
-		companyServiceObj.companies = companies;
+	function setCompanies(companies){	companyServiceObj.companies = companies;
 	}
-	function setCompany(company){
-		companyServiceObj.company = company;
+	function setCompany(company){	companyServiceObj.company = company;
 	}
-	function setCompanyName(companyName){
-		companyServiceObj.companyName = companyName;
+	function setCompanyName(companyName){	companyServiceObj.companyName = companyName;
 	}
-	/* ******************************
-	 * Accessors: Getters & Setters (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchCompanies()
-	 * purpose: fetch companies from server
-	 * ****************************** */
 	function fetchCompanies(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies'
 		};
+		
 		$http(httpConfig)
 		.then(fetchCompaniesSuccessCallback)
 		.catch(fetchCompaniesFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function fetchCompaniesSuccessCallback(response){
-			var companies = companyServiceObj.companies;
-			companies = {};
-			companyServiceObj.companies = companies;
+			var companies = undefined;
 			
 			convertCompaniesResponseToMap(response.data);
 			companies = companyServiceObj.companies;
@@ -108,62 +72,38 @@ function companyService(
 			deferred.resolve(response);
 		}
 		
-		function fetchCompaniesFailedCallback(responseError){
-			deferred.reject(responseError);
+		function fetchCompaniesFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertCompaniesResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
 		function convertCompaniesResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var companiesKey = COMPANIES_DB_FIELDS[0]; //company_name
-			var companiesDetails;
-			
-			for(var i=0; i<responseDataLength; i++){
-				var companiesRunner = responseData[i];
-				var companiesDBFieldCount = Object.keys(COMPANIES_DB_FIELDS).length; 
-				var companiesDBFieldRunner = null;
-				companiesDetails = {};
+			for(var i=0; i<responseData.length; i++){
+				var companiesDetails = {};
+				var key = undefined;
 				
-				for(var j=0; j<companiesDBFieldCount; j++){
-					companiesDBFieldRunner = COMPANIES_DB_FIELDS[j];
-					companiesDetails[companiesDBFieldRunner] = companiesRunner[companiesDBFieldRunner];
+				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
+					companiesDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
 				}
-				var companiesKeyValue = companiesRunner[companiesKey];
-				companyServiceObj.companies[companiesKeyValue] = companiesDetails;
+				
+				key = responseData[i][COMPANIES_DB_FIELDS[0]]; //company_name
+				companyServiceObj.companies[key] = companiesDetails;
 			}
 		}
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchCompany()
-	 * purpose: fetch company from server
-	 * ****************************** */
 	function fetchCompany(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
 		};
+		
 		$http(httpConfig)
 		.then(fetchCompanySuccessCallback)
 		.catch(fetchCompanyFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function fetchCompanySuccessCallback(response){
-			var company = companyServiceObj.company;
-			company = {};
-			companyServiceObj.company = company;
+			var company = undefined;
 			
 			convertCompanyResponseToMap(response.data);
 			company = companyServiceObj.company;
@@ -173,77 +113,45 @@ function companyService(
 			deferred.resolve(response);
 		}
 		
-		function fetchCompanyFailedCallback(responseError){
-			deferred.reject(responseError);
+		function fetchCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertCompanyResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
 		function convertCompanyResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var companyKey = COMPANIES_DB_FIELDS[0]; //company_name;
-			var companyDetails;
-			
-			for(var i=0; i<responseDataLength; i++){
-				var companyRunner = responseData[i];
-				var companyDBFieldCount = Object.keys(COMPANIES_DB_FIELDS).length;
-				var companyDBFieldRunner = null;
-				companyDetails = {};
+			for(var i=0; i<responseData.length; i++){
+				var companyDetails = {};
+				var key = undefined;
 				
-				for(var j=0; j<companyDBFieldCount; j++){
-					companyDBFieldRunner = COMPANIES_DB_FIELDS[j];
-					companyDetails[companyDBFieldRunner] = companyRunner[companyDBFieldRunner];
+				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
+					companyDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
 				}
-				var companyKeyValue = companyRunner[companyKey];
-				companyServiceObj.company[companyKeyValue] = companyDetails;
+				
+				key = responseData[i][COMPANIES_DB_FIELDS[0]]; //company_name
+				companyServiceObj.company[key] = companyDetails;
 			}
 		}
 		return deferred.promise;
 	}
 
-	/* ******************************
-	 * Method Implementation
-	 * method name: addCompanyValidate()
-	 * purpose: validates data for add
-	 * ****************************** */
 	function addCompanyValidate(companies){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/validate', 
 				data: companies
-		}
+		};
+		
 		$http(httpConfig)
 		.then(addCompanyValidateSuccessCallback)
 		.catch(addCompanyValidateFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function addCompanyValidateSuccessCallback(response){
-			deferred.resolve(response);
+		function addCompanyValidateSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function addCompanyValidateFailedCallback(responseError){
-			deferred.reject(responseError);
+		function addCompanyValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: addCompany()
-	 * purpose: adds company
-	 * ****************************** */
 	function addCompany(companies){
 		var deferred = $q.defer();
 		var httpConfig = {
@@ -251,63 +159,39 @@ function companyService(
 				url: API_BASE_URL + '/companies', 
 				data: companies
 		};
+		
 		$http(httpConfig)
 		.then(addCompanySuccessCallback)
 		.catch(addCompanyFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function addCompanySuccessCallback(response){
-			deferred.resolve(response);
+		function addCompanySuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function addCompanyFailedCallback(responseError){
-			deferred.reject(responseError);
+		function addCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: updateCompanyValidate()
-	 * purpose: validates data for update
-	 * ****************************** */
 	function updateCompanyValidate(company){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName, 
 				data: company
-		}
+		};
+		
 		$http(httpConfig)
 		.then(updateCompanyValidateSuccessCallback)
 		.catch(updateCompanyValidateFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function updateCompanyValidateSuccessCallback(response){
-			deferrred.resolve(response);
+		function updateCompanyValidateSuccessCallback(response){	deferrred.resolve(response);
 		}
 		
-		function updateCompanyValidateFailedCallback(responseError){
-			deferred.reject(responseError);
+		function updateCompanyValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: updateCompany()
-	 * purpose: updates company
-	 * ****************************** */
 	function updateCompany(company){
 		var deferred = $q.defer();
 		var httpConfig = {
@@ -315,62 +199,38 @@ function companyService(
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName, 
 				data: company
 		};
+		
 		$http(httpConfig)
 		.then(updateCompanySuccessCallback)
 		.catch(updateCompanyFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function updateCompanySuccessCallback(response){
-			deferred.resolve(response);
+		function updateCompanySuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function updateCompanyFailedCallback(responseError){
-			deferred.reject(responseError);
+		function updateCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: deleteCompany()
-	 * purpose: deletes company
-	 * ****************************** */
 	function deleteCompany(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
-		}
+		};
+		
 		$http(httpConfig)
 		.then(deleteCompanySuccessCallback)
 		.catch(deleteCompanyFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function deleteCompanySuccessCallback(response){
-			deferred.resolve(response);
+		function deleteCompanySuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function deleteCompanyFailedCallback(responseError){
-			deferred.reject(responseError);
+		function deleteCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: uploadCompanyLogo()
-	 * purpose: uploads company logo
-	 * ****************************** */
 	function uploadCompanyLogo(imgFile){
 		var httpFD = new FormData();
 		httpFD.append('imgFile', imgFile);
@@ -380,29 +240,19 @@ function companyService(
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName + '/companyImage', 
 				data: httpFD, 
 				headers: {	'Content-Type': undefined	}
-		}
+		};
+		
 		$http(httpConfig)
 		.then(uploadCompanyLogoSuccessCallback)
 		.catch(uploadCompanyLogoFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function uploadCompanyLogoSuccessCallback(response){
-			deferred.resolve(response);
+		function uploadCompanyLogoSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function uploadCompanyLogoFailedCallback(responseError){
-			deferred.reject(responseError);
+		function uploadCompanyLogoFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
 	return companyServiceObj;
 }
-/* ******************************
- * Service Implementation (End)
- * ****************************** */

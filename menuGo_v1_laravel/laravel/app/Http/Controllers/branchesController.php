@@ -11,9 +11,7 @@ include_once "companiesController.php";
 
 class branchesConstants{
 	const branchesTable = 'branches';
-	/*
-	 * CONSTANTS w/c signify the column_name in branches table
-	 * */
+	
 	const dbBranchId = 'branch_id';
 	const dbBranchName = 'branch_name';
 	const dbCompanyName = 'company_name';
@@ -24,9 +22,7 @@ class branchesConstants{
 	const dbBranchAddressPostalcode = 'branch_address_postalcode';
 	const dbBranchAddressCountry = 'branch_address_country';
 	const dbBranchHotline = 'branch_hotline';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqBranchId = 'BranchId';
 	const reqBranchName = 'BranchName';
 	const reqCompanyName = 'CompanyName';
@@ -37,43 +33,28 @@ class branchesConstants{
 	const reqBranchAddressPostalcode = 'BranchAddressPostalcode';
 	const reqBranchAddressCountry = 'BranchAddressCountry';
 	const reqBranchHotline = 'BranchHotline';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW BRANCH RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING BRANCH RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING BRANCH RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on validation
-	 * */
+	
 	const dbAddValidateSuccessMsg = 'DATA IS VALID FOR DB ADD OPERATION';
 	const dbUpdateValidateSuccessMsg = 'DATA IS VALID FOR DB UPDATE OPERATION';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class branchesController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to branchesController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
-
-	/**
-	 * getJoinCompanyBranch: joins companies_table & branches_table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCompanyBranch($mySqlWhere){
 		$companyBranch = DB::table(branchesConstants::branchesTable)
 		->join(
@@ -87,10 +68,7 @@ class branchesController extends Controller
 				return $companyBranch;
 	}
 
-	/**
-	 * GET method getAllCompanyBranches
-	 * URL-->/companies/{CompanyName}/branches
-	 **/
+	//URL-->>/companies/{CompanyName}/branches
 	public function getAllCompanyBranches($CompanyName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -109,10 +87,7 @@ class branchesController extends Controller
 		return $branchesResponse;
 	}
 
-	/**
-	 * GET method getCompanyBranch
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}
 	public function getCompanyBranch($CompanyName, $BranchName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -132,10 +107,7 @@ class branchesController extends Controller
 		return $branchesResponse;
 	}
 
-	/**
-	 * GET method getByQuery
-	 * URL-->/branches/query
-	 **/
+	//URL-->>/branches/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 
@@ -184,9 +156,6 @@ class branchesController extends Controller
 		return $branchesResponse;
 	}
 
-	/**
-	 * Do basic Laravel validation
-	 * */
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -227,10 +196,7 @@ class branchesController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addBranchValidate
-	 * URL-->/companies/{CompanyName}/branches/validate
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/validate
 	public function addBranchValidate(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -246,10 +212,7 @@ class branchesController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addBranch
-	 * URL-->/companies/{CompanyName}/branches
-	 **/
+	//URL-->>/companies/{CompanyName}/branches
 	public function addBranch(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -274,10 +237,7 @@ class branchesController extends Controller
 		return branchesConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * PUT method updateBranchValidate
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/validate
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/validate
 	public function updateBranchValidate(Request $jsonRequest, $CompanyName, $BranchName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -293,10 +253,7 @@ class branchesController extends Controller
 		}
 	}
 	
-	/**
-	 * PUT method updateBranch
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}
 	public function updateBranch(Request $jsonRequest, $CompanyName, $BranchName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -321,10 +278,7 @@ class branchesController extends Controller
 		return branchesConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * DELETE method deleteBranch
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}
 	public function deleteBranch($CompanyName, $BranchName){
 		$mySqlWhere = array();
 		$errorMsg = '';

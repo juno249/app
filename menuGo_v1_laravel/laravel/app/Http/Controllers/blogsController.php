@@ -9,57 +9,40 @@ use Illuminate\Support\Facades\Validator;
 
 class blogsConstants{
 	const blogsTable = 'blogs';
-	/*
-	 * CONSTANTS w/c signify the column_name in advertisements table
-	 * */
+	
 	const dbBlogId = 'blog_id';
 	const dbBlogTitle = 'blog_title';
 	const dbBlogAuthor = 'blog_branches';
 	const dbBlogContent = 'blog_content';
 	const dbBlogImage = 'blog_image';
 	const dbBlogUrl = 'blog_url';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqBlogId = 'BlogId';
 	const reqBlogTitle = 'BlogTitle';
 	const reqBlogAuthor = 'BlogBranches';
 	const reqBlogContent = 'BlogContent';
 	const reqBlogImage = 'BlogImage';
 	const reqBlogUrl = 'BlogUrl';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW BLOG RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING BLOG RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING BLOG RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class blogsController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to branchesController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
 	
-	/**
-	 * GET method getAllBlogs
-	 * URL-->/blogs
-	 **/
+	//URL-->>/blogs
 	public function getAllBlogs(){
 		$blogsResponse = new Response();
 		try{
@@ -75,10 +58,7 @@ class blogsController extends Controller
 		return $blogsResponse;
 	}
 	
-	/**
-	 * GET method getBlog
-	 * URL-->/blogs/{BlogId}
-	 **/
+	//URL-->>/blogs/{BlogId}
 	public function getBlog($BlogId){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [blogsConstants::blogsTable . '.' . blogsConstants::dbBlogId, '=', $BlogId]);
@@ -97,10 +77,7 @@ class blogsController extends Controller
 		return $blogsResponse;
 	}
 	
-	/**
-	 * GET method getByQuery
-	 * URL-->/blogs/query
-	 **/
+	//URL-->>/blogs/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -137,9 +114,6 @@ class blogsController extends Controller
 		return $blogsResponse;
 	}
 	
-	/**
-	 * Do basic Laravel validation
-	 * */
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -172,10 +146,7 @@ class blogsController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addBlog
-	 * URL-->/blogs
-	 **/
+	//URL-->>/blogs
 	public function addBlog(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -198,10 +169,7 @@ class blogsController extends Controller
 		return blogsConstants::dbAddSuccessMsg;
 	}
 	
-	/**
-	 * PUT method updateBlog
-	 * URL-->/blogs/{BlogId}
-	 **/
+	//URL-->>/blogs/{BlogId}
 	public function updateBlog(Request $jsonRequest, $BlogId){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -225,10 +193,7 @@ class blogsController extends Controller
 		return blogsConstants::dbUpdateSuccessMsg;
 	}
 	
-	/**
-	 * DELETE method deleteBlog
-	 * URL-->/blogs/{BlogId}
-	 * */
+	//URL-->>/blogs/{BlogId}
 	public function deleteBlog($BlogId){
 		$mySqlWhere = array();
 		$errorMsg = '';

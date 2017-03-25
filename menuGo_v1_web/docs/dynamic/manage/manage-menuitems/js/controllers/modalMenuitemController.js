@@ -2,9 +2,6 @@ angular
 .module('starter')
 .controller('modalMenuitemController', modalMenuitemController);
 
-/* ******************************
- * Controller Dependency Injection (Start)
- * ****************************** */
 modalMenuitemController.$inject = [
 	'API_BASE_URL', 
 	'IS_FEATURED_VALUES', 
@@ -14,14 +11,8 @@ modalMenuitemController.$inject = [
 	'menuitem', 
 	'formMode', 
 	'modalHiddenFields'
-];
-/* ******************************
- * Controller Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Controller Implementation (Start)
- * ****************************** */
 function modalMenuitemController(
 		API_BASE_URL, 
 		IS_FEATURED_VALUES, 
@@ -31,27 +22,19 @@ function modalMenuitemController(
 		menuitem, 
 		formMode, 
 		modalHiddenFields
-	){
-	/* ******************************
-	 * Controller Binded Data (Start)
-	 * ****************************** */
+		){
 	
-	/* ******************************
-	 * Messages Constants (Start)
-	 * ****************************** */
 	const MENUITEM_ADD_CATCH_MESSAGE = 'UNABLE TO ADD MENUITEM, DB EXCEPTION ENCOUNTERED';
 	const MENUITEM_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DB EXCEPTION ENCOUNTERED';
 	const MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DATA IS EMPTY/UNCHANGED';
 	const MENUITEM_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE MENUITEM, DB EXCEPTION ENCOUNTERED';
-	/* ******************************
-	 * Messages Constants (End)
-	 * ****************************** */
+	const DOM_FORM = '#modalMenuitem';
+	const DOM_MODAL = '#modalMenuitemContainer';
 	
 	var vm = this;
-	vm.formId = '#modalMenuitem';
 	vm.formMode = formMode;
 	vm.menuitem = menuitem;
-	vm.menuitemCapture = JSON.parse(JSON.stringify(menuitem));
+	vm.menuitemSnapshot = JSON.parse(JSON.stringify(menuitem));
 	vm.modalHiddenFields = modalHiddenFields;
 	vm.dom2DbColumn = {
 			menuitemCode: 'menuitem_code', 
@@ -79,458 +62,278 @@ function modalMenuitemController(
 	}
 	vm.featuredOptions = IS_FEATURED_VALUES;
 	vm.validationErr = {};
-	vm.validationErrDB = undefined;
+	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
-	vm.menuitemImageImage = undefined;
 	vm.isMenuitemImageImageHidden = true;
-	/* ******************************
-	 * Controller Binded Data (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Controller Binded Method (Start)
-	 * ****************************** */
+	//controller_method
 	vm.initBootstrapValidator = initBootstrapValidator;
+	//controller_method
 	vm.initDom = initDom;
+	//controller_method
 	vm.doCancel = doCancel;
+	//controller_method
 	vm.uploadMenuitemImage =uploadMenuitemImage;
-	/* ******************************
-	 * Controller Binded Method (end)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initBootstrapValidator()
-	 * purpose: initializes bootstrap validator plugin
-	 * ****************************** */
 	function initBootstrapValidator(){
-		var formId = vm.formId;
-		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")'
-		$(formId).validator();
-		$(formId).validator().on('submit', doSubmit);
+		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$timeout(function(){
-			$(formId).validator('update');
-		})
-	}
+		$(DOM_FORM).validator();
+		$(DOM_FORM).validator().on(
+				'submit', 
+				doSubmit
+				);
+		
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
+		}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initDom
-	 * purpose: initializes Dom object attributes
-	 * ****************************** */
 	function initDom(){
-		var formMode = vm.formMode;
-		var menuitem = vm.menuitem;
-		var menuitemImageId = '#menuitemImage';
-		var menuitemImageBrowseId = '#menuitemImageBrowse';
-		var menuitemImage = $(menuitemImageId);
-		var menuitemImageBrowse = $(menuitemImageBrowseId);
+		const MENUITEM_IMAGE_BROWSE = '#menuitemImageBrowse';
 		
-		/* ******************************
-		 * menuitemImageBrowse File Type (Start)
-		 * ****************************** */
-		menuitemImageBrowse.css('display', 'none');
-		menuitemImageBrowse.on('change', menuitemImageBrowseChangeCallback);
+		var menuitemImageBrowse = $(MENUITEM_IMAGE_BROWSE);
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: menuitemImageBrowseChangeCallback
-		 * purpose: handles input[type='file'] change event
-		 * ****************************** */
+		$(MENUITEM_IMAGE_BROWSE).css(
+				'display', 
+				'none'
+				);
+		$(MENUITEM_IMAGE_BROWSE).on(
+				'change', 
+				menuitemImageBrowseChangeCallback
+				);
+		
 		function menuitemImageBrowseChangeCallback(e){
-			var eTarg = e.target;
 			var eFiles = e.target.files;
-			var isMenuitemImageImageHidden = vm.isMenuitemImageImageHidden;
 			
-			menuitem.menuitemImage = eFiles[0].name;
-			isMenuitemImageImageHidden = true;
-			
-			vm.isMenuitemImageImageHidden = isMenuitemImageImageHidden;
-			$timeout(function(){
-				vm.menuitem = menuitem;
-			})
-		}
-		/* ******************************
-		 * menuitemImageBrowse File Type (End)
-		 * ****************************** */
+			$timeout(
+					function(){
+						vm.menuitem.menuitemImage = eFiles[0].name;
+						vm.isMenuitemImageImageHidden = true;
+						}
+					);
+			}
 		
-		/* ******************************
-		 * Input Controls (Start)
-		 * ****************************** */
-		if('D' == formMode){
-			$('#modalMenuitemContainer input').prop('disabled', true);
-			$('#modalMenuitemContainer textarea').prop('disabled', true);
-			$('#modalMenuitemContainer select').prop('disabled', true);
-		}
-		/* ******************************
-		 * Input Controls (End)
-		 * ****************************** */
+		if('D' == vm.formMode){
+			$('#modalMenuitemContainer input').prop(
+					'disabled', 
+					true
+					);
+			$('#modalMenuitemContainer textarea').prop(
+					'disabled', 
+					true
+					);
+			$('#modalMenuitemContainer select').prop(
+					'disabled', 
+					true
+					);
+			}
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doCancel()
-	 * purpose: closes uib modal instance
-	 * ****************************** */
-	function doCancel(){
-		$uibModalInstance.close();
+	function doCancel(){	$uibModalInstance.close();
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: uploadMenuitemImage()
-	 * purpose: upload a menuitem image to server
-	 * ****************************** */
 	function uploadMenuitemImage(){
-		var menuitem = vm.menuitem;
-		var imgFileId = '#menuitemImageBrowse';
-		var imgFile = $(imgFileId)[0].files[0];
-		var modalMenuitemContainerId = '#modalMenuitemContainer';
-		var modalMenuitemContainer = $(modalMenuitemContainerId);
+		const MENUITEM_IMAGE_BROWSE = '#menuitemImageBrowse';
 		
-		menuitemService.setCompanyName(menuitem.companyName);
-		menuitemService.setMenuName(menuitem.menuName);
-		menuitemService.uploadMenuitemImage(imgFile)
+		var menuitemImage = $(MENUITEM_IMAGE_BROWSE)[0].files[0];
+		
+		menuitemService.setCompanyName(vm.menuitem.companyName);
+		menuitemService.setMenuName(vm.menuitem.menuName);
+		
+		menuitemService.uploadMenuitemImage(menuitemImage)
 		.then(uploadMenuitemImageSuccessCallback)
 		.catch(uploadMenuitemImageFailedCallback);
 		
-		showBootstrapLoader(modalMenuitemContainer);
+		showBootstrapLoader($(DOM_MODAL));
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function uploadMenuitemImageSuccessCallback(response){
-			var menuitemImageImage = vm.menuitemImageImage;
-			var isMenuitemImageImageHidden = vm.isMenuitemImageImageHidden;
 			var appQueryStr = '?timestamp=' + new Date().getTime();
 			
-			menuitem.menuitemImage = response.config.url + appQueryStr;
-			menuitemImageImage = menuitem.menuitemImage;
-			isMenuitemImageImageHidden = false;
+			vm.menuitem.menuitemImage = response.config.url + appQueryStr;
+			vm.isMenuitemImageImageHidden = false;
 			
-			vm.menuitem = menuitem;
-			vm.menuitemImageImage = menuitemImageImage;
-			vm.isMenuitemImageImageHidden = isMenuitemImageImageHidden;
-			hideBootstrapLoader(modalMenuitemContainer);
+			hideBootstrapLoader($(DOM_MODAL));
 		}
 		
-		function uploadMenuitemImageFailedCallback(responseError){
-			hideBootstrapLoader(modalMenuitemContainer);
+		function uploadMenuitemImageFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL));
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doSubmit()
-	 * purpose: handles form-submission (insert/amend)
-	 * ****************************** */
 	function doSubmit(e){
-		var formMode = vm.formMode;
-		var modalMenuitemContainerId = '#modalMenuitemContainer';
-		var modalMenuitemContainer = $(modalMenuitemContainerId);
 		var data = [];
-		var validationErr = vm.validationErr;
-		var validationErrDB = vm.validationErrDB;
-		
-		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn());
 		
-		showBootstrapLoader(modalMenuitemContainer);
+		hideBootstrapAlert();
 		
-		if('I' == formMode){
-			var menuitem = vm.menuitem;
-			var companyName = menuitem.companyName;
-			var menuName = menuitem.menuName;
-			menuitemService.setCompanyName(companyName);
-			menuitemService.setMenuName(menuName);
+		showBootstrapLoader($(DOM_MODAL));
+		
+		if('I' == vm.formMode){
+			menuitemService.setCompanyName(vm.menuitem.companyName);
+			menuitemService.setMenuName(vm.menuitem.menuName);
+			
 			menuitemService.addMenuitem(data)
 			.then(addMenuitemSuccessCallback)
 			.catch(addMenuitemFailedCallback);
 			
-			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function addMenuitemSuccessCallback(response){
-				hideBootstrapLoader(modalMenuitemContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function addMenuitemFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalMenuitemContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(MENUITEM_ADD_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
-			
-		} else if('A' == formMode){
-			var menuitemCapture = vm.menuitemCapture;
-			var companyName = menuitemCapture.companyName;
-			var menuName = menuitemCapture.menuName;
-			var menuitemCode = menuitemCapture.menuitemCode;
-			
+		} else if('A' == vm.formMode){
 			discardModalHiddenFields();
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data).length){
-				hideBootstrapLoader(modalMenuitemContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				showBootstrapLoader(MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE);
+				
 				return;
 			}
 			
-			menuitemService.setCompanyName(companyName);
-			menuitemService.setMenuName(menuName);
-			menuitemService.setMenuitemCode(menuitemCode);
+			menuitemService.setCompanyName(vm.menuitemSnapshot.companyName);
+			menuitemService.setMenuName(vm.menuitemSnapshot.menuName);
+			menuitemService.setMenuitemCode(vm.menuitemSnapshot.menuitemCode);
+			
 			menuitemService.updateMenuitem(data)
 			.then(updateMenuitemSuccessCallback)
 			.catch(updateMenuitemFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function updateMenuitemSuccessCallback(response){
-				hideBootstrapLoader(modalMenuitemContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function updateMenuitemFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalMenuitemContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(MENUITEM_UPDATE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalHiddenFields()
-			 * purpose: discards hidden modal fields from Json-format data
-			 * ****************************** */
 			function discardModalHiddenFields(){
-				var dataCopy = data[0];
-				var modalHiddenFields = vm.modalHiddenFields;
-				var modalHiddenFieldsKeys = Object.keys(modalHiddenFields);
-				var dom2DbColumn = vm.dom2DbColumn;
-				
-				modalHiddenFieldsKeys.forEach(function(modalHiddenFieldsKey){
-					delete dataCopy[dom2DbColumn[modalHiddenFieldsKey]];
-				});
-				
-				data[0] = dataCopy;
+				Object.keys(vm.modalHiddenFields).forEach(
+						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+						}
+						);
 			}
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalUnchangedFields()
-			 * purpose: discards unchanged modal fields from Json-format data
-			 * ****************************** */
 			function discardModalUnchangedFields(){
-				var dataCopy = data[0];
-				var dataCopyKeys = Object.keys(dataCopy);
-				var menuitemCapture = vm.menuitemCapture;
-				var dbColumn2Dom = vm.dbColumn2Dom;
+				var dataKeys = Object.keys(data[0]);
 				
-				dataCopyKeys.forEach(function(dataCopyKey){
-					var dataCopyValue = dataCopy[dataCopyKey];
-					var menuitemCaptureValue = menuitemCapture[dbColumn2Dom[dataCopyKey]];
-					
-					if(dataCopyValue == menuitemCaptureValue){	delete dataCopy[dataCopyKey];
-					}
-				});
-				
-				data[0] = dataCopy;
-			}
-		} else if('D' == formMode){
-			var menuitem = vm.menuitem;
-			var companyName = menuitem.companyName;
-			var menuName = menuitem.menuName; 
-			var menuitemCode = menuitem.menuitemCode;
-			menuitemService.setCompanyName(companyName);
-			menuitemService.setMenuName(menuName);
-			menuitemService.setMenuitemCode(menuitemCode);
+				dataKeys.forEach(
+						function(dataKey){
+							var dataValue = data[0][dataKey];
+							var menuitemSnapshotValue = vm.menuitemSnapshot[vm.dbColumn2Dom[dataKey]];
+							
+							if(dataValue == menuitemSnapshotValue){	delete data[0][dataKey];
+							}
+							}
+						);
+				}
+		} else if('D' == vm.formMode){
+			menuitemService.setCompanyName(vm.menuitem.companyName);
+			menuitemService.setMenuName(vm.menuitem.menuName);
+			menuitemService.setMenuitemCode(vm.menuitem.menuitemCode);
+			
 			menuitemService.deleteMenuitem()
 			.then(deleteMenuitemSuccessCallback)
 			.catch(deleteMenuitemFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function deleteMenuitemSuccessCallback(response){
-				hideBootstrapLoader(modalMenuitemContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function deleteMenuitemFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalMenuitemContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(MENUITEM_DELETE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 		}
 		
-		validationErr = {};
-		validationErrDB = undefined;
-		
-		vm.validationErr = validationErr;
-		vm.validationErrDB = validationErrDB;
+		vm.validationErr = {};
+		vm.validationErrDB = {};
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doDom2DbColumn()
-	 * purpose: converts dom to dbcolumn (server-posting)
-	 * ****************************** */
 	function doDom2DbColumn(){
-		var menuitem = vm.menuitem;
-		var menuitemKeys = Object.keys(menuitem);
-		var dom2DbColumn = vm.dom2DbColumn;
 		var data = {};
 		
-		menuitemKeys.forEach(function(menuitemKey){
-			var dbField = dom2DbColumn[menuitemKey];
-			if(
-					!(null == dbField) && 
-					!(undefined == dbField)
-			){
-				data[dbField] = menuitem[menuitemKey];
-			}
-		});
+		Object.keys(vm.menuitem).forEach(
+				function(menuitemKey){
+					if(
+							!(null == vm.dom2DbColumn[menuitemKey]) && 
+							!(undefined == vm.dom2DbColumn[menuitemKey])
+							){	data[vm.dom2DbColumn[menuitemKey]] = vm.menuitem[menuitemKey];
+							}
+					}
+				);
 		
 		return data;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: genValidationErrorFromResponse()
-	 * purpose: generates validation error from server response 
-	 * ****************************** */
 	function genValidationErrorFromResponse(responseError){
-		/* ******************************
-		 * DOM classes (start)
-		 * ****************************** */
-		var formGroupClass = '.form-group';
-		var hasErrorClass = 'has-error';
-		/* ******************************
-		 * DOM classes (end)
-		 * ****************************** */
-		var dbColumn2Dom = vm.dbColumn2Dom;
-		var validationErr = vm.validationErr;
+		const CLASS_FORM_GROUP = '.form-group';
+		const CLASS_HAS_ERROR = 'has-error';
+		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 		
 		statusTextKeys.forEach(function(statusTextKey){
-			var arrIndex = statusTextKey.split('.')[0];
 			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = undefined;
-			var errorMessage = undefined;
-			
-			if(statusTextKey == (arrIndex + '.' + dbColumnName)){
-				dbColumnIndex = getDbColumnIndex(dbColumnName);
-				errorMessage = statusTextObj[statusTextKey][0];
-				errorMessage = errorMessage.replace(statusTextKey, dbColumn2Dom[dbColumnName]);
-				validationErr[parseInt(dbColumnIndex)] = errorMessage;
+			var dbColumnIndex = getDbColumnIndex(dbColumnName);
+			var errorMessage = statusTextObj[statusTextKey][0];
+			var formGroups = $(CLASS_FORM_GROUP);
 				
-				/* ******************************
-				 * JQuery DOM update (start)
-				 * ****************************** */
-				var formGroups = $(formGroupClass);
-				formGroups.eq(parseInt(dbColumnIndex+1)).addClass(hasErrorClass);
-				/* ******************************
-				 * JQuery DOM update (end)
-				 * ****************************** */
-			}
-		});
-		
-		/* ******************************
-		 * Method Implementation
-		 * method name: getDbColumnIndex()
-		 * purpose: gets db column index from db column name
-		 * ****************************** */
-		function getDbColumnIndex(dbColumnName){
-			var dbColumn2DomIndex = vm.dbColumn2DomIndex;
+			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
 			
-			return dbColumn2DomIndex[dbColumnName];
+			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+			
+			formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+			}
+		);
+		
+		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-		
-		vm.validationErr = validationErr;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapLoader()
-	 * purpose: shows bootstrap loader
-	 * ****************************** */
-	function showBootstrapLoader(target){
-		$(target).LoadingOverlay('show');
+	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapLoader()
-	 * purpose: hides bootstrap loader
-	 * ****************************** */
-	function hideBootstrapLoader(target){
-		$(target).LoadingOverlay('hide');
+	function hideBootstrapLoader(target){	$(target).LoadingOverlay('hide');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapAlert()
-	 * purpose: shows bootstrap alert
-	 * ****************************** */
-	function showBootstrapAlert(arg_validationErrDB){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = arg_validationErrDB;
-		isValidationErrDBHidden = false;
-		
+	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.isValidationErrDBHidden = false;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapAlert()
-	 * purpose: hides bootstrap alert
-	 * ****************************** */
 	function hideBootstrapAlert(){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = undefined;
-		isValidationErrDBHidden = true;
-		
-		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.validationErrDB = {};
+		vm.isValidationErrDBHidden = true;
 	}
 }
-/* ******************************
- * Controller Implementation (End)
- * ****************************** */

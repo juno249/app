@@ -11,57 +11,38 @@ include_once "customersCompaniesBranchesController.php";
 
 class companiesConstants{
 	const companiesTable = 'companies';
-	/*
-	 * CONSTANTS w/c signify the column_name in companies table
-	 * */
+	
 	const dbCompanyName = 'company_name';
 	const dbCompanyDesc = 'company_desc';
 	const dbCompanyCategory = 'company_category';
 	const dbCompanyLogo = 'company_logo';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqCompanyName = 'CompanyName';
 	const reqCompanyDesc = 'CompanyDesc';
 	const reqCompanyCategory = 'CompanyCategory';
 	const reqCompanyLogo = 'CompanyLogo';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW COMPANY RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING COMPANY RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING COMPANY RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on validation
-	 * */
+	
 	const dbAddValidateSuccessMsg = 'DATA IS VALID FOR DB ADD OPERATION';
 	const dbUpdateValidateSuccessMsg = 'DATA IS VALID FOR DB UPDATE OPERATION';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class companiesController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to companiesController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
 
-	/**
-	 * getJoinCompanyCustomerCompanyBranch: joins companies_table & customers_companies_branches table w/a variable $mySqlWhere
-	 * */
 	public function getJoinCompanyCustomerCompanyBranch($mySqlWhere){
 		$companyCustomerCompanyBranch = DB::table(companiesConstants::companiesTable)
 		->join(
@@ -75,10 +56,7 @@ class companiesController extends Controller
 				return $companyCustomerCompanyBranch;
 	}
 	
-	/**
-	 * GET method getAllCompaniesAdministrator
-	 * URL--> /companies/customers/{CustomerUsername}
-	 * */
+	//URL-->>/companies/customers/{CustomerUsername}
 	public function getAllCompaniesAdministrator($CustomerUsername){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -97,10 +75,7 @@ class companiesController extends Controller
 		return $companiesResponse;
 	}
 	
-	/**
-	 * GET method getAllCompanies
-	 * URL-->/companies/
-	 **/
+	//URL-->>/companies/
 	public function getAllCompanies(){
 		$companiesResponse = new Response();
 		try{
@@ -116,10 +91,7 @@ class companiesController extends Controller
 		return $companiesResponse;
 	}
 
-	/**
-	 * GET method getCompany
-	 * URL-->/companies/{CompanyName}
-	 * */
+	//URL-->>/companies/{CompanyName}
 	public function getCompany($CompanyName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -138,10 +110,7 @@ class companiesController extends Controller
 		return $companiesResponse;
 	}
 
-	/**
-	 * GET method getByQuery
-	 * URL-->/companies/query
-	 * */
+	//URL-->>/companies/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 			
@@ -171,10 +140,7 @@ class companiesController extends Controller
 		}
 		return $companiesResponse;
 	}
-
-	/**
-	 * Do basic Laravel validation
-	 * */
+	
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -205,10 +171,7 @@ class companiesController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addCompanyValidate
-	 * URL-->/companies/validate
-	 * */
+	//URL-->>/companies/validate
 	public function addCompanyValidate(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -224,10 +187,7 @@ class companiesController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addCompany
-	 * URL-->/companies/
-	 * */
+	//URL-->>/companies/
 	public function addCompany(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -250,10 +210,7 @@ class companiesController extends Controller
 		return companiesConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * PUT method updateCompanyValidate
-	 * URL-->/companies/{CompanyName}/validate
-	 * */
+	//URL-->>/companies/{CompanyName}/validate
 	public function updateCompanyValidate(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -269,10 +226,7 @@ class companiesController extends Controller
 		}
 	}
 	
-	/**
-	 * PUT method updateCompany
-	 * URL-->/companies/{CompanyName}
-	 * */
+	//URL-->>/companies/{CompanyName}
 	public function updateCompany(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -296,10 +250,7 @@ class companiesController extends Controller
 		return companiesConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * DELETE method deleteCompany
-	 * URL-->/companies/{CompanyName}
-	 * */
+	//URL-->>/companies/{CompanyName}
 	public function deleteCompany($CompanyName){
 		$mySqlWhere = array();
 		$errorMsg = '';

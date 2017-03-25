@@ -2,9 +2,6 @@ angular
 .module('starter')
 .controller('customerNearbyController', customerNearbyController);
 
-/* ******************************
- * Controller Dependency Injection (Start)
- * ****************************** */
 customerNearbyController.$inject = [
 	'$ionicHistory', 
 	'$ionicSlideBoxDelegate', 
@@ -16,14 +13,8 @@ customerNearbyController.$inject = [
 	'dataService', 
 	'geolocationService', 
 	'googleplacesService'
-];
-/* ******************************
- * Controller Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Controller Implementation (Start)
- * ****************************** */
 function customerNearbyController(
 		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
@@ -35,13 +26,12 @@ function customerNearbyController(
 		dataService, 
 		geolocationService, 
 		googleplacesService
-	){
+		){
 	$ionicHistory.clearHistory();
 	
 	const COMPANIES_KEY = 'Companies';
-	/* ******************************
-	 * Controller Binded Data (Start)
-	 * ****************************** */
+	const DOM_FEATURED_MENUS_SLIDEBOX = 'featured-menus-slidebox';
+	
 	var vm = this;
 	vm.mapConfig = {
 			center: {
@@ -54,64 +44,38 @@ function customerNearbyController(
 			zoom: 15, 
 			zoomControl: false
 	}
-	var companies = undefined;
+	
 	if(null == localStorage.getItem(COMPANIES_KEY)){
 		dataService.fetchCompanies();
-		vm.companies = undefined;
 	} else {
-		companies = localStorage.getItem(COMPANIES_KEY);
-		companies = JSON.parse(companies);
-		vm.companies = companies;
-	}
-	vm.companiesBranches = undefined;
-	vm.companiesMenuitems = undefined;
-	vm.companiesCategoriesSelection = undefined;
-	vm.placePredictions = undefined;
+		vm.companies = localStorage.getItem(COMPANIES_KEY);
+		vm.companies = JSON.parse(vm.companies);
+	} 
 	
-	vm.category = undefined;
-	vm.search = undefined;
-	vm.companyBranch = undefined;
-	/* ******************************
-	 * Controller Binded Data (End)
-	 * ****************************** */
-	 
-	/* ******************************
-	 * Controller Binded Method (Start)
-	 * ****************************** */
+	//controller_method
 	vm.gotoState = gotoState;
+	//controller_method
 	vm.initializeMapCoordinates = initializeMapCoordinates;
+	//controller_method
 	vm.setCategory = setCategory;
+	//controller_method
 	vm.toStringAddress = toStringAddress;
-	/* ******************************
-	 * Controller Binded Method (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: gotoState()
-	 * purpose: goes to a state
-	 * ****************************** */
 	function gotoState(
 			stateName
-		){
-		var companyBranch = vm.companyBranch;
+			){
 		if('customer.nearby.reservation_menu' == stateName){
 			$state.go(
-				stateName, 
-				{
-					companyName: companyBranch.companyName, 
-					branchName: companyBranch.branchName
-				}, 
-				{reload: true}
-				);
+					stateName, 
+					{
+						companyName: vm.companyBranch.companyName, 
+						branchName: vm.companyBranch.branchName
+					}, 
+					{	reload: true	}
+					);
 		}
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initializeMapCoordinates()
-	 * purpose: initializes map coordinates
-	 * ****************************** */
 	function initializeMapCoordinates(){
 		var deferred = $q.defer();
 		
@@ -119,202 +83,145 @@ function customerNearbyController(
 		.then(getPositionSuccessCallback)
 		.catch(getPositionFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function getPositionSuccessCallback(coordinates){
-			var mapConfig = vm.mapConfig;
-			
-			mapConfig.center = coordinates;
-			
-			vm.mapConfig = mapConfig;
+		function getPositionSuccessCallback(coordinates){	vm.mapConfig.center = coordinates;
 		}
 		
-		function getPositionFailedCallback(status){
-			//do something on failure
+		function getPositionFailedCallback(status){	//do something on failure
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
-		
 		return deferred.promise;
 	}
 
-	/* ******************************
-	 * Method Implementation
-	 * method name: setCategory()
-	 * purpose: sets category
-	 * ****************************** */
-	function setCategory(arg_category){
-		var category = vm.category;
-		
-		category = arg_category;
-		
-		vm.category = category;
+	function setCategory(category){	vm.category = category;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: toStringAddress()
-	 * purpose: returns an address string
-	 * ****************************** */
 	function toStringAddress(branch){
 		branchService.setBranch(branch);
 		
 		return branchService.toStringAddress();
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: loadCompaniesBranches()
-	 * purpose: loads companies branches
-	 * ****************************** */
 	function loadCompaniesBranches(){
-		var companies = vm.companies;
-		var companiesBranches = {};
+		vm.companiesBranches = {};
 		
-		angular.forEach(companies, function(v, k){
-			var company = v;
-			var companyBranches = company.branches;
-			
-			companiesBranches[k] = companyBranches;
-		});
-		
-		vm.companiesBranches = companiesBranches;
+		angular.forEach(
+				vm.companies, 
+				function(
+						v, 
+						k
+						){					
+					var company = v;
+					var companyBranches = company.branches;
+					
+					vm.companiesBranches[k] = companyBranches;
+					}
+					);
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: loadCompaniesMenuitems()
-	 * purpose: loads companies menuitems
-	 * ****************************** */
 	function loadCompaniesMenuitems(){
-		var companies = vm.companies;
-		var companiesMenuitems = {};
-		var companiesMenuitemsSlidebox = 'featured-menus-slidebox';
+		vm.companiesMenuitems = {};
 		
-		angular.forEach(companies, function(v, k){
-			var company = v;
-			var companyMenus = company.menus;
-			var companyMenuitems = [];
-			
-			angular.forEach(companyMenus, function(v, k){
-				var companyMenu = v;
-				var companyMenuMenuitems = v.menuitems;
-				
-				angular.forEach(companyMenuMenuitems, function(v, k){
-					var companyMenuMenuitem = v;
-					
-					if(1 == companyMenuMenuitem.menuitem_featured){
-						companyMenuitems.push(companyMenuMenuitem);
-					}
-				});
-			});
-			
-			companiesMenuitems[k] = companyMenuitems;
-		});
+		angular.forEach(
+				vm.companies, 
+				function(
+						v, 
+						k
+						){
+					var company = v;
+					var companyMenus = company.menus;
+					var companyMenuitems = [];
+
+					angular.forEach(
+							companyMenus, 
+							function(
+									v, 
+									k
+									){
+								var companyMenu = v;
+								var companyMenuMenuitems = v.menuitems;
+								
+								angular.forEach(
+										companyMenuMenuitems, 
+										function(
+												v, 
+												k
+												){
+											var companyMenuMenuitem = v;
+											
+											if(1 == companyMenuMenuitem.menuitem_featured){
+												companyMenuitems.push(companyMenuMenuitem);
+											}
+										}
+										);
+							}
+							);
+					vm.companiesMenuitems[k] = companyMenuitems;
+				}
+				);
 		
 		$timeout(function(){
-			$ionicSlideBoxDelegate.$getByHandle(companiesMenuitemsSlidebox).update();	
+			$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENUS_SLIDEBOX).update();	
 		});
-		vm.companiesMenuitems = companiesMenuitems;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: loadCompaniesCategoriesSelection()
-	 * purpose: loads companies categories selection
-	 * ****************************** */
 	function loadCompaniesCategoriesSelection(){
-		var companies = vm.companies;
-		var companiesCategoriesSelection = [];
+		vm.companiesCategoriesSelection = [];
 		
-		angular.forEach(companies, function(v, k){
-			var company = v;
-			if(-1 == companiesCategoriesSelection.indexOf(v.company_category)){
-				companiesCategoriesSelection.push(v.company_category);
-			}
-		});
-		
-		vm.companiesCategoriesSelection = companiesCategoriesSelection;
+		angular.forEach(
+				vm.companies, 
+				function(
+						v, 
+						k
+						){
+					var company = v;
+					
+					if(-1 == vm.companiesCategoriesSelection.indexOf(v.company_category)){
+						vm.companiesCategoriesSelection.push(v.company_category);
+					}
+				}
+				);
 	}
 	
-	/* ******************************
-	 * Watchers (Start)
-	 * ****************************** */
 	$scope.$watch(
-			function(){
-				return localStorage.getItem(COMPANIES_KEY);
+			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
 			function(){
-				var companies = vm.companies;
-				
-				companies = localStorage.getItem(COMPANIES_KEY);
-				companies = JSON.parse(companies);
-				
-				vm.companies = companies;
+				vm.companies = localStorage.getItem(COMPANIES_KEY);
+				vm.companies = JSON.parse(vm.companies);
 			}
 	);
 	
 	$scope.$watch(
-			function(){
-				return vm.companies;
+			function(){	return vm.companies;
 			}, 
 			function(){
 				loadCompaniesBranches();
 				loadCompaniesMenuitems();
 				loadCompaniesCategoriesSelection();
 			}
-	);
+			);
 	
 	$scope.$watch(
-			function(){
-				return vm.search;
+			function(){	return vm.search;
 			}, 
 			function(){
-				var search = vm.search;
-				var companies = vm.companies;
-				var companiesNames = '';
-				
 				if(
-						null == search ||
-						0 == search.trim().length
-				){	
-					var placePredictions = vm.placePredictions;
-					
-					placePredictions = undefined;
-					
-					vm.placePredictions = placePredictions;	
+						null == vm.search || 
+						0 == vm.search.trim().length
+						){
+					vm.placePredictions = undefined;
 					return;
 				}
 				
-				googleplacesService.getPlacePredictions(search)
+				googleplacesService.getPlacePredictions(vm.search)
 				.then(getPlacePredictionsSuccessCallback)
 				.catch(getPlacePredictionsFailedCallback);
 				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
-				function getPlacePredictionsSuccessCallback(predictions){
-					var placePredictions = vm.placePredictions;
-					
-					placePredictions = predictions;
-					
-					vm.placePredictions = placePredictions;
+				function getPlacePredictionsSuccessCallback(predictions){	
+					vm.placePredictions = predictions;
 				}
 				
-				function getPlacePredictionsFailedCallback(status){
-					//do something on failure
+				function getPlacePredictionsFailedCallback(status){	//do something on failure
 				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
 			}
 	);
-	/* ******************************
-	 * Watchers (End)
-	 * ****************************** */
 }
-/* ******************************
- * Controller Implementation (End)
- * ****************************** */

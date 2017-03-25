@@ -11,54 +11,37 @@ include_once "companiesController.php";
 
 class menusConstants{
 	const menusTable = 'menus';
-	/*
-	 * CONSTANTS w/c signify the column_name in menus table
-	 * */
+	
 	const dbMenuId = 'menu_id';
 	const dbCompanyName = 'company_name';
 	const dbMenuName = 'menu_name';
 	const dbMenuDesc = 'menu_desc';
 	const dbMenuImage = 'menu_image';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqMenuId = 'MenuId';
 	const reqCompanyName = 'CompanyName';
 	const reqMenuName = 'MenuName';
 	const reqMenuDesc = 'MenuDesc';
 	const reqMenuImage = 'MenuImage';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW MENU RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING MENU RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING MENU RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class menusController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to menusController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
-
-	/**
-	 * getJoinCompanyMenu: joins companies_table & menus_table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCompanyMenu($mySqlWhere){
 		$companyMenu = DB::table(menusConstants::menusTable)
 		->join(
@@ -72,10 +55,7 @@ class menusController extends Controller
 				return $companyMenu;
 	}
 
-	/**
-	 * GET method getAllCompanyMenus
-	 * URL-->/companies/{CompanyName}/menus
-	 **/
+	//URL-->>/companies/{CompanyName}/menus
 	public function getAllCompanyMenus($CompanyName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -94,10 +74,7 @@ class menusController extends Controller
 		return $menusResponse;
 	}
 
-	/**
-	 * GET method getCompanyMenu
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}
 	public function getCompanyMenu($CompanyName, $MenuName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -117,10 +94,7 @@ class menusController extends Controller
 		return $menusResponse;
 	}
 
-	/**
-	 * GET method getByQuery
-	 * URL-->/menus/query
-	 **/
+	//URL-->>/menus/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 
@@ -153,10 +127,7 @@ class menusController extends Controller
 		}
 		return $menusResponse;
 	}
-
-	/**
-	 * Do basic Laravel validation
-	 * */
+	
 	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -187,10 +158,7 @@ class menusController extends Controller
 		}
 	}
 
-	/**
-	 * POST method addMenu
-	 * URL-->/companies/{CompanyName}/menus
-	 **/
+	//URL-->>/companies/{CompanyName}/menus
 	public function addMenu(Request $jsonRequest, $CompanyName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -215,10 +183,7 @@ class menusController extends Controller
 		return menusConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * PUT method updateMenu
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}
 	public function updateMenu(Request $jsonRequest, $CompanyName, $MenuName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -243,10 +208,7 @@ class menusController extends Controller
 		return menusConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * DELETE method deleteMenu
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}
 	public function deleteMenu($CompanyName, $MenuName){
 		$mySqlWhere = array();
 		$errorMsg = '';

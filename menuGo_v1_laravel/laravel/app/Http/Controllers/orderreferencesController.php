@@ -12,48 +12,31 @@ include_once "customersController.php";
 
 class orderreferencesConstants{
 	const orderreferencesTable = 'orderreferences';
-	/*
-	 * CONSTANTS w/c signify the column_name in orders table
-	 * */
+	
 	const dbOrderreferenceCode = 'orderreference_code';
 	const dbCustomerUsername = 'customer_username';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqOrderreferenceCode = 'OrderreferenceCode';
 	const reqCustomerUsername = 'CustomerUsername';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW ORDER REFERENCE RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING ORDER REFERENCE RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ORDER REFERENCE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class orderreferencesController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to ordersController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
 	
-	/**
-	 * getJoinCustomerOrderreference: joins customers_table & orderreferences_table w/a variable $mySqlWhere
-	 * */
 	public function getJoinCustomerOrderreference($mySqlWhere){
 		$customerOrderreference = DB::table(orderreferencesConstants::orderreferencesTable)
 		->join(
@@ -67,10 +50,7 @@ class orderreferencesController extends Controller
 				return $customerOrderreference;
 	}
 	
-	/**
-	 * GET method getAllCustomerOrderreferences
-	 * URL-->/customers/{CustomerUsername}/orderreferences
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orderreferences
 	public function getAllCustomerOrderreferences($CustomerUsername){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -89,10 +69,7 @@ class orderreferencesController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	/**
-	 * GET method getCustomerOrderreference
-	 * URL-->/customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}
 	public function getCustomerOrderreference($CustomerUsername, $OrderreferenceCode){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -112,10 +89,7 @@ class orderreferencesController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	/**
-	 * GET method getByQuery
-	 * URL-->/orderreferences/query
-	 **/
+	//URL-->>/orderreferences/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -140,9 +114,6 @@ class orderreferencesController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	/**
-	 * Do basic laravel validation
-	 * */
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -169,10 +140,7 @@ class orderreferencesController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addOrderreference
-	 * URL-->/customer/{CustomerUsername}/orderreferences
-	 **/
+	//URL-->>/customer/{CustomerUsername}/orderreferences
 	public function addOrderreference(Request $jsonRequest, $CustomerUsername){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -199,10 +167,7 @@ class orderreferencesController extends Controller
 		return orderreferencesConstants::dbAddSuccessMsg;
 	}
 	
-	/**
-	 * PUT method updateOrderreference
-	 * URL-->/customer/{CustomerUsername}/orderreferences/{OrderreferenceCode}
-	 **/
+	//URL-->>/customer/{CustomerUsername}/orderreferences/{OrderreferenceCode}
 	public function updateOrderreference(Request $jsonRequest, $CustomerUsername, $OrderreferenceCode){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -227,10 +192,7 @@ class orderreferencesController extends Controller
 		return orderreferencesConstants::dbUpdateSuccessMsg;
 	}
 	
-	/**
-	 * DELETE method deleteOrderreference
-	 * URL-->/customer/{CustomerUsername}/orderreferences/{OrderreferenceCode}
-	 **/
+	//URL-->>/customer/{CustomerUsername}/orderreferences/{OrderreferenceCode}
 	public function deleteOrderreference($CustomerUsername, $OrderreferenceCode){
 		$mySqlWhere = array();
 		$errorMsg = '';

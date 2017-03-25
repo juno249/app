@@ -15,9 +15,7 @@ include_once "tablesController.php";
 
 class ordersConstants{
 	const ordersTable = 'orders';
-	/*
-	 * CONSTANTS w/c signify the column_name in orders table
-	 * */
+	
 	const dbOrderId = 'order_id';
 	const dbCustomerUsername = 'customer_username';
 	const dbMenuitemId = 'menuitem_id';
@@ -25,9 +23,7 @@ class ordersConstants{
 	const dbOrderreferenceCode = 'orderreference_code';
 	const dbOrderTimestamp = 'order_timestamp';
 	const dbOrderStatus = 'order_status';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqOrderId = 'OrderId';
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqMenuitemId = 'MenuitemId';
@@ -35,44 +31,29 @@ class ordersConstants{
 	const reqOrderreferenceCode = 'OrderreferenceCode';
 	const reqOrderTimestamp = 'OrderTimestamp';
 	const reqOrderStatus = 'OrderStatus';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW ORDER RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING ORDER RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ORDER RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const inconsistencyValidationErr1 = 'MENUITEM OWNER & TABLEID OWNER DO NOT MATCH';
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & BRANCH_NAME & TABLE_NUMBER & ORDER_ID IS NON-EXISTING';
 	const inconsistencyValidationErr3 = 'KEY-COMBINATION CUSTOMER_USERNAME & ORDER_ID IS NON-EXISTING';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class ordersController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to ordersController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
-
-	/**
-	 * getJoinCompanyBranchTableOrders: joins companies_table & branches_table & tables_table & orders_table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCompanyBranchTableOrders($mySqlWhere){
 		$companyBranchTableOrder = DB::table(ordersConstants::ordersTable)
 		->join(
@@ -97,10 +78,7 @@ class ordersController extends Controller
 								->get();
 								return $companyBranchTableOrder;
 	}
-
-	/**
-	 * getJoinCompanyMenuMenuitemOrders: joins companies_table & menus_table & menuitems_table & orders_table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCompanyMenuMenuitemOrders($mySqlWhere){
 		$companyMenuMenuitemOrder = DB::table(ordersConstants::ordersTable)
 		->join(
@@ -125,10 +103,7 @@ class ordersController extends Controller
 								->get();
 								return $companyMenuMenuitemOrder;
 	}
-
-	/**
-	 * getJoinCustomerOrders: joins customers_table & orders_table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCustomerOrders($mySqlWhere){
 		$customerOrder = DB::table(ordersConstants::ordersTable)
 		->join(
@@ -142,10 +117,7 @@ class ordersController extends Controller
 				return $customerOrder;
 	}
 
-	/**
-	 * GET method getCompanyBranchOrders
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/orders
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders
 	public function getCompanyBranchOrders($CompanyName, $BranchName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -165,10 +137,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCompanyBranchOrdersOrderStatus
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/orders/{OrderStatus}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders/{OrderStatus}
 	public function getCompanyBranchOrdersOrderStatus($CompanyName, $BranchName, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -189,10 +158,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCompanyBranchOrdersNotOrderStatus
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/orders/not/{OrderStatus}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders/not/{OrderStatus}
 	public function getCompanyBranchOrdersNotOrderStatus($CompanyName, $BranchName, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -213,10 +179,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 
-	/**
-	 * GET method getCompanyBranchTableOrders
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders
 	public function getCompanyBranchTableOrders($CompanyName, $BranchName, $TableNumber){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -237,10 +200,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCompanyBranchTableOrdersOrderStatus
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}
 	public function getCompanyBranchTableOrdersOrderStatus($CompanyName, $BranchName, $TableNumber, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -262,10 +222,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCompanyBranchTableOrdersNotOrderStatus
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}
 	public function getCompanyBranchTableOrdersNotOrderStatus($CompanyName, $BranchName, $TableNumber, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -287,10 +244,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCustomerOrders
-	 * URL-->/customers/{CustomerUsername}/orders
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orders
 	public function getCustomerOrders($CustomerUsername){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -309,10 +263,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCustomerOrdersOrderStatus
-	 * URL-->/customers/{CustomerUsername}/orders/{OrderStatus}
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orders/{OrderStatus}
 	public function getCustomerOrdersOrderStatus($CustomerUsername, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -332,10 +283,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 	
-	/**
-	 * GET method getCustomerOrdersNotOrderStatus
-	 * URL-->/customers/{CustomerUsername}/orders/not/{OrderStatus}
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orders/not/{OrderStatus}
 	public function getCustomerOrdersNotOrderStatus($CustomerUsername, $OrderStatus){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -355,10 +303,7 @@ class ordersController extends Controller
 		return $ordersResponse;
 	}
 
-	/**
-	 * GET method getByQuery
-	 * URL-->/orders/query
-	 **/
+	//URL-->>/orders/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 
@@ -397,10 +342,7 @@ class ordersController extends Controller
 		}
 		return $ordersResponse;
 	}
-
-	/**
-	 * Do basic Laravel validation
-	 * */
+	
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -433,10 +375,7 @@ class ordersController extends Controller
 		}
 	}
 
-	/**
-	 * POST method addOrder
-	 * URL-->/customers/{CustomerUsername}/orders
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orders
 	public function addOrder(Request $jsonRequest, $CustomerUsername){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -476,10 +415,7 @@ class ordersController extends Controller
 		return ordersConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * POST method updateOrder
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
 	public function updateOrder(Request $jsonRequest, $CompanyName, $BranchName, $TableNumber, $OrderId){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -515,10 +451,7 @@ class ordersController extends Controller
 		return ordersConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * POST method deleteOrderCompany
-	 * URL-->/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
-	 **/
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}
 	public function deleteOrderCompany($CompanyName, $BranchName, $TableNumber, $OrderId){
 		$mySqlWhere = array();
 		$errorMsg = '';
@@ -547,10 +480,7 @@ class ordersController extends Controller
 		return ordersConstants::dbDeleteSuccessMsg;
 	}
 
-	/**
-	 * POST method deleteOrderCustomer
-	 * URL-->/customers/{CustomerUsername}/orders/{OrderId}
-	 **/
+	//URL-->>/customers/{CustomerUsername}/orders/{OrderId}
 	public function deleteOrderCustomer($CustomerUsername, $OrderId){
 		$mySqlWhere = array();
 		$errorMsg = '';

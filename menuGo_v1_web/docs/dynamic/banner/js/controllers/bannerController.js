@@ -2,9 +2,6 @@ angular
 .module('starter')
 .controller('bannerController', bannerController);
 
-/* ******************************
- * Controller Dependency Injection (Start)
- * ****************************** */
 bannerController.$inject = [
 	'BROADCAST_MESSAGES', 
 	'USER_ROLES', 
@@ -19,14 +16,8 @@ bannerController.$inject = [
 	'companyService', 
 	'customerCompanyBranchService', 
 	'loginService'
-];
-/* ******************************
- * Controller Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Controller Implementation (Start)
- * ****************************** */
 function bannerController(
 		BROADCAST_MESSAGES, 
 		USER_ROLES, 
@@ -41,196 +32,125 @@ function bannerController(
 		companyService, 
 		customerCompanyBranchService, 
 		loginService
-	){
-	/* ******************************
-	 * Controller Binded Data (Start)
-	 * ****************************** */
+		){
 	var vm = this;
-	vm.user = undefined;
+	
 	if(!(null == localStorage.getItem('User'))){
-		var user = localStorage.getItem('User');
-		user= JSON.parse(user);
-		vm.user = user;
-		vm.isAuthenticated = user.isAuthenticated;
-	} else {
-		vm.loginUsername = undefined;
-		vm.loginPassword = undefined;
-		vm.isAuthenticated = undefined;
-	}
-	/* ******************************
-	 * Controller Binded Data (End)
-	 * ****************************** */
+		vm.user = localStorage.getItem('User');
+		vm.user= JSON.parse(vm.user);
+	} 
 	
-	/* ******************************
-	 * Controller Binded Methods (Start)
-	 * ****************************** */
+	//controller_method
 	vm.doLogin = doLogin;
+	//controller_method
 	vm.doLogout = doLogout;
+	//controller_method
 	vm.doSignup = doSignup;
-	/* ******************************
-	 * Controller Binded Methods (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doLogin()
-	 * purpose: do login
-	 * ****************************** */
 	function doLogin(){
-		var loginUsername = vm.loginUsername;
-		var loginPassword = vm.loginPassword;
+		loginService.setLoginUsername(vm.loginUsername);
+		loginService.setLoginPassword(vm.loginPassword);
 		
-		loginService.setLoginUsername(loginUsername);
-		loginService.setLoginPassword(loginPassword);
 		loginService.doLogin()
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function doLoginSuccessCallback(response){
-			$rootScope.$broadcast(BROADCAST_MESSAGES.authAuthenticated);
+		function doLoginSuccessCallback(response){	$rootScope.$broadcast(BROADCAST_MESSAGES.authAuthenticated);
 		}
 		
-		function doLoginFailedCallback(responseError){
-			//do something on failure
+		function doLoginFailedCallback(responseError){	
+			alert('failed');//do something on failure
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doLogout()
-	 * purpose: do logout
-	 * ****************************** */
-	function doLogout(){
+	function doLogout(){	//do something on logout
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doSignup()
-	 * purpose: do signup
-	 * ****************************** */
 	function doSignup(){
-		var customer = undefined;
-		var company = undefined; 
-		var branch = undefined;
-		var customerCompanyBranch = undefined;
 		var formMode = 'I';
 		var fromSignup = true;
-		var modalInstance = undefined;
 		
-		//modalCustomer
-		modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
-			controller: 'modalCustomerController as modalCustomerController', 
-			resolve: {
-				customer: function(){	
-					return {
-						customerRole: 'administrator'
-					};	
-				}, 
-				formMode: function(){	return formMode;	}, 
-				fromSignup: function(){	return fromSignup;	}, 
-				modalHiddenFields: function(){	
-					return {
-						customerRole: true
-					};	
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
+					controller: 'modalCustomerController as modalCustomerController', 
+					resolve: {
+						customer: function(){	return {	customerRole: 'administrator'	}; 
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return {	customerRole: true	};
+						}
+						}
 				}
-			}
-		});
+				);
 		modalInstance.result.then(customerUibModalResultCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function customerUibModalResultCallback(data){
-			customer = data;
+			var customer = data;
 			customer = customer[0];
 			
-			if(null == customer){	return;	}
+			if(null == customer){	return;
+			}
 			
-			if(USER_ROLES.administrator == customer.customer_role){
-				doSignupAsAdministrator();
+			if(USER_ROLES.administrator == customer.customer_role){	doSignupAsAdministrator();
 			}
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: doSignupAsAdministrator()
-		 * purpose: do signup w/an administrator role
-		 * ****************************** */
 		function doSignupAsAdministrator(){
-			//modalCompany
-			modalInstance =  $uibModal.open({
-				animation: true, 
-				templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
-				controller: 'modalCompanyController as modalCompanyController', 
-				resolve: {
-					company: function(){	return {};	}, 
-					formMode: function(){	return formMode;	}, 
-					fromSignup: function(){	return fromSignup;	}, 
-					modalHiddenFields: function(){	return null;	}
-				}
-			});
+			var modalInstance =  $uibModal.open(
+					{
+						animation: true, 
+						templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
+						controller: 'modalCompanyController as modalCompanyController', 
+						resolve: {
+							company: function(){	return {};
+							}, 
+							formMode: function(){	return formMode;
+							}, 
+							fromSignup: function(){	return fromSignup;
+							}, 
+							modalHiddenFields: function(){	return null;
+							}
+							}
+					}
+					);
 			modalInstance.result.then(companyUibModalResultCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function companyUibModalResultCallback(data){
-				company = data;
+				var company = data;
 				company = company[0];
 				
-				//modalBranch
-				modalInstance = $uibModal.open({
-					animation: true, 
-					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
-					controller: 'modalBranchController as modalBranchController', 
-					resolve: {
-						branch: function(){	
-							return {
-								companyName: company.company_name
-							};	
-						}, 
-						formMode: function(){	return formMode;	}, 
-						fromSignup: function(){	return fromSignup;	}, 
-						modalHiddenFields: function(){	
-							return {
-									companyName: true
-							};
+				modalInstance = $uibModal.open(
+						{
+							animation: true, 
+							templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
+							controller: 'modalBranchController as modalBranchController', 
+							resolve: {
+								branch: function(){	return {	companyName: company.company_name	};
+								}, 
+								formMode: function(){	return formMode;
+								}, 
+								fromSignup: function(){	return fromSignup;
+								}, 
+								modalHiddenFields: function(){	return {	companyName: true	};
+								}
+								}
 						}
-					}
-				});
+						);
 				modalInstance.result.then(branchUibModalResultCallback);
 				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
 				function branchUibModalResultCallback(data){
-					branch = data;
+					var branch = data;
 					branch = branch[0];
 					
 					doAdminCascadedPosts();
 				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
 				
-				/* ******************************
-				 * Method Implementation
-				 * method name: doAdminCascadedPosts()
-				 * purpose: do posts for customer, company, branch
-				 *  & customer_company_branch
-				 * ****************************** */
 				function doAdminCascadedPosts(){
 					var customerCompanyBranch = {
 							customer_username: customer.customer_username, 
@@ -248,53 +168,29 @@ function bannerController(
 					.then(addCustomerCompanyBranchSuccessCallback)
 					.catch(addCustomerCompanyBranchFailedCallback);
 					
-					/* ******************************
-					 * Callback Implementations (Start)
-					 * ****************************** */
-					function addCustomerCompanyBranchSuccessCallback(response){
-						//do something on success
+					function addCustomerCompanyBranchSuccessCallback(response){	//do something on success
 					}
 					
-					function addCustomerCompanyBranchFailedCallback(responseError){
-						//do something on failure
+					function addCustomerCompanyBranchFailedCallback(responseError){	//do something on failure
 					}
-					/* ******************************
-					 * Callback Implementations (End)
-					 * ****************************** */
-				}				
+				}			
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 		}
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: authAuthenticatedCallback()
-	 * purpose: authAuthenticated message event handler
-	 * ****************************** */
 	function authAuthenticatedCallback(){
-		$timeout(function(){
-			var user = localStorage.getItem('User');
-			var isAuthenticated = vm.isAuthenticated;
-
-			user = JSON.parse(user);
-			isAuthenticated = user.isAuthenticated;
-			
-			vm.isAuthenticated = isAuthenticated;
-			$state.go('manage');
-		})
-	}
+		const USER_KEY = 'User';
+		
+		if(!(null == localStorage.getItem(USER_KEY))){
+			vm.user = localStorage.getItem(USER_KEY);
+			vm.user = JSON.parse(vm.user);
+		}
+		
+		$timeout(
+				function(){	$state.go('manage');
+				}
+				);
+		}
 	
-	/* ******************************
-	 * Broadcast Event Handlers (Start)
-	 * ****************************** */
 	$scope.$on(BROADCAST_MESSAGES.authAuthenticated, authAuthenticatedCallback);
-	/* ******************************
-	 * Broadcast Event Handlers (End)
-	 * ****************************** */
 }
-/* ******************************
- * Controller Implementation (End)
- * ****************************** */

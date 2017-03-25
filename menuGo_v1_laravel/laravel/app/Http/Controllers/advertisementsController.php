@@ -11,9 +11,7 @@ include_once "companiesController.php";
 
 class advertisementsConstants{
 	const advertisementsTable = 'advertisements';
-	/*
-	 * CONSTANTS w/c signify the column_name in advertisements table
-	 * */
+	
 	const dbAdvertisementId = 'advertisement_id';
 	const dbCompanyName = 'company_name';
 	const dbAdvertisementTitle = 'advertisement_title';
@@ -21,9 +19,7 @@ class advertisementsConstants{
 	const dbAdvertisementPrice = 'advertisement_price';
 	const dbAdvertisementImage = 'advertisement_image';
 	const dbAdvertisementUrl = 'advertisement_url';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqAdvertisementId = 'AdvertisementId';
 	const reqCompanyName = 'CompanyName';
 	const reqAdvertisementTitle = 'AdvertisementTitle';
@@ -31,37 +27,25 @@ class advertisementsConstants{
 	const reqAdvertisementPrice = 'AdvertisementPrice';
 	const reqAdvertisementImage = 'AdvertisementImage';
 	const reqAdvertisementUrl = 'AdvertisementUrl';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW ADVERTISEMENT RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING ADVERTISEMENT RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ADVERTISEMENT RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
-class advertisementsController extends Controller{
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to branchesController
-	 * */
+class advertisementsController extends Controller
+{
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
 	
-	/**
-	 * getJoinCompanyAdvertisement: joins companies_table & advertisements_table w/a variable $mySqlWhere
-	 * */
 	public function getJoinCompanyAdvertisement($mySqlWhere){
 		$companyAdvertisement = DB::table(advertisementsConstants::advertisementsTable)
 		->join(
@@ -75,10 +59,7 @@ class advertisementsController extends Controller{
 				return $companyAdvertisement;
 	}
 	
-	/**
-	 * GET method getAllAdvertisements
-	 * URL-->/advertisements
-	 **/
+	//URL-->>/advertisements
 	public function getAllAdvertisements(){
 		$mySqlWhere = array();
 		
@@ -96,10 +77,7 @@ class advertisementsController extends Controller{
 		return $advertisementsResponse;
 	}
 	
-	/**
-	 * GET method getAdvertisement
-	 * URL-->/advertisements/{AdvertisementId}
-	 **/
+	//URL-->>/advertisements/{AdvertisementId}
 	public function getAdvertisement($AdvertisementId){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [advertisementsConstants::advertisementsTable . '.' . advertisementsConstants::dbAdvertisementId, '=', $AdvertisementId]);
@@ -118,10 +96,7 @@ class advertisementsController extends Controller{
 		return $advertisementsResponse;
 	}
 	
-	/**
-	 * GET method getCompanyAdvertisements
-	 * URL-->/companies/{CompanyName}/advertisements
-	 **/
+	//URL-->>/companies/{CompanyName}/advertisements
 	public function getCompanyAdvertisements($CompanyName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -140,10 +115,7 @@ class advertisementsController extends Controller{
 		return $advertisementsResponse;
 	}
 	
-	/**
-	 * GET method getCompanyAdvertisements
-	 * URL-->/companies/{CompanyName}/advertisements/{AdvertisementId}
-	 **/
+	//URL-->>/companies/{CompanyName}/advertisements/{AdvertisementId}
 	public function getCompanyAdvertisement($CompanyName, $AdvertisementId){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -163,10 +135,7 @@ class advertisementsController extends Controller{
 		return $advertisementsResponse;
 	}
 	
-	/**
-	 * GET method getByQuery
-	 * URL-->/advertisements/query
-	 **/
+	//URL-->>/advertisements/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 		if(isset($_GET[advertisementsConstants::reqAdvertisementId])){
@@ -205,9 +174,6 @@ class advertisementsController extends Controller{
 		return $advertisementsResponse;
 	}
 	
-	/**
-	 * Do basic Laravel validation
-	 * */
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -242,10 +208,7 @@ class advertisementsController extends Controller{
 		}
 	}
 	
-	/**
-	 * POST method addAdvertisement
-	 * URL-->/advertisements
-	 **/
+	//URL-->>/advertisements
 	public function addAdvertisement(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -268,10 +231,7 @@ class advertisementsController extends Controller{
 		return advertisementsConstants::dbAddSuccessMsg;
 	}
 	
-	/**
-	 * PUT method updateAdvertisement
-	 * URL-->/advertisements/{AdvertisementId}
-	 **/
+	//URL-->>/advertisements/{AdvertisementId}
 	public function updateAdvertisement(Request $jsonRequest, $AdvertisementId){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -295,10 +255,7 @@ class advertisementsController extends Controller{
 		return advertisementsConstants::dbUpdateSuccessMsg;
 	}
 	
-	/**
-	 * DELETE method deleteAdvertisement
-	 * URL-->/advertisements/{AdvertisementId}
-	 * */
+	//URL-->>/advertisements/{AdvertisementId}
 	public function deleteAdvertisement($AdvertisementId){
 		$mySqlWhere = array();
 		$errorMsg = '';

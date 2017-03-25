@@ -12,9 +12,7 @@ include_once "menusController.php";
 
 class menuitemsConstants{
 	const menuitemsTable = 'menuitems';
-	/*
-	 * CONSTANTS w/c signify the column_name in menuitems table
-	 * */
+	
 	const dbMenuitemId = 'menuitem_id';
 	const dbMenuitemCode = 'menuitem_code';
 	const dbMenuId = 'menu_id';
@@ -23,9 +21,7 @@ class menuitemsConstants{
 	const dbMenuitemPrice = 'menuitem_price';
 	const dbMenuitemFeatured = 'menuitem_featured';
 	const dbMenuitemImage = 'menuitem_image';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqMenuitemId = 'MenuitemId';
 	const reqMenuId = 'MenuId';
 	const reqMenuitemCode = 'MenuitemCode';
@@ -34,43 +30,28 @@ class menuitemsConstants{
 	const reqMenuitemPrice = 'MenuitemPrice';
 	const reqMenuitemFeatured = 'MenuitemFeatured';
 	const reqMenuitemImage = 'MenuitemImage';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW MENUITEM RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING MENUITEM RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING MENUITEM RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const inconsistencyValidationErr1 = 'KEY-COMBINATION COMPANY_NAME & MENU_NAME IS NON-EXISTING';
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & MENU_NAME & MENUITEM_CODE IS NON-EXISTING';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class menuitemsController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to menuitemsController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
-
-	/**
-	 * getJoinCompanyMenuMenuitems: joins companies_table & menus_table & menuitems_table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCompanyMenuMenuitems($mySqlWhere){
 		$companyMenuMenuitem = DB::table(menuitemsConstants::menuitemsTable)
 		->join(
@@ -90,10 +71,7 @@ class menuitemsController extends Controller
 						return $companyMenuMenuitem;
 	}
 
-	/**
-	 * GET method getAllCompanyMenuMenuitems
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems
 	public function getAllCompanyMenuMenuitems($CompanyName, $MenuName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -113,10 +91,7 @@ class menuitemsController extends Controller
 		return $menuitemsResponse;
 	}
 
-	/**
-	 * GET method getCompanyMenuMenuitem
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	public function getCompanyMenuMenuitem($CompanyName, $MenuName, $MenuitemCode){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
@@ -137,10 +112,7 @@ class menuitemsController extends Controller
 		return $menuitemsResponse;
 	}
 
-	/**
-	 * GET method getByQuery
-	 * URL-->/menuitems/query
-	 **/
+	//URL-->>/menuitems/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 
@@ -182,10 +154,7 @@ class menuitemsController extends Controller
 		}
 		return $menuitemsResponse;
 	}
-
-	/**
-	 * Do basic Laravel validation
-	 * */
+	
 	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -222,10 +191,7 @@ class menuitemsController extends Controller
 		}
 	}
 
-	/**
-	 * POST method addMenuitem
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/
 	public function addMenuitem(Request $jsonRequest, $CompanyName, $MenuName){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -263,10 +229,7 @@ class menuitemsController extends Controller
 		return menuitemsConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * POST method updateMenuitem
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	public function updateMenuitem(Request $jsonRequest, $CompanyName, $MenuName, $MenuitemCode){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -297,10 +260,7 @@ class menuitemsController extends Controller
 		return menuitemsConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * POST method deleteMenuitem
-	 * URL-->/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
-	 **/
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	public function deleteMenuitem($CompanyName, $MenuName, $MenuitemCode){
 		$mySqlWhere = array();
 		$errorMsg = '';

@@ -12,9 +12,7 @@ include_once "customersCompaniesBranchesController.php";
 
 class customersConstants{
 	const customersTable = 'customers';
-	/*
-	 * CONSTANTS w/c signify the column_name in customers table
-	 * */
+	
 	const dbCustomerUsername = 'customer_username';
 	const dbCustomerPassword = 'customer_password';
 	const dbCustomerNameFname = 'customer_name_fname';
@@ -33,9 +31,7 @@ class customersConstants{
 	const dbCustomerBirthdayMonth = 'customer_birthday_month';
 	const dbCustomerBirthdayDate = 'customer_birthday_date';
 	const dbCustomerBirthdayYear = 'customer_birthday_year';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqCustomerPassword = 'CustomerPassword';
 	const reqCustomerNameFname = 'CustomerNameFname';
@@ -54,43 +50,28 @@ class customersConstants{
 	const reqCustomerBirthdayMonth = 'CustomerBirthdayMonth';
 	const reqCustomerBirthdayDate = 'CustomerBirthdayDate';
 	const reqCustomerBirthdayYear = 'CustomerBirthdayYear';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW CUSTOMER RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING CUSTOMER RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING CUSTOMER RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on validation
-	 * */
+	
 	const dbAddValidateSuccessMsg = 'DATA IS VALID FOR DB ADD OPERATION';
 	const dbUpdateValidateSuccessMsg = 'DATA IS VALID FOR DB UPDATE OPERATION';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class customersController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to customersController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth', ['except' => ['addCustomer']]);
 	}
-
-	/**
-	 * getJoinCustomerCustomerCompanyBranch: joins customers_table & customers_companies_branches table w/a variable $mySqlWhere
-	 * */
+	
 	public function getJoinCustomerCustomerCompanyBranch($mySqlWhere){
 		$customerCustomerCompanyBranch = DB::table(customersConstants::customersTable)
 		->join(
@@ -104,10 +85,7 @@ class customersController extends Controller
 				return $customerCustomerCompanyBranch;
 	}
 	
-	/**
-	 * GET method getAllCustomersAdministrator
-	 * URL-->/customers/companies/{CompanyName}
-	 **/
+	//URL-->>/customers/companies/{CompanyName}
 	public function getAllCustomersAdministrator($CompanyName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName,  '=', $CompanyName]);
@@ -126,11 +104,7 @@ class customersController extends Controller
 		return $customersResponse;
 	}
 	
-	
-	/**
-	 * GET method getAllCustomers
-	 * URL-->/customers/
-	 **/
+	//URL-->>/customers/
 	public function getAllCustomers(){
 		$customersResponse = new Response();
 		try{
@@ -146,10 +120,7 @@ class customersController extends Controller
 		return $customersResponse;
 	}
 
-	/**
-	 * GET method getCustomer
-	 * URL-->/customers/{CustomerUsername}
-	 **/
+	//URL-->>/customers/{CustomerUsername}
 	public function getCustomer($CustomerUsername){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -168,10 +139,7 @@ class customersController extends Controller
 		return $customersResponse;
 	}
 
-	/**
-	 * GET method getByQuery
-	 * URL-->/customers/query
-	 **/
+	//URL-->>/customers/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 
@@ -243,10 +211,7 @@ class customersController extends Controller
 		}
 		return $customersResponse;
 	}
-
-	/**
-	 * Do basic Laravel validation
-	 * */
+	
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -305,10 +270,7 @@ class customersController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addCustomerValidate
-	 * URL-->/customers/validate
-	 * */
+	//URL-->>/customers/validate
 	public function addCustomerValidate(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -324,10 +286,7 @@ class customersController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addCustomer
-	 * URL-->/customers/
-	 * */
+	//URL-->>/customers/
 	public function addCustomer(Request $jsonRequest){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -353,10 +312,7 @@ class customersController extends Controller
 		return customersConstants::dbAddSuccessMsg;
 	}
 
-	/**
-	 * PUT method updateCustomerValidate
-	 * URL-->/customers/{CustomerUsername}/validate
-	 * */
+	//URL-->>/customers/{CustomerUsername}/validate
 	public function updateCustomerValidate(Request $jsonRequest, $CustomerUsername){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -372,10 +328,7 @@ class customersController extends Controller
 		}
 	}
 	
-	/**
-	 * PUT method updateCustomer
-	 * URL-->/customers/{CustomerUsername}
-	 * */
+	//URL-->>/customers/{CustomerUsername}
 	public function updateCustomer(Request $jsonRequest, $CustomerUsername){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -399,10 +352,7 @@ class customersController extends Controller
 		return customersConstants::dbUpdateSuccessMsg;
 	}
 
-	/**
-	 * DELETE method deleteCustomer
-	 * URL-->/customers/{CustomerUsername}
-	 * */
+	//URL-->>/customers/{CustomerUsername}
 	public function deleteCustomer($CustomerUsername){
 		$mySqlWhere = array();
 		$errorMsg = '';

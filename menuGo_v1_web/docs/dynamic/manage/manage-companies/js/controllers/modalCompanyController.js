@@ -2,9 +2,6 @@ angular
 .module('starter')
 .controller('modalCompanyController', modalCompanyController);
 
-/* ******************************
- * Controller Dependency Injection (Start)
- * ****************************** */
 modalCompanyController.$inject = [
 	'API_BASE_URL', 
 	'$uibModalInstance', 
@@ -15,14 +12,8 @@ modalCompanyController.$inject = [
 	'formMode', 
 	'fromSignup', 
 	'modalHiddenFields'
-];
-/* ******************************
- * Controller Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Controller Implementation (Start)
- * ****************************** */
 function modalCompanyController(
 		API_BASE_URL, 
 		$uibModalInstance, 
@@ -33,34 +24,26 @@ function modalCompanyController(
 		formMode, 
 		fromSignup, 
 		modalHiddenFields
-	){	
-	/* ******************************
-	 * Messages Constants (Start)
-	 * ****************************** */
+		){
 	const COMPANY_ADD_CATCH_MESSAGE = 'UNABLE TO ADD COMPANY, DB EXCEPTION ENCOUNTERED';
 	const COMPANY_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE COMPANY, DB EXCEPTION ENCOUNTERED';
 	const COMPANY_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE COMPANY, DATA IS EMPTY/UNCHANGED';
 	const COMPANY_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE COMPANY, DB EXCEPTION ENCOUNTERED';
-	/* ******************************
-	 * Messages Constants (End)
-	 * ****************************** */
+	const DOM_FORM = '#modalCompany';
+	const DOM_MODAL = '#modalCompanyContainer';
 	
-	/* ******************************
-	 * Controller Binded Data (Start)
-	 * ****************************** */
 	var vm = this;
-	vm.formId = '#modalCompany';
 	vm.formMode = formMode;
 	vm.fromSignup = fromSignup;
 	vm.company = company;
-	vm.companyCapture = JSON.parse(JSON.stringify(company));
+	vm.companySnapshot = JSON.parse(JSON.stringify(company));
 	vm.modalHiddenFields = modalHiddenFields;
 	vm.dom2DbColumn = {
 			companyName: 'company_name', 
 			companyDesc: 'company_desc', 
 			companyCategory: 'company_category', 
 			companyLogo: 'company_logo'
-	};
+	}
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
@@ -74,187 +57,128 @@ function modalCompanyController(
 			company_logo: 3
 	}
 	vm.validationErr = {};
-	vm.validationErrDB = undefined;
+	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
-	vm.companyLogoImage = undefined;
 	vm.isCompanyLogoImageHidden = true;
-	/* ******************************
-	 * Controller Binded Data (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Controller Binded Method (Start)
-	 * ****************************** */
+	//controller_method
 	vm.initBootstrapValidator = initBootstrapValidator;
+	//controller_method
 	vm.initDom = initDom;
+	//controller_method
 	vm.doCancel = doCancel;
+	//controller_method
 	vm.uploadCompanyLogo = uploadCompanyLogo;
-	/* ******************************
-	 * Controller Binded Method (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initBootstrapValidator()
-	 * purpose: initializes bootstrap validator plugin
-	 * ****************************** */
 	function initBootstrapValidator(){
-		var formId = vm.formId;
-		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")'
-		$(formId).validator();
-		$(formId).validator().on('submit', doSubmit);
+		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$timeout(function(){
-			$(formId).validator('update');
-		})
+		$(DOM_FORM).validator();
+		$(DOM_FORM).validator().on(
+				'submit', 
+				doSubmit
+				);
+		
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initDom
-	 * purpose: initializes Dom object attributes
-	 * ****************************** */
 	function initDom(){
-		var formMode = vm.formMode;
-		var company = vm.company;
-		var companyLogoId = '#companyLogo';
-		var companyLogoBrowseId = '#companyLogoBrowse';
-		var companyLogo = $(companyLogoId);
-		var companyLogoBrowse =$(companyLogoBrowseId);
+		const COMPANY_LOGO_BROWSE = '#companyLogoBrowse';
 		
-		/* ******************************
-		 * companyLogoBrowse File Type (Start)
-		 * ****************************** */
-		companyLogoBrowse.css('display', 'none');
-		companyLogoBrowse.on('change', companyLogoBrowseChangeCallback);
-		/* ******************************
-		 * Method Implementation
-		 * method name: companyLogoBrowseChangeCallback
-		 * purpose: handles input[type='file'] change event
-		 * ****************************** */
+		$(COMPANY_LOGO_BROWSE).css(
+				'display', 
+				'none'
+				);
+		$(COMPANY_LOGO_BROWSE).on(
+				'change', 
+				companyLogoBrowseChangeCallback
+				);
+		
 		function companyLogoBrowseChangeCallback(e){
-			var eTarg = e.target;
 			var eFiles = e.target.files;
-			var isCompanyLogoImageHidden = vm.isCompanyLogoImageHidden;
-
-			company.companyLogo = eFiles[0].name;
-			isCompanyLogoImageHidden = true;
 			
-			vm.isCompanyLogoImageHidden = isCompanyLogoImageHidden;
-			$timeout(function(){
-				vm.company = company;
-			})
-		}
-		/* ******************************
-		 * companyLogoBrowse File Type (End)
-		 * ****************************** */
+			$timeout(
+					function(){
+						vm.company.companyLogo = eFiles[0].name;
+						vm.isCompanyLogoImageHidden = true;
+						}
+					);
+			}
 		
-		/* ******************************
-		 * Input Controls (Start)
-		 * ****************************** */
-		if('D' == formMode){
-			$('#modalCompanyContainer input').prop('disabled', true);
-			$('#modalCompanyContainer textarea').prop('disabled', true);
-			$('#modalCompanyContainer select').prop('disabled', true);
-		}
-		/* ******************************
-		 * Input Controls (End)
-		 * ****************************** */
+		if('D' == vm.formMode){
+			$('#modalCompanyContainer input').prop(
+					'disabled', 
+					true
+					);
+			$('#modalCompanyContainer textarea').prop(
+					'disabled', 
+					true
+					);
+			$('#modalCompanyContainer select').prop(
+					'disabled', 
+					true
+					);
+			}
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doCancel()
-	 * purpose: closes uib modal instance
-	 * ****************************** */
-	function doCancel(){
-		$uibModalInstance.close();
+	function doCancel(){	$uibModalInstance.close();
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: uploadCompanyLogo()
-	 * purpose: upload a company logo to server
-	 * ****************************** */
 	function uploadCompanyLogo(){
-		var company = vm.company;
-		var imgFileId = '#companyLogoBrowse';
-		var imgFile = $(imgFileId)[0].files[0];
-		var modalCompanyContainerId = '#modalCompanyContainer';
-		var modalCompanyContainer = $(modalCompanyContainerId);
+		const COMPANY_LOGO_BROWSE = '#companyLogoBrowse';
 		
-		companyService.setCompanyName(company.companyName);
-		companyService.uploadCompanyLogo(imgFile)
+		var companyLogo = $(COMPANY_LOGO_BROWSE)[0].files[0];
+		
+		companyService.setCompanyName(vm.company.companyName);
+		
+		companyService.uploadCompanyLogo(companyLogo)
 		.then(uploadCompanyLogoSuccessCallback)
 		.catch(uploadCompanyLogoFailedCallback);
 		
-		showBootstrapLoader(modalCompanyContainer);
+		showBootstrapLoader($(DOM_MODAL));
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function uploadCompanyLogoSuccessCallback(response){
-			var companyLogoImage = vm.companyLogoImage;
-			var isCompanyLogoImageHidden = vm.isCompanyLogoImageHidden;
 			var appQueryStr = '?timestamp=' + new Date().getTime();
 			
-			company.companyLogo = response.config.url + appQueryStr;
-			companyLogoImage = company.companyLogo;
-			isCompanyLogoImageHidden = false;
+			vm.company.companyLogo = response.config.url + appQueryStr;
+			vm.isCompanyLogoImageHidden = false;
 			
-			vm.company = company;
-			vm.companyLogoImage = companyLogoImage;
-			vm.isCompanyLogoImageHidden = isCompanyLogoImageHidden;
-			hideBootstrapLoader(modalCompanyContainer);
+			hideBootstrapLoader($(DOM_MODAL));
 		}
 		
-		function uploadCompanyLogoFailedCallback(responseError){
-			hideBootstrapLoader(modalCompanyContainer);
+		function uploadCompanyLogoFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL));
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doSubmit()
-	 * purpose: handles form-submission (insert/amend)
-	 * ****************************** */
 	function doSubmit(e){
-		var formMode = vm.formMode;
-		var fromSignup = vm.fromSignup;
-		var modalCompanyContainerId = '#modalCompanyContainer';
-		var modalCompanyContainer = $(modalCompanyContainerId);
 		var data = [];
-		
-		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn());
 		
-		showBootstrapLoader(modalCompanyContainer);
+		hideBootstrapAlert();
 		
-		if('I' == formMode){
-			if(fromSignup){
+		showBootstrapLoader($(DOM_MODAL));
+		
+		if('I' == vm.formMode){
+			if(vm.fromSignup){
 				companyService.addCompanyValidate(data)
 				.then(addCompanyValidateSuccessCallback)
 				.catch(addCompanyValidateFailedCallback);
 				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
 				function addCompanyValidateSuccessCallback(response){
-					hideBootstrapLoader(modalCompanyContainer);
+					hideBootstrapLoader($(DOM_MODAL));
+					
 					$uibModalInstance.close(data);
 				}
 				
 				function addCompanyValidateFailedCallback(responseError){
-					hideBootstrapLoader(modalCompanyContainer);
+					hideBootstrapLoader($(DOM_MODAL));
+					
 					genValidationErrorFromResponse(responseError);
 				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
 				return;
 			}
 			
@@ -262,276 +186,157 @@ function modalCompanyController(
 			.then(addCompanySuccessCallback)
 			.catch(addCompanyFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function addCompanySuccessCallback(response){
-				hideBootstrapLoader(modalCompanyContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function addCompanyFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalCompanyContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(COMPANY_ADD_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
-			
-		} else if('A' == formMode){
-			var companyCapture = vm.companyCapture;
-			var companyName = companyCapture.companyName;
-			
+		} else if('A' == vm.formMode){
 			discardModalHiddenFields();
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data[0]).length){
-				hideBootstrapLoader(modalCompanyContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				showBootstrapAlert(COMPANY_UPDATE_CUSTOM_ERR_MESSAGE);
+				
 				return;
 			}
 			
-			companyService.setCompanyName(companyName);
+			companyService.setCompanyName(vm.companySnapshot.companyName);
+			
 			companyService.updateCompany(data)
 			.then(updateCompanySuccessCallback)
 			.catch(updateCompanyFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function updateCompanySuccessCallback(response){
-				hideBootstrapLoader(modalCompanyContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function updateCompanyFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalCompanyContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(COMPANY_UPDATE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalHiddenFields()
-			 * purpose: discards hidden modal fields from Json-format data
-			 * ****************************** */
 			function discardModalHiddenFields(){
-				var dataCopy = data[0];
-				var modalHiddenFields = vm.modalHiddenFields;
-				var modalHiddenFieldsKeys = Object.keys(modalHiddenFields);
-				var dom2DbColumn = vm.dom2DbColumn;
-				
-				modalHiddenFieldsKeys.forEach(function(modalHiddenFieldsKey){
-					delete dataCopy[dom2DbColumn[modalHiddenFieldsKey]];
-				});
-				
-				data[0] = dataCopy;
-			}
+				Object.keys(modalHiddenFields).forEach(
+						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+						}
+						);
+				}
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalUnchangedFields()
-			 * purpose: discards unchanged modal fields from Json-format data
-			 * ****************************** */
 			function discardModalUnchangedFields(){
-				var dataCopy = data[0];
-				var dataCopyKeys = Object.keys(dataCopy);
-				var companyCapture = vm.companyCapture;
-				var dbColumn2Dom = vm.dbColumn2Dom;
+				var dataKeys = Object.keys(data[0]);
 				
-				dataCopyKeys.forEach(function(dataCopyKey){
-					var dataCopyValue = dataCopy[dataCopyKey];
-					var companyCaptureValue = companyCapture[dbColumn2Dom[dataCopyKey]];
-					
-					if(dataCopyValue == companyCaptureValue){	delete dataCopy[dataCopyKey];
-					}
-				});
-				
-				data[0] = dataCopy;
-			}
-		} else if('D' == formMode){
-			var company = vm.company;
-			var companyName = company.companyName;
-			companyService.setCompanyName(companyName);
+				dataKeys.forEach(
+						function(dataKey){
+							var dataValue = data[0][dataKey];
+							var companySnapshotValue = vm.companySnapshot[vm.dbColumn2Dom[dataKey]];
+							
+							if(dataValue == companySnapshotValue){	delete data[0][dataKey];
+							}
+							}
+						);
+				}
+		} else if('D' == vm.formMode){
+			companyService.setCompanyName(vm.company.companyName);
+			
 			companyService.deleteCompany()
 			.then(deleteCompanySuccessCallback)
 			.catch(deleteCompanyFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function deleteCompanySuccessCallback(response){
-				hideBootstrapLoader(modalCompanyContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 						
 			function deleteCompanyFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalCompanyContainer);
 				try{
-					JSON.parse(statusText)
+					JSON.parse(responseError.statusText)
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(COMPANY_DELETE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 		}
 		
 		validationErr = {};
-		validationErrDB = undefined;
-		
-		vm.validationErr = validationErr;
-		vm.validationErrDB = validationErrDB;
+		validationErrDB = {};
 	}
 
-	/* ******************************
-	 * Method Implementation
-	 * method name: doDom2DbColumn()
-	 * purpose: converts dom to dbcolumn (server-posting)
-	 * ****************************** */
 	function doDom2DbColumn(){
-		var company = vm.company;
-		var companyKeys = Object.keys(company);
-		var dom2DbColumn = vm.dom2DbColumn;
 		var data = {};
 		
-		companyKeys.forEach(function(companyKey){
-			var dbField = dom2DbColumn[companyKey];
-			if(
-					!(null == dbField) && 
-					!(undefined == dbField)
-			){
-				data[dbField] = company[companyKey];
-			}
-		});
+		Object.keys(company).forEach(
+				function(companyKey){
+					if(
+							!(null == vm.dom2DbColumn[companyKey]) && 
+							!(undefined == vm.dom2DbColumn[companyKey])
+							){	data[vm.dom2DbColumn[companyKey]] = vm.company[companyKey];	}
+					}
+				);
 		
 		return data;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: genValidationErrorFromResponse()
-	 * purpose: generates validation error from server response 
-	 * ****************************** */
 	function genValidationErrorFromResponse(responseError){
-		/* ******************************
-		 * DOM classes (start)
-		 * ****************************** */
-		var formGroupClass = '.form-group';
-		var hasErrorClass = 'has-error';
-		/* ******************************
-		 * DOM classes (end)
-		 * ****************************** */
-		var dbColumn2Dom = vm.dbColumn2Dom;
-		var validationErr = vm.validationErr;
+		const CLASS_FORM_GROUP = '.form-group';
+		const CLASS_HAS_ERROR = 'has-error';
+		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 		
 		statusTextKeys.forEach(function(statusTextKey){
-			var arrIndex = statusTextKey.split('.')[0];
 			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = undefined;
-			var errorMessage = undefined;
+			var dbColumnIndex = getDbColumnIndex(dbColumnName);
+			var errorMessage = statusTextObj[statusTextKey][0];
+			var formGroups = $(CLASS_FORM_GROUP);
 			
-			if(statusTextKey == (arrIndex + '.' + dbColumnName)){
-				dbColumnIndex = getDbColumnIndex(dbColumnName);
-				errorMessage = statusTextObj[statusTextKey][0];
-				errorMessage = errorMessage.replace(statusTextKey, dbColumn2Dom[dbColumnName]);
-				validationErr[parseInt(dbColumnIndex)] = errorMessage;
+			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
 				
-				/* ******************************
-				 * JQuery DOM update (start)
-				 * ****************************** */
-				var formGroups = $(formGroupClass);
-				formGroups.eq(parseInt(dbColumnIndex+1)).addClass(hasErrorClass);
-				/* ******************************
-				 * JQuery DOM update (end)
-				 * ****************************** */
+			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+				
+			formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
 			}
-		});
+		);
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: getDbColumnIndex()
-		 * purpose: gets db column index from db column name
-		 * ****************************** */
-		function getDbColumnIndex(dbColumnName){
-			var dbColumn2DomIndex = vm.dbColumn2DomIndex;
-			
-			return dbColumn2DomIndex[dbColumnName];
+		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-		
-		vm.validationErr = validationErr;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapLoader()
-	 * purpose: shows bootstrap loader
-	 * ****************************** */
-	function showBootstrapLoader(target){
-		$(target).LoadingOverlay('show');
+	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapLoader()
-	 * purpose: hides bootstrap loader
-	 * ****************************** */
-	function hideBootstrapLoader(target){
-		$(target).LoadingOverlay('hide');
+	function hideBootstrapLoader(target){	$(target).LoadingOverlay('hide');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapAlert()
-	 * purpose: shows bootstrap alert
-	 * ****************************** */
-	function showBootstrapAlert(arg_validationErrDB){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = arg_validationErrDB;
-		isValidationErrDBHidden = false;
-		
+	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.isValidationErrDBHidden = false;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapAlert()
-	 * purpose: hides bootstrap alert
-	 * ****************************** */
 	function hideBootstrapAlert(){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = undefined;
-		isValidationErrDBHidden = true;
-		
-		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.validationErrDB = {};
+		vm.isValidationErrDBHidden = true;
 	}
 }
-/* ******************************
- * Controller Implementation (End)
- * ****************************** */

@@ -2,9 +2,6 @@ angular
 .module('starter')
 .controller('modalCustomerController', modalCustomerController);
 
-/* ******************************
- * Controller Dependency Injection (Start)
- * ****************************** */
 modalCustomerController.$inject = [
 	'USER_GENDERS', 
 	'USER_ROLES', 
@@ -16,14 +13,8 @@ modalCustomerController.$inject = [
 	'formMode', 
 	'fromSignup', 
 	'modalHiddenFields'
-];
-/* ******************************
- * Controller Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Controller Implementation (Start)
- * ****************************** */
 function modalCustomerController(
 		USER_GENDERS, 
 		USER_ROLES, 
@@ -35,23 +26,15 @@ function modalCustomerController(
 		formMode, 
 		fromSignup, 
 		modalHiddenFields
-	){
-	/* ******************************
-	 * Messages Constants (Start)
-	 * ****************************** */
+		){
 	const CUSTOMER_ADD_CATCH_MESSAGE = 'UNABLE TO ADD CUSTOMER, DB EXCEPTION ENCOUNTERED';
 	const CUSTOMER_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DB EXCEPTION ENCOUNTERED';
 	const CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DATA IS EMPTY/UNCHANGED';
 	const CUSTOMER_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE CUSTOMER, DB EXCEPTION ENCOUNTERED';
-	/* ******************************
-	 * Messages Constants (End)
-	 * ****************************** */
+	const DOM_FORM = '#modalCustomer';
+	const DOM_MODAL = '#modalCustomerContainer';
 	
-	/* ******************************
-	 * Controller Binded Data (Start)
-	 * ****************************** */
 	var vm = this;
-	vm.formId = '#modalCustomer';
 	vm.formMode = formMode;
 	vm.fromSignup = fromSignup;
 	vm.customer = customer;
@@ -67,7 +50,7 @@ function modalCustomerController(
 			customerGender: 'customer_gender', 
 			customerAddressHouseBuilding: 'customer_address_house_building', 
 			customerAddressStreet: 'customer_address_street', 
-			customerAddressDistrict: 'customer_address_district',
+			customerAddressDistrict: 'customer_address_district', 
 			customerAddressCity: 'customer_address_city', 
 			customerAddressPostalcode: 'customer_address_postalcode', 
 			customerAddressCountry: 'customer_address_country', 
@@ -87,7 +70,7 @@ function modalCustomerController(
 			customer_gender: 'customerGender', 
 			customer_address_house_building: 'customerAddressHouseBuilding', 
 			customer_address_street: 'customerAddressStreet', 
-			customer_address_district: 'customerAddressDistrict',
+			customer_address_district: 'customerAddressDistrict', 
 			customer_address_city: 'customerAddressCity', 
 			customer_address_postalcode: 'customerAddressPostalcode', 
 			customer_address_country: 'customerAddressCountry', 
@@ -107,7 +90,7 @@ function modalCustomerController(
 			customer_gender: 6, 
 			customer_address_house_building: 7, 
 			customer_address_street: 8, 
-			customer_address_district: 9,
+			customer_address_district: 9, 
 			customer_address_city: 10, 
 			customer_address_postalcode: 11, 
 			customer_address_country: 12, 
@@ -117,457 +100,296 @@ function modalCustomerController(
 	vm.customerRoleOptions = USER_ROLES;
 	vm.customerGenderOptions = USER_GENDERS;
 	vm.validationErr = {};
-	vm.validationErrDB = undefined;
+	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
-	/* ******************************
-	 * Controller Binded Data (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Controller Binded Method (Start)
-	 * ****************************** */
+	//controller_method
 	vm.initBootstrapValidator = initBootstrapValidator;
+	//controller_method
 	vm.initBootstrapDatepicker = initBootstrapDatepicker;
+	//controller_method
 	vm.initDom = initDom;
+	//controller_method
 	vm.doCancel = doCancel;
-	/* ******************************
-	 * Controller Binded Method (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initBootstrapValidator()
-	 * purpose: initializes bootstrap validator plugin
-	 * ****************************** */
 	function initBootstrapValidator(){
-		var formId = vm.formId;
-		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")'
-		$(formId).validator();
-		$(formId).validator().on('submit', doSubmit);
+		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$timeout(function(){
-			$(formId).validator('update');
-		})
+		$(DOM_FORM).validator();
+		$(DOM_FORM).validator().on(
+				'submit', 
+				doSubmit
+				);
+		
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initBootstrapDatepicker()
-	 * purpose: initializes bootstrap datepicker plugin
-	 * ****************************** */
 	function initBootstrapDatepicker(){
-		var customerBirthdayId = '#customerBirthday';
-		$(customerBirthdayId).datepicker({
-			onSelect: function(){
-				var customer = vm.customer;
-				var date = $(this).datepicker('getDate');
-				var calendarMonths = [
-					'Jan', 
-					'Feb', 
-					'Mar', 
-					'Apr', 
-					'May', 
-					'Jun', 
-					'Jul', 
-					'Aug', 
-					'Sep', 
-					'Oct', 
-					'Nov', 
-					'Dec'
-				];
-				
-				customer.customerBirthdayMonth = calendarMonths[date.getMonth()];
-				customer.customerBirthdayDate = date.getDate();
-				customer.customerBirthdayYear = date.getFullYear();
-				
-				$timeout(function(){
-					vm.customer = customer;
-				})
-			}
-		});
-	}
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initDom()
-	 * purpose: initializes Dom object attributes
-	 * ****************************** */
-	function initDom(){
-		var formMode = vm.formMode;
-		/* ******************************
-		 * Input Controls (Start)
-		 * ****************************** */
-		if('D' == formMode){
-			$('#modalCustomerContainer input').prop('disabled', true);
-			$('#modalCustomerContainer textarea').prop('disabled', true);
-			$('#modalCustomerContainer select').prop('disabled', true);
-		}
-		/* ******************************
-		 * Input Controls (End)
-		 * ****************************** */
+		const DOM_CUSTOMER_BIRTHDAY = '#customerBirthday';
 		
-		/* ******************************
-		 * Hide Password on 'A' and 'D' (Start)
-		 * ****************************** */
-		if(!('I' == formMode)){
-			var modalHiddenFields = vm.modalHiddenFields;
-			
-			modalHiddenFields.customerPassword = true;
-			
-			vm.modalHiddenFields = modalHiddenFields;
+		$(DOM_CUSTOMER_BIRTHDAY).datepicker(
+				{
+					onSelect: function(){
+						var date = $(this).datepicker('getDate');
+						var calendarMonths = [
+							'Jan', 
+							'Feb', 
+							'Mar', 
+							'Apr', 
+							'May', 
+							'Jun', 
+							'Jul', 
+							'Aug', 
+							'Sep', 
+							'Oct', 
+							'Nov', 
+							'Dec'
+						];
+						
+						$timeout(
+								function(){
+									vm.customer.customerBirthdayMonth = calendarMonths[date.getMonth()];
+									vm.customer.customerBirthdayDate = date.getDate();
+									vm.customer.customerBirthdayYear = date.getFullYear();
+									}
+								);
+						}
+				}
+				);
 		}
-		/* ******************************
-		 * Hide Password on 'A' and 'D' (End)
-		 * ****************************** */
+	
+	function initDom(){
+		if('D' == vm.formMode){
+			$('#modalCustomerContainer input').prop(
+					'disabled', 
+					true
+					);
+			$('#modalCustomerContainer textarea').prop(
+					'disabled', 
+					true
+					);
+			$('#modalCustomerContainer select').prop(
+					'disabled', 
+					true
+					);
+			}
+		
+		if(!('I' == vm.formMode)){		vm.modalHiddenFields.customerPassword = true;
+		}
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doCancel()
-	 * purpose: closes uib modal instance
-	 * ****************************** */
-	function doCancel(){
-		$uibModalInstance.close();
+	function doCancel(){	$uibModalInstance.close();
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doSubmit()
-	 * purpose: handles form-submission (insert/amend)
-	 * ****************************** */
 	function doSubmit(e){
-		var customer = undefined;
-		var customerCompanyBranch = undefined;
 		var user = localStorage.getItem('User');
 		user = JSON.parse(user);
-		var formMode = vm.formMode;
-		var fromSignup = vm.fromSignup;
-		var modalCustomerContainerId = '#modalCustomerContainer';
-		var modalCustomerContainer = $(modalCustomerContainerId);
 		var data = [];
+		
+		data.push(doDom2DbColumn(vm.formMode));
 		
 		hideBootstrapAlert();
 		
-		data.push(doDom2DbColumn(formMode));
+		showBootstrapLoader($(DOM_MODAL));
 		
-		showBootstrapLoader(modalCustomerContainer);
-		
-		if('I' == formMode){
-			var transParams = undefined;
-			
-			if(fromSignup){
-				customerService.addCustomerValidate(data)
-				.then(addCustomerValidateSuccessCallback)
-				.catch(addCustomerValidateFailedCallback);
-				
-				/* ******************************
-				 * Callback Implementations (Start)
-				 * ****************************** */
-				function addCustomerValidateSuccessCallback(response){
-					hideBootstrapLoader(modalCustomerContainer);
-					$uibModalInstance.close(data);
-				}
-				
-				function addCustomerValidateFailedCallback(responseError){
-					hideBootstrapLoader(modalCustomerContainer);
-					genValidationErrorFromResponse(responseError);
-				}
-				/* ******************************
-				 * Callback Implementations (End)
-				 * ****************************** */
-				return;
-			}
-			
-			customer = data[0];
-			customerCompanyBranch = {
+		if('I' == vm.formMode){
+			var customer = data[0];
+			var customerCompanyBranch = {
 					customer_username: customer.customer_username, 
 					company_name: user.company, 
 					branch_name: user.branch
 			};
-			transParams = {
+			var transParams = {
 					customer: customer, 
 					company: null, 
 					branch: null, 
 					customerCompanyBranch : customerCompanyBranch
 			};
-			customerCompanyBranchService.addCustomerCompanyBranchTransaction([transParams])
-			.then(addCustomerCompanyBranchTransactionSuccessCallback)
-			.catch(addCustomerCompanyBranchTransactionFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
-			function addCustomerCompanyBranchTransactionSuccessCallback(response){
-				hideBootstrapLoader(modalCustomerContainer);
+			if(vm.fromSignup){
+				customerService.addCustomerValidate(data)
+				.then(addCustomerValidateSuccessCallback)
+				.catch(addCustomerValidateFailedCallback);
+				
+				function addCustomerValidateSuccessCallback(response){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					$uibModalInstance.close(data);
+				}
+				
+				function addCustomerValidateFailedCallback(responseError){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					genValidationErrorFromResponse(responseError);
+				}
+				return;
+			}
+			
+			customerCompanyBranchService.addCustomerCompanyBranch([transParams])
+			.then(addCustomerCompanyBranchSuccessCallback)
+			.catch(addCustomerCompanyBranchFailedCallback);
+			
+			function addCustomerCompanyBranchSuccessCallback(response){
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
-			function addCustomerCompanyBranchTransactionFailedCallback(responseError){
-				var statusText = responseError.statusText;
+			function addCustomerCompanyBranchFailedCallback(responseError){
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalCustomerContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(CUSTOMER_ADD_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
-			
-		} else if('A' == formMode){
-			var customerCapture = vm.customerCapture;
-			var customerUsername = customerCapture.customerUsername;
-			
+		} else if('A' == vm.formMode){
 			discardModalHiddenFields();
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data[0]).length){
-				hideBootstrapLoader(modalCustomerContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				showBootstrapAlert(CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE);
+				
 				return;
 			}
 			
-			customerService.setCustomerUsername(customerUsername);
+			customerService.setCustomerUsername(vm.customerCapture.customerUsername);
+			
 			customerService.updateCustomer(data)
 			.then(updateCustomerSuccessCallback)
 			.catch(updateCustomerFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function updateCustomerSuccessCallback(response){
-				hideBootstrapLoader(modalCustomerContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function updateCustomerFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalCustomerContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(CUSTOMER_UPDATE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalHiddenFields()
-			 * purpose: discards hidden modal fields from Json-format data
-			 * ****************************** */
 			function discardModalHiddenFields(){
-				var dataCopy = data[0];
-				var modalHiddenFields = vm.modalHiddenFields;
-				var modalHiddenFieldsKeys = Object.keys(modalHiddenFields);
-				var dom2DbColumn = vm.dom2DbColumn;
-				
-				modalHiddenFieldsKeys.forEach(function(modalHiddenFieldsKey){
-					delete dataCopy[dom2DbColumn[modalHiddenFieldsKey]];
-				});
-				
-				data[0] = dataCopy;
-			}
+				Object.keys(vm.modalHiddenFields).forEach(
+						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+						}
+						);
+				}
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalUnchangedFields()
-			 * purpose: discards unchanged modal fields from Json-format data
-			 * ****************************** */
 			function discardModalUnchangedFields(){
-				var dataCopy = data[0];
-				var dataCopyKeys = Object.keys(dataCopy);
-				var customerCapture = vm.customerCapture;
-				var dbColumn2Dom = vm.dbColumn2Dom;
+				var dataKeys = Object.keys(data[0]);
 				
-				dataCopyKeys.forEach(function(dataCopyKey){
-					var dataCopyValue = dataCopy[dataCopyKey];
-					var customerCaptureValue = customerCapture[dbColumn2Dom[dataCopyKey]];
-					
-					if(dataCopyValue == customerCaptureValue){	delete dataCopy[dataCopyKey];
-					}
-				});
-				
-				data[0] = dataCopy;
-			}
-		} else if('D' == formMode){
-			var customer = vm.customer;
-			var customerUsername = customer.customerUsername;
-			customerService.setCustomerUsername(customerUsername);
+				dataKeys.forEach(
+						function(dataKey){
+							var dataValue = data[0][dataKey];
+							var customerCaptureValue = vm.customerCapture[vm.dbColumn2Dom[dataKey]];
+							
+							if(dataValue == customerCaptureValue){	delete data[0][dataKey];
+							}
+							}
+						);
+				}
+		} else if('D' == vm.formMode){
+			customerService.setCustomerUsername(vm.customer.customerUsername);
+			
 			customerService.deleteCustomer()
 			.then(deleteCustomerSuccessCallback)
 			.catch(deleteCustomerFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function deleteCustomerSuccessCallback(response){
-				hideBootstrapLoader(modalCustomerContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function deleteCustomerFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(CUSTOMER_DELETE_CATCH_MESSAGE)
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 		}
 		
 		validationErr = {};
-		validationErrDB = undefined;
-		
-		vm.validationErr = validationErr;
-		vm.validationErrDB = validationErrDB;
+		validationErrDB = {};
 	}
 
-	/* ******************************
-	 * Method Implementation
-	 * method name: doDom2DbColumn()
-	 * purpose: converts dom to dbcolumn (server-posting)
-	 * ****************************** */
 	function doDom2DbColumn(formMode){
-		var customer = vm.customer;
-		var customerKeys = Object.keys(customer);
-		var dom2DbColumn = vm.dom2DbColumn;
 		var data = {};
 		
-		customerKeys.forEach(function(customerKey){
-			var dbField = dom2DbColumn[customerKey];
-			if(
-					!(null == dbField) && 
-					!(undefined == dbField)
-			){
-				data[dbField] = customer[customerKey];
-			}
-		});
+		Object.keys(customer).forEach(
+				function(customerKey){
+					if(
+							!(null == vm.dom2DbColumn[customerKey]) && 
+							!(undefined == vm.dom2DbColumn[customerKey])
+							){	data[vm.dom2DbColumn[customerKey]] = vm.customer[customerKey];
+							}
+					}
+				);
 		
 		return data;
 	}
 		
-	/* ******************************
-	 * Method Implementation
-	 * method name: genValidationErrorFromResponse()
-	 * purpose: generates validation error from server response 
-	 * ****************************** */
 	function genValidationErrorFromResponse(responseError){
-		/* ******************************
-		 * DOM classes (start)
-		 * ****************************** */
-		var formGroupClass = '.form-group';
-		var hasErrorClass = 'has-error';
-		/* ******************************
-		 * DOM classes (end)
-		 * ****************************** */
-		var dbColumn2Dom = vm.dbColumn2Dom;
-		var validationErr = vm.validationErr;
+		const CLASS_FORM_GROUP = '.form-group';
+		const CLASS_HAS_ERROR = 'has-error';
+		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 			
 		statusTextKeys.forEach(function(statusTextKey){
-			var arrIndex = statusTextKey.split('.')[0];
 			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = undefined;
-			var errorMessage = undefined;
-			var dbColPassIndex = 1;
+			var dbColumnIndex = getDbColumnIndex(dbColumnName);
+			var dbColumnPasswordIndex = 1;
 			var domOffset = 1;
+			var errorMessage = statusTextObj[statusTextKey][0];
+			var formGroups = $(CLASS_FORM_GROUP);
 			
-			if(statusTextKey == (arrIndex + '.' + dbColumnName)){
-				dbColumnIndex = getDbColumnIndex(dbColumnName);
-				errorMessage = statusTextObj[statusTextKey][0];
-				errorMessage = errorMessage.replace(statusTextKey, dbColumn2Dom[dbColumnName]);
-				validationErr[parseInt(dbColumnIndex)] = errorMessage;
-					
-				/* ******************************
-				 * JQuery DOM update (start)
-				 * ****************************** */
-				var formGroups = $(formGroupClass);
-				if(dbColPassIndex < dbColumnIndex){	domOffset = 2;
-				} else {	domOffset = 1;
-				}
-				formGroups.eq(parseInt(dbColumnIndex+domOffset)).addClass(hasErrorClass);
-				/* ******************************
-				 * JQuery DOM update (end)
-				 * ****************************** */
+			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+			
+			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+			
+			if(dbColumnPasswordIndex < dbColumnIndex){	domOffset = 2;
+			} else {	domOffset = 1;
 			}
-		});
 			
-		/* ******************************
-		 * Method Implementation
-		 * method name: getDbColumnIndex()
-		 * purpose: gets db column index from db column name
-		 * ****************************** */
-		function getDbColumnIndex(dbColumnName){
-			var dbColumn2DomIndex = vm.dbColumn2DomIndex;
+			formGroups.eq(parseInt(dbColumnIndex+domOffset)).addClass(CLASS_HAS_ERROR);
+			}
+		);
 			
-			return dbColumn2DomIndex[dbColumnName];
+		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-		
-		vm.validationErr = validationErr;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapLoader()
-	 * purpose: shows bootstrap loader
-	 * ****************************** */
-	function showBootstrapLoader(target){
-		$(target).LoadingOverlay('show');
+	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapLoader()
-	 * purpose: hides bootstrap loader
-	 * ****************************** */
-	function hideBootstrapLoader(target){
-		$(target).LoadingOverlay('hide');
+	function hideBootstrapLoader(target){	$(target).LoadingOverlay('hide');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapAlert()
-	 * purpose: shows bootstrap alert
-	 * ****************************** */
-	function showBootstrapAlert(arg_validationErrDB){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = arg_validationErrDB;
-		isValidationErrDBHidden = false;
-		
+	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.isValidationErrDBHidden = false;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapAlert()
-	 * purpose: hides bootstrap alert
-	 * ****************************** */
 	function hideBootstrapAlert(){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = undefined;
-		isValidationErrDBHidden = true;
-		
-		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.validationErrDB = {};
+		vm.isValidationErrDBHidden = true;
 	}
 }
-/* ******************************
- * Controller Implementation (End)
- * ****************************** */

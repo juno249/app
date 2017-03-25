@@ -13,9 +13,7 @@ include_once "customersController.php";
 
 class reservationsConstants{
 	const reservationsTable = 'reservations';
-	/*
-	 * CONSTANTS w/c signify the column_name in orders table
-	 * */
+	
 	const dbReservationCode = 'reservation_code';
 	const dbCustomerUsername = 'customer_username';
 	const dbOrderreferenceCode = 'orderreference_code';
@@ -23,9 +21,7 @@ class reservationsConstants{
 	const dbReservationPaymentmode = 'reservation_paymentmode';
 	const dbReservationServicetime = 'reservation_servicetime';
 	const dbReservationStatus = 'reservation_status';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqReservationCode = 'ReservationCode';
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqOrderreferenceCode = 'OrderreferenceCode';
@@ -33,38 +29,25 @@ class reservationsConstants{
 	const reqReservationPaymentmode = 'ReservationPaymentmode';
 	const reqReservationServicetime = 'ReservationServicetime';
 	const reqReservationStatus = 'ReservationStatus';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW RESERVATION RECORD';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING RESERVATION RECORD';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING RESERVATION RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
 class reservationsController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to ordersController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth');
 	}
 	
-	/**
-	 * getJoinCustomerReservation: joins customers_table & reservations_table w/a variable $mySqlWhere
-	 * */
 	public function getJoinCustomerReservation($mySqlWhere){
 		$customerReservation = DB::table(reservationsConstants::reservationsTable)
 		->join(
@@ -78,10 +61,7 @@ class reservationsController extends Controller
 				return $customerReservation;
 	}
 	
-	/**
-	 * GET method getAllCustomerReservations
-	 * URL-->/customers/{CustomerUsername}/reservations
-	 **/
+	//URL-->>/customers/{CustomerUsername}/reservations
 	public function getAllCustomerReservations($CustomerUsername){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -100,10 +80,7 @@ class reservationsController extends Controller
 		return $reservationsResponse;
 	}
 	
-	/**
-	 * GET method getCustomerReservation
-	 * URL-->/customers/{CustomerUsername}/reservations/{ReservationCode}
-	 **/
+	//URL-->>/customers/{CustomerUsername}/reservations/{ReservationCode}
 	public function getCustomerReservation($CustomerUsername, $ReservationCode){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -123,10 +100,7 @@ class reservationsController extends Controller
 		return $reservationsResponse;
 	}
 	
-	/**
-	 * GET method getByQuery
-	 * URL-->/reservations/query
-	 **/
+	//URL-->>/reservations/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -166,9 +140,6 @@ class reservationsController extends Controller
 		return $reservationsResponse;
 	}
 	
-	/**
-	 * Do basic Laravel validation
-	 * */
 	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
@@ -205,10 +176,7 @@ class reservationsController extends Controller
 		}
 	}
 	
-	/**
-	 * POST method addReservation
-	 * URL-->/customer/{CustomerUsername}/reservations
-	 **/
+	//URL-->>/customer/{CustomerUsername}/reservations
 	public function addReservation(Request $jsonRequest, $CustomerUsername){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -237,10 +205,7 @@ class reservationsController extends Controller
 		return reservationsConstants::dbAddSuccessMsg;
 	}
 	
-	/**
-	 * PUT method updateReservation
-	 * URL-->/customer/{CustomerUsername}/reservations/{ReservationCode}
-	 **/
+	//URL-->>/customer/{CustomerUsername}/reservations/{ReservationCode}
 	public function updateReservation(Request $jsonRequest, $CustomerUsername, $ReservationCode){
 		$jsonData = json_decode($jsonRequest->getContent(), true);
 		$jsonDataSize = sizeof($jsonData);
@@ -265,10 +230,7 @@ class reservationsController extends Controller
 		return reservationsConstants::dbUpdateSuccessMsg;
 	}
 	
-	/**
-	 * DELETE method deleteReservation
-	 * URL-->/customer/{CustomerUsername}/reservations/{ReservationCode}
-	 **/
+	//URL-->>/customer/{CustomerUsername}/reservations/{ReservationCode}
 	public function deleteReservation(Request $jsonRequest, $CustomerUsername, $ReservationCode){
 		$mySqlWhere = array();
 		$errorMsg = '';

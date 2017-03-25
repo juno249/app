@@ -2,33 +2,21 @@ angular
 .module('starter')
 .factory('orderreferenceService', orderreferenceService);
 
-/* ******************************
- * Service Dependency Injection (Start)
- * ****************************** */
 orderreferenceService.$inject = [
 	'API_BASE_URL', 
 	'ORDERREFERENCES_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
 	'$q'
-]
-/* ******************************
- * Service Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Service Implementation (Start)
- * ****************************** */
 function orderreferenceService(
 		API_BASE_URL, 
 		ORDERREFERENCES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q
-	){
-	/* ******************************
-	 * Service Return Object (Start)
-	 * ****************************** */
+		){
 	var orderreferenceServiceObj = {
 			orderreferences: {}, 
 			orderreference: {}, 
@@ -48,63 +36,37 @@ function orderreferenceService(
 			updateOrderreference: updateOrderreference, 
 			deleteOrderreference: deleteOrderreference
 	}
-	/* ******************************
-	 * Service Return Object (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Accessors: Getters & Setters (Start)
-	 * ****************************** */
-	function getOrderreferences(){
-		return orderreferenceServiceObj.orderreferences;
+	function getOrderreferences(){	return orderreferenceServiceObj.orderreferences;
 	}
-	function getOrderreference(){
-		return orderreferenceServiceObj.orderreference;
+	function getOrderreference(){	return orderreferenceServiceObj.orderreference;
 	}
-	function getOrderreferenceCode(){
-		return orderreferenceServiceObj.orderreferenceCode;
+	function getOrderreferenceCode(){	return orderreferenceServiceObj.orderreferenceCode;
 	}
-	function getCustomerUsername(){
-		return orderreferenceServiceObj.customerUsername;
+	function getCustomerUsername(){	return orderreferenceServiceObj.customerUsername;
 	}
-	function setOrderreferences(orderreferences){
-		orderreferenceServiceObj.orderreferences = orderreferences;
+	function setOrderreferences(orderreferences){	orderreferenceServiceObj.orderreferences = orderreferences;
 	}
-	function setOrderreference(orderreference){
-		orderreferenceServiceObj.orderreference = orderreference;
+	function setOrderreference(orderreference){	orderreferenceServiceObj.orderreference = orderreference;
 	}
-	function setOrderreferenceCode(orderreferenceCode){
-		orderreferenceServiceObj.orderreferenceCode = orderreferenceCode;
+	function setOrderreferenceCode(orderreferenceCode){	orderreferenceServiceObj.orderreferenceCode = orderreferenceCode;
 	}
-	function setCustomerUsername(customerUsername){
-		orderreferenceServiceObj.customerUsername = customerUsername;
+	function setCustomerUsername(customerUsername){	orderreferenceServiceObj.customerUsername = customerUsername;
 	}
-	/* ******************************
-	 * Accessors: Getters & Setters (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchOrderreferences()
-	 * purpose: fetch orderreferences from server
-	 * ****************************** */
 	function fetchOrderreferences(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences'
-		}
+		};
+		
 		$http(httpConfig)
 		.then(fetchOrderreferencesSuccessCallback)
 		.catch(fetchOrderreferencesFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function fetchOrderreferencesSuccessCallback(response){
-			var orderreferences = orderreferenceServiceObj.orderreferences;
-			orderreferences = {};
-			orderreferenceServiceObj.orderreferences = orderreferences;
+			var orderreferences = undefined;
 			
 			convertOrderreferencesResponseToMap(response.data);
 			orderreferences = orderreferenceServiceObj.orderreferences;
@@ -114,62 +76,38 @@ function orderreferenceService(
 			deferred.resolve(response);
 		}
 		
-		function fetchOrderreferencesFailedCallback(responseError){
-			deferred.reject(responseError);
+		function fetchOrderreferencesFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertOrderreferencesResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
 		function convertOrderreferencesResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var orderreferencesKey = ORDERREFERENCES_DB_FIELDS[0]; //orderreference_code
-			var orderreferencesDetails;
-			
-			for(var i=0; i<responseDataLength; i++){
-				var orderreferencesRunner = responseData[i];
-				var orderreferencesDBFieldCount = Object.keys(ORDERREFERENCES_DB_FIELDS).length;
-				var orderreferencesDBFieldRunner = null;
-				orderreferencesDetails = {};
+			for(var i=0; i<responseData.length; i++){
+				var orderreferencesDetails = {};
+				var key = undefined;
 				
-				for(var j=0; j<orderreferencesDBFieldCount; j++){
-					orderreferencesDBFieldRunner = ORDERREFERENCES_DB_FIELDS[j];
-					orderreferencesDetails[orderreferencesDBFieldRunner] = orderreferencesRunner[orderreferencesDBFieldRunner];
+				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
+					orderreferencesDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 				}
-				var orderreferencesKeyValue = orderreferencesRunner[orderreferencesKey];
-				orderreferenceServiceObj.orderreferences[orderreferencesKeyValue] = orderreferencesDetails;
+				
+				key = responseData[i][ORDERREFERENCES_DB_FIELDS[0]]; //orderreference_code
+				orderreferenceServiceObj.orderreferences[key] = orderreferencesDetails;
 			}
 		}
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchOrderreference()
-	 * purpose: fetch orderreference from server
-	 * ****************************** */
 	function fetchOrderreference(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
-		}
+		};
+		
 		$http(httpConfig)
 		.then(fetchOrderreferenceSuccessCallback)
 		.catch(fetchOrderreferenceFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
 		function fetchOrderreferenceSuccessCallback(response){
-			var orderreference = orderreferenceServiceObj.orderreference;
-			orderreference = {};
-			orderreferenceServiceObj.orderreference = orderreference;
+			var orderreference = undefined;
 			
 			convertOrderreferenceResponseToMap(response.data);
 			orderreference = orderreferenceServiceObj.orderreference;
@@ -179,12 +117,8 @@ function orderreferenceService(
 			deferred.resolve(response);
 		}
 		
-		function fetchOrderreferenceFailedCallback(responseError){
-			deferred.reject(responseError);
+		function fetchOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		
 		/* ******************************
 		 * Method Implementation
@@ -192,124 +126,79 @@ function orderreferenceService(
 		 * purpose: convert http response to a map
 		 * ****************************** */
 		function convertOrderreferenceResponseToMap(responseData){
-			var responseDataLength = responseData.length;
-			var orderreferenceKey = ORDERREFERENCES_DB_FIELDS[0]; //orderreference_code
-			var orderreferenceDetails;
-			
-			for (var i=0; i<responseDataLength; i++){
-				var orderreferenceRunner = responseData[i];
-				var orderreferenceDBFieldCount = Object.keys(ORDERREFERENCES_DB_FIELDS).length;
-				var orderreferenceDBFieldRunner = null;
-				orderreferenceDetails = {};
+			for (var i=0; i<responseData.length; i++){
+				var orderreferenceDetails = {};
+				var key = undefined;
 				
-				for(var j=0; j<orderreferenceDBFieldCount; j++){
-					orderreferenceDBFieldRunner = ORDERREFERENCES_DB_FIELDS[j];
-					orderreferenceDetails[orderreferenceDBFieldRunner] = orderreferenceRunner[orderreferenceDBFieldRunner];
+				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
+					orderreferenceDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 				}
-				var orderreferenceKeyValue = orderreferenceRunner[orderreferenceKey];
-				orderreferenceServiceObj.orderreference[orderreferenceKeyValue] = orderreferenceDetails;
+				
+				var key = responseData[i][ORDERREFERENCES_DB_FIELDS[0]]; //orderreference_code
+				orderreferenceServiceObj.orderreference[key] = orderreferenceDetails;
 			}
 		}
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: addOrderreference()
-	 * purpose: adds orderreference
-	 * ****************************** */
 	function addOrderreference(orderreferences){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences', 
 				data: orderreferences
-		}
+		};
+		
 		$http(httpConfig)
 		.then(addOrderreferenceSuccessCallback)
 		.catch(addOrderreferenceFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function addOrderreferenceSuccessCallback(response){
-			deferred.resolve(response);
+		function addOrderreferenceSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function addOrderreferenceFailedCallback(responseError){
-			deferred.reject(responseError);
+		function addOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: updateOrderreference()
-	 * purpose: updates orderreference
-	 * ****************************** */
 	function updateOrderreference(orderreference){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode, 
 				data: orderreference
-		}
+		};
+		
 		$http(httpConfig)
 		.then(updateOrderreferenceSuccessCallback)
 		.catch(updateOrderreferenceFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function updateOrderreferenceSuccessCallback(response){
-			deferred.resolve(response);
+		function updateOrderreferenceSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function updateOrderreferenceFailedCallback(responseError){
-			deferred.reject(responseError);
+		function updateOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: deleteOrderreference()
-	 * purpose: deletes orderreference
-	 * ****************************** */
 	function deleteOrderreference(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
-		}
+		};
+		
 		$http(httpConfig)
 		.then(deleteOrderreferenceSuccessCallback)
 		.catch(deleteOrderreferenceFailedCallback);
 		
-		/* ******************************
-		 * Callback Implementations (Start)
-		 * ****************************** */
-		function deleteOrderreferenceSuccessCallback(response){
-			deferred.resolve(response);
+		function deleteOrderreferenceSuccessCallback(response){	deferred.resolve(response);
 		}
 		
-		function deleteOrderreferenceFailedCallback(responseError){
-			deferred.reject(responseError);
+		function deleteOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		/* ******************************
-		 * Callback Implementations (End)
-		 * ****************************** */
 		return deferred.promise;
 	}
 	
 	return orderreferenceServiceObj;
 }
-/* ******************************
- * Service Implementation (End)
- * ****************************** */

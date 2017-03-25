@@ -2,9 +2,6 @@ angular
 .module('starter')
 .controller('modalBranchController', modalBranchController);
 
-/* ******************************
- * Controller Dependency Injection (Start)
- * ****************************** */
 modalBranchController.$inject = [
 	'$uibModalInstance', 
 	'$timeout', 
@@ -13,14 +10,8 @@ modalBranchController.$inject = [
 	'formMode', 
 	'fromSignup', 
 	'modalHiddenFields'
-];
-/* ******************************
- * Controller Dependency Injection (End)
- * ****************************** */
+	];
 
-/* ******************************
- * Controller Implementation (Start)
- * ****************************** */
 function modalBranchController(
 		$uibModalInstance, 
 		$timeout, 
@@ -29,27 +20,19 @@ function modalBranchController(
 		formMode, 
 		fromSignup, 
 		modalHiddenFields
-	){
-	/* ******************************
-	 * Messages Constants (Start)
-	 * ****************************** */
+		){
 	const BRANCH_ADD_CATCH_MESSAGE = 'UNABLE TO ADD BRANCH, DB EXCEPTION ENCOUNTERED';
 	const BRANCH_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE BRANCH, DB EXCEPTION ENCOUNTERED';
 	const BRANCH_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE BRANCH, DATA IS EMPTY/UNCHANGED';
 	const BRANCH_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE BRANCH, DB EXCEPTION ENCOUNTERED';
-	/* ******************************
-	 * Messages Constants (End)
-	 * ****************************** */
+	const DOM_FORM = '#modalBranch';
+	const DOM_MODAL = '#modalBranchContainer';
 	
-	/* ******************************
-	 * Controller Binded Data (Start)
-	 * ****************************** */
 	var vm = this;
-	vm.formId = '#modalBranch';
 	vm.formMode = formMode;
 	vm.fromSignup = fromSignup;
 	vm.branch = branch;
-	vm.branchCapture = JSON.parse(JSON.stringify(branch));
+	vm.branchSnapshot = JSON.parse(JSON.stringify(branch));
 	vm.modalHiddenFields = modalHiddenFields;
 	vm.dom2DbColumn = {
 			branchName: 'branch_name', 
@@ -85,375 +68,226 @@ function modalBranchController(
 			branch_hotline: 8
 	}
 	vm.validationErr = {};
-	vm.validationErrDB = undefined;
+	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
-	/* ******************************
-	 * Controller Binded Data (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Controller Binded Method (Start)
-	 * ****************************** */
+	//controller_method
 	vm.initBootstrapValidator = initBootstrapValidator;
+	//controller_method
 	vm.initDom = initDom;
+	//controller_method
 	vm.doCancel = doCancel;
-	/* ******************************
-	 * Controller Binded Method (End)
-	 * ****************************** */
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initBootstrapValidator()
-	 * purpose: initializes bootstrap validator plugin
-	 * ****************************** */
 	function initBootstrapValidator(){
-		var formId = vm.formId;
-		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")'
-		$(formId).validator();
-		$(formId).validator().on('submit', doSubmit);
+		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
+		$(DOM_FORM).validator();
+		$(DOM_FORM).validator().on(
+				'submit', 
+				doSubmit
+				);
 		
-		$timeout(function(){
-			$(formId).validator('update');
-		})
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: initDom()
-	 * purpose: initializes Dom object attributes
-	 * ****************************** */
 	function initDom(){
-		var formMode = vm.formMode;
-		/* ******************************
-		 * Input Controls (Start)
-		 * ****************************** */
-		if('D' == formMode){
-			$('#modalBranchContainer input').prop('disabled', true);
-			$('#modalBranchContainer textarea').prop('disabled', true);
-			$('#modalBranchContainer select').prop('disabled', true);
-		}
-		/* ******************************
-		 * Input Controls (End)
-		 * ****************************** */
+		if('D' == vm.formMode){
+			$('#modalBranchContainer input').prop(
+					'disabled', 
+					true
+					);
+			$('#modalBranchContainer textarea').prop(
+					'disabled', 
+					true
+					);
+			$('#modalBranchContainer select').prop(
+					'disabled', 
+					true
+					);
+			}
 	}
 
-	/* ******************************
-	 * Method Implementation
-	 * method name: doCancel()
-	 * purpose: closes uib modal instance
-	 * ****************************** */
-	function doCancel(){
-		$uibModalInstance.close();
+	function doCancel(){	$uibModalInstance.close();
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doSubmit()
-	 * purpose: handles form-submission (insert/amend)
-	 * ****************************** */
 	function doSubmit(e){
-		var formMode = vm.formMode;
-		var fromSignup = vm.fromSignup;
-		var modalBranchContainerId = '#modalBranchContainer';
-		var modalBranchContainer = $(modalBranchContainerId);
 		var data = [];
-		var validationErr = vm.validationErr;
-		var validationErrDB = vm.validationErrDB;
-		
-		hideBootstrapAlert();
 		
 		data.push(doDom2DbColumn());
 		
-		showBootstrapLoader(modalBranchContainer);
+		hideBootstrapAlert();
 		
-		if('I' == formMode){
-			var branch = vm.branch;
-			var companyName = branch.companyName;
-			
-			if(fromSignup){
-				hideBootstrapLoader(modalBranchContainer);
+		showBootstrapLoader($(DOM_MODAL));
+		
+		if('I' == vm.formMode){
+			if(vm.fromSignup){
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close(data);
 			}
 			
-			branchService.setCompanyName(companyName);
+			branchService.setCompanyName(vm.branch.companyName);
+			
 			branchService.addBranch(data)
 			.then(addBranchSuccessCallback)
 			.catch(addBranchFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function addBranchSuccessCallback(response){
-				hideBootstrapLoader(modalBranchContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function addBranchFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalBranchContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(BRANCH_ADD_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
-			
-		} else if('A' == formMode){
-			var branchCapture = vm.branchCapture;
-			var companyName = branchCapture.companyName;
-			var branchName = branchCapture.branchName;
-			
+		} else if('A' == vm.formMode){
 			discardModalHiddenFields();
 			discardModalUnchangedFields();
 			
 			if(0 == Object.keys(data[0]).length){
-				hideBootstrapLoader(modalBranchContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				showBootstrapAlert(BRANCH_UPDATE_CUSTOM_ERR_MESSAGE);
+				
 				return;
 			}
 			
-			branchService.setCompanyName(companyName);
-			branchService.setBranchName(branchName);
+			branchService.setCompanyName(vm.branchSnapshot.companyName);
+			branchService.setBranchName(vm.branchSnapshot.branchName);
+			
 			branchService.updateBranch(data)
 			.then(updateBranchSuccessCallback)
 			.catch(updateBranchFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function updateBranchSuccessCallback(response){
-				hideBootstrapLoader(modalBranchContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function updateBranchFailedCallback(responseError){
-				var statusText = responseError.statusText;
+				hideBootstrapLoader($(DOM_MODAL));
 				
-				hideBootstrapLoader(modalBranchContainer);
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(BRANCH_UPDATE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 		
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalHiddenFields()
-			 * purpose: discards hidden modal fields from Json-format data
-			 * ****************************** */
 			function discardModalHiddenFields(){
-				var dataCopy = data[0];
-				var modalHiddenFields = vm.modalHiddenFields;
-				var modalHiddenFieldsKeys = Object.keys(modalHiddenFields);
-				var dom2DbColumn = vm.dom2DbColumn;
-				
-				modalHiddenFieldsKeys.forEach(function(modalHiddenFieldsKey){
-					delete dataCopy[dom2DbColumn[modalHiddenFieldsKey]];
-				});
-				
-				data[0] = dataCopy;
-			}
+				Object.keys(vm.modalHiddenFields).forEach(
+						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+						}
+						);
+				}
 			
-			/* ******************************
-			 * Method Implementation
-			 * method name: discardModalUnchangedFields()
-			 * purpose: discards unchanged modal fields from Json-format data
-			 * ****************************** */
 			function discardModalUnchangedFields(){
-				var dataCopy = data[0];
-				var dataCopyKeys = Object.keys(dataCopy);
-				var branchCapture = vm.branchCapture;
-				var dbColumn2Dom = vm.dbColumn2Dom;
+				var dataKeys = Object.keys(data[0]);
 				
-				dataCopyKeys.forEach(function(dataCopyKey){
-					var dataCopyValue = dataCopy[dataCopyKey];
-					var branchCaptureValue = branchCapture[dbColumn2Dom[dataCopyKey]];
-					
-					if(dataCopyValue == branchCaptureValue){	delete dataCopy[dataCopyKey];
-					}
-				});
-				
-				data[0] = dataCopy;
-			}
-		} else if('D' == formMode){
-			var branch = vm.branch;
-			var companyName = branch.companyName;
-			var branchName = branch.branchName;
-			branchService.setCompanyName(companyName);
-			branchService.setBranchName(branchName);
+				dataKeys.forEach(
+						function(dataKey){
+							var dataValue = data[0][dataKey];
+							var branchSnapshotValue = vm.branchSnapshot[vm.dbColumn2Dom[dataKey]];
+							
+							if(dataValue == branchSnapshotValue){	delete data[0][dataKey];
+							}
+							}
+						);
+				}
+		} else if('D' == vm.formMode){
+			branchService.setCompanyName(vm.branch.companyName);
+			branchService.setBranchName(vm.branch.branchName);
+			
 			branchService.deleteBranch()
 			.then(deleteBranchSuccessCallback)
 			.catch(deleteBranchFailedCallback);
 			
-			/* ******************************
-			 * Callback Implementations (Start)
-			 * ****************************** */
 			function deleteBranchSuccessCallback(response){
-				hideBootstrapLoader(modalBranchContainer);
+				hideBootstrapLoader($(DOM_MODAL));
+				
 				$uibModalInstance.close();
 			}
 			
 			function deleteBranchFailedCallback(responseError){
-				var statusText = responseError.statusText;
-				
 				hideBootstrapLoader(modalMenuContainer);
+				
 				try{
-					JSON.parse(statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(BRANCH_DELETE_CATCH_MESSAGE);
 				}
 			}
-			/* ******************************
-			 * Callback Implementations (End)
-			 * ****************************** */
 		}
 		
-		validationErr = {};
-		validationErrDB = undefined;
-		
-		vm.validationErr = validationErr;
-		vm.validationErrDB = validationErrDB;
+		vm.validationErr = {};
+		vm.validationErrDB = {}
 	}
-	
-	/* ******************************
-	 * Method Implementation
-	 * method name: doDom2DbColumn()
-	 * purpose: converts dom to dbcolumn (server-posting)
-	 * ****************************** */
+
 	function doDom2DbColumn(){
-		var branch = vm.branch;
-		var branchKeys = Object.keys(branch);
-		var dom2DbColumn = vm.dom2DbColumn;
 		var data = {};
 		
-		branchKeys.forEach(function(branchKey){
-			var dbField = dom2DbColumn[branchKey];
-			if(
-					!(null == dbField) && 
-					!(undefined == dbField)
-			){
-				data[dbField] = branch[branchKey];
-			}
-		});
+		Object.keys(vm.branch).forEach(
+				function(branchKey){
+					if(
+							!(null == vm.dom2DbColumn[branchKey]) && 
+							!(undefined == vm.dom2DbColumn[branchKey])
+							){	data[vm.dom2DbColumn[branchKey]] = vm.branch[branchKey];
+							}
+					}
+				);
 		
 		return data;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: genValidationErrorFromResponse()
-	 * purpose: generates validation error from server response 
-	 * ****************************** */
 	function genValidationErrorFromResponse(responseError){
-		/* ******************************
-		 * DOM classes (start)
-		 * ****************************** */
-		var formGroupClass = '.form-group';
-		var hasErrorClass = 'has-error';
-		/* ******************************
-		 * DOM classes (end)
-		 * ****************************** */
-		var dbColumn2Dom = vm.dbColumn2Dom;
-		var validationErr = vm.validationErr;
+		const CLASS_FORM_GROUP = '.form-group';
+		const CLASS_HAS_ERROR = 'has-error';
+		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 		
-		statusTextKeys.forEach(function(statusTextKey){
-			var arrIndex = statusTextKey.split('.')[0];
-			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = undefined;
-			var errorMessage = undefined;
-			
-			if(statusTextKey == (arrIndex + '.' + dbColumnName)){
-				dbColumnIndex = getDbColumnIndex(dbColumnName);
-				errorMessage = statusTextObj[statusTextKey][0];
-				errorMessage = errorMessage.replace(statusTextKey, dbColumn2Dom[dbColumnName]);
-				validationErr[parseInt(dbColumnIndex)] = errorMessage;
-				
-				/* ******************************
-				 * JQuery DOM update (start)
-				 * ****************************** */
-				var formGroups = $(formGroupClass);
-				formGroups.eq(parseInt(dbColumnIndex+1)).addClass(hasErrorClass);
-				/* ******************************
-				 * JQuery DOM update (end)
-				 * ****************************** */
-			}
-		});
+		statusTextKeys.forEach(
+				function(statusTextKey){
+					var dbColumnName = statusTextKey.split('.')[1];
+					var dbColumnIndex = getDbColumnIndex(dbColumnName);
+					var errorMessage = statusTextObj[statusTextKey][0];
+					var formGroups = $(CLASS_FORM_GROUP);
+					
+					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+					
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					}
+				);
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: getDbColumnIndex()
-		 * purpose: gets db column index from db column name
-		 * ****************************** */
-		function getDbColumnIndex(dbColumnName){
-			var dbColumn2DomIndex = vm.dbColumn2DomIndex;
-			
-			return dbColumn2DomIndex[dbColumnName];
+		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-		
-		vm.validationErr = validationErr;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapLoader()
-	 * purpose: shows bootstrap loader
-	 * ****************************** */
-	function showBootstrapLoader(target){
-		$(target).LoadingOverlay('show');
+	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapLoader()
-	 * purpose: hides bootstrap loader
-	 * ****************************** */
-	function hideBootstrapLoader(target){
-		$(target).LoadingOverlay('hide');
+	function hideBootstrapLoader(target){	$(target).LoadingOverlay('hide');
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: showBootstrapAlert()
-	 * purpose: shows bootstrap alert
-	 * ****************************** */
-	function showBootstrapAlert(arg_validationErrDB){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = arg_validationErrDB;
-		isValidationErrDBHidden = false;
-		
+	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.isValidationErrDBHidden = false;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: hideBootstrapAlert()
-	 * purpose: hides bootstrap alert
-	 * ****************************** */
 	function hideBootstrapAlert(){
-		var validationErrDB = vm.validationErrDB;
-		var isValidationErrDBHidden = vm.isValidationErrDBHidden;
-		
-		validationErrDB = undefined;
-		isValidationErrDBHidden = true;
-		
-		vm.validationErrDB = validationErrDB;
-		vm.isValidationErrDBHidden = isValidationErrDBHidden;
+		vm.validationErrDB = {};
+		vm.isValidationErrDBHidden = true;
 	}
 }
-/* ******************************
- * Controller Implementation (End)
- * ****************************** */

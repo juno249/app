@@ -13,54 +13,35 @@ include_once "branchesController.php";
 
 class customersCompaniesBranchesConstants{
 	const customersCompaniesBranchesTable = 'customers_companies_branches';
-	/*
-	 * CONSTANTS w/c signify the column_name in tables table
-	 * */
+	
 	const dbCustomerUsername = 'customer_username';
 	const dbCompanyName = 'company_name';
 	const dbBranchName = 'branch_name';
-	/*
-	 * CONSTANTS w/c signify the request_name in HTTP GET request
-	 * */
+	
 	const reqCustomerUsername = 'customerUsername';
 	const reqCompanyName = 'companyName';
 	const reqBranchName = 'branchName';
-	/*
-	 * CONSTANTS w/c signify the messages returned on failed DB operation
-	 * */
+	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
 	const dbUpdateCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO UPDATE RECORD';
 	const dbDeleteCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO DELETE RECORD';
-	/*
-	 * CONSTANTS w/c signify the messages returned on successful DB operation
-	 * */
+	
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW CUSTOMER, COMPANY, BRANCH RECORDS';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING CUSTOMER, COMPANY, BRANCH RECORDS';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING CUSTOMER, COMPANY, BRANCH RECORDS';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const inconsistencyValidationErr1 = 'KEYS COMPANY_NAME DO NOT MATCH';
-	/*
-	 * CONSTANTS w/c signify the messages returned on custom validation errors
-	 * */
+	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 		
 class customersCompaniesBranchesController extends Controller
 {
-	/**
-	 * Constructor
-	 * add 'jwt.auth' middleware to customersController
-	 * */
 	public function __construct(){
 		//$this->middleware('jwt.auth', ['except' => ['addCustomerCompanyBranch']]);
 	}
 	
-	/**
-	 * getJoinCustomerCompanyBranch: joins customers_table & companies_table & branches_table w/a variable $mySqlWhere
-	 * */
 	public function getJoinCustomerCompanyBranch($mySqlWhere){
 		$customerCompanyBranch = DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)
 		->join(
@@ -86,10 +67,7 @@ class customersCompaniesBranchesController extends Controller
 								return $customerCompanyBranch;
 	}
 	
-	/**
-	 * GET method getAllCustomersCompaniesBranches
-	 * URL-->/customers-companies-branches
-	 **/
+	//URL-->>/customers-companies-branches
 	public function getAllCustomersCompaniesBranches(){
 		$mySqlWhere = array();
 		
@@ -107,10 +85,7 @@ class customersCompaniesBranchesController extends Controller
 		return $customersCompaniesBranchesResponse;
 	}
 	
-	/**
-	 * GET method getCustomerCompanyBranch
-	 * URL-->/customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}
-	 **/
+	//URL-->>/customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}
 	public function getCustomerCompanyBranch($CustomerUsername, $CompanyName, $BranchName){
 		$mySqlWhere = array();
 		array_push($mySqlWhere, [customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, '=', $CustomerUsername]);
@@ -131,10 +106,7 @@ class customersCompaniesBranchesController extends Controller
 		return $customersCompaniesBranchesResponse;
 	}
 	
-	/**
-	 * GET method getByQuery
-	 * URL-->/customers-companies-branches/query
-	 **/
+	//URL-->>/customers-companies-branches/query
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -162,10 +134,7 @@ class customersCompaniesBranchesController extends Controller
 		return $customersCompaniesBranchesResponse;
 	}
 	
-	/**
-	 * POST method addCustomerCompanyBranch
-	 * URL-->/customers-companies-branches/
-	 * */
+	//URL-->>/customers-companies-branches/
 	public function addCustomerCompanyBranch(Request $jsonRequest){
 		$customerCompanyBranch = [];
 		$jsonData = json_decode($jsonRequest->getContent(), true);
@@ -275,10 +244,7 @@ class customersCompaniesBranchesController extends Controller
 		return customersCompaniesBranchesConstants::dbAddSuccessMsg;
 	}
 	
-	/**
-	 * DELETE method deleteCustomerCompanyBranch
-	 * URL-->/customers-companies-branches/{CustomerUsername}
-	 **/
+	//URL-->>/customers-companies-branches/{CustomerUsername}
 	function deleteCustomerCompanyBranch($CustomerUsername){
 		$mySqlWhere = array();
 		$errorMsg = '';
