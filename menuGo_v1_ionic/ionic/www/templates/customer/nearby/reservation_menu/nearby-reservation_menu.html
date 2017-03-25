@@ -1,3 +1,6 @@
+<!--  *************** 
+		reservation_menu (start)
+		*************** -->
 <ion-view 
 	id="reservation_menu" 
 	name="reservation_menu" 
@@ -48,7 +51,7 @@
 					</i>
 					<span 
 						class="font-family-1-size-small">
-						{{v.menu_name}}
+						<underline><b>{{v.menu_name}}</b></underline>
 					</span>
 				</div>
 				<div 
@@ -57,10 +60,16 @@
 					ng-show="!v.isCompanyMenuHidden">
 					<div 
 						class="item item-thumbnail-left">
+						<!--  *************** 
+								menuitem-image (start)
+								*************** -->
 						<img 
 							id="menuitems-image" 
 							name="menuitem-image" 
 							src={{j.menuitem_image}}>
+						<!--  *************** 
+								menuitem-image (end)
+								*************** -->
 						<span 
 							class="font-family-1-size-small">
 							<underline><b>{{j.menuitem_name}}</b></underline>
@@ -73,8 +82,62 @@
 							</span>
 						</div>
 					</div>
+					<div 
+						class="row">
+						<div 
+							class="child-content-right col">
+							<button 
+								class="button button-positive button-small" 
+								ng-click="nearbyReservationMenuController.addReservationOrder(v, j)">
+								<i 
+									class="icon ion-plus">
+								</i>
+								<span 
+									class="font-family-1-size-small">
+									Add
+								</span>
+							</button>
+							<button 
+								class="button button-positive button-small" 
+								ng-click="nearbyReservationMenuController.subReservationOrder(v, j)">
+								<i 
+									class="icon ion-minus">
+								</i>
+							<span 
+								class="font-family-1-size-small">
+								Sub
+							</span>
+							</button>
+						</div>
+						<div 
+							class="col item item-input-wrapper menuitem-qty-container">
+								<input 
+									class="child-content-center fill-parent-x font-family-1-size-small" 
+									ng-model="j.quantity" 
+									type="number">
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</ion-content>
+	
+	<!--  *************** 
+			gotoOrdersBtn (start)
+			*************** -->
+	<button 
+		class="button button-medium button-positive child-content-center" 
+		id="gotoOrdersBtn" 
+		name="gotoOrdersbtn" 
+		ng-if="keys(nearbyReservationMenuController.user.reservationOrders).length > 0">
+		<i 
+			class="icon ion-arrow-right-a">
+		</i>
+	</button>
+	<!--  *************** 
+			gotoOrdersBtn (end)
+			*************** -->
 </ion-view>
+<!--  *************** 
+		reservation_menu (end)
+		*************** -->

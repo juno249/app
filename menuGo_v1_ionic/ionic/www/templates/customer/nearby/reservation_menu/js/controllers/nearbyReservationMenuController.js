@@ -16,6 +16,7 @@ function nearbyReservationMenuController(
 		dataService
 		){
 	const COMPANIES_KEY = 'Companies';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	
@@ -24,6 +25,14 @@ function nearbyReservationMenuController(
 	} else {
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
+	}
+	
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user = JSON.parse(vm.user);
+		
+		if(null == vm.user.reservationOrders){	vm.user.reservationOrders = {};
+		}
 	}
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
@@ -36,6 +45,10 @@ function nearbyReservationMenuController(
 	vm.toggleVis = toggleVis;
 	//controller_method
 	vm.toStringAddress = toStringAddress;
+	//controller_method
+	vm.addReservationOrder = addReservationOrder;
+	//controller_method
+	vm.subReservationOrder = subReservationOrder;
 	
 	function toggleVis(menu){
 		resetVis(menu);
@@ -56,10 +69,55 @@ function nearbyReservationMenuController(
 						v, 
 						k
 						){
-					if(!(exemptMenu.menu_name == v.menu_name)){	v['isCompanyMenuHidden'] = true;
+					if(!(exemptMenu.menu_name == v.menu_name)){	v.isCompanyMenuHidden = true;
 					}
 				}
 				);
+	}
+	
+	function resetCompanyMenus(){
+		angular.forEach(
+				vm.companyMenus, 
+				function(
+						v, 
+						k
+						){
+					v.quantity = 0;
+					angular.forEach(
+							v.menuitems, 
+							function(
+									j, 
+									i
+									){
+								j.quantity = 0;
+							}
+							);
+				}
+				);
+	}
+	
+	function addReservationOrder(
+			menu, 
+			menuitem
+			){
+		menu.quantity++;
+		menuitem.quantity++;
+		
+		vm.user.reservationOrders[menuitem.menuitem_code] = menuitem;
+	}
+	
+	function subReservationOrder(
+			menu, 
+			menuitem
+			){
+		if(0 >= --menu.quantity){	menu.quantity = 0;
+		}
+		
+		if(0 >= --menuitem.quantity){
+			menuitem.quantity = 0;
+			
+			delete vm.user.reservationOrders[menuitem.menuitem_code];
+		}
 	}
 	
 	$scope.$watch(
@@ -80,6 +138,7 @@ function nearbyReservationMenuController(
 				vm.companyMenus = vm.company.menus;
 				
 				resetVis(new String(''));
+				resetCompanyMenus();
 			}
 	);
 }

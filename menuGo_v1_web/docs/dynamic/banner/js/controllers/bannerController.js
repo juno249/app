@@ -91,13 +91,12 @@ function bannerController(
 		modalInstance.result.then(customerUibModalResultCallback);
 		
 		function customerUibModalResultCallback(data){
-			var customer = data;
-			customer = customer[0];
+			vm.customer = data[0];
 			
-			if(null == customer){	return;
+			if(null == vm.customer){	return;
 			}
 			
-			if(USER_ROLES.administrator == customer.customer_role){	doSignupAsAdministrator();
+			if(USER_ROLES.administrator == vm.customer.customer_role){	doSignupAsAdministrator();
 			}
 		}
 		
@@ -122,8 +121,7 @@ function bannerController(
 			modalInstance.result.then(companyUibModalResultCallback);
 			
 			function companyUibModalResultCallback(data){
-				var company = data;
-				company = company[0];
+				vm.company = data[0];
 				
 				modalInstance = $uibModal.open(
 						{
@@ -131,7 +129,7 @@ function bannerController(
 							templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
 							controller: 'modalBranchController as modalBranchController', 
 							resolve: {
-								branch: function(){	return {	companyName: company.company_name	};
+								branch: function(){	return {	companyName: vm.company.company_name	};
 								}, 
 								formMode: function(){	return formMode;
 								}, 
@@ -145,23 +143,22 @@ function bannerController(
 				modalInstance.result.then(branchUibModalResultCallback);
 				
 				function branchUibModalResultCallback(data){
-					var branch = data;
-					branch = branch[0];
+					vm.branch = data[0];
 					
 					doAdminCascadedPosts();
 				}
 				
 				function doAdminCascadedPosts(){
 					var customerCompanyBranch = {
-							customer_username: customer.customer_username, 
-							company_name: company.company_name, 
-							branch_name: branch.branch_name
+							customer_username: vm.customer.customer_username, 
+							company_name: vm.company.company_name, 
+							branch_name: vm.branch.branch_name
 					};
 					var transParams = {
-							customer: customer, 
-							company: company, 
-							branch: branch, 
-							customerCompanyBranch: customerCompanyBranch
+							customer: vm.customer, 
+							company: vm.company, 
+							branch: vm.branch, 
+							customerCompanyBranch: vm.customerCompanyBranch
 					};
 					
 					customerCompanyBranchService.addCustomerCompanyBranch([transParams])

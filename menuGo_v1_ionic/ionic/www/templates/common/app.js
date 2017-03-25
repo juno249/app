@@ -5,29 +5,32 @@ angular
 	'ngMap', 
 	'ngStorage', 
 	'ion-datetime-picker'
-	])
+	]
+)
 
 .config(doRouteConfig)
 .config(doIonicConfig)
 .run(doRunConfig);
 
-function doRouteConfig( 
+function doRouteConfig(
 		$stateProvider, 
 		$urlRouterProvider
 		){
-		$stateProvider
-		.state('login', {
-			url: '/', 
-			views: {
-				'main': {
-					templateUrl: 'templates/login/login.html', 
-					controller: 'loginController', 
-					controllerAs: 'loginController'
-				}
+	$stateProvider
+	.state(
+			'login', 
+			{
+				url: '/', 
+				views: {
+					'main': {
+						templateUrl: 'templates/login/login.html', 
+						controller: 'loginController', 
+						controllerAs: 'loginController'
+							}
 			}
-		}
-		)
-		.state('customer', {
+			}
+			)
+	.state('customer', {
 			url: '/customer', 
 			abstract: true, 
 			views: {
@@ -48,35 +51,38 @@ function doRouteConfig(
 			}
 		}
 		)
-		.state('customer.nearby', {
-			url: '/nearby', 
-			views: {
-				'customer-nearby': {
-					templateUrl: 'templates/customer/nearby/customer-nearby.html', 
-					controller: 'customerNearbyController', 
-					controllerAs: 'customerNearbyController'
+		.state(
+				'customer.nearby', 
+				{
+					url: '/nearby', 
+					views: {
+						'customer-nearby': {
+							templateUrl: 'templates/customer/nearby/customer-nearby.html', 
+							controller: 'customerNearbyController', 
+							controllerAs: 'customerNearbyController'
+								}
 				}
-			}
-		}
-		)
-		.state('customer.nearby.reservation_menu', {
-			url: '/reservation_menu/:companyName/:branchName', 
-			views: {
-				'customer-nearby@customer': {
-					templateUrl: 'templates/customer/nearby/reservation_menu/nearby-reservation_menu.html', 
-					controller: 'nearbyReservationMenuController', 
-					controllerAs: 'nearbyReservationMenuController'
 				}
-			}
-		}
-		)
+				)
+		.state(
+				'customer.nearby.reservation_menu', 
+				{
+					url: '/reservation_menu/:companyName/:branchName', 
+					views: {
+						'customer-nearby@customer': {
+							templateUrl: 'templates/customer/nearby/reservation_menu/nearby-reservation_menu.html', 
+							controller: 'nearbyReservationMenuController', 
+							controllerAs: 'nearbyReservationMenuController'
+								}
+				}
+				}
+				)
 
 		$urlRouterProvider
-		.otherwise('/customer/home');
+		.otherwise('/');
 	}
 
-function doIonicConfig($ionicConfigProvider){
-	$ionicConfigProvider.tabs.position('bottom');
+function doIonicConfig($ionicConfigProvider){	$ionicConfigProvider.tabs.position('bottom');
 }
 
 function doRunConfig(
@@ -86,14 +92,13 @@ function doRunConfig(
 	$ionicPlatform.ready(
 			function(){
 				if(window.cordova && window.cordova.plugins.Keyboard) {
-			    	cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-			    	cordova.plugins.Keyboard.disableScroll(true);
-			    }
+					cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+					cordova.plugins.Keyboard.disableScroll(true);
+					}
 				
-				if(window.StatusBar) {
-			    	StatusBar.styleDefault();
-			    }
-			}
+				if(window.StatusBar) {	StatusBar.styleDefault();
+				}
+				}
 			);
 	
 	$rootScope.keys = Object.keys;
@@ -107,6 +112,6 @@ function doRunConfig(
 					fromStateParams
 					){
 				//do something here
-			}
+				}
 			);
-}
+	}

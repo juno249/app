@@ -195,37 +195,41 @@ function modalCustomerController(
 		
 		showBootstrapLoader($(DOM_MODAL));
 		
+		if(vm.fromSignup){
+			customerService.addCustomerValidate(data)
+			.then(addCustomerValidateSuccessCallback)
+			.catch(addCustomerValidateFailedCallback);
+			
+			function addCustomerValidateSuccessCallback(response){
+				hideBootstrapLoader($(DOM_MODAL));
+				
+				$uibModalInstance.close(data);
+			}
+			
+			function addCustomerValidateFailedCallback(responseError){
+				hideBootstrapLoader($(DOM_MODAL));
+				
+				genValidationErrorFromResponse(responseError);
+			}
+			return;
+		}
+		
 		if('I' == vm.formMode){
 			var customer = data[0];
-			var customerCompanyBranch = {
-					customer_username: customer.customer_username, 
-					company_name: user.company, 
-					branch_name: user.branch
-			};
-			var transParams = {
-					customer: customer, 
-					company: null, 
-					branch: null, 
-					customerCompanyBranch : customerCompanyBranch
-			};
+			var customerCompanyBranch = {};
+			var transParams = {};
 			
-			if(vm.fromSignup){
-				customerService.addCustomerValidate(data)
-				.then(addCustomerValidateSuccessCallback)
-				.catch(addCustomerValidateFailedCallback);
-				
-				function addCustomerValidateSuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
-					
-					$uibModalInstance.close(data);
-				}
-				
-				function addCustomerValidateFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
-					
-					genValidationErrorFromResponse(responseError);
-				}
-				return;
+			if(USER_ROLES.customer == customer.customer_role){	transParams.customer = customer;
+			} else{
+				customerCompanyBranch = {
+						customer_username: customer.customer_username, 
+						company_name: user.company, 
+						branch_name: user.branch
+				};
+				transParams = {
+						customer: customer, 
+						customerCompanyBranch : customerCompanyBranch
+				};
 			}
 			
 			customerCompanyBranchService.addCustomerCompanyBranch([transParams])

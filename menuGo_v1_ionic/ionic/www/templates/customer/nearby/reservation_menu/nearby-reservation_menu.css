@@ -1,6 +1,12 @@
+button#gotoOrdersBtn{
+	bottom: 100px;
+	position: absolute;
+	right: 10px;
+}
+
 button.back-button span.back-text{
 	font-family: 'Julius Sans One', sans-serif;
-	font-size: 12px;	
+	font-size: 12px;
 }
 
 div.reservation_menu-container div.company-details-container div.branch-container, 
@@ -16,12 +22,10 @@ div.reservation_menu-container div.company-details-container img{
 	object-fit: cover;
 }
 
-div.reservation_menu-container div.container-header{
+div.reservation_menu-container div.container-header, 
+div.reservation_menu-container div.menuitem-qty-container{
 	background-color: #303030;
 	color: #f0f0f0;
-	
-	padding-top: 0px;
-	padding-bottom: 0px;
 }
 
 div.reservation_menu-container div.list{
@@ -35,8 +39,8 @@ div.reservation_menu-container div.menuitems-container img{
 }
 
 div.reservation_menu-container div.menus-container{
-	background-color: #ef473a;
+	background-color: #5cb85c;
 	color: #f0f0f0;
 	
-	padding-left: 20px;
+	padding: 5px 0px 5px 10px;
 }
