@@ -73,7 +73,7 @@ function customerNearbyController(
 					}, 
 					{	reload: true	}
 					);
-		}
+			}
 	}
 	
 	function initializeMapCoordinates(){
