@@ -34,6 +34,7 @@ function menuitemService(
 			setMenuName: setMenuName, 
 			setMenuitemCode: setMenuitemCode, 
 			fetchMenuitems: fetchMenuitems, 
+			fetchMenuitem: fetchMenuitem, 
 			addMenuitem: addMenuitem, 
 			updateMenuitem: updateMenuitem, 
 			deleteMenuitem: deleteMenuitem, 
@@ -74,6 +75,7 @@ function menuitemService(
 		
 		function fetchMenuitemsSuccessCallback(response){
 			var menuitems = undefined;
+			menuitemServiceObj.menuitems = {};
 			
 			convertMenuitemsResponseToMap(response.data);
 			menuitems = menuitemServiceObj.menuitems;
@@ -115,6 +117,7 @@ function menuitemService(
 		
 		function fetchMenuitemSuccessCallback(response){
 			var menuitem = undefined;
+			menuitemServiceObj.menuitem = {};
 			
 			convertMenuitemResponseToMap(response.data);
 			menuitem = menuitemServiceObj.menuitem;

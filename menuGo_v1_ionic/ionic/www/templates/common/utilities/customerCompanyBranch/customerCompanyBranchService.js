@@ -73,6 +73,7 @@ function customerCompanyBranchService(
 		
 		function fetchCustomersCompaniesBranchesSuccessCallback(response){
 			var customersCompaniesBranches = undefined;
+			customerCompanyBranchServiceObj.customersCompaniesBranches = {};
 			
 			convertCustomersCompaniesBranchesResponseToMap(response.data);
 			customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
@@ -113,6 +114,7 @@ function customerCompanyBranchService(
 		
 		function fetchCustomerCompanyBranchSuccessCallback(response){
 			var customerCompanyBranch = undefined;
+			customerCompanyBranchServiceObj.customerCompanyBranch = {};
 			
 			convertCustomerCompanyBranchResponseToMap(response.data);
 			customerCompanyBranch = customerCompanyBranchServiceObj.customerCompanyBranch;

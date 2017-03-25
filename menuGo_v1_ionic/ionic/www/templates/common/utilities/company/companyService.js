@@ -63,6 +63,7 @@ function companyService(
 		
 		function fetchCompaniesSuccessCallback(response){
 			var companies = undefined;
+			companyServiceObj.companies = {};
 			
 			convertCompaniesResponseToMap(response.data);
 			companies = companyServiceObj.companies;
@@ -104,6 +105,7 @@ function companyService(
 		
 		function fetchCompanySuccessCallback(response){
 			var company = undefined;
+			companyServiceObj.company = {};
 			
 			convertCompanyResponseToMap(response.data);
 			company = companyServiceObj.company;

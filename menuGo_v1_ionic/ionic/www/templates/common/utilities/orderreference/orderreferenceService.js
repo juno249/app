@@ -67,6 +67,7 @@ function orderreferenceService(
 		
 		function fetchOrderreferencesSuccessCallback(response){
 			var orderreferences = undefined;
+			orderreferenceServiceObj.orderreferences = {};
 			
 			convertOrderreferencesResponseToMap(response.data);
 			orderreferences = orderreferenceServiceObj.orderreferences;
@@ -108,6 +109,7 @@ function orderreferenceService(
 		
 		function fetchOrderreferenceSuccessCallback(response){
 			var orderreference = undefined;
+			orderreferenceServiceObj.orderreference = {};
 			
 			convertOrderreferenceResponseToMap(response.data);
 			orderreference = orderreferenceServiceObj.orderreference;

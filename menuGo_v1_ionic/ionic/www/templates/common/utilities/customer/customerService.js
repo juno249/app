@@ -49,11 +49,6 @@ function customerService(
 	function setCustomerUsername(customerUsername){	customerServiceObj.customerUsername = customerUsername;
 	}
 	
-	/* ******************************
-	 * Method Implementation
-	 * method name: fetchCustomers()
-	 * purpose: fetch customers from server
-	 * ****************************** */
 	function fetchCustomers(){
 		var deferred = $q.defer();
 		var httpConfig = {
@@ -67,6 +62,7 @@ function customerService(
 		
 		function fetchCustomersSuccessCallback(response){
 			var customers = undefined;
+			customerServiceObj.customers = {};
 			
 			convertCustomersResponseToMap(response.data);
 			customers = customerServiceObj.customers;
@@ -108,6 +104,7 @@ function customerService(
 		
 		function fetchCustomerSuccessCallback(response){
 			var customer = undefined;
+			customerServiceObj.customer = {};
 			
 			convertCustomerResponseToMap(response.data);
 			customer = customerServiceObj.customer;

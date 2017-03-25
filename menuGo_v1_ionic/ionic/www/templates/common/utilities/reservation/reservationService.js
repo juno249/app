@@ -67,6 +67,7 @@ function reservationService(
 		
 		function fetchReservationsSuccessCallback(response){
 			var reservations = undefined;
+			reservationServiceObj.reservations = {};
 			
 			convertReservationsResponseToMap(response.data);
 			reservations = reservationServiceObj.reservations;
@@ -108,6 +109,7 @@ function reservationService(
 		
 		function fetchReservationSuccessCallback(response){
 			var reservation = undefined;
+			reservationServiceObj.reservation = {};
 			
 			convertReservationResponseToMap(response.data);
 			reservation = reservationServiceObj.reservation;

@@ -143,6 +143,7 @@ function orderService(
 		
 		function fetchOrdersSuccessCallback(response){
 			var orders = undefined;
+			orderServiceObj.orders = {};
 			
 			convertOrdersResponseToMap(response.data);
 			orders = orderServiceObj.orders;
