@@ -17,6 +17,9 @@ function companyService(
 		$localStorage, 
 		$q 
 		){
+	const COMPANIES_KEY = 'Companies';
+	const COMPANY_KEY = 'Company';
+	
 	var companyServiceObj = {
 		companies: {}, 
 		company: {}, 
@@ -68,7 +71,10 @@ function companyService(
 			convertCompaniesResponseToMap(response.data);
 			companies = companyServiceObj.companies;
 			companies = JSON.stringify(companies);
-			localStorage.setItem('Companies', companies);
+			localStorage.setItem(
+					COMPANIES_KEY, 
+					companies
+					);
 			
 			deferred.resolve(response);
 		}
@@ -110,7 +116,10 @@ function companyService(
 			convertCompanyResponseToMap(response.data);
 			company = companyServiceObj.company;
 			company = JSON.stringify(company);
-			localStorage.setItem('Company', company);
+			localStorage.setItem(
+					COMPANY_KEY, 
+					company
+					);
 			
 			deferred.resolve(response);
 		}

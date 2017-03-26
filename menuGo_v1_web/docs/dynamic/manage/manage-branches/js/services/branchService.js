@@ -17,6 +17,9 @@ function branchService(
 		$localStorage, 
 		$q 
 		){
+	const BRANCHES_KEY = 'Branches';
+	const BRANCH_KEY = 'Branch';
+	
 	var branchServiceObj = {
 			branches: {}, 
 			branch: {}, 
@@ -75,7 +78,10 @@ function branchService(
 			convertBranchesResponseToMap(response.data);
 			branches = branchServiceObj.branches;
 			branches = JSON.stringify(branches);
-			localStorage.setItem('Branches', branches);
+			localStorage.setItem(
+					BRANCHES_KEY, 
+					branches
+					);
 			
 			deferred.resolve(response);
 		}
@@ -117,7 +123,10 @@ function branchService(
 			convertBranchResponseToMap(response.data);
 			branch = branchServiceObj.branch;
 			branch = JSON.stringify(branch);
-			localStorage.setItem('Branch', branch);
+			localStorage.setItem(
+					BRANCH_KEY, 
+					branch
+					);
 			
 			deferred.resolve(response);
 		}

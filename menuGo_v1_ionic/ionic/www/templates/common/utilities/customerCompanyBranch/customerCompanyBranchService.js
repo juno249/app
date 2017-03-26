@@ -17,6 +17,9 @@ function customerCompanyBranchService(
 		$localStorage, 
 		$q
 		){
+	const CUSTOMERS_COMPANIES_BRANCHES_KEY = 'CustomersCompaniesBranches';
+	const CUSTOMER_COMPANY_BRANCH_KEY = 'CustomerCompanyBranch';
+	
 	var customerCompanyBranchServiceObj = {
 			customersCompaniesBranches: {}, 
 			customerCompanyBranch: {}, 
@@ -78,7 +81,10 @@ function customerCompanyBranchService(
 			convertCustomersCompaniesBranchesResponseToMap(response.data);
 			customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
 			customersCompaniesBranches = JSON.stringify(customersCompaniesBranches);
-			localStorage.setItem('CustomersCompaniesBranches', customersCompaniesBranches);
+			localStorage.setItem(
+					CUSTOMERS_COMPANIES_BRANCHES_KEY, 
+					customersCompaniesBranches
+					);
 			
 			deferred.resolve(response);
 		}
@@ -119,7 +125,10 @@ function customerCompanyBranchService(
 			convertCustomerCompanyBranchResponseToMap(response.data);
 			customerCompanyBranch = customerCompanyBranchServiceObj.customerCompanyBranch;
 			customerCompanyBranch  = JSON.stringify(customerCompanyBranch);
-			localStorage.setItem('CustomerCompanyBranch', customerCompanyBranch);
+			localStorage.setItem(
+					CUSTOMER_COMPANY_BRANCH_KEY, 
+					customerCompanyBranch
+					);
 			
 			deferred.resolve(response);
 		}

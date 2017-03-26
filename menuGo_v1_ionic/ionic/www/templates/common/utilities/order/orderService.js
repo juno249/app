@@ -25,6 +25,8 @@ function orderService(
 		$q, 
 		loginService 
 		){
+	const ORDERS_KEY = 'Orders';
+	
 	var orderServiceObj = {
 			orders: {}, 
 			customerOrders: {},  
@@ -148,7 +150,10 @@ function orderService(
 			convertOrdersResponseToMap(response.data);
 			orders = orderServiceObj.orders;
 			orders = JSON.stringify(orders);
-			localStorage.setItem('Orders', orders);
+			localStorage.setItem(
+					ORDERS_KEY, 
+					orders
+					);
 			
 			deferred.resolve(response);
 		}

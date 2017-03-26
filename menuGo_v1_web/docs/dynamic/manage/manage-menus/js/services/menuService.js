@@ -17,6 +17,9 @@ function menuService(
 		$localStorage, 
 		$q 
 		){
+	const MENUS_KEY = 'Menus';
+	const MENU_KEY = 'Menu';
+	
 	var menuServiceObj = {
 		menus: {}, 
 		menu: {}, 
@@ -73,7 +76,10 @@ function menuService(
 			convertMenusResponseToMap(response.data);
 			menus = menuServiceObj.menus;
 			menus = JSON.stringify(menus);
-			localStorage.setItem('Menus', menus);
+			localStorage.setItem(
+					MENUS_KEY, 
+					menus
+					);
 			
 			deferred.resolve(response);
 		}
@@ -115,7 +121,10 @@ function menuService(
 			convertMenuResponseToMap(response.data);
 			menu = menuServiceObj.menu;
 			menu = JSON.stringify(menu);
-			localStorage.setItem('Menu', menu);
+			localStorage.setItem(
+					MENU_KEY, 
+					menu
+					);
 			
 			deferred.resolve(response);
 		}

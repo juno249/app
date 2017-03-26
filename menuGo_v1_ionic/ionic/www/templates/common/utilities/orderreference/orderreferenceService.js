@@ -17,6 +17,9 @@ function orderreferenceService(
 		$localStorage, 
 		$q
 		){
+	const ORDERREFERENCES_KEY = 'Orderreferences';
+	const ORDERREFERENCE_KEY = 'Orderreference';
+	
 	var orderreferenceServiceObj = {
 			orderreferences: {}, 
 			orderreference: {}, 
@@ -72,7 +75,10 @@ function orderreferenceService(
 			convertOrderreferencesResponseToMap(response.data);
 			orderreferences = orderreferenceServiceObj.orderreferences;
 			orderreferences = JSON.stringify(orderreferences);
-			localStorage.setItem('Orderreferences', orderreferences);
+			localStorage.setItem(
+					ORDERREFERENCES_KEY, 
+					orderreferences
+					);
 			
 			deferred.resolve(response);
 		}
@@ -114,7 +120,10 @@ function orderreferenceService(
 			convertOrderreferenceResponseToMap(response.data);
 			orderreference = orderreferenceServiceObj.orderreference;
 			orderreference = JSON.stringify(orderreference);
-			localStorage.setItem('Orderreference', orderreference);
+			localStorage.setItem(
+					ORDERREFERENCE_KEY, 
+					orderreference
+					);
 			
 			deferred.resolve(response);
 		}
@@ -122,11 +131,6 @@ function orderreferenceService(
 		function fetchOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		
-		/* ******************************
-		 * Method Implementation
-		 * method name: convertOrderreferenceResponseToMap()
-		 * purpose: convert http response to a map
-		 * ****************************** */
 		function convertOrderreferenceResponseToMap(responseData){
 			for (var i=0; i<responseData.length; i++){
 				var orderreferenceDetails = {};

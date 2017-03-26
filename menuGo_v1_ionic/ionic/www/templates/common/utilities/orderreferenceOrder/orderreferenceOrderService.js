@@ -4,13 +4,11 @@ angular
 
 orderreferenceOrderService.$inject = [
 	'$http', 
-	'$localStorage', 
 	'$q' 
 	];
 
 function orderreferenceOrderService(
 		$http, 
-		$localStorage, 
 		$q
 		){
 	var orderreferenceOrderServiceObj = {

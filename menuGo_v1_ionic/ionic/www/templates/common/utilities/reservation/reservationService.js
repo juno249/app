@@ -17,6 +17,9 @@ function reservationService(
 		$localStorage, 
 		$q
 		){
+	const RESERVATIONS_KEY = 'Reservations';
+	const RESERVATION_KEY = 'Reservation';
+	
 	reservationServiceObj = {
 			reservations: {}, 
 			reservation: {}, 
@@ -72,7 +75,10 @@ function reservationService(
 			convertReservationsResponseToMap(response.data);
 			reservations = reservationServiceObj.reservations;
 			reservations = JSON.stringify(reservations);
-			localStorage.setItem('Reservations', reservations);
+			localStorage.setItem(
+					RESERVATIONS_KEY, 
+					reservations
+					);
 			
 			deferred.resolve(response);
 		}
@@ -114,7 +120,10 @@ function reservationService(
 			convertReservationResponseToMap(response.data);
 			reservation = reservationServiceObj.reservation;
 			reservation = JSON.stringify(reservation);
-			localStorage.setItem('Reservation', reservation);
+			localStorage.setItem(
+					RESERVATION_KEY, 
+					reservation
+					);
 			
 			deferred.resolve(response);
 		}

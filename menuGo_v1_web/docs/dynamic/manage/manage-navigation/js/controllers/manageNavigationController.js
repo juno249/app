@@ -4,12 +4,14 @@ angular
 
 manageNavigationController.$inject = [
 	'BROADCAST_MESSAGES', 
+	'$localStorage', 
 	'$scope', 
 	'$state'
 	];
 
 function manageNavigationController(
 		BROADCAST_MESSAGES, 
+		$localStorage, 
 		$scope, 
 		$state
 		){

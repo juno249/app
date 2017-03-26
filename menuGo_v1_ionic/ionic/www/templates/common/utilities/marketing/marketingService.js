@@ -19,6 +19,11 @@ function marketingService(
 		$localStorage, 
 		$q
 		){
+	const ADVERTISEMENTS_KEY = 'Advertisements';
+	const ADVERTISEMENT_KEY = 'Advertisement';
+	const BLOGS_KEY = 'Blogs';
+	const BLOG_KEY = 'Blog';
+	
 	var marketingServiceObj = {
 			advertisements: {}, 
 			advertisement: {}, 
@@ -99,7 +104,10 @@ function marketingService(
 			convertAdvertisementsResponseToMap(response.data);
 			advertisements = marketingServiceObj.advertisements;
 			advertisements = JSON.stringify(advertisements);
-			localStorage.setItem('Advertisements', advertisements);
+			localStorage.setItem(
+					ADVERTISEMENTS_KEY, 
+					advertisements
+					);
 			
 			deferred.resolve(response);
 		}
@@ -140,7 +148,10 @@ function marketingService(
 			convertAdvertisementResponseToMap(response.data);
 			advertisement = marketingServiceObj.advertisement;
 			advertisement = JSON.stringify(advertisement);
-			localStorage.setItem('Advertisement', advertisement);
+			localStorage.setItem(
+					ADVERTISEMENT_KEY, 
+					advertisement
+					);
 			
 			deferred.resolve(response);
 		}
@@ -240,7 +251,10 @@ function marketingService(
 			convertBlogsResponseToMap(response.data);
 			blogs  = marketingServiceObj.blogs;
 			blogs = JSON.stringify(blogs);
-			localStorage.setItem('Blogs', blogs);
+			localStorage.setItem(
+					BLOGS_KEY, 
+					blogs
+					);
 			
 			deferred.resolve(response);
 		}
@@ -281,7 +295,10 @@ function marketingService(
 			convertBlogResponseToMap(response.data);
 			blog = marketingServiceObj.blog;
 			blog = JSON.stringify(blog);
-			localStorage.setItem('Blog', blog);
+			localStorage.setItem(
+					BLOG_KEY, 
+					blog
+					);
 			
 			deferred.resolve(response);
 		}

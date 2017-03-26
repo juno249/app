@@ -17,6 +17,8 @@ function loginService(
 		$localStorage, 
 		$q 
 		){
+	const USER_KEY = 'User';
+	
 	var loginServiceObj = {
 		loginUsername: undefined, 
 		loginPassword: undefined, 
@@ -76,7 +78,10 @@ function loginService(
 			
 			if(USER_ROLES.customer == user.role){
 				user = JSON.stringify(user);
-				localStorage.setItem('User', user);
+				localStorage.setItem(
+						USER_KEY, 
+						user
+						);
 				deferred.resolve();
 			} else {	getCustomerCompanyBranch();
 			}
@@ -100,7 +105,10 @@ function loginService(
 					user.branch = responseData.branch_id;
 					
 					user = JSON.stringify(user);
-					localStorage.setItem('User', user);
+					localStorage.setItem(
+							USER_KEY, 
+							user
+							);
 					deferred.resolve();
 				}
 				

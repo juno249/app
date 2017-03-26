@@ -17,6 +17,9 @@ function customerService(
 		$localStorage, 
 		$q 
 		){
+	const CUSTOMERS_KEY = 'Customers';
+	const CUSTOMER_KEY = 'Customer';
+	
 	var customerServiceObj = {
 			customers: {}, 
 			customer: {}, 
@@ -67,7 +70,10 @@ function customerService(
 			convertCustomersResponseToMap(response.data);
 			customers = customerServiceObj.customers;
 			customers = JSON.stringify(customers);
-			localStorage.setItem('Customers', customers);
+			localStorage.setItem(
+					CUSTOMERS_KEY, 
+					customers
+					);
 			
 			deferred.resolve(response);
 		}
@@ -109,7 +115,10 @@ function customerService(
 			convertCustomerResponseToMap(response.data);
 			customer = customerServiceObj.customer;
 			customer = JSON.stringify(customer);
-			localStorage.setItem('Customer', customer);
+			localStorage.setItem(
+					CUSTOMER_KEY, 
+					customer
+					);
 			
 			deferred.resolve(response);
 		}

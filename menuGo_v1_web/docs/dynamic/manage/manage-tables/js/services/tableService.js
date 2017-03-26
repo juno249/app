@@ -17,6 +17,9 @@ function tableService(
 		$localStorage, 
 		$q 
 		){
+	const TABLES_KEY = 'Tables';
+	const TABLE_KEY = 'Table';
+	
 	var tableServiceObj = {
 			tables: {}, 
 			table: {}, 
@@ -79,7 +82,10 @@ function tableService(
 			convertTablesResponseToMap(response.data);
 			tables = tableServiceObj.tables;
 			tables = JSON.stringify(tables);
-			localStorage.setItem('Tables', tables);
+			localStorage.setItem(
+					TABLES_KEY, 
+					tables
+					);
 			
 			deferred.resolve(response);
 		}
@@ -121,7 +127,10 @@ function tableService(
 			convertTableResponseToMap(response.data);
 			table = tableServiceObj.table;
 			table = JSON.stringify(table);
-			localStorage.setItem('Table', table);
+			localStorage.setItem(
+					TABLE_KEY, 
+					table
+					);
 			
 			deferred.resolve(response);
 		}
