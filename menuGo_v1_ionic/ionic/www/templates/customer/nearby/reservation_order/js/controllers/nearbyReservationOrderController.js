@@ -3,11 +3,13 @@ angular
 .controller('nearbyReservationOrderController', nearbyReservationOrderController);
 
 nearbyReservationOrderController.$inject = [
+	'$localStorage', 
 	'$scope', 
 	'$stateParams'
 	];
 
 function nearbyReservationOrderController(
+		$localStorage, 
 		$scope, 
 		$stateParams
 		){

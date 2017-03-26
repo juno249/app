@@ -241,6 +241,7 @@ angular
 			deleteTable: 'deleteTable', 
 			addOrder: 'addOrder', 
 			updateOrder: 'updateOrder', 
-			deleteOrder: 'deleteOrder'
+			deleteOrder: 'deleteOrder', 
+			remReservationOrder: 'remReservationOrder'
 				}
 		)

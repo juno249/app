@@ -6,6 +6,7 @@ customerHomeController.$inject = [
 	'dataService', 
 	'$ionicHistory', 
 	'$ionicSlideBoxDelegate', 
+	'$localStorage', 
 	'$scope', 
 	'$timeout'
 	];
@@ -14,6 +15,7 @@ function customerHomeController(
 		dataService, 
 		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
+		$localStorage, 
 		$scope, 
 		$timeout
 		){
@@ -44,7 +46,7 @@ function customerHomeController(
 			}
 			);
 	
-	$scope.$watch(
+	$scope.$watchCollection(
 			function(){	return vm.marketing;
 			}, 
 			function(){

@@ -77,6 +77,19 @@ function doRouteConfig(
 				}
 				}
 				)
+		.state(
+				'customer.nearby.reservation_order', 
+				{	
+					url: '/reservation_order/:reservationOrders', 
+					views: {
+						'customer-nearby@customer': {
+							templateUrl: 'templates/customer/nearby/reservation_order/nearby-reservation_order.html', 
+							controller: 'nearbyReservationOrderController', 
+							controllerAs: 'nearbyReservationOrderController'
+								}
+				}
+				}
+				)
 
 		$urlRouterProvider
 		.otherwise('/');

@@ -44,7 +44,7 @@
 							class="font-family-1-size-small">
 							Remove
 						</span>
-					</button>	
+					</button>
 				</div>
 			</div>
 			<div 
@@ -52,7 +52,7 @@
 				ng-if="keys(nearbyReservationOrderController.reservationOrders).length > 0">
 				<span 
 					class="font-family-1-size-medium">
-					Total: <underline><b>&#8369{{nearbyReservationOrderController.totalCost}}</b></underline>
+					Total: <underline><b>&#8369{{nearbyReservationOrderController.totalCost | number: 2}}</b></underline>
 				</span>
 			</div>
 		</div>

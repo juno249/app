@@ -3,6 +3,7 @@ angular
 .controller('nearbyReservationMenuController', nearbyReservationMenuController);
 
 nearbyReservationMenuController.$inject = [
+	'$localStorage', 
 	'$scope', 
 	'$state', 
 	'$stateParams', 
@@ -11,6 +12,7 @@ nearbyReservationMenuController.$inject = [
 	];
 
 function nearbyReservationMenuController(
+		$localStorage, 
 		$scope, 
 		$state, 
 		$stateParams, 
@@ -145,7 +147,7 @@ function nearbyReservationMenuController(
 			}
 	);
 	
-	$scope.$watch(
+	$scope.$watchCollection(
 			function(){	return vm.companies;
 			}, 
 			function(){

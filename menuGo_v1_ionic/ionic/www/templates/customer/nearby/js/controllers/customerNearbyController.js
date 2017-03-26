@@ -5,6 +5,7 @@ angular
 customerNearbyController.$inject = [
 	'$ionicHistory', 
 	'$ionicSlideBoxDelegate', 
+	'$localStorage', 
 	'$q', 
 	'$scope', 
 	'$state', 
@@ -18,6 +19,7 @@ customerNearbyController.$inject = [
 function customerNearbyController(
 		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
+		$localStorage, 
 		$q, 
 		$scope, 
 		$state, 
@@ -190,7 +192,7 @@ function customerNearbyController(
 			}
 	);
 	
-	$scope.$watch(
+	$scope.$watchCollection(
 			function(){	return vm.companies;
 			}, 
 			function(){
