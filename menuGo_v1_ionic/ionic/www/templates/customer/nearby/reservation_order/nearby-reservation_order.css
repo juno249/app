@@ -1,0 +1,15 @@
+div.reservation_order-container div.container-header{
+	background-color: #303030;
+	color: #f0f0f0;
+}
+
+div.reservation_order-container div.orders-container{
+	max-height: 300px;
+	
+	overflow-x: hidden;
+	overflow-y: scroll;	
+}
+
+div.reservation_order-container div.orders-container div.item{
+	padding: 5px 0px 5px 10px;
+}

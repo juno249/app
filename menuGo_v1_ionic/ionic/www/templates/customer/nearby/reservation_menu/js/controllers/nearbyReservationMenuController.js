@@ -4,6 +4,7 @@ angular
 
 nearbyReservationMenuController.$inject = [
 	'$scope', 
+	'$state', 
 	'$stateParams', 
 	'branchService', 
 	'dataService'
@@ -11,6 +12,7 @@ nearbyReservationMenuController.$inject = [
 
 function nearbyReservationMenuController(
 		$scope, 
+		$state, 
 		$stateParams, 
 		branchService, 
 		dataService
@@ -42,6 +44,8 @@ function nearbyReservationMenuController(
 	}
 	
 	//controller_method
+	vm.gotoState = gotoState;
+	//controller_method
 	vm.toggleVis = toggleVis;
 	//controller_method
 	vm.toStringAddress = toStringAddress;
@@ -49,6 +53,18 @@ function nearbyReservationMenuController(
 	vm.addReservationOrder = addReservationOrder;
 	//controller_method
 	vm.subReservationOrder = subReservationOrder;
+	
+	function gotoState(
+			stateName
+			){
+		if('customer.nearby.reservation_order' == stateName){
+			$state.go(
+					stateName, 
+					{	reservationOrders: JSON.stringify(vm.user.reservationOrders)	}, 
+					{	reload: true	}
+					);
+			}
+	}
 	
 	function toggleVis(menu){
 		resetVis(menu);

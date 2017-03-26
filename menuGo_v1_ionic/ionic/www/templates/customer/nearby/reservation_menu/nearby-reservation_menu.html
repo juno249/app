@@ -4,7 +4,7 @@
 <ion-view 
 	id="reservation_menu" 
 	name="reservation_menu" 
-	view-title="reservation_menu">
+	view-title="menu">
 	<ion-content 
 		class="has-header">
 		<div 
@@ -81,6 +81,13 @@
 								{{j.menuitem_desc}}
 							</span>
 						</div>
+						<div 
+							class="child-content-right">
+							<span 
+								class="font-family-1-size-medium">
+								&#8369{{j.menuitem_price}}
+							</span>
+						</div>
 					</div>
 					<div 
 						class="row">
@@ -103,10 +110,10 @@
 								<i 
 									class="icon ion-minus">
 								</i>
-							<span 
-								class="font-family-1-size-small">
-								Sub
-							</span>
+								<span 
+									class="font-family-1-size-small">
+									Sub
+								</span>
 							</button>
 						</div>
 						<div 
@@ -129,6 +136,7 @@
 		class="button button-medium button-positive child-content-center" 
 		id="gotoOrdersBtn" 
 		name="gotoOrdersbtn" 
+		ng-click="nearbyReservationMenuController.gotoState('customer.nearby.reservation_order');"
 		ng-if="keys(nearbyReservationMenuController.user.reservationOrders).length > 0">
 		<i 
 			class="icon ion-arrow-right-a">

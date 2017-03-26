@@ -1,0 +1,60 @@
+<ion-view 
+	id="reservation_order" 
+	name="reservation_order" 
+	view-title="order">
+	<ion-content 
+		class="has-header">
+		<div 
+			class="reservation_order-container">
+			<div 
+				class="child-content-center container-header item item-divider">
+				<span 
+					class="font-family-1-size-medium">
+					My Orders
+				</span>
+			</div>
+			<div 
+				class="orders-container list">
+				<div 
+					class="item" 
+					ng-repeat="(k, v) in nearbyReservationOrderController.reservationOrders">
+					<span 
+						class="font-family-1-size-medium">
+						<underline><b>{{v.menuitem_name}}</b><underline>
+					</span><br>
+					<span 
+						class="font-family-2-size-small">
+						Quantity: <underlIne><b>{{v.quantity}}</b></underlIne>
+					</span>,
+					<span 
+						class="font-family-2-size-small">
+						Unit Price: <underline><b>&#8369{{v.menuitem_price}}</b></underline>
+					</span>,
+					<span 
+						class="font-family-2-size-small">
+						Cost: <underline><b>&#8369{{v.quantity * v.menuitem_price}}</b></underline>
+					</span><br>
+					<button 
+						class="button button-assertive button-small" 
+						ng-click="nearbyReservationOrderController.remReservationOrder(v);">
+						<i 
+							class="icon ion-close">
+						</i>
+						<span 
+							class="font-family-1-size-small">
+							Remove
+						</span>
+					</button>	
+				</div>
+			</div>
+			<div 
+				class="child-content-right item" 
+				ng-if="keys(nearbyReservationOrderController.reservationOrders).length > 0">
+				<span 
+					class="font-family-1-size-medium">
+					Total: <underline><b>&#8369{{nearbyReservationOrderController.totalCost}}</b></underline>
+				</span>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
