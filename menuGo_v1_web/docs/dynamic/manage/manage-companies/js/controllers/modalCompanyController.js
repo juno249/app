@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('modalCompanyController', modalCompanyController);
+.controller(
+		'modalCompanyController', 
+		modalCompanyController
+		);
 
 modalCompanyController.$inject = [
 	'API_BASE_URL', 
@@ -43,19 +46,19 @@ function modalCompanyController(
 			companyDesc: 'company_desc', 
 			companyCategory: 'company_category', 
 			companyLogo: 'company_logo'
-	}
+				}
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
 			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
-	}
+				}
 	vm.dbColumn2DomIndex = {
 			company_name: 0, 
 			company_desc: 1, 
 			company_category: 2, 
 			company_logo: 3
-	}
+			}
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
@@ -83,7 +86,7 @@ function modalCompanyController(
 				function(){	$(DOM_FORM).validator('update');
 				}
 				);
-	}
+		}
 	
 	function initDom(){
 		const COMPANY_LOGO_BROWSE = '#companyLogoBrowse';
@@ -122,7 +125,7 @@ function modalCompanyController(
 					true
 					);
 			}
-	}
+		}
 	
 	function doCancel(){	$uibModalInstance.close();
 	}
@@ -147,11 +150,11 @@ function modalCompanyController(
 			vm.isCompanyLogoImageHidden = false;
 			
 			hideBootstrapLoader($(DOM_MODAL));
-		}
+			}
 		
 		function uploadCompanyLogoFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL));
 		}
-	}
+		}
 	
 	function doSubmit(e){
 		var data = [];
@@ -172,15 +175,15 @@ function modalCompanyController(
 					hideBootstrapLoader($(DOM_MODAL));
 					
 					$uibModalInstance.close(data);
-				}
+					}
 				
 				function addCompanyValidateFailedCallback(responseError){
 					hideBootstrapLoader($(DOM_MODAL));
 					
 					genValidationErrorFromResponse(responseError);
-				}
+					}
 				return;
-			}
+				}
 			
 			companyService.addCompany(data)
 			.then(addCompanySuccessCallback)
@@ -190,7 +193,7 @@ function modalCompanyController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close();
-			}
+				}
 			
 			function addCompanyFailedCallback(responseError){
 				hideBootstrapLoader($(DOM_MODAL));
@@ -198,90 +201,90 @@ function modalCompanyController(
 				try{
 					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(COMPANY_ADD_CATCH_MESSAGE);
-				}
-			}
-		} else if('A' == vm.formMode){
-			discardModalHiddenFields();
-			discardModalUnchangedFields();
-			
-			if(0 == Object.keys(data[0]).length){
-				hideBootstrapLoader($(DOM_MODAL));
+					} catch(e){	showBootstrapAlert(COMPANY_ADD_CATCH_MESSAGE);
+					}
+					}
+			} else if('A' == vm.formMode){
+				discardModalHiddenFields();
+				discardModalUnchangedFields();
 				
-				showBootstrapAlert(COMPANY_UPDATE_CUSTOM_ERR_MESSAGE);
+				if(0 == Object.keys(data[0]).length){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					showBootstrapAlert(COMPANY_UPDATE_CUSTOM_ERR_MESSAGE);
+					
+					return;
+					}
 				
-				return;
-			}
-			
-			companyService.setCompanyName(vm.companySnapshot.companyName);
-			
-			companyService.updateCompany(data)
-			.then(updateCompanySuccessCallback)
-			.catch(updateCompanyFailedCallback);
-			
-			function updateCompanySuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				companyService.setCompanyName(vm.companySnapshot.companyName);
 				
-				$uibModalInstance.close();
-			}
-			
-			function updateCompanyFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				companyService.updateCompany(data)
+				.then(updateCompanySuccessCallback)
+				.catch(updateCompanyFailedCallback);
 				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(COMPANY_UPDATE_CATCH_MESSAGE);
-				}
-			}
-			
-			function discardModalHiddenFields(){
-				Object.keys(modalHiddenFields).forEach(
-						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+				function updateCompanySuccessCallback(response){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					$uibModalInstance.close();
+					}
+				
+				function updateCompanyFailedCallback(responseError){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					try{
+						JSON.parse(responseError.statusText);
+						genValidationErrorFromResponse(responseError);
+						} catch(e){	showBootstrapAlert(COMPANY_UPDATE_CATCH_MESSAGE);
 						}
-						);
-				}
-			
-			function discardModalUnchangedFields(){
-				var dataKeys = Object.keys(data[0]);
+						}
 				
-				dataKeys.forEach(
-						function(dataKey){
-							var dataValue = data[0][dataKey];
-							var companySnapshotValue = vm.companySnapshot[vm.dbColumn2Dom[dataKey]];
-							
-							if(dataValue == companySnapshotValue){	delete data[0][dataKey];
+				function discardModalHiddenFields(){
+					Object.keys(modalHiddenFields).forEach(
+							function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
 							}
-							}
-						);
-				}
-		} else if('D' == vm.formMode){
-			companyService.setCompanyName(vm.company.companyName);
-			
-			companyService.deleteCompany()
-			.then(deleteCompanySuccessCallback)
-			.catch(deleteCompanyFailedCallback);
-			
-			function deleteCompanySuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+							);
+					}
 				
-				$uibModalInstance.close();
-			}
+				function discardModalUnchangedFields(){
+					var dataKeys = Object.keys(data[0]);
+					
+					dataKeys.forEach(
+							function(dataKey){
+								var dataValue = data[0][dataKey];
+								var companySnapshotValue = vm.companySnapshot[vm.dbColumn2Dom[dataKey]];
+								
+								if(dataValue == companySnapshotValue){	delete data[0][dataKey];
+								}
+								}
+							);
+					}
+				} else if('D' == vm.formMode){
+					companyService.setCompanyName(vm.company.companyName);
+					
+					companyService.deleteCompany()
+					.then(deleteCompanySuccessCallback)
+					.catch(deleteCompanyFailedCallback);
+					
+					function deleteCompanySuccessCallback(response){
+						hideBootstrapLoader($(DOM_MODAL));
 						
-			function deleteCompanyFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				try{
-					JSON.parse(responseError.statusText)
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(COMPANY_DELETE_CATCH_MESSAGE);
-				}
-			}
-		}
+						$uibModalInstance.close();
+						}
+					
+					function deleteCompanyFailedCallback(responseError){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						try{
+							JSON.parse(responseError.statusText)
+							genValidationErrorFromResponse(responseError);
+							} catch(e){	showBootstrapAlert(COMPANY_DELETE_CATCH_MESSAGE);
+							}
+							}
+					}
 		
 		validationErr = {};
 		validationErrDB = {};
-	}
+		}
 
 	function doDom2DbColumn(){
 		var data = {};
@@ -296,7 +299,7 @@ function modalCompanyController(
 				);
 		
 		return data;
-	}
+		}
 	
 	function genValidationErrorFromResponse(responseError){
 		const CLASS_FORM_GROUP = '.form-group';
@@ -306,23 +309,24 @@ function modalCompanyController(
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 		
-		statusTextKeys.forEach(function(statusTextKey){
-			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = getDbColumnIndex(dbColumnName);
-			var errorMessage = statusTextObj[statusTextKey][0];
-			var formGroups = $(CLASS_FORM_GROUP);
-			
-			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
-				
-			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
-				
-			formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
-			}
-		);
+		statusTextKeys.forEach(
+				function(statusTextKey){
+					var dbColumnName = statusTextKey.split('.')[1];
+					var dbColumnIndex = getDbColumnIndex(dbColumnName);
+					var errorMessage = statusTextObj[statusTextKey][0];
+					var formGroups = $(CLASS_FORM_GROUP);
+					
+					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+					
+					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+					
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					}
+				);
 		
 		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-	}
+		}
 	
 	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
@@ -333,10 +337,10 @@ function modalCompanyController(
 	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
 		vm.isValidationErrDBHidden = false;
-	}
+		}
 	
 	function hideBootstrapAlert(){
 		vm.validationErrDB = {};
 		vm.isValidationErrDBHidden = true;
+		}
 	}
-}

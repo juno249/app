@@ -1,12 +1,14 @@
 angular
-.module('starter', [
-	'ionic', 
-	'ngCordova', 
-	'ngMap', 
-	'ngStorage', 
-	'ion-datetime-picker'
-	]
-)
+.module(
+		'starter', 
+		[
+			'ionic', 
+			'ngCordova', 
+			'ngMap', 
+			'ngStorage', 
+			'ion-datetime-picker'	
+			]
+		)
 
 .config(doRouteConfig)
 .config(doIonicConfig)
@@ -80,7 +82,7 @@ function doRouteConfig(
 		.state(
 				'customer.nearby.reservation_order', 
 				{	
-					url: '/reservation_order/:reservationOrders', 
+					url: '/reservation_order', 
 					views: {
 						'customer-nearby@customer': {
 							templateUrl: 'templates/customer/nearby/reservation_order/nearby-reservation_order.html', 

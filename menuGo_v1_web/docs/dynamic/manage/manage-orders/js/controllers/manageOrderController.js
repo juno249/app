@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageOrderController', manageOrderController);
+.controller(
+		'manageOrderController', 
+		manageOrderController
+		);
 
 manageOrderController.$inject = [
 	'API_BASE_URL', 
@@ -44,7 +47,7 @@ function manageOrderController(
 			table_id: 'Table id', 
 			order_timestamp: 'Timestamp', 
 			order_status: 'Status'
-	};
+				};
 	vm.dbColumn2Dom = {
 			order_id: 'orderId', 
 			customer_username: 'customerUsername', 
@@ -52,12 +55,12 @@ function manageOrderController(
 			table_id: 'tableId', 
 			order_timestamp: 'orderTimestamp', 
 			order_status: 'orderStatus'
-	}
+				}
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orders';
 	
@@ -74,25 +77,27 @@ function manageOrderController(
 		if(-1 == eClassname.indexOf('selected')){	vm.order = data;
 		} else {	vm.order= {};
 		}
-	}
+		}
 	
 	function addOrder(){
 		var formMode = 'I';
 		
-		modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-orders/modalOrder.html', 
-			controller: 'modalOrderController as modalOrderController', 
-			resolve: {
-				order: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-orders/modalOrder.html', 
+					controller: 'modalOrderController as modalOrderController', 
+					resolve: {
+						order: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function updateOrder(){
 		var formMode = 'A';
@@ -100,20 +105,22 @@ function manageOrderController(
 		if(0 == Object.keys(vm.order).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
-			controller: 'modalOrderController as modalOrderController', 
-			resolve: {
-				order: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
+					controller: 'modalOrderController as modalOrderController', 
+					resolve: {
+						order: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function deleteOrder(){
 		var formMode = 'D';
@@ -121,20 +128,22 @@ function manageOrderController(
 		if(0 == Object.keys(vm.order).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
-			controller: 'modalOrderController as modalOrderController', 
-			resolve: {
-				order: function(){	return doDbColumn2Dom(formMode);	
-				}, 
-				formMode: function(){	return formMode;	
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
+					controller: 'modalOrderController as modalOrderController', 
+					resolve: {
+						order: function(){	return doDbColumn2Dom(formMode);	
+						}, 
+						formMode: function(){	return formMode;	
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function doDbColumn2Dom(formMode){
 		var data = {};
@@ -149,11 +158,11 @@ function manageOrderController(
 					
 					data['companyName'] = vm.companyName;
 					data['branchName'] = vm.branchName;
-				}
+					}
 				);
 		
 		return data;
-	}
+		}
 	
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
@@ -169,12 +178,12 @@ function manageOrderController(
 				);
 		
 		return modalHiddenFields;
-	}
+		}
 	
 	function uibModalClosedCallback(){
 		vm.dtInstance.reloadData();
 		vm.order = {};
-	}
+		}
 	
 	function genDtHiddenColumns(){
 		var orderDt = $(DOM_ORDER_TABLE).dataTable();
@@ -188,10 +197,10 @@ function manageOrderController(
 			if(!(null == aoColumnsRunnerMdata)){
 				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
 				}
+				}
 			}
-		}
 		);
-	}
+		}
 	
 	dtInitialize();
 	
@@ -204,11 +213,11 @@ function manageOrderController(
 				BROADCAST_MESSAGES.addOrder, 
 				BROADCAST_MESSAGES.updateOrder, 
 				BROADCAST_MESSAGES.deleteOrder
-		);
+				);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, 
 				vm
-		);
+				);
 		
 		vm.dtOptions = datatableService.getDtOptions();
 		vm.dtColumns = datatableService.getDtColumns();
@@ -232,12 +241,12 @@ function manageOrderController(
 					function(dtHiddenColumnsKey){	orderTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
+			}
 		}
-	}
 	
 	$scope.$on(BROADCAST_MESSAGES.addOrder, addOrder);
 	
 	$scope.$on(BROADCAST_MESSAGES.updateOrder, updateOrder);
 
 	$scope.$on(BROADCAST_MESSAGES.deleteOrder, deleteOrder);
-}
+	}

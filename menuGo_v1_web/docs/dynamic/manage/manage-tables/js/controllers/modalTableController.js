@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('modalTableController', modalTableController);
+.controller(
+		'modalTableController', 
+		modalTableController
+		);
 
 modalTableController.$inject = [
 	'TABLE_STATUS', 
@@ -37,17 +40,17 @@ function modalTableController(
 			tableNumber: 'table_number', 
 			tableCapacity: 'table_capacity', 
 			tableStatus: 'table_status'
-	}
+				}
 	vm.dbColumn2Dom = {
 			table_number: 'tableNumber', 
 			table_capacity: 'tableCapacity', 
 			table_status: 'tableStatus'
-	}
+				}
 	vm.dbColumn2DomIndex = {
 			table_number: 0, 
 			table_capacity: 1, 
 			table_status: 2
-	}
+			}
 	vm.tableStatusOptions = TABLE_STATUS;
 	vm.validationErr = {};
 	vm.validationErrDB = {};
@@ -73,7 +76,7 @@ function modalTableController(
 				function(){	$(DOM_FORM).validator('update');
 				}
 				);
-	}
+		}
 	
 	function initDom(){
 		if('D' == vm.formMode){
@@ -90,7 +93,7 @@ function modalTableController(
 					true
 					);
 			}
-	}
+		}
 	
 	function doCancel(){	$uibModalInstance.close();
 	}
@@ -116,7 +119,7 @@ function modalTableController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close();
-			}
+				}
 			
 			function addTableFailedCallback(responseError){
 				hideBootstrapLoader($(DOM_MODAL));
@@ -126,91 +129,91 @@ function modalTableController(
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(TABLE_ADD_CATCH_MESSAGE);
 				}
-			}
-		} else if('A' == vm.formMode){
-			discardModalHiddenFields();
-			discardModalUnchangedFields();
-			
-			if(0 == Object.keys(data).length){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				showBootstrapAlert(TABLE_UPDATE_CUSTOM_ERR_MESSAGE)
-				
-				return;
-			}
-			
-			tableService.setCompanyName(vm.tableSnapshot.companyName);
-			tableService.setBranchName(vm.tableSnapshot.branchName);
-			tableService.setTableNumber(vm.tableSnapshot.tableNumber);
-			
-			tableService.updateTable(data)
-			.then(updateTableSuccessCallback)
-			.catch(updateTableFailedCallback);
-			
-			function updateTableSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				$uibModalInstance.close();
-			}
-			
-			function updateTableFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(TABLE_UPDATE_CATCH_MESSAGE);
 				}
-			}
-			
-			function discardModalHiddenFields(){
-				Object.keys(vm.modalHiddenFields).forEach(
-						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+			} else if('A' == vm.formMode){
+				discardModalHiddenFields();
+				discardModalUnchangedFields();
+				
+				if(0 == Object.keys(data).length){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					showBootstrapAlert(TABLE_UPDATE_CUSTOM_ERR_MESSAGE);
+					
+					return;
+					}
+				
+				tableService.setCompanyName(vm.tableSnapshot.companyName);
+				tableService.setBranchName(vm.tableSnapshot.branchName);
+				tableService.setTableNumber(vm.tableSnapshot.tableNumber);
+				
+				tableService.updateTable(data)
+				.then(updateTableSuccessCallback)
+				.catch(updateTableFailedCallback);
+				
+				function updateTableSuccessCallback(response){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					$uibModalInstance.close();
+					}
+				
+				function updateTableFailedCallback(responseError){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					try{
+						JSON.parse(responseError.statusText);
+						genValidationErrorFromResponse(responseError);
+						} catch(e){	showBootstrapAlert(TABLE_UPDATE_CATCH_MESSAGE);
 						}
-						);
-			}
-			
-			function discardModalUnchangedFields(){
+						}
 				
-				dataKeys.forEach(
-						function(dataCopyKey){
-							var dataValue = data[0][dataCopyKey];
-							var tableSnapshotValue = vm.tableSnapshot[vm.dbColumn2Dom[dataCopyKey]];
-							
-							if(dataValue == tableSnapshotValue){	delete data[0][dataCopyKey];
+				function discardModalHiddenFields(){
+					Object.keys(vm.modalHiddenFields).forEach(
+							function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+							}
+							);
+					}
+				
+				function discardModalUnchangedFields(){
+					
+					dataKeys.forEach(
+							function(dataCopyKey){
+								var dataValue = data[0][dataCopyKey];
+								var tableSnapshotValue = vm.tableSnapshot[vm.dbColumn2Dom[dataCopyKey]];
+								
+								if(dataValue == tableSnapshotValue){	delete data[0][dataCopyKey];
+								}
+								}
+							);
+					}
+				} else if('D' == vm.formMode){
+					tableService.setCompanyName(vm.table.companyName);
+					tableService.setBranchName(vm.table.branchName);
+					tableService.setTableNumber(vm.table.tableNumber);
+					
+					tableService.deleteTable(data)
+					.then(deleteTableSuccessCallback)
+					.catch(deleteTableFailedCallback);
+					
+					function deleteTableSuccessCallback(response){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						$uibModalInstance.close();
+						}
+					
+					function deleteTableFailedCallback(responseError){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						try{
+							JSON.parse(responseError.statusText);
+							genValidationErrorFromResponse(responseError);
+							} catch(e){	showBootstrapAlert(TABLE_DELETE_CATCH_MESSAGE);
 							}
 							}
-						);
-				}
-		} else if('D' == vm.formMode){
-			tableService.setCompanyName(vm.table.companyName);
-			tableService.setBranchName(vm.table.branchName);
-			tableService.setTableNumber(vm.table.tableNumber);
-			
-			tableService.deleteTable(data)
-			.then(deleteTableSuccessCallback)
-			.catch(deleteTableFailedCallback);
-			
-			function deleteTableSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				$uibModalInstance.close();
-			}
-			
-			function deleteTableFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(TABLE_DELETE_CATCH_MESSAGE);
-				}
-			}
-		}
+					}
 		
 		vm.validationErr = {};
 		vm.validationErrDB = undefined;
-	}
+		}
 	
 	function doDom2DbColumn(){
 		var data = {};
@@ -226,7 +229,7 @@ function modalTableController(
 				);
 		
 		return data;
-	}
+		}
 	
 	function genValidationErrorFromResponse(responseError){
 		const CLASS_FORM_GROUP = '.form-group';
@@ -236,23 +239,24 @@ function modalTableController(
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 		
-		statusTextKeys.forEach(function(statusTextKey){
-			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = getDbColumnIndex(dbColumnName);
-			var errorMessage = statusTextObj[statusTextKey][0];
-			var formGroups = $(CLASS_FORM_GROUP);
-				
-			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
-			
-			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
-
-			formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
-			}
-		);
+		statusTextKeys.forEach(
+				function(statusTextKey){
+					var dbColumnName = statusTextKey.split('.')[1];
+					var dbColumnIndex = getDbColumnIndex(dbColumnName);
+					var errorMessage = statusTextObj[statusTextKey][0];
+					var formGroups = $(CLASS_FORM_GROUP);
+					
+					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+					
+					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+					
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					}
+				);
 		
 		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-	}
+		}
 	
 	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
@@ -263,10 +267,10 @@ function modalTableController(
 	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
 		vm.isValidationErrDBHidden = false;
-	}
+		}
 	
 	function hideBootstrapAlert(){
 		vm.validationErrDB = undefined;
 		vm.isValidationErrDBHidden = true;
+		}
 	}
-}

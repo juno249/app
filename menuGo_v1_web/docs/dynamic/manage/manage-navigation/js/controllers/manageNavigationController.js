@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageNavigationController', manageNavigationController);
+.controller(
+		'manageNavigationController', 
+		manageNavigationController
+		);
 
 manageNavigationController.$inject = [
 	'BROADCAST_MESSAGES', 
@@ -24,7 +27,7 @@ function manageNavigationController(
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 	
 	vm.customerUsername = vm.user.username;
 	
@@ -86,7 +89,7 @@ function manageNavigationController(
 			){
 		vm.companyName = args.companyName;
 		vm.isManageBranchHidden = !vm.isManageBranchHidden;
-	}
+		}
 	
 	$scope.$on(BROADCAST_MESSAGES.toggleMenu, toggleMenuCallback);
 	
@@ -96,7 +99,7 @@ function manageNavigationController(
 			){
 		vm.companyName = args.companyName;
 		vm.isManageMenuHidden = !vm.isManageMenuHidden;
-	}
+		}
 	
 	$scope.$on(BROADCAST_MESSAGES.toggleTable, toggleTableCallback);
 	
@@ -107,7 +110,7 @@ function manageNavigationController(
 		vm.companyName = args.companyName;
 		vm.branchName = args.branchName;
 		vm.isManageTableHidden = !vm.isManageTableHidden;
-	}
+		}
 	
 	$scope.$on(BROADCAST_MESSAGES.toggleMenuitem, toggleMenuitemCallback);
 	
@@ -118,5 +121,5 @@ function manageNavigationController(
 		vm.companyName = args.companyName;
 		vm.menuName = args.menuName;
 		vm.isManageMenuitemHidden = !vm.isManageMenuitemHidden;
+		}
 	}
-}

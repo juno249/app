@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('customerNearbyController', customerNearbyController);
+.controller(
+		'customerNearbyController', 
+		customerNearbyController
+		);
 
 customerNearbyController.$inject = [
 	'$ionicHistory', 
@@ -39,20 +42,19 @@ function customerNearbyController(
 			center: {
 				latitude: undefined, 
 				longitude: undefined
-			}, 
+				}, 
 			mapTypeControl: false, 
 			scaleControl: false, 
 			streetViewControl: false, 
 			zoom: 15, 
 			zoomControl: false
-	}
+			}
 	
-	if(null == localStorage.getItem(COMPANIES_KEY)){
-		dataService.fetchCompanies();
+	if(null == localStorage.getItem(COMPANIES_KEY)){	dataService.fetchCompanies();
 	} else {
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-	} 
+		} 
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -63,20 +65,18 @@ function customerNearbyController(
 	//controller_method
 	vm.toStringAddress = toStringAddress;
 	
-	function gotoState(
-			stateName
-			){
+	function gotoState(stateName){
 		if('customer.nearby.reservation_menu' == stateName){
 			$state.go(
 					stateName, 
 					{
 						companyName: vm.companyBranch.companyName, 
 						branchName: vm.companyBranch.branchName
-					}, 
+						}, 
 					{	reload: true	}
-					);
+						);
 			}
-	}
+		}
 	
 	function initializeMapCoordinates(){
 		var deferred = $q.defer();
@@ -91,7 +91,7 @@ function customerNearbyController(
 		function getPositionFailedCallback(status){	//do something on failure
 		}
 		return deferred.promise;
-	}
+		}
 
 	function setCategory(category){	vm.category = category;
 	}
@@ -100,7 +100,7 @@ function customerNearbyController(
 		branchService.setBranch(branch);
 		
 		return branchService.toStringAddress();
-	}
+		}
 	
 	function loadCompaniesBranches(){
 		vm.companiesBranches = {};
@@ -110,14 +110,14 @@ function customerNearbyController(
 				function(
 						v, 
 						k
-						){					
+						){
 					var company = v;
 					var companyBranches = company.branches;
 					
 					vm.companiesBranches[k] = companyBranches;
 					}
-					);
-	}
+				);
+		}
 	
 	function loadCompaniesMenuitems(){
 		vm.companiesMenuitems = {};
@@ -149,21 +149,20 @@ function customerNearbyController(
 												){
 											var companyMenuMenuitem = v;
 											
-											if(1 == companyMenuMenuitem.menuitem_featured){
-												companyMenuitems.push(companyMenuMenuitem);
+											if(1 == companyMenuMenuitem.menuitem_featured){	companyMenuitems.push(companyMenuMenuitem);
 											}
-										}
+											}
 										);
-							}
+								}
 							);
 					vm.companiesMenuitems[k] = companyMenuitems;
-				}
+					}
 				);
 		
-		$timeout(function(){
-			$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENUS_SLIDEBOX).update();	
-		});
-	}
+		$timeout(function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENUS_SLIDEBOX).update();
+		}
+		);
+		}
 	
 	function loadCompaniesCategoriesSelection(){
 		vm.companiesCategoriesSelection = [];
@@ -176,12 +175,11 @@ function customerNearbyController(
 						){
 					var company = v;
 					
-					if(-1 == vm.companiesCategoriesSelection.indexOf(v.company_category)){
-						vm.companiesCategoriesSelection.push(v.company_category);
+					if(-1 == vm.companiesCategoriesSelection.indexOf(v.company_category)){	vm.companiesCategoriesSelection.push(v.company_category);
 					}
-				}
+					}
 				);
-	}
+		}
 	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
@@ -189,7 +187,7 @@ function customerNearbyController(
 			function(){
 				vm.companies = localStorage.getItem(COMPANIES_KEY);
 				vm.companies = JSON.parse(vm.companies);
-			}
+				}
 			);
 	
 	$scope.$watchCollection(
@@ -199,7 +197,7 @@ function customerNearbyController(
 				loadCompaniesBranches();
 				loadCompaniesMenuitems();
 				loadCompaniesCategoriesSelection();
-			}
+				}
 			);
 	
 	$scope.$watch(
@@ -212,18 +210,17 @@ function customerNearbyController(
 						){
 					vm.placePredictions = undefined;
 					return;
-				}
+					}
 				
 				googleplacesService.getPlacePredictions(vm.search)
 				.then(getPlacePredictionsSuccessCallback)
 				.catch(getPlacePredictionsFailedCallback);
 				
-				function getPlacePredictionsSuccessCallback(predictions){	
-					vm.placePredictions = predictions;
+				function getPlacePredictionsSuccessCallback(predictions){		vm.placePredictions = predictions;
 				}
 				
 				function getPlacePredictionsFailedCallback(status){	//do something on failure
 				}
-			}
+				}
 			);
-}
+	}

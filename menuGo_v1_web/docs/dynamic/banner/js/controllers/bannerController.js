@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('bannerController', bannerController);
+.controller(
+		'bannerController', 
+		bannerController
+		);
 
 bannerController.$inject = [
 	'BROADCAST_MESSAGES', 
@@ -38,7 +41,7 @@ function bannerController(
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	} 
+		} 
 	
 	//controller_method
 	vm.doLogin = doLogin;
@@ -58,11 +61,9 @@ function bannerController(
 		function doLoginSuccessCallback(response){	$rootScope.$broadcast(BROADCAST_MESSAGES.authAuthenticated);
 		}
 		
-		function doLoginFailedCallback(responseError){	
-			alert('failed');//do something on failure
+		function doLoginFailedCallback(responseError){	//do something on failure
 		}
-		
-	}
+		}
 	
 	function doLogout(){	//do something on logout
 	}
@@ -77,7 +78,7 @@ function bannerController(
 					templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
 					controller: 'modalCustomerController as modalCustomerController', 
 					resolve: {
-						customer: function(){	return {	customerRole: 'administrator'	}; 
+						customer: function(){	return {	customerRole: 'administrator'	};
 						}, 
 						formMode: function(){	return formMode;
 						}, 
@@ -98,7 +99,7 @@ function bannerController(
 			
 			if(USER_ROLES.administrator == vm.customer.customer_role){	doSignupAsAdministrator();
 			}
-		}
+			}
 		
 		function doSignupAsAdministrator(){
 			var modalInstance =  $uibModal.open(
@@ -146,20 +147,20 @@ function bannerController(
 					vm.branch = data[0];
 					
 					doAdminCascadedPosts();
-				}
+					}
 				
 				function doAdminCascadedPosts(){
 					var customerCompanyBranch = {
 							customer_username: vm.customer.customer_username, 
 							company_name: vm.company.company_name, 
 							branch_name: vm.branch.branch_name
-					};
+							};
 					var transParams = {
 							customer: vm.customer, 
 							company: vm.company, 
 							branch: vm.branch, 
 							customerCompanyBranch: vm.customerCompanyBranch
-					};
+							};
 					
 					customerCompanyBranchService.addCustomerCompanyBranch([transParams])
 					.then(addCustomerCompanyBranchSuccessCallback)
@@ -170,10 +171,10 @@ function bannerController(
 					
 					function addCustomerCompanyBranchFailedCallback(responseError){	//do something on failure
 					}
-				}			
+					}
+				}
 			}
 		}
-	}
 	
 	function authAuthenticatedCallback(){
 		const USER_KEY = 'User';
@@ -181,13 +182,12 @@ function bannerController(
 		if(!(null == localStorage.getItem(USER_KEY))){
 			vm.user = localStorage.getItem(USER_KEY);
 			vm.user = JSON.parse(vm.user);
-		}
+			}
 		
-		$timeout(
-				function(){	$state.go('manage');
-				}
-				);
+		$timeout(function(){	$state.go('manage');
+		}
+		);
 		}
 	
 	$scope.$on(BROADCAST_MESSAGES.authAuthenticated, authAuthenticatedCallback);
-}
+	}

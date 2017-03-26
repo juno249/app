@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('customerCompanyBranchService', customerCompanyBranchService);
+.factory(
+		'customerCompanyBranchService', 
+		customerCompanyBranchService
+		);
 
 customerCompanyBranchService.$inject = [
 	'API_BASE_URL', 
@@ -40,7 +43,7 @@ function customerCompanyBranchService(
 			fetchCustomerCompanyBranch: fetchCustomerCompanyBranch, 
 			addCustomerCompanyBranch: addCustomerCompanyBranch, 
 			deleteCustomerCompanyBranch: deleteCustomerCompanyBranch
-	};
+			};
 	
 	function getCustomersCompaniesBranches(){	return customerCompanyBranchServiceObj.customersCompaniesBranches;
 	}
@@ -68,7 +71,7 @@ function customerCompanyBranchService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers-companies-branches'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchCustomersCompaniesBranchesSuccessCallback)
@@ -87,7 +90,8 @@ function customerCompanyBranchService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
+		
 		function fetchCustomersCompaniesBranchesFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		
@@ -96,23 +100,22 @@ function customerCompanyBranchService(
 				var customersCompaniesBranchesDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(CUSTOMERCOMPANYBRANCH_DB_FIELDS).length; j++){
-					customersCompaniesBranchesDetails[CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]] = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(CUSTOMERCOMPANYBRANCH_DB_FIELDS).length; j++){	customersCompaniesBranchesDetails[CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]] = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[0]]; //customer_username
 				customerCompanyBranchServiceObj.customersCompaniesBranches[key] = customersCompaniesBranchesDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchCustomerCompanyBranch(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchName
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchCustomerCompanyBranchSuccessCallback)
@@ -131,7 +134,8 @@ function customerCompanyBranchService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
+		
 		function fetchCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		
@@ -140,16 +144,15 @@ function customerCompanyBranchService(
 				var customerCompanyBranchDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(CUSTOMERCOMPANYBRANCH_DB_FIELDS).length; j++){
-					customerCompanyBranchDetails[CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]] = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]];	
+				for(var j=0; j<Object.keys(CUSTOMERCOMPANYBRANCH_DB_FIELDS).length; j++){	customerCompanyBranchDetails[CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]] = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[0]]; //customer_username
 				customerCompanyBranchServiceObj.customerCompanyBranch[key] = customerCompanyBranchDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addCustomerCompanyBranch(transParams){
 		var deferred = $q.defer();
@@ -157,7 +160,7 @@ function customerCompanyBranchService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers-companies-branches', 
 				data: transParams
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addCustomerCompanyBranchTransactionSuccessCallback)
@@ -169,14 +172,14 @@ function customerCompanyBranchService(
 		function addCustomerCompanyBranchTransactionFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 		
 	function deleteCustomerCompanyBranch(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchName
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteCustomerCompanyBranchSuccessCallback)
@@ -188,7 +191,7 @@ function customerCompanyBranchService(
 		function deleteCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return customerCompanyBranchServiceObj;
-}
+	}

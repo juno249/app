@@ -1,13 +1,16 @@
 angular
 .module('starter')
-.factory('customerService', customerService);
+.factory(
+		'customerService', 
+		customerService
+		);
 
 customerService.$inject = [
 	'API_BASE_URL', 
 	'CUSTOMERS_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
-	'$q' 
+	'$q'
 	];
 
 function customerService(
@@ -15,7 +18,7 @@ function customerService(
 		CUSTOMERS_DB_FIELDS, 
 		$http, 
 		$localStorage, 
-		$q 
+		$q
 		){
 	const CUSTOMERS_KEY = 'Customers';
 	const CUSTOMER_KEY = 'Customer';
@@ -37,7 +40,7 @@ function customerService(
 			updateCustomerValidate: updateCustomerValidate, 
 			updateCustomer: updateCustomer, 
 			deleteCustomer: deleteCustomer
-	};
+			};
 	
 	function getCustomers(){	return customerServiceObj.customers;
 	}
@@ -57,7 +60,7 @@ function customerService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchCustomersSuccessCallback)
@@ -76,7 +79,7 @@ function customerService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchCustomersFailedCallback(responseError){	return deferred.reject(responseError);
 		}
@@ -86,23 +89,22 @@ function customerService(
 				var customersDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
-					customersDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){	customersDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][CUSTOMERS_DB_FIELDS[0]]; //customer_username
 				customerServiceObj.customers[key] = customersDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchCustomer(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchCustomerSuccessCallback)
@@ -121,7 +123,7 @@ function customerService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -131,16 +133,15 @@ function customerService(
 				var customerDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
-					customerDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){	customerDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][CUSTOMERS_DB_FIELDS[0]]; //customer_username
 				customerServiceObj.customer[key] = customerDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addCustomerValidate(customers){
 		var deferred = $q.defer();
@@ -148,7 +149,7 @@ function customerService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers/validate', 
 				data: customers
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addCustomerValidateSuccessCallback)
@@ -160,7 +161,7 @@ function customerService(
 		function addCustomerValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function addCustomer(customers){
 		var deferred = $q.defer();
@@ -168,7 +169,7 @@ function customerService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers', 
 				data: customers
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addCustomerSuccessCallback)
@@ -180,7 +181,7 @@ function customerService(
 		function addCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateCustomerValidate(customer){
 		var deferred = $q.defer();
@@ -188,7 +189,7 @@ function customerService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername + '/validate', 
 				data: customer
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateCustomerSuccessCallback)
@@ -200,7 +201,7 @@ function customerService(
 		function updateCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateCustomer(customer){
 		var deferred = $q.defer();
@@ -208,7 +209,7 @@ function customerService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername, 
 				data: customer
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateCustomerSuccessCallback)
@@ -220,14 +221,14 @@ function customerService(
 		function updateCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteCustomer(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteCustomerSuccessCallback)
@@ -239,7 +240,7 @@ function customerService(
 		function deleteCustomerFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return customerServiceObj;
-}
+	}

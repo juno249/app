@@ -1,13 +1,16 @@
 angular
 .module('starter')
-.factory('loginService', loginService);
+.factory(
+		'loginService', 
+		loginService
+		);
 
 loginService.$inject = [
 	'API_BASE_URL', 
 	'USER_ROLES', 
 	'$http', 
 	'$localStorage', 
-	'$q' 
+	'$q'
 	];
 
 function loginService(
@@ -17,6 +20,8 @@ function loginService(
 		$localStorage, 
 		$q
 		){
+	const USER_KEY = 'User';
+	
 	var loginServiceObj = {
 		loginUsername: undefined, 
 		loginPassword: undefined, 
@@ -24,11 +29,8 @@ function loginService(
 			username: undefined, 
 			token: undefined, 
 			role: undefined, 
-			name: undefined, 
-			company: undefined, 
-			branch: undefined, 
-			isAuthenticated: undefined
-		}, 
+			name: undefined
+			}, 
 		getLoginUsername: getLoginUsername, 
 		getLoginPassword: getLoginPassword, 
 		getUser: getUser, 
@@ -36,7 +38,7 @@ function loginService(
 		setLoginPassword: setLoginPassword, 
 		setUser: setUser, 
 		doLogin: doLogin
-	};
+		};
 	
 	function getLoginUsername(){	return loginServiceObj.loginUsername;
 	}
@@ -56,13 +58,14 @@ function loginService(
 		var httpConfig = {
 				method: 'POST', 
 				url: API_BASE_URL + '/login?customer_username=' + loginServiceObj.loginUsername + '&customer_password=' + loginServiceObj.loginPassword
-		};
+				};
 		
 		$http(httpConfig)
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);
 		
 		function doLoginSuccessCallback(response){
+			loginServiceObj.user = {};
 			var userResponseData = response.data.User;
 			
 			loginServiceObj.user.username = userResponseData.customer_username;
@@ -71,46 +74,54 @@ function loginService(
 			loginServiceObj.user.name = 
 				userResponseData.customer_name_fname + " " + 
 				userResponseData.customer_name_mname + ". " + 
-				userResponseData.customer_name_lname
+				userResponseData.customer_name_lname;
+			loginServiceObj.user.isAuthenticated = true;
 		
 			$http.defaults.headers.common.Authorization = "bearer " + loginServiceObj.user.token;
 			
-			getCustomerCompanyBranch();
+			if(USER_ROLES.customer == loginServiceObj.user.role){
+				localStorage.setItem(
+						USER_KEY, 
+						JSON.stringify(loginServiceObj.user)
+						);
+				deferred.resolve();
+			} else {	getCustomerCompanyBranch();
+			}
 			
 			function getCustomerCompanyBranch(){
 				var httpConfig = {
 						method: 'GET', 
 						url: API_BASE_URL + '/customers-companies-branches/query', 
-						params: {	customerUsername: loginServiceObj.user.username	}
-				}
+						params: {customerUsername: loginServiceObj.user.username}
+				};
 				
 				$http(httpConfig)
 				.then(getCustomerCompanyBranchSuccessCallback)
 				.catch(getCustomerCompanyBranchFailedCallback);
 				
 				function getCustomerCompanyBranchSuccessCallback(response){
-					var userResponseData = response.data;
-					userResponseData = userResponseData[0];
+					var responseData = response.data;
 					
-					loginServiceObj.user.company = userResponseData.company_name;
-					loginServiceObj.user.branch = userResponseData.branch_id;
-					loginServiceObj.user.isAuthenticated = true;
+					responseData = responseData[0];
+					loginServiceObj.user.company = responseData.company_name;
+					loginServiceObj.user.branch = responseData.branch_id;
 					
-					loginServiceObj.user = JSON.stringify(loginServiceObj.user);
-					localStorage.setItem('User', loginServiceObj.user);
-					
+					localStorage.setItem(
+							USER_KEY, 
+							JSON.stringify(loginServiceObj.user)
+							);
 					deferred.resolve();
-				}
+					}
 				
 				function getCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
 				}
+				}
 			}
-		}
 		
 		function doLoginFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return loginServiceObj;
-}
+	}

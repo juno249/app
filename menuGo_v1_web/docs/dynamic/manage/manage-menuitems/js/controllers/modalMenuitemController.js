@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('modalMenuitemController', modalMenuitemController);
+.controller(
+		'modalMenuitemController', 
+		modalMenuitemController
+		);
 
 modalMenuitemController.$inject = [
 	'API_BASE_URL', 
@@ -43,7 +46,7 @@ function modalMenuitemController(
 			menuitemPrice: 'menuitem_price', 
 			menuitemFeatured: 'menuitem_featured', 
 			menuitemImage: 'menuitem_image'
-	}
+				}
 	vm.dbColumn2Dom = {
 			menuitem_code: 'menuitemCode', 
 			menuitem_name: 'menuitemName', 
@@ -51,7 +54,7 @@ function modalMenuitemController(
 			menuitem_price: 'menuitemPrice', 
 			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
-	}
+				}
 	vm.dbColumn2DomIndex = {
 			menuitem_code: 0, 
 			menuitem_name: 1, 
@@ -59,7 +62,7 @@ function modalMenuitemController(
 			menuitem_price: 3, 
 			menuitem_featured: 4, 
 			menuitem_image: 5
-	}
+			}
 	vm.featuredOptions = IS_FEATURED_VALUES;
 	vm.validationErr = {};
 	vm.validationErrDB = {};
@@ -84,10 +87,9 @@ function modalMenuitemController(
 				doSubmit
 				);
 		
-		$timeout(
-				function(){	$(DOM_FORM).validator('update');
-				}
-				);
+		$timeout(	function(){	$(DOM_FORM).validator('update');
+		}
+		);
 		}
 	
 	function initDom(){
@@ -129,7 +131,7 @@ function modalMenuitemController(
 					true
 					);
 			}
-	}
+		}
 	
 	function doCancel(){	$uibModalInstance.close();
 	}
@@ -155,11 +157,11 @@ function modalMenuitemController(
 			vm.isMenuitemImageImageHidden = false;
 			
 			hideBootstrapLoader($(DOM_MODAL));
-		}
+			}
 		
 		function uploadMenuitemImageFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL));
 		}
-	}
+		}
 	
 	function doSubmit(e){
 		var data = [];
@@ -182,7 +184,7 @@ function modalMenuitemController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close();
-			}
+				}
 			
 			function addMenuitemFailedCallback(responseError){
 				hideBootstrapLoader($(DOM_MODAL));
@@ -190,94 +192,94 @@ function modalMenuitemController(
 				try{
 					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(MENUITEM_ADD_CATCH_MESSAGE);
-				}
-			}
-		} else if('A' == vm.formMode){
-			discardModalHiddenFields();
-			discardModalUnchangedFields();
-			
-			if(0 == Object.keys(data).length){
-				hideBootstrapLoader($(DOM_MODAL));
+					} catch(e){	showBootstrapAlert(MENUITEM_ADD_CATCH_MESSAGE);
+					}
+					}
+			} else if('A' == vm.formMode){
+				discardModalHiddenFields();
+				discardModalUnchangedFields();
 				
-				showBootstrapLoader(MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE);
+				if(0 == Object.keys(data).length){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					showBootstrapLoader(MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE);
+					
+					return;
+					}
 				
-				return;
-			}
-			
-			menuitemService.setCompanyName(vm.menuitemSnapshot.companyName);
-			menuitemService.setMenuName(vm.menuitemSnapshot.menuName);
-			menuitemService.setMenuitemCode(vm.menuitemSnapshot.menuitemCode);
-			
-			menuitemService.updateMenuitem(data)
-			.then(updateMenuitemSuccessCallback)
-			.catch(updateMenuitemFailedCallback);
-			
-			function updateMenuitemSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				menuitemService.setCompanyName(vm.menuitemSnapshot.companyName);
+				menuitemService.setMenuName(vm.menuitemSnapshot.menuName);
+				menuitemService.setMenuitemCode(vm.menuitemSnapshot.menuitemCode);
 				
-				$uibModalInstance.close();
-			}
-			
-			function updateMenuitemFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				menuitemService.updateMenuitem(data)
+				.then(updateMenuitemSuccessCallback)
+				.catch(updateMenuitemFailedCallback);
 				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(MENUITEM_UPDATE_CATCH_MESSAGE);
-				}
-			}
-			
-			function discardModalHiddenFields(){
-				Object.keys(vm.modalHiddenFields).forEach(
-						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+				function updateMenuitemSuccessCallback(response){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					$uibModalInstance.close();
+					}
+				
+				function updateMenuitemFailedCallback(responseError){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					try{
+						JSON.parse(responseError.statusText);
+						genValidationErrorFromResponse(responseError);
+						} catch(e){	showBootstrapAlert(MENUITEM_UPDATE_CATCH_MESSAGE);
 						}
-						);
-			}
-			
-			function discardModalUnchangedFields(){
-				var dataKeys = Object.keys(data[0]);
+						}
 				
-				dataKeys.forEach(
-						function(dataKey){
-							var dataValue = data[0][dataKey];
-							var menuitemSnapshotValue = vm.menuitemSnapshot[vm.dbColumn2Dom[dataKey]];
-							
-							if(dataValue == menuitemSnapshotValue){	delete data[0][dataKey];
+				function discardModalHiddenFields(){
+					Object.keys(vm.modalHiddenFields).forEach(
+							function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+							}
+							);
+					}
+				
+				function discardModalUnchangedFields(){
+					var dataKeys = Object.keys(data[0]);
+					
+					dataKeys.forEach(
+							function(dataKey){
+								var dataValue = data[0][dataKey];
+								var menuitemSnapshotValue = vm.menuitemSnapshot[vm.dbColumn2Dom[dataKey]];
+								
+								if(dataValue == menuitemSnapshotValue){	delete data[0][dataKey];
+								}
+								}
+							);
+					}
+				} else if('D' == vm.formMode){
+					menuitemService.setCompanyName(vm.menuitem.companyName);
+					menuitemService.setMenuName(vm.menuitem.menuName);
+					menuitemService.setMenuitemCode(vm.menuitem.menuitemCode);
+					
+					menuitemService.deleteMenuitem()
+					.then(deleteMenuitemSuccessCallback)
+					.catch(deleteMenuitemFailedCallback);\
+					
+					function deleteMenuitemSuccessCallback(response){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						$uibModalInstance.close();
+						}
+					
+					function deleteMenuitemFailedCallback(responseError){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						try{
+							JSON.parse(responseError.statusText);
+							genValidationErrorFromResponse(responseError);
+							} catch(e){	showBootstrapAlert(MENUITEM_DELETE_CATCH_MESSAGE);
 							}
 							}
-						);
-				}
-		} else if('D' == vm.formMode){
-			menuitemService.setCompanyName(vm.menuitem.companyName);
-			menuitemService.setMenuName(vm.menuitem.menuName);
-			menuitemService.setMenuitemCode(vm.menuitem.menuitemCode);
-			
-			menuitemService.deleteMenuitem()
-			.then(deleteMenuitemSuccessCallback)
-			.catch(deleteMenuitemFailedCallback);
-			
-			function deleteMenuitemSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				$uibModalInstance.close();
-			}
-			
-			function deleteMenuitemFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(MENUITEM_DELETE_CATCH_MESSAGE);
-				}
-			}
-		}
+					}
 		
 		vm.validationErr = {};
 		vm.validationErrDB = {};
-	}
+		}
 	
 	function doDom2DbColumn(){
 		var data = {};
@@ -293,7 +295,7 @@ function modalMenuitemController(
 				);
 		
 		return data;
-	}
+		}
 	
 	function genValidationErrorFromResponse(responseError){
 		const CLASS_FORM_GROUP = '.form-group';
@@ -303,23 +305,24 @@ function modalMenuitemController(
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 		
-		statusTextKeys.forEach(function(statusTextKey){
-			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = getDbColumnIndex(dbColumnName);
-			var errorMessage = statusTextObj[statusTextKey][0];
-			var formGroups = $(CLASS_FORM_GROUP);
-				
-			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
-			
-			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
-			
-			formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
-			}
-		);
+		statusTextKeys.forEach(
+				function(statusTextKey){
+					var dbColumnName = statusTextKey.split('.')[1];
+					var dbColumnIndex = getDbColumnIndex(dbColumnName);
+					var errorMessage = statusTextObj[statusTextKey][0];
+					var formGroups = $(CLASS_FORM_GROUP);
+					
+					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+					
+					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+					
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					}
+				);
 		
 		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-	}
+		}
 	
 	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
@@ -330,10 +333,10 @@ function modalMenuitemController(
 	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
 		vm.isValidationErrDBHidden = false;
-	}
+		}
 	
 	function hideBootstrapAlert(){
 		vm.validationErrDB = {};
 		vm.isValidationErrDBHidden = true;
+		}
 	}
-}

@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('loginController', loginController);
+.controller(
+		'loginController', 
+		loginController
+		);
 
 loginController.$inject = [
 	'USER_ROLES', 
@@ -20,7 +23,7 @@ function loginController(
 		vm.user = localStorage.getItem('User');
 		vm.user = JSON.parse(vm.user);
 		vm.isAuthenticated = vm.user.isAuthenticated;
-	}
+		}
 	
 	//controller_method
 	vm.doLogin = doLogin;
@@ -44,14 +47,14 @@ function loginController(
 					STATE_CUSTOMER_HOME, 
 					{}, 
 					{reload: true}
-				);
+					);
+				}
 			}
-		}
 		
 		function doLoginFailedCallback(responseError){	//do something on failure
 		}
-	}
+		}
 	
-	function doSignup(){
+	function doSignup(){	
 	}
-}
+	}

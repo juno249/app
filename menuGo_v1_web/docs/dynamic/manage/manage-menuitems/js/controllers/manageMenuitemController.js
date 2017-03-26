@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageMenuitemController', manageMenuitemController);
+.controller(
+		'manageMenuitemController', 
+		manageMenuitemController
+		);
 
 manageMenuitemController.$inject = [
 	'API_BASE_URL', 
@@ -35,8 +38,7 @@ function manageMenuitemController(
 	vm.menuitem = {};
 	vm.controllerObjName = 'manageMenuitemController';
 	vm.dtInstance = dtInstanceCallback;
-	vm.dtHiddenColumns = {
-	}
+	vm.dtHiddenColumns = {}
 	vm.dbColumnFields = MENUITEMS_DB_FIELDS;
 	vm.dbColumn2Colheader = {
 			menuitem_id: 'Id', 
@@ -47,7 +49,7 @@ function manageMenuitemController(
 			menuitem_price: 'Price', 
 			menuitem_featured: 'Featured', 
 			menuitem_image: 'Image'
-	};
+				};
 	vm.dbColumn2Dom = {
 			menuitem_id: 'menuitemId', 
 			menuitem_code: 'menuitemCode', 
@@ -57,12 +59,12 @@ function manageMenuitemController(
 			menuitem_price: 'menuitemPrice', 
 			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
-	};
+				};
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/menus/' + vm.menuName + '/menuitems';
 	
@@ -82,25 +84,27 @@ function manageMenuitemController(
 		if(-1 == eClassname.indexOf('selected')){	vm.menuitem = data;
 		} else {	vm.menuitem= {};
 		}
-	}
+		}
 	
 	function addMenuitem(){
 		var formMode = 'I';
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
-			controller: 'modalMenuitemController as modalMenuitemController', 
-			resolve: {
-				menuitem: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
+					controller: 'modalMenuitemController as modalMenuitemController', 
+					resolve: {
+						menuitem: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function updateMenuitem(){
 		var formMode = 'A';
@@ -108,20 +112,22 @@ function manageMenuitemController(
 		if(0 == Object.keys(vm.menuitem).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
-			controller: 'modalMenuitemController as modalMenuitemController', 
-			resolve: {
-				menuitem: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
+					controller: 'modalMenuitemController as modalMenuitemController', 
+					resolve: {
+						menuitem: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function deleteMenuitem(){
 		var formMode = 'D';
@@ -129,20 +135,22 @@ function manageMenuitemController(
 		if(0 == Object.keys(vm.menuitem).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
-			controller: 'modalMenuitemController as modalMenuitemController', 
-			resolve: {
-				menuitem: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-menuitems/modalMenuitem.html', 
+					controller: 'modalMenuitemController as modalMenuitemController', 
+					resolve: {
+						menuitem: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function doDbColumn2Dom(formMode){
 		var data = {};
@@ -157,11 +165,11 @@ function manageMenuitemController(
 					
 					data['companyName'] = vm.companyName;
 					data['menuName'] = vm.menuName;
-				}
+					}
 				);
 		
 		return data;
-	}
+		}
 	
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
@@ -177,12 +185,12 @@ function manageMenuitemController(
 				);
 		
 		return modalHiddenFields;
-	}
+		}
 	
 	function uibModalClosedCallback(){
 		vm.dtInstance.reloadData();
 		vm.menuitem = {};
-	}
+		}
 	
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_MENUITEM_TABLE).dataTable();
@@ -196,10 +204,10 @@ function manageMenuitemController(
 			if(!(null == aoColumnsRunnerMdata)){
 				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
 				}
+				}
 			}
-		}
 		);
-	}
+		}
 	
 	dtInitialize();
 
@@ -212,11 +220,11 @@ function manageMenuitemController(
 				BROADCAST_MESSAGES.addMenuitem, 
 				BROADCAST_MESSAGES.updateMenuitem, 
 				BROADCAST_MESSAGES.deleteMenuitem
-		);
+				);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, 
 				vm
-		);
+				);
 		
 		vm.dtOptions = datatableService.getDtOptions();
 		vm.dtColumns = datatableService.getDtColumns();
@@ -240,12 +248,12 @@ function manageMenuitemController(
 					function(dtHiddenColumnsKey){	menuitemTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
+			}
 		}
-	}
 	
 	$scope.$on(BROADCAST_MESSAGES.addMenuitem, addMenuitem);
 	
 	$scope.$on(BROADCAST_MESSAGES.updateMenuitem, updateMenuitem);
 
 	$scope.$on(BROADCAST_MESSAGES.deleteMenuitem, deleteMenuitem);
-}
+	}

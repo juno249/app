@@ -1,13 +1,16 @@
 angular
 .module('starter')
-.factory('tableService', tableService);
+.factory(
+		'tableService', 
+		tableService
+		);
 
 tableService.$inject = [
 	'API_BASE_URL', 
 	'TABLES_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
-	'$q' 
+	'$q'
 	];
 
 function tableService(
@@ -15,7 +18,7 @@ function tableService(
 		TABLES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
-		$q 
+		$q
 		){
 	const TABLES_KEY = 'Tables';
 	const TABLE_KEY = 'Table';
@@ -41,7 +44,7 @@ function tableService(
 			addTable: addTable, 
 			updateTable: updateTable, 
 			deleteTable: deleteTable
-	}
+			}
 	
 	function getTables(){	return tableServiceObj.tables;
 	}
@@ -69,7 +72,7 @@ function tableService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchTablesSuccessCallback)
@@ -88,7 +91,7 @@ function tableService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchTablesFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -98,23 +101,22 @@ function tableService(
 				var tablesDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){
-					tablesDetails[TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){	tablesDetails[TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][TABLES_DB_FIELDS[1]]; //table_number
 				tableServiceObj.tables[key] = tablesDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchTable(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchTableSuccessCallback)
@@ -133,7 +135,7 @@ function tableService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchTableFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -143,16 +145,15 @@ function tableService(
 				var tableDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){
-					tableDetails[TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){	tableDetails[TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][TABLES_DB_FIELDS[1]]; //table_number
 				tableServiceObj.table[key] = tableDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addTable(tables){
 		var deferred = $q.defer();
@@ -160,7 +161,7 @@ function tableService(
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables', 
 				data: tables
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addTableSuccessCallback)
@@ -172,7 +173,7 @@ function tableService(
 		function addTableFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateTable(table){
 		var deferred = $q.defer();
@@ -180,7 +181,7 @@ function tableService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber, 
 				data: table
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateTableSuccessCallback)
@@ -192,14 +193,14 @@ function tableService(
 		function updateTableFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteTable(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteTableSuccessCallback)
@@ -211,7 +212,7 @@ function tableService(
 		function deleteTableFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return tableServiceObj;
-}
+	}

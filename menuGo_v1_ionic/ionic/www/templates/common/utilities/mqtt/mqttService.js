@@ -1,16 +1,19 @@
 angular
 .module('starter')
-.factory('mqttService', mqttService);
+.factory(
+		'mqttService', 
+		mqttService
+		);
 
 mqttService.$inject = [
 	'MQTT_CONFIG', 
 	'loginService'
-];
+	];
 
 function mqttService(
 		MQTT_CONFIG, 
 		loginService
-	){
+		){
 	var mqttServiceObj = {
 			mqttClient: undefined, 
 			mqttHost: undefined, 
@@ -31,7 +34,7 @@ function mqttService(
 			doUnsubscribe: doUnsubscribe, 
 			doSendMessage: doSendMessage, 
 			doDisconnect: doDisconnect
-	};
+			};
 	
 	function getMqttHost(){	return mqttServiceObj.mqttHost;
 	}
@@ -56,7 +59,7 @@ function mqttService(
 		mqttServiceObj.setMqttHost(MQTT_CONFIG.host);
 		mqttServiceObj.setMqttPort(MQTT_CONFIG.port);
 		mqttServiceObj.setMqttClientId(customerUsername);
-	}
+		}
 	
 	function doConnect(
 			onConnectionLostCallback, 
@@ -71,7 +74,7 @@ function mqttService(
 		mqttServiceObj.mqttClient.onConnectionLost = onConnectionLostCallback;
 		mqttServiceObj.mqttClient.onMessageArrived = onMessageArrivedCallback;
 		mqttServiceObj.mqttClient.connect({onSuccess: onSuccessCallback});
-	}
+		}
 	
 	function doSubscribe(){	mqttServiceObj.mqttClient.subscribe(mqttServiceObj.mqttTopic);
 	}
@@ -84,10 +87,10 @@ function mqttService(
 		
 		mqttMessage.destinationName = mqttServiceObj.mqttTopic;
 		mqttServiceObj.mqttClient.send(mqttMessage);
-	}
+		}
 	
 	function doDisconnect(){	mqttServiceObj.mqttClient.disconnect();
 	}
 	
 	return mqttServiceObj;
-}
+	}

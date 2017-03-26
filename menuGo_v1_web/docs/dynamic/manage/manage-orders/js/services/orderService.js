@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('orderService', orderService);
+.factory(
+		'orderService', 
+		orderService
+		);
 
 orderService.$inject = [
 	'API_BASE_URL', 
@@ -11,7 +14,7 @@ orderService.$inject = [
 	'$http', 
 	'$localStorage', 
 	'$q', 
-	'loginService' 
+	'loginService'
 	];
 
 function orderService(
@@ -23,7 +26,7 @@ function orderService(
 		$http, 
 		$localStorage, 
 		$q, 
-		loginService 
+		loginService
 		){
 	const ORDERS_KEY = 'Orders';
 	
@@ -59,16 +62,16 @@ function orderService(
 				7: 'getCustomerOrders', 
 				8: 'getCustomerOrdersOrderStatus', 
 				9: 'getCustomerOrdersNotOrderStatus'
-			}, 
+					}, 
 			deleteOptions: {
 				1: 'deleteOrderCompany', 
 				2: 'deleteOrderCustomer'
-			}, 
+					}, 
 			fetchOrders: fetchOrders, 
 			addOrder: addOrder, 
 			updateOrder: updateOrder, 
 			deleteOrder: deleteOrder
-	};
+			};
 	
 	function getOrders(){	return orderServiceObj.orders;
 	}
@@ -106,7 +109,7 @@ function orderService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET'
-		};
+					};
 		
 		switch(orderServiceObj.getOptions[getOption]){
 			case 'getCompanyBranchOrders': 
@@ -137,7 +140,7 @@ function orderService(
 				httpConfig['url'] = API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/not/' + getParams['OrderStatus']
 				break;
 			default: break;
-		}
+			}
 		
 		$http(httpConfig)
 		.then(fetchOrdersSuccessCallback)
@@ -156,7 +159,7 @@ function orderService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -166,16 +169,15 @@ function orderService(
 				var ordersDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(ORDERS_DB_FIELDS).length; j++){
-					ordersDetails[ ORDERS_DB_FIELDS[j]] = responseData[i][ ORDERS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(ORDERS_DB_FIELDS).length; j++){	ordersDetails[ ORDERS_DB_FIELDS[j]] = responseData[i][ ORDERS_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][ORDERS_DB_FIELDS[0]]; //order_id
 				orderServiceObj.orders[key] = ordersDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addOrder(orders){
 		var deferred = $q.defer();
@@ -183,7 +185,7 @@ function orderService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders', 
 				data: orders
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addOrderSuccessCallback)
@@ -195,7 +197,7 @@ function orderService(
 		function addOrderFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateOrder(order){
 		var deferred = $q.defer();
@@ -203,7 +205,7 @@ function orderService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId, 
 				data: order
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateOrderSuccessCallback)
@@ -215,13 +217,13 @@ function orderService(
 		function updateOrderFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteOrder(deleteOption){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE'
-		};
+					};
 		
 		switch(orderServiceObj.deleteOptions[deleteOption]){
 			case 'deleteOrderCompany':
@@ -231,7 +233,7 @@ function orderService(
 				httpConfig['url'] = API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/' + orderServiceObj.orderId;
 				break;
 			default: break;
-		}
+			}
 		
 		$http(httpConfig)
 		.then(deleteOrderSuccessCallback)
@@ -243,7 +245,7 @@ function orderService(
 		function deleteOrderFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return orderServiceObj;
-}
+	}

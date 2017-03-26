@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageBranchController', manageBranchController);
+.controller(
+		'manageBranchController', 
+		manageBranchController
+		);
 
 manageBranchController.$inject = [
 	'API_BASE_URL', 
@@ -14,7 +17,7 @@ manageBranchController.$inject = [
 	'DTColumnBuilder', 
 	'DTOptionsBuilder', 
 	'datatableService'
-];
+	];
 
 function manageBranchController(
 		API_BASE_URL, 
@@ -27,9 +30,10 @@ function manageBranchController(
 		$uibModal, 
 		DTColumnBuilder, 
 		DTOptionsBuilder, 
-		datatableService		
+		datatableService
 		){
-	const DOM_BRANCH_TABLE = '#branchTable'
+	const DOM_BRANCH_TABLE = '#branchTable';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.companyName = $stateParams['companyName'];
@@ -48,8 +52,8 @@ function manageBranchController(
 			branch_address_city: 'Address - city', 
 			branch_address_postalcode: 'Address - postalcode', 
 			branch_address_country: 'Address - country', 
-			branch_hotline: 'Hotline' 
-	};
+			branch_hotline: 'Hotline'
+				};
 	vm.dbColumn2Dom = {
 			branch_id: 'branchId', 
 			branch_name: 'branchName', 
@@ -60,13 +64,13 @@ function manageBranchController(
 			branch_address_city: 'branchAddressCity', 
 			branch_address_postalcode: 'branchAddressPostalcode', 
 			branch_address_country: 'branchAddressCountry', 
-			branch_hotline: 'branchHotline' 
-	};
+			branch_hotline: 'branchHotline'
+				};
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches';
 	
@@ -92,41 +96,43 @@ function manageBranchController(
 					{
 						companyName: vm.companyName, 
 						branchName: vm.branch.branch_name
-					}
+						}
 					);
-		} else {	
-			vm.branch= {};
-			
-			$rootScope.$broadcast(
-					BROADCAST_MESSAGES.toggleTable, 
-					{
-						companyName: vm.companyName, 
-						branchName: vm.branch.branch_name
-					}
-					);
+			} else {	
+				vm.branch= {};
+				$rootScope.$broadcast(
+						
+						BROADCAST_MESSAGES.toggleTable, 
+						{
+							companyName: vm.companyName, 
+							branchName: vm.branch.branch_name
+							}
+						);
+				}
 		}
-	}
 	
 	function addBranch(){
 		var formMode = 'I';
 		var fromSignup = false;
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
-			controller: 'modalBranchController as modalBranchController', 
-			resolve: {
-				branch: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
+					controller: 'modalBranchController as modalBranchController', 
+					resolve: {
+						branch: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function updateBranch(){
 		var formMode = 'A';
@@ -135,46 +141,50 @@ function manageBranchController(
 		if(0 == Object.keys(vm.branch).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
-			controller: 'modalBranchController as modalBranchController', 
-			resolve: {
-				branch: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
+					controller: 'modalBranchController as modalBranchController', 
+					resolve: {
+						branch: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function deleteBranch(){
 		var formMode = 'D';
 		var fromSignup = false;
 		
 		if(0 == Object.keys(vm.branch).length){	return;
-		}	
+		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
-			controller: 'modalBranchController as modalBranchController', 
-			resolve: {
-				branch: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
+					controller: 'modalBranchController as modalBranchController', 
+					resolve: {
+						branch: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function doDbColumn2Dom(formMode){
 		var data = {};
@@ -188,11 +198,11 @@ function manageBranchController(
 					}
 					
 					data['companyName'] = vm.companyName;
-				}
+					}
 				);
 		
 		return data;
-	}
+		}
 	
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
@@ -208,7 +218,7 @@ function manageBranchController(
 				);
 		
 		return modalHiddenFields;
-	}
+		}
 	
 	function uibModalClosedCallback(){
 		vm.dtInstance.reloadData();
@@ -222,9 +232,9 @@ function manageBranchController(
 				{
 					companyName: vm.companyName, 
 					branchName: vm.branch.branch_name
-				}
+					}
 				);
-	}
+		}
 	
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_BRANCH_TABLE).dataTable();
@@ -238,10 +248,10 @@ function manageBranchController(
 			if(!(null == aoColumnsRunnerMdata)){
 				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
 				}
+				}
 			}
-		}	
 		);
-	}
+		}
 	
 	dtInitialize();
 	
@@ -282,12 +292,12 @@ function manageBranchController(
 					function(dtHiddenColumnsKey){	branchTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
+			}
 		}
-	}
 
 	$scope.$on(BROADCAST_MESSAGES.addBranch, addBranch);
 	
 	$scope.$on(BROADCAST_MESSAGES.updateBranch, updateBranch);
 
 	$scope.$on(BROADCAST_MESSAGES.deleteBranch, deleteBranch);
-}
+	}

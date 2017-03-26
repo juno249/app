@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageCompanyController', manageCompanyController);
+.controller(
+		'manageCompanyController', 
+		manageCompanyController
+		);
 
 manageCompanyController.$inject = [
 	'API_BASE_URL', 
@@ -42,18 +45,18 @@ function manageCompanyController(
 			company_desc: 'Description', 
 			company_category: 'Category', 
 			company_logo: 'Logo'
-	}
+				}
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
 			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
-	}
+				}
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 	
 	vm.restApiSource = API_BASE_URL + '/companies/customers/' + vm.user.username;
 	
@@ -81,39 +84,42 @@ function manageCompanyController(
 					BROADCAST_MESSAGES.toggleMenu, 
 					{	companyName: vm.company.company_name	}
 					);
-		} else {	
-			vm.company = {};
-			$rootScope.$broadcast(
-					BROADCAST_MESSAGES.toggleBranch, 
-					{	companyName: vm.company.company_name	}
-					);
-			$rootScope.$broadcast(
-					BROADCAST_MESSAGES.toggleMenu, 
-					{	companyName: vm.company.company_name	}
-					);
+			} else {	
+				vm.company = {};
+				
+				$rootScope.$broadcast(
+						BROADCAST_MESSAGES.toggleBranch, 
+						{	companyName: vm.company.company_name	}
+						);
+				$rootScope.$broadcast(
+						BROADCAST_MESSAGES.toggleMenu, 
+						{	companyName: vm.company.company_name	}
+						);
+				}
 		}
-	}
 	
 	function addCompany(){
 		var formMode = 'I';
 		var fromSignup = false;
 			
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
-			controller: 'modalCompanyController as modalCompanyController', 
-			resolve: {
-				company: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
+					controller: 'modalCompanyController as modalCompanyController', 
+					resolve: {
+						company: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function updateCompany(){
 		var formMode = 'A';
@@ -122,22 +128,24 @@ function manageCompanyController(
 		if(0 == Object.keys(vm.company).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
-			controller: 'modalCompanyController as modalCompanyController', 
-			resolve: {
-				company: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
+					controller: 'modalCompanyController as modalCompanyController', 
+					resolve: {
+						company: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function deleteCompany(){
 		var formMode = 'D';
@@ -146,22 +154,24 @@ function manageCompanyController(
 		if(0 == Object.keys(vm.company).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
-			controller: 'modalCompanyController as modalCompanyController', 
-			resolve: {
-				company: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-companies/modalCompany.html', 
+					controller: 'modalCompanyController as modalCompanyController', 
+					resolve: {
+						company: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function doDbColumn2Dom(formMode){
 		var data = {};
@@ -173,11 +183,11 @@ function manageCompanyController(
 					if('I' == formMode){	data[dataKey] = undefined;
 					} else {	data[dataKey] = vm.company[dbColumn2ColheaderKey];
 					}
-				}
+					}
 				);
 		
 		return data;
-	}
+		}
 	
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
@@ -193,7 +203,7 @@ function manageCompanyController(
 				);
 		
 		return modalHiddenFields;
-	}
+		}
 	
 	function uibModalClosedCallback(){
 		var formMode = vm.formMode;
@@ -212,7 +222,7 @@ function manageCompanyController(
 				BROADCAST_MESSAGES.toggleMenu, 
 				{	companyName: vm.company.company_name	}
 				);
-	}
+		}
 	
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_COMPANY_TABLE).dataTable();
@@ -226,10 +236,10 @@ function manageCompanyController(
 			if(!(null == aoColumnsRunnerMdata)){
 				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
 				}
+				}
 			}
-		}
 		);
-	}
+		}
 
 	dtInitialize();
 	
@@ -270,12 +280,12 @@ function manageCompanyController(
 					function(dtHiddenColumnsKey){	companyTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
+			}
 		}
-	}
 	
 	$scope.$on(BROADCAST_MESSAGES.addCompany, addCompany);
 	
 	$scope.$on(BROADCAST_MESSAGES.updateCompany, updateCompany);
 	
 	$scope.$on(BROADCAST_MESSAGES.deleteCompany, deleteCompany);
-}
+	}

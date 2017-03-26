@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageTableController', manageTableController);
+.controller(
+		'manageTableController', 
+		manageTableController
+		);
 
 manageTableController.$inject = [
 	'API_BASE_URL', 
@@ -44,19 +47,19 @@ function manageTableController(
 			branch_id: 'Branch id', 
 			table_capacity: 'Capacity', 
 			table_status: 'Status'
-	};
+				};
 	vm.dbColumn2Dom = {
 			table_id: 'tableId', 
 			table_number: 'tableNumber', 
 			branch_id: 'branchId', 
 			table_capacity: 'tableCapacity', 
 			table_status: 'tableStatus'
-	};
+				};
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables';
 	
@@ -76,25 +79,27 @@ function manageTableController(
 		if(-1 == eClassname.indexOf('selected')){	vm.table = data;
 		} else {	vm.table= {};
 		}
-	}
+		}
 	
 	function addTable(){
 		var formMode = 'I';
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
-			controller: 'modalTableController as modalTableController', 
-			resolve: {
-				table: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
+					controller: 'modalTableController as modalTableController', 
+					resolve: {
+						table: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function updateTable(){
 		var formMode = 'A';
@@ -102,20 +107,22 @@ function manageTableController(
 		if(0 == Object.keys(vm.table).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
-			controller: 'modalTableController as modalTableController', 
-			resolve: {
-				table: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
+					controller: 'modalTableController as modalTableController', 
+					resolve: {
+						table: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function deleteTable(){
 		var formMode = 'D';
@@ -123,20 +130,22 @@ function manageTableController(
 		if(0 == Object.keys(vm.table).length){	return;
 		}
 		
-		modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
-			controller: 'modalTableController as modalTableController', 
-			resolve: {
-				table: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-tables/modalTable.html', 
+					controller: 'modalTableController as modalTableController', 
+					resolve: {
+						table: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function doDbColumn2Dom(formMode){
 		var data = {};
@@ -151,7 +160,7 @@ function manageTableController(
 					
 					data['companyName'] = vm.companyName;
 					data['branchName'] = vm.branchName;
-				}
+					}
 				);
 		
 		return data;
@@ -176,7 +185,7 @@ function manageTableController(
 	function uibModalClosedCallback(){
 		vm.dtInstance.reloadData();
 		vm.table = {};
-	}
+		}
 
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_TABLE_TABLE).dataTable();
@@ -190,10 +199,10 @@ function manageTableController(
 			if(!(null == aoColumnsRunnerMdata)){
 				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
 				}
+				}
 			}
-		}
 		);
-	}
+		}
 	
 	dtInitialize();
 	
@@ -206,11 +215,11 @@ function manageTableController(
 				BROADCAST_MESSAGES.addTable, 
 				BROADCAST_MESSAGES.updateTable, 
 				BROADCAST_MESSAGES.deleteTable
-		);
+				);
 		datatableService.doDTInitColumns(
 				DTColumnBuilder, 
 				vm
-		);
+				);
 		
 		vm.dtOptions = datatableService.getDtOptions();
 		vm.dtColumns = datatableService.getDtColumns();
@@ -234,12 +243,12 @@ function manageTableController(
 					function(dtHiddenColumnsKey){	tableTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
+			}
 		}
-	}
 	
 	$scope.$on(BROADCAST_MESSAGES.addTable, addTable);
 	
 	$scope.$on(BROADCAST_MESSAGES.updateTable, updateTable);
 
 	$scope.$on(BROADCAST_MESSAGES.deleteTable, deleteTable);
-}
+	}

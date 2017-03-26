@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('orderreferenceService', orderreferenceService);
+.factory(
+		'orderreferenceService', 
+		orderreferenceService
+		);
 
 orderreferenceService.$inject = [
 	'API_BASE_URL', 
@@ -38,7 +41,7 @@ function orderreferenceService(
 			addOrderreference: addOrderreference, 
 			updateOrderreference: updateOrderreference, 
 			deleteOrderreference: deleteOrderreference
-	}
+			}
 	
 	function getOrderreferences(){	return orderreferenceServiceObj.orderreferences;
 	}
@@ -62,7 +65,7 @@ function orderreferenceService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchOrderreferencesSuccessCallback)
@@ -81,7 +84,7 @@ function orderreferenceService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchOrderreferencesFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -91,23 +94,22 @@ function orderreferenceService(
 				var orderreferencesDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
-					orderreferencesDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){	orderreferencesDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][ORDERREFERENCES_DB_FIELDS[0]]; //orderreference_code
 				orderreferenceServiceObj.orderreferences[key] = orderreferencesDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchOrderreference(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchOrderreferenceSuccessCallback)
@@ -126,7 +128,7 @@ function orderreferenceService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -136,16 +138,15 @@ function orderreferenceService(
 				var orderreferenceDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
-					orderreferenceDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){	orderreferenceDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][ORDERREFERENCES_DB_FIELDS[0]]; //orderreference_code
 				orderreferenceServiceObj.orderreference[key] = orderreferenceDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addOrderreference(orderreferences){
 		var deferred = $q.defer();
@@ -153,7 +154,7 @@ function orderreferenceService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences', 
 				data: orderreferences
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addOrderreferenceSuccessCallback)
@@ -165,7 +166,7 @@ function orderreferenceService(
 		function addOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateOrderreference(orderreference){
 		var deferred = $q.defer();
@@ -173,7 +174,7 @@ function orderreferenceService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode, 
 				data: orderreference
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateOrderreferenceSuccessCallback)
@@ -185,14 +186,14 @@ function orderreferenceService(
 		function updateOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteOrderreference(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteOrderreferenceSuccessCallback)
@@ -204,7 +205,7 @@ function orderreferenceService(
 		function deleteOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return orderreferenceServiceObj;
-}
+	}

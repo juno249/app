@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('manageCustomerController', manageCustomerController);
+.controller(
+		'manageCustomerController', 
+		manageCustomerController
+		);
 
 manageCustomerController.$inject = [
 	'API_BASE_URL', 
@@ -54,7 +57,7 @@ function manageCustomerController(
 			customer_birthday_month: 'Birthday - month', 
 			customer_birthday_date: 'Birthday - date', 
 			customer_birthday_year: 'Birthday - year'
-	}
+				}
 	vm.dbColumn2Dom = {
 			customer_username: 'customerUsername', 
 			customer_password: 'customerPassword', 
@@ -74,12 +77,12 @@ function manageCustomerController(
 			customer_birthday_month: 'customerBirthdayMonth', 
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
-	}
+				}
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-	}
+		}
 	
 	vm.restApiSource = API_BASE_URL + '/customers/companies/' + vm.user.company;
 	
@@ -99,28 +102,30 @@ function manageCustomerController(
 		if(-1 == eClassname.indexOf('selected')){	vm.customer = data;
 		} else {	vm.customer= {};
 		}
-	}
+		}
 	
 	function addCustomer(){
 		var formMode = 'I';
 		var fromSignup = false;
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
-			controller: 'modalCustomerController as modalCustomerController', 
-			resolve: {
-				customer: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
+					controller: 'modalCustomerController as modalCustomerController', 
+					resolve: {
+						customer: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function updateCustomer(){
 		var formMode = 'A';
@@ -129,22 +134,24 @@ function manageCustomerController(
 		if(0 == Object.keys(vm.customer).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
-			controller: 'modalCustomerController as modalCustomerController', 
-			resolve: {
-				customer: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return formMode;
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
+					controller: 'modalCustomerController as modalCustomerController', 
+					resolve: {
+						customer: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return formMode;
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function deleteCustomer(){
 		var formMode = 'D';
@@ -153,22 +160,24 @@ function manageCustomerController(
 		if(0 == Object.keys(vm.customer).length){	return;
 		}
 		
-		var modalInstance = $uibModal.open({
-			animation: true, 
-			templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
-			controller: 'modalCustomerController as modalCustomerController', 
-			resolve: {
-				customer: function(){	return doDbColumn2Dom(formMode);
-				}, 
-				formMode: function(){	return 'D';
-				}, 
-				fromSignup: function(){	return fromSignup;
-				}, 
-				modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+		var modalInstance = $uibModal.open(
+				{
+					animation: true, 
+					templateUrl: 'docs/dynamic/manage/manage-customers/modalCustomer.html', 
+					controller: 'modalCustomerController as modalCustomerController', 
+					resolve: {
+						customer: function(){	return doDbColumn2Dom(formMode);
+						}, 
+						formMode: function(){	return 'D';
+						}, 
+						fromSignup: function(){	return fromSignup;
+						}, 
+						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
+						}
+						}
 				}
-			}
-		}).closed.then(uibModalClosedCallback);
-	}
+				).closed.then(uibModalClosedCallback);
+		}
 	
 	function doDbColumn2Dom(formMode){
 		var data = {};
@@ -180,11 +189,11 @@ function manageCustomerController(
 					if('I' == formMode){	data[dataKey] = undefined;
 					} else {	data[dataKey] = vm.customer[dbColumn2ColheaderKey];
 					}
-				}
+					}
 				);
 		
 		return data;
-	}
+		}
 	
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
@@ -200,12 +209,12 @@ function manageCustomerController(
 				);
 		
 		return modalHiddenFields;
-	}
+		}
 	
 	function uibModalClosedCallback(){
 		vm.dtInstance.reloadData();
 		vm.customer = {};
-	}
+		}
 	
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_CUSTOMER_TABLE).dataTable();
@@ -219,10 +228,10 @@ function manageCustomerController(
 			if(!(null == aoColumnsRunnerMdata)){
 				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
 				}
+				}
 			}
-		}
 		);
-	}
+		}
 	
 	dtInitialize();
 	
@@ -264,12 +273,12 @@ function manageCustomerController(
 					function(dtHiddenColumnsKey){	customerTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
-		}	
-	}
+			}
+		}
 	
 	$scope.$on(BROADCAST_MESSAGES.addCustomer, addCustomer);
 	
 	$scope.$on(BROADCAST_MESSAGES.updateCustomer, updateCustomer);
 
 	$scope.$on(BROADCAST_MESSAGES.deleteCustomer, deleteCustomer);
-}
+	}

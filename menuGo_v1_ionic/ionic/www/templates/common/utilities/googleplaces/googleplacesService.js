@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('googleplacesService', googleplacesService);
+.factory(
+		'googleplacesService', 
+		googleplacesService
+		);
 
 googleplacesService.$inject = [
 	'$q', 
@@ -20,7 +23,7 @@ function googleplacesService(
 			getPlaceDetails: getPlaceDetails, 
 			getPlacesNearby: getPlacesNearby, 
 			getRadarSearch: getRadarSearch
-	}
+			}
 	
 	function getPlacePredictions(query){
 		var deferred = $q.defer();
@@ -28,13 +31,13 @@ function googleplacesService(
 				input: query, 
 				componentRestrictions: {
 					country: 'ph'
-				}
+						}
 		}
 		var service = new google.maps.places.AutocompleteService();
 		
 		service.getPlacePredictions(
 				config, 
-				getPlacePredictionsCallback	
+				getPlacePredictionsCallback
 				);
 		
 		function getPlacePredictionsCallback(
@@ -44,9 +47,9 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){	deferred.resolve(predictions);
 			} else {	deferred.reject(status);
 			}
-		}
+			}
 		return deferred.promise;
-	}
+		}
 	
 	function getPlaceCoordinates(placeId){
 		var deferred = $q.defer();
@@ -65,9 +68,9 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){	deferred.resolve(coordinates[0].geometry.location);
 			} else {	deferred.reject(status);
 			}
-		}
+			}
 		return deferred.promise;
-	}
+		}
 	
 	function getPlaceDetails(
 			placeId, 
@@ -78,15 +81,17 @@ function googleplacesService(
 		var mapInstance = undefined;
 		var service = undefined;
 		
-		NgMap.getMap({id: domMapId}).then(function(map){
-			mapInstance = map;
-			service = new google.maps.places.PlacesService(mapInstance);
-			
-			service.getDetails(
-					config, 
-					getDetailsCallback
-					);
-		});
+		NgMap.getMap({id: domMapId}).then(
+				function(map){
+					mapInstance = map;
+					service = new google.maps.places.PlacesService(mapInstance);
+					
+					service.getDetails(
+							config, 
+							getDetailsCallback
+							);
+					}
+				);
 			
 		function getDetailsCallback(
 				placeDetails, 
@@ -95,9 +100,9 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){	deferred.resolve(placeDetails);
 			} else {	deferred.reject(status);
 			}
-		}
+			}
 		return deferred.promise;
-	}
+		}
 	
 	function getPlacesNearby(
 			companiesNames, 
@@ -108,25 +113,27 @@ function googleplacesService(
 		var loc = new google.maps.LatLng(
 				location.lat(), 
 				location.lng()
-		);
+				);
 		var config = {
 				location: loc, 
 				name: companiesNames, 
 				rankBy: google.maps.places.RankBy.DISTANCE, 
 				type: CONF_TYPE
-		}
+				}
 		var mapInstance = undefined;
 		var service = undefined;	
 		
-		NgMap.getMap({id: domMapId}).then(function(map){
-			mapInstance = map;
-			service = new google.maps.places.PlacesService(mapInstance);
-			
-			service.nearbySearch(
-					config, 
-					nearbySearchCallback
-					);
-		});
+		NgMap.getMap({id: domMapId}).then(
+				function(map){
+					mapInstance = map;
+					service = new google.maps.places.PlacesService(mapInstance);
+					
+					service.nearbySearch(
+							config, 
+							nearbySearchCallback
+							);
+					}
+				);
 		
 		function nearbySearchCallback(
 				nearby, 
@@ -136,9 +143,9 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){	deferred.resolve(nearby);
 			} else {	deferred.reject(status);
 			}
-		}
+			}
 		return deferred.promise;
-	}
+		}
 	
 	function getRadarSearch(
 			companiesNames, 
@@ -149,25 +156,27 @@ function googleplacesService(
 		var loc = new google.maps.LatLng(
 				location.lat(), 
 				location.lng()
-		);
+				);
 		var config = {
 				location: loc, 
 				name: companiesNames, 
 				radius: CONF_RADAR_RADIUS, 
 				type: CONF_TYPE
-		}
+				}
 		var mapInstance = undefined;
 		var service = undefined;
 		
-		NgMap.getMap({id: domMapId}).then(function(map){
-			mapInstance = map;
-			service = new google.maps.places.PlacesService(mapInstance);
-			
-			service.radarSearch(
-					config, 
-					radarSearchCallback
-					);
-		});
+		NgMap.getMap({id: domMapId}).then(
+				function(map){
+					mapInstance = map;
+					service = new google.maps.places.PlacesService(mapInstance);
+					
+					service.radarSearch(
+							config, 
+							radarSearchCallback
+							);
+					}
+				);
 		
 		function radarSearchCallback(
 				nearby, 
@@ -176,9 +185,9 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){	deferred.resolve(nearby);
 			} else {	deferred.reject(status);
 			}
-		}		
+			}		
 		return deferred.promise;
-	}	
+		}	
 	
 	return googleplacesServiceObj;
-}
+	}

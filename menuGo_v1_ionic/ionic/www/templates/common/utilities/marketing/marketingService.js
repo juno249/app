@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('marketingService', marketingService);
+.factory(
+		'marketingService', 
+		marketingService
+		);
 
 marketingService.$inject = [
 	'ADVERTISEMENTS_DB_FIELDS', 
@@ -56,7 +59,7 @@ function marketingService(
 			addBlog: addBlog, 
 			updateBlog: updateBlog, 
 			deleteBlog: deleteBlog
-	}
+			}
 	
 	function getAdvertisements(){	return marketingServiceObj.advertisements;
 	}
@@ -92,7 +95,7 @@ function marketingService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/advertisements'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchAdvertisementsSuccessCallback)
@@ -110,7 +113,7 @@ function marketingService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchAdvertisementsFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -120,23 +123,22 @@ function marketingService(
 				var advertisementsDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(ADVERTISEMENTS_DB_FIELDS).length; j++){
-					advertisementsDetails[ADVERTISEMENTS_DB_FIELDS[j]] = responseData[i][ADVERTISEMENTS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(ADVERTISEMENTS_DB_FIELDS).length; j++){	advertisementsDetails[ADVERTISEMENTS_DB_FIELDS[j]] = responseData[i][ADVERTISEMENTS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][ADVERTISEMENTS_DB_FIELDS[0]]; //advertisement_id
 				marketingServiceObj.advertisements[key] = advertisementsDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchAdvertisement(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchAdvertisementSuccessCallback)
@@ -154,7 +156,7 @@ function marketingService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchAdvertisementFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -164,16 +166,15 @@ function marketingService(
 				var advertisementDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(ADVERTISEMENTS_DB_FIELDS).length; j++){
-					advertisementDetails[ADVERTISEMENTS_DB_FIELDS[j]] = responseData[i][ADVERTISEMENTS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(ADVERTISEMENTS_DB_FIELDS).length; j++){	advertisementDetails[ADVERTISEMENTS_DB_FIELDS[j]] = responseData[i][ADVERTISEMENTS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][ADVERTISEMENTS_DB_FIELDS[0]]; //advertisement_id
 				marketingServiceObj.advertisement[key] = advertisementDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addAdvertisement(advertisements){
 		var deferred = $q.defer();
@@ -181,7 +182,7 @@ function marketingService(
 				method: 'POST', 
 				url: API_BASE_URL + '/advertisements', 
 				data: advertisements
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addAdvertisementSuccessCallback)
@@ -193,7 +194,7 @@ function marketingService(
 		function addAdvertisementFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateAdvertisement(advertisement){
 		var deferred = $q.defer();
@@ -201,7 +202,7 @@ function marketingService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId, 
 				data: advertisement
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateAdvertisementSuccessCallback)
@@ -213,14 +214,14 @@ function marketingService(
 		function updateAdvertisementFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteAdvertisement(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteAdvertisementSuccessCallback)
@@ -232,14 +233,14 @@ function marketingService(
 		function deleteAdvertisementFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchBlogs(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/blogs'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchBlogsSuccessCallback)
@@ -257,7 +258,7 @@ function marketingService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchBlogsFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -267,23 +268,22 @@ function marketingService(
 				var blogsDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(BLOGS_DB_FIELDS).length; j++){
-					blogsDetails[BLOGS_DB_FIELDS[j]] = responseData[i][BLOGS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(BLOGS_DB_FIELDS).length; j++){	blogsDetails[BLOGS_DB_FIELDS[j]] = responseData[i][BLOGS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][BLOGS_DB_FIELDS[0]]; //blog_id
 				marketingServiceObj.blogs[key] = blogsDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchBlog(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchBlogSuccessCallback)
@@ -301,7 +301,7 @@ function marketingService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchBlogFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -311,16 +311,15 @@ function marketingService(
 				var blogDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(BLOGS_DB_FIELDS).length; j++){
-					blogDetails[BLOGS_DB_FIELDS[j]] = responseData[i][BLOGS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(BLOGS_DB_FIELDS).length; j++){	blogDetails[BLOGS_DB_FIELDS[j]] = responseData[i][BLOGS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][BLOGS_DB_FIELDS[0]]; //blog_id
 				marketingServiceObj.blog[key] = blogDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addBlog(blogs){
 		var deferred = $q.defer();
@@ -328,7 +327,7 @@ function marketingService(
 				method: 'POST', 
 				url: API_BASE_URL + '/blogs', 
 				data: blogs
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addBlogSuccessCallback)
@@ -340,7 +339,7 @@ function marketingService(
 		function addBlogFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateBlog(blog){
 		var deferred = $q.defer();
@@ -348,7 +347,7 @@ function marketingService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId, 
 				data: blog
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateBlogSuccessCallback)
@@ -360,14 +359,14 @@ function marketingService(
 		function updateBlogFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteBlog(blog){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteBlogSuccessCallback)
@@ -379,7 +378,7 @@ function marketingService(
 		function deleteBlogFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return marketingServiceObj;
-}
+	}

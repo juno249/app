@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('geolocationService', geolocationService);
+.factory(
+		'geolocationService', 
+		geolocationService
+		);
 
 geolocationService.$inject = [
 	'$cordovaGeolocation', 
@@ -19,7 +22,7 @@ function geolocationService(
 			getGeolocationConfig: getGeolocationConfig, 
 			setGeolocationConfig: setGeolocationConfig, 
 			getPosition: getPosition
-	}
+			}
 	
 	function getGeolocationConfig(){	return geolocationServiceObj.geolocationConfig;
 	}
@@ -33,10 +36,10 @@ function geolocationService(
 		var geolocationConfig = {
 				timeout: CONF_TIMEOUT, 
 				enableHighAccuracy: CONF_ENABLE_HIGH_ACCURACY
-		};
+				};
 		
 		geolocationServiceObj.setGeolocationConfig(geolocationConfig);
-	}
+		}
 	
 	function getPosition(){
 		var deferred = $q.defer();
@@ -50,15 +53,15 @@ function geolocationService(
 			var coordinates = {
 				latitude: position.coords.latitude, 
 				longitude: position.coords.longitude
-			}
+				}
 			
 			deferred.resolve(coordinates);
-		}
+			}
 		
 		function getCurrentPositionFailedCallback(status){	deferred.reject(status);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return geolocationServiceObj;
-}
+	}

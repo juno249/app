@@ -44,7 +44,7 @@ function modalBranchController(
 			branchAddressPostalcode: 'branch_address_postalcode', 
 			branchAddressCountry: 'branch_address_country', 
 			branchHotline: 'branch_hotline'
-	}
+				}
 	vm.dbColumn2Dom = {
 			branch_name: 'branchName', 
 			company_name: 'companyName', 
@@ -55,7 +55,7 @@ function modalBranchController(
 			branch_address_postalcode: 'branchAddressPostalcode', 
 			branch_address_country: 'branchAddressCountry', 
 			branch_hotline: 'branchHotline'
-	}
+				}
 	vm.dbColumn2DomIndex = {
 			branch_name: 0, 
 			company_name: 1, 
@@ -66,7 +66,7 @@ function modalBranchController(
 			branch_address_postalcode: 6, 
 			branch_address_country: 7, 
 			branch_hotline: 8
-	}
+			}
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
@@ -86,11 +86,10 @@ function modalBranchController(
 				doSubmit
 				);
 		
-		$timeout(
-				function(){	$(DOM_FORM).validator('update');
-				}
-				);
-	}
+		$timeout(	function(){	$(DOM_FORM).validator('update');
+		}
+		);
+		}
 	
 	function initDom(){
 		if('D' == vm.formMode){
@@ -107,7 +106,7 @@ function modalBranchController(
 					true
 					);
 			}
-	}
+		}
 
 	function doCancel(){	$uibModalInstance.close();
 	}
@@ -126,7 +125,7 @@ function modalBranchController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close(data);
-			}
+				}
 			
 			branchService.setCompanyName(vm.branch.companyName);
 			
@@ -138,7 +137,7 @@ function modalBranchController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close();
-			}
+				}
 			
 			function addBranchFailedCallback(responseError){
 				hideBootstrapLoader($(DOM_MODAL));
@@ -146,92 +145,91 @@ function modalBranchController(
 				try{
 					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(BRANCH_ADD_CATCH_MESSAGE);
-				}
-			}
-		} else if('A' == vm.formMode){
-			discardModalHiddenFields();
-			discardModalUnchangedFields();
-			
-			if(0 == Object.keys(data[0]).length){
-				hideBootstrapLoader($(DOM_MODAL));
+					} catch(e){	showBootstrapAlert(BRANCH_ADD_CATCH_MESSAGE);
+					}
+					}
+			} else if('A' == vm.formMode){
+				discardModalHiddenFields();
+				discardModalUnchangedFields();
 				
-				showBootstrapAlert(BRANCH_UPDATE_CUSTOM_ERR_MESSAGE);
+				if(0 == Object.keys(data[0]).length){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					showBootstrapAlert(BRANCH_UPDATE_CUSTOM_ERR_MESSAGE);
+					
+					return;
+					}
 				
-				return;
-			}
-			
-			branchService.setCompanyName(vm.branchSnapshot.companyName);
-			branchService.setBranchName(vm.branchSnapshot.branchName);
-			
-			branchService.updateBranch(data)
-			.then(updateBranchSuccessCallback)
-			.catch(updateBranchFailedCallback);
-			
-			function updateBranchSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				branchService.setCompanyName(vm.branchSnapshot.companyName);
+				branchService.setBranchName(vm.branchSnapshot.branchName);
 				
-				$uibModalInstance.close();
-			}
-			
-			function updateBranchFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				branchService.updateBranch(data)
+				.then(updateBranchSuccessCallback)
+				.catch(updateBranchFailedCallback);
 				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(BRANCH_UPDATE_CATCH_MESSAGE);
-				}
-			}
-		
-			function discardModalHiddenFields(){
-				Object.keys(vm.modalHiddenFields).forEach(
-						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+				function updateBranchSuccessCallback(response){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					$uibModalInstance.close();
+					}
+				
+				function updateBranchFailedCallback(responseError){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					try{
+						JSON.parse(responseError.statusText);
+						genValidationErrorFromResponse(responseError);
+						} catch(e){	showBootstrapAlert(BRANCH_UPDATE_CATCH_MESSAGE);
 						}
-						);
-				}
-			
-			function discardModalUnchangedFields(){
-				var dataKeys = Object.keys(data[0]);
+						}
 				
-				dataKeys.forEach(
-						function(dataKey){
-							var dataValue = data[0][dataKey];
-							var branchSnapshotValue = vm.branchSnapshot[vm.dbColumn2Dom[dataKey]];
-							
-							if(dataValue == branchSnapshotValue){	delete data[0][dataKey];
+				function discardModalHiddenFields(){
+					Object.keys(vm.modalHiddenFields).forEach(
+							function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+							}
+							);
+					}
+				
+				function discardModalUnchangedFields(){
+					var dataKeys = Object.keys(data[0]);
+					
+					dataKeys.forEach(
+							function(dataKey){
+								var dataValue = data[0][dataKey];
+								var branchSnapshotValue = vm.branchSnapshot[vm.dbColumn2Dom[dataKey]];
+								
+								if(dataValue == branchSnapshotValue){	delete data[0][dataKey];
+								}
+								}
+							);
+					}
+				} else if('D' == vm.formMode){
+					branchService.setCompanyName(vm.branch.companyName);
+					branchService.setBranchName(vm.branch.branchName);
+					
+					branchService.deleteBranch()
+					.then(deleteBranchSuccessCallback)
+					.catch(deleteBranchFailedCallback);
+					
+					function deleteBranchSuccessCallback(response){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						$uibModalInstance.close();
+						}
+					
+					function deleteBranchFailedCallback(responseError){
+						hideBootstrapLoader(modalMenuContainer);
+						
+						try{
+							JSON.parse(responseError.statusText);
+							genValidationErrorFromResponse(responseError);
+							} catch(e){	showBootstrapAlert(BRANCH_DELETE_CATCH_MESSAGE);
 							}
 							}
-						);
-				}
-		} else if('D' == vm.formMode){
-			branchService.setCompanyName(vm.branch.companyName);
-			branchService.setBranchName(vm.branch.branchName);
-			
-			branchService.deleteBranch()
-			.then(deleteBranchSuccessCallback)
-			.catch(deleteBranchFailedCallback);
-			
-			function deleteBranchSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				$uibModalInstance.close();
-			}
-			
-			function deleteBranchFailedCallback(responseError){
-				hideBootstrapLoader(modalMenuContainer);
-				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(BRANCH_DELETE_CATCH_MESSAGE);
-				}
-			}
-		}
-		
+					}
 		vm.validationErr = {};
 		vm.validationErrDB = {}
-	}
+		}
 
 	function doDom2DbColumn(){
 		var data = {};
@@ -247,7 +245,7 @@ function modalBranchController(
 				);
 		
 		return data;
-	}
+		}
 	
 	function genValidationErrorFromResponse(responseError){
 		const CLASS_FORM_GROUP = '.form-group';
@@ -273,7 +271,7 @@ function modalBranchController(
 		
 		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-	}
+		}
 	
 	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
@@ -284,10 +282,10 @@ function modalBranchController(
 	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
 		vm.isValidationErrDBHidden = false;
-	}
+		}
 	
 	function hideBootstrapAlert(){
 		vm.validationErrDB = {};
 		vm.isValidationErrDBHidden = true;
+		}
 	}
-}

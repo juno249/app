@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('nearbyReservationMenuController', nearbyReservationMenuController);
+.controller(
+		'nearbyReservationMenuController', 
+		nearbyReservationMenuController
+		);
 
 nearbyReservationMenuController.$inject = [
 	'$localStorage', 
@@ -24,12 +27,11 @@ function nearbyReservationMenuController(
 	
 	var vm = this;
 	
-	if(null == localStorage.getItem(COMPANIES_KEY)){
-		dataService.fetchCompanies();
+	if(null == localStorage.getItem(COMPANIES_KEY)){	dataService.fetchCompanies();
 	} else {
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-	}
+		}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
@@ -37,7 +39,7 @@ function nearbyReservationMenuController(
 		
 		if(null == vm.user.reservationOrders){	vm.user.reservationOrders = {};
 		}
-	}
+		}
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
@@ -56,29 +58,27 @@ function nearbyReservationMenuController(
 	//controller_method
 	vm.subReservationOrder = subReservationOrder;
 	
-	function gotoState(
-			stateName
-			){
+	function gotoState(stateName){
 		if('customer.nearby.reservation_order' == stateName){
 			$state.go(
 					stateName, 
-					{	reservationOrders: JSON.stringify(vm.user.reservationOrders)	}, 
+					{}, 
 					{	reload: true	}
 					);
 			}
-	}
+		}
 	
 	function toggleVis(menu){
 		resetVis(menu);
 		
 		menu.isCompanyMenuHidden = !menu.isCompanyMenuHidden;
-	}
+		}
 	
 	function toStringAddress(){
 		branchService.setBranch(vm.branch);
 		
 		return branchService.toStringAddress();
-	}
+		}
 	
 	function resetVis(exemptMenu){
 		angular.forEach(
@@ -89,9 +89,9 @@ function nearbyReservationMenuController(
 						){
 					if(!(exemptMenu.menu_name == v.menu_name)){	v.isCompanyMenuHidden = true;
 					}
-				}
+					}
 				);
-	}
+		}
 	
 	function resetCompanyMenus(){
 		angular.forEach(
@@ -108,11 +108,11 @@ function nearbyReservationMenuController(
 									i
 									){
 								j.quantity = 0;
-							}
+								}
 							);
-				}
+					}
 				);
-	}
+		}
 	
 	function addReservationOrder(
 			menu, 
@@ -122,7 +122,11 @@ function nearbyReservationMenuController(
 		menuitem.quantity++;
 		
 		vm.user.reservationOrders[menuitem.menuitem_code] = menuitem;
-	}
+		localStorage.setItem(
+				USER_KEY, 
+				JSON.stringify(vm.user)
+				);
+		}
 	
 	function subReservationOrder(
 			menu, 
@@ -135,8 +139,14 @@ function nearbyReservationMenuController(
 			menuitem.quantity = 0;
 			
 			delete vm.user.reservationOrders[menuitem.menuitem_code];
+		} else {	vm.user.reservationOrders[menuitem.menuitem_code] = menuitem;
 		}
-	}
+		
+		localStorage.setItem(
+				USER_KEY, 
+				JSON.stringify(vm.user)
+				);
+		}
 	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
@@ -144,8 +154,8 @@ function nearbyReservationMenuController(
 			function(){
 				vm.companies = localStorage.getItem(COMPANIES_KEY);
 				vm.companies = JSON.parse(vm.companies);
-			}
-	);
+				}
+			);
 	
 	$scope.$watchCollection(
 			function(){	return vm.companies;
@@ -157,6 +167,6 @@ function nearbyReservationMenuController(
 				
 				resetVis(new String(''));
 				resetCompanyMenus();
-			}
-	);
-}
+				}
+			);
+	}

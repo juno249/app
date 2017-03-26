@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('reservationService', reservationService);
+.factory(
+		'reservationService', 
+		reservationService
+		);
 
 reservationService.$inject = [
 	'API_BASE_URL', 
@@ -38,7 +41,7 @@ function reservationService(
 			addReservation: addReservation, 
 			updateReservation: updateReservation, 
 			deleteReservation: deleteReservation
-	}
+			}
 	
 	function getReservations(){	return reservationServiceObj.reservations;
 	}
@@ -62,7 +65,7 @@ function reservationService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchReservationsSuccessCallback)
@@ -81,7 +84,7 @@ function reservationService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchReservationsFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -91,23 +94,22 @@ function reservationService(
 				var reservationsDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){
-					reservationsDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){	reservationsDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][RESERVATIONS_DB_FIELDS[0]]; //reservation_code
 				reservationServiceObj.reservations[key] = reservationsDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchReservation(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchReservationSuccessCallback)
@@ -126,7 +128,7 @@ function reservationService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchReservationFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -136,16 +138,15 @@ function reservationService(
 				var reservationDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){
-					reservationDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){	reservationDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][RESERVATIONS_DB_FIELDS[0]]; //reservation_code
 				reservationServiceObj.reservation[key] = reservationDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addReservation(reservations){
 		var deferred = $q.defer();
@@ -153,7 +154,7 @@ function reservationService(
 				method: 'POST', 
 				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations', 
 				data: reservations
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addReservationSuccessCallback)
@@ -165,7 +166,7 @@ function reservationService(
 		function addReservationFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateReservation(reservation){
 		var deferred = $q.defer();
@@ -173,7 +174,7 @@ function reservationService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode, 
 				data: reservation
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateReservationSuccessCallback)
@@ -185,14 +186,14 @@ function reservationService(
 		function updateReservationFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteReservation(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteReservationSuccessCallback)
@@ -204,7 +205,7 @@ function reservationService(
 		function deleteReservationFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return reservationServiceObj;
-}
+	}

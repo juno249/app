@@ -1,17 +1,18 @@
 angular
 .module('starter')
-.controller('nearbyReservationOrderController', nearbyReservationOrderController);
+.controller(
+		'nearbyReservationOrderController', 
+		nearbyReservationOrderController
+		);
 
 nearbyReservationOrderController.$inject = [
 	'$localStorage', 
-	'$scope', 
-	'$stateParams'
+	'$scope'
 	];
 
 function nearbyReservationOrderController(
 		$localStorage, 
-		$scope, 
-		$stateParams
+		$scope
 		){
 	const USER_KEY = 'User';
 	
@@ -20,10 +21,7 @@ function nearbyReservationOrderController(
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
 		vm.user = JSON.parse(vm.user);
-	}
-	
-	if(!(null == $stateParams.reservationOrders)){	vm.reservationOrders = JSON.parse($stateParams.reservationOrders);
-	}
+		}
 	
 	//controller_method
 	vm.remReservationOrder = remReservationOrder;
@@ -37,7 +35,7 @@ function nearbyReservationOrderController(
 		vm.totalCost = 0;
 		
 		angular.forEach(
-				vm.reservationOrders, 
+				vm.user.reservationOrders, 
 				function(
 						v, 
 						k
@@ -45,7 +43,7 @@ function nearbyReservationOrderController(
 					vm.totalCost += v.quantity * v.menuitem_price;
 					}
 				);
-	}
+		}
 	
 	$scope.$watchCollection(
 			function(){	return vm.reservationOrders;
@@ -53,4 +51,4 @@ function nearbyReservationOrderController(
 			function(){	getTotalCost();
 			}
 			);
-}
+	}

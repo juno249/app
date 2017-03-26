@@ -1,13 +1,16 @@
 angular
 .module('starter')
-.factory('companyService', companyService);
+.factory(
+		'companyService', 
+		companyService
+		);
 
 companyService.$inject = [
 	'API_BASE_URL', 
 	'COMPANIES_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
-	'$q' 
+	'$q'
 	];
 
 function companyService(
@@ -15,7 +18,7 @@ function companyService(
 		COMPANIES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
-		$q 
+		$q
 		){
 	const COMPANIES_KEY = 'Companies';
 	const COMPANY_KEY = 'Company';
@@ -38,7 +41,7 @@ function companyService(
 		updateCompany: updateCompany, 
 		deleteCompany: deleteCompany, 
 		uploadCompanyLogo: uploadCompanyLogo
-	}
+		}
 	
 	function getCompanies(){	return companyServiceObj.companies;
 	}
@@ -58,7 +61,7 @@ function companyService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchCompaniesSuccessCallback)
@@ -77,7 +80,7 @@ function companyService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchCompaniesFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -87,23 +90,22 @@ function companyService(
 				var companiesDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
-					companiesDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){	companiesDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][COMPANIES_DB_FIELDS[0]]; //company_name
 				companyServiceObj.companies[key] = companiesDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchCompany(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchCompanySuccessCallback)
@@ -122,7 +124,7 @@ function companyService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -132,16 +134,15 @@ function companyService(
 				var companyDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
-					companyDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){	companyDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][COMPANIES_DB_FIELDS[0]]; //company_name
 				companyServiceObj.company[key] = companyDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 
 	function addCompanyValidate(companies){
 		var deferred = $q.defer();
@@ -149,7 +150,7 @@ function companyService(
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/validate', 
 				data: companies
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addCompanyValidateSuccessCallback)
@@ -161,7 +162,7 @@ function companyService(
 		function addCompanyValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function addCompany(companies){
 		var deferred = $q.defer();
@@ -169,7 +170,7 @@ function companyService(
 				method: 'POST', 
 				url: API_BASE_URL + '/companies', 
 				data: companies
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addCompanySuccessCallback)
@@ -181,7 +182,7 @@ function companyService(
 		function addCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateCompanyValidate(company){
 		var deferred = $q.defer();
@@ -189,7 +190,7 @@ function companyService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName, 
 				data: company
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateCompanyValidateSuccessCallback)
@@ -200,8 +201,8 @@ function companyService(
 		
 		function updateCompanyValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
-		return deferred.promise;
-	}
+		return deferred.promise
+		}
 	
 	function updateCompany(company){
 		var deferred = $q.defer();
@@ -209,7 +210,7 @@ function companyService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName, 
 				data: company
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateCompanySuccessCallback)
@@ -221,14 +222,14 @@ function companyService(
 		function updateCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteCompany(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteCompanySuccessCallback)
@@ -240,7 +241,7 @@ function companyService(
 		function deleteCompanyFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function uploadCompanyLogo(imgFile){
 		var httpFD = new FormData();
@@ -263,7 +264,7 @@ function companyService(
 		function uploadCompanyLogoFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return companyServiceObj;
-}
+	}

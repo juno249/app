@@ -1,13 +1,16 @@
 angular
 .module('starter')
-.factory('branchService', branchService);
+.factory(
+		'branchService', 
+		branchService
+		);
 
 branchService.$inject = [
 	'API_BASE_URL', 
 	'BRANCHES_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
-	'$q' 
+	'$q'
 	];
 
 function branchService(
@@ -15,7 +18,7 @@ function branchService(
 		BRANCHES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
-		$q 
+		$q
 		){
 	const BRANCHES_KEY = 'Branches';
 	const BRANCH_KEY = 'Branch';
@@ -41,7 +44,7 @@ function branchService(
 			updateBranch: updateBranch, 
 			deleteBranch: deleteBranch, 
 			toStringAddress: toStringAddress
-	};
+			};
 	
 	function getBranches(){	return branchServiceObj.branches;
 	}
@@ -65,7 +68,7 @@ function branchService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchBranchesSuccessCallback)
@@ -84,7 +87,7 @@ function branchService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchBranchesFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -94,23 +97,22 @@ function branchService(
 				var branchesDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){
-					branchesDetails[BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){	branchesDetails[BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][BRANCHES_DB_FIELDS[1]]; //branch_name
 				branchServiceObj.branches[key] = branchesDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchBranch(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchBranchSuccessCallback)
@@ -129,7 +131,7 @@ function branchService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -139,16 +141,15 @@ function branchService(
 				var branchDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){
-					branchDetails[BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){	branchDetails[BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
 				}
 				
 				key = responseData[i][BRANCHES_DB_FIELDS[1]]; //branch_name
 				branchServiceObj.branch[key] = branchDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addBranchValidate(branches){
 		var deferred = $q.defer();
@@ -156,7 +157,7 @@ function branchService(
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches', 
 				data: branches
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addBranchValidateSuccessCallback)
@@ -168,7 +169,7 @@ function branchService(
 		function addBranchValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function addBranch(branches){
 		var deferred = $q.defer();
@@ -176,7 +177,7 @@ function branchService(
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches', 
 				data: branches
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addBranchSuccessCallback)
@@ -188,7 +189,7 @@ function branchService(
 		function addBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateBranchValidate(branch){
 		var deferred = $q.defer();
@@ -196,7 +197,7 @@ function branchService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName, 
 				data: branch
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateBranchValidateSuccessCallback)
@@ -208,7 +209,7 @@ function branchService(
 		function updateBranchValidateFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateBranch(branch){
 		var deferred = $q.defer();
@@ -216,7 +217,7 @@ function branchService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName, 
 				data: branch
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateBranchSuccessCallback)
@@ -228,7 +229,7 @@ function branchService(
 		function updateBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteBranch(){
 		var deferred = $q.defer();
@@ -247,7 +248,7 @@ function branchService(
 		function deleteBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function toStringAddress(){
 		const INDEX_START_ADDRESS = 3;
@@ -265,22 +266,20 @@ function branchService(
 						){
 					if(!(k < 3 || k > 9)){	branchLocArray[k-INDEX_START_ADDRESS] = branch[BRANCHES_DB_FIELDS[k]];
 					}
-				}
+					}
 				);
 		
 		angular.forEach(
 				branchLocArray, 
-				function(
-						i
-						){
+				function(i){
 					returnStr += i + ', ';
-				}
+					}
 				);
 		
 		returnStr = returnStr.substring(0, returnStr.length-2);
 		
 		return returnStr;
-	}
+		}
 	
 	return branchServiceObj;
-}
+	}

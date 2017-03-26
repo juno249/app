@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.factory('dataService', dataService);
+.factory(
+		'dataService', 
+		dataService
+		);
 
 dataService.$inject = [
 	'$localStorage', 
@@ -37,17 +40,14 @@ function dataService(
 			marketing: {}, 
 			fetchCompanies: fetchCompanies, 
 			fetchMarketing: fetchMarketing
-	}
+			}
 	
 	function getCompanies(){	return dataServiceObj.companies;
 	}
-	
 	function getMarketing(){	return dataServiceObj.marketing;
 	}
-	
 	function setCompanies(companies){	dataServiceObj.companies = companies;
 	}
-	
 	function setMarketing(marketing){	dataServiceObj.marketing = marketing;
 	}
 	
@@ -72,7 +72,7 @@ function dataService(
 							){
 						fetchBranches(v.company_name);
 						fetchMenus(v.company_name);
-					}
+						}
 					);
 			
 			function fetchBranches(companyName){
@@ -95,11 +95,11 @@ function dataService(
 									k
 									){
 								fetchTables(v.branch_name);
-							}
+								}
 							);
 					
 					try{	companies = JSON.parse(companies);
-					} catch(e){						
+					} catch(e){
 					}
 					
 					companies[companyName]['branches'] = branches;
@@ -131,16 +131,16 @@ function dataService(
 							
 							localStorage.removeItem(BRANCHES_KEY);
 							localStorage.removeItem(TABLES_KEY);
-						}
+							}
 						
 						function fetchTablesFailedCallback(responseError){	reset();
 						}
+						}
 					}
-				}
 				
 				function fetchBranchesFailedCallback(responseError){	reset();
 				}
-			}
+				}
 			
 			function fetchMenus(companyName){
 				var menus = undefined;
@@ -162,7 +162,7 @@ function dataService(
 									k
 									){
 								fetchMenuitems(v.menu_name);
-							}
+								}
 							);
 					
 					try{	companies = JSON.parse(companies);
@@ -198,21 +198,21 @@ function dataService(
 							
 							localStorage.removeItem(MENUS_KEY);
 							localStorage.removeItem(MENUITEMS_KEY);
-						}
+							}
 						
 						function fetchMenuitemsFailedCallback(responseError){	reset();
 						}
+						}
 					}
-				}
 				
 				function fetchMenusFailedCallback(responseError){	reset();
 				}
+				}
 			}
-		}
 		
 		function fetchCompaniesFailedCallback(responseError){	reset();
 		}
-	}
+		}
 	
 	function fetchMarketing(){
 		var marketing = undefined;
@@ -241,7 +241,7 @@ function dataService(
 					);
 			
 			localStorage.removeItem(ADVERTISEMENTS_KEY);
-		}
+			}
 		
 		function fetchAdvertisementsFailedCallback(responseError){	reset();
 		}
@@ -268,11 +268,11 @@ function dataService(
 					);
 			
 			localStorage.removeItem(BLOGS_KEY);
-		}
+			}
 		
 		function fetchBlogsFailedCallback(responseError){	reset();
 		}
-	}
+		}
 	
 	function reset(){
 		localStorage.removeItem(COMPANIES_KEY);
@@ -282,7 +282,7 @@ function dataService(
 		localStorage.removeItem(MENUITEMS_KEY);
 		localStorage.removeItem(ADVERTISEMENTS_KEY);
 		localStorage.removeItem(BLOGS_KEY);
-	}
+		}
 	
 	return dataServiceObj;
-}
+	}

@@ -1,10 +1,13 @@
 angular
 .module('starter')
-.factory('reservationOrderreferenceOrderService', reservationOrderreferenceOrderService);
+.factory(
+		'reservationOrderreferenceOrderService', 
+		reservationOrderreferenceOrderService
+		);
 
 reservationOrderreferenceOrderService.$inject = [
 	'$http', 
-	'$q' 
+	'$q'
 	];
 
 function reservationOrderreferenceOrderService(
@@ -13,7 +16,7 @@ function reservationOrderreferenceOrderService(
 		){
 	var reservationOrderreferenceOrderServiceObj = {
 			addReservationOrderreferenceOrder: addReservationOrderreferenceOrder
-	}
+			}
 	
 	function addReservationOrderreferenceOrder(transParams){
 		var deferred = $q.defer();
@@ -21,7 +24,7 @@ function reservationOrderreferenceOrderService(
 				method: 'POST', 
 				url: API_BASE_URL + '/reservations-orderreferences-orders', 
 				data: transParams
-		}
+				}
 		
 		$http(httpConfig)
 		.then(addReservationOrderreferenceOrderSuccessCallback)
@@ -33,7 +36,7 @@ function reservationOrderreferenceOrderService(
 		function addReservationOrderreferenceOrderFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return reservationOrderreferenceOrderServiceObj;
-}
+	}

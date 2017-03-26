@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('modalCustomerController', modalCustomerController);
+.controller(
+		'modalCustomerController', 
+		modalCustomerController
+		);
 
 modalCustomerController.$inject = [
 	'USER_GENDERS', 
@@ -59,7 +62,7 @@ function modalCustomerController(
 			customerBirthdayMonth: 'customer_birthday_month', 
 			customerBirthdayDate: 'customer_birthday_date', 
 			customerBirthdayYear: 'customer_birthday_year'
-	}
+				}
 	vm.dbColumn2Dom = {
 			customer_username: 'customerUsername', 
 			customer_password: 'customerPassword', 
@@ -79,7 +82,7 @@ function modalCustomerController(
 			customer_birthday_month: 'customerBirthdayMonth', 
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
-	}
+				}
 	vm.dbColumn2DomIndex = {
 			customer_username: 0, 
 			customer_password: 1, 
@@ -96,7 +99,7 @@ function modalCustomerController(
 			customer_address_country: 12, 
 			customer_mobile: 13, 
 			customer_email: 14
-	}
+			}
 	vm.customerRoleOptions = USER_ROLES;
 	vm.customerGenderOptions = USER_GENDERS;
 	vm.validationErr = {};
@@ -125,7 +128,7 @@ function modalCustomerController(
 				function(){	$(DOM_FORM).validator('update');
 				}
 				);
-	}
+		}
 	
 	function initBootstrapDatepicker(){
 		const DOM_CUSTOMER_BIRTHDAY = '#customerBirthday';
@@ -147,7 +150,7 @@ function modalCustomerController(
 							'Oct', 
 							'Nov', 
 							'Dec'
-						];
+							];
 						
 						$timeout(
 								function(){
@@ -179,7 +182,7 @@ function modalCustomerController(
 		
 		if(!('I' == vm.formMode)){		vm.modalHiddenFields.customerPassword = true;
 		}
-	}
+		}
 	
 	function doCancel(){	$uibModalInstance.close();
 	}
@@ -204,15 +207,15 @@ function modalCustomerController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close(data);
-			}
+				}
 			
 			function addCustomerValidateFailedCallback(responseError){
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				genValidationErrorFromResponse(responseError);
-			}
+				}
 			return;
-		}
+			}
 		
 		if('I' == vm.formMode){
 			var customer = data[0];
@@ -225,12 +228,12 @@ function modalCustomerController(
 						customer_username: customer.customer_username, 
 						company_name: user.company, 
 						branch_name: user.branch
-				};
+						};
 				transParams = {
 						customer: customer, 
 						customerCompanyBranch : customerCompanyBranch
-				};
-			}
+						};
+				}
 			
 			customerCompanyBranchService.addCustomerCompanyBranch([transParams])
 			.then(addCustomerCompanyBranchSuccessCallback)
@@ -240,7 +243,7 @@ function modalCustomerController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close();
-			}
+				}
 			
 			function addCustomerCompanyBranchFailedCallback(responseError){
 				hideBootstrapLoader($(DOM_MODAL));
@@ -250,88 +253,88 @@ function modalCustomerController(
 					genValidationErrorFromResponse(responseError);
 				} catch(e){	showBootstrapAlert(CUSTOMER_ADD_CATCH_MESSAGE);
 				}
-			}
-		} else if('A' == vm.formMode){
-			discardModalHiddenFields();
-			discardModalUnchangedFields();
-			
-			if(0 == Object.keys(data[0]).length){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				showBootstrapAlert(CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE);
-				
-				return;
-			}
-			
-			customerService.setCustomerUsername(vm.customerCapture.customerUsername);
-			
-			customerService.updateCustomer(data)
-			.then(updateCustomerSuccessCallback)
-			.catch(updateCustomerFailedCallback);
-			
-			function updateCustomerSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				$uibModalInstance.close();
-			}
-			
-			function updateCustomerFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(CUSTOMER_UPDATE_CATCH_MESSAGE);
 				}
-			}
-			
-			function discardModalHiddenFields(){
-				Object.keys(vm.modalHiddenFields).forEach(
-						function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+			} else if('A' == vm.formMode){
+				discardModalHiddenFields();
+				discardModalUnchangedFields();
+				
+				if(0 == Object.keys(data[0]).length){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					showBootstrapAlert(CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE);
+					
+					return;
+					}
+				
+				customerService.setCustomerUsername(vm.customerCapture.customerUsername);
+				
+				customerService.updateCustomer(data)
+				.then(updateCustomerSuccessCallback)
+				.catch(updateCustomerFailedCallback);
+				
+				function updateCustomerSuccessCallback(response){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					$uibModalInstance.close();
+					}
+				
+				function updateCustomerFailedCallback(responseError){
+					hideBootstrapLoader($(DOM_MODAL));
+					
+					try{
+						JSON.parse(responseError.statusText);
+						genValidationErrorFromResponse(responseError);
+						} catch(e){	showBootstrapAlert(CUSTOMER_UPDATE_CATCH_MESSAGE);
 						}
-						);
-				}
-			
-			function discardModalUnchangedFields(){
-				var dataKeys = Object.keys(data[0]);
+						}
 				
-				dataKeys.forEach(
-						function(dataKey){
-							var dataValue = data[0][dataKey];
-							var customerCaptureValue = vm.customerCapture[vm.dbColumn2Dom[dataKey]];
-							
-							if(dataValue == customerCaptureValue){	delete data[0][dataKey];
+				function discardModalHiddenFields(){
+					Object.keys(vm.modalHiddenFields).forEach(
+							function(modalHiddenFieldsKey){	delete data[0][vm.dom2DbColumn[modalHiddenFieldsKey]];
+							}
+							);
+					}
+				
+				function discardModalUnchangedFields(){
+					var dataKeys = Object.keys(data[0]);
+					
+					dataKeys.forEach(
+							function(dataKey){
+								var dataValue = data[0][dataKey];
+								var customerCaptureValue = vm.customerCapture[vm.dbColumn2Dom[dataKey]];
+								
+								if(dataValue == customerCaptureValue){	delete data[0][dataKey];
+								}
+								}
+							);
+					}
+				} else if('D' == vm.formMode){
+					customerService.setCustomerUsername(vm.customer.customerUsername);
+					
+					customerService.deleteCustomer()
+					.then(deleteCustomerSuccessCallback)
+					.catch(deleteCustomerFailedCallback);
+					
+					function deleteCustomerSuccessCallback(response){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						$uibModalInstance.close();
+						}
+					
+					function deleteCustomerFailedCallback(responseError){
+						hideBootstrapLoader($(DOM_MODAL));
+						
+						try{
+							JSON.parse(responseError.statusText);
+							genValidationErrorFromResponse(responseError);
+							} catch(e){	showBootstrapAlert(CUSTOMER_DELETE_CATCH_MESSAGE);
 							}
 							}
-						);
-				}
-		} else if('D' == vm.formMode){
-			customerService.setCustomerUsername(vm.customer.customerUsername);
-			
-			customerService.deleteCustomer()
-			.then(deleteCustomerSuccessCallback)
-			.catch(deleteCustomerFailedCallback);
-			
-			function deleteCustomerSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				$uibModalInstance.close();
-			}
-			
-			function deleteCustomerFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
-				
-				try{
-					JSON.parse(responseError.statusText);
-					genValidationErrorFromResponse(responseError);
-				} catch(e){	showBootstrapAlert(CUSTOMER_DELETE_CATCH_MESSAGE)
-				}
-			}
-		}
+					}
 		
 		validationErr = {};
 		validationErrDB = {};
-	}
+		}
 
 	function doDom2DbColumn(formMode){
 		var data = {};
@@ -346,8 +349,8 @@ function modalCustomerController(
 					}
 				);
 		
-		return data;
-	}
+		return data
+		}
 		
 	function genValidationErrorFromResponse(responseError){
 		const CLASS_FORM_GROUP = '.form-group';
@@ -357,29 +360,30 @@ function modalCustomerController(
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
 			
-		statusTextKeys.forEach(function(statusTextKey){
-			var dbColumnName = statusTextKey.split('.')[1];
-			var dbColumnIndex = getDbColumnIndex(dbColumnName);
-			var dbColumnPasswordIndex = 1;
-			var domOffset = 1;
-			var errorMessage = statusTextObj[statusTextKey][0];
-			var formGroups = $(CLASS_FORM_GROUP);
-			
-			errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
-			
-			vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
-			
-			if(dbColumnPasswordIndex < dbColumnIndex){	domOffset = 2;
-			} else {	domOffset = 1;
-			}
-			
-			formGroups.eq(parseInt(dbColumnIndex+domOffset)).addClass(CLASS_HAS_ERROR);
-			}
-		);
-			
+		statusTextKeys.forEach(
+				function(statusTextKey){
+					var dbColumnName = statusTextKey.split('.')[1];
+					var dbColumnIndex = getDbColumnIndex(dbColumnName);
+					var dbColumnPasswordIndex = 1;
+					var domOffset = 1;
+					var errorMessage = statusTextObj[statusTextKey][0];
+					var formGroups = $(CLASS_FORM_GROUP);
+					
+					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+					
+					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
+					
+					if(dbColumnPasswordIndex < dbColumnIndex){	domOffset = 2;
+					} else {	domOffset = 1;
+					}
+					
+					formGroups.eq(parseInt(dbColumnIndex+domOffset)).addClass(CLASS_HAS_ERROR);
+					}
+				);
+		
 		function getDbColumnIndex(dbColumnName){	return vm.dbColumn2DomIndex[dbColumnName];
 		}
-	}
+		}
 	
 	function showBootstrapLoader(target){	$(target).LoadingOverlay('show');
 	}
@@ -390,10 +394,10 @@ function modalCustomerController(
 	function showBootstrapAlert(validationErrDB){
 		vm.validationErrDB = validationErrDB;
 		vm.isValidationErrDBHidden = false;
-	}
+		}
 	
 	function hideBootstrapAlert(){
 		vm.validationErrDB = {};
 		vm.isValidationErrDBHidden = true;
+		}
 	}
-}

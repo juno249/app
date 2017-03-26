@@ -1,13 +1,16 @@
 angular
 .module('starter')
-.factory('menuitemService', menuitemService);
+.factory(
+		'menuitemService', 
+		menuitemService
+		);
 
 menuitemService.$inject = [
 	'API_BASE_URL', 
 	'MENUITEMS_DB_FIELDS', 
 	'$http', 
 	'$localStorage', 
-	'$q' 
+	'$q'
 	];
 
 function menuitemService(
@@ -15,7 +18,7 @@ function menuitemService(
 		MENUITEMS_DB_FIELDS, 
 		$http, 
 		$localStorage, 
-		$q 
+		$q
 		){
 	const MENUITEMS_KEY = 'Menuitems';
 	const MENUITEM_KEY = 'Menuitem';
@@ -42,7 +45,7 @@ function menuitemService(
 			updateMenuitem: updateMenuitem, 
 			deleteMenuitem: deleteMenuitem, 
 			uploadMenuitemImage: uploadMenuitemImage
-	};
+			};
 	
 	function getMenuitems(){	return menuitemServiceObj.menuitems;
 	}
@@ -70,7 +73,7 @@ function menuitemService(
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems'
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchMenuitemsSuccessCallback)
@@ -89,7 +92,7 @@ function menuitemService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchMenuitemsFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -99,23 +102,22 @@ function menuitemService(
 				var menuitemsDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(MENUITEMS_DB_FIELDS).length; j++){
-					menuitemsDetails[MENUITEMS_DB_FIELDS[j]] = responseData[i][MENUITEMS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(MENUITEMS_DB_FIELDS).length; j++){	menuitemsDetails[MENUITEMS_DB_FIELDS[j]] = responseData[i][MENUITEMS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][MENUITEMS_DB_FIELDS[1]]; //menuitem_code
 				menuitemServiceObj.menuitems[key] = menuitemsDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function fetchMenuitem(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'GET', 
 				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode
-		};
+				};
 		
 		$http(httpConfig)
 		.then(fetchMenuitemSuccessCallback)
@@ -134,7 +136,7 @@ function menuitemService(
 					);
 			
 			deferred.resolve(response);
-		}
+			}
 		
 		function fetchMenuitemFailedCallback(responseError){	deferred.reject(responseError);
 		}
@@ -144,16 +146,15 @@ function menuitemService(
 				var menuitemDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(MENUITEMS_DB_FIELDS).length; j++){
-					menuitemDetails[MENUITEMS_DB_FIELDS[j]] = responseData[i][MENUITEMS_DB_FIELDS[j]];
+				for(var j=0; j<Object.keys(MENUITEMS_DB_FIELDS).length; j++){	menuitemDetails[MENUITEMS_DB_FIELDS[j]] = responseData[i][MENUITEMS_DB_FIELDS[j]];
 				}
 				
 				var key = responseData[i][MENUITEMS_DB_FIELDS[1]]; //menuitem_code
 				menuitemServiceObj.menuitem[key] = menuitemDetails;
+				}
 			}
-		}
 		return deferred.promise;
-	}
+		}
 	
 	function addMenuitem(menuitems){
 		var deferred = $q.defer();
@@ -161,7 +162,7 @@ function menuitemService(
 				method: 'POST', 
 				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems', 
 				data: menuitems
-		};
+				};
 		
 		$http(httpConfig)
 		.then(addMenuitemsSuccessCallback)
@@ -173,7 +174,7 @@ function menuitemService(
 		function addMenuitemsFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function updateMenuitem(menuitem){
 		var deferred = $q.defer();
@@ -181,7 +182,7 @@ function menuitemService(
 				method: 'PUT', 
 				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode, 
 				data: menuitem
-		};
+				};
 		
 		$http(httpConfig)
 		.then(updateMenuitemSuccessCallback)
@@ -193,14 +194,14 @@ function menuitemService(
 		function updateMenuitemFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function deleteMenuitem(){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteMenuitemSuccessCallback)
@@ -212,7 +213,7 @@ function menuitemService(
 		function deleteMenuitemFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	function uploadMenuitemImage(imgFile){
 		var httpFD = new FormData();
@@ -235,7 +236,7 @@ function menuitemService(
 		function uploadMenuitemImageFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
-	}
+		}
 	
 	return menuitemServiceObj;
-}
+	}
