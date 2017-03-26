@@ -190,7 +190,7 @@ function customerNearbyController(
 				vm.companies = localStorage.getItem(COMPANIES_KEY);
 				vm.companies = JSON.parse(vm.companies);
 			}
-	);
+			);
 	
 	$scope.$watchCollection(
 			function(){	return vm.companies;
@@ -225,5 +225,5 @@ function customerNearbyController(
 				function getPlacePredictionsFailedCallback(status){	//do something on failure
 				}
 			}
-	);
+			);
 }
