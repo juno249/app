@@ -133,9 +133,9 @@ class menusController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . menusConstants::dbMenuName => 'required|string|max:30',
-							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30',
-							'*.' . menusConstants::dbMenuDesc => 'required|string|max:500',
+							'*.' . menusConstants::dbMenuName => 'required|string|max:30', 
+							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
+							'*.' . menusConstants::dbMenuDesc => 'required|string|max:500', 
 							'*.' . menusConstants::dbMenuImage => 'required|string|max:1000'
 					]
 					);
@@ -143,9 +143,9 @@ class menusController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . menusConstants::dbMenuName => 'sometimes|string|max:30',
-							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
-							'*.' . menusConstants::dbMenuDesc => 'sometimes|string|max:500',
+							'*.' . menusConstants::dbMenuName => 'sometimes|string|max:30', 
+							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
+							'*.' . menusConstants::dbMenuDesc => 'sometimes|string|max:500', 
 							'*.' . menusConstants::dbMenuImage => 'sometimes|string|max:1000'
 					]
 					);

@@ -160,12 +160,12 @@ class menuitemsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . menuitemsConstants::dbMenuitemCode => 'required|string|max:10',
-							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|numeric',
-							'*.' . menuitemsConstants::dbMenuitemName => 'required|string|max:30',
-							'*.' . menuitemsConstants::dbMenuitemDesc => 'required|string|max:500',
-							'*.' . menuitemsConstants::dbMenuitemPrice => 'required|numeric',
-							'*.' . menuitemsConstants::dbMenuitemFeatured => 'required|numeric',
+							'*.' . menuitemsConstants::dbMenuitemCode => 'required|string|max:10', 
+							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|numeric', 
+							'*.' . menuitemsConstants::dbMenuitemName => 'required|string|max:30', 
+							'*.' . menuitemsConstants::dbMenuitemDesc => 'required|string|max:500', 
+							'*.' . menuitemsConstants::dbMenuitemPrice => 'required|numeric', 
+							'*.' . menuitemsConstants::dbMenuitemFeatured => 'required|numeric', 
 							'*.' . menuitemsConstants::dbMenuitemImage => 'required|string|max:500'
 					]
 					);
@@ -173,12 +173,12 @@ class menuitemsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . menuitemsConstants::dbMenuitemCode => 'sometimes|string|max:10',
-							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|sometimes|numeric',
-							'*.' . menuitemsConstants::dbMenuitemName => 'sometimes|string|max:30',
-							'*.' . menuitemsConstants::dbMenuitemDesc => 'sometimes|string|max:500',
-							'*.' . menuitemsConstants::dbMenuitemPrice => 'sometimes|numeric',
-							'*.' . menuitemsConstants::dbMenuitemFeatured => 'sometimes|numeric',
+							'*.' . menuitemsConstants::dbMenuitemCode => 'sometimes|string|max:10', 
+							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|sometimes|numeric', 
+							'*.' . menuitemsConstants::dbMenuitemName => 'sometimes|string|max:30', 
+							'*.' . menuitemsConstants::dbMenuitemDesc => 'sometimes|string|max:500', 
+							'*.' . menuitemsConstants::dbMenuitemPrice => 'sometimes|numeric', 
+							'*.' . menuitemsConstants::dbMenuitemFeatured => 'sometimes|numeric', 
 							'*.' . menuitemsConstants::dbMenuitemImage => 'sometimes|string|max:500'
 					]
 					);

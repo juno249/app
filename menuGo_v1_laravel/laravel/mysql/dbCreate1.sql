@@ -180,13 +180,17 @@ CREATE TABLE IF NOT EXISTS ziplogic.blogs(
 /*
  * CREATE ziplogic.reservations
  */
+/*
+ * CREATE ziplogic.reservations
+ */
 CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
 	orderreference_code VARCHAR(40) NOT NULL, 
+	reservation_diners_count INT NOT NULL, 
 	reservation_eta DATETIME NOT NULL, 
-	reservation_paymentmode VARCHAR(30) NOT NULL, 
-	reservation_servicetime DATETIME NOT NULL, 
+	reservation_payment_mode VARCHAR(30) NOT NULL, 
+	reservation_service_time DATETIME NOT NULL, 
 	reservation_status VARCHAR(30) NOT NULL, 
 	PRIMARY KEY(reservation_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 

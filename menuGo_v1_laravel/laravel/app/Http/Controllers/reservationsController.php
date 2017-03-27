@@ -17,17 +17,19 @@ class reservationsConstants{
 	const dbReservationCode = 'reservation_code';
 	const dbCustomerUsername = 'customer_username';
 	const dbOrderreferenceCode = 'orderreference_code';
+	const dbReservationDinersCount = 'reservation_diners_count';
 	const dbReservationEta = 'reservation_eta';
-	const dbReservationPaymentmode = 'reservation_paymentmode';
-	const dbReservationServicetime = 'reservation_servicetime';
+	const dbReservationPaymentMode = 'reservation_payment_mode';
+	const dbReservationServiceTime = 'reservation_service_time';
 	const dbReservationStatus = 'reservation_status';
 	
 	const reqReservationCode = 'ReservationCode';
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqOrderreferenceCode = 'OrderreferenceCode';
+	const reqReservationDinersCount = 'ReservationDinersCount';
 	const reqReservationEta = 'ReservationEta';
-	const reqReservationPaymentmode = 'ReservationPaymentmode';
-	const reqReservationServicetime = 'ReservationServicetime';
+	const reqReservationPaymentMode = 'ReservationPaymentMode';
+	const reqReservationServiceTime = 'ReservationServiceTime';
 	const reqReservationStatus = 'ReservationStatus';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
@@ -113,14 +115,17 @@ class reservationsController extends Controller
 		if(isset($_GET[reservationsConstants::reqOrderreferenceCode])){
 			array_push($mySqlWhere, [reservationsConstants::dbOrderreferenceCode, '=' , $_GET[reservationsConstants::reqOrderreferenceCode]]);
 		}
+		if(isset($_GET[reservationsConstants::reqReservationDinersCount])){
+			array_push($mySqlWhere, [reservationsConstants::dbReservationDinersCount, '=', $_GET[reservationsConstants::reqReservationDinersCount]]);
+		}
 		if(isset($_GET[reservationsConstants::reqReservationEta])){
 			array_push($mySqlWhere, [reservationsConstants::dbReservationEta, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationEta] . '%']);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationPaymentmode])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationPaymentmode, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationPaymentmode] . '%']);
+		if(isset($_GET[reservationsConstants::reqReservationPaymentMode])){
+			array_push($mySqlWhere, [reservationsConstants::dbReservationPaymentMode, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationPaymentMode] . '%']);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationServicetime])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationServicetime, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationServicetime] . '%']);
+		if(isset($_GET[reservationsConstants::reqReservationServiceTime])){
+			array_push($mySqlWhere, [reservationsConstants::dbReservationServiceTime, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationServiceTime] . '%']);
 		}
 		if(isset($_GET[reservationsConstants::reqReservationStatus])){
 			array_push($mySqlWhere, [reservationsConstants::dbReservationStatus, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationStatus] . '%']);
@@ -148,9 +153,10 @@ class reservationsController extends Controller
 							'*.' . reservationsConstants::dbReservationCode => 'unique:reservations,reservation_code|required|max:40', 
 							'*.' . reservationsConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
 							'*.' . reservationsConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|required|string|max:40', 
+							'*.' . reservationsConstants::dbReservationDinersCount => 'required|numeric', 
 							'*.' . reservationsConstants::dbReservationEta => 'required|date_format:Y-m-d H:i:s', 
-							'*.' . reservationsConstants::dbReservationPaymentmode => 'required|string|max:30', 
-							'*.' . reservationsConstants::dbReservationServicetime => 'required|date_format:Y-m-d H:i:s', 
+							'*.' . reservationsConstants::dbReservationPaymentMode => 'required|string|max:30', 
+							'*.' . reservationsConstants::dbReservationServiceTime => 'required|date_format:Y-m-d H:i:s', 
 							'*.' . reservationsConstants::dbReservationStatus => 'required|string|max:30'
 					]
 					);
@@ -158,12 +164,13 @@ class reservationsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . reservationsConstants::dbReservationCode => 'unique:reservations,reservation_code|sometimes|max:40',
-							'*.' . reservationsConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30',
-							'*.' . reservationsConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40',
-							'*.' . reservationsConstants::dbReservationEta => 'sometimes|date_format:Y-m-d H:i:s',
-							'*.' . reservationsConstants::dbReservationPaymentmode => 'sometimes|string|max:30',
-							'*.' . reservationsConstants::dbReservationServicetime => 'sometimes|date_format:Y-m-d H:i:s',
+							'*.' . reservationsConstants::dbReservationCode => 'unique:reservations,reservation_code|sometimes|max:40', 
+							'*.' . reservationsConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
+							'*.' . reservationsConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40', 
+							'*.' . reservationsConstants::dbReservationDinersCount => 'sometimes|numeric', 
+							'*.' . reservationsConstants::dbReservationEta => 'sometimes|date_format:Y-m-d H:i:s', 
+							'*.' . reservationsConstants::dbReservationPaymentMode => 'sometimes|string|max:30', 
+							'*.' . reservationsConstants::dbReservationServiceTime => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . reservationsConstants::dbReservationStatus => 'sometimes|string|max:30'
 					]
 					);
@@ -187,7 +194,7 @@ class reservationsController extends Controller
 		for($i=0; $i<$jsonDataSize; $i++){
 			$jsonData[$i]['reservation_code'] = Uuid::generate()->string;
 			$jsonData[$i]['reservation_eta'] = Carbon::parse($jsonData[$i]['reservation_eta'])->format('Y-m-d H:i:s');
-			$jsonData[$i]['reservation_servicetime'] = Carbon::parse($jsonData[$i]['reservation_servicetime'])->format('Y-m-d H:i:s');
+			$jsonData[$i]['reservation_service_time'] = Carbon::parse($jsonData[$i]['reservation_service_time'])->format('Y-m-d H:i:s');
 		}
 		
 		if($this->isDataValid($jsonData, $errorMsg, "ADD")){

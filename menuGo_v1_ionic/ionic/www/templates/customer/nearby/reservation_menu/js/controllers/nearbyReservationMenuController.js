@@ -148,6 +148,31 @@ function nearbyReservationMenuController(
 				);
 		}
 	
+	function synchronize(){
+		angular.forEach(
+				vm.companyMenus, 
+				function(
+						v, 
+						k
+						){
+					v.quantity = 0;
+					angular.forEach(
+							v.menuitems, 
+							function(
+									j, 
+									i
+									){
+								if(!(null == vm.user.reservationOrders[j.menuitem_code])){
+									j.quantity = vm.user.reservationOrders[j.menuitem_code].quantity;
+									v.quantity += j.quantity;
+								} else {	j.quantity = 0;
+								}
+								}
+							);
+					}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -168,5 +193,24 @@ function nearbyReservationMenuController(
 				resetVis(new String(''));
 				resetCompanyMenus();
 				}
+			);
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(USER_KEY);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(USER_KEY);
+				vm.user = JSON.parse(vm.user);
+				
+				if(null == vm.user.reservationOrders){	vm.user.reservationOrders = {};
+				}
+				}
+			);
+	
+	$scope.$watchCollection(
+			function(){	return vm.user.reservationOrders;
+			}, 
+			function(){	synchronize();
+			}
 			);
 	}

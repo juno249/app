@@ -146,9 +146,9 @@ class companiesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|required|string|max:30',
-							'*.' . companiesConstants::dbCompanyDesc => 'required|string|max:500',
-							'*.' . companiesConstants::dbCompanyCategory => 'required|string|max:30',
+							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|required|string|max:30', 
+							'*.' . companiesConstants::dbCompanyDesc => 'required|string|max:500', 
+							'*.' . companiesConstants::dbCompanyCategory => 'required|string|max:30', 
 							'*.' . companiesConstants::dbCompanyLogo => 'required|string|max:500'
 					]
 					);
@@ -156,9 +156,9 @@ class companiesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|sometimes|string|max:30',
-							'*.' . companiesConstants::dbCompanyDesc => 'sometimes|string|max:500',
-							'*.' . companiesConstants::dbCompanyCategory => 'sometimes|string|max:30',
+							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|sometimes|string|max:30', 
+							'*.' . companiesConstants::dbCompanyDesc => 'sometimes|string|max:500', 
+							'*.' . companiesConstants::dbCompanyCategory => 'sometimes|string|max:30', 
 							'*.' . companiesConstants::dbCompanyLogo => 'sometimes|string|max:500'
 					]
 					);

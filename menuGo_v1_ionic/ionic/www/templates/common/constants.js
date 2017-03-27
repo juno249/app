@@ -153,10 +153,11 @@ angular
 			0: 'reservation_code', 
 			1: 'customer_username', 
 			2: 'orderreference_code', 
-			3: 'reservation_eta', 
-			4: 'reservation_paymentmode', 
-			5: 'reservation_servicetime', 
-			6: 'reservation_status'
+			3: 'reservation_diners_count', 
+			4: 'reservation_eta', 
+			5: 'reservation_payment_mode', 
+			6: 'reservation_service_time', 
+			7: 'reservation_status'
 				}
 		)
 
@@ -199,7 +200,7 @@ angular
 		)
 
 .constant(
-		'PAYMENT_METHODS', 
+		'PAYMENT_MODES', 
 		[
 			'cash', 
 			'credit card'

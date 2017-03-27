@@ -145,9 +145,9 @@ class tablesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . tablesConstants::dbTableNumber => 'required|numeric',
-							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|numeric',
-							'*.' . tablesConstants::dbTableCapacity => 'required|numeric',
+							'*.' . tablesConstants::dbTableNumber => 'required|numeric', 
+							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|numeric', 
+							'*.' . tablesConstants::dbTableCapacity => 'required|numeric', 
 							'*.' . tablesConstants::dbTableStatus => 'required|string|max:30'
 					]
 					);
@@ -155,9 +155,9 @@ class tablesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . tablesConstants::dbTableNumber => 'sometimes|numeric',
-							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|sometimes|numeric',
-							'*.' . tablesConstants::dbTableCapacity => 'sometimes|numeric',
+							'*.' . tablesConstants::dbTableNumber => 'sometimes|numeric', 
+							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|sometimes|numeric', 
+							'*.' . tablesConstants::dbTableCapacity => 'sometimes|numeric', 
 							'*.' . tablesConstants::dbTableStatus => 'sometimes|string|max:30'
 					]
 					);

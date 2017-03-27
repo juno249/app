@@ -1,3 +1,14 @@
+.row+.row{
+	margin-top: 0px;
+	padding-top: 5px;
+}
+
+div.reservation_order-container button{
+	margin: 5px 10px 5px 0px;
+	
+	min-width: 80px;
+}
+
 div.reservation_order-container div.container-header{
 	background-color: #303030;
 	color: #f0f0f0;
@@ -10,6 +21,26 @@ div.reservation_order-container div.orders-container{
 	overflow-y: scroll;	
 }
 
+div.reservation_order-container div.orders-container, 
+div.reservation_order-container div.payment-container{
+	margin-bottom: 0px;
+}
+
 div.reservation_order-container div.orders-container div.item{
 	padding: 5px 0px 5px 10px;
+}
+
+div.reservation_order-container div.payment-container div.item, 
+div.reservation_order-container div.payment-container label.item{
+	background-color: #f9f9f9;
+	
+	padding: 5px;
+}
+
+div.reservation_order-container div.payment-container div.row{
+	border-bottom: solid 1px #d3d3d3;
+}
+
+div.reservation_order-container div.payment-container label.item input{
+	max-height: 20px;
 }

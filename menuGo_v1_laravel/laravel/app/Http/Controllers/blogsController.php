@@ -130,10 +130,10 @@ class blogsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . blogsConstants::dbBlogTitle => 'sometimes|string|max:100',
-							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50',
-							'*.' . blogsConstants::dbBlogContent => 'sometimes|string|max:1000',
-							'*.' . blogsConstants::dbBlogImage => 'sometimes|string|max:500',
+							'*.' . blogsConstants::dbBlogTitle => 'sometimes|string|max:100', 
+							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50', 
+							'*.' . blogsConstants::dbBlogContent => 'sometimes|string|max:1000', 
+							'*.' . blogsConstants::dbBlogImage => 'sometimes|string|max:500', 
 							'*.' . blogsConstants::dbBlogUrl => 'sometimes|string|max:500'
 					]
 					);

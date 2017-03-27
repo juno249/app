@@ -161,14 +161,14 @@ class branchesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . branchesConstants::dbBranchName => 'required|string|max:30',
-							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'required|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressStreet => 'required|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressDistrict => 'required|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressCity => 'required|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressPostalcode => 'required|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressCountry => 'required|string|max:30',
+							'*.' . branchesConstants::dbBranchName => 'required|string|max:30', 
+							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'required|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressStreet => 'required|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressDistrict => 'required|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressCity => 'required|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressPostalcode => 'required|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressCountry => 'required|string|max:30', 
 							'*.' . branchesConstants::dbBranchHotline => 'required|string|max:10'
 					]
 					);
@@ -176,14 +176,14 @@ class branchesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . branchesConstants::dbBranchName => 'sometimes|string|max:30',
-							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'sometimes|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressStreet => 'sometimes|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressDistrict => 'sometimes|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressCity => 'sometimes|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressPostalcode => 'sometimes|string|max:30',
-							'*.' . branchesConstants::dbBranchAddressCountry => 'sometimes|string|max:30',
+							'*.' . branchesConstants::dbBranchName => 'sometimes|string|max:30', 
+							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'sometimes|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressStreet => 'sometimes|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressDistrict => 'sometimes|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressCity => 'sometimes|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressPostalcode => 'sometimes|string|max:30', 
+							'*.' . branchesConstants::dbBranchAddressCountry => 'sometimes|string|max:30', 
 							'*.' . branchesConstants::dbBranchHotline => 'sometimes|string|max:10'
 					]
 					);

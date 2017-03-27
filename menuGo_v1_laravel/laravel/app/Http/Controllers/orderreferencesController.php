@@ -127,7 +127,7 @@ class orderreferencesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . orderreferencesConstants::dbOrderreferenceCode => 'unique:orderreferences,orderreference_code|sometimes|string|max:40',
+							'*.' . orderreferencesConstants::dbOrderreferenceCode => 'unique:orderreferences,orderreference_code|sometimes|string|max:40', 
 							'*.' . orderreferencesConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30'
 					]
 					);

@@ -191,11 +191,11 @@ class advertisementsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . advertisementsConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30',
-							'*.' . advertisementsConstants::dbAdvertisementTitle => 'sometimes|string|max:100',
-							'*.' . advertisementsConstants::dbAdvertisementContent => 'sometimes|string|max:1000',
-							'*.' . advertisementsConstants::dbAdvertisementPrice => 'sometimes|numeric',
-							'*.' . advertisementsConstants::dbAdvertisementImage => 'sometimes|string|max:500',
+							'*.' . advertisementsConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
+							'*.' . advertisementsConstants::dbAdvertisementTitle => 'sometimes|string|max:100', 
+							'*.' . advertisementsConstants::dbAdvertisementContent => 'sometimes|string|max:1000', 
+							'*.' . advertisementsConstants::dbAdvertisementPrice => 'sometimes|numeric', 
+							'*.' . advertisementsConstants::dbAdvertisementImage => 'sometimes|string|max:500', 
 							'*.' . advertisementsConstants::dbAdvertisementUrl => 'sometimes|string|max:500'
 					]
 					);

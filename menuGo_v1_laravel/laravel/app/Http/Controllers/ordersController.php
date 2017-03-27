@@ -348,22 +348,22 @@ class ordersController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30',
-							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric',
-							'*.' . ordersConstants::dbTableId => 'exists:tables,table_id|required|numeric',
+							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
+							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric', 
+							'*.' . ordersConstants::dbTableId => 'exists:tables,table_id|required|numeric', 
 							'*.' . ordersConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|required|string|max:40', 
-							'*.' . ordersConstants::dbOrderStatus => 'required|string|max:30',
+							'*.' . ordersConstants::dbOrderStatus => 'required|string|max:30'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData,
 					[
-							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30',
-							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric',
-							'*.' . ordersConstants::dbTableId => 'exists:tables,table_id|sometimes|numeric',
-							'*.' . ordersConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40',
-							'*.' . ordersConstants::dbOrderStatus => 'sometimes|string|max:30',
+							'*.' . ordersConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
+							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric', 
+							'*.' . ordersConstants::dbTableId => 'exists:tables,table_id|sometimes|numeric', 
+							'*.' . ordersConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40', 
+							'*.' . ordersConstants::dbOrderStatus => 'sometimes|string|max:30'
 					]
 					);
 		}

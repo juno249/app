@@ -184,9 +184,10 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
 	orderreference_code VARCHAR(40) NOT NULL, 
+	reservation_diners_count INT NOT NULL, 
 	reservation_eta DATETIME NOT NULL, 
-	reservation_paymentmode VARCHAR(30) NOT NULL, 
-	reservation_servicetime DATETIME NOT NULL, 
+	reservation_payment_mode VARCHAR(30) NOT NULL, 
+	reservation_service_time DATETIME NOT NULL, 
 	reservation_status VARCHAR(30) NOT NULL, 
 	PRIMARY KEY(reservation_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
@@ -1295,26 +1296,29 @@ USE ziplogic;
 SET @reservation_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
 SET @customer_username = "johnvlim";
 SET @orderreference_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
+SET @reservation_diners_count = 5;
 SET @reservation_eta = "2017-03-14 12:37:00";
-SET @reservation_paymentmode = "cash";
-SET @reservation_servicetime = "2017-03-14 12:37:00";
+SET @reservation_payment_mode = "cash";
+SET @reservation_service_time = "2017-03-14 12:37:00";
 SET @reservation_status = "pending";
 
 INSERT INTO reservations(
 	reservation_code, 
 	customer_username, 
 	orderreference_code, 
+	reservation_diners_count, 
 	reservation_eta, 
-	reservation_paymentmode, 
-	reservation_servicetime, 
+	reservation_payment_mode, 
+	reservation_service_time, 
 	reservation_status
 )
 VALUES(
 	@reservation_code, 
 	@customer_username, 
 	@orderreference_code, 
+	@reservation_diners_count, 
 	@reservation_eta, 
-	@reservation_paymentmode, 
-	@reservation_servicetime, 
+	@reservation_payment_mode, 
+	@reservation_service_time, 
 	@reservation_status
 );
