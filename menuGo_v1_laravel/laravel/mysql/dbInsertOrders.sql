@@ -3,20 +3,17 @@ USE ziplogic;
 # ==========
 # RECORD 1
 # ==========
-SET @customer_username = "johnvlim";
 SET @menuitem_id = "1";
-SET @table_id = "1";
+SET @orderreference_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
 SET @order_status = "sent";
 
 INSERT INTO orders(
-	customer_username, 
-	menuitem_id,
-	table_id, 
+	menuitem_id, 
+	orderreference_code, 
 	order_status
 )
 VALUES(
-	@customer_username, 
 	@menuitem_id, 
-	@table_id, 
+	@orderreference_code, 
 	@order_status
 );

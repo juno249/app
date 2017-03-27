@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "companiesController.php";
 include_once "branchesController.php";
+include_once "companiesController.php";
 
 class tablesConstants{
 	const tablesTable = 'tables';

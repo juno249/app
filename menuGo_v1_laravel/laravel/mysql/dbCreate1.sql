@@ -123,16 +123,12 @@ CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
  * */
 CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	order_id INT NOT NULL AUTO_INCREMENT, 
-	customer_username VARCHAR(30) NOT NULL, 
 	menuitem_id INT NOT NULL, 
-	table_id INT NOT NULL, 
 	orderreference_code VARCHAR(40) NOT NULL, 
-	order_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	order_status VARCHAR(30) NOT NULL, 
+	order_status_change_timestamp NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(order_id), 
-	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
-	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 );
 
