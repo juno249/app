@@ -96,7 +96,8 @@ angular
 		'ORDERREFERENCES_DB_FIELDS', 
 		{
 			0: 'orderreference_code', 
-			1: 'customer_username'
+			1: 'customer_username', 
+			2: 'orderreference_status'
 				}
 		)
 
