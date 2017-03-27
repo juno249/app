@@ -15,9 +15,11 @@ class orderreferencesConstants{
 	
 	const dbOrderreferenceCode = 'orderreference_code';
 	const dbCustomerUsername = 'customer_username';
+	const dbOrderreferenceStatus = 'orderreference_status';
 	
 	const reqOrderreferenceCode = 'OrderreferenceCode';
 	const reqCustomerUsername = 'CustomerUsername';
+	const reqOrderreferenceStatus = 'OrderreferenceStatus';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -99,6 +101,9 @@ class orderreferencesController extends Controller
 		if(isset($_GET[orderreferencesConstants::reqCustomerUsername])){
 			array_push($mySqlWhere, [orderreferencesConstants::dbCustomerUsername, 'LIKE', '%' . $_GET[orderreferencesConstants::reqCustomerUsername] . '%']);
 		}
+		if(isset($_GET[orderreferencesConstants::reqOrderreferenceStatus])){
+			array_push($mySqlWhere, [orderreferencesConstants::dbOrderreferenceStatus, 'LIKE', '%' . $_GET[orderreferencesConstants::reqOrderreferenceStatus] . '%']);
+		}
 		
 		$orderreferencesResponse = new Response();
 		try{
@@ -120,7 +125,8 @@ class orderreferencesController extends Controller
 					$jsonData, 
 					[
 							'*.' . orderreferencesConstants::dbOrderreferenceCode => 'unique:orderreferences,orderreference_code|required|string|max:40', 
-							'*.' . orderreferencesConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30'
+							'*.' . orderreferencesConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
+							'*.' . orderreferencesConstants::dbOrderreferenceStatus => 'required|string|max:30'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
@@ -128,7 +134,8 @@ class orderreferencesController extends Controller
 					$jsonData, 
 					[
 							'*.' . orderreferencesConstants::dbOrderreferenceCode => 'unique:orderreferences,orderreference_code|sometimes|string|max:40', 
-							'*.' . orderreferencesConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30'
+							'*.' . orderreferencesConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
+							'*.' . orderreferencesConstants::dbOrderreferenceStatus => 'sometimes|string|max:30'
 					]
 					);
 		}

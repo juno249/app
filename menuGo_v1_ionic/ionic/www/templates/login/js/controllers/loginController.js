@@ -7,12 +7,14 @@ angular
 
 loginController.$inject = [
 	'USER_ROLES', 
+	'$localStorage', 
 	'$state', 
 	'loginService'
 	];
 
 function loginController(
 		USER_ROLES, 
+		$localStorage, 
 		$state, 
 		loginService
 		){
@@ -29,6 +31,8 @@ function loginController(
 	vm.doLogin = doLogin;
 	//controller_method
 	vm.doSignup = doSignup;
+	
+	localStorage.clear();
 	
 	function doLogin(){
 		loginService.setLoginUsername(vm.loginUsername);
