@@ -49,6 +49,7 @@ class branchesConstants{
 	const dbUpdateValidateSuccessMsg = 'DATA IS VALID FOR DB UPDATE OPERATION';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class branchesController extends Controller
@@ -404,12 +405,25 @@ class branchesController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(
 				400, 
 				null
 				);
+		if(isset($jsonData[0][branchesConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][branchesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchesConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$branchesResponse->setStatusCode(
+						400, 
+						branchesConstants::carbonParseErr
+						);
+				
+				return $branchesResponse;
+			}
+		}
+		
 		if($this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -445,6 +459,19 @@ class branchesController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][branchesConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][branchesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchesConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$branchesResponse->setStatusCode(
+						400, 
+						branchesConstants::carbonParseErr
+						);
+				
+				return $branchesResponse;
+			}
+		}
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 

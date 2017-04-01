@@ -40,6 +40,7 @@ class advertisementsConstants{
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ADVERTISEMENT RECORD';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class advertisementsController extends Controller
@@ -385,13 +386,29 @@ class advertisementsController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][advertisementsConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][advertisementsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][advertisementsConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$advertisementsResponse->setStatusCode(
+						400, 
+						advertisementsConstants::carbonParseErr
+						);
+				
+				return $advertisementsResponse;
+			}
+		}
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
 				"UPDATE"
 				)
 				){
-			$advertisementsResponse->setStatusCode(400, $errorMsg);
+			$advertisementsResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
 			
 			return $advertisementsResponse;
 		}

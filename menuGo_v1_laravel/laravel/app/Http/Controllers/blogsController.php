@@ -36,6 +36,7 @@ class blogsConstants{
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING BLOG RECORD';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class blogsController extends Controller
@@ -286,6 +287,19 @@ class blogsController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][blogsConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][blogsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][blogsConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$blogsResponse->setStatusCode(
+						400, 
+						blogsConstants::carbonParseErr
+						);
+				
+				return blogsResponse;
+			}
+		}
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 

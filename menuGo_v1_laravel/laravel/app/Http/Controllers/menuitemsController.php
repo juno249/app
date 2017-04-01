@@ -46,6 +46,7 @@ class menuitemsConstants{
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & MENU_NAME & MENUITEM_CODE IS NON-EXISTING';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class menuitemsController extends Controller
@@ -405,6 +406,19 @@ class menuitemsController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][menuitemsConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][menuitemsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menuitemsConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\PDOException  $e){
+				$menuitemsResponse->setStatusCode(
+						400, 
+						menuitemsConstants::carbonParseErr
+						);
+				
+				return $menuitemsResponse;
+			}
+		}
+		
 		$companyMenuMenuitem = json_decode(
 				$this->getCompanyMenuMenuitem(
 						$CompanyName, 

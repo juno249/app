@@ -36,6 +36,7 @@ class menusConstants{
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING MENU RECORD';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class menusController extends Controller
@@ -309,6 +310,19 @@ class menusController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][menusConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][menusConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menusConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$menusResponse->setStatusCode(
+						400, 
+						menusConstants::carbonParseErr
+						);
+				
+				return $menusResponse;
+			}
+		}
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 

@@ -37,6 +37,7 @@ class companiesConstants{
 	const dbUpdateValidateSuccessMsg = 'DATA IS VALID FOR DB UPDATE OPERATION';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class companiesController extends Controller
@@ -334,12 +335,25 @@ class companiesController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(
 				400, 
 				null
 				);
+		if(isset($jsonData[0][companiesConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][companiesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companiesConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$companiesResponse->setStatusCode(
+						400, 
+						companiesConstants::carbonParseErr
+						);
+				
+				return $companiesResponse;
+			}
+		}
+		
 		if($this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -374,6 +388,19 @@ class companiesController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][companiesConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][companiesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companiesConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$companiesResponse->setStatusCode(
+						400, 
+						companiesConstants::carbonParseErr
+						);
+				
+				return $companiesResponse;
+			}
+		}
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 

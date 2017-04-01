@@ -44,6 +44,7 @@ class ordersConstants{
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & BRANCH_NAME & TABLE_NUMBER & ORDERREFERENCE_CODE & ORDER IS NON-EXISTING';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class ordersController extends Controller
@@ -925,6 +926,21 @@ class ordersController extends Controller
 			}
 		}
 		
+		for($i=0; $i<jsonData; $i++){
+			if(isset($jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp])){
+				try{	$jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp])
+				->format('Y-m-d H:i:s');
+				} catch(\Exception $e){
+					$ordersResponse->setStatusCode(
+							400, 
+							orderreferencesConstants::carbonParseErr
+							);
+					
+					return $ordersResponse;
+				}
+			}
+		}
+		
 		if($this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -978,6 +994,31 @@ class ordersController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp])){
+			try{	$jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp])
+			->format('Y-m-d H:i:s');
+			} catch(\PDOException $e){
+				$ordersResponse->setStatusCode(
+						400, 
+						ordersConstants::carbonParseErr
+						);
+				
+				return $ordersResponse;
+			}
+		}
+		if(isset($jsonData[0][ordersConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][ordersConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][ordersConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$ordersResponse->setStatusCode(
+						400, 
+						ordersConstants::carbonParseErr
+						);
+				
+				return $ordersResponse;
+			}
+		}
+		
 		$companyBranchTableOrderreferenceOrder = json_decode(
 				$this->getCompanyBranchTableOrderreferenceOrder(
 						$CompanyName, 

@@ -43,6 +43,7 @@ class orderreferencesConstants{
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & BRANCH_NAME & TABLE_NUMBER & ORDERREFERENCE_CODE IS NON-EXISTING';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class orderreferencesController extends Controller
@@ -820,7 +821,22 @@ class orderreferencesController extends Controller
 		$tableId = $companyBranchTable[0][tablesConstants::dbTableId];
 		
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(!(isset(jsonData[$i][orderreferencesConstants::dbTableId]))){	$jsonData[$i][orderreferencesConstants::dbTableId] = $tableId;
+			if(!(isset($jsonData[$i][orderreferencesConstants::dbTableId]))){	$jsonData[$i][orderreferencesConstants::dbTableId] = $tableId;
+			}
+		}
+		
+		for($i=0; $i<$jsonDataSize; $i++){
+			if(isset($jsonData[$i][orderreferencesConstants::dbOrderreferenceStatusChangeTimestamp])){
+				try{	$jsonData[$i][orderreferencesConstants::dbOrderreferenceStatusChangeTimestamp] = Carbon::parse($jsonData[$i][orderreferencesConstants::dbOrderreferenceStatusChangeTimestamp])
+				->format('Y-m-d H:i:s');
+				} catch(\Exception $e){
+					$orderreferencesResponse->setStatusCode(
+							400, 
+							orderreferencesConstants::carbonParseErr
+							);
+					
+					return $orderreferencesResponse;
+				}
 			}
 		}
 		
@@ -877,6 +893,31 @@ class orderreferencesController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][orderreferencesConstants::dbOrderreferenceStatusChangeTimestamp])){
+			try{	$jsonData[0][orderreferencesConstants::dbOrderreferenceStatusChangeTimestamp] = Carbon::parse($jsonData[0][orderreferencesConstants::dbOrderreferenceStatusChangeTimestamp])
+			->format('Y-m-d H:i:s');
+			}  catch(\Exception $e){
+				$orderreferencesResponse->setStatusCode(
+						400, 
+						orderreferencesConstants::carbonParseErr
+						);
+				
+				return $orderreferencesResponse;
+			}
+		}
+		if(isset($jsonData[0][orderreferencesConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][orderreferencesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][orderreferencesConstants::dbLastChangeTimeStamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$orderreferencesResponse->setStatusCode(
+						400, 
+						orderreferencsConstants::carbonParseErr
+						);
+				
+				return $orderreferencesResponse;
+			}
+		}
+		
 		$companyBranchTableOrderreference = json_decode(
 				$this-getCompanyBranchTableOrderreference(
 						$CompanyName, 
