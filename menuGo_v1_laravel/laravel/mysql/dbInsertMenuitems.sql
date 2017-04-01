@@ -19,7 +19,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -28,7 +28,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 2
@@ -49,7 +49,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -58,7 +58,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 3
@@ -79,7 +79,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -88,7 +88,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 4
@@ -109,7 +109,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -118,7 +118,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 5
@@ -139,7 +139,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -148,7 +148,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 6
@@ -169,7 +169,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -178,7 +178,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 7
@@ -199,16 +199,16 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
 	@menuitem_name, 
 	@menuitem_desc, 
 	@menuitem_price, 
-	@menuitem_image,
+	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 8
@@ -229,7 +229,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -238,7 +238,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 9
@@ -259,7 +259,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -268,7 +268,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 10
@@ -289,16 +289,16 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
 	@menuitem_name, 
 	@menuitem_desc, 
 	@menuitem_price, 
-	@menuitem_image,
+	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 11
@@ -319,7 +319,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -328,7 +328,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 12
@@ -349,7 +349,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -358,7 +358,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 13
@@ -379,7 +379,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -388,7 +388,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 14
@@ -409,7 +409,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -418,7 +418,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 15
@@ -439,7 +439,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -448,7 +448,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 16
@@ -469,7 +469,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -478,7 +478,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 17
@@ -499,7 +499,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -508,7 +508,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 18
@@ -529,7 +529,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -538,7 +538,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 19
@@ -559,7 +559,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -568,7 +568,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 20
@@ -589,7 +589,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -598,7 +598,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 21
@@ -619,7 +619,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -628,4 +628,4 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);

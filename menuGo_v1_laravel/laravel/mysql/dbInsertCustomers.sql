@@ -41,7 +41,7 @@ INSERT INTO customers(
 	customer_birthday_month, 
 	customer_birthday_date, 
 	customer_birthday_year
-)
+	)
 VALUES(
 	@customer_username, 
 	@customer_password, 
@@ -61,7 +61,7 @@ VALUES(
 	@customer_birthday_month, 
 	@customer_birthday_date, 
 	@customer_birthday_year
-);
+	);
 
 # ==========
 # RECORD 2
@@ -104,7 +104,7 @@ INSERT INTO customers(
 	customer_birthday_month, 
 	customer_birthday_date, 
 	customer_birthday_year
-)
+	)
 VALUES(
 	@customer_username, 
 	@customer_password, 
@@ -124,4 +124,4 @@ VALUES(
 	@customer_birthday_month, 
 	@customer_birthday_date, 
 	@customer_birthday_year
-);
+	);

@@ -17,7 +17,7 @@ INSERT INTO advertisements(
 	advertisement_price, 
 	advertisement_image, 
 	advertisement_url
-)
+	)
 VALUES(
 	@company_name, 
 	@advertisement_title, 
@@ -25,7 +25,7 @@ VALUES(
 	@advertisement_price, 
 	@advertisement_image, 
 	@advertisement_url
-);
+	);
 
 # ==========
 # RECORD 2
@@ -44,7 +44,7 @@ INSERT INTO advertisements(
 	advertisement_price, 
 	advertisement_image, 
 	advertisement_url
-)
+	)
 VALUES(
 	@company_name, 
 	@advertisement_title, 
@@ -52,4 +52,4 @@ VALUES(
 	@advertisement_price, 
 	@advertisement_image, 
 	@advertisement_url
-);
+	);

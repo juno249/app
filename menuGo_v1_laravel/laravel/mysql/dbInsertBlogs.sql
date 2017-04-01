@@ -15,14 +15,14 @@ INSERT INTO blogs(
 	blog_content, 
 	blog_image, 
 	blog_url
-)
+	)
 VALUES(
 	@blog_title, 
 	@blog_author, 
 	@blog_content, 
 	@blog_image, 
 	@blog_url
-);
+	);
 
 # ==========
 # RECORD 2
@@ -39,11 +39,11 @@ INSERT INTO blogs(
 	blog_content, 
 	blog_image, 
 	blog_url
-)
+	)
 VALUES(
 	@blog_title, 
 	@blog_author, 
 	@blog_content, 
 	@blog_image, 
 	@blog_url
-);
+	);

@@ -21,7 +21,7 @@ INSERT INTO reservations(
 	reservation_payment_mode, 
 	reservation_service_time, 
 	reservation_status
-)
+	)
 VALUES(
 	@reservation_code, 
 	@customer_username, 
@@ -31,4 +31,4 @@ VALUES(
 	@reservation_payment_mode, 
 	@reservation_service_time, 
 	@reservation_status
-);
+	);

@@ -1,16 +1,8 @@
-/*
- * DROP DB/SCHEMA IF EXISTS
- */
 DROP DATABASE IF EXISTS ziplogic;
 
-/*
- * CREATE DB/SCHEMA ziplogic
- */
 CREATE DATABASE IF NOT EXISTS ziplogic;
 
-/*
- * CREATE ziplogic.customers
- */
+/*customers*/
 CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_username VARCHAR(30) NOT NULL, 
  	customer_password VARCHAR(100) NOT NULL, 
@@ -30,23 +22,21 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_birthday_month VARCHAR(10), 
  	customer_birthday_date INT, 
  	customer_birthday_year INT, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(customer_username)
-);
+ 	);
  
-/*
- * CREATE ziplogic.companies
- */
+/*companies*/
 CREATE TABLE IF NOT EXISTS ziplogic.companies(
 	company_name VARCHAR(30) NOT NULL, 
  	company_desc VARCHAR(500) NOT NULL, 
  	company_category VARCHAR(30) NOT NULL, 
  	company_logo VARCHAR(500) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(company_name)
-);
+ 	);
  
-/*
- * CREATE ziplogic.branches
- */
+ /*branches*/
 CREATE TABLE IF NOT EXISTS ziplogic.branches(
 	branch_id INT NOT NULL AUTO_INCREMENT, 
  	branch_name VARCHAR(30) NOT NULL, 
@@ -58,124 +48,81 @@ CREATE TABLE IF NOT EXISTS ziplogic.branches(
  	branch_address_postalcode VARCHAR(30) NOT NULL, 
  	branch_address_country VARCHAR(30) NOT NULL, 
  	branch_hotline VARCHAR(10) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(branch_id), 
  	UNIQUE(branch_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
-);
+ 	);
  
-/*
- * CREATE ziplogic.menus
- */
+/*menus*/
 CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	menu_id INT NOT NULL AUTO_INCREMENT, 
  	menu_name VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
  	menu_desc VARCHAR(500) NOT NULL, 
  	menu_image VARCHAR(1000) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(menu_id), 
  	UNIQUE(menu_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
-);
+ 	);
  
-/*
- * CREATE ziplogic.tables
- * */
+/*tables*/
 CREATE TABLE IF NOT EXISTS ziplogic.tables(
- 	table_id INT NOT NULL AUTO_INCREMENT,  
+ 	table_id INT NOT NULL AUTO_INCREMENT, 
  	table_number INT NOT NULL, 
  	branch_id INT NOT NULL, 
  	table_capacity INT NOT NULL, 
  	table_status VARCHAR(30), 
+ 	table_status_change_timestamp DATETIME NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(table_id), 
  	UNIQUE(table_number, branch_id), 
  	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
-);
+ 	);
   
-/*
- * CREATE ziplogic.menuitems
- */
+/*menuitems*/
 CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
- 	menuitem_id INT NOT NULL AUTO_INCREMENT,
+ 	menuitem_id INT NOT NULL AUTO_INCREMENT, 
  	menuitem_code VARCHAR(10) NOT NULL, 
  	menu_id INT NOT NULL, 
  	menuitem_name VARCHAR(30) NOT NULL, 
- 	menuitem_desc VARCHAR(500) NOT NULL,
+ 	menuitem_desc VARCHAR(500) NOT NULL, 
  	menuitem_price DOUBLE NOT NULL, 
  	menuitem_featured BOOLEAN NOT NULL, 
  	menuitem_image VARCHAR(500) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(menuitem_id), 
  	UNIQUE(menuitem_code, menu_id), 
 	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
-);
+	);
 
-/*
- * CREATE ziplogic.orderreferences
- */
+/*orderreferences*/
 CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	orderreference_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
+	table_id INT NOT NULL, 
+	orderreference_status VARCHAR(30) NOT NULL, 
+	orderreference_status_change_timestamp DATETIME NOT NULL, 
+	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(orderreference_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username)
-);
+	);
 
-/*
- * CREATE ziplogic.orders
- * */
+/*orders*/
 CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	order_id INT NOT NULL AUTO_INCREMENT, 
 	menuitem_id INT NOT NULL, 
 	orderreference_code VARCHAR(40) NOT NULL, 
 	order_status VARCHAR(30) NOT NULL, 
-	order_status_change_timestamp NOT NULL DEFAULT NOW(), 
+	order_status_change_timestamp DATETIME NOT NULL, 
+	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(order_id), 
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
-);
+	);
 
-/*
- * CREATE ziplogic.customers_companies_branches
- * */
-CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
- 	customer_username VARCHAR(30) NOT NULL, 
- 	company_name VARCHAR(30) NOT NULL, 
- 	branch_id INT NOT NULL, 
- 	PRIMARY KEY(customer_username), 
- 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
- 	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
- 	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
-);
- 
-/*
- * CREATE ziplogic.advertisements
- * */
-CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
- 	advertisement_id INT NOT NULL AUTO_INCREMENT, 
- 	company_name VARCHAR(30) NOT NULL, 
- 	advertisement_title VARCHAR(100) NOT NULL, 
- 	advertisement_content VARCHAR(1000) NOT NULL, 
- 	advertisement_price DOUBLE NOT NULL, 
- 	advertisement_image VARCHAR(500) NOT NULL, 
- 	advertisement_url VARCHAR(500) NOT NULL, 
- 	PRIMARY KEY(advertisement_id), 
- 	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
-);
- 
-/*
- * CREATE ziplogic.blogs
- * */
-CREATE TABLE IF NOT EXISTS ziplogic.blogs(
- 	blog_id INT NOT NULL AUTO_INCREMENT, 
- 	blog_title VARCHAR (100) NOT NULL, 
- 	blog_author VARCHAR(50), 
- 	blog_content VARCHAR(1000) NOT NULL, 
- 	blog_image VARCHAR(500) NOT NULL, 
- 	blog_url VARCHAR(500) NOT NULL, 
-	PRIMARY KEY(blog_id)
-);
-
-/*
- * CREATE ziplogic.reservations
- */
+/*reservations*/
 CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
@@ -185,11 +132,51 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_payment_mode VARCHAR(30) NOT NULL, 
 	reservation_service_time DATETIME NOT NULL, 
 	reservation_status VARCHAR(30) NOT NULL, 
+	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(reservation_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
-);
+	);
+	
+/*customers_companies_branches*/
+CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
+ 	customer_username VARCHAR(30) NOT NULL, 
+ 	company_name VARCHAR(30) NOT NULL, 
+ 	branch_name VARCHAR(30) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	PRIMARY KEY(customer_username), 
+ 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
+ 	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
+ 	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
+ 	);
  
+/*advertisements*/
+CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
+ 	advertisement_id INT NOT NULL AUTO_INCREMENT, 
+ 	company_name VARCHAR(30) NOT NULL, 
+ 	advertisement_title VARCHAR(100) NOT NULL, 
+ 	advertisement_content VARCHAR(1000) NOT NULL, 
+ 	advertisement_price DOUBLE NOT NULL, 
+ 	advertisement_image VARCHAR(500) NOT NULL, 
+ 	advertisement_url VARCHAR(500) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	PRIMARY KEY(advertisement_id), 
+ 	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
+ 	);
+ 
+/*blogs*/
+CREATE TABLE IF NOT EXISTS ziplogic.blogs(
+ 	blog_id INT NOT NULL AUTO_INCREMENT, 
+ 	blog_title VARCHAR (100) NOT NULL, 
+ 	blog_author VARCHAR(50) NOT NULL, 
+ 	blog_content VARCHAR(1000) NOT NULL, 
+ 	blog_image VARCHAR(500) NOT NULL, 
+ 	blog_url VARCHAR(500) NOT NULL, 
+ 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+	PRIMARY KEY(blog_id)
+	);
+
+/*customers - insert*/
 USE ziplogic;
 
 # ==========
@@ -233,7 +220,7 @@ INSERT INTO customers(
 	customer_birthday_month, 
 	customer_birthday_date, 
 	customer_birthday_year
-)
+	)
 VALUES(
 	@customer_username, 
 	@customer_password, 
@@ -253,7 +240,7 @@ VALUES(
 	@customer_birthday_month, 
 	@customer_birthday_date, 
 	@customer_birthday_year
-);
+	);
 
 # ==========
 # RECORD 2
@@ -296,7 +283,7 @@ INSERT INTO customers(
 	customer_birthday_month, 
 	customer_birthday_date, 
 	customer_birthday_year
-)
+	)
 VALUES(
 	@customer_username, 
 	@customer_password, 
@@ -316,8 +303,9 @@ VALUES(
 	@customer_birthday_month, 
 	@customer_birthday_date, 
 	@customer_birthday_year
-);
+	);
 
+/*companies - insert*/
 USE ziplogic;
 
 # ==========
@@ -325,22 +313,23 @@ USE ziplogic;
 # ==========
 SET @company_name = "Max's";
 SET @company_desc = "Max's Restaurant";
-SET @company_category = "Fine Dining"; 
+SET @company_category = "Fine Dining";
 SET @company_logo = "https://upload.wikimedia.org/wikipedia/en/d/de/Max's_Restaurant_logo.jpeg";
 
 INSERT  INTO companies(
-		company_name, 
-		company_desc, 
-		company_category, 
-		company_logo
-)	
+	company_name, 
+	company_desc, 
+	company_category, 
+	company_logo
+	)
 VALUES(
 	@company_name, 
 	@company_desc, 
 	@company_category, 
 	@company_logo
-);
+	);
 
+/*branches - insert*/
 USE ziplogic;
 
 # ==========
@@ -356,28 +345,30 @@ SET @branch_address_postalcode = "1007";
 SET @branch_address_country = "Philippines";
 SET @branch_hotline = "632-0970";
 
-INSERT  INTO branches( 
-		branch_name, 
-		company_name, 
-		branch_address_house_building, 
-		branch_address_street, 
-		branch_address_district, 
-		branch_address_city, 
-		branch_address_postalcode, 
-		branch_address_country, 
-		branch_hotline
-)	
+INSERT  INTO branches(
+	branch_name, 
+	company_name, 
+	branch_address_house_building, 
+	branch_address_street, 
+	branch_address_district, 
+	branch_address_city, 
+	branch_address_postalcode, 
+	branch_address_country, 
+	branch_hotline
+	)
 VALUES(
 	@branch_name, 
 	@company_name, 
 	@branch_address_house_building, 
 	@branch_address_street, 
 	@branch_address_district, 
-	@branch_address_city,
+	@branch_address_city, 
 	@branch_address_postalcode, 
 	@branch_address_country, 
 	@branch_hotline
-);
+	);
+	
+/*menus - insert*/
 USE ziplogic;
 
 # ==========
@@ -393,13 +384,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 2
@@ -414,13 +405,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 3
@@ -435,13 +426,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 4
@@ -456,13 +447,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 5
@@ -477,14 +468,15 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
+/*tables - insert*/
 USE ziplogic;
 
 # ==========
@@ -494,19 +486,22 @@ SET @table_number = 1;
 SET @branch_id = 1;
 SET @table_capacity = 5;
 SET @table_status = "vacant";
+SET @table_status_change_timestamp = "2017-03-14 12:37:00";
 
 INSERT INTO tables(
 	table_number, 
 	branch_id, 
 	table_capacity, 
-	table_status
-)
+	table_status, 
+	table_status_change_timestamp
+	)
 VALUES(
 	@table_number, 
 	@branch_id, 
 	@table_capacity, 
-	@table_status
-);
+	@table_status, 
+	@table_status_change_timestamp
+	);
 
 # ==========
 # RECORD 2
@@ -515,20 +510,24 @@ SET @table_number = 2;
 SET @branch_id = 1;
 SET @table_capacity = 5;
 SET @table_status = "vacant";
+SET @table_status_change_timestamp = "2017-03-14 12:37:00";
 
 INSERT INTO tables(
 	table_number, 
 	branch_id, 
 	table_capacity, 
-	table_status
-)
+	table_status, 
+	table_status_change_timestamp
+	)
 VALUES(
 	@table_number, 
 	@branch_id, 
 	@table_capacity, 
-	@table_status
-);
+	@table_status, 
+	@table_status_change_timestamp
+	);
 
+/*menuitems - insert*/
 USE ziplogic;
 
 # ==========
@@ -550,7 +549,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -559,7 +558,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 2
@@ -580,7 +579,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -589,7 +588,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 3
@@ -610,7 +609,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -619,7 +618,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 4
@@ -640,7 +639,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -649,7 +648,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 5
@@ -670,7 +669,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -679,7 +678,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 6
@@ -700,7 +699,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -709,7 +708,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 7
@@ -730,16 +729,16 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
 	@menuitem_name, 
 	@menuitem_desc, 
 	@menuitem_price, 
-	@menuitem_image,
+	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 8
@@ -760,7 +759,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -769,7 +768,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 9
@@ -790,7 +789,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -799,7 +798,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 10
@@ -820,16 +819,16 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
 	@menuitem_name, 
 	@menuitem_desc, 
 	@menuitem_price, 
-	@menuitem_image,
+	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 11
@@ -850,7 +849,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -859,7 +858,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 12
@@ -880,7 +879,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -889,7 +888,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 13
@@ -910,7 +909,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -919,7 +918,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 14
@@ -940,7 +939,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -949,7 +948,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 15
@@ -970,7 +969,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -979,7 +978,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 16
@@ -1000,7 +999,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -1009,7 +1008,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 17
@@ -1030,7 +1029,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -1039,7 +1038,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 18
@@ -1060,7 +1059,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -1069,7 +1068,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 19
@@ -1090,7 +1089,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -1099,7 +1098,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 20
@@ -1120,7 +1119,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -1129,7 +1128,7 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 # ==========
 # RECORD 21
@@ -1150,7 +1149,7 @@ INSERT INTO menuitems(
 	menuitem_price, 
 	menuitem_image, 
 	menuitem_featured
-)
+	)
 VALUES(
 	@menuitem_code, 
 	@menu_id, 
@@ -1159,131 +1158,60 @@ VALUES(
 	@menuitem_price, 
 	@menuitem_image, 
 	@menuitem_featured
-);
+	);
 
 USE ziplogic;
 
-# ==========
-# RECORD 1
-# ==========
-SET @company_name = "Max's";
-SET @advertisement_title = "Gilas Favorite Takeout Treat";
-SET @advertisement_content = "1 Whole Regular Fried Chicken with Max's Banana Ketchup and limited edition Gilas Pilipinas Eco Bag";
-SET @advertisement_price = 299;
-SET @advertisement_image = "http://2.bp.blogspot.com/-UZZk8Pdl9xw/U72-1D-a2TI/AAAAAAABCfQ/vY6b8OYtXtM/s1600/Gilas+TakeOut.jpg";
-SET @advertisement_url = "http://sweetnbonappetit.blogspot.com/2014_07_01_archive.html";
-
-INSERT INTO advertisements(
-	company_name, 
-	advertisement_title, 
-	advertisement_content, 
-	advertisement_price, 
-	advertisement_image, 
-	advertisement_url
-)
-VALUES(
-	@company_name, 
-	@advertisement_title, 
-	@advertisement_content, 
-	@advertisement_price, 
-	@advertisement_image, 
-	@advertisement_url
-);
-
-# ==========
-# RECORD 2
-# ==========
-SET @company_name = "Max's";
-SET @advertisement_title = "Fish Fillet in Black Bean Sauce";
-SET @advertisement_content = "Featuring Ruby's Favorite Fish Fillet in Black Bean Sauce";
-SET @advertisement_price = 799;
-SET @advertisement_image = "http://3.bp.blogspot.com/-rUGXqOmW7yY/Uvynn3TaDAI/AAAAAAAA1no/-uq8B3riIf0/s1600/Maxs+4Sharing+Meal.jpg";
-SET @advertisement_url = "http://www.wazzuppilipinas.com/2014/02/4sharing-sumptuous-seafood-spread-from.html";
-
-INSERT INTO advertisements(
-	company_name, 
-	advertisement_title, 
-	advertisement_content, 
-	advertisement_price, 
-	advertisement_image, 
-	advertisement_url
-)
-VALUES(
-	@company_name, 
-	@advertisement_title, 
-	@advertisement_content, 
-	@advertisement_price, 
-	@advertisement_image, 
-	@advertisement_url
-);
-
-USE ziplogic;
-
-# ==========
-# RECORD 1
-# ==========
-SET @blog_title = "Fuel your Pokemon Go craze with Boulangerie22 Pokemon Cakes";
-SET @blog_author = "Clarisse";
-SET @blog_content = "With their penchant for creating super cute character cakes, I knew it was only a matter of time before the Asian bakery chains got in on the Pokemon Go craze. And with the introduction of the Boulangerie22 Pokemon cakes, that time has finally arrived. My first encounter with Boulangerie22 was fairly recent– late last year …";
-SET @blog_image = "http://thetummytrain.com/wp-content/uploads/2017/03/Boulangerie22-Pokemon-Cakes-1.jpg";
-SET @blog_url = "http://thetummytrain.com/2017/03/10/boulangerie22-pokemon-cakes-review/";
-
-INSERT INTO blogs(
-	blog_title, 
-	blog_author, 
-	blog_content, 
-	blog_image, 
-	blog_url
-)
-VALUES(
-	@blog_title, 
-	@blog_author, 
-	@blog_content, 
-	@blog_image, 
-	@blog_url
-);
-
-# ==========
-# RECORD 2
-# ==========
-SET @blog_title = "Sapporo Travel Diary 2017: A brief visit to the Sapporo Central Wholesale Market";
-SET @blog_author = "Clarisse";
-SET @blog_content = "Despite having visited Japan twice before, would you believe this is only my first time paying a visit to a Japanese market? I guess third time really is the charm! Because I wanted to acknowledge this momentous occasion, I decided to write about it briefly as part of my travel diaries. This is the last …";
-SET @blog_image = "http://thetummytrain.com/wp-content/uploads/2017/03/Sapporo-Wholesale-Market-Crabs.jpg";
-SET @blog_url = "http://thetummytrain.com/2017/03/08/sapporo-travel-diary-2017-sapporo-central-wholesale-market/";
-
-INSERT INTO blogs(
-	blog_title, 
-	blog_author, 
-	blog_content, 
-	blog_image, 
-	blog_url
-)
-VALUES(
-	@blog_title, 
-	@blog_author, 
-	@blog_content, 
-	@blog_image, 
-	@blog_url
-);
-
-USE ziplogic;
-
+/*orderreference - insert*/
 # ==========
 # RECORD 1
 # ==========
 SET @orderreference_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
 SET @customer_username= "johnvlim";
+SET @table_id = 1;
+SET @orderreference_status = "sent";
+SET @orderreference_status_change_timestamp = "2017-03-14 12:37:00";
 
 INSERT INTO orderreferences(
 	orderreference_code, 
-	customer_username
-)
+	customer_username, 
+	table_id, 
+	orderreference_status, 
+	orderreference_status_change_timestamp
+	)
 VALUES(
 	@orderreference_code, 
-	@customer_username
-);
+	@customer_username, 
+	@table_id, 
+	@orderreference_status, 
+	@orderreference_status_change_timestamp
+	);
 
+/*orders - insert*/
+USE ziplogic;
+
+# ==========
+# RECORD 1
+# ==========
+SET @menuitem_id = "1";
+SET @orderreference_code = "cWDDDpmFb5hRCG8neSNHdWzzcSnzTL";
+SET @order_status = "sent";
+SET @order_status_change_timestamp = "2017-03-14 12:37:00";
+
+INSERT INTO orders(
+	menuitem_id, 
+	orderreference_code, 
+	order_status, 
+	order_status_change_timestamp
+	)
+VALUES(
+	@menuitem_id, 
+	@orderreference_code, 
+	@order_status, 
+	@order_status_change_timestamp
+	);
+
+/*reservations - insert*/
 USE ziplogic;
 
 # ==========
@@ -1307,7 +1235,7 @@ INSERT INTO reservations(
 	reservation_payment_mode, 
 	reservation_service_time, 
 	reservation_status
-)
+	)
 VALUES(
 	@reservation_code, 
 	@customer_username, 
@@ -1317,4 +1245,112 @@ VALUES(
 	@reservation_payment_mode, 
 	@reservation_service_time, 
 	@reservation_status
-);
+	);
+
+/*advertisements - insert*/
+USE ziplogic;
+
+# ==========
+# RECORD 1
+# ==========
+SET @company_name = "Max's";
+SET @advertisement_title = "Gilas Favorite Takeout Treat";
+SET @advertisement_content = "1 Whole Regular Fried Chicken with Max's Banana Ketchup and limited edition Gilas Pilipinas Eco Bag";
+SET @advertisement_price = 299;
+SET @advertisement_image = "http://2.bp.blogspot.com/-UZZk8Pdl9xw/U72-1D-a2TI/AAAAAAABCfQ/vY6b8OYtXtM/s1600/Gilas+TakeOut.jpg";
+SET @advertisement_url = "http://sweetnbonappetit.blogspot.com/2014_07_01_archive.html";
+
+INSERT INTO advertisements(
+	company_name, 
+	advertisement_title, 
+	advertisement_content, 
+	advertisement_price, 
+	advertisement_image, 
+	advertisement_url
+	)
+VALUES(
+	@company_name, 
+	@advertisement_title, 
+	@advertisement_content, 
+	@advertisement_price, 
+	@advertisement_image, 
+	@advertisement_url
+	);
+
+# ==========
+# RECORD 2
+# ==========
+SET @company_name = "Max's";
+SET @advertisement_title = "Fish Fillet in Black Bean Sauce";
+SET @advertisement_content = "Featuring Ruby's Favorite Fish Fillet in Black Bean Sauce";
+SET @advertisement_price = 799;
+SET @advertisement_image = "http://3.bp.blogspot.com/-rUGXqOmW7yY/Uvynn3TaDAI/AAAAAAAA1no/-uq8B3riIf0/s1600/Maxs+4Sharing+Meal.jpg";
+SET @advertisement_url = "http://www.wazzuppilipinas.com/2014/02/4sharing-sumptuous-seafood-spread-from.html";
+
+INSERT INTO advertisements(
+	company_name, 
+	advertisement_title, 
+	advertisement_content, 
+	advertisement_price, 
+	advertisement_image, 
+	advertisement_url
+	)
+VALUES(
+	@company_name, 
+	@advertisement_title, 
+	@advertisement_content, 
+	@advertisement_price, 
+	@advertisement_image, 
+	@advertisement_url
+	);
+	
+/*blogs - insert*/
+USE ziplogic;
+
+# ==========
+# RECORD 1
+# ==========
+SET @blog_title = "Fuel your Pokemon Go craze with Boulangerie22 Pokemon Cakes";
+SET @blog_author = "Clarisse";
+SET @blog_content = "With their penchant for creating super cute character cakes, I knew it was only a matter of time before the Asian bakery chains got in on the Pokemon Go craze. And with the introduction of the Boulangerie22 Pokemon cakes, that time has finally arrived. My first encounter with Boulangerie22 was fairly recent– late last year …";
+SET @blog_image = "http://thetummytrain.com/wp-content/uploads/2017/03/Boulangerie22-Pokemon-Cakes-1.jpg";
+SET @blog_url = "http://thetummytrain.com/2017/03/10/boulangerie22-pokemon-cakes-review/";
+
+INSERT INTO blogs(
+	blog_title, 
+	blog_author, 
+	blog_content, 
+	blog_image, 
+	blog_url
+	)
+VALUES(
+	@blog_title, 
+	@blog_author, 
+	@blog_content, 
+	@blog_image, 
+	@blog_url
+	);
+
+# ==========
+# RECORD 2
+# ==========
+SET @blog_title = "Sapporo Travel Diary 2017: A brief visit to the Sapporo Central Wholesale Market";
+SET @blog_author = "Clarisse";
+SET @blog_content = "Despite having visited Japan twice before, would you believe this is only my first time paying a visit to a Japanese market? I guess third time really is the charm! Because I wanted to acknowledge this momentous occasion, I decided to write about it briefly as part of my travel diaries. This is the last …";
+SET @blog_image = "http://thetummytrain.com/wp-content/uploads/2017/03/Sapporo-Wholesale-Market-Crabs.jpg";
+SET @blog_url = "http://thetummytrain.com/2017/03/08/sapporo-travel-diary-2017-sapporo-central-wholesale-market/";
+
+INSERT INTO blogs(
+	blog_title, 
+	blog_author, 
+	blog_content, 
+	blog_image, 
+	blog_url
+	)
+VALUES(
+	@blog_title, 
+	@blog_author, 
+	@blog_content, 
+	@blog_image, 
+	@blog_url
+	);

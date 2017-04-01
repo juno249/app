@@ -13,13 +13,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 2
@@ -34,13 +34,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 3
@@ -55,13 +55,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 4
@@ -76,13 +76,13 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);
 
 # ==========
 # RECORD 5
@@ -97,10 +97,10 @@ INSERT INTO menus(
 	company_name, 
 	menu_desc, 
 	menu_image
-)
+	)
 VALUES(
 	@menu_name, 
 	@company_name, 
 	@menu_desc, 
 	@menu_image
-);
+	);

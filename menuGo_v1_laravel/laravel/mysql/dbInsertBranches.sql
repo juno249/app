@@ -13,25 +13,25 @@ SET @branch_address_postalcode = "1007";
 SET @branch_address_country = "Philippines";
 SET @branch_hotline = "632-0970";
 
-INSERT  INTO branches( 
-		branch_name, 
-		company_name, 
-		branch_address_house_building, 
-		branch_address_street, 
-		branch_address_district, 
-		branch_address_city, 
-		branch_address_postalcode, 
-		branch_address_country, 
-		branch_hotline
-)	
+INSERT  INTO branches(
+	branch_name, 
+	company_name, 
+	branch_address_house_building, 
+	branch_address_street, 
+	branch_address_district, 
+	branch_address_city, 
+	branch_address_postalcode, 
+	branch_address_country, 
+	branch_hotline
+	)
 VALUES(
 	@branch_name, 
 	@company_name, 
 	@branch_address_house_building, 
 	@branch_address_street, 
 	@branch_address_district, 
-	@branch_address_city,
+	@branch_address_city, 
 	@branch_address_postalcode, 
 	@branch_address_country, 
 	@branch_hotline
-);
+	);
