@@ -106,7 +106,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	orderreference_status_change_timestamp DATETIME NOT NULL, 
 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(orderreference_code), 
-	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username)
+	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
+	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id)
 	);
 
 /*orders*/
