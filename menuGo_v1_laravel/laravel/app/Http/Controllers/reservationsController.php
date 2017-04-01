@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Uuid;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Uuid;
 
 include_once "customersController.php";
 
@@ -22,6 +22,7 @@ class reservationsConstants{
 	const dbReservationPaymentMode = 'reservation_payment_mode';
 	const dbReservationServiceTime = 'reservation_service_time';
 	const dbReservationStatus = 'reservation_status';
+	const dbLastChangeTimestamp = 'last_change_timestamp';
 	
 	const reqReservationCode = 'ReservationCode';
 	const reqCustomerUsername = 'CustomerUsername';
@@ -31,6 +32,7 @@ class reservationsConstants{
 	const reqReservationPaymentMode = 'ReservationPaymentMode';
 	const reqReservationServiceTime = 'ReservationServiceTime';
 	const reqReservationStatus = 'ReservationStatus';
+	const reqLastChangeTimestamp = 'LastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -46,8 +48,7 @@ class reservationsConstants{
 
 class reservationsController extends Controller
 {
-	public function __construct(){
-		//$this->middleware('jwt.auth');
+	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	public function getJoinCustomerReservation($mySqlWhere){
@@ -59,46 +60,75 @@ class reservationsController extends Controller
 				customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername
 				)
 				->where($mySqlWhere)
-				->get();
-				return $customerReservation;
+		->get();
+		return $customerReservation;
 	}
 	
 	//URL-->>/customers/{CustomerUsername}/reservations
 	public function getAllCustomerReservations($CustomerUsername){
 		$mySqlWhere = array();
-		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
+		array_push(
+				$mySqlWhere, 
+				[
+						customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, 
+						'=', 
+						$CustomerUsername
+				]
+				);
 		
 		$reservationsResponse = new Response();
 		try{
 			$customerReservations = $this->getJoinCustomerReservation($mySqlWhere);
-			if($customerReservations->isEmpty()){
-				$reservationsResponse->setStatusCode(200, reservationsConstants::emptyResultSetErr);
-			} else {
-				$reservationsResponse->setContent(json_encode($customerReservations));
+			if($customerReservations->isEmpty()){	$reservationsResponse->setStatusCode(
+					200, 
+					reservationsConstants::emptyResultSetErr
+					);
+			} else {	$reservationsResponse->setContent(json_encode($customerReservations));
 			}
-		} catch(\PDOException $e){
-			$reservationsResponse->setStatusCode(400, reservationsConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
+				400, 
+				reservationsConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $reservationsResponse;
 	}
 	
 	//URL-->>/customers/{CustomerUsername}/reservations/{ReservationCode}
 	public function getCustomerReservation($CustomerUsername, $ReservationCode){
 		$mySqlWhere = array();
-		array_push($mySqlWhere, [customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, '=', $CustomerUsername]);
-		array_push($mySqlWhere, [reservationsConstants::reservationsTable . '.' . reservationsConstants::dbReservationCode, '=', $ReservationCode]);
+		array_push(
+				$mySqlWhere, 
+				[
+						customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, 
+						'=', 
+						$CustomerUsername
+				]
+				);
+		array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::reservationsTable . '.' . reservationsConstants::dbReservationCode, 
+						'=', 
+						$ReservationCode
+				]
+				);
 		
 		$reservationsResponse = new Response();
 		try{
 			$customerReservations = $this->getJoinCustomerReservation($mySqlWhere);
-			if($customerReservations->isEmpty()){
-				$reservationsResponse->setStatusCode(200, reservationsConstants::emptyResultSetErr);
-			} else {
-				$reservationsResponse->setContent(json_encode($customerReservations));
+			if($customerReservations->isEmpty()){	$reservationsResponse->setStatusCode(
+					200, 
+					reservationsConstants::emptyResultSetErr
+					);
+			} else {	$reservationsResponse->setContent(json_encode($customerReservations));
 			}
-		} catch(\PDOException $e){
-			$reservationsResponse->setStatusCode(400, reservationsConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
+				400, 
+				reservationsConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $reservationsResponse;
 	}
 	
@@ -106,46 +136,113 @@ class reservationsController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
-		if(isset($_GET[reservationsConstants::reqReservationCode])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationCode, '=', $_GET[reservationsConstants::reqReservationCode]]);
+		if(isset($_GET[reservationsConstants::reqReservationCode])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbReservationCode, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqReservationCode] . '%'
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqCustomerUsername])){
-			array_push($mySqlWhere, [reservationsConstants::dbCustomerUsername, 'LIKE', '%' . $_GET[reservationsConstants::reqCustomerUsername] . '%']);
+		if(isset($_GET[reservationsConstants::reqCustomerUsername])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbCustomerUsername, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqCustomerUsername] . '%'
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqOrderreferenceCode])){
-			array_push($mySqlWhere, [reservationsConstants::dbOrderreferenceCode, '=' , $_GET[reservationsConstants::reqOrderreferenceCode]]);
+		if(isset($_GET[reservationsConstants::reqOrderreferenceCode])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbOrderreferenceCode, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqOrderreferenceCode] . '%'
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationDinersCount])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationDinersCount, '=', $_GET[reservationsConstants::reqReservationDinersCount]]);
+		if(isset($_GET[reservationsConstants::reqReservationDinersCount])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbReservationDinersCount, 
+						'=', 
+						$_GET[reservationsConstants::reqReservationDinersCount]
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationEta])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationEta, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationEta] . '%']);
+		if(isset($_GET[reservationsConstants::reqReservationEta])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbReservationEta, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqReservationEta] . '%'
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationPaymentMode])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationPaymentMode, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationPaymentMode] . '%']);
+		if(isset($_GET[reservationsConstants::reqReservationPaymentMode])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbReservationPaymentMode, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqReservationPaymentMode] . '%'
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationServiceTime])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationServiceTime, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationServiceTime] . '%']);
+		if(isset($_GET[reservationsConstants::reqReservationServiceTime])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbReservationServiceTime, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqReservationServiceTime] . '%'
+				]
+				);
 		}
-		if(isset($_GET[reservationsConstants::reqReservationStatus])){
-			array_push($mySqlWhere, [reservationsConstants::dbReservationStatus, 'LIKE', '%' . $_GET[reservationsConstants::reqReservationStatus] . '%']);
+		if(isset($_GET[reservationsConstants::reqReservationStatus])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbReservationStatus, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqReservationStatus] . '%'
+				]
+				);
+		}
+		if(isset($_GET[reservationsConstants::reqLastChangeTimestamp])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationsConstants::dbLastChangeTimestamp, 
+						'LIKE', 
+						'%' . $_GET[reservationsConstants::reqLastChangeTimestamp] . '%'
+				]
+				);
 		}
 		
 		$reservationsResponse = new Response();
 		try{
-			$customerReservations = DB::table(reservationsConstants::reservationsTable)->where($mySqlWhere)->get();
-			if($customerReservations->isEmpty()){
-				$reservationsResponse->setStatusCode(200, reservationsConstants::emptyResultSetErr);
-			} else {
-				$reservationsResponse->setContent(json_encode($customerReservations));
+			$customerReservations = DB::table(reservationsConstants::reservationsTable)
+			->where($mySqlWhere)
+			->get();
+			if($customerReservations->isEmpty()){	$reservationsResponse->setStatusCode(
+					200, 
+					reservationsConstants::emptyResultSetErr
+					);
+			} else {	$reservationsResponse->setContent(json_encode($customerReservations));
 			}
-		} catch(\PDOException $e){
-			$reservationsResponse->setStatusCode(400, reservationsConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
+				400, 
+				reservationsConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $reservationsResponse;
 	}
 	
-	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
+	public function isDataValid(
+			$jsonData, 
+			&$errorMsg, 
+			$dbOperation
+			){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
@@ -171,87 +268,183 @@ class reservationsController extends Controller
 							'*.' . reservationsConstants::dbReservationEta => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . reservationsConstants::dbReservationPaymentMode => 'sometimes|string|max:30', 
 							'*.' . reservationsConstants::dbReservationServiceTime => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . reservationsConstants::dbReservationStatus => 'sometimes|string|max:30'
+							'*.' . reservationsConstants::dbReservationStatus => 'sometimes|string|max:30', 
+							'*.' . reservationsConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
+		
 		if($jsonValidation->fails()){
 			$errorMsg = $jsonValidation->messages();
+			
 			return false;
-		} else {
-			return true;
+		} else {	return true;
 		}
 	}
 	
 	//URL-->>/customer/{CustomerUsername}/reservations
-	public function addReservation(Request $jsonRequest, $CustomerUsername){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
+	public function addReservation(
+			Request $jsonRequest, 
+			$CustomerUsername
+			){
+		$jsonData = json_decode(
+				$jsonRequest->getContent(), 
+				true
+				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 		
 		$reservationsResponse = new Response();
-		$reservationsResponse->setStatusCode(400, null);
+		$reservationsResponse->setStatusCode(
+				400, 
+				null
+				);
 		for($i=0; $i<$jsonDataSize; $i++){
-			$jsonData[$i]['reservation_code'] = Uuid::generate()->string;
-			$jsonData[$i]['reservation_eta'] = Carbon::parse($jsonData[$i]['reservation_eta'])->format('Y-m-d H:i:s');
-			$jsonData[$i]['reservation_service_time'] = Carbon::parse($jsonData[$i]['reservation_service_time'])->format('Y-m-d H:i:s');
+			$jsonData[$i][reservationsConstants::dbReservationCode] = Uuid::generate()
+			->string;
+			$jsonData[$i][reservationsConstants::dbReservationEta] = Carbon::parse($jsonData[$i][reservationsConstants::dbReservationEta])
+			->format('Y-m-d H:i:s');
+			$jsonData[$i][reservationsConstants::dbReservationServiceTime] = Carbon::parse($jsonData[$i][reservationsConstants::dbReservationServiceTime])
+			->format('Y-m-d H:i:s');
 		}
 		
-		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
+		if($this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"ADD"
+				)
+				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{	DB::table(reservationsConstants::reservationsTable)->insert($jsonData[$i]);
+				try{	DB::table(reservationsConstants::reservationsTable)
+				->insert($jsonData[$i]);
 				} catch(\PDOException $e){
-					$reservationsResponse->setStatusCode(400, $e->getMessage());
+					$reservationsResponse->setStatusCode(
+							400, 
+							reservationsConstants::dbAddCatchMsg);
+					
 					return $reservationsResponse;
 				}
 			}
 		} else {
-			$reservationsResponse->setStatusCode(400, $errorMsg);
+			$reservationsResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
 			return $reservationsResponse;
 		}
+		
 		return reservationsConstants::dbAddSuccessMsg;
 	}
 	
 	//URL-->>/customer/{CustomerUsername}/reservations/{ReservationCode}
-	public function updateReservation(Request $jsonRequest, $CustomerUsername, $ReservationCode){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
+	public function updateReservation(
+			Request $jsonRequest, 
+			$CustomerUsername, 
+			$ReservationCode
+			){
+		$jsonData = json_decode(
+				$jsonRequest->getContent(), 
+				true
+				);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 		
 		$reservationsResponse = new Response();
-		$reservationsResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
-			$reservationsResponse->setStatusCode(400, $errorMsg);
+		$reservationsResponse->setStatusCode(
+				400, 
+				null
+				);
+		if(!$this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"UPDATE"
+				)
+				){
+			$reservationsResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
 			return $reservationsResponse;
 		}
 		
 		try{
-			array_push($mySqlWhere, [reservationsConstants::dbCustomerUsername, '=', $CustomerUsername]);
-			array_push($mySqlWhere, [reservationsConstants::dbReservationCode, '=', $ReservationCode]);
-			DB::table(reservationsConstants::reservationsTable)->where($mySqlWhere)->update($jsonData[0]);
+			array_push(
+					$mySqlWhere, 
+					[
+							reservationsConstants::dbCustomerUsername, 
+							'=', 
+							$CustomerUsername
+					]
+					);
+			array_push(
+					$mySqlWhere, 
+					[
+							reservationsConstants::dbReservationCode, 
+							'=', 
+							$ReservationCode
+					]
+					);
+			DB::table(reservationsConstants::reservationsTable)
+			->where($mySqlWhere)
+			->update($jsonData[0]);
 		} catch(\PDOException $e){
-			$reservationsResponse->setStatusCode(400, reservationsConstants::dbUpdateCatchMsg);
+			$reservationsResponse->setStatusCode(
+					400, 
+					reservationsConstants::dbUpdateCatchMsg
+					);
+			
 			return $reservationsResponse;
 		}
+		
 		return reservationsConstants::dbUpdateSuccessMsg;
 	}
 	
 	//URL-->>/customer/{CustomerUsername}/reservations/{ReservationCode}
-	public function deleteReservation(Request $jsonRequest, $CustomerUsername, $ReservationCode){
+	public function deleteReservation(
+			Request $jsonRequest, 
+			$CustomerUsername, 
+			$ReservationCode
+			){
 		$mySqlWhere = array();
 		$errorMsg = '';
 		
 		$reservationsResponse = new Response();
-		$reservationsResponse->setStatusCode(400, null);
+		$reservationsResponse->setStatusCode(
+				400, 
+				null
+				);
 		try{
-			array_push($mySqlWhere, [reservationsConstants::dbCustomerUsername, '=', $CustomerUsername]);
-			array_push($mySqlWhere, [reservationsConstants::dbReservationCode, '=', $ReservationCode]);
-			DB::table(reservationsConstants::reservationsTable)->where($mySqlWhere)->delete();	
+			array_push(
+					$mySqlWhere, 
+					[
+							reservationsConstants::dbCustomerUsername, 
+							'=', 
+							$CustomerUsername
+					]
+					);
+			array_push(
+					$mySqlWhere, 
+					[
+							reservationsConstants::dbReservationCode, 
+							'=', 
+							$ReservationCode
+					]
+					);
+			DB::table(reservationsConstants::reservationsTable)
+			->where($mySqlWhere)
+			->delete();
 		} catch(\PDOException $e){
-			$reservationsResponse->setStatusCode(400, reservationsConstants::dbDeleteCatchMsg);
+			$reservationsResponse->setStatusCode(
+					400, 
+					reservationsConstants::dbDeleteCatchMsg
+					);
+			
 			return $reservationsResponse;
 		}
+		
 		return reservationsConstants::dbDeleteSuccessMsg;
 	}
 }

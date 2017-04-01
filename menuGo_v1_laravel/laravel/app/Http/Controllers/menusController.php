@@ -17,12 +17,14 @@ class menusConstants{
 	const dbMenuName = 'menu_name';
 	const dbMenuDesc = 'menu_desc';
 	const dbMenuImage = 'menu_image';
+	const dbLastChangeTimestamp = 'last_change_timestamp';
 	
 	const reqMenuId = 'MenuId';
 	const reqCompanyName = 'CompanyName';
 	const reqMenuName = 'MenuName';
 	const reqMenuDesc = 'MenuDesc';
 	const reqMenuImage = 'MenuImage';
+	const reqLastChangeTimestamp = 'LastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -38,59 +40,91 @@ class menusConstants{
 
 class menusController extends Controller
 {
-	public function __construct(){
-		//$this->middleware('jwt.auth');
+	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	public function getJoinCompanyMenu($mySqlWhere){
 		$companyMenu = DB::table(menusConstants::menusTable)
 		->join(
-				companiesConstants::companiesTable,
-				menusConstants::menusTable . '.' . menusConstants::dbCompanyName,
-				'=',
+				companiesConstants::companiesTable, 
+				menusConstants::menusTable . '.' . menusConstants::dbCompanyName, 
+				'=', 
 				companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
 				)
 				->where($mySqlWhere)
 				->get();
+		
 				return $companyMenu;
 	}
 
 	//URL-->>/companies/{CompanyName}/menus
 	public function getAllCompanyMenus($CompanyName){
 		$mySqlWhere = array();
-		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
+		array_push(
+				$mySqlWhere, 
+				[
+						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						'=', 
+						$CompanyName
+				]
+				);
 		
 		$menusResponse = new Response();
 		try{
 			$companyMenus = $this->getJoinCompanyMenu($mySqlWhere); 
-			if($companyMenus->isEmpty()){
-				$menusResponse->setStatusCode(200, menusConstants::emptyResultSetErr);
-			} else {
-				$menusResponse->setContent(json_encode($companyMenus));
+			if($companyMenus->isEmpty()){	$menusResponse->setStatusCode(
+					200, 
+					menusConstants::emptyResultSetErr
+					);
+			} else {	$menusResponse->setContent(json_encode($companyMenus));
 			}
-		} catch(\PDOException $e){
-			$menusResponse->setStatusCode(400, menusConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$menusResponse->setStatusCode(
+				400, 
+				menusConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $menusResponse;
 	}
 
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}
-	public function getCompanyMenu($CompanyName, $MenuName){
+	public function getCompanyMenu(
+			$CompanyName, 
+			$MenuName
+			){
 		$mySqlWhere = array();
-		array_push($mySqlWhere, [companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, '=', $CompanyName]);
-		array_push($mySqlWhere, [menusConstants::menusTable . '.' . menusConstants::dbMenuName, '=', $MenuName]);
+		array_push(
+				$mySqlWhere, 
+				[
+						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						'=', 
+						$CompanyName
+				]
+				);
+		array_push(
+				$mySqlWhere, 
+				[
+						menusConstants::menusTable . '.' . menusConstants::dbMenuName, 
+						'=', 
+						$MenuName
+				]
+				);
 		
 		$menusResponse = new Response();
 		try{
 			$companyMenu = $this->getJoinCompanyMenu($mySqlWhere);
-			if($companyMenu->isEmpty()){
-				$menusResponse->setStatusCode(200, menusConstants::emptyResultSetErr);
-			} else {
-				$menusResponse->setContent(json_encode($companyMenu));
+			if($companyMenu->isEmpty()){	$menusResponse->setStatusCode(
+					200, 
+					menusConstants::emptyResultSetErr
+					);
+			} else {	$menusResponse->setContent(json_encode($companyMenu));
 			}
-		} catch(\PDOException $e){
-			$menusResponse->setStatusCode(400, menusConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$menusResponse->setStatusCode(
+				400, 
+				menusConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $menusResponse;
 	}
 
@@ -98,40 +132,88 @@ class menusController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 
-		if(isset($_GET[menusConstants::reqMenuId])){
-			array_push($mySqlWhere, [menusConstants::dbMenuId, '=', $_GET[menusConstants::reqMenuId]]);
+		if(isset($_GET[menusConstants::reqMenuId])){	array_push(
+				$mySqlWhere, 
+				[
+						menusConstants::dbMenuId, 
+						'=', 
+						$_GET[menusConstants::reqMenuId]
+				]
+				);
 		}
-		if(isset($_GET[menusConstants::reqCompanyName])){
-			array_push($mySqlWhere, [menusConstants::dbCompanyName, 'LIKE', '%' . $_GET[menusConstants::reqCompanyName] . '%']);
+		if(isset($_GET[menusConstants::reqMenuName])){	array_push(
+				$mySqlWhere,
+				[
+						menusConstants::dbMenuName,
+						'LIKE',
+						'%' . $_GET[menusConstants::reqMenuName] . '%'
+				]
+				);
 		}
-		if(isset($_GET[menusConstants::reqMenuName])){
-			array_push($mySqlWhere, [menusConstants::dbMenuName, 'LIKE', '%' . $_GET[menusConstants::reqMenuName] . '%']);
+		if(isset($_GET[menusConstants::reqCompanyName])){	array_push(
+				$mySqlWhere, 
+				[
+						menusConstants::dbCompanyName, 
+						'LIKE', 
+						'%' . $_GET[menusConstants::reqCompanyName] . '%'
+				]
+				);
 		}
-		if(isset($_GET[menusConstants::reqMenuDesc])){
-			array_push($mySqlWhere, [menusConstants::dbMenuDesc, 'LIKE', '%' . $_GET[menusConstants::reqMenuDesc] . '%']);
+		if(isset($_GET[menusConstants::reqMenuDesc])){	array_push(
+				$mySqlWhere, 
+				[
+						menusConstants::dbMenuDesc, 
+						'LIKE', 
+						'%' . $_GET[menusConstants::reqMenuDesc] . '%'
+				]
+				);
 		}
-		if(isset($_GET[menusConstants::reqMenuImage])){
-			array_push($mySqlWhere, [menusConstants::dbMenuImage, 'LIKE', '%' . $_GET[menusConstants::reqMenuImage] . '%']);
+		if(isset($_GET[menusConstants::reqMenuImage])){	array_push(
+				$mySqlWhere, [
+						menusConstants::dbMenuImage, 
+						'LIKE', 
+						'%' . $_GET[menusConstants::reqMenuImage] . '%'
+				]
+				);
+		}
+		if(isset($_GET[menusConstants::reqLastChangeTimestamp])){	array_push(
+				$mySqlWhere, 
+				[
+						menusConstants::dbLastChangeTimestamp, 
+						'LIKE', 
+						'%' . $_GET[menusConstants::reqLastChangeTimestamp] . '%'
+				]
+				);
 		}
 
 		$menusResponse = new Response();
 		try{
-			$companyMenus = DB::table(menusConstants::menusTable)->where($mySqlWhere)->get();
-			if($companyMenus->isEmpty()){
-				$menusResponse->setStatusCode(200, menusConstants::emptyResultSetErr);
-			} else {
-				$menusResponse->setContent(json_encode($companyMenus));
+			$companyMenus = DB::table(menusConstants::menusTable)
+			->where($mySqlWhere)
+			->get();
+			if($companyMenus->isEmpty()){	$menusResponse->setStatusCode(
+					200, 
+					menusConstants::emptyResultSetErr
+					);
+			} else {	$menusResponse->setContent(json_encode($companyMenus));
 			}
-		} catch(\PDOException $e){
-			$menusResponse->setStatusCode(400, menusConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$menusResponse->setStatusCode(
+				400, 
+				menusConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $menusResponse;
 	}
 	
-	private function isDataValid($jsonData, &$errorMsg, $dbOperation){
+	private function isDataValid(
+			$jsonData, 
+			&$errorMsg, 
+			$dbOperation
+			){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonData,
+					$jsonData, 
 					[
 							'*.' . menusConstants::dbMenuName => 'required|string|max:30', 
 							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
@@ -141,88 +223,180 @@ class menusController extends Controller
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
-					$jsonData,
+					$jsonData, 
 					[
 							'*.' . menusConstants::dbMenuName => 'sometimes|string|max:30', 
 							'*.' . menusConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
 							'*.' . menusConstants::dbMenuDesc => 'sometimes|string|max:500', 
-							'*.' . menusConstants::dbMenuImage => 'sometimes|string|max:1000'
+							'*.' . menusConstants::dbMenuImage => 'sometimes|string|max:1000', 
+							'*.' . menusConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
+		
 		if($jsonValidation->fails()){
 			$errorMsg = $jsonValidation->messages();
+			
 			return false;
-		} else {
-			return true;
+		} else {	return true;
 		}
 	}
 
 	//URL-->>/companies/{CompanyName}/menus
-	public function addMenu(Request $jsonRequest, $CompanyName){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
+	public function addMenu(
+			Request $jsonRequest, 
+			$CompanyName
+			){
+		$jsonData = json_decode(
+				$jsonRequest->getContent(), 
+				true
+				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 	
 		$menusResponse = new Response();
-		$menusResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
+		$menusResponse->setStatusCode(
+				400, 
+				null
+				);
+		if($this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"ADD"
+				)
+				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i]['company_name'] == $CompanyName){
-					try{		DB::table(menusConstants::menusTable)->insert($jsonData[$i]);
-					} catch(\PDOException $e){
-						$menusResponse->setStatusCode(400, menusConstants::dbAddCatchMsg);
+				if($jsonData[$i][menusConstants::dbCompanyName] == $CompanyName){
+					try{		DB::table(menusConstants::menusTable)
+					->insert($jsonData[$i]);
+					} catch(\PDOException $e){	$menusResponse->setStatusCode(
+							400, 
+							menusConstants::dbAddCatchMsg
+							);
+					
 						return $menusResponse;
 					}
 				}
 			}
 		} else {
-			$menusResponse->setStatusCode(400, $errorMsg);
+			$menusResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
 			return $menusResponse;
 		}
+		
 		return menusConstants::dbAddSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}
-	public function updateMenu(Request $jsonRequest, $CompanyName, $MenuName){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
+	public function updateMenu(
+			Request $jsonRequest, 
+			$CompanyName, 
+			$MenuName
+			){
+		$jsonData = json_decode(
+				$jsonRequest->getContent(), 
+				true
+				);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 	
 		$menusResponse = new Response();
-		$menusResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
-			$menusResponse->setStatusCode(400, $errorMsg);
+		$menusResponse->setStatusCode(
+				400, 
+				null
+				);
+		if(!$this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"UPDATE"
+				)
+				){
+			$menusResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
 			return $menusResponse;
 		}
 	
 		try{
-			array_push($mySqlWhere, [menusConstants::dbCompanyName, '=', $CompanyName]);
-			array_push($mySqlWhere, [menusConstants::dbMenuName, '=', $MenuName]);
-			DB::table(menusConstants::menusTable)->where($mySqlWhere)->update($jsonData[0]);
+			array_push(
+					$mySqlWhere, 
+					[
+							menusConstants::dbCompanyName, 
+							'=', 
+							$CompanyName
+					]
+					);
+			array_push(
+					$mySqlWhere, 
+					[
+							menusConstants::dbMenuName, 
+							'=', 
+							$MenuName
+					]
+					);
+			DB::table(menusConstants::menusTable)
+			->where($mySqlWhere)
+			->update($jsonData[0]);
 		} catch(\PDOException $e){
-			$menusResponse->setStatusCode(400, menusConstants::dbUpdateCatchMsg);
+			$menusResponse->setStatusCode(
+					400, 
+					menusConstants::dbUpdateCatchMsg
+					);
+			
 			return $menusResponse;
 		}
+		
 		return menusConstants::dbUpdateSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}
-	public function deleteMenu($CompanyName, $MenuName){
+	public function deleteMenu(
+			$CompanyName, 
+			$MenuName
+			){
 		$mySqlWhere = array();
 		$errorMsg = '';
 		
 		$menusResponse = new Response();
-		$menusResponse->setStatusCode(400, null);
+		$menusResponse->setStatusCode(
+				400, 
+				null
+				);
 		try{
-			array_push($mySqlWhere, [menusConstants::dbCompanyName, '=', $CompanyName]);
-			array_push($mySqlWhere, [menusConstants::dbMenuName, '=', $MenuName]);
-			DB::table(menusConstants::menusTable)->where($mySqlWhere)->delete();
+			array_push(
+					$mySqlWhere, 
+					[
+							menusConstants::dbCompanyName, 
+							'=', 
+							$CompanyName
+					]
+					);
+			array_push(
+					$mySqlWhere, 
+					[
+							menusConstants::dbMenuName, 
+							'=', 
+							$MenuName
+					]
+					);
+			DB::table(menusConstants::menusTable)
+			->where($mySqlWhere)
+			->delete();
 		} catch(\PDOException $e){
-			$menusResponse->setStatusCode(400, menusConstants::dbDeleteCatchMsg);
+			$menusResponse->setStatusCode(
+					400, 
+					menusConstants::dbDeleteCatchMsg
+					);
+			
 			return $menusResponse;
 		}
+		
 		return menusConstants::dbDeleteSuccessMsg;
 	}
 }

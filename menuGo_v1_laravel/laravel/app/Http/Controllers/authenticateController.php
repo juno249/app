@@ -26,68 +26,77 @@ class authenticateController extends Controller
 	//URL-->>/login
 	public function authenticate(Request $request){
 		$loginCredentials = $request->only(
-				customersConstants::dbCustomerUsername,
+				customersConstants::dbCustomerUsername, 
 				customersConstants::dbCustomerPassword
 				);
-		try{
-			$jwtAuthToken = JWTAuth::attempt($loginCredentials);
+		
+		try{	$jwtAuthToken = JWTAuth::attempt($loginCredentials);
 		} catch(InvalidClaimException $err){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
-					$err->getStatusCode(),
+					$err->getStatusCode(), 
 					$this::ERR_INVALID_CLAIM_EXCEPTION
 					);
+			
 			return $authResponse;
 		} catch(PayloadException $err){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
-					$err->getStatusCode(),
+					$err->getStatusCode(), 
 					$this::ERR_PAYLOAD_EXCEPTION
 					);
+			
 			return $authResponse;
 		} catch(TokenBlacklistedException $err){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
-					$err->getStatusCode(),
+					$err->getStatusCode(), 
 					$this::ERR_TOKEN_BLACKLISTED_EXCEPTION
 					);
+			
 			return $authResponse;
 		} catch(TokenExpiredException $err){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
-					$err->getStatusCode(),
+					$err->getStatusCode(), 
 					$this::ERR_TOKEN_EXPIRED_EXCEPTION
 					);
+			
 			return $authResponse;
 		} catch(TokenInvalidException $err){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
-					$err->getStatusCode(),
+					$err->getStatusCode(), 
 					$this::ERR_TOKEN_INVALID_EXCEPTION
 					);
+			
 			return $authResponse;
 		}
 
 		if(!$jwtAuthToken){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
-					$this::STATUS_CODE_INVALID_LOGIN_CREDENTIALS,
+					$this::STATUS_CODE_INVALID_LOGIN_CREDENTIALS, 
 					$this::ERR_INVALID_LOGIN_CREDENTIALS
 					);
+			
 			return $authResponse;
 		}
 
-		/*
-		 * retrieve user details
-		 * */
+		//get user details
 		$mySqlWhere = array();
-		array_push($mySqlWhere, [
-				customersConstants::dbCustomerUsername,
-				'=',
-				$loginCredentials[customersConstants::dbCustomerUsername]
-		]);
+		array_push(
+				$mySqlWhere, 
+				[
+						customersConstants::dbCustomerUsername, 
+						'=', 
+						$loginCredentials[customersConstants::dbCustomerUsername]
+				]
+				);
 
-		$user = (array)DB::table(customersConstants::customersTable)->where($mySqlWhere)->first();
+		$user = (array)DB::table(customersConstants::customersTable)
+		->where($mySqlWhere)
+		->first();
 
 		$userDetails = array();
 		$userDetails[customersConstants::dbCustomerUsername] = $user[customersConstants::dbCustomerUsername];
@@ -97,11 +106,13 @@ class authenticateController extends Controller
 		$userDetails[customersConstants::dbCustomerRole] = $user[customersConstants::dbCustomerRole];
 
 		return response()
-		->json([
-				'Token' => $jwtAuthToken,
-				'Message' => $this::SUCCESS_MESSAGE,
-				'Status' => $this::STATUS_CODE_SUCCESS,
-				'User' => $userDetails
-		]);
+		->json(
+				[
+						'Token' => $jwtAuthToken, 
+						'Message' => $this::SUCCESS_MESSAGE, 
+						'Status' => $this::STATUS_CODE_SUCCESS, 
+						'User' => $userDetails
+				]
+				);
 	}
 }

@@ -16,6 +16,7 @@ class blogsConstants{
 	const dbBlogContent = 'blog_content';
 	const dbBlogImage = 'blog_image';
 	const dbBlogUrl = 'blog_url';
+	const dbLastChangeTimestamp = 'last_change_timestamp';
 	
 	const reqBlogId = 'BlogId';
 	const reqBlogTitle = 'BlogTitle';
@@ -23,6 +24,7 @@ class blogsConstants{
 	const reqBlogContent = 'BlogContent';
 	const reqBlogImage = 'BlogImage';
 	const reqBlogUrl = 'BlogUrl';
+	const reqLastChangeTimestamp = 'LastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -38,42 +40,61 @@ class blogsConstants{
 
 class blogsController extends Controller
 {
-	public function __construct(){
-		//$this->middleware('jwt.auth');
+	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	//URL-->>/blogs
 	public function getAllBlogs(){
 		$blogsResponse = new Response();
+		
 		try{
-			$blogs = DB::table(blogsConstants::blogsTable)->get();
-			if($blogs->isEmpty()){
-				$blogs->setStatusCode(200, blogsConstants::emptyResultSetErr);
-			} else {
-				$blogsResponse->setContent(json_encode($blogs));
+			$blogs = DB::table(blogsConstants::blogsTable)
+			->get();
+			if($blogs->isEmpty()){	$blogs->setStatusCode(
+					200, 
+					blogsConstants::emptyResultSetErr
+					);
+			} else {	$blogsResponse->setContent(json_encode($blogs));
 			}
-		} catch(\PDOException $e){
-			$blogsResponse->setStatusCode(400, blogsConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$blogsResponse->setStatusCode(
+				400, 
+				blogsConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $blogsResponse;
 	}
 	
 	//URL-->>/blogs/{BlogId}
 	public function getBlog($BlogId){
 		$mySqlWhere = array();
-		array_push($mySqlWhere, [blogsConstants::blogsTable . '.' . blogsConstants::dbBlogId, '=', $BlogId]);
+		
+		array_push(
+				$mySqlWhere, 
+				[
+						blogsConstants::blogsTable . '.' . blogsConstants::dbBlogId, 
+						'=', 
+						$BlogId
+				]
+				);
 		
 		$blogsResponse = new Response();
 		try{
-			$blog = DB::table(blogsConstants::blogsTable)->where($mySqlWhere)->get();
-			if($blog->isEmpty()){
-				$blogsResponse->setStatusCode(200, blogsConstants::emptyResultSetErr);
-			} else {
-				$blogsResponse->setContent(json_encode($blog));
+			$blog = DB::table(blogsConstants::blogsTable)
+			->where($mySqlWhere)
+			->get();
+			if($blog->isEmpty()){	$blogsResponse->setStatusCode(
+					200, 
+					blogsConstants::emptyResultSetErr
+					);
+			} else {	$blogsResponse->setContent(json_encode($blog));
 			}
-		} catch(\PDOException $e){
-			$blogsResponse->setStatusCode(400, blogsConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$blogsResponse->setStatusCode(
+				400, 
+				blogsConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $blogsResponse;
 	}
 	
@@ -81,46 +102,101 @@ class blogsController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
-		if(isset($_GET[blogsConstants::reqBlogId])){
-			array_push($mySqlWhere, [blogsConstants::dbBlogId, '=', $_GET[blogsConstants::reqBlogId]]);
+		if(isset($_GET[blogsConstants::reqBlogId])){	array_push(
+				$mySqlWhere, 
+				[
+						blogsConstants::dbBlogId, 
+						'=', 
+						$_GET[blogsConstants::reqBlogId]
+				]
+				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogTitle])){
-			array_push($mySqlWhere, [blogsConstants::dbBlogTitle, 'LIKE', '%' . $_GET[blogsConstants::reqBlogTitle] . '%']);
+		if(isset($_GET[blogsConstants::reqBlogTitle])){	array_push(
+				$mySqlWhere, 
+				[
+						blogsConstants::dbBlogTitle, 
+						'LIKE', 
+						'%' . $_GET[blogsConstants::reqBlogTitle] . '%'
+				]
+				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogAuthor])){
-			array_push($mySqlWhere, [blogsConstants::dbBlogAuthor, 'LIKE', '%' . $_GET[blogsConstants::reqBlogAuthor] . '%']);
+		if(isset($_GET[blogsConstants::reqBlogAuthor])){	array_push(
+				$mySqlWhere, 
+				[
+						blogsConstants::dbBlogAuthor, 
+						'LIKE', 
+						'%' . $_GET[blogsConstants::reqBlogAuthor] . '%'
+				]
+				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogContent])){
-			array_push($mySqlWhere, [blogsConstans::dbBlogContent, 'LIKE', '%' . $_GET[blogsConstans::reqBlogContents] . '%']);
+		if(isset($_GET[blogsConstants::reqBlogContent])){	array_push(
+				$mySqlWhere, 
+				[
+						blogsConstans::dbBlogContent, 
+						'LIKE', 
+						'%' . $_GET[blogsConstans::reqBlogContents] . '%'
+				]
+				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogImage])){
-			array_push($mySqlWhere, [blogsConstants::dbBlogImage, 'LIKE', '%' . $_GET[blogsConstants::reqBlogImage] . '%']);
+		if(isset($_GET[blogsConstants::reqBlogImage])){	array_push(
+				$mySqlWhere, 
+				[blogsConstants::dbBlogImage, 
+						'LIKE', 
+						'%' . 
+						$_GET[blogsConstants::reqBlogImage] . '%'
+				]
+				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogUrl])){
-			array_push($mySqlWhere, [blogsConstants::dbBlogUrl, 'LIKE', '%' . $_GET[blogsConstants::reqBlogUrl] . '%']);
+		if(isset($_GET[blogsConstants::reqBlogUrl])){	array_push(
+				$mySqlWhere, 
+				[
+						blogsConstants::dbBlogUrl, 
+						'LIKE', 
+						'%' . $_GET[blogsConstants::reqBlogUrl] . '%'
+				]
+				);
+		}
+		if(isset($_GET[blogsConstants::reqLastChangeTimestamp])){	array_push(
+				$mySqlWhere, 
+				[
+						blogsConstants::dbLastChangeTimestamp, 
+						'LIKE', 
+						'%' . $_GET[blogsConstants::reqLastChangeTimestamp] . '%'
+				]
+				);
 		}
 		
 		$blogsResponse = new Response();
 		try{
-			$blogs = DB::table(blogsConstants::blogsTable)->where($mySqlWhere)->get();
-			if($blogs->isEmpty()){
-				$blogsResponse->setStatusCode(200, blogsConstants::emptyResultSetErr);
-			} else {
-				$blogsResponse->setContent(json_encode($blogs));
+			$blogs = DB::table(blogsConstants::blogsTable)
+			->where($mySqlWhere)
+			->get();
+			if($blogs->isEmpty()){	$blogsResponse->setStatusCode(
+					200, 
+					blogsConstants::emptyResultSetErr
+					);
+			} else {	$blogsResponse->setContent(json_encode($blogs));
 			}
-		} catch(\PDOException $e){
-			$blogsResponse->setStatusCode(400, blogsConstants::dbReadCatchMsg);
+		} catch(\PDOException $e){	$blogsResponse->setStatusCode(
+				400, 
+				blogsConstants::dbReadCatchMsg
+				);
 		}
+		
 		return $blogsResponse;
 	}
 	
-	public function isDataValid($jsonData, &$errorMsg, $dbOperation){
+	public function isDataValid(
+			$jsonData, 
+			&$errorMsg, 
+			$dbOperation
+			){
 		if("ADD" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
 							'*.' . blogsConstants::dbBlogTitle => 'required|string|max:100', 
-							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50', 
+							'*.' . blogsConstants::dbBlogAuthor => 'required|string|max:50', 
 							'*.' . blogsConstants::dbBlogContent => 'required|string|max:1000', 
 							'*.' . blogsConstants::dbBlogImage => 'required|string|max:500', 
 							'*.' . blogsConstants::dbBlogUrl => 'required|string|max:500'
@@ -134,62 +210,117 @@ class blogsController extends Controller
 							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50', 
 							'*.' . blogsConstants::dbBlogContent => 'sometimes|string|max:1000', 
 							'*.' . blogsConstants::dbBlogImage => 'sometimes|string|max:500', 
-							'*.' . blogsConstants::dbBlogUrl => 'sometimes|string|max:500'
+							'*.' . blogsConstants::dbBlogUrl => 'sometimes|string|max:500', 
+							'*.' . blogsConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
+		
 		if($jsonValidation->fails()){
 			$errorMsg = $jsonValidation->messages();
+			
 			return false;
-		} else {
-			return true;
+		} else {	return true;
 		}
 	}
 	
 	//URL-->>/blogs
 	public function addBlog(Request $jsonRequest){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
+		$jsonData = json_decode(
+				$jsonRequest->getContent(), 
+				true
+				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 		
 		$blogsResponse = new Response();
-		$blogsResponse->setStatusCode(400, null);
-		if($this->isDataValid($jsonData, $errorMsg, "ADD")){
+		$blogsResponse->setStatusCode(
+				400, 
+				null
+				);
+		if($this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"ADD"
+				)
+				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{	DB::table(blogsConstants::blogsTable)->insert($jsonData[$i]);
+				try{	DB::table(blogsConstants::blogsTable)
+				->insert($jsonData[$i]);
 				} catch(\PDOException $e){
-					$blogsResponse->setStatusCode(400, blogsConstants::dbAddCatchMsg);
+					$blogsResponse->setStatusCode(
+							400, 
+							blogsConstants::dbAddCatchMsg
+							);
+					
 					return $blogsResponse;
 				}
 			}
 		} else {
-			$blogsResponse->setStatusCode(400, $errorMsg);
+			$blogsResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
 			return $blogsResponse;
 		}
+		
 		return blogsConstants::dbAddSuccessMsg;
 	}
 	
 	//URL-->>/blogs/{BlogId}
-	public function updateBlog(Request $jsonRequest, $BlogId){
-		$jsonData = json_decode($jsonRequest->getContent(), true);
+	public function updateBlog(
+			Request $jsonRequest, 
+			$BlogId
+			){
+		$jsonData = json_decode(
+				$jsonRequest->getContent(), 
+				true
+				);
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
 		
 		$blogsResponse = new Response();
-		$blogsResponse->setStatusCode(400, null);
-		if(!$this->isDataValid($jsonData, $errorMsg, "UPDATE")){
-			$blogsResponse->setStatusCode(400, $errorMsg);
+		$blogsResponse->setStatusCode(
+				400, 
+				null
+				);
+		if(!$this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"UPDATE"
+				)
+				){
+			$blogsResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
 			return $blogsResponse;
 		}
 		
 		try{
-			array_push($mySqlWhere, [blogsConstants::dbBlogId, '=' , $BlogId]);
-			DB::table(blogsConstants::blogsTable)->where($mySqlWhere)->update($jsonData[0]);
+			array_push(
+					$mySqlWhere, 
+					[
+							blogsConstants::dbBlogId, 
+							'=' , 
+							$BlogId
+					]
+					);
+			DB::table(blogsConstants::blogsTable)
+			->where($mySqlWhere)
+			->update($jsonData[0]);
 		} catch(\PDOException $e){
-			$blogsResponse->setStatusCode(400, blogsConstants::dbUpdateCatchMsg);
+			$blogsResponse->setStatusCode(
+					400, 
+					blogsConstants::dbUpdateCatchMsg
+					);
+			
 			return $blogsResponse;
 		}
+		
 		return blogsConstants::dbUpdateSuccessMsg;
 	}
 	
@@ -199,14 +330,31 @@ class blogsController extends Controller
 		$errorMsg = '';
 		
 		$blogsResponse = new Response();
-		$blogsResponse->setStatusCode(400, null);
+		$blogsResponse->setStatusCode(
+				400, 
+				null
+				);
 		try{
-			array_push($mySqlWhere, [blogsConstants::dbBlogId, '=', $BlogId]);
-			DB::table(blogsConstants::blogsTable)->where($mySqlWhere)->delete();
+			array_push(
+					$mySqlWhere, 
+					[
+							blogsConstants::dbBlogId, 
+							'=', 
+							$BlogId
+					]
+					);
+			DB::table(blogsConstants::blogsTable)
+			->where($mySqlWhere)
+			->delete();
 		} catch(\PDOException $e){
-			$blogsResponse->setStatusCode(400, blogsConstants::dbDeleteCatchMsg);
+			$blogsResponse->setStatusCode(
+					400, 
+					blogsConstants::dbDeleteCatchMsg
+					);
+			
 			return $blogsResponse;
 		}
+		
 		return blogsConstants::dbDeleteSuccessMsg;
 	}
 }
