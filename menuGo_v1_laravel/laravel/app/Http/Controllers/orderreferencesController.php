@@ -51,7 +51,7 @@ class orderreferencesController extends Controller
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
-	public function getJoinCompanyBranchTableOrderreferences($mySqlWhere){
+	public function getJoinCompanyBranchTableOrderreference($mySqlWhere){
 		$companyBranchTableOrderreference = DB::table(orderreferencesConstants::orderreferencesTable)
 		->join(
 				tablesConstants::tablesTable, 
@@ -116,7 +116,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchOrderreferences = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchOrderreferences = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -166,7 +166,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchOrderreference = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchOrderreference = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchOrderreference->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -216,7 +216,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchOrderreferences = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchOrderreferences = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -266,7 +266,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchOrderreferences = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchOrderreferences = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -316,7 +316,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchTableOrderreferences = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchTableOrderreferences = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchTableOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -375,7 +375,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchTableOrderreference = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchTableOrderreference = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchTableOrderreference->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -434,7 +434,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchTableOrderreferences = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchTableOrderreferences = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchTableOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr
@@ -493,7 +493,7 @@ class orderreferencesController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$companyBranchTableOrderreferences = $this->getJoinCompanyBranchTableOrderreferences($mySqlWhere);
+			$companyBranchTableOrderreferences = $this->getJoinCompanyBranchTableOrderreference($mySqlWhere);
 			if($companyBranchTableOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferencesConstants::emptyResultSetErr

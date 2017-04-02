@@ -119,12 +119,14 @@ CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	order_status_change_timestamp DATETIME NOT NULL, 
 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(order_id), 
+	UNIQUE(orderreference_code), 
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 	);
 
 /*reservations*/
 CREATE TABLE IF NOT EXISTS ziplogic.reservations(
+	reservation_id INT NOT NULL AUTO_INCREMENT, 
 	reservation_code VARCHAR(40) NOT NULL, 
 	customer_username VARCHAR(30) NOT NULL, 
 	orderreference_code VARCHAR(40) NOT NULL, 
@@ -135,6 +137,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_status VARCHAR(30) NOT NULL, 
 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(reservation_code), 
+	UNIQUE(reservation_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 	);

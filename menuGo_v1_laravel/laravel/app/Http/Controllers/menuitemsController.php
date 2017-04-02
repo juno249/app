@@ -54,7 +54,7 @@ class menuitemsController extends Controller
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
-	public function getJoinCompanyMenuMenuitems($mySqlWhere){
+	public function getJoinCompanyMenuMenuitem($mySqlWhere){
 		$companyMenuMenuitem = DB::table(menuitemsConstants::menuitemsTable)
 		->join(
 				menusConstants::menusTable, 
@@ -98,7 +98,7 @@ class menuitemsController extends Controller
 		
 		$menuitemsResponse = new Response();
 		try{
-			$companyMenuMenuitems = $this->getJoinCompanyMenuMenuitems($mySqlWhere);
+			$companyMenuMenuitems = $this->getJoinCompanyMenuMenuitem($mySqlWhere);
 			if($companyMenuMenuitems->isEmpty()){	$menuitemsResponse->setStatusCode(
 					200, 
 					menuitemsConstants::emptyResultSetErr
@@ -148,7 +148,7 @@ class menuitemsController extends Controller
 	
 		$menuitemsResponse = new Response();
 		try{
-			$companyMenuMenuitem = $this->getJoinCompanyMenuMenuitems($mySqlWhere);
+			$companyMenuMenuitem = $this->getJoinCompanyMenuMenuitem($mySqlWhere);
 			if($companyMenuMenuitem->isEmpty()){	$menuitemsResponse->setStatusCode(
 					200, 
 					menuitemsConstants::emptyResultSetErr
@@ -409,7 +409,7 @@ class menuitemsController extends Controller
 		if(isset($jsonData[0][menuitemsConstants::dbLastChangeTimestamp])){
 			try{	$jsonData[0][menuitemsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menuitemsConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
-			} catch(\PDOException  $e){
+			} catch(\Exception  $e){
 				$menuitemsResponse->setStatusCode(
 						400, 
 						menuitemsConstants::carbonParseErr

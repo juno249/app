@@ -52,7 +52,7 @@ class ordersController extends Controller
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
-	public function getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere){
+	public function getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere){
 		$companyBranchTableOrderreferenceOrders = DB::table(ordersConstants::ordersTable)
 		->join(
 				orderreferencesConstants::orderreferencesTable, 
@@ -109,7 +109,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -159,7 +159,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchOrder = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchOrder = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrder->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -209,7 +209,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -259,7 +259,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -309,7 +309,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -368,7 +368,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrder = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrder = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrder->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -427,7 +427,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -486,7 +486,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -545,7 +545,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -613,7 +613,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrderreferenceOrder = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrderreferenceOrder = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrder->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -681,7 +681,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -749,7 +749,7 @@ class ordersController extends Controller
 		
 		$ordersResponse = new Response();
 		try{
-			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrders($mySqlWhere);
+			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
 					ordersConstants::emptyResultSetErr
@@ -841,7 +841,7 @@ class ordersController extends Controller
 				);
 		}
 		
-		return $orders;
+		return $ordersResponse;
 	}
 	
 	private function isDataValid(
@@ -926,7 +926,7 @@ class ordersController extends Controller
 			}
 		}
 		
-		for($i=0; $i<jsonData; $i++){
+		for($i=0; $i<$jsonData; $i++){
 			if(isset($jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp])){
 				try{	$jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp])
 				->format('Y-m-d H:i:s');
@@ -997,7 +997,7 @@ class ordersController extends Controller
 		if(isset($jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp])){
 			try{	$jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp])
 			->format('Y-m-d H:i:s');
-			} catch(\PDOException $e){
+			} catch(\Exception $e){
 				$ordersResponse->setStatusCode(
 						400, 
 						ordersConstants::carbonParseErr
@@ -1050,7 +1050,7 @@ class ordersController extends Controller
 							$orderId
 					]
 					);
-			DB::table(ordersConstants::dbOrderId)
+			DB::table(ordersConstants::ordersTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
