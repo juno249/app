@@ -7,7 +7,6 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
-use Uuid;
 
 include_once "branchesController.php";
 include_once "companiesController.php";
