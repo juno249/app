@@ -103,7 +103,7 @@ class companiesController extends Controller
 			} else {	$companiesResponse->setContent(json_encode($companies));
 			}
 		} catch(\PDOException $e){
-			$customersResponse->setStatusCode(
+			$companiesResponse->setStatusCode(
 					400, 
 					customersConstants::dbReadCatchMsg
 					);
