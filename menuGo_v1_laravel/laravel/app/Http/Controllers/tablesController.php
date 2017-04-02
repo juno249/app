@@ -42,6 +42,7 @@ class tablesConstants{
 	const inconsistencyValidationErr2 = 'KEY-COMBINATION COMPANY_NAME & BRANCH_NAME & TABLE_NUMBER IS NON-EXISTING';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
+	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
 class tablesController extends Controller
@@ -326,7 +327,22 @@ class tablesController extends Controller
 			if(!(isset($jsonData[$i][tablesConstants::dbBranchId]))){	$jsonData[$i][tablesConstants::dbBranchId] = $branchId;
 			}
 		}
-	
+		
+		for($i=0; $i<$jsonDataSize; $i++){
+			if(isset($jsonData[$i][tablesConstants::dbTableStatusChangeTimestsamp])){
+				try{	$jsonData[$i][tablesConstantss::dbTableStatusChangeTimestsamp] = Carbon::parse($jsonData[$i][tablesConstantss::dbTableStatusChangeTimestsamp])
+				->format('Y-m-d H:i:s');
+				} catch(\Exception $e){
+					$tablesResponse->setStatusCode(
+							400, 
+							tablesConstants::carbonParseErr
+							);
+					
+					return $tablesResponse;
+				}
+			}
+		}
+		
 		if($this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -378,6 +394,31 @@ class tablesController extends Controller
 				400, 
 				null
 				);
+		if(isset($jsonData[0][tablesConstants::dbTableStatusChangeTimestamp])){
+			try{	$jsonData[0][tablesConstants::dbTableStatusChangeTimestamp] = Carbon::parse($jsonData[0][tablesConstants::dbTableStatusChangeTimestamp])
+				->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$tablesResponse->setStatusCode(
+						400, 
+						tablesConstants::carbonParseErr
+						);
+				
+				return $tablesResponse;
+			}
+		}
+		if(isset($jsonData[0][tablesConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][tablesConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][tablesConstants::dbLastChangeTimestamp])
+			->format('Y-m-d H:i:s');
+			} catch(\Exception $e){
+				$tablesResponse->setStatusCode(
+						400, 
+						tablesConstants::carbonParseErr
+						);
+				
+				return tablesConstants::carbonParseErr;
+			}
+		}
+		
 		$companyBranchTable = json_decode(
 				$this->getCompanyBranchTable(
 						$CompanyName, 
