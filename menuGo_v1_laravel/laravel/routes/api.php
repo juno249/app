@@ -265,31 +265,71 @@ Route::delete('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 ]);
 
 //Routes; reservationsController
-Route::get('customers/{CustomerUsername}/reservations', [
-		'uses' => 'reservationsController@getAllCustomerReservations'
+Route::get('companies/{CompanyName}/branches/{BranchName}/reservations', [
+		'uses' => 'reservationsController@getCompanyBranchReservations'
 ]);
 
-Route::get('customers/{CustomerUsername}/reservations/{ReservationCode}', [
-		'uses' => 'reservationsController@getCustomerReservation'
+Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/{ReservationCode}', [
+		'uses' => 'reservationsController@getCompanyBranchReservation'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/{ReservationStatus}', [
+		'uses' => 'reservationsController@getCompanyBranchReservationsReservationStatus'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/not/{ReservationStatus}', [
+		'uses' => 'reservationsController@getCompanyBranchReservationsNotReservationStatus'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations', [
+		'uses' => 'reservationsController@getCompanyBranchTableReservations'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/{ReservationCode}', [
+		'uses' => 'reservationsController@getCompanyBranchTableReservation'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/{ReservationStatus}', [
+		'uses' => 'reservationsController@getCompanyBranchTableReservationsReservationStatus'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/not/{ReservationStatus}', [
+		'uses' => 'reservationsController@getCompanyBranchTableReservationsNotReservationStatus'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations', [
+		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservations'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}', [
+		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservation'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationStatus}', [
+		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservationsReservationStatus'
+]);
+
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/not/{ReservationStatus}', [
+		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservationsNotReservationStatus'
 ]);
 
 Route::get('reservations/query', [
 		'uses' => 'reservationsController@getByQuery'
 ]);
 
-Route::post('customers/{CustomerUsername}/reservations', [
+Route::post('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations', [
 		'uses' => 'reservationsController@addReservation'
 ]);
 
-Route::put('customers/{CustomerUsername}/reservations/{ReservationCode}', [
+Route::put('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}', [
 		'uses' => 'reservationsController@updateReservation'
 ]);
 
-Route::delete('customers/{CustomerUsername}/reservations/{ReservationCode}', [
+Route::delete('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}', [
 		'uses' => 'reservationsController@deleteReservation'
 ]);
 
-//Routes; orderreferenceController
+//Routes; orderreferencesController
 Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences', [
 		'uses' => 'orderreferencesController@getCompanyBranchOrderreferences'
 ]);
