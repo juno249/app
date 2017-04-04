@@ -7,10 +7,10 @@ use Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-include_once "orderreferencesController.php";
-include_once "ordersController.php";
+include_once "orderreferenceController.php";
+include_once "orderController.php";
 
-class orderreferencesOrdersConstants{
+class orderreferenceOrderConstants{
 	const keyOrderreference = 'orderreference';
 	const keyOrder = 'order';
 	
@@ -28,7 +28,7 @@ class orderreferencesOrdersConstants{
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
-class orderreferencesOrdersController extends Controller
+class orderreferenceOrderController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth', ['except' => ['addCustomerCompanyBranch']]);
 	}
@@ -42,8 +42,8 @@ class orderreferencesOrdersController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 		
-		$orderreferencesController = new orderreferencesController();
-		$ordersController = new ordersController();
+		$orderreferenceController = new orderreferenceController();
+		$orderController = new orderController();
 		
 		$orderreferencesOrdersResponse = new Response();
 		$orderreferencesOrdersResponse->setStatusCode(400, null);
@@ -58,26 +58,26 @@ class orderreferencesOrdersController extends Controller
 					$orderreferenceOrderRunner
 					)
 					){
-				$orderreference = $orderreferenceOrderRunner[orderreferencesOrdersConstants::keyOrderreference];
-				$orderreference[orderreferencesConstants::dbOrderreferenceCode] = $orderreferenceCode;
+				$orderreference = $orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrderreference];
+				$orderreference[orderreferenceConstants::dbOrderreferenceCode] = $orderreferenceCode;
 				
-				$orderreferenceOrderRunner[orderreferencesOrdersConstants::keyOrderreference] = $orderreference;
+				$orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrderreference] = $orderreference;
 			}
 			if(array_key_exists(
 					'order', 
 					$orderreferenceOrderRunner
 					)
 					){
-				$order = $orderreferenceOrderRunner[orderreferencesOrdersConstants::keyOrder];
+				$order = $orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrder];
 				$orderSize = sizeof($order);
 				for($j=0; $j<$orderSize; $j++){
 					$orderRunner = $order[$j];
-					$orderRunner[ordersConstants::dbOrderreferenceCode] = $orderreferenceCode;
+					$orderRunner[orderConstants::dbOrderreferenceCode] = $orderreferenceCode;
 					
 					$order[$j] = $orderRunner;
 				}
 				
-				$orderreferenceOrderRunner[orderreferencesOrdersConstants::keyOrder] = $order;
+				$orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrder] = $order;
 			}
 			
 			$jsonData[$i] = $orderreferenceOrderRunner;
@@ -94,14 +94,14 @@ class orderreferencesOrdersController extends Controller
 						$orderreferenceOrderRunner
 						)
 						){
-					$orderreference = $orderreferenceOrderRunner[orderreferencesOrdersConstants::keyOrderreference];
-					if($orderreferencesController->isDataValid(
+					$orderreference = $orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrderreference];
+					if($orderreferenceController->isDataValid(
 							[$orderreference], 
 							$errorMsg, 
 							"ADD"
 							)
 							){
-						try{	DB::table(orderreferencesConstants::orderreferencesTable)
+						try{	DB::table(orderreferenceConstants::orderreferencesTable)
 						->insert($orderreference);
 						} catch(\PDOException $e){	throw $e;
 						}
@@ -121,26 +121,26 @@ class orderreferencesOrdersController extends Controller
 						$orderreferenceOrderRunner
 						)
 						){
-					$order = $orderreferenceOrderRunner[orderreferencesOrdersConstants::keyOrder];
+					$order = $orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrder];
 					$orderSize = sizeof($order);
 					for($j=0; $j<$orderSize; $j++){
 						$orderRunner = $order[$j];
-						if($ordersController->isDataValid(
+						if($orderController->isDataValid(
 								[$orderRunner], 
 								$errorMsg, 
 								"ADD"
 								)
 								){
-							if(!($orderRunner[ordersConstants::dbCustomerUsername] == $orderreference[orderreferencesConstants::dbCustomerUsername])){
+							if(!($orderRunner[orderConstants::dbCustomerUsername] == $orderreference[orderreferenceConstants::dbCustomerUsername])){
 								$orderreferencesOrdersResponse->setStatusCode(
 										400, 
-										orderreferencesConstants::inconsistencyValidationErr1
+										orderreferenceConstants::inconsistencyValidationErr1
 										);
 								
 								return $orderreferencesOrdersResponse;
 							}
 							
-							try{	DB::table(ordersConstants::ordersTable)
+							try{	DB::table(orderConstants::ordersTable)
 							->insert($orderRunner);
 							} catch(\PDOException $e){	throw $e;
 							}
@@ -160,13 +160,13 @@ class orderreferencesOrdersController extends Controller
 				DB::rollback();
 				$orderreferencesOrdersResponse->setStatusCode(
 						400, 
-						orderreferencesOrdersConstants::dbAddCatchMsg
+						orderreferenceOrderConstants::dbAddCatchMsg
 						);
 				
 				return $orderreferencesOrdersResponse;
 			}
 		}
 		
-		return orderreferencesOrdersConstants::dbAddSuccessMsg;
+		return orderreferenceOrderConstants::dbAddSuccessMsg;
 	}
 }

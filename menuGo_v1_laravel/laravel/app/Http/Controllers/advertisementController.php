@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "companiesController.php";
+include_once "companyController.php";
 
-class advertisementsConstants{
+class advertisementConstants{
 	const advertisementsTable = 'advertisements';
 	
 	const dbAdvertisementId = 'advertisement_id';
@@ -43,18 +43,18 @@ class advertisementsConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class advertisementsController extends Controller
+class advertisementController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	public function getJoinCompanyAdvertisement($mySqlWhere){
-		$companyAdvertisement = DB::table(advertisementsConstants::advertisementsTable)
+		$companyAdvertisement = DB::table(advertisementConstants::advertisementsTable)
 		->join(
-				companiesConstants::companiesTable, 
-				advertisementsConstants::advertisementsTable . '.' . advertisementsConstants::dbCompanyName, 
+				companyConstants::companiesTable, 
+				advertisementConstants::advertisementsTable . '.' . advertisementConstants::dbCompanyName, 
 				'=', 
-				companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
+				companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 				)
 				->where($mySqlWhere)
 		->get();
@@ -63,7 +63,7 @@ class advertisementsController extends Controller
 	}
 	
 	//URL-->>/advertisements
-	public function getAllAdvertisements(){
+	public function getAdvertisements(){
 		$mySqlWhere = array();
 		
 		$advertisementsResponse = new Response();
@@ -71,13 +71,13 @@ class advertisementsController extends Controller
 			$advertisements = $this->getJoinCompanyAdvertisement($mySqlWhere);
 			if($advertisements->isEmpty()){	$advertisementsResponse->setStatusCode(
 					200, 
-					advertisementsConstants::emptyResultSetErr
+					advertisementConstants::emptyResultSetErr
 					);
 			} else {	$advertisementsResponse->setContent(json_encode($advertisements));
 			}
 		} catch(\PDOException $e){	$advertisementsResponse->setStatusCode(
 				400, 
-				advertisementsConstants::dbReadCatchMsg
+				advertisementConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -91,7 +91,7 @@ class advertisementsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::advertisementsTable . '.' . advertisementsConstants::dbAdvertisementId, 
+						advertisementConstants::advertisementsTable . '.' . advertisementConstants::dbAdvertisementId, 
 						'=', 
 						$AdvertisementId
 				]
@@ -102,13 +102,13 @@ class advertisementsController extends Controller
 			$advertisement = $this->getJoinCompanyAdvertisement($mySqlWhere);
 			if($advertisement->isEmpty()){	$advertisementsResponse->setStatusCode(
 					200, 
-					advertisementsConstants::emptyResultSetErr
+					advertisementConstants::emptyResultSetErr
 					);
 			} else {	$advertisementsResponse->setContent(json_encode($advertisement));
 			}
 		} catch(\PDOException $e){	$advertisementsResponse->setStatusCode(
 				400, 
-				advertisementsConstants::dbReadCatchMsg
+				advertisementConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -122,7 +122,7 @@ class advertisementsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -133,13 +133,13 @@ class advertisementsController extends Controller
 			$companyAdvertisements = $this->getJoinCompanyAdvertisement($mySqlWhere);
 			if($companyAdvertisements->isEmpty()){	$advertisementsResponse->setStatusCode(
 					200, 
-					advertisementsConstants::emptyResultSetErr
+					advertisementConstants::emptyResultSetErr
 					);
 			} else {	$advertisementsResponse->setContent(json_encode($companyAdvertisements));
 			}
 		} catch(\PDOException $e){	$advertisementsResponse->setStatusCode(
 				400, 
-				advertisementsConstants::dbReadCatchMsg
+				advertisementConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -156,7 +156,7 @@ class advertisementsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -164,7 +164,7 @@ class advertisementsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::advertisementsTable . '.' . advertisementsConstants::dbAdvertisementId, 
+						advertisementConstants::advertisementsTable . '.' . advertisementConstants::dbAdvertisementId, 
 						'=', 
 						$AdvertisementId
 				]
@@ -175,13 +175,13 @@ class advertisementsController extends Controller
 			$companyAdvertisement = $this->getJoinCompanyAdvertisement($mySqlWhere);
 			if($companyAdvertisement->isEmpty()){	$advertisementsResponse->setStatusCode(
 					200, 
-					advertisementsConstants::emptyResultSetErr
+					advertisementConstants::emptyResultSetErr
 					);
 			} else {	$advertisementsResponse->setContent(json_encode($companyAdvertisement));
 			}
 		} catch(\PDOException $e){	$advertisementsResponse->setStatusCode(
 				400, 
-				advertisementsConstants::dbReadCatchMsg
+				advertisementConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -191,93 +191,93 @@ class advertisementsController extends Controller
 	//URL-->>/advertisements/query
 	public function getByQuery(){
 		$mySqlWhere = array();
-		if(isset($_GET[advertisementsConstants::reqAdvertisementId])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementId])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbAdvertisementId, 
+						advertisementConstants::dbAdvertisementId, 
 						'=', 
-						$_GET[advertisementsConstants::reqAdvertisementId]
+						$_GET[advertisementConstants::reqAdvertisementId]
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqCompanyName])){	array_push(
+		if(isset($_GET[advertisementConstants::reqCompanyName])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbCompanyName, 
+						advertisementConstants::dbCompanyName, 
 						'LIKE', 
-						'%'. $_GET[advertisementsConstants::reqCompanyName] . '%'
+						'%'. $_GET[advertisementConstants::reqCompanyName] . '%'
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqAdvertisementTitle])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementTitle])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbAdvertisementTitle, 
+						advertisementConstants::dbAdvertisementTitle, 
 						'LIKE', 
-						'%' . $_GET[advertisementsConstants::reqAdvertisementTitle] . '%'
+						'%' . $_GET[advertisementConstants::reqAdvertisementTitle] . '%'
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqAdvertisementContent])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementContent])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbAdvertisementContent, 
+						advertisementConstants::dbAdvertisementContent, 
 						'LIKE', 
-						'%' . $_GET[advertisementsConstants::reqAdvertisementContent] . '%'
+						'%' . $_GET[advertisementConstants::reqAdvertisementContent] . '%'
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqAdvertisementPrice])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementPrice])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbAdvertisementPrice, 
+						advertisementConstants::dbAdvertisementPrice, 
 						'=', 
-						$_GET[advertisementsConstants::reqAdvertisementPrice]
+						$_GET[advertisementConstants::reqAdvertisementPrice]
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqAdvertisementImage])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementImage])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbAdvertisementImage, 
+						advertisementConstants::dbAdvertisementImage, 
 						'LIKE', 
-						'%' . $_GET[advertisementsConstants::reqAdvertisementImage] . '%'
+						'%' . $_GET[advertisementConstants::reqAdvertisementImage] . '%'
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqAdvertisementUrl])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementUrl])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbAdvertisementUrl, 
+						advertisementConstants::dbAdvertisementUrl, 
 						'LIKE', 
-						'%' . $_GET[advertisementsConstants::reqAdvertisementUrl] . '%'
+						'%' . $_GET[advertisementConstants::reqAdvertisementUrl] . '%'
 				]
 				);
 		}
-		if(isset($_GET[advertisementsConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[advertisementConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementsConstants::dbLastChangeTimestamp, 
+						advertisementConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[advertisementsConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[advertisementConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 		
 		$advertisementsResponse = new Response();
 		try{
-			$advertisements = DB::table(advertisementsConstants::advertisementsTable)
+			$advertisements = DB::table(advertisementConstants::advertisementsTable)
 			->where($mySqlWhere)
 			->get();
 			if($advertisements->isEmpty()){	$advertisementsResponse->setStatusCode(
 					200, 
-					advertisementsConstants::emptyResultSetErr
+					advertisementConstants::emptyResultSetErr
 					);
 			} else {	$advertisementsResponse->setContent(json_encode($advertisements));
 			}
 		} catch(\PDOException $e){	$advertisementsResponse->setStatusCode(
 				400, 
-				advertisementsConstants::dbReadCatchMsg
+				advertisementConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -293,25 +293,25 @@ class advertisementsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . advertisementsConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
-							'*.' . advertisementsConstants::dbAdvertisementTitle => 'required|string|max:100', 
-							'*.' . advertisementsConstants::dbAdvertisementContent => 'required|string|max:1000', 
-							'*.' . advertisementsConstants::dbAdvertisementPrice => 'required|numeric', 
-							'*.' . advertisementsConstants::dbAdvertisementImage => 'required|string|max:500', 
-							'*.' . advertisementsConstants::dbAdvertisementUrl => 'required|string|max:500'
+							'*.' . advertisementConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
+							'*.' . advertisementConstants::dbAdvertisementTitle => 'required|string|max:100', 
+							'*.' . advertisementConstants::dbAdvertisementContent => 'required|string|max:1000', 
+							'*.' . advertisementConstants::dbAdvertisementPrice => 'required|numeric', 
+							'*.' . advertisementConstants::dbAdvertisementImage => 'required|string|max:500', 
+							'*.' . advertisementConstants::dbAdvertisementUrl => 'required|string|max:500'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . advertisementsConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
-							'*.' . advertisementsConstants::dbAdvertisementTitle => 'sometimes|string|max:100', 
-							'*.' . advertisementsConstants::dbAdvertisementContent => 'sometimes|string|max:1000', 
-							'*.' . advertisementsConstants::dbAdvertisementPrice => 'sometimes|numeric', 
-							'*.' . advertisementsConstants::dbAdvertisementImage => 'sometimes|string|max:500', 
-							'*.' . advertisementsConstants::dbAdvertisementUrl => 'sometimes|string|max:500', 
-							'*.' . advertisementsConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . advertisementConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
+							'*.' . advertisementConstants::dbAdvertisementTitle => 'sometimes|string|max:100', 
+							'*.' . advertisementConstants::dbAdvertisementContent => 'sometimes|string|max:1000', 
+							'*.' . advertisementConstants::dbAdvertisementPrice => 'sometimes|numeric', 
+							'*.' . advertisementConstants::dbAdvertisementImage => 'sometimes|string|max:500', 
+							'*.' . advertisementConstants::dbAdvertisementUrl => 'sometimes|string|max:500', 
+							'*.' . advertisementConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -345,12 +345,12 @@ class advertisementsController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{		DB::table(advertisementsConstants::advertisementsTable)
+				try{		DB::table(advertisementConstants::advertisementsTable)
 				->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$advertisementsResponse->setStatusCode(
 							400, 
-							advertisementsConstants::dbAddCatchMsg
+							advertisementConstants::dbAddCatchMsg
 							);
 					
 					return $advertisementsResponse;
@@ -365,7 +365,7 @@ class advertisementsController extends Controller
 			return $advertisementsResponse;
 		}
 		
-		return advertisementsConstants::dbAddSuccessMsg;
+		return advertisementConstants::dbAddSuccessMsg;
 	}
 	
 	//URL-->>/advertisements/{AdvertisementId}
@@ -386,13 +386,13 @@ class advertisementsController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][advertisementsConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][advertisementsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][advertisementsConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][advertisementConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][advertisementConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][advertisementConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$advertisementsResponse->setStatusCode(
 						400, 
-						advertisementsConstants::carbonParseErr
+						advertisementConstants::carbonParseErr
 						);
 				
 				return $advertisementsResponse;
@@ -417,24 +417,24 @@ class advertisementsController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							advertisementsConstants::dbAdvertisementId, 
+							advertisementConstants::dbAdvertisementId, 
 							'=', 
 							$AdvertisementId
 					]
 					);
-			DB::table(advertisementsConstants::advertisementsTable)
+			DB::table(advertisementConstants::advertisementsTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$advertisementsResponse->setStatusCode(
 					400, 
-					advertisementsConstants::dbUpdateCatchMsg
+					advertisementConstants::dbUpdateCatchMsg
 					);
 			
 			return $advertisementsResponse;
 		}
 		
-		return advertisementsConstants::dbUpdateSuccessMsg;
+		return advertisementConstants::dbUpdateSuccessMsg;
 	}
 	
 	//URL-->>/advertisements/{AdvertisementId}
@@ -451,23 +451,23 @@ class advertisementsController extends Controller
 			array_push(
 					$mySqlWhere , 
 					[
-							advertisementsConstants::dbAdvertisementId, 
+							advertisementConstants::dbAdvertisementId, 
 							'=', 
 							$AdvertisementId
 					]
 					);
-			DB::table(advertisementsConstants::advertisementsTable)
+			DB::table(advertisementConstants::advertisementsTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$advertisementsResponse->setStatusCode(
 					400, 
-					advertisementsConstants::dbDeleteCatchMsg
+					advertisementConstants::dbDeleteCatchMsg
 					);
 			
 			return $advertisementsResponse;
 		}
 		
-		return advertisementsConstants::dbDeleteSuccessMsg;
+		return advertisementConstants::dbDeleteSuccessMsg;
 	}
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class filesConstants{
+class fileConstants{
 	const fileGetSuccessMsg = 'FILE RETRIEVED SUCCESSFULLY';
 	const fileUploadSuccessMsg = 'FILE UPLOADED SUCCESSFULLY';
 	const fileDeleteSuccessMsg = 'FILE DELETED SUCCESSFULLY';
@@ -17,7 +17,7 @@ class filesConstants{
 	const fileDeleteCatchMsg = 'EXCEPTION ENCOUNTERED, UNABLE TO DELETE FILE';
 }
 
-class filesController extends Controller
+class fileController extends Controller
 {	
 	//URL-->>/companies/{CompanyName}/companyImage
 	public function getCompanyImage($CompanyName){
@@ -28,9 +28,9 @@ class filesController extends Controller
 		try{
 			$companyImage = Storage::disk('public')->get($imgFileName);
 			$companyImageResponse->setContent($companyImage);
-			$companyImageResponse->setStatusCode(200, filesConstants::fileGetSuccessMsg);
+			$companyImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
 		} catch (\Exception $e){
-			$companyImageResponse->setStatusCode(400, filesConstants::fileGetCatchMsg);
+			$companyImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
 		}
 		
 		return $companyImageResponse;
@@ -44,9 +44,9 @@ class filesController extends Controller
 			$companyImageResponse = new Response();
 			try{
 				Storage::disk('public')->put($imgFileName, File::get($imgFile));
-				$companyImageResponse->setStatusCode(200, filesConstants::fileUploadSuccessMsg);
+				$companyImageResponse->setStatusCode(200, fileConstants::fileUploadSuccessMsg);
 			} catch(\Exception $e){
-				$companyImageResponse->setStatusCode(400, filesConstants::fileUploadCatchMsg);
+				$companyImageResponse->setStatusCode(400, fileConstants::fileUploadCatchMsg);
 			}
 
 			return $companyImageResponse;
@@ -60,9 +60,9 @@ class filesController extends Controller
 		
 		try{
 			Storage::disk('public')->delete($imgFileName);
-			$companyImageResponse->setStatusCode(200, filesConstants::fileDeleteSuccessMsg);
+			$companyImageResponse->setStatusCode(200, fileConstants::fileDeleteSuccessMsg);
 		} catch (\Exception $e){
-			$companyImageResponse->setStatusCode(400, filesConstants::fileDeleteCatchMsg);
+			$companyImageResponse->setStatusCode(400, fileConstants::fileDeleteCatchMsg);
 		}
 		
 		return $companyImageResponse;
@@ -77,9 +77,9 @@ class filesController extends Controller
 		try{
 			$companyMenuImage  = Storage::disk('public')->get($imgFileName);
 			$companyMenuImageResponse->setContent($companyMenuImage);
-			$companyMenuImageResponse->setStatusCode(200, filesConstants::fileGetSuccessMsg);
+			$companyMenuImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
 		} catch(\Exception $e){
-			$companyMenuImageResponse->setStatusCode(400, filesConstants::fileGetCatchMsg);
+			$companyMenuImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
 		}
 		
 		return $companyMenuImageResponse;
@@ -94,9 +94,9 @@ class filesController extends Controller
 		
 		try{
 			Storage::disk('public')->put($imgFileName, File::get($imgFile));
-			$companyMenuImageResponse->setStatusCode(200, filesConstants::fileUploadSuccessMsg);
+			$companyMenuImageResponse->setStatusCode(200, fileConstants::fileUploadSuccessMsg);
 		} catch(\Exception $e){
-			$companyMenuImageResponse->setStatusCode(400, filesConstants::fileUploadCatchMsg);
+			$companyMenuImageResponse->setStatusCode(400, fileConstants::fileUploadCatchMsg);
 		}
 		
 		return $companyMenuImageResponse;
@@ -110,9 +110,9 @@ class filesController extends Controller
 		
 		try{
 			Storage::disk('public')->delete($imgFileName);
-			$companyMenuImageResponse->setStatusCode(200, filesConstants::fileDeleteSuccessMsg);
+			$companyMenuImageResponse->setStatusCode(200, fileConstants::fileDeleteSuccessMsg);
 		} catch(\Exception $e){
-			$companyMenuImageResponse->setStatusCode(400, filesConstants::fileDeleteCatchMsg);
+			$companyMenuImageResponse->setStatusCode(400, fileConstants::fileDeleteCatchMsg);
 		}
 		
 		return $companyMenuImageResponse;
@@ -127,9 +127,9 @@ class filesController extends Controller
 		try{
 			$companyMenuMenuitemImage = Storage::disk('public')->get($imgFileName);
 			$companyMenuMenuitemImageResponse->setContent($companyMenuMenuitemImage);
-			$companyMenuMenuitemImageResponse->setStatusCode(200, filesConstants::fileGetSuccessMsg);
+			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
 		} catch(\Exception $e){
-			$companyMenuMenuitemImageResponse->setStatusCode(400, filesConstants::fileGetCatchMsg);
+			$companyMenuMenuitemImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
 		}
 		
 		return $companyMenuMenuitemImageResponse;
@@ -143,9 +143,9 @@ class filesController extends Controller
 		$companyMenuMenuitemImageResponse = new Response();
 		try{
 			Storage::disk('public')->put($imgFileName, File::get($imgFile));
-			$companyMenuMenuitemImageResponse->setStatusCode(200, filesConstants::fileGetSuccessMsg);
+			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
 		} catch(\Exception $e){
-			$companyMenuMenuitemImageResponse->setStatusCode(400, filesConstants::fileGetCatchMsg);
+			$companyMenuMenuitemImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
 		}
 		
 		return $companyMenuMenuitemImageResponse;
@@ -159,9 +159,9 @@ class filesController extends Controller
 		
 		try{
 			Storage::disk('public')->delete($imgFileName);
-			$companyMenuMenuitemImageResponse->setStatusCode(200, filesConstants::fileDeleteSuccessMsg);
+			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileDeleteSuccessMsg);
 		} catch(\Exception $e){
-			$companyMenuMenuitemImageResponse->setStatusCode(200, filesConstants::fileDeleteCatchMsg);
+			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileDeleteCatchMsg);
 		}
 		
 		return $companyMenuMenuitemImageResponse;

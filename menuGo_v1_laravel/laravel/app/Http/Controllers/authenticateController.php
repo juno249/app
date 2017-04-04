@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use JWTAuth;
 
-include_once "customersController.php";
+include_once "customerController.php";
 
 class authenticateController extends Controller
 {
@@ -26,8 +26,8 @@ class authenticateController extends Controller
 	//URL-->>/login
 	public function authenticate(Request $request){
 		$loginCredentials = $request->only(
-				customersConstants::dbCustomerUsername, 
-				customersConstants::dbCustomerPassword
+				customerConstants::dbCustomerUsername, 
+				customerConstants::dbCustomerPassword
 				);
 		
 		try{	$jwtAuthToken = JWTAuth::attempt($loginCredentials);
@@ -88,22 +88,22 @@ class authenticateController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerUsername, 
+						customerConstants::dbCustomerUsername, 
 						'=', 
-						$loginCredentials[customersConstants::dbCustomerUsername]
+						$loginCredentials[customerConstants::dbCustomerUsername]
 				]
 				);
 
-		$user = (array)DB::table(customersConstants::customersTable)
+		$user = (array)DB::table(customerConstants::customersTable)
 		->where($mySqlWhere)
 		->first();
 
 		$userDetails = array();
-		$userDetails[customersConstants::dbCustomerUsername] = $user[customersConstants::dbCustomerUsername];
-		$userDetails[customersConstants::dbCustomerNameFname] = $user[customersConstants::dbCustomerNameFname];
-		$userDetails[customersConstants::dbCustomerNameMname] = $user[customersConstants::dbCustomerNameMname];
-		$userDetails[customersConstants::dbCustomerNameLname] = $user[customersConstants::dbCustomerNameLname];
-		$userDetails[customersConstants::dbCustomerRole] = $user[customersConstants::dbCustomerRole];
+		$userDetails[customerConstants::dbCustomerUsername] = $user[customerConstants::dbCustomerUsername];
+		$userDetails[customerConstants::dbCustomerNameFname] = $user[customerConstants::dbCustomerNameFname];
+		$userDetails[customerConstants::dbCustomerNameMname] = $user[customerConstants::dbCustomerNameMname];
+		$userDetails[customerConstants::dbCustomerNameLname] = $user[customerConstants::dbCustomerNameLname];
+		$userDetails[customerConstants::dbCustomerRole] = $user[customerConstants::dbCustomerRole];
 
 		return response()
 		->json(

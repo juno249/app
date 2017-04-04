@@ -8,11 +8,11 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-include_once "branchesController.php";
-include_once "companiesController.php";
-include_once "customersController.php";
+include_once "branchController.php";
+include_once "companyController.php";
+include_once "customerController.php";
 
-class customersCompaniesBranchesConstants{
+class customerCompanyBranchConstants{
 	const customersCompaniesBranchesTable = 'customers_companies_branches';
 	
 	const keyCustomer = 'customer';
@@ -43,30 +43,30 @@ class customersCompaniesBranchesConstants{
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 		
-class customersCompaniesBranchesController extends Controller
+class customerCompanyBranchController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth', ['except' => ['addCustomerCompanyBranch']]);
 	}
 	
 	public function getJoinCustomerCompanyBranch($mySqlWhere){
-		$customerCompanyBranch = DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)
+		$customerCompanyBranch = DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
 		->join(
-				customersConstants::customersTable, 
-				customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, 
+				customerConstants::customersTable, 
+				customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCustomerUsername, 
 				'=', 
-				customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername
+				customerConstants::customersTable . '.' . customerConstants::dbCustomerUsername
 				)
 				->join(
-						companiesConstants::companiesTable, 
-						customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName, 
+						companyConstants::companiesTable, 
+						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCompanyName, 
 						'=', 
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 						)
 						->join(
-								branchesConstants::branchesTable, 
-								companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+								branchConstants::branchesTable, 
+								companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 								'=', 
-								branchesConstants::branchesTable . '.' . branchesConstants::dbCompanyName
+								branchConstants::branchesTable . '.' . branchConstants::dbCompanyName
 								)
 								->where($mySqlWhere)
 		->get();
@@ -75,7 +75,7 @@ class customersCompaniesBranchesController extends Controller
 	}
 	
 	//URL-->>/customers-companies-branches
-	public function getAllCustomersCompaniesBranches(){
+	public function getCustomersCompaniesBranches(){
 		$mySqlWhere = array();
 		
 		$customersCompaniesBranchesResponse = new Response();
@@ -83,14 +83,14 @@ class customersCompaniesBranchesController extends Controller
 			$customersCompaniesBranches = $this->getJoinCustomerCompanyBranch($mySqlWhere);
 			if($customersCompaniesBranches->isEmpty()){	$customersCompaniesBranchesResponse->setStatusCode(
 					200, 
-					customersCompaniesBranchesConstants::emptyResultSetErr
+					customerCompanyBranchConstants::emptyResultSetErr
 					);
 			} else {	$customersCompaniesBranchesResponse->setContent(json_encode($customersCompaniesBranches));
 			}
 		} catch(\PDOException $e){
 			$customersCompaniesBranchesResponse->setStatusCode(
 					400, 
-					customersCompaniesBranchesConstants::dbReadCatchMsg
+					customerCompanyBranchConstants::dbReadCatchMsg
 					);
 		}
 		
@@ -108,7 +108,7 @@ class customersCompaniesBranchesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, 
+						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCustomerUsername, 
 						'=', 
 						$CustomerUsername
 				]
@@ -116,7 +116,7 @@ class customersCompaniesBranchesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName, 
+						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -124,7 +124,7 @@ class customersCompaniesBranchesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -135,14 +135,14 @@ class customersCompaniesBranchesController extends Controller
 			$customerCompanyBranch = $this->getJoinCustomerCompanyBranch($mySqlWhere);
 			if($customerCompanyBranch->isEmpty()){	$customersCompaniesBranchesResponse->setStatusCode(
 					200, 
-					customersCompaniesBranchesConstants::emptyResultSetErr
+					customerCompanyBranchConstants::emptyResultSetErr
 					);
 			} else {	$customersCompaniesBranchesResponse->setContent(json_encode($customerCompanyBranch));
 			}
 		} catch(\PDOException $e){
 			$customersCompaniesBranchesResponse->setStatusCode(
 					400, 
-					customersCompaniesBranchesConstants::dbReadCatchMsg
+					customerCompanyBranchConstants::dbReadCatchMsg
 					);
 		}
 		
@@ -153,58 +153,58 @@ class customersCompaniesBranchesController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
-		if(isset($_GET[customersCompaniesBranchesConstants::reqCustomerUsername])){	array_push(
+		if(isset($_GET[customerCompanyBranchConstants::reqCustomerUsername])){	array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::dbCustomerUsername, 
+						customerCompanyBranchConstants::dbCustomerUsername, 
 						'LIKE', 
-						'%' . $_GET[customersCompaniesBranchesConstants::reqCustomerUsername] . '%'
+						'%' . $_GET[customerCompanyBranchConstants::reqCustomerUsername] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersCompaniesBranchesConstants::reqCompanyName])){	array_push(
+		if(isset($_GET[customerCompanyBranchConstants::reqCompanyName])){	array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::dbCompanyName, 
+						customerCompanyBranchConstants::dbCompanyName, 
 						'LIKE', 
-						'%' . $_GET[customersCompaniesBranchesConstants::reqCompanyName] . '%'
+						'%' . $_GET[customerCompanyBranchConstants::reqCompanyName] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersCompaniesBranchesConstants::reqBranchName])){		array_push(
+		if(isset($_GET[customerCompanyBranchConstants::reqBranchName])){		array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::dbBranchName, 
+						customerCompanyBranchConstants::dbBranchName, 
 						'LIKE', 
-						'%' . $_GET[customersCompaniesBranchesConstants::reqBranchName] . '%'
+						'%' . $_GET[customerCompanyBranchConstants::reqBranchName] . '%'
 						
 				]
 				);
 		}
-		if(isset($_GET[customersCompaniesBranchesConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[customerCompanyBranchConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::dbLastChangeTimestamp, 
+						customerCompanyBranchConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[customersCompaniesBranchesConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[customerCompanyBranchConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 		
 		$customersCompaniesBranchesResponse = new Response();
 		try{
-			$customersCompaniesBranches = DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)
+			$customersCompaniesBranches = DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
 			->where($mySqlWhere)
 			->get();
 			if($customersCompaniesBranches->isEmpty()){	$customersCompaniesBranchesResponse->setStatusCode(
 					200, 
-					customersCompaniesBranchesConstants::emptyResultSetErr
+					customerCompanyBranchConstants::emptyResultSetErr
 					);
 			} else {	$customersCompaniesBranchesResponse->setContent(json_encode($customersCompaniesBranches));
 			}
 		} catch(\PDOException $e){	$customersCompaniesBranchesResponse->setStatusCode(
 				400, 
-				customersCompaniesBranchesConstants::dbReadCatchMessage
+				customerCompanyBranchConstants::dbReadCatchMessage
 				);
 		}
 		
@@ -220,19 +220,19 @@ class customersCompaniesBranchesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . customersCompaniesBranchesConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbBranchName => 'exists:branches,branch_name|required|string|max:30'
+							'*.' . customerCompanyBranchConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
+							'*.' . customerCompanyBranchConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
+							'*.' . customerCompanyBranchConstants::dbBranchName => 'exists:branches,branch_name|required|string|max:30'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . customersCompaniesBranchesConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbBranchName => 'exists:branches,branch_name|sometimes|string|max:30', 
-							'*.' . customersCompaniesBranchesConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . customerCompanyBranchConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
+							'*.' . customerCompanyBranchConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
+							'*.' . customerCompanyBranchConstants::dbBranchName => 'exists:branches,branch_name|sometimes|string|max:30', 
+							'*.' . customerCompanyBranchConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -255,9 +255,9 @@ class customersCompaniesBranchesController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 		
-		$customersController = new customersController();
-		$companiesController = new companiesController();
-		$branchesController = new branchesController();
+		$customerController = new customerController();
+		$companyController = new companyController();
+		$branchController = new branchController();
 		
 		$customerDbWrite = false;
 		$companyDbWrite = false;
@@ -275,26 +275,26 @@ class customersCompaniesBranchesController extends Controller
 			try{
 				//db_transaction: add_customer
 				if(array_key_exists(
-						customersCompaniesBranchesConstants::keyCustomer, 
+						customerCompanyBranchConstants::keyCustomer, 
 						$customerCompanyBranchRunner
 						)
 						){
-					$customer = $customerCompanyBranchRunner[customersCompaniesBranchesConstants::keyCustomer];
-					if($customersController->isDataValid(
+					$customer = $customerCompanyBranchRunner[customerCompanyBranchConstants::keyCustomer];
+					if($customerController->isDataValid(
 							[$customer], 
 							$errorMsg, 
 							"ADD"
 							)
 							){
-						$pwHashed = Hash::make($customer[customersConstants::dbCustomerPassword]);
-						$customer[customersConstants::dbCustomerPassword] = $pwHashed;
+						$pwHashed = Hash::make($customer[customerConstants::dbCustomerPassword]);
+						$customer[customerConstants::dbCustomerPassword] = $pwHashed;
 						
-						try{	DB::table(customersConstants::customersTable)
+						try{	DB::table(customerConstants::customersTable)
 						->insert($customer);
 						} catch(\PDOException $e){	throw $e;
 						}
 						
-						$customerCompanyBranch[customersConstants::dbCustomerUsername] = $customer[customersConstants::dbCustomerUsername];
+						$customerCompanyBranch[customerConstants::dbCustomerUsername] = $customer[customerConstants::dbCustomerUsername];
 						$customerDbWrite = true;
 					} else {
 						$customersCompaniesBranchesResponse->setStatusCode(
@@ -308,23 +308,23 @@ class customersCompaniesBranchesController extends Controller
 				
 				//db_transaction: add_company
 				if(array_key_exists(
-						customersCompaniesBranchesConstants::keyCompany, 
+						customerCompanyBranchConstants::keyCompany, 
 						$customerCompanyBranchRunner
 						)
 						){
-					$company = $customerCompanyBranchRunner[customersCompaniesBranchesConstants::keyCompany];
-					if($companiesController->isDataValid(
+					$company = $customerCompanyBranchRunner[customerCompanyBranchConstants::keyCompany];
+					if($companyController->isDataValid(
 							[$company], 
 							$errorMsg, 
 							"ADD"
 							)
 							){
-						try{	DB::table(companiesConstants::companiesTable)
+						try{	DB::table(companyConstants::companiesTable)
 						->insert($company);
 						} catch(\PDOException $e){	throw $e;
 						}
 						
-						$customerCompanyBranch[companiesConstants::dbCompanyName] = $company[companiesConstants::dbCompanyName];
+						$customerCompanyBranch[companyConstants::dbCompanyName] = $company[companyConstants::dbCompanyName];
 						$companyDbWrite = true;
 					} else {
 						$customersCompaniesBranchesResponse->setStatusCode(
@@ -338,27 +338,27 @@ class customersCompaniesBranchesController extends Controller
 					
 				//db_transaction: add_branch
 				if(array_key_exists(
-						customersCompaniesBranchesConstants::keyBranch, 
+						customerCompanyBranchConstants::keyBranch, 
 						$customerCompanyBranchRunner
 						)
 						){
-					$branch = $customerCompanyBranchRunner[customersCompaniesBranchesConstants::keyBranch];
-					if($branchesController->isDataValid(
+					$branch = $customerCompanyBranchRunner[customerCompanyBranchConstants::keyBranch];
+					if($branchController->isDataValid(
 							[$branch], 
 							$errorMsg, 
 							"ADD"
 							)
 							){
-						if(!($branch[branchesConstants::dbCompanyName] == $company[companiesConstants::dbCompanyName])){
+						if(!($branch[branchConstants::dbCompanyName] == $company[companyConstants::dbCompanyName])){
 							$customersCompaniesBranchesResponse->setStatusCode(
 									400, 
-									customersCompaniesBranchesConstants::inconsistencyValidationErr1
+									customerCompanyBranchConstants::inconsistencyValidationErr1
 									);
 							
 							return $customersCompaniesBranchesResponse;
 						}
 						
-						try{	DB::table(branchesConstants::branchesTable)
+						try{	DB::table(branchConstants::branchesTable)
 						->insert($branch);
 						} catch(\PDOException $e){	throw $e;
 						}
@@ -367,20 +367,20 @@ class customersCompaniesBranchesController extends Controller
 				
 				//db_transaction: add_customerCompanyBranch
 				if(array_key_exists(
-						customersCompaniesBranchesConstants::keyBranch, 
+						customerCompanyBranchConstants::keyBranch, 
 						$customerCompanyBranchRunner
 						)
 						){
-					$companyName = $company[companiesConstants::dbCompanyName];
-					$branchName = $branch[branchesConstants::dbBranchName];
+					$companyName = $company[companyConstants::dbCompanyName];
+					$branchName = $branch[branchConstants::dbBranchName];
 					$branch = json_decode(
-							$branchesController->getCompanyBranch(
+							$branchController->getCompanyBranch(
 									$companyName, 
 									$branchName
 									)->original, 
 							true)[0];
 					
-					$customerCompanyBranch[branchesConstants::dbBranchId] = $branch[branchesConstants::dbBranchId];
+					$customerCompanyBranch[branchConstants::dbBranchId] = $branch[branchConstants::dbBranchId];
 					$branchDbWrite = true;
 				}
 				
@@ -396,7 +396,7 @@ class customersCompaniesBranchesController extends Controller
 							)
 							){
 						try{
-							DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)
+							DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
 							->insert($customerCompanyBranch);
 						} catch(\PDOException $e){	throw $e;
 						}	
@@ -408,14 +408,14 @@ class customersCompaniesBranchesController extends Controller
 				DB::rollback();
 				$customersCompaniesBranchesResponse->setStatusCode(
 						400, 
-						customersCompaniesBranchesConstants::dbAddCatchMsg
+						customerCompanyBranchConstants::dbAddCatchMsg
 						);
 				
 				return $customersCompaniesBranchesResponse;
 			}
 		}
 		
-		return customersCompaniesBranchesConstants::dbAddSuccessMsg;
+		return customerCompanyBranchConstants::dbAddSuccessMsg;
 	}
 	
 	//URL-->>/customers-companies-branches/{CustomerUsername}
@@ -432,23 +432,23 @@ class customersCompaniesBranchesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							customersCompaniesBranchesConstants::dbCustomerUsername, 
+							customerCompanyBranchConstants::dbCustomerUsername, 
 							'=', 
 							$CustomerUsername
 					]
 					);
-			DB::table(customersCompaniesBranchesConstants::customersCompaniesBranchesTable)
+			DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$customersCompaniesBranchesResponse->setStatusCode(
 					400, 
-					customersCompaniesBranchesConstants::dbDeleteCatchMsg
+					customerCompanyBranchConstants::dbDeleteCatchMsg
 					);
 			
 			return $customersCompaniesBranchesResponse;
 		}
 		
-		return customersCompaniesBranchesConstants::dbDeleteSuccessMsg;
+		return customerCompanyBranchConstants::dbDeleteSuccessMsg;
 	}
 }

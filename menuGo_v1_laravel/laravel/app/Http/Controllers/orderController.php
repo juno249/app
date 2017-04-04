@@ -7,14 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "branchesController.php";
-include_once "companiesController.php";
-include_once "customersController.php";
-include_once "menuitemsController.php";
-include_once "tablesController.php";
-include_once "orderreferencesController.php";
+include_once "branchController.php";
+include_once "companyController.php";
+include_once "tableController.php";
+include_once "orderreferenceController.php";
 
-class ordersConstants{
+class orderConstants{
 	const ordersTable = 'orders';
 	
 	const dbOrderId = 'order_id';
@@ -47,36 +45,36 @@ class ordersConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class ordersController extends Controller
+class orderController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	public function getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere){
-		$companyBranchTableOrderreferenceOrders = DB::table(ordersConstants::ordersTable)
+		$companyBranchTableOrderreferenceOrders = DB::table(orderConstants::ordersTable)
 		->join(
-				orderreferencesConstants::orderreferencesTable, 
-				ordersConstants::ordersTable . '.' . ordersConstants::dbOrderreferenceCode, 
+				orderreferenceConstants::orderreferencesTable, 
+				orderConstants::ordersTable . '.' . orderConstants::dbOrderreferenceCode, 
 				'=', 
-				orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbOrderreferenceCode
+				orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode
 				)
 				->join(
-						tablesConstants::tablesTable, 
-						orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbTableId, 
+						tableConstants::tablesTable, 
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbTableId, 
 						'=', 
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableId
+						tableConstants::tablesTable . '.' . tableConstants::dbTableId
 						)
 						->join(
-								branchesConstants::branchesTable, 
-								tablesConstants::ordersTable . '.' . tablesConstants::dbBranchId, 
+								branchConstants::branchesTable, 
+								tableConstants::ordersTable . '.' . tableConstants::dbBranchId, 
 								'=', 
-								branchesConstants::branchesTable . '.' . branchesConstants::dbBranchId
+								branchConstants::branchesTable . '.' . branchConstants::dbBranchId
 								)
 								->join(
-										companiesConstants::companiesTable, 
-										branchesConstants::branchesTable . '.' . branchesConstants::dbCompanyName, 
+										companyConstants::companiesTable, 
+										branchConstants::branchesTable . '.' . branchConstants::dbCompanyName, 
 										'=', 
-										companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
+										companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 										)
 										->where($mySqlWhere)
 		->get();
@@ -93,7 +91,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -101,7 +99,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -112,13 +110,13 @@ class ordersController extends Controller
 			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -135,7 +133,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -143,7 +141,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -151,7 +149,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderId, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderId, 
 						'=', 
 						$OrderId
 				]
@@ -162,13 +160,13 @@ class ordersController extends Controller
 			$companyBranchOrder = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrder->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchOrder));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -185,7 +183,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -193,7 +191,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -201,7 +199,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderStatus, 
 						'=', 
 						$OrderStatus
 				]
@@ -212,13 +210,13 @@ class ordersController extends Controller
 			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -235,7 +233,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -243,7 +241,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -251,7 +249,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderStatus, 
 						'!=', 
 						$OrderStatus
 				]
@@ -262,13 +260,13 @@ class ordersController extends Controller
 			$companyBranchOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -285,7 +283,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -293,7 +291,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -301,7 +299,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -312,13 +310,13 @@ class ordersController extends Controller
 			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrders));
 			}
 		} catch(\PDOException  $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -336,7 +334,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -344,7 +342,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -352,7 +350,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -360,7 +358,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderId, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderId, 
 						'=', 
 						$OrderId
 				]
@@ -371,13 +369,13 @@ class ordersController extends Controller
 			$companyBranchTableOrder = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrder->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrder));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -395,7 +393,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -403,7 +401,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -411,7 +409,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -419,7 +417,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderStatus, 
 						'=', 
 						$OrderStatus
 				]
@@ -430,13 +428,13 @@ class ordersController extends Controller
 			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -454,7 +452,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -462,7 +460,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -470,7 +468,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -478,7 +476,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderStatus, 
 						'!=', 
 						$OrderStatus
 				]
@@ -489,13 +487,13 @@ class ordersController extends Controller
 			$companyBranchTableOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrders));
 			}
 		} catch(\PDOException  $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -513,7 +511,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -521,7 +519,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -529,7 +527,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -537,7 +535,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbOrderreferenceCode, 
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode, 
 						'=', 
 						$OrderreferenceCode
 				]
@@ -548,13 +546,13 @@ class ordersController extends Controller
 			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrderreferenceOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -573,7 +571,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -581,7 +579,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -589,7 +587,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -597,7 +595,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbOrderreferenceCode, 
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode, 
 						'=', 
 						$OrderreferenceCode
 				]
@@ -605,7 +603,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderId, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderId, 
 						'=', 
 						$OrderId
 				]
@@ -616,13 +614,13 @@ class ordersController extends Controller
 			$companyBranchTableOrderreferenceOrder = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrder->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrderreferenceOrder));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -641,7 +639,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -649,7 +647,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -657,7 +655,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -665,7 +663,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbOrderreferenceCode, 
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode, 
 						'=', 
 						$OrderreferenceCode
 				]
@@ -673,7 +671,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderStatus, 
 						'=', 
 						$OrderStatus
 				]
@@ -684,13 +682,13 @@ class ordersController extends Controller
 			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrderreferenceOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -709,7 +707,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -717,7 +715,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -725,7 +723,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -733,7 +731,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						orderreferencesConstants::orderreferencesTable . '.' . orderreferencesConstants::dbOrderreferenceCode, 
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode, 
 						'=', 
 						$OrderreferenceCode
 				]
@@ -741,7 +739,7 @@ class ordersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::ordersTable . '.' . ordersConstants::dbOrderStatus, 
+						orderConstants::ordersTable . '.' . orderConstants::dbOrderStatus, 
 						'!=', 
 						$OrderStatus
 				]
@@ -752,13 +750,13 @@ class ordersController extends Controller
 			$companyBranchTableOrderreferenceOrders = $this->getJoinCompanyBranchTableOrderreferenceOrder($mySqlWhere);
 			if($companyBranchTableOrderreferenceOrders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($ordersResponse));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -769,75 +767,75 @@ class ordersController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
-		if(isset($_GET[ordersConstants::reqOrderId])){	array_push(
+		if(isset($_GET[orderConstants::reqOrderId])){	array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::dbOrderId, 
+						orderConstants::dbOrderId, 
 						'=', 
-						$_GET[ordersConstants::reqOrderId]
+						$_GET[orderConstants::reqOrderId]
 				]
 				);
 		}
-		if(isset($_GET[ordersConstants::reqMenuitemId])){	array_push(
+		if(isset($_GET[orderConstants::reqMenuitemId])){	array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::dbMenuitemId, 
+						orderConstants::dbMenuitemId, 
 						'=', 
-						$_GET[ordersConstants::reqMenuitemId]
+						$_GET[orderConstants::reqMenuitemId]
 				]
 				);
 		}
-		if(isset($_GET[ordersConstants::reqOrderreferenceCode])){	array_push(
+		if(isset($_GET[orderConstants::reqOrderreferenceCode])){	array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::dbOrderreferenceCode, 
+						orderConstants::dbOrderreferenceCode, 
 						'LIKE', 
-						'%' . $_GET[ordersConstants::reqOrderreferenceCode] . '%'
+						'%' . $_GET[orderConstants::reqOrderreferenceCode] . '%'
 				]
 				);
 		}
-		if(isset($_GET[ordersConstants::reqOrderStatus])){	array_push(
+		if(isset($_GET[orderConstants::reqOrderStatus])){	array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::dbOrderStatus, 
+						orderConstants::dbOrderStatus, 
 						'LIKE', 
-						'%' . $_GET[ordersConstants::reqOrderStatus] . '%'
+						'%' . $_GET[orderConstants::reqOrderStatus] . '%'
 				]
 				);
 		}
-		if(isset($_GET[ordersConstants::reqOrderStatusChangeTimestamp])){	array_push(
+		if(isset($_GET[orderConstants::reqOrderStatusChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::dbOrderStatusChangeTimestamp, 
+						orderConstants::dbOrderStatusChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[ordersConstants::reqOrderStatusChangeTimestamp] . '%'
+						'%' . $_GET[orderConstants::reqOrderStatusChangeTimestamp] . '%'
 				]
 				);
 		}
-		if(isset($_GET[ordersConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[orderConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						ordersConstants::dbLastChangeTimestamp, 
+						orderConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[ordersConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[orderConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 		
 		$ordersResponse = new Response();
 		try{
-			$orders = DB::table(ordersConstants::ordersTable)
+			$orders = DB::table(orderConstants::ordersTable)
 			->where($mySqlWhere)
 			->get();
 			if($orders->isEmpty()){	$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::emptyResultSetErr
+					orderConstants::emptyResultSetErr
 					);
 			} else {	$ordersResponse->setContent(json_encode($orders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
-				ordersConstants::dbReadCatchMsg
+				orderConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -853,21 +851,21 @@ class ordersController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric', 
-							'*.' . ordersConstants::dbOrderreferenceCode => 'exists::orderreferences,orderreference_code|required|string|max:40', 
-							'*.' . ordersConstants::dbOrderStatus => 'required|string|max:30', 
-							'*.' . ordersConstants::dbOrderStatusChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . orderConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric', 
+							'*.' . orderConstants::dbOrderreferenceCode => 'exists::orderreferences,orderreference_code|required|string|max:40', 
+							'*.' . orderConstants::dbOrderStatus => 'required|string|max:30', 
+							'*.' . orderConstants::dbOrderStatusChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . ordersConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric', 
-							'*.' . ordersConstants::dbOrderreferenceCode => 'exists::orderreferences,orderreference_code|sometimes|string|max:40', 
-							'*.' . ordersConstants::dbOrderStatus => 'sometimes|string|max:30', 
-							'*.' . ordersConstants::dbOrderStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . ordersConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . orderConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric', 
+							'*.' . orderConstants::dbOrderreferenceCode => 'exists::orderreferences,orderreference_code|sometimes|string|max:40', 
+							'*.' . orderConstants::dbOrderStatus => 'sometimes|string|max:30', 
+							'*.' . orderConstants::dbOrderStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
+							'*.' . orderConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -913,27 +911,27 @@ class ordersController extends Controller
 		if(sizeof($companyBranchTableOrderreference == 0)){
 			$ordersResponse->setStatusCode(
 					400, 
-					ordersConstants::inconsistencyValidationErr1
+					orderConstants::inconsistencyValidationErr1
 					);
 			
 			return $ordersResponse;
 		}
 		
-		$orderreferenceCode = $companyBranchTableOrderreference[0][ordersConstants::dbOrderreferenceCode];
+		$orderreferenceCode = $companyBranchTableOrderreference[0][orderConstants::dbOrderreferenceCode];
 		
 		for($i=0; $i<$jsonData; $i++){
-			if(!(isset($jsonData[$i][ordersConstants::dbOrderreferenceCode]))){	$jsonData[$i][ordersConstants::dbOrderreferenceCode] = $orderreferenceCode;
+			if(!(isset($jsonData[$i][orderConstants::dbOrderreferenceCode]))){	$jsonData[$i][orderConstants::dbOrderreferenceCode] = $orderreferenceCode;
 			}
 		}
 		
 		for($i=0; $i<$jsonData; $i++){
-			if(isset($jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp])){
-				try{	$jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[$i][ordersConstants::dbOrderStatusChangeTimestamp])
+			if(isset($jsonData[$i][orderConstants::dbOrderStatusChangeTimestamp])){
+				try{	$jsonData[$i][orderConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[$i][orderConstants::dbOrderStatusChangeTimestamp])
 				->format('Y-m-d H:i:s');
 				} catch(\Exception $e){
 					$ordersResponse->setStatusCode(
 							400, 
-							orderreferencesConstants::carbonParseErr
+							orderreferenceConstants::carbonParseErr
 							);
 					
 					return $ordersResponse;
@@ -948,13 +946,13 @@ class ordersController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i][ordersConstants::dbOrderreferenceCode] == $orderreferenceCode){
-					try{	DB::table(ordersConstants::ordersTable)
+				if($jsonData[$i][orderConstants::dbOrderreferenceCode] == $orderreferenceCode){
+					try{	DB::table(orderConstants::ordersTable)
 					->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$ordersResponse->setStatusCode(
 								400, 
-								ordersConstants::dbAddCatchMsg
+								orderConstants::dbAddCatchMsg
 								);
 						
 						return $ordersResponse;
@@ -970,7 +968,7 @@ class ordersController extends Controller
 			return $ordersResponse;
 		}
 		
-		return ordersConstants::dbAddSuccessMsg;
+		return orderConstants::dbAddSuccessMsg;
 	}
 	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderId}
@@ -994,25 +992,25 @@ class ordersController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp])){
-			try{	$jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[0][ordersConstants::dbOrderStatusChangeTimestamp])
+		if(isset($jsonData[0][orderConstants::dbOrderStatusChangeTimestamp])){
+			try{	$jsonData[0][orderConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[0][orderConstants::dbOrderStatusChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$ordersResponse->setStatusCode(
 						400, 
-						ordersConstants::carbonParseErr
+						orderConstants::carbonParseErr
 						);
 				
 				return $ordersResponse;
 			}
 		}
-		if(isset($jsonData[0][ordersConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][ordersConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][ordersConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][orderConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][orderConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][orderConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$ordersResponse->setStatusCode(
 						400, 
-						ordersConstants::carbonParseErr
+						orderConstants::carbonParseErr
 						);
 				
 				return $ordersResponse;
@@ -1033,30 +1031,30 @@ class ordersController extends Controller
 		if(sizeof($companyBranchTableOrderreferenceOrder) == 0){
 			$ordersResponse->setStatusCode(
 					400, 
-					ordersConstants::inconsistencyValidationErr2
+					orderConstants::inconsistencyValidationErr2
 					);
 			
 			return $ordersResponse;
 		}
 		
-		$orderId = $companyBranchTableOrderreferenceOrder[0][ordersConstants::dbOrderId];
+		$orderId = $companyBranchTableOrderreferenceOrder[0][orderConstants::dbOrderId];
 		
 		try{
 			array_push(
 					$mySqlWhere, 
 					[
-							ordersConstants::dbOrderId, 
+							orderConstants::dbOrderId, 
 							'=', 
 							$orderId
 					]
 					);
-			DB::table(ordersConstants::ordersTable)
+			DB::table(orderConstants::ordersTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$ordersResponse->setStatusCode(
 					400, 
-					ordersConstants::dbUpdateCatchMsg
+					orderConstants::dbUpdateCatchMsg
 					);
 			
 			return $ordersResponse;
@@ -1095,30 +1093,30 @@ class ordersController extends Controller
 		if(sizeof($companyBranchTableOrderreferenceOrder) == 0){
 			$ordersResponse->setStatusCode(
 					200, 
-					ordersConstants::inconsistencyValidationErr2
+					orderConstants::inconsistencyValidationErr2
 					);
 			
 			return $ordersResponse;
 		}
 		
-		$orderId = $companyBranchTableOrderreferenceOrder[0][ordersConstants::dbOrderId];
+		$orderId = $companyBranchTableOrderreferenceOrder[0][orderConstants::dbOrderId];
 		
 		try{
 			array_push(
 					$mySqlWhere, 
 					[
-							ordersConstants::dbOrderId, 
+							orderConstants::dbOrderId, 
 							'=', 
 							$orderId
 					]
 					);
-			DB::table(ordersConstants::ordersTable)
+			DB::table(orderConstants::ordersTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$ordersResponse->setStatusCode(
 					400, 
-					ordersConstants::dbDeleteCatchMsg
+					orderConstants::dbDeleteCatchMsg
 					);
 			
 			return $ordersResponse;

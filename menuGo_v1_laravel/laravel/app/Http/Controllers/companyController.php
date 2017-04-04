@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "customersCompaniesBranchesController.php";
+include_once "customerCompanyBranchController.php";
 
-class companiesConstants{
+class companyConstants{
 	const companiesTable = 'companies';
 	
 	const dbCompanyName = 'company_name';
@@ -40,33 +40,33 @@ class companiesConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class companiesController extends Controller
+class companyController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 
-	public function getJoinCompanyCustomerCompanyBranch($mySqlWhere){
-		$companyCustomerCompanyBranch = DB::table(companiesConstants::companiesTable)
+	public function getJoinCustomerCompanyBranchCompany($mySqlWhere){
+		$customerCompanyBranchCompany = DB::table(companyConstants::companiesTable)
 		->join(
-				customersCompaniesBranchesConstants::customersCompaniesBranchesTable, 
-				companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+				customerCompanyBranchConstants::customersCompaniesBranchesTable, 
+				companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 				'=', 
-				customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName
+				customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCompanyName
 				)
 				->where($mySqlWhere)
 		->get();
 		
-		return $companyCustomerCompanyBranch;
+		return $customerCompanyBranchCompany;
 	}
 	
 	//URL-->>/companies/customers/{CustomerUsername}
-	public function getAllCompaniesAdministrator($CustomerUsername){
+	public function getCompanies_asAdministrator($CustomerUsername){
 		$mySqlWhere = array();
 		
 		array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername, 
+						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCustomerUsername, 
 						'=', 
 						$CustomerUsername
 				]
@@ -74,10 +74,10 @@ class companiesController extends Controller
 		
 		$companiesResponse = new Response();
 		try{
-			$companies = $this->getJoinCompanyCustomerCompanyBranch($mySqlWhere);
+			$companies = $this->getJoinCustomerCompanyBranchCompany($mySqlWhere);
 			if($companies->isEmpty()){	$companiesResponse->setStatusCode(
 					200, 
-					companiesConstants::emptyResultSetErr
+					companyConstants::emptyResultSetErr
 					);
 			} else {	$companiesResponse->setContent(json_encode($companies));
 			}
@@ -91,14 +91,14 @@ class companiesController extends Controller
 	}
 	
 	//URL-->>/companies/
-	public function getAllCompanies(){
+	public function getCompanies(){
 		$companiesResponse = new Response();
 		try{
-			$companies = DB::table(companiesConstants::companiesTable)
+			$companies = DB::table(companyConstants::companiesTable)
 			->get();
 			if($companies->isEmpty()){	$companiesResponse->setStatusCode(
 					200, 
-					companiesConstants::emptyResultSetErr
+					companyConstants::emptyResultSetErr
 					);
 			} else {	$companiesResponse->setContent(json_encode($companies));
 			}
@@ -119,7 +119,7 @@ class companiesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -127,12 +127,12 @@ class companiesController extends Controller
 			
 		$companiesResponse = new Response();
 		try{	
-			$company = DB::table(companiesConstants::companiesTable)
+			$company = DB::table(companyConstants::companiesTable)
 			->where($mySqlWhere)
 			->get();
 			if($company->isEmpty()){	$companiesResponse->setStatusCode(
 					200, 
-					companiesConstants::emptyResultSetErr
+					companyConstants::emptyResultSetErr
 					);
 			} else {	$companiesResponse->setContent(json_encode($company));
 			}
@@ -149,60 +149,60 @@ class companiesController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
-		if(isset($_GET[companiesConstants::reqCompanyName])){	array_push(
+		if(isset($_GET[companyConstants::reqCompanyName])){	array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::dbCompanyName, 
+						companyConstants::dbCompanyName, 
 						'LIKE', 
-						'%' . $_GET[companiesConstants::reqCompanyName] . '%'
+						'%' . $_GET[companyConstants::reqCompanyName] . '%'
 				]
 				);
 		}
-		if(isset($_GET[companiesConstants::reqCompanyDesc])){	array_push(
+		if(isset($_GET[companyConstants::reqCompanyDesc])){	array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::dbCompanyDesc, 
+						companyConstants::dbCompanyDesc, 
 						'LIKE', 
-						'%' . $_GET[companiesConstants::reqCompanyDesc] . '%'
+						'%' . $_GET[companyConstants::reqCompanyDesc] . '%'
 				]
 				);
 		}
-		if(isset($_GET[companiesConstants::reqCompanyCategory])){	array_push(
+		if(isset($_GET[companyConstants::reqCompanyCategory])){	array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::dbCompanyCategory, 
+						companyConstants::dbCompanyCategory, 
 						'LIKE', 
-						'%' . $_GET[companiesConstants::reqCompanyCategory] . '%'
+						'%' . $_GET[companyConstants::reqCompanyCategory] . '%'
 				]
 				);
 		}
-		if(isset($_GET[companiesConstants::reqCompanyLogo])){	array_push(
+		if(isset($_GET[companyConstants::reqCompanyLogo])){	array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::dbCompanyLogo, 
+						companyConstants::dbCompanyLogo, 
 						'LIKE', 
-						'%' . $_GET[companiesConstants::reqCompanyLogo] . '%'
+						'%' . $_GET[companyConstants::reqCompanyLogo] . '%'
 				]
 				);
 		}
-		if(isset($_GET[companiesConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[companyConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::dbLastChangeTimestamp, 
+						companyConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[companiesConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[companyConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 			
 		$companiesResponse = new Response();
 		try{
-			$companies = DB::table(companiesConstants::companiesTable)
+			$companies = DB::table(companyConstants::companiesTable)
 			->where($mySqlWhere)
 			->get();
 			if($companies->isEmpty()){	$companiesResponse->setStatusCode(
 					200, 
-					companiesConstants::emptyResultSetErr
+					companyConstants::emptyResultSetErr
 					);
 			} else {	$companiesResponse->setContent(json_encode($companies));
 			}
@@ -224,21 +224,21 @@ class companiesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|required|string|max:30', 
-							'*.' . companiesConstants::dbCompanyDesc => 'required|string|max:500', 
-							'*.' . companiesConstants::dbCompanyCategory => 'required|string|max:30', 
-							'*.' . companiesConstants::dbCompanyLogo => 'required|string|max:500'
+							'*.' . companyConstants::dbCompanyName => 'unique:companies,company_name|required|string|max:30', 
+							'*.' . companyConstants::dbCompanyDesc => 'required|string|max:500', 
+							'*.' . companyConstants::dbCompanyCategory => 'required|string|max:30', 
+							'*.' . companyConstants::dbCompanyLogo => 'required|string|max:500'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . companiesConstants::dbCompanyName => 'unique:companies,company_name|sometimes|string|max:30', 
-							'*.' . companiesConstants::dbCompanyDesc => 'sometimes|string|max:500', 
-							'*.' . companiesConstants::dbCompanyCategory => 'sometimes|string|max:30', 
-							'*.' . companiesConstants::dbCompanyLogo => 'sometimes|string|max:500', 
-							'*.' . companiesConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . companyConstants::dbCompanyName => 'unique:companies,company_name|sometimes|string|max:30', 
+							'*.' . companyConstants::dbCompanyDesc => 'sometimes|string|max:500', 
+							'*.' . companyConstants::dbCompanyCategory => 'sometimes|string|max:30', 
+							'*.' . companyConstants::dbCompanyLogo => 'sometimes|string|max:500', 
+							'*.' . companyConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -270,7 +270,7 @@ class companiesController extends Controller
 				$errorMsg, 
 				"ADD"
 				)
-				){	return companiesConstants::dbAddValidateSuccessMsg;
+				){	return companyConstants::dbAddValidateSuccessMsg;
 		} else {
 			$companiesResponse->setStatusCode(
 					400, 
@@ -301,12 +301,12 @@ class companiesController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{		DB::table(companiesConstants::companiesTable)
+				try{		DB::table(companyConstants::companiesTable)
 				->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$companiesResponse->setStatusCode(
 							400, 
-							companiesConstants::dbAddCatchMsg
+							companyConstants::dbAddCatchMsg
 							);
 					
 					return $companiesResponse;
@@ -321,7 +321,7 @@ class companiesController extends Controller
 			return $companiesResponse;
 		}
 		
-		return companiesConstants::dbAddSuccessMsg;
+		return companyConstants::dbAddSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/validate
@@ -341,13 +341,13 @@ class companiesController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][companiesConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][companiesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companiesConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][companyConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][companyConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$companiesResponse->setStatusCode(
 						400, 
-						companiesConstants::carbonParseErr
+						companyConstants::carbonParseErr
 						);
 				
 				return $companiesResponse;
@@ -359,7 +359,7 @@ class companiesController extends Controller
 				$errorMsg, 
 				"UPDATE"
 				)
-				){	return companiesConstants::dbUpdateValidateSuccessMsg;
+				){	return companyConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$companiesResponse->setStatusCode(
 					400, 
@@ -388,13 +388,13 @@ class companiesController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][companiesConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][companiesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companiesConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][companyConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][companyConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$companiesResponse->setStatusCode(
 						400, 
-						companiesConstants::carbonParseErr
+						companyConstants::carbonParseErr
 						);
 				
 				return $companiesResponse;
@@ -419,24 +419,24 @@ class companiesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							companiesConstants::dbCompanyName, 
+							companyConstants::dbCompanyName, 
 							'=', 
 							$CompanyName
 					]
 					);
-			DB::table(companiesConstants::companiesTable)
+			DB::table(companyConstants::companiesTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$companiesResponse->setStatusCode(
 					400, 
-					companiesConstants::dbUpdateCatchMsg
+					companyConstants::dbUpdateCatchMsg
 					);
 			
 			return $companiesResponse;
 		}
 		
-		return companiesConstants::dbUpdateSuccessMsg;
+		return companyConstants::dbUpdateSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}
@@ -453,23 +453,23 @@ class companiesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							companiesConstants::dbCompanyName, 
+							companyConstants::dbCompanyName, 
 							'=', 
 							$CompanyName
 					]
 					);
-			DB::table(companiesConstants::companiesTable)
+			DB::table(companyConstants::companiesTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$companiesResponse->setStatusCode(
 					400, 
-					companiesConstants::dbDeleteCatchMsg
+					companyConstants::dbDeleteCatchMsg
 					);
 			
 			return $companiesResponse;
 		}
 		
-		return companiesConstants::dbDeleteSuccessMsg;
+		return companyConstants::dbDeleteSuccessMsg;
 	}
 }

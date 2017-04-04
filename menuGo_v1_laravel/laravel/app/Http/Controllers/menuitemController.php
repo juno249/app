@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "companiesController.php";
-include_once "menusController.php";
+include_once "companyController.php";
+include_once "menuController.php";
 
-class menuitemsConstants{
+class menuitemConstants{
 	const menuitemsTable = 'menuitems';
 	
 	const dbMenuitemId = 'menuitem_id';
@@ -49,24 +49,24 @@ class menuitemsConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class menuitemsController extends Controller
+class menuitemController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	public function getJoinCompanyMenuMenuitem($mySqlWhere){
-		$companyMenuMenuitem = DB::table(menuitemsConstants::menuitemsTable)
+		$companyMenuMenuitem = DB::table(menuitemConstants::menuitemsTable)
 		->join(
-				menusConstants::menusTable, 
-				menuitemsConstants::menuitemsTable . '.' . menuitemsConstants::dbMenuId, 
+				menuConstants::menusTable, 
+				menuitemConstants::menuitemsTable . '.' . menuitemConstants::dbMenuId, 
 				'=', 
-				menusConstants::menusTable . '.' . menusConstants::dbMenuId
+				menuConstants::menusTable . '.' . menuConstants::dbMenuId
 				)
 				->join(
-						companiesConstants::companiesTable, 
-						menusConstants::menusTable . '.' . menusConstants::dbCompanyName, 
+						companyConstants::companiesTable, 
+						menuConstants::menusTable . '.' . menuConstants::dbCompanyName, 
 						'=', 
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 						)
 						->where($mySqlWhere)
 		->get();
@@ -74,7 +74,7 @@ class menuitemsController extends Controller
 	}
 
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems
-	public function getAllCompanyMenuMenuitems(
+	public function getCompanyMenuMenuitems(
 			$CompanyName, 
 			$MenuName
 			){
@@ -82,7 +82,7 @@ class menuitemsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -90,7 +90,7 @@ class menuitemsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						menusConstants::menusTable . '.' . menusConstants::dbMenuName, 
+						menuConstants::menusTable . '.' . menuConstants::dbMenuName, 
 						'=', 
 						$MenuName
 				]
@@ -101,13 +101,13 @@ class menuitemsController extends Controller
 			$companyMenuMenuitems = $this->getJoinCompanyMenuMenuitem($mySqlWhere);
 			if($companyMenuMenuitems->isEmpty()){	$menuitemsResponse->setStatusCode(
 					200, 
-					menuitemsConstants::emptyResultSetErr
+					menuitemConstants::emptyResultSetErr
 					);
 			} else {	$menuitemsResponse->setContent(json_encode($companyMenuMenuitems));
 			}
 		} catch(\PDOException $e){	$menuitemsResponse->setStatusCode(
 				400, 
-				menuitemsConstants::dbReadCatchMsg
+				menuitemConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -124,7 +124,7 @@ class menuitemsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -132,7 +132,7 @@ class menuitemsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						menusConstants::menusTable . '.' . menusConstants::dbMenuName, 
+						menuConstants::menusTable . '.' . menuConstants::dbMenuName, 
 						'=', 
 						$MenuName
 				]
@@ -140,7 +140,7 @@ class menuitemsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::menuitemsTable . '.' . menuitemsConstants::dbMenuitemCode, 
+						menuitemConstants::menuitemsTable . '.' . menuitemConstants::dbMenuitemCode, 
 						'=', 
 						$MenuitemCode
 				]
@@ -151,13 +151,13 @@ class menuitemsController extends Controller
 			$companyMenuMenuitem = $this->getJoinCompanyMenuMenuitem($mySqlWhere);
 			if($companyMenuMenuitem->isEmpty()){	$menuitemsResponse->setStatusCode(
 					200, 
-					menuitemsConstants::emptyResultSetErr
+					menuitemConstants::emptyResultSetErr
 					);
 			} else {	$menuitemsResponse->setContent(json_encode($companyMenuMenuitem));
 			}
 		} catch(\PDOException $e){	$menuitemsResponse->setStatusCode(
 				400, 
-				menuitemsConstants::dbReadCatchMsg
+				menuitemConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -168,102 +168,102 @@ class menuitemsController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 
-		if(isset($_GET[menuitemsConstants::reqMenuitemId])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemId])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuitemId, 
+						menuitemConstants::dbMenuitemId, 
 						'=', 
-						$_GET[menuitemsConstants::reqMenuitemId]
+						$_GET[menuitemConstants::reqMenuitemId]
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuitemCode])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemCode])){	array_push(
 				$mySqlWhere,
 				[
-						menuitemsConstants::dbMenuitemCode,
+						menuitemConstants::dbMenuitemCode,
 						'LIKE',
-						'%' . $_GET[menuitemsConstants::reqMenuitemCode] . '%'
+						'%' . $_GET[menuitemConstants::reqMenuitemCode] . '%'
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuId])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuId])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuId, 
+						menuitemConstants::dbMenuId, 
 						'=', 
-						$_GET[menuitemsConstants::reqMenuId]
+						$_GET[menuitemConstants::reqMenuId]
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuitemName])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemName])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuitemName, 
+						menuitemConstants::dbMenuitemName, 
 						'LIKE', 
-						'%' . $_GET[menuitemsConstants::reqMenuitemName] . '%'
+						'%' . $_GET[menuitemConstants::reqMenuitemName] . '%'
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuitemDesc])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemDesc])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuitemDesc, 
+						menuitemConstants::dbMenuitemDesc, 
 						'LIKE', 
-						'%' . $_GET[menuitemsConstants::reqMenuitemDesc] . '%'
+						'%' . $_GET[menuitemConstants::reqMenuitemDesc] . '%'
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuitemPrice])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemPrice])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuitemPrice, 
+						menuitemConstants::dbMenuitemPrice, 
 						'=',  
-						$_GET[menuitemsConstants::reqMenuitemPrice]
+						$_GET[menuitemConstants::reqMenuitemPrice]
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuitemFeatured])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemFeatured])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuitemFeatured, 
+						menuitemConstants::dbMenuitemFeatured, 
 						'=',  
-						$_GET[menuitemsConstants::reqMenuitemFeatured]
+						$_GET[menuitemConstants::reqMenuitemFeatured]
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqMenuitemImage])){	array_push(
+		if(isset($_GET[menuitemConstants::reqMenuitemImage])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbMenuitemImage, 
+						menuitemConstants::dbMenuitemImage, 
 						'LIKE', 
-						'%' . $_GET[menuitemsConstants::reqMenuitemImage] . '%'
+						'%' . $_GET[menuitemConstants::reqMenuitemImage] . '%'
 				]
 				);
 		}
-		if(isset($_GET[menuitemsConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[menuitemConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						menuitemsConstants::dbLastChangeTimestamp, 
+						menuitemConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[menuitemsConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[menuitemConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 	
 		$menuitemsResponse = new Response();
 		try{
-			$menuitems = DB::table(menuitemsConstants::menuitemsTable)
+			$menuitems = DB::table(menuitemConstants::menuitemsTable)
 			->where($mySqlWhere)
 			->get();
 			if($menuitems->isEmpty()){	$menuitemsResponse->setStatusCode(
 					200, 
-					menuitemsConstants::emptyResultSetErr
+					menuitemConstants::emptyResultSetErr
 					);
 			} else {	$menuitemsResponse->setContent(json_encode($menuitems));
 			}
 		} catch(\PDOException $e){	$menuitemsResponse->setStatusCode(
 				400, 
-				menuitemsConstants::dbReadCatchMsg
+				menuitemConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -279,27 +279,27 @@ class menuitemsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . menuitemsConstants::dbMenuitemCode => 'required|string|max:10', 
-							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|numeric', 
-							'*.' . menuitemsConstants::dbMenuitemName => 'required|string|max:30', 
-							'*.' . menuitemsConstants::dbMenuitemDesc => 'required|string|max:500', 
-							'*.' . menuitemsConstants::dbMenuitemPrice => 'required|numeric', 
-							'*.' . menuitemsConstants::dbMenuitemFeatured => 'required|numeric', 
-							'*.' . menuitemsConstants::dbMenuitemImage => 'required|string|max:500'
+							'*.' . menuitemConstants::dbMenuitemCode => 'required|string|max:10', 
+							'*.' . menuitemConstants::dbMenuId => 'exists:menus,menu_id|numeric', 
+							'*.' . menuitemConstants::dbMenuitemName => 'required|string|max:30', 
+							'*.' . menuitemConstants::dbMenuitemDesc => 'required|string|max:500', 
+							'*.' . menuitemConstants::dbMenuitemPrice => 'required|numeric', 
+							'*.' . menuitemConstants::dbMenuitemFeatured => 'required|numeric', 
+							'*.' . menuitemConstants::dbMenuitemImage => 'required|string|max:500'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . menuitemsConstants::dbMenuitemCode => 'sometimes|string|max:10', 
-							'*.' . menuitemsConstants::dbMenuId => 'exists:menus,menu_id|sometimes|numeric', 
-							'*.' . menuitemsConstants::dbMenuitemName => 'sometimes|string|max:30', 
-							'*.' . menuitemsConstants::dbMenuitemDesc => 'sometimes|string|max:500', 
-							'*.' . menuitemsConstants::dbMenuitemPrice => 'sometimes|numeric', 
-							'*.' . menuitemsConstants::dbMenuitemFeatured => 'sometimes|numeric', 
-							'*.' . menuitemsConstants::dbMenuitemImage => 'sometimes|string|max:500', 
-							'*.' . menuitemsConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . menuitemConstants::dbMenuitemCode => 'sometimes|string|max:10', 
+							'*.' . menuitemConstants::dbMenuId => 'exists:menus,menu_id|sometimes|numeric', 
+							'*.' . menuitemConstants::dbMenuitemName => 'sometimes|string|max:30', 
+							'*.' . menuitemConstants::dbMenuitemDesc => 'sometimes|string|max:500', 
+							'*.' . menuitemConstants::dbMenuitemPrice => 'sometimes|numeric', 
+							'*.' . menuitemConstants::dbMenuitemFeatured => 'sometimes|numeric', 
+							'*.' . menuitemConstants::dbMenuitemImage => 'sometimes|string|max:500', 
+							'*.' . menuitemConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -331,7 +331,7 @@ class menuitemsController extends Controller
 				null
 				);
 		$companyMenu = json_decode(
-				(new menusController())->getCompanyMenu(
+				(new menuController())->getCompanyMenu(
 						$CompanyName, 
 						$MenuName
 						)
@@ -341,16 +341,16 @@ class menuitemsController extends Controller
 		if(sizeof($companyMenu) == 0){
 			$menuitemsResponse->setStatusCode(
 					400, 
-					menuitemsConstants::inconsistencyValidationErr1
+					menuitemConstants::inconsistencyValidationErr1
 					);
 			
 			return $menuitemsResponse;
 		}
 		
-		$menuId = $companyMenu[0][menusConstants::dbMenuId];
+		$menuId = $companyMenu[0][menuConstants::dbMenuId];
 	
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(!(isset($jsonData[$i][menuitemsConstants::dbMenuId]))){	$jsonData[$i][menuitemsConstants::dbMenuId] = $menuId;
+			if(!(isset($jsonData[$i][menuitemConstants::dbMenuId]))){	$jsonData[$i][menuitemConstants::dbMenuId] = $menuId;
 			}
 		}
 	
@@ -361,13 +361,13 @@ class menuitemsController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i][menuitemsConstants::dbMenuId] == $menuId){
-					try{		DB::table(menuitemsConstants::menuitemsTable)
+				if($jsonData[$i][menuitemConstants::dbMenuId] == $menuId){
+					try{		DB::table(menuitemConstants::menuitemsTable)
 					->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$menuitemsResponse->setStatusCode(
 								400, 
-								menuitemsConstants::dbAddCatchMsg
+								menuitemConstants::dbAddCatchMsg
 								);
 						
 						return $menuitemsResponse;
@@ -383,7 +383,7 @@ class menuitemsController extends Controller
 			return $menuitemsResponse;
 		}
 		
-		return menuitemsConstants::dbAddSuccessMsg;
+		return menuitemConstants::dbAddSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
@@ -406,13 +406,13 @@ class menuitemsController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][menuitemsConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][menuitemsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menuitemsConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][menuitemConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][menuitemConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menuitemConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception  $e){
 				$menuitemsResponse->setStatusCode(
 						400, 
-						menuitemsConstants::carbonParseErr
+						menuitemConstants::carbonParseErr
 						);
 				
 				return $menuitemsResponse;
@@ -431,13 +431,13 @@ class menuitemsController extends Controller
 		if(sizeof($companyMenuMenuitem) == 0){
 			$menuitemsResponse->setStatusCode(
 					400, 
-					menuitemsConstants::inconsistencyValidationErr2
+					menuitemConstants::inconsistencyValidationErr2
 					);
 			
 			return $menuitemsResponse;
 		}
 		
-		$menuitemId = $companyMenuMenuitem[0][menuitemsConstants::dbMenuitemId];
+		$menuitemId = $companyMenuMenuitem[0][menuitemConstants::dbMenuitemId];
 	
 		if(!$this->isDataValid(
 				$jsonData, 
@@ -457,24 +457,24 @@ class menuitemsController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							menuitemsConstants::dbMenuitemId, 
+							menuitemConstants::dbMenuitemId, 
 							'=', 
 							$menuitemId
 					]
 					);
-			DB::table(menuitemsConstants::menuitemsTable)
+			DB::table(menuitemConstants::menuitemsTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$menuitemsResponse->setStatusCode(
 					400, 
-					menuitemsConstants::dbUpdateCatchMsg
+					menuitemConstants::dbUpdateCatchMsg
 					);
 			
 			return $menuitemsResponse;
 		}
 		
-		return menuitemsConstants::dbUpdateSuccessMsg;
+		return menuitemConstants::dbUpdateSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
@@ -503,35 +503,35 @@ class menuitemsController extends Controller
 		if(sizeof($companyMenuMenuitem) == 0){
 			$menuitemsResponse->setStatusCode(
 					400, 
-					menuitemsConstants::inconsistencyValidationErr2
+					menuitemConstants::inconsistencyValidationErr2
 					);
 			
 			return $menuitemsResponse;
 		}
 		
-		$menuitemId = $companyMenuMenuitem[0][menuitemsConstants::dbMenuitemId];
+		$menuitemId = $companyMenuMenuitem[0][menuitemConstants::dbMenuitemId];
 	
 		try{
 			array_push(
 					$mySqlWhere, 
 					[
-							menuitemsConstants::dbMenuitemId, 
+							menuitemConstants::dbMenuitemId, 
 							'=', 
 							$menuitemId
 					]
 					);
-			DB::table(menuitemsConstants::menuitemsTable)
+			DB::table(menuitemConstants::menuitemsTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$menuitemsResponse->setStatusCode(
 					400, 
-					menuitemsConstants::dbDeleteCatchMsg
+					menuitemConstants::dbDeleteCatchMsg
 					);
 			
 			return $menuitemsResponse;
 		}
 		
-		return menuitemsConstants::dbDeleteSuccessMsg;
+		return menuitemConstants::dbDeleteSuccessMsg;
 	}
 }

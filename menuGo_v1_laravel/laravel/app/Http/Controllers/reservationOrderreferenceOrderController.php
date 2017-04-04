@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Uuid;
 
-include_once "orderreferencesController.php";
-include_once "ordersController.php";
-include_once "reservationsController.php";
+include_once "orderreferenceController.php";
+include_once "orderController.php";
+include_once "reservationController.php";
 
-class reservationsOrderreferencesOrdersConstants{
+class reservationOrderreferenceOrderConstants{
 	const keyOrderreference = 'orderreference';
 	const keyOrder = 'order';
 	const keyReservation = 'reservation';
@@ -30,7 +30,7 @@ class reservationsOrderreferencesOrdersConstants{
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
 
-class reservationsOrderreferencesOrdersController extends Controller
+class reservationOrderreferenceOrderController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth', ['except' => ['addCustomerCompanyBranch']]);
 	}
@@ -44,9 +44,9 @@ class reservationsOrderreferencesOrdersController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
 		
-		$reservationsController = new reservationsController();
-		$orderreferencesController = new orderreferencesController();
-		$ordersController = new ordersController();
+		$reservationController = new reservationController();
+		$orderreferenceController = new orderreferenceController();
+		$orderController = new orderController();
 		
 		$reservationsOrderreferencesOrdersResponse = new Response();
 		$reservationsOrderreferencesOrdersResponse->setStatusCode(
@@ -65,26 +65,26 @@ class reservationsOrderreferencesOrdersController extends Controller
 					$reservationOrderreferenceOrderRunner
 					)
 					){
-				$orderreference = $reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyOrderreference];
-				$orderreference[orderreferencesConstants::dbOrderreferenceCode] = $orderreferenceCode;
+				$orderreference = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrderreference];
+				$orderreference[orderreferenceConstants::dbOrderreferenceCode] = $orderreferenceCode;
 				
-				$reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyOrderreference] = $orderreference;
+				$reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrderreference] = $orderreference;
 			}
 			if(array_key_exists(
 					'order', 
 					$reservationOrderreferenceOrderRunner
 					)
 					){
-				$order = $reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyOrder];
+				$order = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrder];
 				$orderSize = sizeof($order);
 				for($j=0; $j<$orderSize; $j++){
 					$orderRunner = $order[$j];
-					$orderRunner[ordersConstants::dbOrderreferenceCode] = $orderreferenceCode;
+					$orderRunner[orderConstants::dbOrderreferenceCode] = $orderreferenceCode;
 					
 					$order[$j] = $orderRunner;
 				}
 				
-				$reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyOrder] = $order;
+				$reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrder] = $order;
 			}
 			
 			$jsonData[$i] = $reservationOrderreferenceOrderRunner;
@@ -100,11 +100,11 @@ class reservationsOrderreferencesOrdersController extends Controller
 					$reservationOrderreferenceOrderRunner
 					)
 					){
-				$reservation = $reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyReservation];
-				$reservation[reservationsConstants::dbReservationCode] = $reservationCode;
-				$reservation[reservationsConstants::dbOrderreferenceCode] = $orderreferenceCode;
+				$reservation = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyReservation];
+				$reservation[reservationConstants::dbReservationCode] = $reservationCode;
+				$reservation[reservationConstants::dbOrderreferenceCode] = $orderreferenceCode;
 		
-				$reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyReservation] = $reservation;
+				$reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyReservation] = $reservation;
 			}
 				
 			$jsonData[$i] = $reservationOrderreferenceOrderRunner;
@@ -121,14 +121,14 @@ class reservationsOrderreferencesOrdersController extends Controller
 						$reservationOrderreferenceOrderRunner
 						)
 						){
-					$orderreference = $reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyOrderreference];
-					if($orderreferencesController->isDataValid(
+					$orderreference = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrderreference];
+					if($orderreferenceController->isDataValid(
 							[$orderreference], 
 							$errorMsg, 
 							"ADD"
 							)
 							){
-						try{	DB::table(orderreferencesConstants::orderreferencesTable)
+						try{	DB::table(orderreferenceConstants::orderreferencesTable)
 						->insert($orderreference);
 						} catch(\PDOException $e){	throw $e;
 						}
@@ -148,26 +148,26 @@ class reservationsOrderreferencesOrdersController extends Controller
 						$reservationOrderreferenceOrderRunner
 						)
 						){
-					$order = $reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyOrder];
+					$order = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrder];
 					$orderSize = sizeof($order);
 					for($j=0; $j<$orderSize; $j++){
 						$orderRunner = $order[$j];
-						if($ordersController->isDataValid(
+						if($orderController->isDataValid(
 								[$orderRunner], 
 								$errorMsg, 
 								"ADD"
 								)
 								){
-							if(!($orderRunner[ordersConstants::dbCustomerUsername] == $orderreference[orderreferencesConstants::dbCustomerUsername])){
+							if(!($orderRunner[orderConstants::dbCustomerUsername] == $orderreference[orderreferenceConstants::dbCustomerUsername])){
 								$reservationsOrderreferencesOrdersResponse->setStatusCode(
 										400, 
-										reservationsOrderreferencesOrdersConstants::inconsistencyValidationErr1
+										reservationOrderreferenceOrderConstants::inconsistencyValidationErr1
 										);
 								
 								return $reservationsOrderreferencesOrdersResponse;
 							}
 								
-							try{	DB::table(ordersConstants::ordersTable)
+							try{	DB::table(orderConstants::ordersTable)
 							->insert($orderRunner);
 							} catch(\PDOException $e){	throw $e;
 							}
@@ -188,23 +188,23 @@ class reservationsOrderreferencesOrdersController extends Controller
 						$reservationOrderreferenceOrderRunner
 						)
 						){
-					$reservation = $reservationOrderreferenceOrderRunner[reservationsOrderreferencesOrdersConstants::keyReservation];
-					if($reservationsController->isDataValid(
+					$reservation = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyReservation];
+					if($reservationController->isDataValid(
 							[$reservation], 
 							$errorMsg, 
 							"ADD"
 							)
 							){
-						if(!($reservation[reservationsConstants::dbCustomerUsername] == $orderreference[orderreferencesConstants::dbCustomerUsername])){
+						if(!($reservation[reservationConstants::dbCustomerUsername] == $orderreference[orderreferenceConstants::dbCustomerUsername])){
 							$reservationsOrderreferencesOrdersResponse->setStatusCode(
 									400, 
-									reservationsOrderreferencesOrdersConstants::inconsistencyValidationErr1
+									reservationOrderreferenceOrderConstants::inconsistencyValidationErr1
 									);
 							
 							return $reservationsOrderreferencesOrdersResponse;
 						}
 						
-						try{	DB::table(reservationsConstants::reservationsTable)
+						try{	DB::table(reservationConstants::reservationsTable)
 						->insert($reservation);
 						} catch(\PDOException $e){	throw $e;
 						}
@@ -223,13 +223,13 @@ class reservationsOrderreferencesOrdersController extends Controller
 				DB::rollback();
 				$reservationsOrderreferencesOrdersResponse->setStatusCode(
 						400, 
-						reservationsOrderreferencesOrdersConstants::dbAddCatchMsg
+						reservationOrderreferenceOrderConstants::dbAddCatchMsg
 						);
 				
 				return $reservationsOrderreferencesOrdersResponse;
 			}
 		}
 		
-		return reservationsOrderreferencesOrdersConstants::dbAddSuccessMsg;
+		return reservationOrderreferenceOrderConstants::dbAddSuccessMsg;
 	}
 }

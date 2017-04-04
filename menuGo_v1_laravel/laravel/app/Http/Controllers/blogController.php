@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-class blogsConstants{
+class blogConstants{
 	const blogsTable = 'blogs';
 	
 	const dbBlogId = 'blog_id';
@@ -39,27 +39,27 @@ class blogsConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class blogsController extends Controller
+class blogController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	//URL-->>/blogs
-	public function getAllBlogs(){
+	public function getBlogs(){
 		$blogsResponse = new Response();
 		
 		try{
-			$blogs = DB::table(blogsConstants::blogsTable)
+			$blogs = DB::table(blogConstants::blogsTable)
 			->get();
 			if($blogs->isEmpty()){	$blogs->setStatusCode(
 					200, 
-					blogsConstants::emptyResultSetErr
+					blogConstants::emptyResultSetErr
 					);
 			} else {	$blogsResponse->setContent(json_encode($blogs));
 			}
 		} catch(\PDOException $e){	$blogsResponse->setStatusCode(
 				400, 
-				blogsConstants::dbReadCatchMsg
+				blogConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -73,7 +73,7 @@ class blogsController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						blogsConstants::blogsTable . '.' . blogsConstants::dbBlogId, 
+						blogConstants::blogsTable . '.' . blogConstants::dbBlogId, 
 						'=', 
 						$BlogId
 				]
@@ -81,18 +81,18 @@ class blogsController extends Controller
 		
 		$blogsResponse = new Response();
 		try{
-			$blog = DB::table(blogsConstants::blogsTable)
+			$blog = DB::table(blogConstants::blogsTable)
 			->where($mySqlWhere)
 			->get();
 			if($blog->isEmpty()){	$blogsResponse->setStatusCode(
 					200, 
-					blogsConstants::emptyResultSetErr
+					blogConstants::emptyResultSetErr
 					);
 			} else {	$blogsResponse->setContent(json_encode($blog));
 			}
 		} catch(\PDOException $e){	$blogsResponse->setStatusCode(
 				400, 
-				blogsConstants::dbReadCatchMsg
+				blogConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -103,34 +103,34 @@ class blogsController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
-		if(isset($_GET[blogsConstants::reqBlogId])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogId])){	array_push(
 				$mySqlWhere, 
 				[
-						blogsConstants::dbBlogId, 
+						blogConstants::dbBlogId, 
 						'=', 
-						$_GET[blogsConstants::reqBlogId]
+						$_GET[blogConstants::reqBlogId]
 				]
 				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogTitle])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogTitle])){	array_push(
 				$mySqlWhere, 
 				[
-						blogsConstants::dbBlogTitle, 
+						blogConstants::dbBlogTitle, 
 						'LIKE', 
-						'%' . $_GET[blogsConstants::reqBlogTitle] . '%'
+						'%' . $_GET[blogConstants::reqBlogTitle] . '%'
 				]
 				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogAuthor])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogAuthor])){	array_push(
 				$mySqlWhere, 
 				[
-						blogsConstants::dbBlogAuthor, 
+						blogConstants::dbBlogAuthor, 
 						'LIKE', 
-						'%' . $_GET[blogsConstants::reqBlogAuthor] . '%'
+						'%' . $_GET[blogConstants::reqBlogAuthor] . '%'
 				]
 				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogContent])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogContent])){	array_push(
 				$mySqlWhere, 
 				[
 						blogsConstans::dbBlogContent, 
@@ -139,48 +139,48 @@ class blogsController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogImage])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogImage])){	array_push(
 				$mySqlWhere, 
-				[blogsConstants::dbBlogImage, 
+				[blogConstants::dbBlogImage, 
 						'LIKE', 
 						'%' . 
-						$_GET[blogsConstants::reqBlogImage] . '%'
+						$_GET[blogConstants::reqBlogImage] . '%'
 				]
 				);
 		}
-		if(isset($_GET[blogsConstants::reqBlogUrl])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogUrl])){	array_push(
 				$mySqlWhere, 
 				[
-						blogsConstants::dbBlogUrl, 
+						blogConstants::dbBlogUrl, 
 						'LIKE', 
-						'%' . $_GET[blogsConstants::reqBlogUrl] . '%'
+						'%' . $_GET[blogConstants::reqBlogUrl] . '%'
 				]
 				);
 		}
-		if(isset($_GET[blogsConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[blogConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						blogsConstants::dbLastChangeTimestamp, 
+						blogConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[blogsConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[blogConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 		
 		$blogsResponse = new Response();
 		try{
-			$blogs = DB::table(blogsConstants::blogsTable)
+			$blogs = DB::table(blogConstants::blogsTable)
 			->where($mySqlWhere)
 			->get();
 			if($blogs->isEmpty()){	$blogsResponse->setStatusCode(
 					200, 
-					blogsConstants::emptyResultSetErr
+					blogConstants::emptyResultSetErr
 					);
 			} else {	$blogsResponse->setContent(json_encode($blogs));
 			}
 		} catch(\PDOException $e){	$blogsResponse->setStatusCode(
 				400, 
-				blogsConstants::dbReadCatchMsg
+				blogConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -196,23 +196,23 @@ class blogsController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . blogsConstants::dbBlogTitle => 'required|string|max:100', 
-							'*.' . blogsConstants::dbBlogAuthor => 'required|string|max:50', 
-							'*.' . blogsConstants::dbBlogContent => 'required|string|max:1000', 
-							'*.' . blogsConstants::dbBlogImage => 'required|string|max:500', 
-							'*.' . blogsConstants::dbBlogUrl => 'required|string|max:500'
+							'*.' . blogConstants::dbBlogTitle => 'required|string|max:100', 
+							'*.' . blogConstants::dbBlogAuthor => 'required|string|max:50', 
+							'*.' . blogConstants::dbBlogContent => 'required|string|max:1000', 
+							'*.' . blogConstants::dbBlogImage => 'required|string|max:500', 
+							'*.' . blogConstants::dbBlogUrl => 'required|string|max:500'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . blogsConstants::dbBlogTitle => 'sometimes|string|max:100', 
-							'*.' . blogsConstants::dbBlogAuthor => 'sometimes|string|max:50', 
-							'*.' . blogsConstants::dbBlogContent => 'sometimes|string|max:1000', 
-							'*.' . blogsConstants::dbBlogImage => 'sometimes|string|max:500', 
-							'*.' . blogsConstants::dbBlogUrl => 'sometimes|string|max:500', 
-							'*.' . blogsConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . blogConstants::dbBlogTitle => 'sometimes|string|max:100', 
+							'*.' . blogConstants::dbBlogAuthor => 'sometimes|string|max:50', 
+							'*.' . blogConstants::dbBlogContent => 'sometimes|string|max:1000', 
+							'*.' . blogConstants::dbBlogImage => 'sometimes|string|max:500', 
+							'*.' . blogConstants::dbBlogUrl => 'sometimes|string|max:500', 
+							'*.' . blogConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -246,12 +246,12 @@ class blogsController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				try{	DB::table(blogsConstants::blogsTable)
+				try{	DB::table(blogConstants::blogsTable)
 				->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$blogsResponse->setStatusCode(
 							400, 
-							blogsConstants::dbAddCatchMsg
+							blogConstants::dbAddCatchMsg
 							);
 					
 					return $blogsResponse;
@@ -266,7 +266,7 @@ class blogsController extends Controller
 			return $blogsResponse;
 		}
 		
-		return blogsConstants::dbAddSuccessMsg;
+		return blogConstants::dbAddSuccessMsg;
 	}
 	
 	//URL-->>/blogs/{BlogId}
@@ -287,13 +287,13 @@ class blogsController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][blogsConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][blogsConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][blogsConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][blogConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][blogConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][blogConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$blogsResponse->setStatusCode(
 						400, 
-						blogsConstants::carbonParseErr
+						blogConstants::carbonParseErr
 						);
 				
 				return blogsResponse;
@@ -318,24 +318,24 @@ class blogsController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							blogsConstants::dbBlogId, 
+							blogConstants::dbBlogId, 
 							'=' , 
 							$BlogId
 					]
 					);
-			DB::table(blogsConstants::blogsTable)
+			DB::table(blogConstants::blogsTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$blogsResponse->setStatusCode(
 					400, 
-					blogsConstants::dbUpdateCatchMsg
+					blogConstants::dbUpdateCatchMsg
 					);
 			
 			return $blogsResponse;
 		}
 		
-		return blogsConstants::dbUpdateSuccessMsg;
+		return blogConstants::dbUpdateSuccessMsg;
 	}
 	
 	//URL-->>/blogs/{BlogId}
@@ -352,23 +352,23 @@ class blogsController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							blogsConstants::dbBlogId, 
+							blogConstants::dbBlogId, 
 							'=', 
 							$BlogId
 					]
 					);
-			DB::table(blogsConstants::blogsTable)
+			DB::table(blogConstants::blogsTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$blogsResponse->setStatusCode(
 					400, 
-					blogsConstants::dbDeleteCatchMsg
+					blogConstants::dbDeleteCatchMsg
 					);
 			
 			return $blogsResponse;
 		}
 		
-		return blogsConstants::dbDeleteSuccessMsg;
+		return blogConstants::dbDeleteSuccessMsg;
 	}
 }

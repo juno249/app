@@ -8,9 +8,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-include_once "customersCompaniesBranchesController.php";
+include_once "customerCompanyBranchController.php";
 
-class customersConstants{
+class customerConstants{
 	const customersTable = 'customers';
 	
 	const dbCustomerUsername = 'customer_username';
@@ -69,33 +69,33 @@ class customersConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class customersController extends Controller
+class customerController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth', ['except' => ['addCustomer']]);
 	}
 	
-	public function getJoinCustomerCustomerCompanyBranch($mySqlWhere){
-		$customerCustomerCompanyBranch = DB::table(customersConstants::customersTable)
+	public function getJoinCustomerCompanyBranchCustomer($mySqlWhere){
+		$customerCompanyBranchCustomer = DB::table(customerConstants::customersTable)
 		->join(
-				customersCompaniesBranchesConstants::customersCompaniesBranchesTable, 
-				customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, 
+				customerCompanyBranchConstants::customersCompaniesBranchesTable, 
+				customerConstants::customersTable . '.' . customerConstants::dbCustomerUsername, 
 				'=', 
-				customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCustomerUsername
+				customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCustomerUsername
 				)
 				->where($mySqlWhere)
 		->get();
 		
-		return $customerCustomerCompanyBranch;
+		return $customerCompanyBranchCustomer;
 	}
 	
 	//URL-->>/customers/companies/{CompanyName}
-	public function getAllCustomersAdministrator($CompanyName){
+	public function getCustomers_asAdministrator($CompanyName){
 		$mySqlWhere = array();
 		
 		array_push(
 				$mySqlWhere, 
 				[
-						customersCompaniesBranchesConstants::customersCompaniesBranchesTable . '.' . customersCompaniesBranchesConstants::dbCompanyName, 
+						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -103,10 +103,10 @@ class customersController extends Controller
 		
 		$customersResponse = new Response();
 		try{
-			$customers = $this->getJoinCustomerCustomerCompanyBranch($mySqlWhere);
+			$customers = $this->getJoinCustomerCompanyBranchCustomer($mySqlWhere);
 			if($customers->isEmpty()){	$customersResponse->setStatusCode(
 					200, 
-					customersConstants::emptyResultSetErr
+					customerConstants::emptyResultSetErr
 					);
 			} else {	$customersResponse->setContent(json_encode($customers));
 			}
@@ -120,20 +120,20 @@ class customersController extends Controller
 	}
 	
 	//URL-->>/customers/
-	public function getAllCustomers(){
+	public function getCustomers(){
 		$customersResponse = new Response();
 		try{
-			$customers = DB::table(customersConstants::customersTable)
+			$customers = DB::table(customerConstants::customersTable)
 			->get();
 			if($customers->isEmpty()){	$customersResponse->setStatusCode(
 					200, 
-					customersConstants::emptyResultSetErr
+					customerConstants::emptyResultSetErr
 					);
 			} else {	$customersResponse->setContent(json_encode($customers));
 			}
 		} catch(\PDOException $e){	$customersResponse->setStatusCode(
 				400, 
-				customersConstants::dbReadCatchMsg
+				customerConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -147,7 +147,7 @@ class customersController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::customersTable . '.' . customersConstants::dbCustomerUsername, 
+						customerConstants::customersTable . '.' . customerConstants::dbCustomerUsername, 
 						'=', 
 						$CustomerUsername
 				]
@@ -155,18 +155,18 @@ class customersController extends Controller
 		
 		$customersResponse = new Response();
 		try{
-			$customer = DB::table(customersConstants::customersTable)
+			$customer = DB::table(customerConstants::customersTable)
 			->where($mySqlWhere)
 			->get();
 			if($customer->isEmpty()){	$customersResponse->setStatusCode(
 					200, 
-					customersConstants::emptyResultSetErr
+					customerConstants::emptyResultSetErr
 					);
 			} else {	$customersResponse->setContent(json_encode($customer));
 			}
 		} catch(\PDOException $e){	$customersResponse->setStatusCode(
 				400, 
-				customersConstants::dbReadCatchMsg
+				customerConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -177,193 +177,193 @@ class customersController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 
-		if(isset($_GET[customersConstants::reqCustomerUsername])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerUsername])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerUsername, 
+						customerConstants::dbCustomerUsername, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerUsername] . '%'
+						'%' . $_GET[customerConstants::reqCustomerUsername] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerPassword])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerPassword])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerPassword, 
+						customerConstants::dbCustomerPassword, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerPassword] . '%'
+						'%' . $_GET[customerConstants::reqCustomerPassword] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerNameFname])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerNameFname])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerNameFname, 
+						customerConstants::dbCustomerNameFname, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerNameFname] . '%'
+						'%' . $_GET[customerConstants::reqCustomerNameFname] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerNameMname])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerNameMname])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerNameMname, 
+						customerConstants::dbCustomerNameMname, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerNameMname] . '%'
+						'%' . $_GET[customerConstants::reqCustomerNameMname] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerNameLname])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerNameLname])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerNameLname, 
+						customerConstants::dbCustomerNameLname, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerNameLname] . '%'
+						'%' . $_GET[customerConstants::reqCustomerNameLname] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerRole])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerRole])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerRole, 
+						customerConstants::dbCustomerRole, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerRole] . '%'
+						'%' . $_GET[customerConstants::reqCustomerRole] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerGender])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerGender])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerGender, 
+						customerConstants::dbCustomerGender, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerGender] . '%'
+						'%' . $_GET[customerConstants::reqCustomerGender] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerAddressHouseBuilding])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerAddressHouseBuilding])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerAddressHouseBuilding, 
+						customerConstants::dbCustomerAddressHouseBuilding, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerAddressHouseBuilding] . '%'
+						'%' . $_GET[customerConstants::reqCustomerAddressHouseBuilding] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerAddressStreet])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerAddressStreet])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerAddressStreet, 
+						customerConstants::dbCustomerAddressStreet, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerAddressStreet] . '%'
+						'%' . $_GET[customerConstants::reqCustomerAddressStreet] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerAddressDistrict])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerAddressDistrict])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerAddressDistrict, 
+						customerConstants::dbCustomerAddressDistrict, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerAddressDistrict] . '%'
+						'%' . $_GET[customerConstants::reqCustomerAddressDistrict] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerAddressCity])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerAddressCity])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerAddressCity, 
+						customerConstants::dbCustomerAddressCity, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerAddressCity] . '%'
+						'%' . $_GET[customerConstants::reqCustomerAddressCity] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerAddressPostalcode])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerAddressPostalcode])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerAddressPostalcode, 
+						customerConstants::dbCustomerAddressPostalcode, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerAddressPostalcode] . '%'
+						'%' . $_GET[customerConstants::reqCustomerAddressPostalcode] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerAddressCountry])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerAddressCountry])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerAddressCountry, 
+						customerConstants::dbCustomerAddressCountry, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerAddressCountry] . '%'
+						'%' . $_GET[customerConstants::reqCustomerAddressCountry] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerMobile])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerMobile])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerMobile, 
+						customerConstants::dbCustomerMobile, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerMobile] . '%'
+						'%' . $_GET[customerConstants::reqCustomerMobile] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerEmail])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerEmail])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerEmail, 
+						customerConstants::dbCustomerEmail, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerEmail] . '%'
+						'%' . $_GET[customerConstants::reqCustomerEmail] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerBirthdayMonth])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerBirthdayMonth])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerBirthdayMonth, 
+						customerConstants::dbCustomerBirthdayMonth, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqCustomerBirthdayMonth] . '%'
+						'%' . $_GET[customerConstants::reqCustomerBirthdayMonth] . '%'
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerBirthdayDate])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerBirthdayDate])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerBirthdayDate, 
+						customerConstants::dbCustomerBirthdayDate, 
 						'=', 
-						$_GET[customersConstants::reqCustomerBirthdayDate]
+						$_GET[customerConstants::reqCustomerBirthdayDate]
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqCustomerBirthdayYear])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerBirthdayYear])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbCustomerBirthdayYear, 
+						customerConstants::dbCustomerBirthdayYear, 
 						'=', 
-						$_GET[customersConstants::reqCustomerBirthdayYear]
+						$_GET[customerConstants::reqCustomerBirthdayYear]
 				]
 				);
 		}
-		if(isset($_GET[customersConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[customerConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						customersConstants::dbLastChangeTimestamp, 
+						customerConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[customersConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[customerConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 		
 		$customersResponse = new Response();
 		try{
-			$customers = DB::table(customersConstants::customersTable)
+			$customers = DB::table(customerConstants::customersTable)
 			->where($mySqlWhere)
 			->get();
 			if($customers->isEmpty()){	$customersResponse->setStatusCode(
 					200, 
-					customersConstants::emptyResultSetErr
+					customerConstants::emptyResultSetErr
 					);
 			} else {	$customersResponse->setContent(json_encode($customers));
 			}
 		} catch(\PDOException $e){
 			$customersResponse->setStatusCode(
 					400, 
-					customersConstants::dbReadCatchMsg
+					customerConstants::dbReadCatchMsg
 					);
 		}
 		
@@ -379,49 +379,49 @@ class customersController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . customersConstants::dbCustomerUsername => 'unique:customers,customer_username|required|string|max:30', 
-							'*.' . customersConstants::dbCustomerPassword => 'required|string|max:100', 
-							'*.' . customersConstants::dbCustomerNameFname => 'required|string|max:30', 
-							'*.' . customersConstants::dbCustomerNameMname => 'required|string|max:30', 
-							'*.' . customersConstants::dbCustomerNameLname => 'required|string|max:30', 
-							'*.' . customersConstants::dbCustomerRole => 'required|string|max:30', 
-							'*.' . customersConstants::dbCustomerGender => 'string|max:10', 
-							'*.' . customersConstants::dbCustomerAddressHouseBuilding => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressStreet => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressDistrict => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressCity => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressPostalcode => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressCountry => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerMobile => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerEmail => 'string|email|max:30', 
-							'*.' . customersConstants::dbCustomerBirthdayMonth => 'string|max:30', 
-							'*.' . customersConstants::dbCustomerBirthdayDate => 'numeric', 
-							'*.' . customersConstants::dbCustomerBirthdayYear => 'numeric'
+							'*.' . customerConstants::dbCustomerUsername => 'unique:customers,customer_username|required|string|max:30', 
+							'*.' . customerConstants::dbCustomerPassword => 'required|string|max:100', 
+							'*.' . customerConstants::dbCustomerNameFname => 'required|string|max:30', 
+							'*.' . customerConstants::dbCustomerNameMname => 'required|string|max:30', 
+							'*.' . customerConstants::dbCustomerNameLname => 'required|string|max:30', 
+							'*.' . customerConstants::dbCustomerRole => 'required|string|max:30', 
+							'*.' . customerConstants::dbCustomerGender => 'string|max:10', 
+							'*.' . customerConstants::dbCustomerAddressHouseBuilding => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressStreet => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressDistrict => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressCity => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressPostalcode => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressCountry => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerMobile => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerEmail => 'string|email|max:30', 
+							'*.' . customerConstants::dbCustomerBirthdayMonth => 'string|max:30', 
+							'*.' . customerConstants::dbCustomerBirthdayDate => 'numeric', 
+							'*.' . customerConstants::dbCustomerBirthdayYear => 'numeric'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . customersConstants::dbCustomerUsername => 'unique:customers,customer_username|sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerPassword => 'sometimes|string|max:100', 
-							'*.' . customersConstants::dbCustomerNameFname => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerNameMname => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerNameLname => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerRole => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerGender => 'sometimes|string|max:10', 
-							'*.' . customersConstants::dbCustomerAddressHouseBuilding => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressStreet => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressDistrict => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressCity => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressPostalcode => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerAddressCountry => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerMobile => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerEmail => 'sometimes|string|email|max:30', 
-							'*.' . customersConstants::dbCustomerBirthdayMonth => 'sometimes|string|max:30', 
-							'*.' . customersConstants::dbCustomerBirthdayDate => 'sometimes|numeric', 
-							'*.' . customersConstants::dbCustomerBirthdayYear => 'sometimes|numeric', 
-							'*.' . customersConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . customerConstants::dbCustomerUsername => 'unique:customers,customer_username|sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerPassword => 'sometimes|string|max:100', 
+							'*.' . customerConstants::dbCustomerNameFname => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerNameMname => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerNameLname => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerRole => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerGender => 'sometimes|string|max:10', 
+							'*.' . customerConstants::dbCustomerAddressHouseBuilding => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressStreet => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressDistrict => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressCity => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressPostalcode => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerAddressCountry => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerMobile => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerEmail => 'sometimes|string|email|max:30', 
+							'*.' . customerConstants::dbCustomerBirthdayMonth => 'sometimes|string|max:30', 
+							'*.' . customerConstants::dbCustomerBirthdayDate => 'sometimes|numeric', 
+							'*.' . customerConstants::dbCustomerBirthdayYear => 'sometimes|numeric', 
+							'*.' . customerConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -453,7 +453,7 @@ class customersController extends Controller
 				$errorMsg, 
 				"ADD"
 				)
-				){	return customersConstants::dbAddValidateSuccessMsg;
+				){	return customerConstants::dbAddValidateSuccessMsg;
 		} else {
 			$customersResponse->setStatusCode(
 					400, 
@@ -487,14 +487,14 @@ class customersController extends Controller
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
 				try{
-					$pwHashed = Hash::make($jsonData[$i][customersConstants::dbCustomerPassword]);
-					$jsonData[$i][customersConstants::dbCustomerPassword] = $pwHashed;
-					DB::table(customersConstants::customersTable)
+					$pwHashed = Hash::make($jsonData[$i][customerConstants::dbCustomerPassword]);
+					$jsonData[$i][customerConstants::dbCustomerPassword] = $pwHashed;
+					DB::table(customerConstants::customersTable)
 					->insert($jsonData[$i]);
 				} catch(\PDOException $e){
 					$customersResponse->setStatusCode(
 							400, 
-							customersConstants::dbAddCatchMsg
+							customerConstants::dbAddCatchMsg
 							);
 					
 					return $customersResponse;
@@ -509,7 +509,7 @@ class customersController extends Controller
 			return $customersResponse;
 		}
 		
-		return customersConstants::dbAddSuccessMsg;
+		return customerConstants::dbAddSuccessMsg;
 	}
 
 	//URL-->>/customers/{CustomerUsername}/validate
@@ -529,13 +529,13 @@ class customersController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][customersConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][customersConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][customersConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][customerConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][customerConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$customersResponse->setStatusCode(
 						400, 
-						customersConstants::carbonParseErr
+						customerConstants::carbonParseErr
 						);
 				
 				return $customersResponse;
@@ -549,7 +549,7 @@ class customersController extends Controller
 				)
 				){
 			
-			return customersConstants::dbUpdateValidateSuccessMsg;
+			return customerConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$customersResponse->setStatusCode(
 					400, 
@@ -578,13 +578,13 @@ class customersController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][customersConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][customersConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][customersConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][customerConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][customerConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$customersResponse->setStatusCode(
 						400, 
-						customersConstants::carbonParseErr
+						customerConstants::carbonParseErr
 						);
 				
 				return $customersResponse;
@@ -609,24 +609,24 @@ class customersController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							customersConstants::dbCustomerUsername, 
+							customerConstants::dbCustomerUsername, 
 							'=', 
 							$CustomerUsername
 					]
 					);
-			DB::table(customersConstants::customersTable)
+			DB::table(customerConstants::customersTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$customersResponse->setStatusCode(
 					400, 
-					customersConstants::dbUpdateCatchMsg
+					customerConstants::dbUpdateCatchMsg
 					);
 			
 			return $customersResponse;
 		}
 		
-		return customersConstants::dbUpdateSuccessMsg;
+		return customerConstants::dbUpdateSuccessMsg;
 	}
 
 	//URL-->>/customers/{CustomerUsername}
@@ -643,23 +643,23 @@ class customersController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							customersConstants::dbCustomerUsername, 
+							customerConstants::dbCustomerUsername, 
 							'=', 
 							$CustomerUsername
 					]
 					);
-			DB::table(customersConstants::customersTable)
+			DB::table(customerConstants::customersTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$customersResponse->setStatusCode(
 					400, 
-					customersConstants::dbDeleteCatchMsg
+					customerConstants::dbDeleteCatchMsg
 					);
 			
 			return $customersResponse;
 		}
 		
-		return customersConstants::dbDeleteSuccessMsg;
+		return customerConstants::dbDeleteSuccessMsg;
 	}
 }

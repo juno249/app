@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "companiesController.php";
+include_once "companyController.php";
 
-class branchesConstants{
+class branchConstants{
 	const branchesTable = 'branches';
 	
 	const dbBranchId = 'branch_id';
@@ -52,18 +52,18 @@ class branchesConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class branchesController extends Controller
+class branchController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
 	public function getJoinCompanyBranch($mySqlWhere){
-		$companyBranch = DB::table(branchesConstants::branchesTable)
+		$companyBranch = DB::table(branchConstants::branchesTable)
 		->join(
-				companiesConstants::companiesTable, 
-				branchesConstants::branchesTable . '.' . branchesConstants::dbCompanyName, 
+				companyConstants::companiesTable, 
+				branchConstants::branchesTable . '.' . branchConstants::dbCompanyName, 
 				'=', 
-				companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
+				companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 				)
 				->where($mySqlWhere)
 		->get();
@@ -72,13 +72,13 @@ class branchesController extends Controller
 	}
 
 	//URL-->>/companies/{CompanyName}/branches
-	public function getAllCompanyBranches($CompanyName){
+	public function getCompanyBranches($CompanyName){
 		$mySqlWhere = array();
 		
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -89,13 +89,13 @@ class branchesController extends Controller
 			$companyBranches = $this->getJoinCompanyBranch($mySqlWhere);
 			if($companyBranches->isEmpty()){	$branchesResponse->setStatusCode(
 					200, 
-					branchesConstants::emptyResultSetErr
+					branchConstants::emptyResultSetErr
 					);
 			} else {	$branchesResponse->setContent(json_encode($companyBranches));
 			}
 		} catch(\PDOException $e){	$branchesResponse->setStatusCode(
 				400, 
-				branchesConstants::dbReadCatchMsg
+				branchConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -109,7 +109,7 @@ class branchesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -117,7 +117,7 @@ class branchesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -128,13 +128,13 @@ class branchesController extends Controller
 			$companyBranch = $this->getJoinCompanyBranch($mySqlWhere);
 			if($companyBranch->isEmpty()){	$branchesResponse->setStatusCode(
 					200, 
-					branchesConstants::emptyResultSetErr
+					branchConstants::emptyResultSetErr
 					);
 			} else {	$branchesResponse->setContent(json_encode($companyBranch));
 			}
 		} catch(\PDOException $e){	$branchesResponse->setStatusCode(
 				400, 
-				branchesConstants::dbReadCatchMsg
+				branchConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -145,101 +145,101 @@ class branchesController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 
-		if(isset($_GET[branchesConstants::reqBranchId])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchId])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchId, 
+						branchConstants::dbBranchId, 
 						'=', 
-						$_GET[branchesConstants::reqBranchId]
+						$_GET[branchConstants::reqBranchId]
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchName])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchName])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchName, 
+						branchConstants::dbBranchName, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchName] . '%'
+						'%' . $_GET[branchConstants::reqBranchName] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqCompanyName])){	array_push(
+		if(isset($_GET[branchConstants::reqCompanyName])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbCompanyName, 
+						branchConstants::dbCompanyName, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqCompanyName] . '%'
+						'%' . $_GET[branchConstants::reqCompanyName] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchAddressHouseBuilding])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchAddressHouseBuilding])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchAddressHouseBuilding, 
+						branchConstants::dbBranchAddressHouseBuilding, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchAddressHouseBuilding] . '%'
+						'%' . $_GET[branchConstants::reqBranchAddressHouseBuilding] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchAddressStreet])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchAddressStreet])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchAddressStreet, 
+						branchConstants::dbBranchAddressStreet, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchAddressStreet] . '%'
+						'%' . $_GET[branchConstants::reqBranchAddressStreet] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchAddressDistrict])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchAddressDistrict])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchAddressDistrict, 
+						branchConstants::dbBranchAddressDistrict, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchAddressDistrict] . '%'
+						'%' . $_GET[branchConstants::reqBranchAddressDistrict] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchAddressCity])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchAddressCity])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchAddressCity, 
+						branchConstants::dbBranchAddressCity, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchAddressCity] . '%'
+						'%' . $_GET[branchConstants::reqBranchAddressCity] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchAddressPostalcode])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchAddressPostalcode])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchAddressPostalcode, 
+						branchConstants::dbBranchAddressPostalcode, 
 						'LIKE', 
 						'%' . 
-						$_GET[branchesConstants::reqBranchAddressPostalcode] . '%'
+						$_GET[branchConstants::reqBranchAddressPostalcode] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchAddressCountry])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchAddressCountry])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchAddressCountry, 
+						branchConstants::dbBranchAddressCountry, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchAddressCountry] . '%'
+						'%' . $_GET[branchConstants::reqBranchAddressCountry] . '%'
 				]
 				);
 		}
-		if(isset($_GET[branchesConstants::reqBranchHotline])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchHotline])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbBranchHotline, 
+						branchConstants::dbBranchHotline, 
 						'LIKE', 
-						'%' . $_GET[branchesConstants::reqBranchHotline] . '%'
+						'%' . $_GET[branchConstants::reqBranchHotline] . '%'
 				]
 				);
 		}
 		if(isset($_GET[branchesConstantns::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::dbLastChangeTimestamp, 
+						branchConstants::dbLastChangeTimestamp, 
 						'LIKE', 
 						$_GET[branchesConstantns::reqLastChangeTimestamp]
 				]
@@ -248,18 +248,18 @@ class branchesController extends Controller
 
 		$branchesResponse = new Response();
 		try{
-			$companyBranches  = DB::table(branchesConstants::branchesTable)
+			$companyBranches  = DB::table(branchConstants::branchesTable)
 			->where($mySqlWhere)
 			->get();
 			if($companyBranches->isEmpty()){	$branchesResponse->setStatusCode(
 					200, 
-					branchesConstants::emptyResultSetErr
+					branchConstants::emptyResultSetErr
 					);
 			} else {	$branchesResponse->setContent(json_encode($companyBranches));
 			}
 		} catch(\PDOException $e){	$branchesResponse->setStatusCode(
 				400, 
-				branchesConstants::dbReadCatchMsg
+				branchConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -275,31 +275,31 @@ class branchesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . branchesConstants::dbBranchName => 'required|string|max:30', 
-							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'required|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressStreet => 'required|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressDistrict => 'required|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressCity => 'required|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressPostalcode => 'required|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressCountry => 'required|string|max:30', 
-							'*.' . branchesConstants::dbBranchHotline => 'required|string|max:10'
+							'*.' . branchConstants::dbBranchName => 'required|string|max:30', 
+							'*.' . branchConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressHouseBuilding => 'required|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressStreet => 'required|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressDistrict => 'required|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressCity => 'required|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressPostalcode => 'required|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressCountry => 'required|string|max:30', 
+							'*.' . branchConstants::dbBranchHotline => 'required|string|max:10'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . branchesConstants::dbBranchName => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressHouseBuilding => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressStreet => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressDistrict => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressCity => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressPostalcode => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchAddressCountry => 'sometimes|string|max:30', 
-							'*.' . branchesConstants::dbBranchHotline => 'sometimes|string|max:10', 
-							'*.' . branchesConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . branchConstants::dbBranchName => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressHouseBuilding => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressStreet => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressDistrict => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressCity => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressPostalcode => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchAddressCountry => 'sometimes|string|max:30', 
+							'*.' . branchConstants::dbBranchHotline => 'sometimes|string|max:10', 
+							'*.' . branchConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -334,7 +334,7 @@ class branchesController extends Controller
 				$errorMsg, 
 				"ADD"
 				)
-				){	return branchesConstants::dbAddValidateSuccessMsg;
+				){	return branchConstants::dbAddValidateSuccessMsg;
 		} else {
 			$branchesResponse->setStatusCode(
 					400, 
@@ -369,13 +369,13 @@ class branchesController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i][companiesConstants::dbCompanyName] == $CompanyName){
-					try{		DB::table(branchesConstants::branchesTable)
+				if($jsonData[$i][companyConstants::dbCompanyName] == $CompanyName){
+					try{		DB::table(branchConstants::branchesTable)
 					->insert($jsonData[$i]);
 					} catch(\PDOException $e){
 						$branchesResponse->setStatusCode(
 								400, 
-								branchesConstants::dbAddCatchMsg
+								branchConstants::dbAddCatchMsg
 								);
 						
 						return $branchesResponse;
@@ -391,7 +391,7 @@ class branchesController extends Controller
 			return $branchesResponse;
 		}
 		
-		return branchesConstants::dbAddSuccessMsg;
+		return branchConstants::dbAddSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/validate
@@ -411,13 +411,13 @@ class branchesController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][branchesConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][branchesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchesConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][branchConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][branchConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$branchesResponse->setStatusCode(
 						400, 
-						branchesConstants::carbonParseErr
+						branchConstants::carbonParseErr
 						);
 				
 				return $branchesResponse;
@@ -429,7 +429,7 @@ class branchesController extends Controller
 				$errorMsg, 
 				"UPDATE"
 				)
-				){	return branchesConstants::dbUpdateValidateSuccessMsg;
+				){	return branchConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$branchesResponse->setStatusCode(
 					400, 
@@ -459,13 +459,13 @@ class branchesController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][branchesConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][branchesConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchesConstants::dbLastChangeTimeStamp])
+		if(isset($jsonData[0][branchConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][branchConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimeStamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$branchesResponse->setStatusCode(
 						400, 
-						branchesConstants::carbonParseErr
+						branchConstants::carbonParseErr
 						);
 				
 				return $branchesResponse;
@@ -490,7 +490,7 @@ class branchesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							branchesConstants::dbCompanyName, 
+							branchConstants::dbCompanyName, 
 							'=', 
 							$CompanyName
 					]
@@ -498,24 +498,24 @@ class branchesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							branchesConstants::dbBranchName, 
+							branchConstants::dbBranchName, 
 							'=', 
 							$BranchName
 					]
 					);
-			DB::table(branchesConstants::branchesTable)
+			DB::table(branchConstants::branchesTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$branchesResponse->setStatusCode(
 					400, 
-					branchesConstants::dbUpdateCatchMsg
+					branchConstants::dbUpdateCatchMsg
 					);
 			
 			return $branchesResponse;
 		}
 		
-		return branchesConstants::dbUpdateSuccessMsg;
+		return branchConstants::dbUpdateSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}
@@ -535,7 +535,7 @@ class branchesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							branchesConstants::dbCompanyName, 
+							branchConstants::dbCompanyName, 
 							'=', 
 							$CompanyName
 					]
@@ -543,23 +543,23 @@ class branchesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							branchesConstants::dbBranchName, 
+							branchConstants::dbBranchName, 
 							'=', 
 							$BranchName
 					]
 					);
-			DB::table(branchesConstants::branchesTable)
+			DB::table(branchConstants::branchesTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$branchesResponse->setStatusCode(
 					400, 
-					branchesConstants::dbDeleteCatchMsg
+					branchConstants::dbDeleteCatchMsg
 					);
 			
 			return $branchesResponse;
 		}
 		
-		return branchesConstants::dbDeleteSuccessMsg;
+		return branchConstants::dbDeleteSuccessMsg;
 	}
 }

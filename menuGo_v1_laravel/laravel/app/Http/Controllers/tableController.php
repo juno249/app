@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
-include_once "branchesController.php";
-include_once "companiesController.php";
+include_once "branchController.php";
+include_once "companyController.php";
 
-class tablesConstants{
+class tableConstants{
 	const tablesTable = 'tables';
 	
 	const dbTableId = 'table_id';
@@ -45,24 +45,24 @@ class tablesConstants{
 	const carbonParseErr = 'UNPARSEABLE DATE';
 }
 
-class tablesController extends Controller
+class tableController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 
 	public function getJoinCompanyBranchTable($mySqlWhere){
-		$companyBranchTable = DB::table(tablesConstants::tablesTable)
+		$companyBranchTable = DB::table(tableConstants::tablesTable)
 		->join(
-				branchesConstants::branchesTable, 
-				tablesConstants::tablesTable . '.' . tablesConstants::dbBranchId, 
+				branchConstants::branchesTable, 
+				tableConstants::tablesTable . '.' . tableConstants::dbBranchId, 
 				'=', 
-				branchesConstants::branchesTable . '.' . branchesConstants::dbBranchId
+				branchConstants::branchesTable . '.' . branchConstants::dbBranchId
 				)
 				->join(
-						companiesConstants::companiesTable, 
-						branchesConstants::branchesTable . '.' . branchesConstants::dbCompanyName, 
+						companyConstants::companiesTable, 
+						branchConstants::branchesTable . '.' . branchConstants::dbCompanyName, 
 						'=', 
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 						)
 						->where($mySqlWhere)
 		->get();
@@ -71,7 +71,7 @@ class tablesController extends Controller
 	}
 
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables
-	public function getAllCompanyBranchTables(
+	public function getCompanyBranchTables(
 			$CompanyName, 
 			$BranchName
 			){
@@ -79,7 +79,7 @@ class tablesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
@@ -87,7 +87,7 @@ class tablesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -98,13 +98,13 @@ class tablesController extends Controller
 			$companyBranchTables = $this->getJoinCompanyBranchTable($mySqlWhere);
 			if($companyBranchTables->isEmpty()){	$tablesResponse->setStatusCode(
 					200, 
-					tablesConstants::emptyResultSetErr
+					tableConstants::emptyResultSetErr
 					);
 			} else {	$tablesResponse->setContent(json_encode($companyBranchTables));
 			}
 		} catch(\PDOException $e){	$tablesResponse->setStatusCode(
 				400, 
-				tablesConstants::dbReadCatchMsg
+				tableConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -121,14 +121,14 @@ class tablesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						companiesConstants::companiesTable . '.' . companiesConstants::dbCompanyName, 
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
 						'=', 
 						$CompanyName
 				]
 				);
 		array_push(
 				$mySqlWhere, 
-				[branchesConstants::branchesTable . '.' . branchesConstants::dbBranchName, 
+				[branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
 						'=', 
 						$BranchName
 				]
@@ -136,7 +136,7 @@ class tablesController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::tablesTable . '.' . tablesConstants::dbTableNumber, 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
 						'=', 
 						$TableNumber
 				]
@@ -147,13 +147,13 @@ class tablesController extends Controller
 			$companyBranchTable = $this->getJoinCompanyBranchTable($mySqlWhere);
 			if($companyBranchTable->isEmpty()){	$tablesResponse->setStatusCode(
 					200, 
-					tablesConstants::emptyResultSetErr
+					tableConstants::emptyResultSetErr
 					);
 			} else {	$tablesResponse->setContent(json_encode($companyBranchTable));
 			}
 		} catch(\PDOException $e){	$tablesResponse->setStatusCode(
 				400, 
-				tablesConstants::dbReadCatchMsg
+				tableConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -164,84 +164,84 @@ class tablesController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 
-		if(isset($_GET[tablesConstants::reqTableId])){	array_push(
+		if(isset($_GET[tableConstants::reqTableId])){	array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::dbTableId, 
+						tableConstants::dbTableId, 
 						'=', 
-						$_GET[tablesConstants::reqTableId]
+						$_GET[tableConstants::reqTableId]
 				]
 				);
 		}
-		if(isset($_GET[tablesConstants::reqTableNumber])){	array_push(
+		if(isset($_GET[tableConstants::reqTableNumber])){	array_push(
 				$mySqlWhere,
 				[
-						tablesConstants::dbTableNumber,
+						tableConstants::dbTableNumber,
 						'=',
-						$_GET[tablesConstants::reqTableNumber]
+						$_GET[tableConstants::reqTableNumber]
 				]
 				);
 		}
-		if(isset($_GET[tablesConstants::reqBranchId])){	array_push(
+		if(isset($_GET[tableConstants::reqBranchId])){	array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::dbBranchId, 
+						tableConstants::dbBranchId, 
 						'=', 
-						$_GET[tablesConstants::reqBranchId]
+						$_GET[tableConstants::reqBranchId]
 				]
 				);
 		}
-		if(isset($_GET[tablesConstants::reqTableCapacity])){	array_push(
+		if(isset($_GET[tableConstants::reqTableCapacity])){	array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::dbTableCapacity, 
+						tableConstants::dbTableCapacity, 
 						'=', 
-						$_GET[tablesConstants::reqTableCapacity]
+						$_GET[tableConstants::reqTableCapacity]
 				]
 				);
 		}
-		if(isset($_GET[tablesConstants::reqTableStatus])){	array_push(
+		if(isset($_GET[tableConstants::reqTableStatus])){	array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::dbTableStatus, 
+						tableConstants::dbTableStatus, 
 						'LIKE', 
-						'%' . $_GET[tablesConstants::reqTableStatus] . '%'
+						'%' . $_GET[tableConstants::reqTableStatus] . '%'
 				]
 				);
 		}
-		if(isset($_GET[tablesConstants::reqTableStatusChangeTimestamp])){	array_push(
+		if(isset($_GET[tableConstants::reqTableStatusChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::dbTableStatusChangeTimestamp, 
+						tableConstants::dbTableStatusChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[tablesConstants::reqTableStatusChangeTimestamp] . '%'
+						'%' . $_GET[tableConstants::reqTableStatusChangeTimestamp] . '%'
 				]
 				);
 		}
-		if(isset($_GET[tablesConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[tableConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						tablesConstants::dbLastChangeTimestamp, 
+						tableConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[tablesConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[tableConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
 		
 		$tablesResponse = new Response();
 		try{
-			$tables = DB::table(tablesConstants::tablesTable)
+			$tables = DB::table(tableConstants::tablesTable)
 			->where($mySqlWhere)
 			->get();
 			if($tables->isEmpty()){	$tablesResponse->setStatusCode(
 					200, 
-					tablesConstants::emptyResultSetErr
+					tableConstants::emptyResultSetErr
 					);
 			} else {	$tablesResponse->setContent(json_encode($tables));
 			}
 		} catch(\PDOException $e){	$tablesResponse->setStatusCode(
 				400, 
-				tablesConstants::dbReadCatchMsg
+				tableConstants::dbReadCatchMsg
 				);
 		}
 		
@@ -257,23 +257,23 @@ class tablesController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . tablesConstants::dbTableNumber => 'required|numeric', 
-							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|numeric', 
-							'*.' . tablesConstants::dbTableCapacity => 'required|numeric', 
-							'*.' . tablesConstants::dbTableStatus => 'required|string|max:30', 
-							'*.' . tablesConstants::dbTableStatusChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . tableConstants::dbTableNumber => 'required|numeric', 
+							'*.' . tableConstants::dbBranchId => 'exists:branches,branch_id|numeric', 
+							'*.' . tableConstants::dbTableCapacity => 'required|numeric', 
+							'*.' . tableConstants::dbTableStatus => 'required|string|max:30', 
+							'*.' . tableConstants::dbTableStatusChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . tablesConstants::dbTableNumber => 'sometimes|numeric', 
-							'*.' . tablesConstants::dbBranchId => 'exists:branches,branch_id|sometimes|numeric', 
-							'*.' . tablesConstants::dbTableCapacity => 'sometimes|numeric', 
-							'*.' . tablesConstants::dbTableStatus => 'sometimes|string|max:30', 
-							'*.' . tablesConstants::dbTableStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . tablesConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . tableConstants::dbTableNumber => 'sometimes|numeric', 
+							'*.' . tableConstants::dbBranchId => 'exists:branches,branch_id|sometimes|numeric', 
+							'*.' . tableConstants::dbTableCapacity => 'sometimes|numeric', 
+							'*.' . tableConstants::dbTableStatus => 'sometimes|string|max:30', 
+							'*.' . tableConstants::dbTableStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
+							'*.' . tableConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -305,7 +305,7 @@ class tablesController extends Controller
 				null
 				);
 		$companyBranch = json_decode(
-				(new branchesController())->getCompanyBranch(
+				(new branchController())->getCompanyBranch(
 						$CompanyName, 
 						$BranchName
 						)
@@ -315,27 +315,27 @@ class tablesController extends Controller
 		if(sizeof($companyBranch) == 0){
 			$tablesResponse->setStatusCode(
 					400, 
-					tablesConstants::inconsistencyValidationErr1
+					tableConstants::inconsistencyValidationErr1
 					);
 			
 			return $tablesResponse;
 		}
 		
-		$branchId = $companyBranch[0][branchesConstants::dbBranchId];
+		$branchId = $companyBranch[0][branchConstants::dbBranchId];
 	
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(!(isset($jsonData[$i][tablesConstants::dbBranchId]))){	$jsonData[$i][tablesConstants::dbBranchId] = $branchId;
+			if(!(isset($jsonData[$i][tableConstants::dbBranchId]))){	$jsonData[$i][tableConstants::dbBranchId] = $branchId;
 			}
 		}
 		
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(isset($jsonData[$i][tablesConstants::dbTableStatusChangeTimestsamp])){
-				try{	$jsonData[$i][tablesConstantss::dbTableStatusChangeTimestsamp] = Carbon::parse($jsonData[$i][tablesConstantss::dbTableStatusChangeTimestsamp])
+			if(isset($jsonData[$i][tableConstants::dbTableStatusChangeTimestsamp])){
+				try{	$jsonData[$i][tableConstantss::dbTableStatusChangeTimestsamp] = Carbon::parse($jsonData[$i][tableConstantss::dbTableStatusChangeTimestsamp])
 				->format('Y-m-d H:i:s');
 				} catch(\Exception $e){
 					$tablesResponse->setStatusCode(
 							400, 
-							tablesConstants::carbonParseErr
+							tableConstants::carbonParseErr
 							);
 					
 					return $tablesResponse;
@@ -350,12 +350,12 @@ class tablesController extends Controller
 				)
 				){
 			for($i=0; $i<$jsonDataSize; $i++){
-				if($jsonData[$i][tablesConstants::dbBranchId] == $branchId){
-					try{		DB::table(tablesConstants::tablesTable)
+				if($jsonData[$i][tableConstants::dbBranchId] == $branchId){
+					try{		DB::table(tableConstants::tablesTable)
 					->insert($jsonData[$i]);
 					} catch(\PDOException $e){	$tablesResponse->setStatusCode(
 							400, 
-							tablesConstants::dbAddCatchMsg
+							tableConstants::dbAddCatchMsg
 							);
 					
 						return $tablesResponse;
@@ -371,7 +371,7 @@ class tablesController extends Controller
 			return $tablesResponse;
 		}
 		
-		return tablesConstants::dbAddSuccessMsg;
+		return tableConstants::dbAddSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
@@ -394,28 +394,28 @@ class tablesController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][tablesConstants::dbTableStatusChangeTimestamp])){
-			try{	$jsonData[0][tablesConstants::dbTableStatusChangeTimestamp] = Carbon::parse($jsonData[0][tablesConstants::dbTableStatusChangeTimestamp])
+		if(isset($jsonData[0][tableConstants::dbTableStatusChangeTimestamp])){
+			try{	$jsonData[0][tableConstants::dbTableStatusChangeTimestamp] = Carbon::parse($jsonData[0][tableConstants::dbTableStatusChangeTimestamp])
 				->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$tablesResponse->setStatusCode(
 						400, 
-						tablesConstants::carbonParseErr
+						tableConstants::carbonParseErr
 						);
 				
 				return $tablesResponse;
 			}
 		}
-		if(isset($jsonData[0][tablesConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][tablesConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][tablesConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][tableConstants::dbLastChangeTimestamp])){
+			try{	$jsonData[0][tableConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][tableConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$tablesResponse->setStatusCode(
 						400, 
-						tablesConstants::carbonParseErr
+						tableConstants::carbonParseErr
 						);
 				
-				return tablesConstants::carbonParseErr;
+				return tableConstants::carbonParseErr;
 			}
 		}
 		
@@ -431,13 +431,13 @@ class tablesController extends Controller
 		if(sizeof($companyBranchTable) == 0){
 			$tablesResponse->setStatusCode(
 					400, 
-					tablesConstants::inconsistencyValidationErr2
+					tableConstants::inconsistencyValidationErr2
 					);
 			
 			return $tablesResponse;
 		}
 		
-		$tableId = $companyBranchTable[0][tablesConstants::dbTableId];
+		$tableId = $companyBranchTable[0][tableConstants::dbTableId];
 	
 		if(!$this->isDataValid(
 				$jsonData, 
@@ -457,24 +457,24 @@ class tablesController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							tablesConstants::dbTableId, 
+							tableConstants::dbTableId, 
 							'=', 
 							$tableId
 					]
 					);
-			DB::table(tablesConstants::tablesTable)
+			DB::table(tableConstants::tablesTable)
 			->where($mySqlWhere)
 			->update($jsonData[0]);
 		} catch(\PDOException $e){
 			$tablesResponse->setStatusCode(
 					400, 
-					tablesConstants::dbUpdateCatchMsg
+					tableConstants::dbUpdateCatchMsg
 					);
 			
 			return $tablesResponse;
 		}
 		
-		return tablesConstants::dbUpdateSuccessMsg;
+		return tableConstants::dbUpdateSuccessMsg;
 	}
 
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
@@ -503,34 +503,34 @@ class tablesController extends Controller
 		if(sizeof($companyBranchTable) == 0){
 			$tablesResponse->setStatusCode(
 					400, 
-					tablesConstants::inconsistencyValidationErr2
+					tableConstants::inconsistencyValidationErr2
 					);
 			
 			return $tablesResponse;
 		}
-		$tableId = $companyBranchTable[0][tablesConstants::dbTableId];
+		$tableId = $companyBranchTable[0][tableConstants::dbTableId];
 	
 		try{
 			array_push(
 					$mySqlWhere, 
 					[
-							tablesConstants::dbTableId, 
+							tableConstants::dbTableId, 
 							'=', 
 							$tableId
 					]
 					);
-			DB::table(tablesConstants::tablesTable)
+			DB::table(tableConstants::tablesTable)
 			->where($mySqlWhere)
 			->delete();
 		} catch(\PDOException $e){
 			$tablesResponse->setStatusCode(
 					400, 
-					tablesConstants::dbDeleteCatchMsg
+					tableConstants::dbDeleteCatchMsg
 					);
 			
 			return $tablesResponse;
 		}
 		
-		return tablesConstants::dbDeleteSuccessMsg;
+		return tableConstants::dbDeleteSuccessMsg;
 	}
 }
