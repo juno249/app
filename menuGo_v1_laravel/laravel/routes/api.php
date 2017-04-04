@@ -24,505 +24,505 @@ Route::get('/user', function (Request $request) {
 //Routes::authenticateController
 Route::post('login', 'authenticateController@authenticate');
 
-//Routes: filesController
+//Routes: fileController
 Route::get('companies/{CompanyName}/companyImage', [
-		'uses' => 'filesController@getCompanyImage'
+		'uses' => 'fileController@getCompanyImage'
 ]);
 
 Route::post('companies/{CompanyName}/companyImage', [
-		'uses' => 'filesController@uploadCompanyImage'
+		'uses' => 'fileController@uploadCompanyImage'
 ]);
 
 Route::delete('companies/{CompanyName}/companyImage', [
-		'uses' => 'filesController@deleteCompanyImage'
+		'uses' => 'fileController@deleteCompanyImage'
 ]);
 
 Route::get('companies/{CompanyName}/menus/{MenuName}/menuImage', [
-		'uses' => 'filesController@getCompanyMenuImage'
+		'uses' => 'fileController@getCompanyMenuImage'
 ]);
 
 Route::post('companies/{CompanyName}/menus/{MenuName}/menuImage', [
-		'uses' => 'filesController@uploadCompanyMenuImage'
+		'uses' => 'fileController@uploadCompanyMenuImage'
 ]);
 
 Route::delete('companies/{CompanyName}/menus/{MenuName}/menuImage', [
-		'uses' => 'filesController@deleteCompanyMenuImage'
+		'uses' => 'fileController@deleteCompanyMenuImage'
 ]);
 
 Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage', [
-		'uses' => 'filesController@getCompanyMenuMenuitemImage'
+		'uses' => 'fileController@getCompanyMenuMenuitemImage'
 ]);
 
 Route::post('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage', [
-		'uses' => 'filesController@uploadCompanyMenuMenuitemImage'
+		'uses' => 'fileController@uploadCompanyMenuMenuitemImage'
 ]);
 
 Route::delete('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage', [
-		'uses' => 'filesController@deleteCompanyMenuMenuitemImage'
+		'uses' => 'fileController@deleteCompanyMenuMenuitemImage'
 ]);
 
-//Routes::customersController
+//Routes::customerController
 Route::get('customers/companies/{CompanyName}', [
-		'uses' => 'customersController@getAllCustomersAdministrator'
+		'uses' => 'customerController@getCustomers_asAdministrator'
 ]);
 
 Route::get('customers', [
-		'uses' => 'customersController@getAllCustomers'
+		'uses' => 'customerController@getCustomers'
 ]);
 
 Route::get('customers/query', [
-		'uses' => 'customersController@getByQuery'
+		'uses' => 'customerController@getByQuery'
 ]);
 
 Route::get('customers/{CustomerUsername}', [
-		'uses' => 'customersController@getCustomer'
+		'uses' => 'customerController@getCustomer'
 ]);
 
 Route::post('customers/validate', [
-		'uses' => 'customersController@addCustomerValidate'
+		'uses' => 'customerController@addCustomerValidate'
 ]);
 
 Route::post('customers', [
-		'uses' => 'customersController@addCustomer'
+		'uses' => 'customerController@addCustomer'
 ]);
 
 Route::put('customers/{CustomerUsername}/validate', [
-		'uses' => 'customersController@updateCustomerValidate'
+		'uses' => 'customerController@updateCustomerValidate'
 ]);
 
 Route::put('customers/{CustomerUsername}', [
-		'uses' => 'customersController@updateCustomer'
+		'uses' => 'customerController@updateCustomer'
 ]);
 
 Route::delete('customers/{CustomerUsername}', [
-		'uses' => 'customersController@deleteCustomer'
+		'uses' => 'customerController@deleteCustomer'
 ]);
 
-//Routes::companiesController
+//Routes::companyController
 Route::get('companies/customers/{CustomerUsername}', [
-		'uses' => 'companiesController@getAllCompaniesAdministrator'
+		'uses' => 'companyController@getCompanies_asAdministrator'
 ]);
 
 Route::get('companies', [
-		'uses' => 'companiesController@getAllCompanies'
+		'uses' => 'companyController@getCompanies'
 ]);
 
 Route::get('companies/query', [
-		'uses' => 'companiesController@getByQuery'
+		'uses' => 'companyController@getByQuery'
 ]);
 
 Route::get('companies/{CompanyName}', [
-		'uses' => 'companiesController@getCompany'
+		'uses' => 'companyController@getCompany'
 ]);
 
 Route::post('companies/validate', [
-		'uses' => 'companiesController@addCompanyValidate'
+		'uses' => 'companyController@addCompanyValidate'
 ]);
 
 Route::post('companies', [
-		'uses' => 'companiesController@addCompany'
+		'uses' => 'companyController@addCompany'
 ]);
 
 Route::put('companies/{CompanyName}/validate', [
-		'uses' => 'companiesController@updateCompanyValidate'
+		'uses' => 'companyController@updateCompanyValidate'
 ]);
 
 Route::put('companies/{CompanyName}', [
-		'uses' => 'companiesController@updateCompany'
+		'uses' => 'companyController@updateCompany'
 ]);
 
 Route::delete('companies/{CompanyName}', [
-		'uses' => 'companiesController@deleteCompany'
+		'uses' => 'companyController@deleteCompany'
 ]);
 
-//Route::branchesController
+//Route::branchController
 Route::get('companies/{CompanyName}/branches', [
-		'uses' => 'branchesController@getAllCompanyBranches'
+		'uses' => 'branchController@getCompanyBranches'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}', [
-		'uses' => 'branchesController@getCompanyBranch'
+		'uses' => 'branchController@getCompanyBranch'
 ]);
 
 Route::get('branches/query', [
-		'uses' => 'branchesController@getByQuery'
+		'uses' => 'branchController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/branches/validate', [
-		'uses' => 'branchesController@addBranchValidate'
+		'uses' => 'branchController@addBranchValidate'
 ]);
 
 Route::post('companies/{CompanyName}/branches', [
-		'uses' =>	'branchesController@addBranch'
+		'uses' => 'branchController@addBranch'
 ]);
 
 Route::put('companies/{CompanyName}/branches/{BranchName}/validate', [
-		'uses' => 'branchesController@updateBranchValidate'
+		'uses' => 'branchController@updateBranchValidate'
 ]);
 
 Route::put('companies/{CompanyName}/branches/{BranchName}', [
-		'uses' => 'branchesController@updateBranch'
+		'uses' => 'branchController@updateBranch'
 ]);
 
 Route::delete('companies/{CompanyName}/branches/{BranchName}', [
-		'uses' => 'branchesController@deleteBranch'
+		'uses' => 'branchController@deleteBranch'
 ]);
 
-//Routes: customersCompaniesBranchesController
+//Routes: customerCompanyBranchController
 Route::get('customers-companies-branches', [
-		'uses' => 'customersCompaniesBranchesController@getAllCustomersCompaniesBranches'
+		'uses' => 'customerCompanyBranchController@getCustomersCompaniesBranches'
 ]);
 
 Route::get('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}', [
-		'uses' => 'customersCompaniesBranchesController@getCustomerCompanyBranch'
+		'uses' => 'customerCompanyBranchController@getCustomerCompanyBranch'
 ]);
 
 Route::get('customers-companies-branches/query', [
-		'uses' =>'customersCompaniesBranchesController@getByQuery'
+		'uses' =>'customerCompanyBranchController@getByQuery'
 ]);
 
 Route::post('customers-companies-branches', [
-		'uses' => 'customersCompaniesBranchesController@addCustomerCompanyBranch'
+		'uses' => 'customerCompanyBranchController@addCustomerCompanyBranch'
 ]);
 
 Route::delete('customers-companies-branches/{CustomerUsername}', [
-		'uses' => 'customersCompaniesBranchesController@deleteCustomerCompanyBranch'
+		'uses' => 'customerCompanyBranchController@deleteCustomerCompanyBranch'
 ]);
 
-//Routes::menusController
+//Routes::menuController
 Route::get('companies/{CompanyName}/menus', [
-		'uses' => 'menusController@getAllCompanyMenus'
+		'uses' => 'menuController@getCompanyMenus'
 ]);
 
 Route::get('companies/{CompanyName}/menus/{MenuName}', [
-		'uses' => 'menusController@getCompanyMenu'
+		'uses' => 'menuController@getCompanyMenu'
 ]);
 
 Route::get('menus/query', [
-		'uses' => 'menusController@getByQuery'
+		'uses' => 'menuController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/menus', [
-		'uses' => 'menusController@addMenu'
+		'uses' => 'menuController@addMenu'
 ]);
 
 Route::put('companies/{CompanyId}/menus/{MenuName}', [
-		'uses' => 'menusController@updateMenu'
+		'uses' => 'menuController@updateMenu'
 ]);
 
 Route::delete('companies/{CompanyName}/menus/{MenuName}', [
-		'uses' => 'menusController@deleteMenu'
+		'uses' => 'menuController@deleteMenu'
 ]);
 
-//Route::tablesController
+//Route::tableController
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables', [
-		'uses' => 'tablesController@getAllCompanyBranchTables'
+		'uses' => 'tableController@getCompanyBranchTables'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}', [
-		'uses' => 'tablesController@getCompanyBranchTable'
+		'uses' => 'tableController@getCompanyBranchTable'
 ]);
 
 Route::get('tables/query', [
-		'uses' => 'tablesController@getByQuery'
+		'uses' => 'tableController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/branches/{BranchName}/tables', [
-		'uses' => 'tablesController@addTable'
+		'uses' => 'tableController@addTable'
 ]);
 
 Route::put('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}', [
-		'uses' => 'tablesController@updateTable'
+		'uses' => 'tableController@updateTable'
 ]);
 
 Route::delete('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}', [
-		'uses' => 'tablesController@deleteTable'
+		'uses' => 'tableController@deleteTable'
 ]);
 
-//Routes::menuitemsController
+//Routes::menuitemController
 Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems', [
-		'uses' => 'menuitemsController@getAllCompanyMenuMenuitems'
+		'uses' => 'menuitemController@getCompanyMenuMenuitems'
 ]);
 
 Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}', [
-		'uses' => 'menuitemsController@getCompanyMenuMenuitem'
+		'uses' => 'menuitemController@getCompanyMenuMenuitem'
 ]);
 
 Route::get('menuitems/query', [
-		'uses' => 'menuitemsController@getByQuery'
+		'uses' => 'menuitemController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/menus/{MenuName}/menuitems', [
-		'uses' => 'menuitemsController@addMenuitem'
+		'uses' => 'menuitemController@addMenuitem'
 ]);
 
 Route::put('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}', [
-		'uses' => 'menuitemsController@updateMenuitem'
+		'uses' => 'menuitemController@updateMenuitem'
 ]);
 
 Route::delete('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}', [
-		'uses' => 'menuitemsController@deleteMenuitem'
+		'uses' => 'menuitemController@deleteMenuitem'
 ]);
 
-//Routes; reservationsController
+//Routes; reservationController
 Route::get('companies/{CompanyName}/branches/{BranchName}/reservations', [
-		'uses' => 'reservationsController@getCompanyBranchReservations'
+		'uses' => 'reservationController@getCompanyBranchReservations'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/{ReservationCode}', [
-		'uses' => 'reservationsController@getCompanyBranchReservation'
+		'uses' => 'reservationController@getCompanyBranchReservation'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/{ReservationStatus}', [
-		'uses' => 'reservationsController@getCompanyBranchReservationsReservationStatus'
+		'uses' => 'reservationController@getCompanyBranchReservationsReservationStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/not/{ReservationStatus}', [
-		'uses' => 'reservationsController@getCompanyBranchReservationsNotReservationStatus'
+		'uses' => 'reservationController@getCompanyBranchReservationsNotReservationStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations', [
-		'uses' => 'reservationsController@getCompanyBranchTableReservations'
+		'uses' => 'reservationController@getCompanyBranchTableReservations'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/{ReservationCode}', [
-		'uses' => 'reservationsController@getCompanyBranchTableReservation'
+		'uses' => 'reservationController@getCompanyBranchTableReservation'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/{ReservationStatus}', [
-		'uses' => 'reservationsController@getCompanyBranchTableReservationsReservationStatus'
+		'uses' => 'reservationController@getCompanyBranchTableReservationsReservationStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/not/{ReservationStatus}', [
-		'uses' => 'reservationsController@getCompanyBranchTableReservationsNotReservationStatus'
+		'uses' => 'reservationController@getCompanyBranchTableReservationsNotReservationStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations', [
-		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservations'
+		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservations'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}', [
-		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservation'
+		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservation'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationStatus}', [
-		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservationsReservationStatus'
+		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservationsReservationStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/not/{ReservationStatus}', [
-		'uses' => 'reservationsController@getCompanyBranchTableOrderreferenceReservationsNotReservationStatus'
+		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservationsNotReservationStatus'
 ]);
 
 Route::get('reservations/query', [
-		'uses' => 'reservationsController@getByQuery'
+		'uses' => 'reservationController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations', [
-		'uses' => 'reservationsController@addReservation'
+		'uses' => 'reservationController@addReservation'
 ]);
 
 Route::put('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}', [
-		'uses' => 'reservationsController@updateReservation'
+		'uses' => 'reservationController@updateReservation'
 ]);
 
 Route::delete('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}', [
-		'uses' => 'reservationsController@deleteReservation'
+		'uses' => 'reservationController@deleteReservation'
 ]);
 
-//Routes; orderreferencesController
+//Routes; orderreferenceController
 Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences', [
-		'uses' => 'orderreferencesController@getCompanyBranchOrderreferences'
+		'uses' => 'orderreferenceController@getCompanyBranchOrderreferences'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/{OrderreferenceCode}', [
-		'uses' => 'orderreferencesController@getCompanyBranchOrderreference'
+		'uses' => 'orderreferenceController@getCompanyBranchOrderreference'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/{OrderreferenceStatus}', [
-		'uses' => 'orderreferencesController@getCompanyBranchOrderreferencesOrderreferenceStatus'
+		'uses' => 'orderreferenceController@getCompanyBranchOrderreferencesOrderreferenceStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/not/{OrderreferenceStatus}', [
-		'uses' => 'orderreferencesController@getCompanyBranchOrderreferencesNotOrderreferenceStatus'
+		'uses' => 'orderreferenceController@getCompanyBranchOrderreferencesNotOrderreferenceStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences', [
-		'uses' => 'orderreferencesController@getCompanyBranchTableOrderreferences'
+		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreferences'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}', [
-		'uses' => 'orderreferencesController@getCompanyBranchTableOrderreference'
+		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreference'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceStatus}', [
-		'uses' => 'orderreferencesController@getCompanyBranchTableOrderreferencesOrderreferenceStatus'
+		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreferencesOrderreferenceStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/not/{OrderreferenceStatus}', [
-		'uses' => 'orderreferencesController@getCompanyBranchTableOrderreferencesNotOrderreferenceStatus'
+		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreferencesNotOrderreferenceStatus'
 ]);
 
 Route::get('customers/{CustomerUsername}/orderreferences', [
-		'uses' => 'orderreferencesController@getCustomerOrderreferences'
+		'uses' => 'orderreferenceController@getCustomerOrderreferences'
 ]);
 
 Route::get('customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}', [
-		'uses' => 'orderreferencesController@getCustomerOrderreference'
+		'uses' => 'orderreferenceController@getCustomerOrderreference'
 ]);
 
 Route::get('customers/{CustomerUsername}/orderreferences/{OrderreferenceStatus}', [
-		'uses' => 'orderreferencesController@getCustomerOrderreferencesOrderreferenceStatus'
+		'uses' => 'orderreferenceController@getCustomerOrderreferencesOrderreferenceStatus'
 ]);
 
 Route::get('customers/{CustomerUsername/orderreferences/not/{OrderreferenceStatus}', [
-		'uses' => 'orderreferencesController@getCustomerOrderreferencesNotOrderreferenceStatus'
+		'uses' => 'orderreferenceController@getCustomerOrderreferencesNotOrderreferenceStatus'
 ]);
 
 Route::get('orderreferences/query', [
-		'uses' => 'orderreferencesController@getByQuery'
+		'uses' => 'orderreferenceController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences', [
-		'uses' => 'orderreferencesController@addOrderreference'
+		'uses' => 'orderreferenceController@addOrderreference'
 ]);
 
 Route::put('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}', [
-		'uses' => 'orderreferencesController@updateOrderreference'
+		'uses' => 'orderreferenceController@updateOrderreference'
 ]);
 
 Route::delete('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}', [
-		'uses' => 'orderreferencesController@deleteOrderreference'
+		'uses' => 'orderreferenceController@deleteOrderreference'
 ]);
 
-//Routes: ordersController
+//Routes: orderController
 Route::get('companies/{CompanyName}/branches/{BranchName}/orders', [
-		'uses' => 'ordersController@getCompanyBranchOrders'
+		'uses' => 'orderController@getCompanyBranchOrders'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/orders/{OrderId}', [
-		'uses' => 'ordersController@getCompanyBranchOrder'
+		'uses' => 'orderController@getCompanyBranchOrder'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/orders/{OrderStatus}', [
-		'uses' => 'ordersController@getCompanyBranchOrdersOrderStatus'
+		'uses' => 'orderController@getCompanyBranchOrdersOrderStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/orders/not/{OrderStatus}', [
-		'uses' => 'ordersController@getCompanyBranchOrdersNotOrderStatus'
+		'uses' => 'orderController@getCompanyBranchOrdersNotOrderStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders', [
-		'uses' => 'ordersController@getCompanyBranchTableOrders'
+		'uses' => 'orderController@getCompanyBranchTableOrders'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderId}', [
-		'uses' => 'ordersController@getCompanyBranchTableOrder'
+		'uses' => 'orderController@getCompanyBranchTableOrder'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}', [
-		'uses' => 'ordersController@getCompanyBranchTableOrdersOrderStatus'
+		'uses' => 'orderController@getCompanyBranchTableOrdersOrderStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}', [
-		'uses' => 'ordersController@getCompanyBranchTableOrdersNotOrderStatus'
+		'uses' => 'orderController@getCompanyBranchTableOrdersNotOrderStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders', [
-		'uses' => 'ordersController@getCompanyBranchTableOrderreferenceOrders'
+		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrders'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders{OrderId}', [
-		'uses' => 'ordersController@getCompanyBranchTableOrderreferenceOrder'
+		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrder'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderStatus}', [
-		'uses' => 'ordersController@getCompanyBranchTableOrderreferenceOrdersOrderStatus'
+		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrdersOrderStatus'
 ]);
 
 Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/not/{OrderStatus}', [
-		'uses' => 'ordersController@getCompanyBranchTableOrderreferenceOrdersNotOrderStatus'
+		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrdersNotOrderStatus'
 ]);
 
 Route::get('orderreferences/query', [
-		'uses' => 'ordersController@getByQuery'
+		'uses' => 'orderController@getByQuery'
 ]);
 
 Route::post('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders', [
-		'uses' => 'ordersController@addOrder'
+		'uses' => 'orderController@addOrder'
 ]);
 
 Route::put('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderId}', [
-		'uses' => 'ordersController@updateOrder'
+		'uses' => 'orderController@updateOrder'
 ]);
 
 Route::delete('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderId}', [
-		'uses' => 'ordersController@deleteOrder'
+		'uses' => 'orderController@deleteOrder'
 ]);
 
-//Routes: advertisementsController
+//Routes: advertisementController
 Route::get('advertisements', [
-		'uses' => 'advertisementsController@getAllAdvertisements'
+		'uses' => 'advertisementController@getAdvertisements'
 ]);
 
 Route::get('advertisements/{AdvertisementId}', [
-		'uses' => 'advertisementsController@getAdvertisement'
+		'uses' => 'advertisementController@getAdvertisement'
 ]);
 
 Route::get('companies/{CompanyName}/advertisements', [
-		'uses' => 'advertisementsController@getCompanyAdvertisements'
+		'uses' => 'advertisementController@getCompanyAdvertisements'
 ]);
 
 Route::get('companies/{CompanyName}/advertisements/{AdvertisementId}', [
-		'uses' => 'advertisementsController@getCompanyAdvertisement'
+		'uses' => 'advertisementController@getCompanyAdvertisement'
 ]);
 
 Route::get('advertisements/query', [
-		'uses' => 'advertisementsController@getByQuery'
+		'uses' => 'advertisementController@getByQuery'
 ]);
 
 Route::post('advertisements', [
-		'uses' => 'advertisementsController@addAdvertisement'
+		'uses' => 'advertisementController@addAdvertisement'
 ]);
 
 Route::put('advertisements/{AdvertisementId}', [
-		'uses' => 'advertisementsController@updateAdvertisement'
+		'uses' => 'advertisementController@updateAdvertisement'
 ]);
 
 Route::delete('advertisements/{AdvertisementId}', [
-		'uses' => 'advertisementsController@deleteAdvertisement'
+		'uses' => 'advertisementController@deleteAdvertisement'
 ]);
 
-//Routes: blogsController
+//Routes: blogController
 Route::get('blogs', [
-		'uses' => 'blogsController@getAllBlogs'
+		'uses' => 'blogController@getBlogs'
 ]);
 
 Route::get('blogs/{BlogId}', [
-		'uses' => 'blogsController@getBlog'
+		'uses' => 'blogController@getBlog'
 ]);
 
 Route::get('blogs/query', [
-		'uses' => 'blogsController@getByQuery'
+		'uses' => 'blogController@getByQuery'
 ]);
 
 Route::post('blogs', [
-		'uses' => 'blogsController@addBlog'
+		'uses' => 'blogController@addBlog'
 ]);
 
 Route::put('blogs/{BlogId}', [
-		'uses' => 'blogsController@updateBlog'
+		'uses' => 'blogController@updateBlog'
 ]);
 
 Route::delete('blogs/{BlogId}', [
-		'uses' => 'blogsController@deleteBlog'
+		'uses' => 'blogController@deleteBlog'
 ]);
 
-//Routes:: orderreferencesOrdersController
+//Routes:: orderreferenceOrderController
 Route::post('orderreferences-orders', [
-		'uses' => 'orderreferencesOrdersController@addOrderreferenceOrder'
+		'uses' => 'orderreferenceOrderController@addOrderreferenceOrder'
 ]);
 
-//Routes:: reservationsOrderreferencesOrdersController
+//Routes:: reservationOrderreferenceOrderController
 Route::post('reservations-orderreferences-orders', [
-		'uses' => 'reservationsOrderreferencesOrdersController@addReservationOrderreferenceOrder'
+		'uses' => 'reservationOrderreferenceOrderController@addReservationOrderreferenceOrder'
 ]);
