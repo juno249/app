@@ -15,6 +15,7 @@ include_once "tableController.php";
 class orderreferenceConstants{
 	const orderreferencesTable = 'orderreferences';
 	
+	const dbOrderreferenceId = 'orderreference_id';
 	const dbOrderreferenceCode = 'orderreference_code';
 	const dbCustomerUsername = 'customer_username';
 	const dbTableId = 'table_id';
@@ -22,6 +23,7 @@ class orderreferenceConstants{
 	const dbOrderreferenceStatusChangeTimestamp = 'orderreference_status_change_timestamp';
 	const dbLastChangeTimestamp = 'last_change_timestamp';
 	
+	const reqOrderreferenceId = 'OrderreferenceId';
 	const reqOrderreferenceCode = 'OrderreferenceCode';
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqTableId = 'TableId';
@@ -665,6 +667,15 @@ class orderreferenceController extends Controller
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
+		if(isset($_GET[orderreferenceConstants::reqOrderreferenceId])){	array_push(
+				$mySqlWhere, 
+				[
+						orderreferenceConstants::dbOrderreferenceId, 
+						'=', 
+						$_GET[orderreferenceConstants::reqOrderreferenceId]
+				]
+				);
+		}
 		if(isset($_GET[orderreferenceConstants::reqOrderreferenceCode])){	array_push(
 				$mySqlWhere, 
 				[
@@ -936,7 +947,7 @@ class orderreferenceController extends Controller
 			return $orderreferencesResponse;
 		}
 		
-		$orderreferenceCode = $companyBranchTableOrderreference[orderreferenceConstants::dbOrderreferenceCode];
+		$orderreferenceId = $companyBranchTableOrderreference[orderreferenceConstants::dbOrderreferenceId];
 		
 		if(!$this->isDataValid(
 				$jsonData, 
@@ -956,9 +967,9 @@ class orderreferenceController extends Controller
 			array_push(
 					$mySqlWhere, 
 					[
-							orderreferenceConstants::dbOrderreferenceCode, 
+							orderreferenceConstants::dbOrderreferenceId, 
 							'=', 
-							$orderreferenceCode
+							$orderreferenceId
 					]
 					);
 			DB::table(orderreferenceConstants::orderreferencesTable)
@@ -1010,15 +1021,15 @@ class orderreferenceController extends Controller
 			return $orderreferencesResponse;
 		}
 		
-		$orderreferenceCode = $companyBranchTableOrderreference[0][orderreferenceConstants::dbOrderreferenceCode];
+		$orderreferenceId = $companyBranchTableOrderreference[0][orderreferenceConstants::dbOrderreferenceId];
 		
 		try{
 			array_push(
 					$mySqlWhere, 
 					[
-							orderreferenceConstants::dbOrderreferenceCode, 
+							orderreferenceConstants::dbOrderreferenceId, 
 							'=', 
-							$orderreferenceCode
+							$orderreferenceId
 					]
 					);
 			DB::table(orderreferenceConstants::orderreferencesTable)
