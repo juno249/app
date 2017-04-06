@@ -42,7 +42,7 @@ class customerCompanyBranchConstants{
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
-		
+
 class customerCompanyBranchController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth', ['except' => ['addCustomerCompanyBranch']]);
