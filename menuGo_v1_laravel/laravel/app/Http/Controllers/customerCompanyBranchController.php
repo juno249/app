@@ -21,12 +21,12 @@ class customerCompanyBranchConstants{
 	
 	const dbCustomerUsername = 'customer_username';
 	const dbCompanyName = 'company_name';
-	const dbBranchName = 'branch_name';
+	const dbBranchId = 'branch_id';
 	const dbLastChangeTimestamp = 'last_change_timestamp';
 	
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqCompanyName = 'CompanyName';
-	const reqBranchName = 'BranchName';
+	const reqBranchId = 'BranchId';
 	const reqLastChangeTimestamp = 'LastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
@@ -97,11 +97,11 @@ class customerCompanyBranchController extends Controller
 		return $customersCompaniesBranchesResponse;
 	}
 	
-	//URL-->>/customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}
+	//URL-->>/customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchId}
 	public function getCustomerCompanyBranch(
 			$CustomerUsername, 
 			$CompanyName, 
-			$BranchName
+			$BranchId
 			){
 		$mySqlWhere = array();
 		
@@ -124,9 +124,9 @@ class customerCompanyBranchController extends Controller
 		array_push(
 				$mySqlWhere, 
 				[
-						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
+						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbBranchId, 
 						'=', 
-						$BranchName
+						$BranchId
 				]
 				);
 		
@@ -171,13 +171,12 @@ class customerCompanyBranchController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[customerCompanyBranchConstants::reqBranchName])){		array_push(
+		if(isset($_GET[customerCompanyBranchConstants::reqBranchId])){		array_push(
 				$mySqlWhere, 
 				[
-						customerCompanyBranchConstants::dbBranchName, 
-						'LIKE', 
-						'%' . $_GET[customerCompanyBranchConstants::reqBranchName] . '%'
-						
+						customerCompanyBranchConstants::dbBranchId, 
+						'=', 
+						$_GET[customerCompanyBranchConstants::reqBranchId]
 				]
 				);
 		}
@@ -222,7 +221,7 @@ class customerCompanyBranchController extends Controller
 					[
 							'*.' . customerCompanyBranchConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
 							'*.' . customerCompanyBranchConstants::dbCompanyName => 'exists:companies,company_name|required|string|max:30', 
-							'*.' . customerCompanyBranchConstants::dbBranchName => 'exists:branches,branch_name|required|string|max:30'
+							'*.' . customerCompanyBranchConstants::dbBranchId => 'exists:branches,branch_id|required|int'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
@@ -231,7 +230,7 @@ class customerCompanyBranchController extends Controller
 					[
 							'*.' . customerCompanyBranchConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
 							'*.' . customerCompanyBranchConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
-							'*.' . customerCompanyBranchConstants::dbBranchName => 'exists:branches,branch_name|sometimes|string|max:30', 
+							'*.' . customerCompanyBranchConstants::dbBranchId => 'exists:branches,branch_id|required|int', 
 							'*.' . customerCompanyBranchConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
@@ -387,7 +386,7 @@ class customerCompanyBranchController extends Controller
 									)->original, 
 							true)[0];
 					
-					$customerCompanyBranch[branchConstants::dbBranchName] = $branch[branchConstants::dbBranchName];
+					$customerCompanyBranch[branchConstants::dbBranchId] = $branch[branchConstants::dbBranchId];
 					$branchDbWrite = true;
 				}
 				
@@ -406,7 +405,7 @@ class customerCompanyBranchController extends Controller
 							DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
 							->insert($customerCompanyBranch);
 						} catch(\PDOException $e){	throw $e;
-						}	
+						}
 					} else {
 						$customersCompaniesBranchesResponse->setStatusCode(
 								400, 
@@ -430,39 +429,5 @@ class customerCompanyBranchController extends Controller
 		}
 		
 		return customerCompanyBranchConstants::dbAddSuccessMsg;
-	}
-	
-	//URL-->>/customers-companies-branches/{CustomerUsername}
-	function deleteCustomerCompanyBranch($CustomerUsername){
-		$mySqlWhere = array();
-		$errorMsg = '';
-		
-		$customersCompaniesBranchesResponse = new Response();
-		$customersCompaniesBranchesResponse->setStatusCode(
-				400, 
-				null
-				);
-		try{
-			array_push(
-					$mySqlWhere, 
-					[
-							customerCompanyBranchConstants::dbCustomerUsername, 
-							'=', 
-							$CustomerUsername
-					]
-					);
-			DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
-			->where($mySqlWhere)
-			->delete();
-		} catch(\PDOException $e){
-			$customersCompaniesBranchesResponse->setStatusCode(
-					400, 
-					customerCompanyBranchConstants::dbDeleteCatchMsg
-					);
-			
-			return $customersCompaniesBranchesResponse;
-		}
-		
-		return customerCompanyBranchConstants::dbDeleteSuccessMsg;
 	}
 }

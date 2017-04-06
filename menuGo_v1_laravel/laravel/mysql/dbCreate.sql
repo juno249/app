@@ -147,12 +147,12 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	customer_username VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
- 	branch_name VARCHAR(30) NOT NULL, 
+ 	branch_id INT NOT NULL, 
  	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(customer_username), 
  	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
- 	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
+ 	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
  	);
  	
 #advertisements
@@ -1260,17 +1260,17 @@ USE ziplogic;
 # ==========
 SET @customer_username = "johnvlim";
 SET @company_name = "Max's";
-SET @branch_name = "Ermita";
+SET @branch_id = 1;
 
 INSERT INTO customers_companies_branches(
 	customer_username, 
 	company_name, 
-	branch_name
+	branch_id
 	)
 VALUES(
 	@customer_username, 
 	@company_name, 
-	@branch_name
+	@branch_id
 	);
 	
 #advertisements_insert

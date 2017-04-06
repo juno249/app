@@ -70,12 +70,12 @@ Route::get('customers', [
 		'uses' => 'customerController@getCustomers'
 ]);
 
-Route::get('customers/query', [
-		'uses' => 'customerController@getByQuery'
-]);
-
 Route::get('customers/{CustomerUsername}', [
 		'uses' => 'customerController@getCustomer'
+]);
+
+Route::get('query/customers', [
+		'uses' => 'customerController@getByQuery'
 ]);
 
 Route::post('customers/validate', [
@@ -107,12 +107,12 @@ Route::get('companies', [
 		'uses' => 'companyController@getCompanies'
 ]);
 
-Route::get('companies/query', [
-		'uses' => 'companyController@getByQuery'
-]);
-
 Route::get('companies/{CompanyName}', [
 		'uses' => 'companyController@getCompany'
+]);
+
+Route::get('query/companies', [
+		'uses' => 'companyController@getByQuery'
 ]);
 
 Route::post('companies/validate', [
@@ -144,7 +144,7 @@ Route::get('companies/{CompanyName}/branches/{BranchName}', [
 		'uses' => 'branchController@getCompanyBranch'
 ]);
 
-Route::get('branches/query', [
+Route::get('query/branches', [
 		'uses' => 'branchController@getByQuery'
 ]);
 
@@ -177,16 +177,12 @@ Route::get('customers-companies-branches/{CustomerUsername}/{CompanyName}/{Branc
 		'uses' => 'customerCompanyBranchController@getCustomerCompanyBranch'
 ]);
 
-Route::get('customers-companies-branches/query', [
+Route::get('query/customers-companies-branches', [
 		'uses' =>'customerCompanyBranchController@getByQuery'
 ]);
 
 Route::post('customers-companies-branches', [
 		'uses' => 'customerCompanyBranchController@addCustomerCompanyBranch'
-]);
-
-Route::delete('customers-companies-branches/{CustomerUsername}', [
-		'uses' => 'customerCompanyBranchController@deleteCustomerCompanyBranch'
 ]);
 
 //Routes::menuController
@@ -476,7 +472,7 @@ Route::get('companies/{CompanyName}/advertisements/{AdvertisementId}', [
 		'uses' => 'advertisementController@getCompanyAdvertisement'
 ]);
 
-Route::get('advertisements/query', [
+Route::get('query/advertisements', [
 		'uses' => 'advertisementController@getByQuery'
 ]);
 
@@ -501,7 +497,7 @@ Route::get('blogs/{BlogId}', [
 		'uses' => 'blogController@getBlog'
 ]);
 
-Route::get('blogs/query', [
+Route::get('query/blogs', [
 		'uses' => 'blogController@getByQuery'
 ]);
 
