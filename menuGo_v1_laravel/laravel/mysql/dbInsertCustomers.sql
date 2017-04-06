@@ -62,7 +62,7 @@ VALUES(
 	@customer_birthday_date, 
 	@customer_birthday_year
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========

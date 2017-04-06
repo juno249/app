@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS ziplogic;
 
 CREATE DATABASE IF NOT EXISTS ziplogic;
 
-/*customers*/
+#customers
 CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_username VARCHAR(30) NOT NULL, 
  	customer_password VARCHAR(100) NOT NULL, 
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(customer_username)
  	);
- 
-/*companies*/
+ 	
+#companies
 CREATE TABLE IF NOT EXISTS ziplogic.companies(
 	company_name VARCHAR(30) NOT NULL, 
  	company_desc VARCHAR(500) NOT NULL, 
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.companies(
  	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(company_name)
  	);
- 
- /*branches*/
+ 	
+ #branches
 CREATE TABLE IF NOT EXISTS ziplogic.branches(
 	branch_id INT NOT NULL AUTO_INCREMENT, 
  	branch_name VARCHAR(30) NOT NULL, 
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.branches(
  	UNIQUE(branch_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
- 
-/*menus*/
+ 	
+#menus
 CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	menu_id INT NOT NULL AUTO_INCREMENT, 
  	menu_name VARCHAR(30) NOT NULL, 
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	UNIQUE(menu_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
- 
-/*tables*/
+ 	
+#tables
 CREATE TABLE IF NOT EXISTS ziplogic.tables(
  	table_id INT NOT NULL AUTO_INCREMENT, 
  	table_number INT NOT NULL, 
@@ -80,8 +80,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.tables(
  	UNIQUE(table_number, branch_id), 
  	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
  	);
-  
-/*menuitems*/
+ 	
+#menuitems
 CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	menuitem_id INT NOT NULL AUTO_INCREMENT, 
  	menuitem_code VARCHAR(10) NOT NULL, 
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	UNIQUE(menuitem_code, menu_id), 
 	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
 	);
-
-/*orderreferences*/
+	
+#orderreferences
 CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	orderreference_id INT NOT NULL AUTO_INCREMENT, 
 	orderreference_code VARCHAR(40) NOT NULL, 
@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id)
 	);
-
-/*orders*/
+	
+#orders
 CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	order_id INT NOT NULL AUTO_INCREMENT, 
 	menuitem_id INT NOT NULL, 
@@ -124,8 +124,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 	);
-
-/*reservations*/
+	
+#reservations
 CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_id INT NOT NULL AUTO_INCREMENT, 
 	reservation_code VARCHAR(40) NOT NULL, 
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 	);
 	
-/*customers_companies_branches*/
+#customers_companies_branches
 CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	customer_username VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
@@ -154,8 +154,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
  	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
  	);
- 
-/*advertisements*/
+ 	
+#advertisements
 CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
  	advertisement_id INT NOT NULL AUTO_INCREMENT, 
  	company_name VARCHAR(30) NOT NULL, 
@@ -168,8 +168,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
  	PRIMARY KEY(advertisement_id), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
- 
-/*blogs*/
+ 	
+#blogs
 CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  	blog_id INT NOT NULL AUTO_INCREMENT, 
  	blog_title VARCHAR (100) NOT NULL, 
@@ -180,8 +180,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(blog_id)
 	);
-
-/*customers - insert*/
+	
+#customers_insert
 USE ziplogic;
 
 # ==========
@@ -246,7 +246,7 @@ VALUES(
 	@customer_birthday_date, 
 	@customer_birthday_year
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========
@@ -309,8 +309,8 @@ VALUES(
 	@customer_birthday_date, 
 	@customer_birthday_year
 	);
-
-/*companies - insert*/
+	
+#companies_insert
 USE ziplogic;
 
 # ==========
@@ -321,7 +321,7 @@ SET @company_desc = "Max's Restaurant";
 SET @company_category = "Fine Dining";
 SET @company_logo = "https://upload.wikimedia.org/wikipedia/en/d/de/Max's_Restaurant_logo.jpeg";
 
-INSERT  INTO companies(
+INSERT INTO companies(
 	company_name, 
 	company_desc, 
 	company_category, 
@@ -333,8 +333,8 @@ VALUES(
 	@company_category, 
 	@company_logo
 	);
-
-/*branches - insert*/
+	
+#branches_insert
 USE ziplogic;
 
 # ==========
@@ -350,7 +350,7 @@ SET @branch_address_postalcode = "1007";
 SET @branch_address_country = "Philippines";
 SET @branch_hotline = "632-0970";
 
-INSERT  INTO branches(
+INSERT INTO branches(
 	branch_name, 
 	company_name, 
 	branch_address_house_building, 
@@ -373,7 +373,7 @@ VALUES(
 	@branch_hotline
 	);
 	
-/*menus - insert*/
+#menus_insert
 USE ziplogic;
 
 # ==========
@@ -396,7 +396,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========
@@ -417,7 +417,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 3
 # ==========
@@ -438,7 +438,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 4
 # ==========
@@ -459,7 +459,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 5
 # ==========
@@ -480,8 +480,8 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
-/*tables - insert*/
+	
+#tables_insert
 USE ziplogic;
 
 # ==========
@@ -507,7 +507,7 @@ VALUES(
 	@table_status, 
 	@table_status_change_timestamp
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========
@@ -531,8 +531,8 @@ VALUES(
 	@table_status, 
 	@table_status_change_timestamp
 	);
-
-/*menuitems - insert*/
+	
+#menuitems_insert
 USE ziplogic;
 
 # ==========
@@ -564,7 +564,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========
@@ -594,7 +594,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 3
 # ==========
@@ -624,7 +624,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 4
 # ==========
@@ -654,7 +654,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 5
 # ==========
@@ -684,7 +684,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 6
 # ==========
@@ -714,7 +714,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 7
 # ==========
@@ -744,7 +744,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 8
 # ==========
@@ -774,7 +774,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 9
 # ==========
@@ -804,7 +804,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 10
 # ==========
@@ -834,7 +834,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 11
 # ==========
@@ -864,7 +864,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 12
 # ==========
@@ -894,7 +894,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 13
 # ==========
@@ -924,7 +924,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 14
 # ==========
@@ -954,7 +954,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 15
 # ==========
@@ -984,7 +984,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 16
 # ==========
@@ -1014,7 +1014,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 17
 # ==========
@@ -1044,7 +1044,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 18
 # ==========
@@ -1074,7 +1074,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 19
 # ==========
@@ -1104,7 +1104,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 20
 # ==========
@@ -1134,7 +1134,7 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
 # ==========
 # RECORD 21
 # ==========
@@ -1164,10 +1164,10 @@ VALUES(
 	@menuitem_image, 
 	@menuitem_featured
 	);
-
+	
+#orderreferences_insert
 USE ziplogic;
 
-/*orderreference - insert*/
 # ==========
 # RECORD 1
 # ==========
@@ -1191,8 +1191,8 @@ VALUES(
 	@orderreference_status, 
 	@orderreference_status_change_timestamp
 	);
-
-/*orders - insert*/
+	
+#orders_insert
 USE ziplogic;
 
 # ==========
@@ -1215,8 +1215,8 @@ VALUES(
 	@order_status, 
 	@order_status_change_timestamp
 	);
-
-/*reservations - insert*/
+	
+#reservations_insert
 USE ziplogic;
 
 # ==========
@@ -1251,8 +1251,29 @@ VALUES(
 	@reservation_service_time, 
 	@reservation_status
 	);
+	
+#customers_companies_branches_insert
+USE ziplogic;
 
-/*advertisements - insert*/
+# ==========
+# RECORD 1
+# ==========
+SET @customer_username = "johnvlim";
+SET @company_name = "Max's";
+SET @branch_name = "Ermita";
+
+INSERT INTO customers(
+	customer_username, 
+	company_name, 
+	branch_name
+	)
+VALUES(
+	@customer_username, 
+	@company_name, 
+	@branch_name
+	);
+	
+#advertisements_insert
 USE ziplogic;
 
 # ==========
@@ -1281,7 +1302,7 @@ VALUES(
 	@advertisement_image, 
 	@advertisement_url
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========
@@ -1309,7 +1330,7 @@ VALUES(
 	@advertisement_url
 	);
 	
-/*blogs - insert*/
+#blogs_insert
 USE ziplogic;
 
 # ==========
@@ -1335,7 +1356,7 @@ VALUES(
 	@blog_image, 
 	@blog_url
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========

@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS ziplogic;
 
 CREATE DATABASE IF NOT EXISTS ziplogic;
 
-/*customers*/
+#customers
 CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_username VARCHAR(30) NOT NULL, 
  	customer_password VARCHAR(100) NOT NULL, 
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(customer_username)
  	);
- 
-/*companies*/
+ 	
+#companies
 CREATE TABLE IF NOT EXISTS ziplogic.companies(
 	company_name VARCHAR(30) NOT NULL, 
  	company_desc VARCHAR(500) NOT NULL, 
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.companies(
  	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(company_name)
  	);
- 
- /*branches*/
+ 	
+ #branches
 CREATE TABLE IF NOT EXISTS ziplogic.branches(
 	branch_id INT NOT NULL AUTO_INCREMENT, 
  	branch_name VARCHAR(30) NOT NULL, 
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.branches(
  	UNIQUE(branch_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
- 
-/*menus*/
+ 	
+#menus
 CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	menu_id INT NOT NULL AUTO_INCREMENT, 
  	menu_name VARCHAR(30) NOT NULL, 
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	UNIQUE(menu_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
- 
-/*tables*/
+ 	
+#tables
 CREATE TABLE IF NOT EXISTS ziplogic.tables(
  	table_id INT NOT NULL AUTO_INCREMENT, 
  	table_number INT NOT NULL, 
@@ -80,8 +80,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.tables(
  	UNIQUE(table_number, branch_id), 
  	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
  	);
-  
-/*menuitems*/
+ 	
+#menuitems
 CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	menuitem_id INT NOT NULL AUTO_INCREMENT, 
  	menuitem_code VARCHAR(10) NOT NULL, 
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	UNIQUE(menuitem_code, menu_id), 
 	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
 	);
-
-/*orderreferences*/
+	
+#orderreferences
 CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	orderreference_id INT NOT NULL AUTO_INCREMENT, 
 	orderreference_code VARCHAR(40) NOT NULL, 
@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
 	FOREIGN KEY(table_id) REFERENCES ziplogic.tables(table_id)
 	);
-
-/*orders*/
+	
+#orders
 CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	order_id INT NOT NULL AUTO_INCREMENT, 
 	menuitem_id INT NOT NULL, 
@@ -124,8 +124,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 	);
-
-/*reservations*/
+	
+#reservations
 CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_id INT NOT NULL AUTO_INCREMENT, 
 	reservation_code VARCHAR(40) NOT NULL, 
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
 	);
 	
-/*customers_companies_branches*/
+#customers_companies_branches
 CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	customer_username VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
@@ -154,8 +154,8 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
  	FOREIGN KEY(branch_name) REFERENCES ziplogic.branches(branch_name)
  	);
- 
-/*advertisements*/
+ 	
+#advertisements
 CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
  	advertisement_id INT NOT NULL AUTO_INCREMENT, 
  	company_name VARCHAR(30) NOT NULL, 
@@ -168,12 +168,12 @@ CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
  	PRIMARY KEY(advertisement_id), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
- 
-/*blogs*/
+ 	
+#blogs
 CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  	blog_id INT NOT NULL AUTO_INCREMENT, 
  	blog_title VARCHAR (100) NOT NULL, 
- 	blog_author VARCHAR(50), 
+ 	blog_author VARCHAR(50) NOT NULL, 
  	blog_content VARCHAR(1000) NOT NULL, 
  	blog_image VARCHAR(500) NOT NULL, 
  	blog_url VARCHAR(500) NOT NULL, 

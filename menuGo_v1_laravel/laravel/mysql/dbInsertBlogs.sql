@@ -23,7 +23,7 @@ VALUES(
 	@blog_image, 
 	@blog_url
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========

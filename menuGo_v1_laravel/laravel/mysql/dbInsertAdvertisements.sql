@@ -26,7 +26,7 @@ VALUES(
 	@advertisement_image, 
 	@advertisement_url
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========

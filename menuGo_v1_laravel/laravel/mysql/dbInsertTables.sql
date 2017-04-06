@@ -23,7 +23,7 @@ VALUES(
 	@table_status, 
 	@table_status_change_timestamp
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========

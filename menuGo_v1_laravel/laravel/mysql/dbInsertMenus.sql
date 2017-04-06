@@ -20,7 +20,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 2
 # ==========
@@ -41,7 +41,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 3
 # ==========
@@ -62,7 +62,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 4
 # ==========
@@ -83,7 +83,7 @@ VALUES(
 	@menu_desc, 
 	@menu_image
 	);
-
+	
 # ==========
 # RECORD 5
 # ==========
