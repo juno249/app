@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -387,7 +388,7 @@ class advertisementController extends Controller
 				null
 				);
 		if(isset($jsonData[0][advertisementConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][advertisementConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][advertisementConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][advertisementConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][advertisementConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$advertisementsResponse->setStatusCode(

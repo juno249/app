@@ -362,6 +362,13 @@ class customerCompanyBranchController extends Controller
 						->insert($branch);
 						} catch(\PDOException $e){	throw $e;
 						}
+					} else {
+						$customersCompaniesBranchesResponse->setStatusCode(
+								400, 
+								$errorMsg
+								);
+						
+						return $customersCompaniesBranchesResponse;
 					}
 				}
 				
@@ -380,7 +387,7 @@ class customerCompanyBranchController extends Controller
 									)->original, 
 							true)[0];
 					
-					$customerCompanyBranch[branchConstants::dbBranchId] = $branch[branchConstants::dbBranchId];
+					$customerCompanyBranch[branchConstants::dbBranchName] = $branch[branchConstants::dbBranchName];
 					$branchDbWrite = true;
 				}
 				
@@ -400,6 +407,13 @@ class customerCompanyBranchController extends Controller
 							->insert($customerCompanyBranch);
 						} catch(\PDOException $e){	throw $e;
 						}	
+					} else {
+						$customersCompaniesBranchesResponse->setStatusCode(
+								400, 
+								$errorMsg
+								);
+						
+						return $customersCompaniesBranchesResponse;
 					}
 				}
 				

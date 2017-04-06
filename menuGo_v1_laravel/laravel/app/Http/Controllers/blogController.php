@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,7 +13,7 @@ class blogConstants{
 	
 	const dbBlogId = 'blog_id';
 	const dbBlogTitle = 'blog_title';
-	const dbBlogAuthor = 'blog_branches';
+	const dbBlogAuthor = 'blog_author';
 	const dbBlogContent = 'blog_content';
 	const dbBlogImage = 'blog_image';
 	const dbBlogUrl = 'blog_url';
@@ -20,7 +21,7 @@ class blogConstants{
 	
 	const reqBlogId = 'BlogId';
 	const reqBlogTitle = 'BlogTitle';
-	const reqBlogAuthor = 'BlogBranches';
+	const reqBlogAuthor = 'BlogAuthor';
 	const reqBlogContent = 'BlogContent';
 	const reqBlogImage = 'BlogImage';
 	const reqBlogUrl = 'BlogUrl';
@@ -133,9 +134,9 @@ class blogController extends Controller
 		if(isset($_GET[blogConstants::reqBlogContent])){	array_push(
 				$mySqlWhere, 
 				[
-						blogsConstans::dbBlogContent, 
+						blogConstants::dbBlogContent, 
 						'LIKE', 
-						'%' . $_GET[blogsConstans::reqBlogContents] . '%'
+						'%' . $_GET[blogConstants::reqBlogContent] . '%'
 				]
 				);
 		}
@@ -143,8 +144,7 @@ class blogController extends Controller
 				$mySqlWhere, 
 				[blogConstants::dbBlogImage, 
 						'LIKE', 
-						'%' . 
-						$_GET[blogConstants::reqBlogImage] . '%'
+						'%' . $_GET[blogConstants::reqBlogImage] . '%'
 				]
 				);
 		}
@@ -288,7 +288,7 @@ class blogController extends Controller
 				null
 				);
 		if(isset($jsonData[0][blogConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][blogConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][blogConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][blogConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][blogConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$blogsResponse->setStatusCode(

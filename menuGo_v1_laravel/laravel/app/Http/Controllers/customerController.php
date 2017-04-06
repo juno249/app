@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -530,7 +531,7 @@ class customerController extends Controller
 				null
 				);
 		if(isset($jsonData[0][customerConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][customerConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][customerConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$customersResponse->setStatusCode(
@@ -547,9 +548,7 @@ class customerController extends Controller
 				$errorMsg, 
 				"UPDATE"
 				)
-				){
-			
-			return customerConstants::dbUpdateValidateSuccessMsg;
+				){	return customerConstants::dbUpdateValidateSuccessMsg;
 		} else {
 			$customersResponse->setStatusCode(
 					400, 
@@ -579,7 +578,7 @@ class customerController extends Controller
 				null
 				);
 		if(isset($jsonData[0][customerConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][customerConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][customerConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$customersResponse->setStatusCode(

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -144,7 +145,7 @@ class branchController extends Controller
 	//URL-->>/branches/query
 	public function getByQuery(){
 		$mySqlWhere = array();
-
+		
 		if(isset($_GET[branchConstants::reqBranchId])){	array_push(
 				$mySqlWhere, 
 				[
@@ -213,8 +214,7 @@ class branchController extends Controller
 				[
 						branchConstants::dbBranchAddressPostalcode, 
 						'LIKE', 
-						'%' . 
-						$_GET[branchConstants::reqBranchAddressPostalcode] . '%'
+						'%' . $_GET[branchConstants::reqBranchAddressPostalcode] . '%'
 				]
 				);
 		}
@@ -236,12 +236,12 @@ class branchController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[branchesConstantns::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[branchConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
 						branchConstants::dbLastChangeTimestamp, 
 						'LIKE', 
-						$_GET[branchesConstantns::reqLastChangeTimestamp]
+						'%' . $_GET[branchConstants::reqLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -412,7 +412,7 @@ class branchController extends Controller
 				null
 				);
 		if(isset($jsonData[0][branchConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][branchConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][branchConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$branchesResponse->setStatusCode(
@@ -460,7 +460,7 @@ class branchController extends Controller
 				null
 				);
 		if(isset($jsonData[0][branchConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][branchConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][branchConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$branchesResponse->setStatusCode(

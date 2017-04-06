@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -342,7 +343,7 @@ class companyController extends Controller
 				null
 				);
 		if(isset($jsonData[0][companyConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][companyConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][companyConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$companiesResponse->setStatusCode(
@@ -389,7 +390,7 @@ class companyController extends Controller
 				null
 				);
 		if(isset($jsonData[0][companyConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][companyConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][companyConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$companiesResponse->setStatusCode(
