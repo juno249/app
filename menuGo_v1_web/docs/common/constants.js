@@ -5,7 +5,7 @@ angular
 		'API_BASE_URL', 
 		'http://localhost/api'
 		)
-
+		
 .constant(
 		'CUSTOMERS_DB_FIELDS', 
 		{
@@ -26,20 +26,22 @@ angular
 			14: 'customer_email', 
 			15: 'customer_birthday_month', 
 			16: 'customer_birthday_date', 
-			17: 'customer_birthday_year'
+			17: 'customer_birthday_year', 
+			18: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'COMPANIES_DB_FIELDS', 
 		{
 			0: 'company_name', 
 			1: 'company_desc', 
 			2: 'company_category', 
-			3: 'company_logo'	
+			3: 'company_logo', 
+			4: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'BRANCHES_DB_FIELDS', 
 		{
@@ -52,10 +54,11 @@ angular
 			6: 'branch_address_city', 
 			7: 'branch_address_postalcode', 
 			8: 'branch_address_country', 
-			9: 'branch_hotline'
+			9: 'branch_hotline', 
+			10: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'MENUS_DB_FIELDS', 
 		{
@@ -63,10 +66,11 @@ angular
 			1: 'menu_name', 
 			2: 'company_name', 
 			3: 'menu_desc', 
-			4: 'menu_image'
+			4: 'menu_image', 
+			5: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'TABLES_DB_FIELDS', 
 		{
@@ -74,10 +78,12 @@ angular
 			1: 'table_number', 
 			2: 'branch_id', 
 			3: 'table_capacity', 
-			4: 'table_status'
+			4: 'table_status', 
+			5: 'table_status_change_timestamp', 
+			6: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'MENUITEMS_DB_FIELDS', 
 		{
@@ -88,41 +94,62 @@ angular
 			4: 'menuitem_desc', 
 			5: 'menuitem_price', 
 			6: 'menuitem_featured', 
-			7: 'menuitem_image'
+			7: 'menuitem_image', 
+			8: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'ORDERREFERENCES_DB_FIELDS', 
 		{
-			0: 'orderreference_code', 
-			1: 'customer_username', 
-			2: 'orderreference_status'
+			0: 'orderreference_id', 
+			1: 'orderreference_code', 
+			2: 'customer_username', 
+			3: 'table_id', 
+			4: 'orderreference_status', 
+			5: 'orderreference_status_change_timestamp', 
+			6: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'ORDERS_DB_FIELDS', 
 		{
 			0: 'order_id', 
-			1: 'customer_username', 
-			2: 'menuitem_id', 
-			3: 'table_id', 
-			4: 'orderreference_code', 
-			5: 'order_timestamp', 
-			6: 'order_status'
+			1: 'menuitem_id', 
+			2: 'orderreference_code', 
+			3: 'order_status', 
+			4: 'order_status_change_timestamp', 
+			5: 'last_change_timestamp'
 				}
 		)
-
+		
+.constant(
+		'RESERVATIONS_DB_FIELDS', 
+		{
+			0: 'reservation_id', 
+			1: 'reservation_code', 
+			2: 'customer_username', 
+			3: 'orderreference_code', 
+			4: 'reservation_diners_count', 
+			5: 'reservation_eta', 
+			6: 'reservation_payment_mode', 
+			7: 'reservation_service_time', 
+			8: 'reservation_status', 
+			9: 'last_change_timestamp'
+				}
+		)
+		
 .constant(
 		'CUSTOMERCOMPANYBRANCH_DB_FIELDS', 
 		{
 			0: 'customer_username', 
 			1: 'company_name', 
-			2: 'branch_name'
+			2: 'branch_name', 
+			3: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'ADVERTISEMENTS_DB_FIELDS', 
 		{
@@ -132,10 +159,11 @@ angular
 			3: 'advertisement_content', 
 			4: 'advertisement_price', 
 			5: 'advertisement_image', 
-			6: 'advertisement_url'
+			6: 'advertisement_url', 
+			7: 'last_change_timestamp'
 				}
 		)
-
+		
 .constant(
 		'BLOGS_DB_FIELDS', 
 		{
@@ -144,24 +172,11 @@ angular
 			2: 'blog_author', 
 			3: 'blog_content', 
 			4: 'blog_image', 
-			5: 'blog_url'
+			5: 'blog_url', 
+			6: 'last_change_timestamp'
 				}
 		)
-
-.constant(
-		'RESERVATIONS_DB_FIELDS', 
-		{
-			0: 'reservation_code', 
-			1: 'customer_username', 
-			2: 'orderreference_code', 
-			3: 'reservation_diners_count', 
-			4: 'reservation_eta', 
-			5: 'reservation_payment_mode', 
-			6: 'reservation_service_time', 
-			7: 'reservation_status'
-				}
-		)
-
+		
 .constant(
 		'USER_ROLES', 
 		{
@@ -172,7 +187,7 @@ angular
 			waiter: 'waiter'
 				}
 		)
-
+		
 .constant(
 		'USER_GENDERS', 
 		{
@@ -180,7 +195,7 @@ angular
 			female: 'female'
 				}
 		)
-
+		
 .constant(
 		'TABLE_STATUS', 
 		{
@@ -188,7 +203,7 @@ angular
 			occupied: 'occupied'
 				}
 		)
-
+		
 .constant(
 		'ORDER_STATUS', 
 		[
@@ -199,7 +214,7 @@ angular
 			'history'
 			]
 		)
-
+		
 .constant(
 		'PAYMENT_MODES', 
 		[
@@ -207,7 +222,7 @@ angular
 			'credit card'
 			]
 		)
-
+		
 .constant(
 		'IS_FEATURED_VALUES', 
 		{
@@ -215,7 +230,7 @@ angular
 			0: 'N'
 				}
 		)
-
+		
 .constant(
 		'BROADCAST_MESSAGES', 
 		{
