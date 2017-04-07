@@ -24,17 +24,14 @@ function customerCompanyBranchService(
 	
 	var customerCompanyBranchServiceObj = {
 			customersCompaniesBranches: {}, 
-			customerCompanyBranch: {}, 
 			customerUsername: undefined, 
 			companyName: undefined, 
 			branchId: undefined, 
 			getCustomersCompaniesBranches, 
-			getCustomerCompanyBranch, 
 			getCustomerUsername, 
 			getCompanyName, 
 			getBranchId, 
 			setCustomersCompaniesBranches, 
-			setCustomerCompanyBranch, 
 			setCustomerUsername, 
 			setCompanyName, 
 			setBranchId, 
@@ -48,8 +45,6 @@ function customerCompanyBranchService(
 	
 	function getCustomersCompaniesBranches(){	return customerCompanyBranchServiceObj.customersCompaniesBranches;
 	}
-	function getCustomerCompanyBranch(){	return customerCompanyBranchServiceObj.customerCompanyBranch;
-	}
 	function getCustomerUsername(){	return customerCompanyBranchServiceObj.customerUsername;
 	}
 	function getCompanyName(){	return customerCompanyBranchServiceObj.companyName;
@@ -57,8 +52,6 @@ function customerCompanyBranchService(
 	function getBranchId(){	return customerCompanyBranchServiceObj.branchId;
 	}
 	function setCustomersCompaniesBranches(customersCompaniesBranches){	customerCompanyBranchServiceObj.customersCompaniesBranches = customersCompaniesBranches;
-	}
-	function setCustomerCompanyBranch(customerCompanyBranch){	customerCompanyBranchServiceObj.customerCompanyBranch = customerCompanyBranch;
 	}
 	function setCustomerUsername(customerUsername){	customerCompanyBranchServiceObj.customerUsername = customerUsername;
 	}

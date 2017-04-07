@@ -24,15 +24,12 @@ function branchService(
 	
 	var branchServiceObj = {
 			branches: {}, 
-			branch: {}, 
 			companyName: undefined, 
 			branchName: undefined, 
 			getBranches: getBranches, 
-			getBranch: getBranch, 
 			getCompanyName: getCompanyName, 
 			getBranchName: getBranchName, 
 			setBranches: setBranches, 
-			setBranch: setBranch, 
 			setCompanyName: setCompanyName, 
 			setBranchName: setBranchName, 
 			getOptions: {
@@ -50,15 +47,11 @@ function branchService(
 	
 	function getBranches(){	return branchServiceObj.branches;
 	}
-	function getBranch(){	return branchServiceObj.branch;
-	}
 	function getCompanyName(){	return branchServiceObj.companyName;
 	}
 	function getBranchName(){	return branchServiceObj.branchName;
 	}
 	function setBranches(branches){	branchServiceObj.branches = branches;
-	}
-	function setBranch(branch){	branchServiceObj.branch = branch;
 	}
 	function setCompanyName(companyName){	branchServiceObj.companyName = companyName;
 	}

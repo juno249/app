@@ -24,13 +24,10 @@ function companyService(
 	
 	var companyServiceObj = {
 		companies: {}, 
-		company: {}, 
 		companyName: undefined, 
 		getCompanies: getCompanies, 
-		getCompany: getCompany,
 		getCompanyName: getCompanyName, 
 		setCompanies: setCompanies, 
-		setCompany: setCompany,
 		setCompanyName: setCompanyName, 
 		getOptions: {
 			1: 'getCompanies_asAdministrator', 
@@ -48,13 +45,9 @@ function companyService(
 	
 	function getCompanies(){	return companyServiceObj.companies;
 	}
-	function getCompany(){	return companyServiceObj.company;
-	}
 	function getCompanyName(){	return companyServiceObj.companyName;
 	}
 	function setCompanies(companies){	companyServiceObj.companies = companies;
-	}
-	function setCompany(company){	companyServiceObj.company = company;
 	}
 	function setCompanyName(companyName){	companyServiceObj.companyName = companyName;
 	}

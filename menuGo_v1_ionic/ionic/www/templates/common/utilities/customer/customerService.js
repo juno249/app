@@ -24,13 +24,10 @@ function customerService(
 	
 	var customerServiceObj = {
 			customers: {}, 
-			customer: {}, 
 			customerUsername: undefined, 
 			getCustomers: getCustomers, 
-			getCustomer: getCustomer, 
 			getCustomerUsername: getCustomerUsername, 
 			setCustomers: setCustomers, 
-			setCustomer: setCustomer, 
 			setCustomerUsername: setCustomerUsername, 
 			getOptions: {
 				1: 'getCustomers_asAdministrator', 
@@ -47,13 +44,9 @@ function customerService(
 	
 	function getCustomers(){	return customerServiceObj.customers;
 	}
-	function getCustomer(){	return customerServiceObj.customer;
-	}
 	function getCustomerUsername(){	return customerServiceObj.customerUsername;
 	}
 	function setCustomers(customers){	customerServiceObj.customers = customers;
-	}
-	function setCustomer(customer){	customerServiceObj.customer = customer;
 	}
 	function setCustomerUsername(customerUsername){	customerServiceObj.customerUsername = customerUsername;
 	}
