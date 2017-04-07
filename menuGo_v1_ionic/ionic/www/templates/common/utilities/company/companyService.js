@@ -21,7 +21,6 @@ function companyService(
 		$q
 		){
 	const COMPANIES_KEY = 'Companies';
-	const COMPANY_KEY = 'Company';
 	
 	var companyServiceObj = {
 		companies: {}, 
@@ -33,8 +32,12 @@ function companyService(
 		setCompanies: setCompanies, 
 		setCompany: setCompany,
 		setCompanyName: setCompanyName, 
+		getOptions: {
+			1: 'getCompanies_asAdministrator', 
+			2: 'getCompanies', 
+			3: 'getCompany'
+		}, 
 		fetchCompanies: fetchCompanies, 
-		fetchCompany: fetchCompany, 
 		addCompanyValidate: addCompanyValidate, 
 		addCompany: addCompany, 
 		updateCompanyValidate: updateCompanyValidate, 
@@ -56,12 +59,27 @@ function companyService(
 	function setCompanyName(companyName){	companyServiceObj.companyName = companyName;
 	}
 	
-	function fetchCompanies(){
+	function fetchCompanies(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
 		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies'
+				method: 'GET'
 				};
+		
+		switch(companyServiceObj.getOptions[getOption]){
+		case 'getCompanies_asAdministrator':
+			httpConfig['url'] = API_BASE_URL + '/companies/customers/' + getParams['CustomerUsername'];
+			break;
+		case 'getCompanies':
+			httpConfig['url'] = API_BASE_URL + '/companies';
+			break;
+		case 'getCompany':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + companyServiceObj.companyName;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchCompaniesSuccessCallback)
@@ -100,50 +118,6 @@ function companyService(
 		return deferred.promise;
 		}
 	
-	function fetchCompany(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + companyServiceObj.companyName
-				};
-		
-		$http(httpConfig)
-		.then(fetchCompanySuccessCallback)
-		.catch(fetchCompanyFailedCallback);
-		
-		function fetchCompanySuccessCallback(response){
-			var company = undefined;
-			companyServiceObj.company = {};
-			
-			convertCompanyResponseToMap(response.data);
-			company = companyServiceObj.company;
-			company = JSON.stringify(company);
-			localStorage.setItem(
-					COMPANY_KEY, 
-					company
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchCompanyFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertCompanyResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var companyDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){	companyDetails[COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
-				}
-				
-				key = responseData[i][COMPANIES_DB_FIELDS[0]]; //company_name
-				companyServiceObj.company[key] = companyDetails;
-				}
-			}
-		return deferred.promise;
-		}
-
 	function addCompanyValidate(companies){
 		var deferred = $q.defer();
 		var httpConfig = {

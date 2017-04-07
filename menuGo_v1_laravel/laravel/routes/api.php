@@ -173,7 +173,7 @@ Route::get('customers-companies-branches', [
 		'uses' => 'customerCompanyBranchController@getCustomersCompaniesBranches'
 ]);
 
-Route::get('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchName}', [
+Route::get('customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchId}', [
 		'uses' => 'customerCompanyBranchController@getCustomerCompanyBranch'
 ]);
 

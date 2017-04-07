@@ -21,7 +21,6 @@ function branchService(
 		$q
 		){
 	const BRANCHES_KEY = 'Branches';
-	const BRANCH_KEY = 'Branch';
 	
 	var branchServiceObj = {
 			branches: {}, 
@@ -36,8 +35,11 @@ function branchService(
 			setBranch: setBranch, 
 			setCompanyName: setCompanyName, 
 			setBranchName: setBranchName, 
+			getOptions: {
+				1: 'getCompanyBranches', 
+				2: 'getCompanyBranch'
+			}, 
 			fetchBranches: fetchBranches, 
-			fetchBranch: fetchBranch, 
 			addBranchValidate: addBranchValidate, 
 			addBranch: addBranch, 
 			updateBranchValidate: updateBranchValidate, 
@@ -63,12 +65,25 @@ function branchService(
 	function setBranchName(branchName){	branchServiceObj.branchName = branchName;
 	}
 	
-	function fetchBranches(){
+	function fetchBranches(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
 		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches'
-				};
+				method: 'GET'
+					};
+		
+		switch(branchServiceObj.getOptions[getOption]){
+		case 'getCompanyBranches':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches';
+			break;
+		case 'getCompanyBranch':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchBranchesSuccessCallback)
@@ -102,50 +117,6 @@ function branchService(
 				
 				key = responseData[i][BRANCHES_DB_FIELDS[1]]; //branch_name
 				branchServiceObj.branches[key] = branchesDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchBranch(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName
-				};
-		
-		$http(httpConfig)
-		.then(fetchBranchSuccessCallback)
-		.catch(fetchBranchFailedCallback);
-		
-		function fetchBranchSuccessCallback(response){
-			var branch = undefined;
-			branchServiceObj.branch = {};
-			
-			convertBranchResponseToMap(response.data);
-			branch = branchServiceObj.branch;
-			branch = JSON.stringify(branch);
-			localStorage.setItem(
-					BRANCH_KEY, 
-					branch
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchBranchFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertBranchResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var branchDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){	branchDetails[BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
-				}
-				
-				key = responseData[i][BRANCHES_DB_FIELDS[1]]; //branch_name
-				branchServiceObj.branch[key] = branchDetails;
 				}
 			}
 		return deferred.promise;

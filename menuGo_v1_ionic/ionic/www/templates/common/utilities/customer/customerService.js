@@ -21,7 +21,6 @@ function customerService(
 		$q
 		){
 	const CUSTOMERS_KEY = 'Customers';
-	const CUSTOMER_KEY = 'Customer';
 	
 	var customerServiceObj = {
 			customers: {}, 
@@ -33,8 +32,12 @@ function customerService(
 			setCustomers: setCustomers, 
 			setCustomer: setCustomer, 
 			setCustomerUsername: setCustomerUsername, 
+			getOptions: {
+				1: 'getCustomers_asAdministrator', 
+				2: 'getCustomers', 
+				3: 'getCustomer'
+			}, 
 			fetchCustomers: fetchCustomers, 
-			fetchCustomer: fetchCustomer, 
 			addCustomerValidate: addCustomerValidate, 
 			addCustomer: addCustomer, 
 			updateCustomerValidate: updateCustomerValidate, 
@@ -55,12 +58,28 @@ function customerService(
 	function setCustomerUsername(customerUsername){	customerServiceObj.customerUsername = customerUsername;
 	}
 	
-	function fetchCustomers(){
+	function fetchCustomers(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
 		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers'
+				method: 'GET'
 				};
+		
+		switch(customerServiceObj.getOptions[getOption]){
+		case '':
+			httpConfig['url'] = API_BASE_URL + '/customers/companies/' + getParams['CompanyName'];
+			break;
+		case '':
+			httpConfig['url'] = API_BASE_URL + '/customers';
+			break;
+		case '':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + customerServiceObj.customerUsername;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchCustomersSuccessCallback)
@@ -94,50 +113,6 @@ function customerService(
 				
 				key = responseData[i][CUSTOMERS_DB_FIELDS[0]]; //customer_username
 				customerServiceObj.customers[key] = customersDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchCustomer(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + customerServiceObj.customerUsername
-				};
-		
-		$http(httpConfig)
-		.then(fetchCustomerSuccessCallback)
-		.catch(fetchCustomerFailedCallback);
-		
-		function fetchCustomerSuccessCallback(response){
-			var customer = undefined;
-			customerServiceObj.customer = {};
-			
-			convertCustomerResponseToMap(response.data);
-			customer = customerServiceObj.customer;
-			customer = JSON.stringify(customer);
-			localStorage.setItem(
-					CUSTOMER_KEY, 
-					customer
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchCustomerFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertCustomerResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var customerDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){	customerDetails[CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
-				}
-				
-				key = responseData[i][CUSTOMERS_DB_FIELDS[0]]; //customer_username
-				customerServiceObj.customer[key] = customerDetails;
 				}
 			}
 		return deferred.promise;
