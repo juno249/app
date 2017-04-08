@@ -381,7 +381,7 @@ class orderreferenceController extends Controller
 					200, 
 					orderreferenceConstants::emptyResultSetErr
 					);
-			} else {	$companyBranchTableOrderreference->setContent(json_encode($companyBranchTableOrderreference));
+			} else {	$orderreferencesResponse->setContent(json_encode($companyBranchTableOrderreference));
 			}
 		} catch(\PDOException $e){	$orderreferencesResponse->setStatusCode(
 				400, 
