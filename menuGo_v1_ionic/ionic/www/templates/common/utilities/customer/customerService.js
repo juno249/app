@@ -61,13 +61,13 @@ function customerService(
 				};
 		
 		switch(customerServiceObj.getOptions[getOption]){
-		case '':
+		case 'getOptionsAdvertisements':
 			httpConfig['url'] = API_BASE_URL + '/customers/companies/' + getParams['CompanyName'];
 			break;
-		case '':
+		case 'getCustomers':
 			httpConfig['url'] = API_BASE_URL + '/customers';
 			break;
-		case '':
+		case 'getCustomer':
 			httpConfig['url'] = API_BASE_URL + '/customers/' + customerServiceObj.customerUsername;
 			break;
 			default:
