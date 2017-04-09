@@ -100,7 +100,7 @@ class blogController extends Controller
 		return $blogsResponse;
 	}
 	
-	//URL-->>/blogs/query
+	//URL-->>/query/blogs
 	public function getByQuery(){
 		$mySqlWhere = array();
 		

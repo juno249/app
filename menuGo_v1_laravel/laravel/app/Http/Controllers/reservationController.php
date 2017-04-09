@@ -59,14 +59,8 @@ class reservationController extends Controller
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
 	
-	public function getJoinCompanyBranchTableOrderreferenceReservation(
-			$CompanyName, 
-			$BranchName, 
-			$TableNumber, 
-			$OrderreferenceCode, 
-			$ReservationCode
-			){
-		$companyBranchTableOrderreferenceReservation = DB::table(reservationConstants::dbOrderreferenceCode)
+	public function getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere){
+		$companyBranchTableOrderreferenceReservation = DB::table(reservationConstants::reservationsTable)
 		->join(
 				orderreferenceConstants::orderreferencesTable, 
 				reservationConstants::reservationsTable . '.' . reservationConstants::dbOrderreferenceCode, 
@@ -144,7 +138,7 @@ class reservationController extends Controller
 			$BranchName, 
 			$ReservationCode
 			){
-		$mySqlWhere = '';
+		$mySqlWhere = array();
 		array_push(
 				$mySqlWhere, 
 				[
@@ -188,7 +182,7 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/reservations/{ReservationStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/reservations/status/{ReservationStatus}
 	public function getCompanyBranchReservationsReservationStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -216,7 +210,7 @@ class reservationController extends Controller
 				[
 						reservationConstants::reservationsTable . '.' . reservationConstants::dbReservationStatus, 
 						'=', 
-						reservationConstants::dbReservationStatus
+						$ReservationStatus
 				]
 				);
 		
@@ -227,7 +221,7 @@ class reservationController extends Controller
 					200, 
 					reservationConstants::emptyResultSetErr
 					);
-			} else {	$reservationsResponse->setContent(json_encode($reservationsResponse));
+			} else {	$reservationsResponse->setContent(json_encode($companyBranchReservations));
 			}
 		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
 				400, 
@@ -238,7 +232,7 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/reservations/not/{ReservationStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/reservations/status_not/{ReservationStatus}
 	public function getCompanyBranchReservationsNotReservationStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -266,7 +260,7 @@ class reservationController extends Controller
 				[
 						reservationConstants::reservationsTable . '.' . reservationConstants::dbReservationStatus, 
 						'!=', 
-						reservationConstants::dbReservationStatus
+						$ReservationStatus
 				]
 				);
 		
@@ -320,7 +314,7 @@ class reservationController extends Controller
 				]
 				);
 		
-		$reservationsResponse = new Reservations();
+		$reservationsResponse = new Response();
 		try{
 			$companyBranchTableReservations = $this->getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere);
 			if($companyBranchTableReservations->isEmpty()){	$reservationsResponse->setStatusCode(
@@ -379,7 +373,7 @@ class reservationController extends Controller
 				]
 				);
 		
-		$reservationsResponse = new Reservations();
+		$reservationsResponse = new Response();
 		try{
 			$companyBranchTableReservation = $this->getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere);
 			if($companyBranchTableReservation->isEmpty()){	$reservationsResponse->setStatusCode(
@@ -397,7 +391,7 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/{ReservationStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/status/{ReservationStatus}
 	public function getCompanyBranchTableReservationsReservationStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -438,7 +432,7 @@ class reservationController extends Controller
 				]
 				);
 		
-		$reservationsResponse = new Reservations();
+		$reservationsResponse = new Response();
 		try{
 			$companyBranchTableReservations = $this->getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere);
 			if($companyBranchTableReservations->isEmpty()){	$reservationsResponse->setStatusCode(
@@ -456,7 +450,7 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/not/{ReservationStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/status_not/{ReservationStatus}
 	public function getCompanyBranchTableReservationsNotReservationStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -497,7 +491,7 @@ class reservationController extends Controller
 				]
 				);
 		
-		$reservationsResponse = new Reservations();
+		$reservationsResponse = new Response();
 		try{
 			$companyBranchTableReservations = $this->getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere);
 			if($companyBranchTableReservations->isEmpty()){	$reservationsResponse->setStatusCode(
@@ -579,7 +573,7 @@ class reservationController extends Controller
 			$CompanyName, 
 			$BranchName, 
 			$TableNumber, 
-			$Orderreference, 
+			$OrderreferenceCode, 
 			$ReservationCode
 			){
 		$mySqlWhere = array();
@@ -642,76 +636,8 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/status/{ReservationStatus}
 	public function getCompanyBranchTableOrderreferenceReservationsReservationStatus(
-			$CompanyName, 
-			$BrarnchName, 
-			$TableNumber, 
-			$OrderreferenceCode, 
-			$ReservationStatus
-			){
-		$mySqlWhere = array();
-		array_push(
-				$mySqlWhere, 
-				[
-						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
-						'=', 
-						$CompanyName
-				]
-				);
-		array_push(
-				$mySqlWhere, 
-				[
-						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
-						'=', 
-						$BranchName
-				]
-				);
-		array_push(
-				$mySqlWhere, 
-				[
-						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
-						'=', 
-						$TableNumber
-				]
-				);
-		array_push(
-				$mySqlWhere, 
-				[
-						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode, 
-						'=', 
-						$OrderreferenceCode
-				]
-				);
-		array_push(
-				$mySqlWhere, 
-				[
-						reservationConstants::reservationsTable . '.' . reservationConstants::dbReservationStatus, 
-						'=', 
-						$ReservationStatus
-				]
-				);
-		
-		$reservationsResponse = new Response();
-		try{
-			$customerCompanyBranchTableOrderreferenceReservations = $this->getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere);
-			if($customerCompanyBranchTableOrderreferenceReservations->isEmpty()){	$reservationsResponse->setStatusCode(
-					200, 
-					reservationConstants::emptyResultSetErr
-					);
-			} else {	$reservationsResponse->setContent(json_encode($customerCompanyBranchTableOrderreferenceReservations));
-			}
-		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
-				400, 
-				reservationConstants::dbReadCatchMsg
-				);
-		}
-		
-		return $reservationsResponse;
-	}
-	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/not/{ReservationStatus}
-	public function getCompanyBranchTableOrderreferenceReservationsNotReservationStatus(
 			$CompanyName, 
 			$BranchName, 
 			$TableNumber, 
@@ -778,7 +704,75 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	//URL-->>/reservations/query
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/status_not/{ReservationStatus}
+	public function getCompanyBranchTableOrderreferenceReservationsNotReservationStatus(
+			$CompanyName, 
+			$BranchName, 
+			$TableNumber, 
+			$OrderreferenceCode, 
+			$ReservationStatus
+			){
+		$mySqlWhere = array();
+		array_push(
+				$mySqlWhere, 
+				[
+						companyConstants::companiesTable . '.' . companyConstants::dbCompanyName, 
+						'=', 
+						$CompanyName
+				]
+				);
+		array_push(
+				$mySqlWhere, 
+				[
+						branchConstants::branchesTable . '.' . branchConstants::dbBranchName, 
+						'=', 
+						$BranchName
+				]
+				);
+		array_push(
+				$mySqlWhere, 
+				[
+						tableConstants::tablesTable . '.' . tableConstants::dbTableNumber, 
+						'=', 
+						$TableNumber
+				]
+				);
+		array_push(
+				$mySqlWhere, 
+				[
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbOrderreferenceCode, 
+						'=', 
+						$OrderreferenceCode
+				]
+				);
+		array_push(
+				$mySqlWhere, 
+				[
+						reservationConstants::reservationsTable . '.' . reservationConstants::dbReservationStatus, 
+						'!=', 
+						$ReservationStatus
+				]
+				);
+		
+		$reservationsResponse = new Response();
+		try{
+			$customerCompanyBranchTableOrderreferenceReservations = $this->getJoinCompanyBranchTableOrderreferenceReservation($mySqlWhere);
+			if($customerCompanyBranchTableOrderreferenceReservations->isEmpty()){	$reservationsResponse->setStatusCode(
+					200, 
+					reservationConstants::emptyResultSetErr
+					);
+			} else {	$reservationsResponse->setContent(json_encode($customerCompanyBranchTableOrderreferenceReservations));
+			}
+		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
+				400, 
+				reservationConstants::dbReadCatchMsg
+				);
+		}
+		
+		return $reservationsResponse;
+	}
+	
+	//URL-->>/query/reservations
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -866,7 +860,7 @@ class reservationController extends Controller
 		if(isset($_GET[reservationConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						reservationConstants::reqLastChangeTimestamp, 
+						reservationConstants::dbLastChangeTimestamp, 
 						'LIKE', 
 						'%' . $_GET[reservationConstants::reqLastChangeTimestamp] . '%'
 				]
@@ -882,7 +876,7 @@ class reservationController extends Controller
 					200, 
 					reservationConstants::emptyResultSetErr
 					);
-			} else {	$reservations->setContent(json_encode($reservations));
+			} else {	$reservationsResponse->setContent(json_encode($reservations));
 			}
 		} catch(\PDOException $e){	$reservationsResponse->setStatusCode(
 				400, 
@@ -893,7 +887,7 @@ class reservationController extends Controller
 		return $reservationsResponse;
 	}
 	
-	private function isDataValid(
+	public function isDataValid(
 			$jsonData, 
 			&$errorMsg, 
 			$dbOperation
@@ -903,9 +897,9 @@ class reservationController extends Controller
 					$jsonData, 
 					[
 							'*.' . reservationConstants::dbReservationCode => 'unique:reservations,reservation_code|required|string|max:40', 
-							'*.' . reservationConstants::dbCustomerUsername => 'exists:customers,customer_usernrame|required|string|max:30', 
+							'*.' . reservationConstants::dbCustomerUsername => 'exists:customers,customer_username|required|string|max:30', 
 							'*.' . reservationConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|required|string|max:40', 
-							'*.' . reservationConstants::dbdbReservationDinersCount => 'required|numeric', 
+							'*.' . reservationConstants::dbReservationDinersCount => 'required|numeric', 
 							'*.' . reservationConstants::dbReservationEta => 'required|date_format:Y-m-d H:i:s', 
 							'*.' . reservationConstants::dbReservationPaymentMode => 'required|string|max:30', 
 							'*.' . reservationConstants::dbReservationServiceTime => 'required|date_format:Y-m-d H:i:s', 
@@ -917,9 +911,9 @@ class reservationController extends Controller
 					$jsonData, 
 					[
 							'*.' . reservationConstants::dbReservationCode => 'unique:reservations,reservation_code|sometimes|string|max:40', 
-							'*.' . reservationConstants::dbCustomerUsername => 'exists:customers,customer_usernrame|sometimes|string|max:30', 
+							'*.' . reservationConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
 							'*.' . reservationConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40', 
-							'*.' . reservationConstants::dbdbReservationDinersCount => 'sometimes|numeric', 
+							'*.' . reservationConstants::dbReservationDinersCount => 'sometimes|numeric', 
 							'*.' . reservationConstants::dbReservationEta => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . reservationConstants::dbReservationPaymentMode => 'sometimes|string|max:30', 
 							'*.' . reservationConstants::dbReservationServiceTime => 'sometimes|date_format:Y-m-d H:i:s', 
@@ -978,13 +972,13 @@ class reservationController extends Controller
 		
 		$orderreferenceCode = $companyBranchTableOrderreference[0][reservationConstants::dbOrderreferenceCode];
 		
-		for($i=0; $i<$jsonData; $i++){
+		for($i=0; $i<$jsonDataSize; $i++){
 			if(!(isset($jsonData[$i][reservationConstants::dbOrderreferenceCode]))){	$jsonData[$i][reservationConstants::dbOrderreferenceCode] = $orderreferenceCode;
 			}
 		}
 		
-		for($i=0; $i<$jsonData; $i++){
-			if(isset($jsonData[$i][reservationsConstant::dbReservationEta])){
+		for($i=0; $i<$jsonDataSize; $i++){
+			if(isset($jsonData[$i][reservationConstants::dbReservationEta])){
 				try{
 					$jsonData[$i][reservationConstants::dbReservationEta] = Carbon::parse($jsonData[$i][reservationConstants::dbReservationEta])
 					->format('Y-m-d H:i:s');
@@ -1018,7 +1012,7 @@ class reservationController extends Controller
 				"ADD"
 				)
 				){
-			for($i=0; $i<$jsonData; $i++){
+			for($i=0; $i<$jsonDataSize; $i++){
 				if($jsonData[$i][reservationConstants::dbOrderreferenceCode] == $orderreferenceCode){
 					try{
 						DB::table(reservationConstants::reservationsTable)
@@ -1127,6 +1121,20 @@ class reservationController extends Controller
 		
 		$reservationId = $companyBranchTableOrderreferenceReservation[0][reservationConstants::dbReservationId];
 		
+		if(!$this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"UPDATE"
+				)
+				){
+			$reservationsResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
+			return $reservationsResponse;
+		}
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -1148,7 +1156,7 @@ class reservationController extends Controller
 			return $reservationsResponse;
 		}
 		
-		return $reservationsResponse;
+		return reservationConstants::dbUpdateSuccessMsg;
 	}
 	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationCode}
@@ -1210,6 +1218,6 @@ class reservationController extends Controller
 			return $reservationsResponse;
 		}
 		
-		return $reservationsResponse;
+		return reservationConstants::dbDeleteSuccessMsg;
 	}
 }

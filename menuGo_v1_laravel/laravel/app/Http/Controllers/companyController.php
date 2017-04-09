@@ -45,7 +45,7 @@ class companyController extends Controller
 {
 	public function __construct(){	//$this->middleware('jwt.auth');
 	}
-
+	
 	public function getJoinCustomerCompanyBranchCompany($mySqlWhere){
 		$customerCompanyBranchCompany = DB::table(companyConstants::companiesTable)
 		->join(
@@ -112,7 +112,7 @@ class companyController extends Controller
 		
 		return $companiesResponse;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}
 	public function getCompany($CompanyName){
 		$mySqlWhere = array();
@@ -125,7 +125,7 @@ class companyController extends Controller
 						$CompanyName
 				]
 				);
-			
+		
 		$companiesResponse = new Response();
 		try{	
 			$company = DB::table(companyConstants::companiesTable)
@@ -145,8 +145,8 @@ class companyController extends Controller
 		
 		return $companiesResponse;
 	}
-
-	//URL-->>/companies/query
+	
+	//URL-->>/query/companies
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -260,7 +260,7 @@ class companyController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(
 				400, 
@@ -290,7 +290,7 @@ class companyController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-			
+		
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(
 				400, 
@@ -324,7 +324,7 @@ class companyController extends Controller
 		
 		return companyConstants::dbAddSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/validate
 	public function updateCompanyValidate(
 			Request $jsonRequest, 
@@ -383,7 +383,7 @@ class companyController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-			
+		
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(
 				400, 
@@ -415,7 +415,7 @@ class companyController extends Controller
 			
 			return $companiesResponse;
 		}
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -439,12 +439,12 @@ class companyController extends Controller
 		
 		return companyConstants::dbUpdateSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}
 	public function deleteCompany($CompanyName){
 		$mySqlWhere = array();
 		$errorMsg = '';
-
+		
 		$companiesResponse = new Response();
 		$companiesResponse->setStatusCode(
 				400, 

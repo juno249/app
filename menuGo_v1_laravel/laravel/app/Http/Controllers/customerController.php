@@ -140,7 +140,7 @@ class customerController extends Controller
 		
 		return $customersResponse;
 	}
-
+	
 	//URL-->>/customers/{CustomerUsername}
 	public function getCustomer($CustomerUsername){
 		$mySqlWhere = array();
@@ -173,11 +173,11 @@ class customerController extends Controller
 		
 		return $customersResponse;
 	}
-
-	//URL-->>/customers/query
+	
+	//URL-->>/query/customers
 	public function getByQuery(){
 		$mySqlWhere = array();
-
+		
 		if(isset($_GET[customerConstants::reqCustomerUsername])){	array_push(
 				$mySqlWhere, 
 				[
@@ -443,7 +443,7 @@ class customerController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(
 				400, 
@@ -466,7 +466,6 @@ class customerController extends Controller
 	}
 	
 	//URL-->>/customers/
-	//jv is here
 	public function addCustomer(Request $jsonRequest){
 		$jsonData = json_decode(
 				$jsonRequest->getContent(), 
@@ -474,7 +473,7 @@ class customerController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(
 				400, 
@@ -512,7 +511,7 @@ class customerController extends Controller
 		
 		return customerConstants::dbAddSuccessMsg;
 	}
-
+	
 	//URL-->>/customers/{CustomerUsername}/validate
 	public function updateCustomerValidate(
 			Request $jsonRequest, 
@@ -524,7 +523,7 @@ class customerController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(
 				400, 
@@ -571,7 +570,7 @@ class customerController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(
 				400, 
@@ -603,7 +602,7 @@ class customerController extends Controller
 			
 			return $customersResponse;
 		}
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -632,7 +631,7 @@ class customerController extends Controller
 	public function deleteCustomer($CustomerUsername){
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$customersResponse = new Response();
 		$customersResponse->setStatusCode(
 				400, 

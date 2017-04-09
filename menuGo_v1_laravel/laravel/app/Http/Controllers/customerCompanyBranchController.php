@@ -149,7 +149,7 @@ class customerCompanyBranchController extends Controller
 		return $customersCompaniesBranchesResponse;
 	}
 	
-	//URL-->>/customers-companies-branches/query
+	//URL-->>/query/customers-companies-branches
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -334,7 +334,7 @@ class customerCompanyBranchController extends Controller
 						return $customersCompaniesBranchesResponse;
 					}
 				}
-					
+				
 				//db_transaction: add_branch
 				if(array_key_exists(
 						customerCompanyBranchConstants::keyBranch, 

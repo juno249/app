@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -183,7 +184,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orderreferences/{OrderreferenceStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orderreferences/status/{OrderreferenceStatus}
 	public function getCompanyBranchOrderreferencesOrderreferenceStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -233,7 +234,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orderreferences/not/{OrderreferenceStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orderreferences/status_not/{OrderreferenceStatus}
 	public function getCompanyBranchOrderreferencesNotOrderreferenceStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -392,7 +393,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/status/{OrderreferenceStatus}
 	public function getCompanyBranchTableOrderreferencesOrderreferenceStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -451,7 +452,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/not/{OrderreferenceStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/status_not/{OrderreferenceStatus}
 	public function getCompanyBranchTableOrderreferencesNotOrderreferenceStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -581,7 +582,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/customers/{CustomerUsername}/orderreferences/{OrderreferenceStatus}
+	//URL-->>/customers/{CustomerUsername}/orderreferences/status/{OrderreferenceStatus}
 	public function getCustomerOrderreferencesOrderreferenceStatus(
 			$CustomerUsername, 
 			$OrderreferenceStatus
@@ -622,7 +623,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/customers/{CustomerUsername}/orderreferences/not/{OrderreferenceStatus}
+	//URL-->>/customers/{CustomerUsername}/orderreferences/status_not/{OrderreferenceStatus}
 	public function getCustomerOrderreferencesNotOrderreferenceStatus(
 			$CustomerUsername, 
 			$OrderreferenceStatus
@@ -663,7 +664,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	//URL-->>/orderreferences/query
+	//URL-->>/query/orderreferences
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -709,7 +710,6 @@ class orderreferenceController extends Controller
 						orderreferenceConstants::dbOrderreferenceStatus, 
 						'LIKE', 
 						'%' . $_GET[orderreferenceConstants::reqOrderreferenceStatus] . '%'
-						
 				]
 				);
 		}
@@ -753,7 +753,7 @@ class orderreferenceController extends Controller
 		return $orderreferencesResponse;
 	}
 	
-	private function isDataValid(
+	public function isDataValid(
 			$jsonData, 
 			&$errorMsg, 
 			$dbOperation
@@ -773,7 +773,7 @@ class orderreferenceController extends Controller
 			$jsonValidation = Validator::make(
 					$jsonData, 
 					[
-							'*.' . orderreferenceConstants::dbOrderreferenceCode => 'unique:orderreferences,orderreferenc_code|sometimes|string|max:40', 
+							'*.' . orderreferenceConstants::dbOrderreferenceCode => 'unique:orderreferences,orderreference_code|sometimes|string|max:40', 
 							'*.' . orderreferenceConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
 							'*.' . orderreferenceConstants::dbTableId => 'exists:tables,table_id|sometimes|numeric', 
 							'*.' . orderreferenceConstants::dbOrderreferenceStatus => 'sometimes|string|max:30', 
@@ -916,7 +916,7 @@ class orderreferenceController extends Controller
 			}
 		}
 		if(isset($jsonData[0][orderreferenceConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][orderreferenceConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][orderreferenceConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][orderreferenceConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][orderreferenceConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$orderreferencesResponse->setStatusCode(
@@ -929,7 +929,7 @@ class orderreferenceController extends Controller
 		}
 		
 		$companyBranchTableOrderreference = json_decode(
-				$this-getCompanyBranchTableOrderreference(
+				$this->getCompanyBranchTableOrderreference(
 						$CompanyName, 
 						$BranchName, 
 						$TableNumber, 
@@ -947,7 +947,7 @@ class orderreferenceController extends Controller
 			return $orderreferencesResponse;
 		}
 		
-		$orderreferenceId = $companyBranchTableOrderreference[orderreferenceConstants::dbOrderreferenceId];
+		$orderreferenceId = $companyBranchTableOrderreference[0][orderreferenceConstants::dbOrderreferenceId];
 		
 		if(!$this->isDataValid(
 				$jsonData, 
@@ -984,7 +984,7 @@ class orderreferenceController extends Controller
 			return $orderreferencesResponse;
 		}
 		
-		return $orderreferencesResponse;
+		return orderreferenceConstants::dbUpdateSuccessMsg;
 	}
 	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}
@@ -1044,6 +1044,6 @@ class orderreferenceController extends Controller
 			return $orderreferencesResponse;
 		}
 		
-		return $orderreferencesResponse;
+		return orderreferenceConstants::dbDeleteSuccessMsg;
 	}
 }

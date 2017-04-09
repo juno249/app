@@ -55,13 +55,12 @@ class reservationOrderreferenceOrderController extends Controller
 				);
 		
 		//assign orderreference_code
-		 
 		for($i=0; $i<$jsonDataSize; $i++){
 			$orderreferenceCode = Uuid::generate(1)
 			->string;
 			$reservationOrderreferenceOrderRunner = $jsonData[$i];
 			if(array_key_exists(
-					'orderreference', 
+					reservationOrderreferenceOrderConstants::keyOrderreference, 
 					$reservationOrderreferenceOrderRunner
 					)
 					){
@@ -71,7 +70,7 @@ class reservationOrderreferenceOrderController extends Controller
 				$reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyOrderreference] = $orderreference;
 			}
 			if(array_key_exists(
-					'order', 
+					reservationOrderreferenceOrderConstants::keyOrder, 
 					$reservationOrderreferenceOrderRunner
 					)
 					){
@@ -96,20 +95,20 @@ class reservationOrderreferenceOrderController extends Controller
 			->string;
 			$reservationOrderreferenceOrderRunner = $jsonData[$i];
 			if(array_key_exists(
-					'reservation', 
+					reservationOrderreferenceOrderConstants::keyReservation, 
 					$reservationOrderreferenceOrderRunner
 					)
 					){
 				$reservation = $reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyReservation];
 				$reservation[reservationConstants::dbReservationCode] = $reservationCode;
 				$reservation[reservationConstants::dbOrderreferenceCode] = $orderreferenceCode;
-		
+				
 				$reservationOrderreferenceOrderRunner[reservationOrderreferenceOrderConstants::keyReservation] = $reservation;
 			}
-				
+			
 			$jsonData[$i] = $reservationOrderreferenceOrderRunner;
 		}
-
+		
 		for($i=0; $i<$jsonDataSize; $i++){
 			$reservationOrderreferenceOrderRunner = $jsonData[$i];
 			
@@ -117,7 +116,7 @@ class reservationOrderreferenceOrderController extends Controller
 			try{
 				//db_transaction: add_orderreference
 				if(array_key_exists(
-						'orderreference', 
+						reservationOrderreferenceOrderConstants::keyOrderreference, 
 						$reservationOrderreferenceOrderRunner
 						)
 						){
@@ -144,7 +143,7 @@ class reservationOrderreferenceOrderController extends Controller
 				
 				//db_transaction: add_order
 				if(array_key_exists(
-						'order', 
+						reservationOrderreferenceOrderConstants::keyOrder, 
 						$reservationOrderreferenceOrderRunner
 						)
 						){
@@ -158,15 +157,6 @@ class reservationOrderreferenceOrderController extends Controller
 								"ADD"
 								)
 								){
-							if(!($orderRunner[orderConstants::dbCustomerUsername] == $orderreference[orderreferenceConstants::dbCustomerUsername])){
-								$reservationsOrderreferencesOrdersResponse->setStatusCode(
-										400, 
-										reservationOrderreferenceOrderConstants::inconsistencyValidationErr1
-										);
-								
-								return $reservationsOrderreferencesOrdersResponse;
-							}
-								
 							try{	DB::table(orderConstants::ordersTable)
 							->insert($orderRunner);
 							} catch(\PDOException $e){	throw $e;

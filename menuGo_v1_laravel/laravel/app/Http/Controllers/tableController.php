@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -69,7 +70,7 @@ class tableController extends Controller
 		
 		return $companyBranchTable;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables
 	public function getCompanyBranchTables(
 			$CompanyName, 
@@ -92,7 +93,7 @@ class tableController extends Controller
 						$BranchName
 				]
 				);
-
+		
 		$tablesResponse = new Response();
 		try{
 			$companyBranchTables = $this->getJoinCompanyBranchTable($mySqlWhere);
@@ -141,7 +142,7 @@ class tableController extends Controller
 						$TableNumber
 				]
 				);
-	
+		
 		$tablesResponse = new Response();
 		try{
 			$companyBranchTable = $this->getJoinCompanyBranchTable($mySqlWhere);
@@ -160,10 +161,10 @@ class tableController extends Controller
 		return $tablesResponse;
 	}
 	
-	//URL-->>/tables/query
+	//URL-->>/query/tables
 	public function getByQuery(){
 		$mySqlWhere = array();
-
+		
 		if(isset($_GET[tableConstants::reqTableId])){	array_push(
 				$mySqlWhere, 
 				[
@@ -247,7 +248,7 @@ class tableController extends Controller
 		
 		return $tablesResponse;
 	}
-
+	
 	private function isDataValid(
 			$jsonData, 
 			&$errorMsg, 
@@ -285,7 +286,7 @@ class tableController extends Controller
 		} else {	return true;
 		}
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/
 	public function addTable(
 			Request $jsonRequest, 
@@ -298,7 +299,7 @@ class tableController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$tablesResponse = new Response();
 		$tablesResponse->setStatusCode(
 				400, 
@@ -322,15 +323,14 @@ class tableController extends Controller
 		}
 		
 		$branchId = $companyBranch[0][branchConstants::dbBranchId];
-	
 		for($i=0; $i<$jsonDataSize; $i++){
 			if(!(isset($jsonData[$i][tableConstants::dbBranchId]))){	$jsonData[$i][tableConstants::dbBranchId] = $branchId;
 			}
 		}
 		
 		for($i=0; $i<$jsonDataSize; $i++){
-			if(isset($jsonData[$i][tableConstants::dbTableStatusChangeTimestsamp])){
-				try{	$jsonData[$i][tableConstantss::dbTableStatusChangeTimestsamp] = Carbon::parse($jsonData[$i][tableConstantss::dbTableStatusChangeTimestsamp])
+			if(isset($jsonData[$i][tableConstants::dbTableStatusChangeTimestamp])){
+				try{	$jsonData[$i][tableConstants::dbTableStatusChangeTimestamp] = Carbon::parse($jsonData[$i][tableConstants::dbTableStatusChangeTimestamp])
 				->format('Y-m-d H:i:s');
 				} catch(\Exception $e){
 					$tablesResponse->setStatusCode(
@@ -358,7 +358,7 @@ class tableController extends Controller
 							tableConstants::dbAddCatchMsg
 							);
 					
-						return $tablesResponse;
+					return $tablesResponse;
 					}
 				}
 			}
@@ -373,7 +373,7 @@ class tableController extends Controller
 		
 		return tableConstants::dbAddSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}
 	public function updateTable(
 			Request $jsonRequest, 
@@ -388,7 +388,7 @@ class tableController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$tablesResponse = new Response();
 		$tablesResponse->setStatusCode(
 				400, 
@@ -438,7 +438,7 @@ class tableController extends Controller
 		}
 		
 		$tableId = $companyBranchTable[0][tableConstants::dbTableId];
-	
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -452,7 +452,7 @@ class tableController extends Controller
 			
 			return $tablesResponse;
 		}
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -485,7 +485,7 @@ class tableController extends Controller
 			){
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$tablesResponse = new Response();
 		$tablesResponse->setStatusCode(
 				400, 
@@ -509,7 +509,7 @@ class tableController extends Controller
 			return $tablesResponse;
 		}
 		$tableId = $companyBranchTable[0][tableConstants::dbTableId];
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 

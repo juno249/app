@@ -18,152 +18,398 @@ class fileConstants{
 }
 
 class fileController extends Controller
-{	
+{
 	//URL-->>/companies/{CompanyName}/companyImage
 	public function getCompanyImage($CompanyName){
 		$imgDirectory = '/companies/' . $CompanyName . '/';
 		$imgFileName = $imgDirectory . $CompanyName . '.jpg';
-		$companyImageResponse = new Response();
+		$filesResponse = new Response();
 		
-		try{
-			$companyImage = Storage::disk('public')->get($imgFileName);
-			$companyImageResponse->setContent($companyImage);
-			$companyImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
-		} catch (\Exception $e){
-			$companyImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
+		if(
+				null == $CompanyName ||
+				'undefined' == $CompanyName
+				){	$filesResponse->setStatusCode(
+						400, 
+						fileConstants::fileGetCatchMsg
+						);
+				
+				return $filesResponse;
 		}
 		
-		return $companyImageResponse;
+		try{
+			$companyImage = Storage::disk('public')
+			->get($imgFileName);
+			$filesResponse->setContent($companyImage);
+			$filesResponse->setStatusCode(
+					200, 
+					fileConstants::fileGetSuccessMsg
+					);
+		} catch (\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileGetCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
 	//URL-->>/companies/{CompanyName}/companyImage
-	public function uploadCompanyImage(Request $formRequest, $CompanyName){
-			$imgDirectory = '/companies/' . $CompanyName . '/';
-			$imgFile = $formRequest->file('imgFile');
-			$imgFileName = $imgDirectory . $CompanyName . '.jpg';
-			$companyImageResponse = new Response();
-			try{
-				Storage::disk('public')->put($imgFileName, File::get($imgFile));
-				$companyImageResponse->setStatusCode(200, fileConstants::fileUploadSuccessMsg);
-			} catch(\Exception $e){
-				$companyImageResponse->setStatusCode(400, fileConstants::fileUploadCatchMsg);
-			}
-
-			return $companyImageResponse;
+	public function uploadCompanyImage(
+			Request $formRequest, 
+			$CompanyName
+			){
+		$imgDirectory = '/companies/' . $CompanyName . '/';
+		$imgFile = $formRequest->file('imgFile');
+		$imgFileName = $imgDirectory . $CompanyName . '.jpg';
+		$filesResponse = new Response();
+		
+		if(
+				null == $CompanyName ||
+				'undefined'== $CompanyName
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileUploadCatchMsg
+					);
+			
+			return $filesResponse;
+		}
+		
+		try{
+			Storage::disk('public')
+			->put(
+					$imgFileName, 
+					File::get($imgFile)
+					);
+					$filesResponse->setStatusCode(
+							200, 
+							fileConstants::fileUploadSuccessMsg
+							);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileUploadCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
 	//URL-->>/companies/{CompanyName}/companyImage
 	public function deleteCompanyImage($CompanyName){
 		$imgDirectory = '/companies/' . $CompanyName . '/';
 		$imgFileName = $imgDirectory . $CompanyName .  '.jpg';
-		$companyImageResponse = new Response();
+		$filesResponse = new Response();
 		
-		try{
-			Storage::disk('public')->delete($imgFileName);
-			$companyImageResponse->setStatusCode(200, fileConstants::fileDeleteSuccessMsg);
-		} catch (\Exception $e){
-			$companyImageResponse->setStatusCode(400, fileConstants::fileDeleteCatchMsg);
+		if(
+				null == $CompanyName ||
+				'undefined' == $CompanyName
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileDeleteCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyImageResponse;
+		try{
+			Storage::disk('public')
+			->delete($imgFileName);
+			$filesResponse->setStatusCode(
+					200, 
+					fileConstants::fileDeleteSuccessMsg
+					);
+		} catch (\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileDeleteCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuImage
-	public function getCompanyMenuImage($CompanyName, $MenuName){
+	public function getCompanyMenuImage(
+			$CompanyName, 
+			$MenuName
+			){
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/';
 		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '.jpg';
-		$companyMenuImageResponse = new Response();
+		$filesResponse = new Response();
 		
-		try{
-			$companyMenuImage  = Storage::disk('public')->get($imgFileName);
-			$companyMenuImageResponse->setContent($companyMenuImage);
-			$companyMenuImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
-		} catch(\Exception $e){
-			$companyMenuImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
+		if(
+				(
+						null == $CompanyName ||
+						'undefined' == $CompanyName
+						) ||
+				(
+						null == $MenuName ||
+						'undefined' == $MenuName
+						)
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileGetCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyMenuImageResponse;
+		try{
+			$companyMenuImage  = Storage::disk('public')
+			->get($imgFileName);
+			$filesResponse->setContent($companyMenuImage);
+			$filesResponse->setStatusCode(
+					200, 
+					fileConstants::fileGetSuccessMsg
+					);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileGetCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuImage
-	public function uploadCompanyMenuImage(Request $formRequest, $CompanyName, $MenuName){
+	public function uploadCompanyMenuImage(
+			Request $formRequest, 
+			$CompanyName,$MenuName
+			){
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/';
 		$imgFile = $formRequest->file('imgFile');
 		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName .'.jpg';
-		$companyMenuImageResponse = new Response();
+		$filesResponse = new Response();
 		
-		try{
-			Storage::disk('public')->put($imgFileName, File::get($imgFile));
-			$companyMenuImageResponse->setStatusCode(200, fileConstants::fileUploadSuccessMsg);
-		} catch(\Exception $e){
-			$companyMenuImageResponse->setStatusCode(400, fileConstants::fileUploadCatchMsg);
+		if(
+				(
+						null == $CompanyName ||
+						'undefined' == $CompanyName
+						) ||
+				(
+						null == $MenuName ||
+						'undefined' == $MenuName
+						)
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileUploadCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyMenuImageResponse;
+		try{
+			Storage::disk('public')
+			->put(
+					$imgFileName, 
+					File::get($imgFile)
+					);
+					$filesResponse->setStatusCode(
+							200, 
+							fileConstants::fileUploadSuccessMsg
+							);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileUploadCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuImage
-	public function deleteCompanyMenuImage(Request $formRequest, $CompanyName, $MenuName){
+	public function deleteCompanyMenuImage(
+			Request $formRequest, 
+			$CompanyName, 
+			$MenuName
+			){
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/';
 		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '.jpg';
-		$companyMenuImageResponse = new Response();
+		$filesResponse = new Response();
 		
-		try{
-			Storage::disk('public')->delete($imgFileName);
-			$companyMenuImageResponse->setStatusCode(200, fileConstants::fileDeleteSuccessMsg);
-		} catch(\Exception $e){
-			$companyMenuImageResponse->setStatusCode(400, fileConstants::fileDeleteCatchMsg);
+		if(
+				(
+						null == $CompanyName ||
+						'undefined' == $CompanyName
+						) ||
+				(
+						null == $MenuName ||
+						'undefined' == $MenuName
+						)
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileDeleteCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyMenuImageResponse;
+		try{
+			Storage::disk('public')
+			->delete($imgFileName);
+			$filesResponse->setStatusCode(
+					200, 
+					fileConstants::fileDeleteSuccessMsg
+					);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileDeleteCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemName}/menuitemImage
-	public function getCompanyMenuMenuitemImage($CompanyName, $MenuName, $MenuitemName){
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage
+	public function getCompanyMenuMenuitemImage(
+			$CompanyName, 
+			$MenuName, 
+			$MenuitemCode
+			){
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/' . $MenuName . '/menuitems/';
-		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' . $MenuitemName . '.jpg';
-		$companyMenuMenuitemImageResponse = new Response();
+		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' . $MenuitemCode . '.jpg';
+		$filesResponse = new Response();
 		
-		try{
-			$companyMenuMenuitemImage = Storage::disk('public')->get($imgFileName);
-			$companyMenuMenuitemImageResponse->setContent($companyMenuMenuitemImage);
-			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
-		} catch(\Exception $e){
-			$companyMenuMenuitemImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
+		if(
+				(
+						null == $CompanyName ||
+						'undefined' == $CompanyName
+						) ||
+				(
+						null == $MenuName ||
+						'undefined' == $MenuName
+						) ||
+				(
+						null == $MenuitemCode ||
+						'undefined' == $MenuitemCode
+						)
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileGetCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyMenuMenuitemImageResponse;
+		try{
+			$companyMenuMenuitemImage = Storage::disk('public')
+			->get($imgFileName);
+			$filesResponse->setContent($companyMenuMenuitemImage);
+			$filesResponse->setStatusCode(
+					200, 
+					fileConstants::fileGetSuccessMsg
+					);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileGetCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemName}/menuitemImage
-	public function uploadCompanyMenuMenuitemImage(Request $formRequest, $CompanyName, $MenuName, $MenuitemName){
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage
+	public function uploadCompanyMenuMenuitemImage(
+			Request $formRequest, 
+			$CompanyName, 
+			$MenuName, 
+			$MenuitemCode
+			){
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/' . $MenuName . '/menuitems/';
 		$imgFile = $formRequest->file('imgFile');
-		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' . $MenuitemName . '.jpg';
-		$companyMenuMenuitemImageResponse = new Response();
-		try{
-			Storage::disk('public')->put($imgFileName, File::get($imgFile));
-			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileGetSuccessMsg);
-		} catch(\Exception $e){
-			$companyMenuMenuitemImageResponse->setStatusCode(400, fileConstants::fileGetCatchMsg);
+		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' . $MenuitemCode . '.jpg';
+		$filesResponse = new Response();
+		
+		if(
+				(
+						null == $CompanyName ||
+						'undefined' == $CompanyName
+						) ||
+				(
+						null == $MenuName ||
+						'undefined' == $MenuName
+						) ||
+				(
+						null == $MenuitemCode ||
+						'undefined' == $MenuitemCode
+						)
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileUploadCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyMenuMenuitemImageResponse;
+		try{
+			Storage::disk('public')
+			->put(
+					$imgFileName, 
+					File::get($imgFile)
+					);
+					$filesResponse->setStatusCode(
+							200, 
+							fileConstants::fileUploadSuccessMsg
+							);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				400, 
+				fileConstants::fileUploadCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemName}/menuitemImage
-	public function deleteCompanyMenuMenuitemImage($CompanyName, $MenuName, $MenuitemName){
+	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}/menuitemImage
+	public function deleteCompanyMenuMenuitemImage(
+			$CompanyName, 
+			$MenuName, 
+			$MenuitemCode
+			){
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/' . $MenuName . '/menuitems/';
-		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' .$MenuitemName . '.jpg';
-		$companyMenuMenuitemImageResponse = new Response();
+		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' .$MenuitemCode . '.jpg';
+		$filesResponse = new Response();
 		
-		try{
-			Storage::disk('public')->delete($imgFileName);
-			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileDeleteSuccessMsg);
-		} catch(\Exception $e){
-			$companyMenuMenuitemImageResponse->setStatusCode(200, fileConstants::fileDeleteCatchMsg);
+		if(
+				(
+						null == $CompanyName ||
+						'undefined' == $CompanyName
+						) ||
+				(
+						null == $MenuName ||
+						'undefined' == $MenuName
+						) ||
+				(
+						null == $MenuitemCode ||
+						'undefined' == $MenuitemCode
+						)
+				){
+			$filesResponse->setStatusCode(
+					400, 
+					fileConstants::fileDeleteCatchMsg
+					);
+			
+			return $filesResponse;
 		}
 		
-		return $companyMenuMenuitemImageResponse;
+		try{
+			Storage::disk('public')
+			->delete($imgFileName);
+			$filesResponse->setStatusCode(
+					200, 
+					fileConstants::fileDeleteSuccessMsg
+					);
+		} catch(\Exception $e){	$filesResponse->setStatusCode(
+				200, 
+				fileConstants::fileDeleteCatchMsg
+				);
+		}
+		
+		return $filesResponse;
 	}
 }

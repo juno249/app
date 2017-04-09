@@ -194,7 +194,7 @@ Route::get('companies/{CompanyName}/menus/{MenuName}', [
 		'uses' => 'menuController@getCompanyMenu'
 ]);
 
-Route::get('menus/query', [
+Route::get('query/menus', [
 		'uses' => 'menuController@getByQuery'
 ]);
 
@@ -219,7 +219,7 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}',
 		'uses' => 'tableController@getCompanyBranchTable'
 ]);
 
-Route::get('tables/query', [
+Route::get('query/tables', [
 		'uses' => 'tableController@getByQuery'
 ]);
 
@@ -244,7 +244,7 @@ Route::get('companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}', 
 		'uses' => 'menuitemController@getCompanyMenuMenuitem'
 ]);
 
-Route::get('menuitems/query', [
+Route::get('query/menuitems', [
 		'uses' => 'menuitemController@getByQuery'
 ]);
 
@@ -269,11 +269,11 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/{Reservat
 		'uses' => 'reservationController@getCompanyBranchReservation'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/{ReservationStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/status/{ReservationStatus}', [
 		'uses' => 'reservationController@getCompanyBranchReservationsReservationStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/not/{ReservationStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/reservations/status_not/{ReservationStatus}', [
 		'uses' => 'reservationController@getCompanyBranchReservationsNotReservationStatus'
 ]);
 
@@ -285,11 +285,11 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/r
 		'uses' => 'reservationController@getCompanyBranchTableReservation'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/{ReservationStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/status/{ReservationStatus}', [
 		'uses' => 'reservationController@getCompanyBranchTableReservationsReservationStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/not/{ReservationStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/reservations/status_not/{ReservationStatus}', [
 		'uses' => 'reservationController@getCompanyBranchTableReservationsNotReservationStatus'
 ]);
 
@@ -301,15 +301,15 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservation'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/{ReservationStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/status/{ReservationStatus}', [
 		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservationsReservationStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/not/{ReservationStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/reservations/status_not/{ReservationStatus}', [
 		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservationsNotReservationStatus'
 ]);
 
-Route::get('reservations/query', [
+Route::get('query/reservations', [
 		'uses' => 'reservationController@getByQuery'
 ]);
 
@@ -334,11 +334,11 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/{Order
 		'uses' => 'orderreferenceController@getCompanyBranchOrderreference'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/{OrderreferenceStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/status/{OrderreferenceStatus}', [
 		'uses' => 'orderreferenceController@getCompanyBranchOrderreferencesOrderreferenceStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/not/{OrderreferenceStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/orderreferences/status_not/{OrderreferenceStatus}', [
 		'uses' => 'orderreferenceController@getCompanyBranchOrderreferencesNotOrderreferenceStatus'
 ]);
 
@@ -350,11 +350,11 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreference'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/status/{OrderreferenceStatus}', [
 		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreferencesOrderreferenceStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/not/{OrderreferenceStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/status_not/{OrderreferenceStatus}', [
 		'uses' => 'orderreferenceController@getCompanyBranchTableOrderreferencesNotOrderreferenceStatus'
 ]);
 
@@ -366,15 +366,15 @@ Route::get('customers/{CustomerUsername}/orderreferences/{OrderreferenceCode}', 
 		'uses' => 'orderreferenceController@getCustomerOrderreference'
 ]);
 
-Route::get('customers/{CustomerUsername}/orderreferences/{OrderreferenceStatus}', [
+Route::get('customers/{CustomerUsername}/orderreferences/status/{OrderreferenceStatus}', [
 		'uses' => 'orderreferenceController@getCustomerOrderreferencesOrderreferenceStatus'
 ]);
 
-Route::get('customers/{CustomerUsername/orderreferences/not/{OrderreferenceStatus}', [
+Route::get('customers/{CustomerUsername}/orderreferences/status_not/{OrderreferenceStatus}', [
 		'uses' => 'orderreferenceController@getCustomerOrderreferencesNotOrderreferenceStatus'
 ]);
 
-Route::get('orderreferences/query', [
+Route::get('query/orderreferences', [
 		'uses' => 'orderreferenceController@getByQuery'
 ]);
 
@@ -399,11 +399,11 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/orders/{OrderId}', [
 		'uses' => 'orderController@getCompanyBranchOrder'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/orders/{OrderStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/orders/status/{OrderStatus}', [
 		'uses' => 'orderController@getCompanyBranchOrdersOrderStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/orders/not/{OrderStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/orders/status_not/{OrderStatus}', [
 		'uses' => 'orderController@getCompanyBranchOrdersNotOrderStatus'
 ]);
 
@@ -415,11 +415,11 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 		'uses' => 'orderController@getCompanyBranchTableOrder'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/status/{OrderStatus}', [
 		'uses' => 'orderController@getCompanyBranchTableOrdersOrderStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/status_not/{OrderStatus}', [
 		'uses' => 'orderController@getCompanyBranchTableOrdersNotOrderStatus'
 ]);
 
@@ -427,19 +427,19 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrders'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders{OrderId}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderId}', [
 		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrder'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/status/{OrderStatus}', [
 		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrdersOrderStatus'
 ]);
 
-Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/not/{OrderStatus}', [
+Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/status_not/{OrderStatus}', [
 		'uses' => 'orderController@getCompanyBranchTableOrderreferenceOrdersNotOrderStatus'
 ]);
 
-Route::get('orderreferences/query', [
+Route::get('query/orders', [
 		'uses' => 'orderController@getByQuery'
 ]);
 

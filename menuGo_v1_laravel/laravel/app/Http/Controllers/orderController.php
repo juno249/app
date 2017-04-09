@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -66,7 +67,7 @@ class orderController extends Controller
 						)
 						->join(
 								branchConstants::branchesTable, 
-								tableConstants::ordersTable . '.' . tableConstants::dbBranchId, 
+								tableConstants::tablesTable . '.' . tableConstants::dbBranchId, 
 								'=', 
 								branchConstants::branchesTable . '.' . branchConstants::dbBranchId
 								)
@@ -173,7 +174,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders/{OrderStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders/status/{OrderStatus}
 	public function getCompanyBranchOrdersOrderStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -223,7 +224,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders/not/{OrderStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orders/status_not/{OrderStatus}
 	public function getCompanyBranchOrdersNotOrderStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -382,7 +383,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/{OrderStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/status/{OrderStatus}
 	public function getCompanyBranchTableOrdersOrderStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -441,7 +442,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/not/{OrderStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orders/status_not/{OrderStatus}
 	public function getCompanyBranchTableOrdersNotOrderStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -627,7 +628,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/status/{OrderStatus}
 	public function getCompanyBranchTableOrderreferenceOrdersOrderStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -695,7 +696,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/not/{OrderStatus}
+	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/status_not/{OrderStatus}
 	public function getCompanyBranchTableOrderreferenceOrdersNotOrderStatus(
 			$CompanyName, 
 			$BranchName, 
@@ -752,7 +753,7 @@ class orderController extends Controller
 					200, 
 					orderConstants::emptyResultSetErr
 					);
-			} else {	$ordersResponse->setContent(json_encode($ordersResponse));
+			} else {	$ordersResponse->setContent(json_encode($companyBranchTableOrderreferenceOrders));
 			}
 		} catch(\PDOException $e){	$ordersResponse->setStatusCode(
 				400, 
@@ -763,7 +764,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	//URL-->>/orderreferences/query
+	//URL-->>/query/orders
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -842,7 +843,7 @@ class orderController extends Controller
 		return $ordersResponse;
 	}
 	
-	private function isDataValid(
+	public function isDataValid(
 			$jsonData, 
 			&$errorMsg, 
 			$dbOperation
@@ -852,7 +853,7 @@ class orderController extends Controller
 					$jsonData, 
 					[
 							'*.' . orderConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|required|numeric', 
-							'*.' . orderConstants::dbOrderreferenceCode => 'exists::orderreferences,orderreference_code|required|string|max:40', 
+							'*.' . orderConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|required|string|max:40', 
 							'*.' . orderConstants::dbOrderStatus => 'required|string|max:30', 
 							'*.' . orderConstants::dbOrderStatusChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
@@ -862,7 +863,7 @@ class orderController extends Controller
 					$jsonData, 
 					[
 							'*.' . orderConstants::dbMenuitemId => 'exists:menuitems,menuitem_id|sometimes|numeric', 
-							'*.' . orderConstants::dbOrderreferenceCode => 'exists::orderreferences,orderreference_code|sometimes|string|max:40', 
+							'*.' . orderConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40', 
 							'*.' . orderConstants::dbOrderStatus => 'sometimes|string|max:30', 
 							'*.' . orderConstants::dbOrderStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . orderConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
@@ -899,7 +900,7 @@ class orderController extends Controller
 				null
 				);
 		$companyBranchTableOrderreference = json_decode(
-				(new orderreferencesConroller())->getCompanyBranchTableOrderreference(
+				(new orderreferenceController())->getCompanyBranchTableOrderreference(
 						$CompanyName, 
 						$BranchName, 
 						$TableNumber, 
@@ -908,7 +909,7 @@ class orderController extends Controller
 				->getContent(), 
 				true
 				);
-		if(sizeof($companyBranchTableOrderreference == 0)){
+		if(sizeof($companyBranchTableOrderreference) == 0){
 			$ordersResponse->setStatusCode(
 					400, 
 					orderConstants::inconsistencyValidationErr1
@@ -919,12 +920,12 @@ class orderController extends Controller
 		
 		$orderreferenceCode = $companyBranchTableOrderreference[0][orderConstants::dbOrderreferenceCode];
 		
-		for($i=0; $i<$jsonData; $i++){
+		for($i=0; $i<$jsonDataSize; $i++){
 			if(!(isset($jsonData[$i][orderConstants::dbOrderreferenceCode]))){	$jsonData[$i][orderConstants::dbOrderreferenceCode] = $orderreferenceCode;
 			}
 		}
 		
-		for($i=0; $i<$jsonData; $i++){
+		for($i=0; $i<$jsonDataSize; $i++){
 			if(isset($jsonData[$i][orderConstants::dbOrderStatusChangeTimestamp])){
 				try{	$jsonData[$i][orderConstants::dbOrderStatusChangeTimestamp] = Carbon::parse($jsonData[$i][orderConstants::dbOrderStatusChangeTimestamp])
 				->format('Y-m-d H:i:s');
@@ -973,6 +974,7 @@ class orderController extends Controller
 	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderId}
 	public function updateOrder(
+			Request $jsonRequest, 
 			$CompanyName, 
 			$BranchName, 
 			$TableNumber, 
@@ -1005,7 +1007,7 @@ class orderController extends Controller
 			}
 		}
 		if(isset($jsonData[0][orderConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][orderConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][orderConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][orderConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][orderConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$ordersResponse->setStatusCode(
@@ -1039,6 +1041,20 @@ class orderController extends Controller
 		
 		$orderId = $companyBranchTableOrderreferenceOrder[0][orderConstants::dbOrderId];
 		
+		if(!$this->isDataValid(
+				$jsonData, 
+				$errorMsg, 
+				"UPDATE"
+				)
+				){
+			$ordersResponse->setStatusCode(
+					400, 
+					$errorMsg
+					);
+			
+			return $ordersResponse;
+		}
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -1060,7 +1076,7 @@ class orderController extends Controller
 			return $ordersResponse;
 		}
 		
-		return $ordersResponse;
+		return orderConstants::dbUpdateSuccessMsg;
 	}
 	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/orderreferences/{OrderreferenceCode}/orders/{OrderId}
@@ -1122,6 +1138,6 @@ class orderController extends Controller
 			return $ordersResponse;
 		}
 		
-		return $ordersResponse;
+		return orderConstants::dbDeleteSuccessMsg;
 	}
 }

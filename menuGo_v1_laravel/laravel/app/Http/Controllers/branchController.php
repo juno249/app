@@ -71,7 +71,7 @@ class branchController extends Controller
 		
 		return $companyBranch;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches
 	public function getCompanyBranches($CompanyName){
 		$mySqlWhere = array();
@@ -84,7 +84,7 @@ class branchController extends Controller
 						$CompanyName
 				]
 				);
-
+		
 		$branchesResponse = new Response();
 		try{
 			$companyBranches = $this->getJoinCompanyBranch($mySqlWhere);
@@ -102,7 +102,7 @@ class branchController extends Controller
 		
 		return $branchesResponse;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}
 	public function getCompanyBranch($CompanyName, $BranchName){
 		$mySqlWhere = array();
@@ -123,7 +123,7 @@ class branchController extends Controller
 						$BranchName
 				]
 				);
-
+		
 		$branchesResponse = new Response();
 		try{
 			$companyBranch = $this->getJoinCompanyBranch($mySqlWhere);
@@ -141,8 +141,8 @@ class branchController extends Controller
 		
 		return $branchesResponse;
 	}
-
-	//URL-->>/branches/query
+	
+	//URL-->>/query/branches
 	public function getByQuery(){
 		$mySqlWhere = array();
 		
@@ -245,7 +245,7 @@ class branchController extends Controller
 				]
 				);
 		}
-
+		
 		$branchesResponse = new Response();
 		try{
 			$companyBranches  = DB::table(branchConstants::branchesTable)
@@ -265,7 +265,7 @@ class branchController extends Controller
 		
 		return $branchesResponse;
 	}
-
+	
 	public function isDataValid(
 			$jsonData, 
 			&$errorMsg, 
@@ -323,7 +323,7 @@ class branchController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(
 				400, 
@@ -356,7 +356,7 @@ class branchController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(
 				400, 
@@ -393,7 +393,7 @@ class branchController extends Controller
 		
 		return branchConstants::dbAddSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/validate
 	public function updateBranchValidate(
 			Request $jsonRequest, 
@@ -453,7 +453,7 @@ class branchController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(
 				400, 
@@ -485,7 +485,7 @@ class branchController extends Controller
 			
 			return $branchesResponse;
 		}
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -517,7 +517,7 @@ class branchController extends Controller
 		
 		return branchConstants::dbUpdateSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}
 	public function deleteBranch(
 			$CompanyName, 
@@ -525,7 +525,7 @@ class branchController extends Controller
 			){
 		$mySqlWhere = array();
 		$errorMsg = '';
-
+		
 		$branchesResponse = new Response();
 		$branchesResponse->setStatusCode(
 				400, 

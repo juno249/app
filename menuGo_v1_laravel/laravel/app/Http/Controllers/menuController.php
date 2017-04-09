@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -53,11 +54,11 @@ class menuController extends Controller
 				companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
 				)
 				->where($mySqlWhere)
-				->get();
+		->get();
 		
-				return $companyMenu;
+		return $companyMenu;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus
 	public function getCompanyMenus($CompanyName){
 		$mySqlWhere = array();
@@ -87,7 +88,7 @@ class menuController extends Controller
 		
 		return $menusResponse;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}
 	public function getCompanyMenu(
 			$CompanyName, 
@@ -128,11 +129,11 @@ class menuController extends Controller
 		
 		return $menusResponse;
 	}
-
-	//URL-->>/menus/query
+	
+	//URL-->>/query/menus
 	public function getByQuery(){
 		$mySqlWhere = array();
-
+		
 		if(isset($_GET[menuConstants::reqMenuId])){	array_push(
 				$mySqlWhere, 
 				[
@@ -143,10 +144,10 @@ class menuController extends Controller
 				);
 		}
 		if(isset($_GET[menuConstants::reqMenuName])){	array_push(
-				$mySqlWhere,
+				$mySqlWhere, 
 				[
-						menuConstants::dbMenuName,
-						'LIKE',
+						menuConstants::dbMenuName, 
+						'LIKE', 
 						'%' . $_GET[menuConstants::reqMenuName] . '%'
 				]
 				);
@@ -170,7 +171,8 @@ class menuController extends Controller
 				);
 		}
 		if(isset($_GET[menuConstants::reqMenuImage])){	array_push(
-				$mySqlWhere, [
+				$mySqlWhere, 
+				[
 						menuConstants::dbMenuImage, 
 						'LIKE', 
 						'%' . $_GET[menuConstants::reqMenuImage] . '%'
@@ -186,7 +188,7 @@ class menuController extends Controller
 				]
 				);
 		}
-
+		
 		$menusResponse = new Response();
 		try{
 			$companyMenus = DB::table(menuConstants::menusTable)
@@ -242,7 +244,7 @@ class menuController extends Controller
 		} else {	return true;
 		}
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus
 	public function addMenu(
 			Request $jsonRequest, 
@@ -254,7 +256,7 @@ class menuController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$menusResponse = new Response();
 		$menusResponse->setStatusCode(
 				400, 
@@ -275,7 +277,7 @@ class menuController extends Controller
 							menuConstants::dbAddCatchMsg
 							);
 					
-						return $menusResponse;
+					return $menusResponse;
 					}
 				}
 			}
@@ -290,7 +292,7 @@ class menuController extends Controller
 		
 		return menuConstants::dbAddSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}
 	public function updateMenu(
 			Request $jsonRequest, 
@@ -304,14 +306,14 @@ class menuController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$menusResponse = new Response();
 		$menusResponse->setStatusCode(
 				400, 
 				null
 				);
 		if(isset($jsonData[0][menuConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][menuConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menuConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][menuConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][menuConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$menusResponse->setStatusCode(
@@ -336,7 +338,7 @@ class menuController extends Controller
 			
 			return $menusResponse;
 		}
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -368,7 +370,7 @@ class menuController extends Controller
 		
 		return menuConstants::dbUpdateSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}
 	public function deleteMenu(
 			$CompanyName, 

@@ -72,7 +72,7 @@ class authenticateController extends Controller
 			
 			return $authResponse;
 		}
-
+		
 		if(!$jwtAuthToken){
 			$authResponse = new Response();
 			$authResponse->setStatusCode(
@@ -82,7 +82,7 @@ class authenticateController extends Controller
 			
 			return $authResponse;
 		}
-
+		
 		//get user details
 		$mySqlWhere = array();
 		array_push(
@@ -93,18 +93,18 @@ class authenticateController extends Controller
 						$loginCredentials[customerConstants::dbCustomerUsername]
 				]
 				);
-
+		
 		$user = (array)DB::table(customerConstants::customersTable)
 		->where($mySqlWhere)
 		->first();
-
+		
 		$userDetails = array();
 		$userDetails[customerConstants::dbCustomerUsername] = $user[customerConstants::dbCustomerUsername];
 		$userDetails[customerConstants::dbCustomerNameFname] = $user[customerConstants::dbCustomerNameFname];
 		$userDetails[customerConstants::dbCustomerNameMname] = $user[customerConstants::dbCustomerNameMname];
 		$userDetails[customerConstants::dbCustomerNameLname] = $user[customerConstants::dbCustomerNameLname];
 		$userDetails[customerConstants::dbCustomerRole] = $user[customerConstants::dbCustomerRole];
-
+		
 		return response()
 		->json(
 				[

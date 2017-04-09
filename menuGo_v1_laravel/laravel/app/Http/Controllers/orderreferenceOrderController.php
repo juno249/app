@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Uuid;
 
 include_once "orderreferenceController.php";
 include_once "orderController.php";
@@ -22,8 +22,6 @@ class orderreferenceOrderConstants{
 	const dbAddSuccessMsg = 'DB UPDATED W/NEW ORDERREFERENCE ORDER RECORDS';
 	const dbUpdateSuccessMsg = 'DB UPDATED EXISTING ORDERREFERENCE ORDER RECORDS';
 	const dbDeleteSuccessMsg = 'DB DELETED EXISTING ORDERREFERENCE ORDER RECORDS';
-	
-	const inconsistencyValidationErr1  = 'KEYS CUSTOMER_USERNAME DO NOT MATCH';
 	
 	const emptyResultSetErr = 'DB SELECT RETURNED EMPTY RESULT SET';
 }
@@ -46,7 +44,10 @@ class orderreferenceOrderController extends Controller
 		$orderController = new orderController();
 		
 		$orderreferencesOrdersResponse = new Response();
-		$orderreferencesOrdersResponse->setStatusCode(400, null);
+		$orderreferencesOrdersResponse->setStatusCode(
+				400, 
+				null
+				);
 		
 		//assign orderreference_code
 		for($i=0; $i<$jsonDataSize; $i++){
@@ -54,7 +55,7 @@ class orderreferenceOrderController extends Controller
 			->string;
 			$orderreferenceOrderRunner = $jsonData[$i];
 			if(array_key_exists(
-					'orderreference', 
+					orderreferenceOrderConstants::keyOrderreference, 
 					$orderreferenceOrderRunner
 					)
 					){
@@ -64,7 +65,7 @@ class orderreferenceOrderController extends Controller
 				$orderreferenceOrderRunner[orderreferenceOrderConstants::keyOrderreference] = $orderreference;
 			}
 			if(array_key_exists(
-					'order', 
+					orderreferenceOrderConstants::keyOrder, 
 					$orderreferenceOrderRunner
 					)
 					){
@@ -90,7 +91,7 @@ class orderreferenceOrderController extends Controller
 			try{
 				//db_transaction: add_orderreference
 				if(array_key_exists(
-						'orderreference', 
+						orderreferenceOrderConstants::keyOrderreference, 
 						$orderreferenceOrderRunner
 						)
 						){
@@ -117,7 +118,7 @@ class orderreferenceOrderController extends Controller
 				
 				//db_transaction: add_order
 				if(array_key_exists(
-						'order', 
+						orderreferenceOrderConstants::keyOrder, 
 						$orderreferenceOrderRunner
 						)
 						){
@@ -131,15 +132,6 @@ class orderreferenceOrderController extends Controller
 								"ADD"
 								)
 								){
-							if(!($orderRunner[orderConstants::dbCustomerUsername] == $orderreference[orderreferenceConstants::dbCustomerUsername])){
-								$orderreferencesOrdersResponse->setStatusCode(
-										400, 
-										orderreferenceConstants::inconsistencyValidationErr1
-										);
-								
-								return $orderreferencesOrdersResponse;
-							}
-							
 							try{	DB::table(orderConstants::ordersTable)
 							->insert($orderRunner);
 							} catch(\PDOException $e){	throw $e;

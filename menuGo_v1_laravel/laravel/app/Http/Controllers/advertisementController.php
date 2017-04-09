@@ -189,7 +189,7 @@ class advertisementController extends Controller
 		return $advertisementsResponse;
 	}
 	
-	//URL-->>/advertisements/query
+	//URL-->>/query/advertisements
 	public function getByQuery(){
 		$mySqlWhere = array();
 		if(isset($_GET[advertisementConstants::reqAdvertisementId])){	array_push(

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -70,9 +71,10 @@ class menuitemController extends Controller
 						)
 						->where($mySqlWhere)
 		->get();
+		
 		return $companyMenuMenuitem;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems
 	public function getCompanyMenuMenuitems(
 			$CompanyName, 
@@ -113,7 +115,7 @@ class menuitemController extends Controller
 		
 		return $menuitemsResponse;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	public function getCompanyMenuMenuitem(
 			$CompanyName, 
@@ -145,7 +147,7 @@ class menuitemController extends Controller
 						$MenuitemCode
 				]
 				);
-	
+		
 		$menuitemsResponse = new Response();
 		try{
 			$companyMenuMenuitem = $this->getJoinCompanyMenuMenuitem($mySqlWhere);
@@ -163,11 +165,11 @@ class menuitemController extends Controller
 		
 		return $menuitemsResponse;
 	}
-
-	//URL-->>/menuitems/query
+	
+	//URL-->>/query/menuitems
 	public function getByQuery(){
 		$mySqlWhere = array();
-
+		
 		if(isset($_GET[menuitemConstants::reqMenuitemId])){	array_push(
 				$mySqlWhere, 
 				[
@@ -178,10 +180,10 @@ class menuitemController extends Controller
 				);
 		}
 		if(isset($_GET[menuitemConstants::reqMenuitemCode])){	array_push(
-				$mySqlWhere,
+				$mySqlWhere, 
 				[
-						menuitemConstants::dbMenuitemCode,
-						'LIKE',
+						menuitemConstants::dbMenuitemCode, 
+						'LIKE', 
 						'%' . $_GET[menuitemConstants::reqMenuitemCode] . '%'
 				]
 				);
@@ -249,7 +251,7 @@ class menuitemController extends Controller
 				]
 				);
 		}
-	
+		
 		$menuitemsResponse = new Response();
 		try{
 			$menuitems = DB::table(menuitemConstants::menuitemsTable)
@@ -311,7 +313,7 @@ class menuitemController extends Controller
 		} else {	return true;
 		}
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/
 	public function addMenuitem(
 			Request $jsonRequest, 
@@ -324,7 +326,7 @@ class menuitemController extends Controller
 				);
 		$jsonDataSize = sizeof($jsonData);
 		$errorMsg = '';
-	
+		
 		$menuitemsResponse = new Response();
 		$menuitemsResponse->setStatusCode(
 				400, 
@@ -348,12 +350,12 @@ class menuitemController extends Controller
 		}
 		
 		$menuId = $companyMenu[0][menuConstants::dbMenuId];
-	
+		
 		for($i=0; $i<$jsonDataSize; $i++){
 			if(!(isset($jsonData[$i][menuitemConstants::dbMenuId]))){	$jsonData[$i][menuitemConstants::dbMenuId] = $menuId;
 			}
 		}
-	
+		
 		if($this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -385,7 +387,7 @@ class menuitemController extends Controller
 		
 		return menuitemConstants::dbAddSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	public function updateMenuitem(
 			Request $jsonRequest, 
@@ -400,14 +402,14 @@ class menuitemController extends Controller
 		$jsonDataSize = sizeof($jsonData);
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$menuitemsResponse = new Response();
 		$menuitemsResponse->setStatusCode(
 				400, 
 				null
 				);
 		if(isset($jsonData[0][menuitemConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][menuitemConstants::dbLastChangeTimeStamp] = Carbon::parse($jsonData[0][menuitemConstants::dbLastChangeTimeStamp])
+			try{	$jsonData[0][menuitemConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][menuitemConstants::dbLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception  $e){
 				$menuitemsResponse->setStatusCode(
@@ -438,7 +440,7 @@ class menuitemController extends Controller
 		}
 		
 		$menuitemId = $companyMenuMenuitem[0][menuitemConstants::dbMenuitemId];
-	
+		
 		if(!$this->isDataValid(
 				$jsonData, 
 				$errorMsg, 
@@ -452,7 +454,7 @@ class menuitemController extends Controller
 			
 			return $menuitemsResponse;
 		}
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
@@ -476,7 +478,7 @@ class menuitemController extends Controller
 		
 		return menuitemConstants::dbUpdateSuccessMsg;
 	}
-
+	
 	//URL-->>/companies/{CompanyName}/menus/{MenuName}/menuitems/{MenuitemCode}
 	public function deleteMenuitem(
 			$CompanyName, 
@@ -485,7 +487,7 @@ class menuitemController extends Controller
 			){
 		$mySqlWhere = array();
 		$errorMsg = '';
-	
+		
 		$menuitemsResponse = new Response();
 		$menuitemsResponse->setStatusCode(
 				400, 
@@ -510,7 +512,7 @@ class menuitemController extends Controller
 		}
 		
 		$menuitemId = $companyMenuMenuitem[0][menuitemConstants::dbMenuitemId];
-	
+		
 		try{
 			array_push(
 					$mySqlWhere, 
