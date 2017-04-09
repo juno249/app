@@ -57,9 +57,7 @@ function companyService(
 			getParams
 			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET'
-				};
+		var httpConfig = {	method: 'GET'	};
 		
 		switch(companyServiceObj.getOptions[getOption]){
 		case 'getCompanies_asAdministrator':

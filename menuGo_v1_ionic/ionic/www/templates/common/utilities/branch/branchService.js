@@ -63,9 +63,7 @@ function branchService(
 			getParams
 			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET'
-					};
+		var httpConfig = {	method: 'GET'	};
 		
 		switch(branchServiceObj.getOptions[getOption]){
 		case 'getCompanyBranches':

@@ -65,9 +65,7 @@ function customerCompanyBranchService(
 			getParams
 			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET'
-				};
+		var httpConfig = {	method: 'GET'	};
 		
 		switch(customerCompanyBranchServiceObj.getOptions[getOption]){
 		case 'getCustomersCompaniesBranches':
@@ -78,7 +76,7 @@ function customerCompanyBranchService(
 			break;
 			default:
 				break;
-		}
+			}
 		
 		$http(httpConfig)
 		.then(fetchCustomersCompaniesBranchesSuccessCallback)

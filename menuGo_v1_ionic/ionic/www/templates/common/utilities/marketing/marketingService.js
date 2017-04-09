@@ -23,39 +23,39 @@ function marketingService(
 		$q
 		){
 	const ADVERTISEMENTS_KEY = 'Advertisements';
-	const ADVERTISEMENT_KEY = 'Advertisement';
 	const BLOGS_KEY = 'Blogs';
-	const BLOG_KEY = 'Blog';
 	
 	var marketingServiceObj = {
 			advertisements: {}, 
-			advertisement: {}, 
 			blogs: {}, 
-			blog: {}, 
 			advertisementId: undefined, 
 			blogId: undefined, 
 			companyName: undefined, 
 			getAdvertisements: getAdvertisements, 
-			getAdvertisement: getAdvertisement, 
 			getBlogs: getBlogs, 
-			getBlog: getBlog, 
 			getAdvertisementId: getAdvertisementId, 
 			getBlogId: getBlogId, 
 			getCompanyName: getCompanyName, 
 			setAdvertisements: setAdvertisements, 
-			setAdvertisement: setAdvertisement, 
 			setBlogs: setBlogs, 
-			setBlog: setBlog, 
 			setAdvertisementId: setAdvertisementId, 
 			setBlogId: setBlogId, 
 			setCompanyName: setCompanyName, 
+			getOptionsAdvertisements: {
+				1: 'getAdvertisements', 
+				2: 'getAdvertisement', 
+				3: 'getCompanyAdvertisements', 
+				4: 'getCompanyAdvertisement'
+			}, 
 			fetchAdvertisements: fetchAdvertisements, 
-			fetchAdvertisement: fetchAdvertisement, 
 			addAdvertisement: addAdvertisement, 
 			updateAdvertisement: updateAdvertisement, 
 			deleteAdvertisement: deleteAdvertisement, 
+			getOptionsBlogs: {
+				1: 'getBlogs', 
+				2: 'getBlog'
+			}, 
 			fetchBlogs: fetchBlogs, 
-			fetchBlog: fetchBlog, 
 			addBlog: addBlog, 
 			updateBlog: updateBlog, 
 			deleteBlog: deleteBlog
@@ -63,11 +63,7 @@ function marketingService(
 	
 	function getAdvertisements(){	return marketingServiceObj.advertisements;
 	}
-	function getAdvertisement(){	return marketingServiceObj.advertisement;
-	}
 	function getBlogs(){	return marketingServiceObj.blogs;
-	}
-	function getBlog(){	return marketingServiceObj.blog;
 	}
 	function getAdvertisementId(){	return marketingServiceObj.advertisementId;
 	}
@@ -77,11 +73,7 @@ function marketingService(
 	}
 	function setAdvertisements(advertisements){	marketingServiceObj.advertisements = advertisements;
 	}
-	function setAdvertisement(advertisement){	marketingServiceObj.advertisement = advertisement;
-	}
 	function setBlogs(blogs){	marketingServiceObj.blogs = blogs;
-	}
-	function setBlog(blog){	marketingServiceObj.blog = blog;
 	}
 	function setAdvertisementId(advertisementId){	marketingServiceObj.advertisementId = advertisementId;
 	}
@@ -90,12 +82,29 @@ function marketingService(
 	function setCompanyName(companyName){	marketingServiceObj.companyName = companyName;
 	}
 	
-	function fetchAdvertisements(){
+	function fetchAdvertisements(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/advertisements'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(marketingServiceObj.getOptionsAdvertisements[getOption]){
+		case 'getAdvertisements':
+			httpConfig['url'] = API_BASE_URL + '/advertisements';
+			break;
+		case 'getAdvertisement':
+			httpConfig['url'] = API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId;
+			break;
+		case 'getCompanyAdvertisements':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + marketingServiceObj.companyName + '/advertisements';
+			break;
+		case 'getCompanyAdvertisement':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + marketingServiceObj.companyName + '/advertisements/' + marketingServiceObj.advertisementId;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchAdvertisementsSuccessCallback)
@@ -128,49 +137,6 @@ function marketingService(
 				
 				var key = responseData[i][ADVERTISEMENTS_DB_FIELDS[0]]; //advertisement_id
 				marketingServiceObj.advertisements[key] = advertisementsDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchAdvertisement(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/advertisements/' + marketingServiceObj.advertisementId
-				};
-		
-		$http(httpConfig)
-		.then(fetchAdvertisementSuccessCallback)
-		.catch(fetchAdvertisementFailedCallback);
-		
-		function fetchAdvertisementSuccessCallback(response){
-			var advertisement = undefined;
-			
-			convertAdvertisementResponseToMap(response.data);
-			advertisement = marketingServiceObj.advertisement;
-			advertisement = JSON.stringify(advertisement);
-			localStorage.setItem(
-					ADVERTISEMENT_KEY, 
-					advertisement
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchAdvertisementFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertAdvertisementResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var advertisementDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(ADVERTISEMENTS_DB_FIELDS).length; j++){	advertisementDetails[ADVERTISEMENTS_DB_FIELDS[j]] = responseData[i][ADVERTISEMENTS_DB_FIELDS[j]];
-				}
-				
-				var key = responseData[i][ADVERTISEMENTS_DB_FIELDS[0]]; //advertisement_id
-				marketingServiceObj.advertisement[key] = advertisementDetails;
 				}
 			}
 		return deferred.promise;
@@ -235,12 +201,23 @@ function marketingService(
 		return deferred.promise;
 		}
 	
-	function fetchBlogs(){
+	function fetchBlogs(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/blogs'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(marketingServiceObj.getOptions[getOption]){
+		case 'getBlogs':
+			httpConfig['url'] = API_BASE_URL + '/blogs';
+			break;
+		case 'getBlog':
+			httpConfig['url'] = API_BASE_URL + '/blogs/' + marketingServiceObj.blogId;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchBlogsSuccessCallback)
@@ -273,49 +250,6 @@ function marketingService(
 				
 				var key = responseData[i][BLOGS_DB_FIELDS[0]]; //blog_id
 				marketingServiceObj.blogs[key] = blogsDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchBlog(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/blogs/' + marketingServiceObj.blogId
-				};
-		
-		$http(httpConfig)
-		.then(fetchBlogSuccessCallback)
-		.catch(fetchBlogFailedCallback);
-		
-		function fetchBlogSuccessCallback(response){
-			var blog = undefined;
-			
-			convertBlogResponseToMap(response.data);
-			blog = marketingServiceObj.blog;
-			blog = JSON.stringify(blog);
-			localStorage.setItem(
-					BLOG_KEY, 
-					blog
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchBlogFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertBlogResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var blogDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(BLOGS_DB_FIELDS).length; j++){	blogDetails[BLOGS_DB_FIELDS[j]] = responseData[i][BLOGS_DB_FIELDS[j]];
-				}
-				
-				var key = responseData[i][BLOGS_DB_FIELDS[0]]; //blog_id
-				marketingServiceObj.blog[key] = blogDetails;
 				}
 			}
 		return deferred.promise;

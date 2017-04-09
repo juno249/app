@@ -56,9 +56,7 @@ function customerService(
 			getParams
 			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET'
-				};
+		var httpConfig = {	method: 'GET'	};
 		
 		switch(customerServiceObj.getOptions[getOption]){
 		case 'getOptionsAdvertisements':
