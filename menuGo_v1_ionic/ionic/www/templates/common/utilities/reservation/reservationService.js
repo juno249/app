@@ -21,51 +21,141 @@ function reservationService(
 		$q
 		){
 	const RESERVATIONS_KEY = 'Reservations';
-	const RESERVATION_KEY = 'Reservation';
 	
 	reservationServiceObj = {
 			reservations: {}, 
-			reservation: {}, 
-			reservationCode: undefined, 
+			companyName: undefined, 
+			branchName: undefined, 
+			tableNumber: undefined, 
+			orderreferenceCode: undefined, 
 			customerUsername: undefined, 
+			reservationCode: undefined, 
 			getReservations: getReservations, 
-			getReservation: getReservation, 
-			getReservationCode: getReservationCode, 
+			getCompanyName: getCompanyName, 
+			getBranchName: getBranchName, 
+			getTableNumber: getTableNumber, 
+			getOrderreferenceCode: getOrderreferenceCode, 
 			getCustomerUsername: getCustomerUsername, 
+			getReservationCode: getReservationCode, 
 			setReservations: setReservations, 
-			setReservation: setReservation, 
-			setReservationCode: setReservationCode, 
+			setCompanyName: setCompanyName, 
+			setBranchName: setBranchName, 
+			setTableNumber: setTableNumber, 
+			setOrderreferenceCode: setOrderreferenceCode, 
 			setCustomerUsername: setCustomerUsername, 
+			setReservationCode: setReservationCode, 
+			getOptions: {
+				1: 'getCompanyBranchReservations', 
+				2: 'getCompanyBranchReservation', 
+				3: 'getCompanyBranchReservationsReservationStatus', 
+				4: 'getCompanyBranchReservationsNotReservationStatus', 
+				5: 'getCompanyBranchTableReservations', 
+				6: 'getCompanyBranchTableReservation', 
+				7: 'getCompanyBranchTableReservationsReservationStatus', 
+				8: 'getCompanyBranchTableReservationsNotReservationStatus', 
+				9: 'getCompanyBranchTableOrderreferenceReservations', 
+				10: 'getCompanyBranchTableOrderreferenceReservation', 
+				11: 'getCompanyBranchTableOrderreferenceReservationsReservationStatus', 
+				12: 'getCompanyBranchTableOrderreferenceReservationsNotReservationStatus', 
+				13: 'getCustomerReservations', 
+				14: 'getCustomerReservation', 
+				15: 'getCustomerReservationsReservationStatus', 
+				16: 'getCustomerReservationsNotReservationStatus'
+					}, 
 			fetchReservations: fetchReservations, 
-			fetchReservation: fetchReservation, 
 			addReservation: addReservation, 
 			updateReservation: updateReservation, 
 			deleteReservation: deleteReservation
-			}
+			};
 	
 	function getReservations(){	return reservationServiceObj.reservations;
 	}
-	function getReservation(){	return reservationServiceObj.reservation;
+	function getCompanyName(){	return reservationServiceObj.companyName;
 	}
-	function getReservationCode(){	return reservationServiceObj.reservationCode;
+	function getBranchName(){	return reservationServiceObj.branchName;
+	}
+	function getTableNumber(){	return reservationServiceObj.tableNumber;
+	}
+	function getOrderreferenceCode(){	return reservationServiceObj.orderreferenceCode;
 	}
 	function getCustomerUsername(){	return reservationServiceObj.customerUsername;
 	}
+	function getReservationCode(){	return reservationServiceObj.reservationCode;
+	}
 	function setReservations(reservations){	reservationServiceObj.reservations = reservations;
 	}
-	function setReservation(reservation){	reservationServiceObj.reservation = reservation;
+	function setCompanyName(companyName){	reservationServiceObj.companyName = companyName;
+	}
+	function setBranchName(branchName){	reservationServiceObj.branchName = branchName;
+	}
+	function setTableNumber(tableNumber){	reservationServiceObj.tableNumber = tableNumber;
+	}
+	function setOrderreferenceCode(orderreferenceCode){	reservationServiceObj.orderreferenceCode = orderreferenceCode;
+	}
+	function setCustomerUsername (customerUsername){	reservationServiceObj.customerUsername = customerUsername;
 	}
 	function setReservationCode(reservationCode){	reservationServiceObj.reservationCode = reservationCode;
 	}
-	function setCustomerUsername(customerUsername){	reservationServiceObj.customerUsername = customerUsername;
-	}
 	
-	function fetchReservations(){
+	function fetchReservations(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(reservationServiceObj.getOptions[getOption]){
+		case 'getCompanyBranchReservations':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/reservations';
+			break;
+		case 'getCompanyBranchReservation':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/reservations/' + reservationServiceObj.reservationCode;
+			break;
+		case 'getCompanyBranchReservationsReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/reservations/status/' + getParams['ReservationStatus'];
+			break;
+		case 'getCompanyBranchReservationsNotReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/reservations/status_not/' + getParams['ReservationStatus'];
+			break;
+		case 'getCompanyBranchTableReservations':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/reservations';
+			break;
+		case 'getCompanyBranchTableReservation':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/reservations/' + reservationServiceObj.reservationCode;
+			break;
+		case 'getCompanyBranchTableReservationsReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/reservations/status/' + getParams['ReservationStatus'];
+			break;
+		case 'getCompanyBranchTableReservationsNotReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/reservations/status_not/' + getParams['ReservationStatus'];
+			break;
+		case 'getCompanyBranchTableOrderreferenceReservations':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations';
+			break;
+		case 'getCompanyBranchTableOrderreferenceReservation':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations/' + reservationServiceObj.reservationCode;
+			break;
+		case 'getCompanyBranchTableOrderreferenceReservationsReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations/status/' + getParams['ReservationStatus'];
+			break;
+		case 'getCompanyBranchTableOrderreferenceReservationsNotReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations/status_not/' + getParams['ReservationStatus'];
+			break;
+		case 'getCustomerReservations':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations';
+			break;
+		case 'getCustomerReservation':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode;
+			break;
+		case 'getCustomerReservationsReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/status/' + getParams['ReservationStatus'];
+			break;
+		case 'getCustomerReservationsNotReservationStatus':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/status_not/' + getParams['ReservationStatus'];
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchReservationsSuccessCallback)
@@ -104,55 +194,11 @@ function reservationService(
 		return deferred.promise;
 		}
 	
-	function fetchReservation(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode
-				};
-		
-		$http(httpConfig)
-		.then(fetchReservationSuccessCallback)
-		.catch(fetchReservationFailedCallback);
-		
-		function fetchReservationSuccessCallback(response){
-			var reservation = undefined;
-			reservationServiceObj.reservation = {};
-			
-			convertReservationResponseToMap(response.data);
-			reservation = reservationServiceObj.reservation;
-			reservation = JSON.stringify(reservation);
-			localStorage.setItem(
-					RESERVATION_KEY, 
-					reservation
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchReservationFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertReservationResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var reservationDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){	reservationDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
-				}
-				
-				key = responseData[i][RESERVATIONS_DB_FIELDS[0]]; //reservation_code
-				reservationServiceObj.reservation[key] = reservationDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
 	function addReservation(reservations){
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations', 
+				url: API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations', 
 				data: reservations
 				};
 		
@@ -172,7 +218,7 @@ function reservationService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode, 
+				url: API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations/' + reservationServiceObj.reservationCode, 
 				data: reservation
 				};
 		
@@ -192,7 +238,7 @@ function reservationService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/' + reservationServiceObj.reservationCode
+				url: API_BASE_URL + '/companies/' + reservationServiceObj.companyName + '/branches/' + reservationServiceObj.branchName + '/tables/' + reservationServiceObj.tableNumber + '/orderreferences/' + reservationServiceObj.orderreferenceCode + '/reservations/' + reservationServiceObj.reservationCode
 				};
 		
 		$http(httpConfig)

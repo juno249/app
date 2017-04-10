@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 include_once "branchController.php";
 include_once "companyController.php";
-include_once "tableController.php";
 include_once "orderreferenceController.php";
+include_once "tableController.php";
 
 class orderConstants{
 	const ordersTable = 'orders';

@@ -309,6 +309,22 @@ Route::get('companies/{CompanyName}/branches/{BranchName}/tables/{TableNumber}/o
 		'uses' => 'reservationController@getCompanyBranchTableOrderreferenceReservationsNotReservationStatus'
 ]);
 
+Route::get('customers/{CustomerUsername}/reservations', [
+	'uses' => 'reservationController@getCustomerReservations'
+]);
+
+Route::get('customers/{CustomerUsername}/reservations/{ReservationCode}', [
+		'uses' => 'reservationController@getCustomerReservation'
+]);
+
+Route::get('customers/{CustomerUsername}/reservations/status/{ReservationStatus}', [
+		'uses' => 'reservationController@getCustomerReservationsReservationStatus'
+]);
+
+Route::get('customers/{CustomerUsername}/reservations/status_not/{ReservationStatus}', [
+		'uses' => 'reservationController@getCustomerReservationsNotReservationStatus'
+]);
+
 Route::get('query/reservations', [
 		'uses' => 'reservationController@getByQuery'
 ]);

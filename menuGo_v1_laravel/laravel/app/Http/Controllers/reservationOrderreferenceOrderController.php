@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Uuid;
 
-include_once "orderreferenceController.php";
 include_once "orderController.php";
+include_once "orderreferenceController.php";
 include_once "reservationController.php";
 
 class reservationOrderreferenceOrderConstants{
