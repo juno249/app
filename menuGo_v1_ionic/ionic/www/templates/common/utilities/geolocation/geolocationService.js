@@ -22,7 +22,7 @@ function geolocationService(
 			getGeolocationConfig: getGeolocationConfig, 
 			setGeolocationConfig: setGeolocationConfig, 
 			getPosition: getPosition
-			}
+			};
 	
 	function getGeolocationConfig(){	return geolocationServiceObj.geolocationConfig;
 	}
@@ -53,7 +53,7 @@ function geolocationService(
 			var coordinates = {
 				latitude: position.coords.latitude, 
 				longitude: position.coords.longitude
-				}
+				};
 			
 			deferred.resolve(coordinates);
 			}

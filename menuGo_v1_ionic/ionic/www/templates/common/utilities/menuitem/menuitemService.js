@@ -38,7 +38,7 @@ function menuitemService(
 			getOptions: {
 				1: 'getCompanyMenuMenuitems', 
 				2: 'getCompanyMenuMenuitem'
-			}, 
+					}, 
 			fetchMenuitems: fetchMenuitems, 
 			addMenuitem: addMenuitem, 
 			updateMenuitem: updateMenuitem, 

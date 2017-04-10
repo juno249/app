@@ -78,7 +78,7 @@ function mqttService(
 	
 	function doSubscribe(){	mqttServiceObj.mqttClient.subscribe(mqttServiceObj.mqttTopic);
 	}
-
+	
 	function doUnsubscribe(){	mqttServiceObj.mqttClient.unsubscribe(mqttServiceObj.mqttTopic);
 	}
 	

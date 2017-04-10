@@ -23,7 +23,7 @@ function googleplacesService(
 			getPlaceDetails: getPlaceDetails, 
 			getPlacesNearby: getPlacesNearby, 
 			getRadarSearch: getRadarSearch
-			}
+			};
 	
 	function getPlacePredictions(query){
 		var deferred = $q.defer();
@@ -32,7 +32,7 @@ function googleplacesService(
 				componentRestrictions: {
 					country: 'ph'
 						}
-		}
+		};
 		var service = new google.maps.places.AutocompleteService();
 		
 		service.getPlacePredictions(
@@ -53,7 +53,7 @@ function googleplacesService(
 	
 	function getPlaceCoordinates(placeId){
 		var deferred = $q.defer();
-		var config = {	placeId: placeId	}
+		var config = {	placeId: placeId	};
 		var service = new google.maps.Geocoder;
 		
 		service.geocode(
@@ -77,7 +77,7 @@ function googleplacesService(
 			domMapId
 			){
 		var deferred = $q.defer();
-		var config = {	placeId: placeId	}
+		var config = {	placeId: placeId	};
 		var mapInstance = undefined;
 		var service = undefined;
 		
@@ -92,7 +92,7 @@ function googleplacesService(
 							);
 					}
 				);
-			
+		
 		function getDetailsCallback(
 				placeDetails, 
 				status
@@ -119,9 +119,9 @@ function googleplacesService(
 				name: companiesNames, 
 				rankBy: google.maps.places.RankBy.DISTANCE, 
 				type: CONF_TYPE
-				}
+				};
 		var mapInstance = undefined;
-		var service = undefined;	
+		var service = undefined;
 		
 		NgMap.getMap({id: domMapId}).then(
 				function(map){
@@ -162,7 +162,7 @@ function googleplacesService(
 				name: companiesNames, 
 				radius: CONF_RADAR_RADIUS, 
 				type: CONF_TYPE
-				}
+				};
 		var mapInstance = undefined;
 		var service = undefined;
 		
@@ -185,9 +185,9 @@ function googleplacesService(
 			if(google.maps.places.PlacesServiceStatus.OK == status){	deferred.resolve(nearby);
 			} else {	deferred.reject(status);
 			}
-			}		
+			}
 		return deferred.promise;
-		}	
+		}
 	
 	return googleplacesServiceObj;
 	}

@@ -44,7 +44,7 @@ function nearbyReservationMenuController(
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
 	
-	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;	
+	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
 	}
 	
 	//controller_method

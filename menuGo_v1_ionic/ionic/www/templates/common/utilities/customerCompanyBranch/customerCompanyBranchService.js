@@ -38,7 +38,7 @@ function customerCompanyBranchService(
 			getOptions: {
 				1: 'getCustomersCompaniesBranches', 
 				2: 'getCustomerCompanyBranch'
-			}, 
+					}, 
 			fetchCustomersCompaniesBranches: fetchCustomersCompaniesBranches, 
 			addCustomerCompanyBranch: addCustomerCompanyBranch
 			};

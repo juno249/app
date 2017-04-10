@@ -54,7 +54,7 @@ function customerNearbyController(
 	} else {
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-		} 
+		}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -92,7 +92,7 @@ function customerNearbyController(
 		}
 		return deferred.promise;
 		}
-
+	
 	function setCategory(category){	vm.category = category;
 	}
 	
@@ -131,7 +131,7 @@ function customerNearbyController(
 					var company = v;
 					var companyMenus = company.menus;
 					var companyMenuitems = [];
-
+					
 					angular.forEach(
 							companyMenus, 
 							function(
@@ -205,7 +205,7 @@ function customerNearbyController(
 			}, 
 			function(){
 				if(
-						null == vm.search || 
+						null == vm.search ||
 						0 == vm.search.trim().length
 						){
 					vm.placePredictions = undefined;

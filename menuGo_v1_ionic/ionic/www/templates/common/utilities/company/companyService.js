@@ -33,7 +33,7 @@ function companyService(
 			1: 'getCompanies_asAdministrator', 
 			2: 'getCompanies', 
 			3: 'getCompany'
-		}, 
+				}, 
 		fetchCompanies: fetchCompanies, 
 		addCompanyValidate: addCompanyValidate, 
 		addCompany: addCompany, 

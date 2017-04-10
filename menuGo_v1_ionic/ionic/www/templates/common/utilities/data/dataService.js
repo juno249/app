@@ -40,7 +40,7 @@ function dataService(
 			marketing: {}, 
 			fetchCompanies: fetchCompanies, 
 			fetchMarketing: fetchMarketing
-			}
+			};
 	
 	function getCompanies(){	return dataServiceObj.companies;
 	}
@@ -56,7 +56,10 @@ function dataService(
 		
 		reset();
 		
-		companyService.fetchCompanies()
+		companyService.fetchCompanies(	//getCompanies
+				2, 
+				{}
+				)
 		.then(fetchCompaniesSuccessCallback)
 		.catch(fetchCompaniesFailedCallback);
 		
@@ -80,7 +83,10 @@ function dataService(
 				
 				branchService.setCompanyName(companyName)
 				
-				branchService.fetchBranches()
+				branchService.fetchBranches(	//getCompanyBranches
+						1, 
+						{}
+						)
 				.then(fetchBranchesSuccessCallback)
 				.catch(fetchBranchesFailedCallback);
 				
@@ -102,7 +108,7 @@ function dataService(
 					} catch(e){
 					}
 					
-					companies[companyName]['branches'] = branches;
+					companies[companyName][BRANCHES_KEY.toLowerCase()] = branches;
 					
 					function fetchTables(branchName){
 						var tables = undefined;
@@ -110,7 +116,10 @@ function dataService(
 						tableService.setCompanyName(companyName);
 						tableService.setBranchName(branchName);
 						
-						tableService.fetchTables()
+						tableService.fetchTables(	//getCompanyBranchTables
+								1, 
+								{}
+								)
 						.then(fetchTablesSuccessCallback)
 						.catch(fetchTablesFailedCallback);
 						
@@ -122,7 +131,7 @@ function dataService(
 							} catch(e){
 							}
 							
-							companies[companyName]['branches'][branchName]['tables'] = tables;
+							companies[companyName][BRANCHES_KEY.toLowerCase()][branchName][TABLES_KEY.toLowerCase()] = tables;
 							companies = JSON.stringify(companies);
 							localStorage.setItem(
 									COMPANIES_KEY, 
@@ -147,7 +156,10 @@ function dataService(
 				
 				menuService.setCompanyName(companyName);
 				
-				menuService.fetchMenus()
+				menuService.fetchMenus(	//getCompanyMenus
+						1, 
+						{}
+						)
 				.then(fetchMenusSuccessCallback)
 				.catch(fetchMenusFailedCallback);
 				
@@ -169,7 +181,7 @@ function dataService(
 					} catch(e){
 					}
 					
-					companies[companyName]['menus'] = menus;
+					companies[companyName][MENUS_KEY.toLowerCase()] = menus;
 					
 					function fetchMenuitems(menuName){
 						var menuitems = undefined;
@@ -177,7 +189,10 @@ function dataService(
 						menuitemService.setCompanyName(companyName);
 						menuitemService.setMenuName(menuName);
 						
-						menuitemService.fetchMenuitems()
+						menuitemService.fetchMenuitems(	//getCompanyMenuMenuitems
+								1, 
+								{}
+								)
 						.then(fetchMenuitemsSuccessCallback)
 						.catch(fetchMenuitemsFailedCallback);
 						
@@ -189,7 +204,7 @@ function dataService(
 							} catch(e){
 							}
 							
-							companies[companyName]['menus'][menuName]['menuitems'] = menuitems;
+							companies[companyName][MENUS_KEY.toLowerCase()][menuName][MENUITEMS_KEY.toLowerCase()] = menuitems;
 							companies = JSON.stringify(companies);
 							localStorage.setItem(
 									COMPANIES_KEY, 
@@ -219,7 +234,10 @@ function dataService(
 		var advertisements = undefined;
 		var blogs = undefined;
 		
-		marketingService.fetchAdvertisements()
+		marketingService.fetchAdvertisements(	//fetchAdvertisements
+				1, 
+				{}
+				)
 		.then(fetchAdvertisementsSuccessCallback)
 		.catch(fetchAdvertisementsFailedCallback);
 		
@@ -233,7 +251,7 @@ function dataService(
 			} else {	marketing = {};
 			}
 			
-			marketing['advertisements'] = advertisements;
+			marketing[ADVERTISEMENTS_KEY.toLowerCase()] = advertisements;
 			marketing = JSON.stringify(marketing);
 			localStorage.setItem(
 					MARKETING_KEY, 
@@ -246,7 +264,10 @@ function dataService(
 		function fetchAdvertisementsFailedCallback(responseError){	reset();
 		}
 		
-		marketingService.fetchBlogs()
+		marketingService.fetchBlogs(	//getBlogs
+				1, 
+				{}
+				)
 		.then(fetchBlogsSuccessCallback)
 		.catch(fetchBlogsFailedCallback);
 		
@@ -260,7 +281,7 @@ function dataService(
 			} else {	marketing = {};
 			}
 			
-			marketing['blogs'] = blogs;
+			marketing[BLOGS_KEY.toLowerCase()] = blogs;
 			marketing = JSON.stringify(marketing);
 			localStorage.setItem(
 					MARKETING_KEY, 

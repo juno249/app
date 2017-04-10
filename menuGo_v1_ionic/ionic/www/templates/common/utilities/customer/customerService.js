@@ -33,7 +33,7 @@ function customerService(
 				1: 'getCustomers_asAdministrator', 
 				2: 'getCustomers', 
 				3: 'getCustomer'
-			}, 
+					}, 
 			fetchCustomers: fetchCustomers, 
 			addCustomerValidate: addCustomerValidate, 
 			addCustomer: addCustomer, 

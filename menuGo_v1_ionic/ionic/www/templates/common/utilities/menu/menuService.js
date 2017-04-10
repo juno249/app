@@ -35,7 +35,7 @@ function menuService(
 		getOptions: {
 			1: 'getCompanyMenus', 
 			2: 'getCompanyMenu'
-		}, 
+				}, 
 		fetchMenus: fetchMenus, 
 		addMenu: addMenu, 
 		updateMenu: updateMenu, 

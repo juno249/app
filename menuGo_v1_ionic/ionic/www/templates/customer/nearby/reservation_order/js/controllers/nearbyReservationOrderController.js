@@ -28,13 +28,13 @@ function nearbyReservationOrderController(
 		if(null == vm.user.reservation){	vm.user.reservation = {};
 		}
 		}
-
+	
 	//controller_method
 	vm.remReservationOrder = remReservationOrder;
 	//controller_method
 	vm.getTotalCost = getTotalCost;
 	
-	function remReservationOrder(menuitem){	
+	function remReservationOrder(menuitem){
 		delete vm.user.reservationOrders[menuitem.menuitem_code];
 		
 		localStorage.setItem(

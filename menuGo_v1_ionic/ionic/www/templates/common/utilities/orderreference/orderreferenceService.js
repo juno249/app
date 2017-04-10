@@ -21,51 +21,114 @@ function orderreferenceService(
 		$q
 		){
 	const ORDERREFERENCES_KEY = 'Orderreferences';
-	const ORDERREFERENCE_KEY = 'Orderreference';
 	
 	var orderreferenceServiceObj = {
 			orderreferences: {}, 
-			orderreference: {}, 
-			orderreferenceCode: undefined, 
+			companyName: undefined, 
+			branchName: undefined, 
+			tableNumber: undefined, 
 			customerUsername: undefined, 
+			orderreferenceCode: undefined, 
 			getOrderreferences: getOrderreferences, 
-			getOrderreference: getOrderreference, 
-			getOrderreferenceCode: getOrderreferenceCode, 
+			getCompanyName: getCompanyName, 
+			getBranchName: getBranchName, 
+			getTableNumber: getTableNumber, 
 			getCustomerUsername: getCustomerUsername, 
+			getOrderreferenceCode: getOrderreferenceCode, 
 			setOrderreferences: setOrderreferences, 
-			setOrderreference: setOrderreference, 
-			setOrderreferenceCode: setOrderreferenceCode, 
+			setCompanyName: setCompanyName, 
+			setBranchName: setBranchName, 
+			setTableNumber: setTableNumber, 
 			setCustomerUsername: setCustomerUsername, 
+			setOrderreferenceCode: setOrderreferenceCode, 
+			getOptions: {
+				1: 'getCompanyBranchOrderreferences', 
+				2: 'getCompanyBranchOrderreference', 
+				3: 'getCompanyBranchOrderreferencesOrderreferenceStatus', 
+				4: 'getCompanyBranchOrderreferencesNotOrderreferenceStatus', 
+				5: 'getCompanyBranchTableOrderreferences', 
+				6: 'getCompanyBranchTableOrderreference', 
+				7: 'getCompanyBranchTableOrderreferencesOrderreferenceStatus', 
+				8: 'getCompanyBranchTableOrderreferencesNotOrderreferenceStatus', 
+				9: 'getCustomerOrderreferences', 
+				10: 'getCustomerOrderreference', 
+				11: 'getCustomerOrderreferencesOrderreferenceStatus', 
+				12: 'getCustomerOrderreferencesNotOrderreferenceStatus'
+			}, 
 			fetchOrderreferences: fetchOrderreferences, 
-			fetchOrderreference: fetchOrderreference, 
 			addOrderreference: addOrderreference, 
 			updateOrderreference: updateOrderreference, 
 			deleteOrderreference: deleteOrderreference
-			}
+			};
 	
 	function getOrderreferences(){	return orderreferenceServiceObj.orderreferences;
 	}
-	function getOrderreference(){	return orderreferenceServiceObj.orderreference;
+	function getCompanyName(){	return orderreferenceServiceObj.companyName;
+	}
+	function getBranchName(){	return orderreferenceServiceObj.branchName;
+	}
+	function getTableNumber(){	return orderreferenceServiceObj.tableNumber;
 	}
 	function getOrderreferenceCode(){	return orderreferenceServiceObj.orderreferenceCode;
 	}
-	function getCustomerUsername(){	return orderreferenceServiceObj.customerUsername;
-	}
 	function setOrderreferences(orderreferences){	orderreferenceServiceObj.orderreferences = orderreferences;
 	}
-	function setOrderreference(orderreference){	orderreferenceServiceObj.orderreference = orderreference;
+	function setCompanyName(companyName){	orderreferenceServiceObj.companyName = companyName;
+	}
+	function setBranchName(branchName){	orderreferenceServiceObj.branchName = branchName;
+	}
+	function setTableNumber(tableNumber){	orderreferenceServiceObj.tableNumber = tableNumber;
 	}
 	function setOrderreferenceCode(orderreferenceCode){	orderreferenceServiceObj.orderreferenceCode = orderreferenceCode;
 	}
-	function setCustomerUsername(customerUsername){	orderreferenceServiceObj.customerUsername = customerUsername;
-	}
 	
-	function fetchOrderreferences(){
+	function fetchOrderreferences(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(orderreferenceServiceObj.getOptions[getOption]){
+		case 'getCompanyBranchOrderreferences':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/orderreferences';
+			break;
+		case 'getCompanyBranchOrderreference':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode;
+			break;
+		case 'getCompanyBranchOrderreferencesOrderreferenceStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/orderreferences/status/' + getParams['OrderreferenceStatus'];
+			break;
+		case 'getCompanyBranchOrderreferencesNotOrderreferenceStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/orderreferences/status_not/' + getParams['OrderreferenceStatus'];
+			break;
+		case 'getCompanyBranchTableOrderreferences':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences';
+			break;
+		case 'getCompanyBranchTableOrderreference':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode;
+			break;
+		case 'getCompanyBranchTableOrderreferencesOrderreferenceStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences/status/' + getParams['OrderreferenceStatus'];
+			break;
+		case 'getCompanyBranchTableOrderreferencesNotOrderreferenceStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences/status_not/' + getParams['OrderreferenceStatus'];
+			break;
+		case 'getCustomerOrderreferences':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences';
+			break;
+		case 'getCustomerOrderreference':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode;
+			break;
+		case 'getCustomerOrderreferencesOrderreferenceStatus':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/status/' + getParams['OrderreferenceStatus'];
+			break;
+		case 'getCustomerOrderreferencesNotOrderreferenceStatus':
+			httpConfig['url'] = API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/status_not/' + getParams['OrderreferenceStatus'];
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchOrderreferencesSuccessCallback)
@@ -97,52 +160,8 @@ function orderreferenceService(
 				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){	orderreferencesDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 				}
 				
-				key = responseData[i][ORDERREFERENCES_DB_FIELDS[0]]; //orderreference_code
+				key = responseData[i][ORDERREFERENCES_DB_FIELDS[1]]; //orderreference_code
 				orderreferenceServiceObj.orderreferences[key] = orderreferencesDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchOrderreference(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
-				};
-		
-		$http(httpConfig)
-		.then(fetchOrderreferenceSuccessCallback)
-		.catch(fetchOrderreferenceFailedCallback);
-		
-		function fetchOrderreferenceSuccessCallback(response){
-			var orderreference = undefined;
-			orderreferenceServiceObj.orderreference = {};
-			
-			convertOrderreferenceResponseToMap(response.data);
-			orderreference = orderreferenceServiceObj.orderreference;
-			orderreference = JSON.stringify(orderreference);
-			localStorage.setItem(
-					ORDERREFERENCE_KEY, 
-					orderreference
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertOrderreferenceResponseToMap(responseData){
-			for (var i=0; i<responseData.length; i++){
-				var orderreferenceDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){	orderreferenceDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
-				}
-				
-				var key = responseData[i][ORDERREFERENCES_DB_FIELDS[0]]; //orderreference_code
-				orderreferenceServiceObj.orderreference[key] = orderreferenceDetails;
 				}
 			}
 		return deferred.promise;
@@ -152,7 +171,7 @@ function orderreferenceService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences', 
+				url: API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences', 
 				data: orderreferences
 				};
 		
@@ -172,7 +191,7 @@ function orderreferenceService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode, 
+				url: API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode, 
 				data: orderreference
 				};
 		
@@ -192,7 +211,7 @@ function orderreferenceService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'DELETE', 
-				url: API_BASE_URL + '/customers/' + orderreferenceServiceObj.customerUsername + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
+				url: API_BASE_URL + '/companies/' + orderreferenceServiceObj.companyName + '/branches/' + orderreferenceServiceObj.branchName + '/tables/' + orderreferenceServiceObj.tableNumber + '/orderreferences/' + orderreferenceServiceObj.orderreferenceCode
 				};
 		
 		$http(httpConfig)

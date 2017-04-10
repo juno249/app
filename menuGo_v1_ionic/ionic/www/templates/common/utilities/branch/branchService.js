@@ -35,7 +35,7 @@ function branchService(
 			getOptions: {
 				1: 'getCompanyBranches', 
 				2: 'getCompanyBranch'
-			}, 
+					}, 
 			fetchBranches: fetchBranches, 
 			addBranchValidate: addBranchValidate, 
 			addBranch: addBranch, 
@@ -198,7 +198,7 @@ function branchService(
 		var httpConfig = {
 				method: 'DELETE', 
 				url: API_BASE_URL + '/companies/' + branchServiceObj.companyName + '/branches/' + branchServiceObj.branchName
-		};
+				};
 		
 		$http(httpConfig)
 		.then(deleteBranchSuccessCallback)

@@ -21,26 +21,25 @@ function tableService(
 		$q
 		){
 	const TABLES_KEY = 'Tables';
-	const TABLE_KEY = 'Table';
 	
 	var tableServiceObj = {
 			tables: {}, 
-			table: {}, 
 			companyName: undefined, 
 			branchName: undefined, 
 			tableNumber: undefined, 
 			getTables: getTables, 
-			getTable: getTable, 
 			getCompanyName: getCompanyName, 
 			getBranchName: getBranchName, 
 			getTableNumber: getTableNumber, 
 			setTables: setTables, 
-			setTable: setTable, 
 			setCompanyName: setCompanyName, 
 			setBranchName: setBranchName, 
 			setTableNumber: setTableNumber, 
+			getOptions: {
+				1: 'getCompanyBranchTables', 
+				2: 'getCompanyBranchTable'
+					}, 
 			fetchTables: fetchTables, 
-			fetchTable: fetchTable, 
 			addTable: addTable, 
 			updateTable: updateTable, 
 			deleteTable: deleteTable
@@ -67,17 +66,28 @@ function tableService(
 	function setTableNumber(tableNumber){	tableServiceObj.tableNumber = tableNumber;
 	}
 	
-	function fetchTables(){
+	function fetchTables(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(tableServiceObj.getOptions[getOption]){
+		case 'getCompanyBranchTables':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables';
+			break;
+		case 'getCompanyBranchTables':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchTablesSuccessCallback)
 		.catch(fetchTablesFailedCallback);
-
+		
 		function fetchTablesSuccessCallback(response){
 			var tables = undefined;
 			tableServiceObj.tables = {};
@@ -106,50 +116,6 @@ function tableService(
 				
 				key = responseData[i][TABLES_DB_FIELDS[1]]; //table_number
 				tableServiceObj.tables[key] = tablesDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchTable(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + tableServiceObj.companyName + '/branches/' + tableServiceObj.branchName + '/tables/' + tableServiceObj.tableNumber
-				};
-		
-		$http(httpConfig)
-		.then(fetchTableSuccessCallback)
-		.catch(fetchTableFailedCallback);
-		
-		function fetchTableSuccessCallback(response){
-			var table = undefined;
-			tableServiceObj.table = {};
-			
-			convertTableResponseToMap(response.data);
-			table = tableServiceObj.table;
-			table = JSON.stringify(table);
-			localStorage.setItem(
-					TABLE_KEY, 
-					table
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchTableFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertTableResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var tableDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){	tableDetails[TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
-				}
-				
-				key = responseData[i][TABLES_DB_FIELDS[1]]; //table_number
-				tableServiceObj.table[key] = tableDetails;
 				}
 			}
 		return deferred.promise;

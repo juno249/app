@@ -46,7 +46,7 @@ function marketingService(
 				2: 'getAdvertisement', 
 				3: 'getCompanyAdvertisements', 
 				4: 'getCompanyAdvertisement'
-			}, 
+					}, 
 			fetchAdvertisements: fetchAdvertisements, 
 			addAdvertisement: addAdvertisement, 
 			updateAdvertisement: updateAdvertisement, 
@@ -54,12 +54,12 @@ function marketingService(
 			getOptionsBlogs: {
 				1: 'getBlogs', 
 				2: 'getBlog'
-			}, 
+					}, 
 			fetchBlogs: fetchBlogs, 
 			addBlog: addBlog, 
 			updateBlog: updateBlog, 
 			deleteBlog: deleteBlog
-			}
+			};
 	
 	function getAdvertisements(){	return marketingServiceObj.advertisements;
 	}

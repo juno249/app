@@ -32,40 +32,36 @@ function orderService(
 	
 	var orderServiceObj = {
 			orders: {}, 
-			customerOrders: {},  
 			companyName: undefined, 
 			branchName: undefined, 
 			tableNumber: undefined, 
-			customerUsername: undefined, 
+			orderreferenceCode: undefined, 
 			orderId: undefined, 
 			getOrders: getOrders, 
-			getCustomerOrders: getCustomerOrders, 
 			getCompanyName: getCompanyName, 
 			getBranchName: getBranchName, 
 			getTableNumber: getTableNumber, 
-			getCustomerUsername: getCustomerUsername, 
+			getOrderreferenceCode: getOrderreferenceCode, 
 			getOrderId: getOrderId, 
 			setOrders: setOrders, 
-			setCustomerOrders: setCustomerOrders, 
 			setCompanyName: setCompanyName, 
 			setBranchName: setBranchName, 
 			setTableNumber: setTableNumber, 
-			setCustomerUsername: setCustomerUsername, 
+			setOrderreferenceCode: setOrderreferenceCode, 
 			setOrderId: setOrderId, 
 			getOptions: {
 				1: 'getCompanyBranchOrders', 
-				2: 'getCompanyBranchOrdersOrderStatus', 
-				3: 'getCompanyBranchOrdersNotOrderStatus', 
-				4: 'getCompanyBranchTableOrders', 
-				5: 'getCompanyBranchTableOrdersOrderStatus', 
-				6: 'getCompanyBranchTableOrdersNotOrderStatus', 
-				7: 'getCustomerOrders', 
-				8: 'getCustomerOrdersOrderStatus', 
-				9: 'getCustomerOrdersNotOrderStatus'
-					}, 
-			deleteOptions: {
-				1: 'deleteOrderCompany', 
-				2: 'deleteOrderCustomer'
+				2: 'getCompanyBranchOrder', 
+				3: 'getCompanyBranchOrdersOrderStatus', 
+				4: 'getCompanyBranchOrdersNotOrderStatus', 
+				5: 'getCompanyBranchTableOrders', 
+				6: 'getCompanyBranchTableOrder', 
+				7: 'getCompanyBranchTableOrdersOrderStatus', 
+				8: 'getCompanyBranchTableOrdersNotOrderStatus', 
+				9: 'getCompanyBranchTableOrderreferenceOrders', 
+				10: 'getCompanyBranchTableOrderreferenceOrder', 
+				11: 'getCompanyBranchTableOrderreferenceOrdersOrderStatus', 
+				12: 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus'
 					}, 
 			fetchOrders: fetchOrders, 
 			addOrder: addOrder, 
@@ -75,21 +71,17 @@ function orderService(
 	
 	function getOrders(){	return orderServiceObj.orders;
 	}
-	function getCustomerOrders(){	return orderServiceObj.customerOrders;
-	}
 	function getCompanyName(){	return orderServiceObj.companyName;
 	}
 	function getBranchName(){	return orderServiceObj.branchName;
 	}
 	function getTableNumber(){	return orderServiceObj.tableNumber;
 	}
-	function getCustomerUsername(){	return orderServiceObj.customerUsername;
+	function getOrderreferenceCode(){	return orderServiceObj.orderreferenceCode;
 	}
 	function getOrderId(){	return orderServiceObj.orderId;
 	}
 	function setOrders(orders){	orderServiceObj.orders = orders;
-	}
-	function setCustomerOrders(customerOrders){	orderServiceObj.customerOrders = customerOrders;
 	}
 	function setCompanyName(companyName){	orderServiceObj.companyName = companyName;
 	}
@@ -97,7 +89,7 @@ function orderService(
 	}
 	function setTableNumber(tableNumber){	orderServiceObj.tableNumber = tableNumber;
 	}
-	function setCustomerUsername(customerUsername){	orderServiceObj.customerUsername = customerUsername;
+	function setOrderreferenceCode(orderreferenceCode){	orderServiceObj.orderreferenceCode = orderreferenceCode;
 	}
 	function setOrderId(orderId){	orderServiceObj.orderId = orderId;
 	}
@@ -107,37 +99,44 @@ function orderService(
 			getParams
 			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET'
-					};
+		var httpConfig = {	method: 'GET'	};
 		
 		switch(orderServiceObj.getOptions[getOption]){
-			case 'getCompanyBranchOrders': 
+			case 'getCompanyBranchOrders':
 				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders';
 				break;
-			case 'getCompanyBranchOrdersOrderStatus': 
-				httpConfiig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/' + getParams['OrderStatus'];
+			case 'getCompanyBranchOrder':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/' + orderServiceObj.orderId;
 				break;
-			case 'getCompanyBranchOrdersNotOrderStatus': 
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/not/' + getParams['OrderStatus'];
+			case 'getCompanyBranchOrdersOrderStatus':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/status/' + getParams['OrderStatus'];
 				break;
-			case 'getCompanyBranchTableOrders': 
+			case 'getCompanyBranchOrdersNotOrderStatus':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/status_not/' + getParams['OrderStatus'];
+				break;
+			case 'getCompanyBranchTableOrders':
 				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders';
 				break;
-			case 'getCompanyBranchTableOrdersOrderStatus': 
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + getParams['OrderStatus'];
+			case 'getCompanyBranchTableOrder':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId;
+				break;
+			case 'getCompanyBranchTableOrdersOrderStatus':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/status/' + getParams['OrderStatus'];
 				break;
 			case 'getCompanyBranchTableOrdersNotOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/not/' + getParams['OrderStatus'];
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/status_not/' + getParams['OrderStatus'];
 				break;
-			case 'getCustomerOrders': 
-				httpConfig['url'] = API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders';
+			case 'getCompanyBranchTableOrderreferenceOrders':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders';
 				break;
-			case 'getCustomerOrdersOrderStatus': 
-				httpConfig['url'] = API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/' + getParams['OrderStatus']
+			case 'getCompanyBranchTableOrderreferenceOrder':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/' + orderServiceObj.orderId;
 				break;
-			case 'getCustomerOrdersNotOrderStatus': 
-				httpConfig['url'] = API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/not/' + getParams['OrderStatus']
+			case 'getCompanyBranchTableOrderreferenceOrdersOrderStatus':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status/' + getParams['OrderStatus'];
+				break;
+			case 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus':
+				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status_not/' + getParams['OrderStatus'];
 				break;
 			default: break;
 			}
@@ -183,7 +182,7 @@ function orderService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'POST', 
-				url: API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders', 
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders', 
 				data: orders
 				};
 		
@@ -203,7 +202,7 @@ function orderService(
 		var deferred = $q.defer();
 		var httpConfig = {
 				method: 'PUT', 
-				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId, 
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/' + orderServiceObj.orderId, 
 				data: order
 				};
 		
@@ -222,18 +221,9 @@ function orderService(
 	function deleteOrder(deleteOption){
 		var deferred = $q.defer();
 		var httpConfig = {
-				method: 'DELETE'
+				method: 'DELETE', 
+				url: API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/' + orderServiceObj.orderId
 					};
-		
-		switch(orderServiceObj.deleteOptions[deleteOption]){
-			case 'deleteOrderCompany':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId;
-				break;
-			case 'deleteOrderCustomer':
-				httpConfig['url'] = API_BASE_URL + '/customers/' + orderServiceObj.customerUsername + '/orders/' + orderServiceObj.orderId;
-				break;
-			default: break;
-			}
 		
 		$http(httpConfig)
 		.then(deleteOrderSuccessCallback)
