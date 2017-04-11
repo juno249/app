@@ -76,7 +76,7 @@ function loginService(
 				userResponseData.customer_name_mname + ". " + 
 				userResponseData.customer_name_lname;
 			loginServiceObj.user.isAuthenticated = true;
-		
+			
 			$http.defaults.headers.common.Authorization = "bearer " + loginServiceObj.user.token;
 			
 			if(USER_ROLES.customer == loginServiceObj.user.role){

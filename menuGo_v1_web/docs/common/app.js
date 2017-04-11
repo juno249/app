@@ -1,18 +1,19 @@
 angular
-.module('starter', [
-	'datatables', 
-	'datatables.bootstrap', 
-	'datatables.buttons', 
-	'datatables.fixedcolumns', 
-	'datatables.light-columnfilter', 
-	'datatables.scroller', 
-	'datatables.select', 
-	'ngStorage', 
-	'ui.bootstrap', 
-	'ui.router'
-	]
-)
-	
+.module(
+		'starter', 
+		[
+			'datatables.bootstrap', 
+			'datatables.buttons', 
+			'datatables.fixedcolumns', 
+			'datatables.light-columnfilter', 
+			'datatables.scroller', 
+			'datatables.select', 
+			'ngStorage', 
+			'ui.bootstrap', 
+			'ui.router'
+			]
+		)
+		
 .config(doRouteConfig)
 .run(doRunConfig);
 
@@ -27,7 +28,7 @@ function doRouteConfig(
 				url: '/manage', 
 				views: {
 					'main': {
-						templateUrl: 'docs/dynamic/manage/manage.html'	
+						templateUrl: 'docs/dynamic/manage/manage.html'
 							}
 			}
 			}
@@ -119,7 +120,7 @@ function doRouteConfig(
 	
 	$urlRouterProvider
 	.otherwise("/home");
-}
+	}
 
 function doRunConfig(
 		$rootScope, 
@@ -136,7 +137,7 @@ function doRunConfig(
 					fromStateParams
 					){
 				var user = localStorage.getItem('User');
-		
+				
 				if(null == user){	$timeout(
 						function(){	$state.go('home');
 						}
