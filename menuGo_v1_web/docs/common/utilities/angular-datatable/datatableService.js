@@ -61,7 +61,7 @@ function datatableService(
 			broadcastMsgAdd, 
 			broadcastMsgUpdate, 
 			broadcastMsgDelete
-			){	
+			){
 		var dtOptions = datatableServiceObj.dtOptions;
 		
 		dtOptions = dtOptionsBuilder
@@ -90,6 +90,7 @@ function datatableService(
 					method: 'GET', 
 					url: restApiSource
 					};
+			
 			$http(httpConfig)
 			.then(fromFnPromiseSuccessCallback)
 			.catch(fromFnPromiseFailedCallback);
@@ -116,6 +117,7 @@ function datatableService(
 		
 		for(var i=0; i<dbColumnFieldsLength; i++){
 			var dbFieldRunner = dbColumnFields[i];
+			
 			dtColumns.push(
 					dtColumnBuilder
 					.newColumn(dbFieldRunner)
@@ -131,6 +133,7 @@ function datatableService(
 				.renderWith(function(data){
 					var params = JSON.stringify(data).replace(/"/g, "&quot;");
 					var htmlStr = '';
+					
 					htmlStr += '<div ';
 					htmlStr += 'style="position: absolute; top: 0px; left: 0px; display:block; width: 100%; height: 100%; z-index: 3;" ';
 					htmlStr += 'ng-click="' + controllerObj.controllerObjName + '.dtAssignOnSelect(' + params +  ', $event);">';
@@ -160,17 +163,20 @@ function datatableService(
 					}
 		var addButton = {
 				text: 'Add', 
-				action: function(){	$rootScope.$broadcast(broadcastMsgAdd);	}, 
+				action: function(){	$rootScope.$broadcast(broadcastMsgAdd);	
+				}, 
 				className: 'btn-control btn-primary font-family-1-size-small'
 					}
 		var updateButton = {
 				text: 'Update', 
-				action: function(){	$rootScope.$broadcast(broadcastMsgUpdate);	}, 
+				action: function(){	$rootScope.$broadcast(broadcastMsgUpdate);
+				}, 
 				className: 'btn-control btn-warning font-family-1-size-small'
 					}
 		var deleteButton = {
 				text: 'Delete', 
-				action: function(){	$rootScope.$broadcast(broadcastMsgDelete);	}, 
+				action: function(){	$rootScope.$broadcast(broadcastMsgDelete);	
+				}, 
 				className: 'btn-control btn-danger font-family-1-size-small'
 					}
 		return [
