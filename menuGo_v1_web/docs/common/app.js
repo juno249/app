@@ -106,7 +106,8 @@ function doRouteConfig(
 			}
 			)
 	.state(
-			'manage.company.menu.menuitem', {
+			'manage.company.menu.menuitem', 
+			{
 				url: '/:menuName/menuitem', 
 				views: {
 					'manage-datatable@manage': {
