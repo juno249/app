@@ -41,7 +41,7 @@ function bannerController(
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
 		vm.user= JSON.parse(vm.user);
-		} 
+		}
 	
 	//controller_method
 	vm.doLogin = doLogin;

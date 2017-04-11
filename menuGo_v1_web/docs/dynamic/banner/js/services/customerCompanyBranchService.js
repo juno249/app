@@ -21,57 +21,62 @@ function customerCompanyBranchService(
 		$q
 		){
 	const CUSTOMERS_COMPANIES_BRANCHES_KEY = 'CustomersCompaniesBranches';
-	const CUSTOMER_COMPANY_BRANCH_KEY = 'CustomerCompanyBranch';
 	
 	var customerCompanyBranchServiceObj = {
 			customersCompaniesBranches: {}, 
-			customerCompanyBranch: {}, 
 			customerUsername: undefined, 
 			companyName: undefined, 
-			branchName: undefined, 
+			branchId: undefined, 
 			getCustomersCompaniesBranches, 
-			getCustomerCompanyBranch, 
 			getCustomerUsername, 
 			getCompanyName, 
-			getBranchName, 
+			getBranchId, 
 			setCustomersCompaniesBranches, 
-			setCustomerCompanyBranch, 
 			setCustomerUsername, 
 			setCompanyName, 
-			setBranchName, 
+			setBranchId, 
+			getOptions: {
+				1: 'getCustomersCompaniesBranches', 
+				2: 'getCustomerCompanyBranch'
+					}, 
 			fetchCustomersCompaniesBranches: fetchCustomersCompaniesBranches, 
-			fetchCustomerCompanyBranch: fetchCustomerCompanyBranch, 
-			addCustomerCompanyBranch: addCustomerCompanyBranch, 
-			deleteCustomerCompanyBranch: deleteCustomerCompanyBranch
+			addCustomerCompanyBranch: addCustomerCompanyBranch
 			};
 	
 	function getCustomersCompaniesBranches(){	return customerCompanyBranchServiceObj.customersCompaniesBranches;
-	}
-	function getCustomerCompanyBranch(){	return customerCompanyBranchServiceObj.customerCompanyBranch;
 	}
 	function getCustomerUsername(){	return customerCompanyBranchServiceObj.customerUsername;
 	}
 	function getCompanyName(){	return customerCompanyBranchServiceObj.companyName;
 	}
-	function getBranchName(){	return customerCompanyBranchServiceObj.branchName;
+	function getBranchId(){	return customerCompanyBranchServiceObj.branchId;
 	}
 	function setCustomersCompaniesBranches(customersCompaniesBranches){	customerCompanyBranchServiceObj.customersCompaniesBranches = customersCompaniesBranches;
-	}
-	function setCustomerCompanyBranch(customerCompanyBranch){	customerCompanyBranchServiceObj.customerCompanyBranch = customerCompanyBranch;
 	}
 	function setCustomerUsername(customerUsername){	customerCompanyBranchServiceObj.customerUsername = customerUsername;
 	}
 	function setCompanyName(companyName){	customerCompanyBranchServiceObj.companyName = companyName;
 	}
-	function setBranchName(branchName){	customerCompanyBranchServiceObj.branchName = branchName;
+	function setBranchId(branchId){	customerCompanyBranchServiceObj.branchId = branchId;
 	}
 	
-	function fetchCustomersCompaniesBranches(){
+	function fetchCustomersCompaniesBranches(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers-companies-branches'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(customerCompanyBranchServiceObj.getOptions[getOption]){
+		case 'getCustomersCompaniesBranches':
+			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches';
+			break;
+		case 'getCustomerCompanyBranch':
+			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchId;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchCustomersCompaniesBranchesSuccessCallback)
@@ -110,50 +115,6 @@ function customerCompanyBranchService(
 		return deferred.promise;
 		}
 	
-	function fetchCustomerCompanyBranch(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchName
-				};
-		
-		$http(httpConfig)
-		.then(fetchCustomerCompanyBranchSuccessCallback)
-		.catch(fetchCustomerCompanyBranchFailedCallback);
-		
-		function fetchCustomerCompanyBranchSuccessCallback(response){
-			var customerCompanyBranch = undefined;
-			customerCompanyBranchServiceObj.customerCompanyBranch = {};
-			
-			convertCustomerCompanyBranchResponseToMap(response.data);
-			customerCompanyBranch = customerCompanyBranchServiceObj.customerCompanyBranch;
-			customerCompanyBranch  = JSON.stringify(customerCompanyBranch);
-			localStorage.setItem(
-					CUSTOMER_COMPANY_BRANCH_KEY, 
-					customerCompanyBranch
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertCustomerCompanyBranchResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var customerCompanyBranchDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(CUSTOMERCOMPANYBRANCH_DB_FIELDS).length; j++){	customerCompanyBranchDetails[CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]] = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[j]];
-				}
-				
-				var key = responseData[i][CUSTOMERCOMPANYBRANCH_DB_FIELDS[0]]; //customer_username
-				customerCompanyBranchServiceObj.customerCompanyBranch[key] = customerCompanyBranchDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
 	function addCustomerCompanyBranch(transParams){
 		var deferred = $q.defer();
 		var httpConfig = {
@@ -170,25 +131,6 @@ function customerCompanyBranchService(
 		}
 		
 		function addCustomerCompanyBranchTransactionFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		return deferred.promise;
-		}
-		
-	function deleteCustomerCompanyBranch(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'DELETE', 
-				url: API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchName
-				};
-		
-		$http(httpConfig)
-		.then(deleteCustomerCompanyBranchSuccessCallback)
-		.catch(deleteCustomerCompanyBranchFailedCallback);
-		
-		function deleteCustomerCompanyBranchSuccessCallback(response){	deferred.resolve(response);
-		}
-		
-		function deleteCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
 		}
