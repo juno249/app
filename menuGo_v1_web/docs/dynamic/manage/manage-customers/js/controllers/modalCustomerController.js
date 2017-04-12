@@ -331,8 +331,8 @@ function modalCustomerController(
 							}
 							}
 					}
-		validationErr = {};
-		validationErrDB = {};
+		vm.validationErr = {};
+		vm.validationErrDB = {};
 		}
 	
 	function doDom2DbColumn(formMode){

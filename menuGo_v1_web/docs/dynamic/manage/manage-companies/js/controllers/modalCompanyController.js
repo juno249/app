@@ -281,8 +281,8 @@ function modalCompanyController(
 							}
 							}
 					}
-		validationErr = {};
-		validationErrDB = {};
+		vm.validationErr = {};
+		vm.validationErrDB = {};
 		}
 	
 	function doDom2DbColumn(){
