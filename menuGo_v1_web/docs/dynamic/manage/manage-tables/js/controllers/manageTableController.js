@@ -39,7 +39,7 @@ function manageTableController(
 	vm.table =  {};
 	vm.controllerObjName = 'manageTableController';
 	vm.dtInstance = dtInstanceCallback;
-	vm.dtHiddenColumns = {}
+	vm.dtHiddenColumns = {};
 	vm.dbColumnFields = TABLES_DB_FIELDS;
 	vm.dbColumn2Colheader = {
 			table_id: 'Id', 
@@ -186,22 +186,23 @@ function manageTableController(
 		vm.dtInstance.reloadData();
 		vm.table = {};
 		}
-
+	
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_TABLE_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
-
-		$.each(tableDt.fnSettings().aoColumns, 
+		
+		$.each(
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
 	
 	dtInitialize();
@@ -246,9 +247,18 @@ function manageTableController(
 			}
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.addTable, addTable);
+	$scope.$on(
+			BROADCAST_MESSAGES.addTable, 
+			addTable
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateTable, updateTable);
-
-	$scope.$on(BROADCAST_MESSAGES.deleteTable, deleteTable);
+	$scope.$on(
+			BROADCAST_MESSAGES.updateTable, 
+			updateTable
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteTable, 
+			deleteTable
+			);
 	}

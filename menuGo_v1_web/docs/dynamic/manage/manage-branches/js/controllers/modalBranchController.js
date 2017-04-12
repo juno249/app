@@ -1,6 +1,9 @@
 angular
 .module('starter')
-.controller('modalBranchController', modalBranchController);
+.controller(
+		'modalBranchController', 
+		modalBranchController
+		);
 
 modalBranchController.$inject = [
 	'$uibModalInstance', 
@@ -44,7 +47,7 @@ function modalBranchController(
 			branchAddressPostalcode: 'branch_address_postalcode', 
 			branchAddressCountry: 'branch_address_country', 
 			branchHotline: 'branch_hotline'
-				}
+				};
 	vm.dbColumn2Dom = {
 			branch_name: 'branchName', 
 			company_name: 'companyName', 
@@ -55,7 +58,7 @@ function modalBranchController(
 			branch_address_postalcode: 'branchAddressPostalcode', 
 			branch_address_country: 'branchAddressCountry', 
 			branch_hotline: 'branchHotline'
-				}
+				};
 	vm.dbColumn2DomIndex = {
 			branch_name: 0, 
 			company_name: 1, 
@@ -66,7 +69,7 @@ function modalBranchController(
 			branch_address_postalcode: 6, 
 			branch_address_country: 7, 
 			branch_hotline: 8
-			}
+			};
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
@@ -86,9 +89,10 @@ function modalBranchController(
 				doSubmit
 				);
 		
-		$timeout(	function(){	$(DOM_FORM).validator('update');
-		}
-		);
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
 		}
 	
 	function initDom(){
@@ -107,7 +111,7 @@ function modalBranchController(
 					);
 			}
 		}
-
+	
 	function doCancel(){	$uibModalInstance.close();
 	}
 	
@@ -230,14 +234,14 @@ function modalBranchController(
 		vm.validationErr = {};
 		vm.validationErrDB = {}
 		}
-
+	
 	function doDom2DbColumn(){
 		var data = {};
 		
 		Object.keys(vm.branch).forEach(
 				function(branchKey){
 					if(
-							!(null == vm.dom2DbColumn[branchKey]) && 
+							!(null == vm.dom2DbColumn[branchKey]) &&
 							!(undefined == vm.dom2DbColumn[branchKey])
 							){	data[vm.dom2DbColumn[branchKey]] = vm.branch[branchKey];
 							}

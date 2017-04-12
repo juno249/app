@@ -130,19 +130,20 @@ function datatableService(
 				dtColumnBuilder
 				.newColumn(null)
 				.notSortable()
-				.renderWith(function(data){
-					var params = JSON.stringify(data).replace(/"/g, "&quot;");
-					var htmlStr = '';
-					
-					htmlStr += '<div ';
-					htmlStr += 'style="position: absolute; top: 0px; left: 0px; display:block; width: 100%; height: 100%; z-index: 3;" ';
-					htmlStr += 'ng-click="' + controllerObj.controllerObjName + '.dtAssignOnSelect(' + params +  ', $event);">';
-					htmlStr += '&nbsp';
-					htmlStr += '</div>';
-					
-					return htmlStr;
-					}
-				)
+				.renderWith(
+						function(data){
+							var params = JSON.stringify(data).replace(/"/g, "&quot;");
+							var htmlStr = '';
+							
+							htmlStr += '<div ';
+							htmlStr += 'style="position: absolute; top: 0px; left: 0px; display:block; width: 100%; height: 100%; z-index: 3;" ';
+							htmlStr += 'ng-click="' + controllerObj.controllerObjName + '.dtAssignOnSelect(' + params +  ', $event);">';
+							htmlStr += '&nbsp';
+							htmlStr += '</div>';
+							
+							return htmlStr;
+							}
+						)
 				.withClass('select-checkbox')
 				.withOption('width', '5%')
 				.withTitle('')
@@ -163,7 +164,7 @@ function datatableService(
 					}
 		var addButton = {
 				text: 'Add', 
-				action: function(){	$rootScope.$broadcast(broadcastMsgAdd);	
+				action: function(){	$rootScope.$broadcast(broadcastMsgAdd);
 				}, 
 				className: 'btn-control btn-primary font-family-1-size-small'
 					}
@@ -175,7 +176,7 @@ function datatableService(
 					}
 		var deleteButton = {
 				text: 'Delete', 
-				action: function(){	$rootScope.$broadcast(broadcastMsgDelete);	
+				action: function(){	$rootScope.$broadcast(broadcastMsgDelete);
 				}, 
 				className: 'btn-control btn-danger font-family-1-size-small'
 					}
@@ -190,7 +191,7 @@ function datatableService(
 	function doDTConfigDom(){
 		var domStr = '';
 		
-		domStr += '<"row"'; 
+		domStr += '<"row"';
 		domStr += '<"col-md-6 col-sm-6 col-xs-12"i>';
 		domStr += '<"col-md-6 col-sm-6 col-xs-12"f>';
 		domStr += '>';

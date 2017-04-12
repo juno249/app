@@ -21,26 +21,25 @@ function menuitemService(
 		$q
 		){
 	const MENUITEMS_KEY = 'Menuitems';
-	const MENUITEM_KEY = 'Menuitem';
 	
 	var menuitemServiceObj = {
 			menuitems: {}, 
-			menuitem: {}, 
 			companyName: undefined, 
 			menuName: undefined, 
 			menuitemCode: undefined, 
 			getMenuitems: getMenuitems, 
-			getMenuitem: getMenuitem, 
 			getCompanyName: getCompanyName, 
 			getMenuName: getMenuName, 
 			getMenuitemCode: getMenuitemCode, 
 			setMenuitems: setMenuitems, 
-			setMenuitem: setMenuitem, 
 			setCompanyName: setCompanyName, 
 			setMenuName: setMenuName, 
 			setMenuitemCode: setMenuitemCode, 
+			getOptions: {
+				1: 'getCompanyMenuMenuitems', 
+				2: 'getCompanyMenuMenuitem'
+					}, 
 			fetchMenuitems: fetchMenuitems, 
-			fetchMenuitem: fetchMenuitem, 
 			addMenuitem: addMenuitem, 
 			updateMenuitem: updateMenuitem, 
 			deleteMenuitem: deleteMenuitem, 
@@ -48,8 +47,6 @@ function menuitemService(
 			};
 	
 	function getMenuitems(){	return menuitemServiceObj.menuitems;
-	}
-	function getMenuitem(){	return menuitemServiceObj.menuitem;
 	}
 	function getCompanyName(){	return menuitemServiceObj.companyName;
 	}
@@ -59,8 +56,6 @@ function menuitemService(
 	}
 	function setMenuitems(menuitems){	menuitemServiceObj.menuitems = menuitems;
 	}
-	function setMenuitem(menuitem){	menuitemServiceObj.menuitem = menuitem;
-	}
 	function setCompanyName(companyName){	menuitemServiceObj.companyName = companyName;
 	}
 	function setMenuName(menuName){	menuitemServiceObj.menuName = menuName;
@@ -68,12 +63,23 @@ function menuitemService(
 	function setMenuitemCode(menuitemCode){	menuitemServiceObj.menuitemCode = menuitemCode;
 	}
 	
-	function fetchMenuitems(){
+	function fetchMenuitems(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(menuitemServiceObj.getOptions[getOption]){
+		case 'getCompanyMenuMenuitems':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems';
+			break;
+		case 'getCompanyMenuMenuitem':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchMenuitemsSuccessCallback)
@@ -107,50 +113,6 @@ function menuitemService(
 				
 				var key = responseData[i][MENUITEMS_DB_FIELDS[1]]; //menuitem_code
 				menuitemServiceObj.menuitems[key] = menuitemsDetails;
-				}
-			}
-		return deferred.promise;
-		}
-	
-	function fetchMenuitem(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + menuitemServiceObj.companyName + '/menus/' + menuitemServiceObj.menuName + '/menuitems/' + menuitemServiceObj.menuitemCode
-				};
-		
-		$http(httpConfig)
-		.then(fetchMenuitemSuccessCallback)
-		.catch(fetchMenuitemFailedCallback);
-		
-		function fetchMenuitemSuccessCallback(response){
-			var menuitem = undefined;
-			menuitemServiceObj.menuitem = {};
-			
-			convertMenuitemResponseToMap(response.data);
-			menuitem = menuitemServiceObj.menuitem;
-			menuitem = JSON.stringify(menuitem);
-			localStorage.setItem(
-					MENUITEM_KEY, 
-					menuitem
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchMenuitemFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertMenuitemResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var menuitemDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(MENUITEMS_DB_FIELDS).length; j++){	menuitemDetails[MENUITEMS_DB_FIELDS[j]] = responseData[i][MENUITEMS_DB_FIELDS[j]];
-				}
-				
-				var key = responseData[i][MENUITEMS_DB_FIELDS[1]]; //menuitem_code
-				menuitemServiceObj.menuitem[key] = menuitemDetails;
 				}
 			}
 		return deferred.promise;

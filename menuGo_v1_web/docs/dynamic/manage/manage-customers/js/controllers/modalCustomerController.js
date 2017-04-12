@@ -62,7 +62,7 @@ function modalCustomerController(
 			customerBirthdayMonth: 'customer_birthday_month', 
 			customerBirthdayDate: 'customer_birthday_date', 
 			customerBirthdayYear: 'customer_birthday_year'
-				}
+				};
 	vm.dbColumn2Dom = {
 			customer_username: 'customerUsername', 
 			customer_password: 'customerPassword', 
@@ -82,7 +82,7 @@ function modalCustomerController(
 			customer_birthday_month: 'customerBirthdayMonth', 
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
-				}
+				};
 	vm.dbColumn2DomIndex = {
 			customer_username: 0, 
 			customer_password: 1, 
@@ -99,7 +99,7 @@ function modalCustomerController(
 			customer_address_country: 12, 
 			customer_mobile: 13, 
 			customer_email: 14
-			}
+			};
 	vm.customerRoleOptions = USER_ROLES;
 	vm.customerGenderOptions = USER_GENDERS;
 	vm.validationErr = {};
@@ -331,18 +331,17 @@ function modalCustomerController(
 							}
 							}
 					}
-		
 		validationErr = {};
 		validationErrDB = {};
 		}
-
+	
 	function doDom2DbColumn(formMode){
 		var data = {};
 		
 		Object.keys(customer).forEach(
 				function(customerKey){
 					if(
-							!(null == vm.dom2DbColumn[customerKey]) && 
+							!(null == vm.dom2DbColumn[customerKey]) &&
 							!(undefined == vm.dom2DbColumn[customerKey])
 							){	data[vm.dom2DbColumn[customerKey]] = vm.customer[customerKey];
 							}
@@ -351,7 +350,7 @@ function modalCustomerController(
 		
 		return data
 		}
-		
+	
 	function genValidationErrorFromResponse(responseError){
 		const CLASS_FORM_GROUP = '.form-group';
 		const CLASS_HAS_ERROR = 'has-error';
@@ -359,7 +358,7 @@ function modalCustomerController(
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
 		var statusTextKeys = Object.keys(statusTextObj);
-			
+		
 		statusTextKeys.forEach(
 				function(statusTextKey){
 					var dbColumnName = statusTextKey.split('.')[1];

@@ -57,7 +57,7 @@ function manageCustomerController(
 			customer_birthday_month: 'Birthday - month', 
 			customer_birthday_date: 'Birthday - date', 
 			customer_birthday_year: 'Birthday - year'
-				}
+				};
 	vm.dbColumn2Dom = {
 			customer_username: 'customerUsername', 
 			customer_password: 'customerPassword', 
@@ -77,7 +77,7 @@ function manageCustomerController(
 			customer_birthday_month: 'customerBirthdayMonth', 
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
-				}
+				};
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
@@ -88,7 +88,7 @@ function manageCustomerController(
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
-
+	
 	//controller_method
 	vm.dtAssignOnSelect = dtAssignOnSelect;
 	
@@ -219,22 +219,22 @@ function manageCustomerController(
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_CUSTOMER_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
-
-		$.each(tableDt.fnSettings().aoColumns, 
+		
+		$.each(
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
 	
 	dtInitialize();
-	
 	
 	function dtInitialize(){
 		datatableService.setDbColumnFields(vm.dbColumnFields);
@@ -276,9 +276,18 @@ function manageCustomerController(
 			}
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.addCustomer, addCustomer);
+	$scope.$on(
+			BROADCAST_MESSAGES.addCustomer, 
+			addCustomer
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateCustomer, updateCustomer);
-
-	$scope.$on(BROADCAST_MESSAGES.deleteCustomer, deleteCustomer);
+	$scope.$on(
+			BROADCAST_MESSAGES.updateCustomer, 
+			updateCustomer
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteCustomer, 
+			deleteCustomer
+			);
 	}

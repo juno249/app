@@ -19,7 +19,7 @@ manageCompanyController.$inject = [
 	'datatableService'
 	];
 
-function manageCompanyController(	
+function manageCompanyController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
 		COMPANIES_DB_FIELDS, 
@@ -45,13 +45,13 @@ function manageCompanyController(
 			company_desc: 'Description', 
 			company_category: 'Category', 
 			company_logo: 'Logo'
-				}
+				};
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
 			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
-				}
+				};
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
@@ -101,7 +101,7 @@ function manageCompanyController(
 	function addCompany(){
 		var formMode = 'I';
 		var fromSignup = false;
-			
+		
 		var modalInstance = $uibModal.open(
 				{
 					animation: true, 
@@ -228,19 +228,20 @@ function manageCompanyController(
 		var tableDt = $(DOM_COMPANY_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
 		
-		$.each(tableDt.fnSettings().aoColumns, 
+		$.each(
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
-
+	
 	dtInitialize();
 	
 	function dtInitialize(){
@@ -269,7 +270,7 @@ function manageCompanyController(
 				'initComplete', 
 				initCompleteCallback
 				);
-	
+		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}
 		
@@ -283,9 +284,18 @@ function manageCompanyController(
 			}
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.addCompany, addCompany);
+	$scope.$on(
+			BROADCAST_MESSAGES.addCompany, 
+			addCompany
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateCompany, updateCompany);
+	$scope.$on(
+			BROADCAST_MESSAGES.updateCompany, 
+			updateCompany
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.deleteCompany, deleteCompany);
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteCompany, 
+			deleteCompany
+			);
 	}

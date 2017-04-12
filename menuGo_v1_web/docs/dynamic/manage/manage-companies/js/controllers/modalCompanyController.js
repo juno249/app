@@ -46,19 +46,19 @@ function modalCompanyController(
 			companyDesc: 'company_desc', 
 			companyCategory: 'company_category', 
 			companyLogo: 'company_logo'
-				}
+				};
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 
 			company_desc: 'companyDesc', 
 			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
-				}
+				};
 	vm.dbColumn2DomIndex = {
 			company_name: 0, 
 			company_desc: 1, 
 			company_category: 2, 
 			company_logo: 3
-			}
+			};
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
@@ -281,18 +281,17 @@ function modalCompanyController(
 							}
 							}
 					}
-		
 		validationErr = {};
 		validationErrDB = {};
 		}
-
+	
 	function doDom2DbColumn(){
 		var data = {};
 		
 		Object.keys(company).forEach(
 				function(companyKey){
 					if(
-							!(null == vm.dom2DbColumn[companyKey]) && 
+							!(null == vm.dom2DbColumn[companyKey]) &&
 							!(undefined == vm.dom2DbColumn[companyKey])
 							){	data[vm.dom2DbColumn[companyKey]] = vm.company[companyKey];	}
 					}

@@ -184,10 +184,14 @@ function bannerController(
 			vm.user = JSON.parse(vm.user);
 			}
 		
-		$timeout(function(){	$state.go('manage');
-		}
-		);
+		$timeout(
+				function(){	$state.go('manage');
+				}
+				);
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.authAuthenticated, authAuthenticatedCallback);
+	$scope.$on(
+			BROADCAST_MESSAGES.authAuthenticated, 
+			authAuthenticatedCallback
+			);
 	}

@@ -40,17 +40,17 @@ function modalTableController(
 			tableNumber: 'table_number', 
 			tableCapacity: 'table_capacity', 
 			tableStatus: 'table_status'
-				}
+				};
 	vm.dbColumn2Dom = {
 			table_number: 'tableNumber', 
 			table_capacity: 'tableCapacity', 
 			table_status: 'tableStatus'
-				}
+				};
 	vm.dbColumn2DomIndex = {
 			table_number: 0, 
 			table_capacity: 1, 
 			table_status: 2
-			}
+			};
 	vm.tableStatusOptions = TABLE_STATUS;
 	vm.validationErr = {};
 	vm.validationErrDB = {};
@@ -174,6 +174,7 @@ function modalTableController(
 					}
 				
 				function discardModalUnchangedFields(){
+					var dataKeys = Object.keys(data[0]);
 					
 					dataKeys.forEach(
 							function(dataCopyKey){
@@ -210,7 +211,6 @@ function modalTableController(
 							}
 							}
 					}
-		
 		vm.validationErr = {};
 		vm.validationErrDB = undefined;
 		}
@@ -221,7 +221,7 @@ function modalTableController(
 		Object.keys(vm.table).forEach(
 				function(tableKey){
 					if(
-							!(null == vm.dom2DbColumn[tableKey]) && 
+							!(null == vm.dom2DbColumn[tableKey]) &&
 							!(undefined == vm.dom2DbColumn[tableKey])
 							){	data[vm.dom2DbColumn[tableKey]] = vm.table[tableKey];
 							}

@@ -38,7 +38,7 @@ function manageOrderController(
 	vm.order = {};
 	vm.controllerObjName = 'manageOrderController';
 	vm.dtInstance = dtInstanceCallback;
-	vm.dtHiddenColumns = {}
+	vm.dtHiddenColumns = {};
 	vm.dbColumnFields = ORDERS_DB_FIELDS;
 	vm.dbColumn2Colheader = {
 			order_id: 'Id', 
@@ -55,7 +55,7 @@ function manageOrderController(
 			table_id: 'tableId', 
 			order_timestamp: 'orderTimestamp', 
 			order_status: 'orderStatus'
-				}
+				};
 	
 	if(!(null == localStorage.getItem('User'))){
 		vm.user = localStorage.getItem('User');
@@ -134,9 +134,9 @@ function manageOrderController(
 					templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
 					controller: 'modalOrderController as modalOrderController', 
 					resolve: {
-						order: function(){	return doDbColumn2Dom(formMode);	
+						order: function(){	return doDbColumn2Dom(formMode);
 						}, 
-						formMode: function(){	return formMode;	
+						formMode: function(){	return formMode;
 						}, 
 						modalHiddenFields: function(){	return genModalHiddenFields(formMode);
 						}
@@ -189,17 +189,18 @@ function manageOrderController(
 		var orderDt = $(DOM_ORDER_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
 		
-		$.each(orderDt.fnSettings().aoColumns, 
+		$.each(
+				orderDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
 	
 	dtInitialize();
@@ -244,9 +245,18 @@ function manageOrderController(
 			}
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.addOrder, addOrder);
+	$scope.$on(
+			BROADCAST_MESSAGES.addOrder, 
+			addOrder
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateOrder, updateOrder);
-
-	$scope.$on(BROADCAST_MESSAGES.deleteOrder, deleteOrder);
+	$scope.$on(
+			BROADCAST_MESSAGES.updateOrder, 
+			updateOrder
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteOrder, 
+			deleteOrder
+			);
 	}

@@ -30,7 +30,7 @@ function manageMenuController(
 		$uibModal, 
 		DTColumnBuilder, 
 		DTOptionsBuilder, 
-		datatableService	
+		datatableService
 		){
 	const DOM_MENU_TABLE = '#menuTable';
 	
@@ -76,7 +76,7 @@ function manageMenuController(
 		var eSrc = $event.currentTarget.parentElement.parentElement;
 		var eClassname = eSrc.className;
 		
-		if(-1 == eClassname.indexOf('selected')){	
+		if(-1 == eClassname.indexOf('selected')){
 			vm.menu = data;
 			
 			$rootScope.$broadcast(
@@ -203,7 +203,7 @@ function manageMenuController(
 		vm.dtInstance.reloadData();
 		vm.menu = {};
 		
-		if(0 == $('.dataTable tr.selected').length){	return;	
+		if(0 == $('.dataTable tr.selected').length){	return;
 		}
 		
 		$rootScope.$broadcast(
@@ -214,22 +214,23 @@ function manageMenuController(
 					}
 				);
 		}
-
+	
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_MENU_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
-
-		$.each(tableDt.fnSettings().aoColumns, 
+		
+		$.each(
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
 	
 	dtInitialize();
@@ -274,9 +275,18 @@ function manageMenuController(
 			}
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.addMenu, addMenu);
+	$scope.$on(
+			BROADCAST_MESSAGES.addMenu, 
+			addMenu
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateMenu, updateMenu);
-
-	$scope.$on(BROADCAST_MESSAGES.deleteMenu, deleteMenu);
+	$scope.$on(
+			BROADCAST_MESSAGES.updateMenu, 
+			updateMenu
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteMenu, 
+			deleteMenu
+			);
 	}

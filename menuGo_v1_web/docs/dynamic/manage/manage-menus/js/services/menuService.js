@@ -21,23 +21,22 @@ function menuService(
 		$q
 		){
 	const MENUS_KEY = 'Menus';
-	const MENU_KEY = 'Menu';
 	
 	var menuServiceObj = {
 		menus: {}, 
-		menu: {}, 
 		companyName: undefined, 
 		menuName: undefined, 
 		getMenus: getMenus, 
-		getMenu: getMenu, 
 		getCompanyName: getCompanyName, 
 		getMenuName: getMenuName, 
 		setMenus: setMenus, 
-		setMenu: setMenu, 
 		setCompanyName: setCompanyName, 
 		setMenuName: setMenuName, 
+		getOptions: {
+			1: 'getCompanyMenus', 
+			2: 'getCompanyMenu'
+				}, 
 		fetchMenus: fetchMenus, 
-		fetchMenu: fetchMenu, 
 		addMenu: addMenu, 
 		updateMenu: updateMenu, 
 		deleteMenu: deleteMenu, 
@@ -46,27 +45,34 @@ function menuService(
 	
 	function getMenus(){	return menuServiceObj.menus;
 	}
-	function getMenu(){	return menuServiceObj.menu;
-	}
 	function getCompanyName(){	return menuServiceObj.companyName;
 	}
 	function getMenuName(){	return menuServiceObj.menuName;
 	}
 	function setMenus(menus){	menuServiceObj.menus = menus;
 	}
-	function setMenu(menu){	menuServiceObj.menu = menu;
-	}
 	function setCompanyName(companyName){	menuServiceObj.companyName = companyName;
 	}
 	function setMenuName(menuName){	menuServiceObj.menuName = menuName;
 	}
 	
-	function fetchMenus(){
+	function fetchMenus(
+			getOption, 
+			getParams
+			){
 		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus'
-				};
+		var httpConfig = {	method: 'GET'	};
+		
+		switch(menuServiceObj.getOptions[getOption]){
+		case 'getCompanyMenus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus';
+			break;
+		case 'getCompanyMenu':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus/' + menuServiceObj.menuName;
+			break;
+			default:
+				break;
+			}
 		
 		$http(httpConfig)
 		.then(fetchMenusSuccessCallback)
@@ -103,50 +109,6 @@ function menuService(
 				}
 			}
 		return deferred.promise;
-		}
-	
-	function fetchMenu(){
-		var deferred = $q.defer();
-		var httpConfig = {
-				method: 'GET', 
-				url: API_BASE_URL + '/companies/' + menuServiceObj.companyName + '/menus/' + menuServiceObj.menuName
-				};
-		
-		$http(httpConfig)
-		.then(fetchMenuSuccessCallback)
-		.catch(fetchMenuFailedCallback);
-
-		function fetchMenuSuccessCallback(response){
-			var menu = undefined;
-			menuServiceObj.menu = {};
-			
-			convertMenuResponseToMap(response.data);
-			menu = menuServiceObj.menu;
-			menu = JSON.stringify(menu);
-			localStorage.setItem(
-					MENU_KEY, 
-					menu
-					);
-			
-			deferred.resolve(response);
-			}
-		
-		function fetchMenuFailedCallback(responseError){	deferred.reject(responseError);
-		}
-		
-		function convertMenuResponseToMap(responseData){
-			for(var i=0; i<responseData.length; i++){
-				var menuDetails = {};
-				var key = undefined;
-				
-				for(var j=0; j<Object.keys(MENUS_DB_FIELDS).length; j++){	menuDetails[MENUS_DB_FIELDS[j]] = responseData[i][MENUS_DB_FIELDS[j]];
-				}
-				
-				key = responseData[i][MENUS_DB_FIELDS[1]]; //menu_name
-				menuServiceObj.menu[key] = menuDetails;
-				}
-			}
-		return deferred.promise;	
 		}
 	
 	function addMenu(menus){

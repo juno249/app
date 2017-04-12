@@ -38,7 +38,7 @@ function manageMenuitemController(
 	vm.menuitem = {};
 	vm.controllerObjName = 'manageMenuitemController';
 	vm.dtInstance = dtInstanceCallback;
-	vm.dtHiddenColumns = {}
+	vm.dtHiddenColumns = {};
 	vm.dbColumnFields = MENUITEMS_DB_FIELDS;
 	vm.dbColumn2Colheader = {
 			menuitem_id: 'Id', 
@@ -70,7 +70,7 @@ function manageMenuitemController(
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
-		
+	
 	//controller_method
 	vm.dtAssignOnSelect = dtAssignOnSelect;
 	
@@ -195,22 +195,23 @@ function manageMenuitemController(
 	function genDtHiddenColumns(){
 		var tableDt = $(DOM_MENUITEM_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
-
-		$.each(tableDt.fnSettings().aoColumns, 
+		
+		$.each(
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
 	
 	dtInitialize();
-
+	
 	function dtInitialize(){
 		datatableService.setDbColumnFields(vm.dbColumnFields);
 		datatableService.setDbColumn2Colheader(vm.dbColumn2Colheader);
@@ -251,9 +252,18 @@ function manageMenuitemController(
 			}
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.addMenuitem, addMenuitem);
+	$scope.$on(
+			BROADCAST_MESSAGES.addMenuitem, 
+			addMenuitem
+			);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateMenuitem, updateMenuitem);
-
-	$scope.$on(BROADCAST_MESSAGES.deleteMenuitem, deleteMenuitem);
+	$scope.$on(
+			BROADCAST_MESSAGES.updateMenuitem, 
+			updateMenuitem
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteMenuitem, 
+			deleteMenuitem
+			);
 	}

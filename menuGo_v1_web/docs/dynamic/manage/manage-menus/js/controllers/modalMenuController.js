@@ -41,19 +41,19 @@ function modalMenuController(
 			companyName: 'company_name', 
 			menuDesc: 'menu_desc', 
 			menuImage: 'menu_image'
-				}
+				};
 	vm.dbColumn2Dom = {
 			menu_name: 'menuName', 
 			company_name: 'companyName', 
 			menu_desc: 'menuDesc', 
 			menu_image: 'menuImage'
-				}
+				};
 	vm.dbColumn2DomIndex = {
 			menu_name: 0, 
 			company_name: 1, 
 			menu_desc: 2, 
 			menu_image: 3
-			}
+			};
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;
@@ -260,7 +260,6 @@ function modalMenuController(
 							}
 							}
 					}
-		
 		vm.validationErr = {};
 		vm.validationErrDB = {};
 		}
@@ -271,7 +270,7 @@ function modalMenuController(
 		Object.keys(vm.menu).forEach(
 				function(menuKey){
 					if(
-							!(null == vm.dom2DbColumn[menuKey]) && 
+							!(null == vm.dom2DbColumn[menuKey]) &&
 							!(undefined == vm.dom2DbColumn[menuKey])
 							){	data[vm.dom2DbColumn[menuKey]] = vm.menu[menuKey];
 							}

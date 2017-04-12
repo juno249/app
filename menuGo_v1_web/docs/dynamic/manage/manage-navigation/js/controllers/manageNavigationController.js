@@ -40,7 +40,7 @@ function manageNavigationController(
 		$(SELECTOR_USERMENU).each(
 				function(){
 					$(this).click(clickCallback);
-				
+					
 					function clickCallback(){
 						const CLASS_ACTIVE = 'active';
 						
@@ -81,7 +81,10 @@ function manageNavigationController(
 				);
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.toggleBranch, toggleBranchCallback);
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleBranch, 
+			toggleBranchCallback
+			);
 	
 	function toggleBranchCallback(
 			e, 
@@ -91,7 +94,10 @@ function manageNavigationController(
 		vm.isManageBranchHidden = !vm.isManageBranchHidden;
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.toggleMenu, toggleMenuCallback);
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleMenu, 
+			toggleMenuCallback
+			);
 	
 	function toggleMenuCallback(
 			e, 
@@ -101,7 +107,10 @@ function manageNavigationController(
 		vm.isManageMenuHidden = !vm.isManageMenuHidden;
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.toggleTable, toggleTableCallback);
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleTable, 
+			toggleTableCallback
+			);
 	
 	function toggleTableCallback(
 			e, 
@@ -112,7 +121,10 @@ function manageNavigationController(
 		vm.isManageTableHidden = !vm.isManageTableHidden;
 		}
 	
-	$scope.$on(BROADCAST_MESSAGES.toggleMenuitem, toggleMenuitemCallback);
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleMenuitem, 
+			toggleMenuitemCallback
+			);
 	
 	function toggleMenuitemCallback(
 			e, 

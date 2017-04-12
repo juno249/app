@@ -40,7 +40,7 @@ function manageBranchController(
 	vm.branch = {};
 	vm.controllerObjName = 'manageBranchController';
 	vm.dtInstance = dtInstanceCallback;
-	vm.dtHiddenColumns = {}
+	vm.dtHiddenColumns = {};
 	vm.dbColumnFields = BRANCHES_DB_FIELDS;
 	vm.dbColumn2Colheader = {
 			branch_id: 'Id', 
@@ -71,7 +71,7 @@ function manageBranchController(
 		vm.user = localStorage.getItem(USER_KEY);
 		vm.user= JSON.parse(vm.user);
 		}
-
+	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches';
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
@@ -98,10 +98,10 @@ function manageBranchController(
 						branchName: vm.branch.branch_name
 						}
 					);
-			} else {	
+			} else {
 				vm.branch= {};
+				
 				$rootScope.$broadcast(
-						
 						BROADCAST_MESSAGES.toggleTable, 
 						{
 							companyName: vm.companyName, 
@@ -170,7 +170,7 @@ function manageBranchController(
 		var modalInstance = $uibModal.open(
 				{
 					animation: true, 
-					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html',
+					templateUrl: 'docs/dynamic/manage/manage-branches/modalBranch.html', 
 					controller: 'modalBranchController as modalBranchController', 
 					resolve: {
 						branch: function(){	return doDbColumn2Dom(formMode);
@@ -240,17 +240,18 @@ function manageBranchController(
 		var tableDt = $(DOM_BRANCH_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
 		
-		$.each(tableDt.fnSettings().aoColumns, 
+		$.each(
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-			var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
-			var aoColumnsRunnerMdata = aoColumnsRunner.mData;
-			
-			if(!(null == aoColumnsRunnerMdata)){
-				if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
-				}
-				}
-			}
-		);
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
+					
+					if(!(null == aoColumnsRunnerMdata)){
+						if(false == aoColumnsRunner.bVisible){	vm.dtHiddenColumns[aoColumnsRunnerMdata] = true;
+						}
+						}
+					}
+				);
 		}
 	
 	dtInitialize();
@@ -294,10 +295,19 @@ function manageBranchController(
 					);
 			}
 		}
-
-	$scope.$on(BROADCAST_MESSAGES.addBranch, addBranch);
 	
-	$scope.$on(BROADCAST_MESSAGES.updateBranch, updateBranch);
-
-	$scope.$on(BROADCAST_MESSAGES.deleteBranch, deleteBranch);
+	$scope.$on(
+			BROADCAST_MESSAGES.addBranch, 
+			addBranch
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.updateBranch, 
+			updateBranch
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.deleteBranch, 
+			deleteBranch
+			);
 	}

@@ -57,11 +57,12 @@ function customerHomeController(
 					vm.blogs = vm.marketing.blogs;
 					}
 				
-				$timeout(function(){
-					$ionicSlideBoxDelegate.$getByHandle(DOM_ADVERTISEMENTS_SLIDEBOX).update();
-					$ionicSlideBoxDelegate.$getByHandle(DOM_BLOGS_SLIDEBOX).update();
-					}
-				);
+				$timeout(
+						function(){
+							$ionicSlideBoxDelegate.$getByHandle(DOM_ADVERTISEMENTS_SLIDEBOX).update();
+							$ionicSlideBoxDelegate.$getByHandle(DOM_BLOGS_SLIDEBOX).update();
+							}
+						);
 				}
 			);
 	}

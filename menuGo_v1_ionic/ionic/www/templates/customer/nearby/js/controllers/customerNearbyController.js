@@ -159,9 +159,10 @@ function customerNearbyController(
 					}
 				);
 		
-		$timeout(function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENUS_SLIDEBOX).update();
-		}
-		);
+		$timeout(
+				function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENUS_SLIDEBOX).update();
+				}
+				);
 		}
 	
 	function loadCompaniesCategoriesSelection(){
