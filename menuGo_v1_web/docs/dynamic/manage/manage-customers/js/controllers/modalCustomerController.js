@@ -266,6 +266,8 @@ function modalCustomerController(
 					return;
 					}
 				
+				data.last_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				
 				customerService.setCustomerUsername(vm.customerCapture.customerUsername);
 				
 				customerService.updateCustomer(data)

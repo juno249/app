@@ -142,6 +142,10 @@ function modalTableController(
 					return;
 					}
 				
+				if(!(null == data.table_status)){	data.table_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				}
+				data.last_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				
 				tableService.setCompanyName(vm.tableSnapshot.companyName);
 				tableService.setBranchName(vm.tableSnapshot.branchName);
 				tableService.setTableNumber(vm.tableSnapshot.tableNumber);

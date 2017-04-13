@@ -92,8 +92,10 @@ function bannerController(
 		modalInstance.result.then(customerUibModalResultCallback);
 		
 		function customerUibModalResultCallback(data){
-			vm.customer = data[0];
+			if(null == data){	return;
+			}
 			
+			vm.customer = data[0];
 			if(null == vm.customer){	return;
 			}
 			
@@ -122,7 +124,12 @@ function bannerController(
 			modalInstance.result.then(companyUibModalResultCallback);
 			
 			function companyUibModalResultCallback(data){
+				if(null == data){	return;
+				}
+				
 				vm.company = data[0];
+				if(null == vm.company){	return;
+				}
 				
 				modalInstance = $uibModal.open(
 						{
@@ -144,7 +151,12 @@ function bannerController(
 				modalInstance.result.then(branchUibModalResultCallback);
 				
 				function branchUibModalResultCallback(data){
+					if(null == data){	return;
+					}
+					
 					vm.branch = data[0];
+					if(null == vm.branch){	return;
+					}
 					
 					doAdminCascadedPosts();
 					}

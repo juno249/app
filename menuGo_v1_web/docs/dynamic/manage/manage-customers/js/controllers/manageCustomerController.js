@@ -56,7 +56,8 @@ function manageCustomerController(
 			customer_email: 'Email', 
 			customer_birthday_month: 'Birthday - month', 
 			customer_birthday_date: 'Birthday - date', 
-			customer_birthday_year: 'Birthday - year'
+			customer_birthday_year: 'Birthday - year', 
+			last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			customer_username: 'customerUsername', 

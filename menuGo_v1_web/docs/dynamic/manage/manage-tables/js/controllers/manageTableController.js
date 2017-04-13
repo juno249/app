@@ -46,7 +46,9 @@ function manageTableController(
 			table_number: 'Number', 
 			branch_id: 'Branch id', 
 			table_capacity: 'Capacity', 
-			table_status: 'Status'
+			table_status: 'Status', 
+			table_status_change_timestamp: 'Status change timestamp', 
+			last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			table_id: 'tableId', 

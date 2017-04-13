@@ -44,7 +44,8 @@ function manageCompanyController(
 			company_name: 'Name', 
 			company_desc: 'Description', 
 			company_category: 'Category', 
-			company_logo: 'Logo'
+			company_logo: 'Logo', 
+			last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			company_name: 'companyName', 

@@ -42,18 +42,16 @@ function manageOrderController(
 	vm.dbColumnFields = ORDERS_DB_FIELDS;
 	vm.dbColumn2Colheader = {
 			order_id: 'Id', 
-			customer_username: 'Customer username', 
 			menuitem_id: 'Menuitem id', 
-			table_id: 'Table id', 
-			order_timestamp: 'Timestamp', 
-			order_status: 'Status'
+			orderreference_code: 'Orderreference code', 
+			order_status: 'Status', 
+			order_status_change_timestamp: 'Status change timestamp', 
+			last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			order_id: 'orderId', 
-			customer_username: 'customerUsername', 
 			menuitem_id: 'menuitemId', 
-			table_id: 'tableId', 
-			order_timestamp: 'orderTimestamp', 
+			orderreference_code: 'Orderreference code', 
 			order_status: 'orderStatus'
 				};
 	
