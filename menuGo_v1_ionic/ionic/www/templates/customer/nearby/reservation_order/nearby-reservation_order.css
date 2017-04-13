@@ -18,7 +18,7 @@ div.reservation_order-container div.orders-container{
 	max-height: 300px;
 	
 	overflow-x: hidden;
-	overflow-y: scroll;	
+	overflow-y: scroll;
 }
 
 div.reservation_order-container div.orders-container, 
