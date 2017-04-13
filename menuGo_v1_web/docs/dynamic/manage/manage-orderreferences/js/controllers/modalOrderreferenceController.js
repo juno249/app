@@ -195,7 +195,7 @@ function modalOrderreferenceController(
 								}
 								}
 							);
-							}
+					}
 				} else if('D' == vm.formMode){
 					orderreferenceService.setCompanyName(vm.orderreference.companyName);
 					orderreferenceService.setBranchName(vm.orderreference.branchName);
