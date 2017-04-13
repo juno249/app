@@ -2,8 +2,8 @@ angular
 .module(
 		'starter', 
 		[
-		 'datatables.bootstrap', 
 		 'datatables.buttons', 
+		 'datatables.bootstrap', 
 		 'datatables.fixedcolumns', 
 		 'datatables.light-columnfilter', 
 		 'datatables.scroller', 
