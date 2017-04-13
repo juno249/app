@@ -224,7 +224,7 @@ function modalBranchController(
 						}
 					
 					function deleteBranchFailedCallback(responseError){
-						hideBootstrapLoader(modalMenuContainer);
+						hideBootstrapLoader($(DOM_MODAL));
 						
 						try{
 							JSON.parse(responseError.statusText);
@@ -234,7 +234,7 @@ function modalBranchController(
 							}
 					}
 		vm.validationErr = {};
-		vm.validationErrDB = {}
+		vm.validationErrDB = {};
 		}
 	
 	function doDom2DbColumn(){
@@ -269,6 +269,7 @@ function modalBranchController(
 					var formGroups = $(CLASS_FORM_GROUP);
 					
 					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
+					
 					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
 					
 					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);

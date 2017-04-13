@@ -181,11 +181,11 @@ function modalTableController(
 					var dataKeys = Object.keys(data[0]);
 					
 					dataKeys.forEach(
-							function(dataCopyKey){
-								var dataValue = data[0][dataCopyKey];
-								var tableSnapshotValue = vm.tableSnapshot[vm.dbColumn2Dom[dataCopyKey]];
+							function(dataKey){
+								var dataValue = data[0][dataKey];
+								var tableSnapshotValue = vm.tableSnapshot[vm.dbColumn2Dom[dataKey]];
 								
-								if(dataValue == tableSnapshotValue){	delete data[0][dataCopyKey];
+								if(dataValue == tableSnapshotValue){	delete data[0][dataKey];
 								}
 								}
 							);
@@ -216,7 +216,7 @@ function modalTableController(
 							}
 					}
 		vm.validationErr = {};
-		vm.validationErrDB = undefined;
+		vm.validationErrDB = {};
 		}
 	
 	function doDom2DbColumn(){

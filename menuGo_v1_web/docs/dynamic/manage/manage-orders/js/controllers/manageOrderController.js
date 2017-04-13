@@ -35,6 +35,8 @@ function manageOrderController(
 	var vm = this;
 	vm.companyName = $stateParams['companyName'];
 	vm.branchName = $stateParams['branchName'];
+	vm.tableNumber = $stateParams['tableNumber'];
+	vm.orderreferenceCode = $stateParams['orderreferenceCode'];
 	vm.order = {};
 	vm.controllerObjName = 'manageOrderController';
 	vm.dtInstance = dtInstanceCallback;
@@ -60,7 +62,7 @@ function manageOrderController(
 		vm.user= JSON.parse(vm.user);
 		}
 	
-	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orders';
+	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences/' + vm.orderreferenceCode + '/orders';
 	
 	//controller_method
 	vm.dtAssignOnSelect = dtAssignOnSelect;
@@ -159,6 +161,8 @@ function manageOrderController(
 					
 					data['companyName'] = vm.companyName;
 					data['branchName'] = vm.branchName;
+					data['tableNumber'] = vm.tableNumber;
+					data['orderreferenceCode'] = vm.orderreferenceCode;
 					}
 				);
 		
