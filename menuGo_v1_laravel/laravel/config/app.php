@@ -161,9 +161,9 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class, 
-    	Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class, 
-
+        Illuminate\View\ViewServiceProvider::class,
+    	Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+    	Intervention\Image\ImageServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -227,8 +227,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
     	'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
-    	'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class, 
+    	'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class,
     	'Uuid' => Webpatser\Uuid\Uuid::class,
+    	'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
