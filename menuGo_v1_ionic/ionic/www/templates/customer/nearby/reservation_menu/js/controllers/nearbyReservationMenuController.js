@@ -6,13 +6,13 @@ angular
 		);
 
 nearbyReservationMenuController.$inject = [
-	'$localStorage', 
-	'$scope', 
-	'$state', 
-	'$stateParams', 
-	'branchService', 
-	'dataService'
-	];
+                                           '$localStorage', 
+                                           '$scope', 
+                                           '$state', 
+                                           '$stateParams', 
+                                           'branchService', 
+                                           'dataService'
+                                           ];
 
 function nearbyReservationMenuController(
 		$localStorage, 

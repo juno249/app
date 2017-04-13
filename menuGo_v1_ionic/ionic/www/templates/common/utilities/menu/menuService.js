@@ -6,12 +6,12 @@ angular
 		);
 
 menuService.$inject = [
-	'API_BASE_URL', 
-	'MENUS_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                       'API_BASE_URL', 
+                       'MENUS_DB_FIELDS', 
+                       '$http', 
+                       '$localStorage', 
+                       '$q'
+                       ];
 
 function menuService(
 		API_BASE_URL, 
@@ -36,12 +36,12 @@ function menuService(
 			1: 'getCompanyMenus', 
 			2: 'getCompanyMenu'
 				}, 
-		fetchMenus: fetchMenus, 
-		addMenu: addMenu, 
-		updateMenu: updateMenu, 
-		deleteMenu: deleteMenu, 
-		uploadMenuImage: uploadMenuImage
-		};
+				fetchMenus: fetchMenus, 
+				addMenu: addMenu, 
+				updateMenu: updateMenu, 
+				deleteMenu: deleteMenu, 
+				uploadMenuImage: uploadMenuImage
+				};
 	
 	function getMenus(){	return menuServiceObj.menus;
 	}

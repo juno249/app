@@ -6,11 +6,11 @@ angular
 		);
 
 loginController.$inject = [
-	'USER_ROLES', 
-	'$localStorage', 
-	'$state', 
-	'loginService'
-	];
+                           'USER_ROLES', 
+                           '$localStorage', 
+                           '$state', 
+                           'loginService'
+                           ];
 
 function loginController(
 		USER_ROLES, 

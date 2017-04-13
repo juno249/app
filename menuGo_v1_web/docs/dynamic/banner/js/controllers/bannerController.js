@@ -6,20 +6,20 @@ angular
 		);
 
 bannerController.$inject = [
-	'BROADCAST_MESSAGES', 
-	'USER_ROLES', 
-	'$localStorage', 
-	'$rootScope', 
-	'$scope', 
-	'$state', 
-	'$timeout', 
-	'$uibModal', 
-	'branchService', 
-	'customerService', 
-	'companyService', 
-	'customerCompanyBranchService', 
-	'loginService'
-	];
+                            'BROADCAST_MESSAGES', 
+                            'USER_ROLES', 
+                            '$localStorage', 
+                            '$rootScope', 
+                            '$scope', 
+                            '$state', 
+                            '$timeout', 
+                            '$uibModal', 
+                            'branchService', 
+                            'customerService', 
+                            'companyService', 
+                            'customerCompanyBranchService', 
+                            'loginService'
+                            ];
 
 function bannerController(
 		BROADCAST_MESSAGES, 

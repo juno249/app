@@ -6,12 +6,12 @@ angular
 		);
 
 customerService.$inject = [
-	'API_BASE_URL', 
-	'CUSTOMERS_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                           'API_BASE_URL', 
+                           'CUSTOMERS_DB_FIELDS', 
+                           '$http', 
+                           '$localStorage', 
+                           '$q'
+                           ];
 
 function customerService(
 		API_BASE_URL, 
@@ -34,13 +34,13 @@ function customerService(
 				2: 'getCustomers', 
 				3: 'getCustomer'
 					}, 
-			fetchCustomers: fetchCustomers, 
-			addCustomerValidate: addCustomerValidate, 
-			addCustomer: addCustomer, 
-			updateCustomerValidate: updateCustomerValidate, 
-			updateCustomer: updateCustomer, 
-			deleteCustomer: deleteCustomer
-			};
+					fetchCustomers: fetchCustomers, 
+					addCustomerValidate: addCustomerValidate, 
+					addCustomer: addCustomer, 
+					updateCustomerValidate: updateCustomerValidate, 
+					updateCustomer: updateCustomer, 
+					deleteCustomer: deleteCustomer
+					};
 	
 	function getCustomers(){	return customerServiceObj.customers;
 	}

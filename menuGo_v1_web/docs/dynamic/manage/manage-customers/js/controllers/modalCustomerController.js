@@ -6,17 +6,17 @@ angular
 		);
 
 modalCustomerController.$inject = [
-	'USER_GENDERS', 
-	'USER_ROLES', 
-	'$uibModalInstance', 
-	'$timeout', 
-	'customerCompanyBranchService', 
-	'customerService', 
-	'customer', 
-	'formMode', 
-	'fromSignup', 
-	'modalHiddenFields'
-	];
+                                   'USER_GENDERS', 
+                                   'USER_ROLES', 
+                                   '$uibModalInstance', 
+                                   '$timeout', 
+                                   'customerCompanyBranchService', 
+                                   'customerService', 
+                                   'customer', 
+                                   'formMode', 
+                                   'fromSignup', 
+                                   'modalHiddenFields'
+                                   ];
 
 function modalCustomerController(
 		USER_GENDERS, 
@@ -138,19 +138,19 @@ function modalCustomerController(
 					onSelect: function(){
 						var date = $(this).datepicker('getDate');
 						var calendarMonths = [
-							'Jan', 
-							'Feb', 
-							'Mar', 
-							'Apr', 
-							'May', 
-							'Jun', 
-							'Jul', 
-							'Aug', 
-							'Sep', 
-							'Oct', 
-							'Nov', 
-							'Dec'
-							];
+						                      'Jan', 
+						                      'Feb', 
+						                      'Mar', 
+						                      'Apr', 
+						                      'May', 
+						                      'Jun', 
+						                      'Jul', 
+						                      'Aug', 
+						                      'Sep', 
+						                      'Oct', 
+						                      'Nov', 
+						                      'Dec'
+						                      ];
 						
 						$timeout(
 								function(){
@@ -223,7 +223,7 @@ function modalCustomerController(
 			var transParams = {};
 			
 			if(USER_ROLES.customer == customer.customer_role){	transParams.customer = customer;
-			} else{
+			} else {
 				customerCompanyBranch = {
 						customer_username: customer.customer_username, 
 						company_name: user.company, 

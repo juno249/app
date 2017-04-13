@@ -6,9 +6,9 @@ angular
 		);
 
 mqttService.$inject = [
-	'MQTT_CONFIG', 
-	'loginService'
-	];
+                       'MQTT_CONFIG', 
+                       'loginService'
+                       ];
 
 function mqttService(
 		MQTT_CONFIG, 

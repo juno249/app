@@ -6,14 +6,14 @@ angular
 		);
 
 modalMenuController.$inject = [
-	'API_BASE_URL', 
-	'$uibModalInstance', 
-	'$timeout', 
-	'menuService', 
-	'menu', 
-	'formMode', 
-	'modalHiddenFields'
-	];
+                               'API_BASE_URL', 
+                               '$uibModalInstance', 
+                               '$timeout', 
+                               'menuService', 
+                               'menu', 
+                               'formMode', 
+                               'modalHiddenFields'
+                               ];
 
 function modalMenuController(
 		API_BASE_URL, 

@@ -6,9 +6,9 @@ angular
 		);
 
 geolocationService.$inject = [
-	'$cordovaGeolocation', 
-	'$q'
-	];
+                              '$cordovaGeolocation', 
+                              '$q'
+                              ];
 
 function geolocationService(
 		$cordovaGeolocation, 

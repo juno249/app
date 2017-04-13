@@ -6,12 +6,12 @@ angular
 		);
 
 orderreferenceService.$inject = [
-	'API_BASE_URL', 
-	'ORDERREFERENCES_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                                 'API_BASE_URL', 
+                                 'ORDERREFERENCES_DB_FIELDS', 
+                                 '$http', 
+                                 '$localStorage', 
+                                 '$q'
+                                 ];
 
 function orderreferenceService(
 		API_BASE_URL, 

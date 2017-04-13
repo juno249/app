@@ -6,16 +6,16 @@ angular
 		);
 
 orderService.$inject = [
-	'API_BASE_URL', 
-	'BROADCAST_MESSAGES', 
-	'ORDER_STATUS', 
-	'ORDERS_DB_FIELDS', 
-	'$rootScope', 
-	'$http', 
-	'$localStorage', 
-	'$q', 
-	'loginService'
-	];
+                        'API_BASE_URL', 
+                        'BROADCAST_MESSAGES', 
+                        'ORDER_STATUS', 
+                        'ORDERS_DB_FIELDS', 
+                        '$rootScope', 
+                        '$http', 
+                        '$localStorage', 
+                        '$q', 
+                        'loginService'
+                        ];
 
 function orderService(
 		API_BASE_URL, 
@@ -63,11 +63,11 @@ function orderService(
 				11: 'getCompanyBranchTableOrderreferenceOrdersOrderStatus', 
 				12: 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus'
 					}, 
-			fetchOrders: fetchOrders, 
-			addOrder: addOrder, 
-			updateOrder: updateOrder, 
-			deleteOrder: deleteOrder
-			};
+					fetchOrders: fetchOrders, 
+					addOrder: addOrder, 
+					updateOrder: updateOrder, 
+					deleteOrder: deleteOrder
+					};
 	
 	function getOrders(){	return orderServiceObj.orders;
 	}

@@ -6,14 +6,14 @@ angular
 		);
 
 modalTableController.$inject = [
-	'TABLE_STATUS', 
-	'$uibModalInstance', 
-	'$timeout', 
-	'tableService', 
-	'table', 
-	'formMode', 
-	'modalHiddenFields'
-	];
+                                'TABLE_STATUS', 
+                                '$uibModalInstance', 
+                                '$timeout', 
+                                'tableService', 
+                                'table', 
+                                'formMode', 
+                                'modalHiddenFields'
+                                ];
 
 function modalTableController(
 		TABLE_STATUS, 

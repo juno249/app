@@ -6,12 +6,12 @@ angular
 		);
 
 branchService.$inject = [
-	'API_BASE_URL', 
-	'BRANCHES_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                         'API_BASE_URL', 
+                         'BRANCHES_DB_FIELDS', 
+                         '$http', 
+                         '$localStorage', 
+                         '$q'
+                         ];
 
 function branchService(
 		API_BASE_URL, 
@@ -36,14 +36,14 @@ function branchService(
 				1: 'getCompanyBranches', 
 				2: 'getCompanyBranch'
 					}, 
-			fetchBranches: fetchBranches, 
-			addBranchValidate: addBranchValidate, 
-			addBranch: addBranch, 
-			updateBranchValidate: updateBranchValidate, 
-			updateBranch: updateBranch, 
-			deleteBranch: deleteBranch, 
-			toStringAddress: toStringAddress
-			};
+					fetchBranches: fetchBranches, 
+					addBranchValidate: addBranchValidate, 
+					addBranch: addBranch, 
+					updateBranchValidate: updateBranchValidate, 
+					updateBranch: updateBranch, 
+					deleteBranch: deleteBranch, 
+					toStringAddress: toStringAddress
+					};
 	
 	function getBranches(){	return branchServiceObj.branches;
 	}

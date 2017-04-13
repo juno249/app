@@ -6,17 +6,17 @@ angular
 		);
 
 manageCustomerController.$inject = [
-	'API_BASE_URL', 
-	'BROADCAST_MESSAGES', 
-	'CUSTOMERS_DB_FIELDS', 
-	'$compile', 
-	'$localStorage', 
-	'$scope', 
-	'$uibModal', 
-	'DTColumnBuilder', 
-	'DTOptionsBuilder', 
-	'datatableService'
-	];
+                                    'API_BASE_URL', 
+                                    'BROADCAST_MESSAGES', 
+                                    'CUSTOMERS_DB_FIELDS', 
+                                    '$compile', 
+                                    '$localStorage', 
+                                    '$scope', 
+                                    '$uibModal', 
+                                    'DTColumnBuilder', 
+                                    'DTOptionsBuilder', 
+                                    'datatableService'
+                                    ];
 
 function manageCustomerController(
 		API_BASE_URL, 
@@ -124,7 +124,8 @@ function manageCustomerController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateCustomer(){
@@ -150,7 +151,8 @@ function manageCustomerController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteCustomer(){
@@ -176,7 +178,8 @@ function manageCustomerController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -258,10 +261,10 @@ function manageCustomerController(
 				'createdRow', 
 				createdRowCallback
 				)
-		.withOption(
-				'initComplete', 
-				initCompleteCallback
-				);
+				.withOption(
+						'initComplete', 
+						initCompleteCallback
+						);
 		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}

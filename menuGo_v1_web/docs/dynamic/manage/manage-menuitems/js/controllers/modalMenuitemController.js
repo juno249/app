@@ -6,15 +6,15 @@ angular
 		);
 
 modalMenuitemController.$inject = [
-	'API_BASE_URL', 
-	'IS_FEATURED_VALUES', 
-	'$uibModalInstance', 
-	'$timeout', 
-	'menuitemService', 
-	'menuitem', 
-	'formMode', 
-	'modalHiddenFields'
-	];
+                                   'API_BASE_URL', 
+                                   'IS_FEATURED_VALUES', 
+                                   '$uibModalInstance', 
+                                   '$timeout', 
+                                   'menuitemService', 
+                                   'menuitem', 
+                                   'formMode', 
+                                   'modalHiddenFields'
+                                   ];
 
 function modalMenuitemController(
 		API_BASE_URL, 
@@ -46,7 +46,7 @@ function modalMenuitemController(
 			menuitemPrice: 'menuitem_price', 
 			menuitemFeatured: 'menuitem_featured', 
 			menuitemImage: 'menuitem_image'
-				}
+				};
 	vm.dbColumn2Dom = {
 			menuitem_code: 'menuitemCode', 
 			menuitem_name: 'menuitemName', 
@@ -54,7 +54,7 @@ function modalMenuitemController(
 			menuitem_price: 'menuitemPrice', 
 			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
-				}
+				};
 	vm.dbColumn2DomIndex = {
 			menuitem_code: 0, 
 			menuitem_name: 1, 
@@ -62,7 +62,7 @@ function modalMenuitemController(
 			menuitem_price: 3, 
 			menuitem_featured: 4, 
 			menuitem_image: 5
-			}
+			};
 	vm.featuredOptions = IS_FEATURED_VALUES;
 	vm.validationErr = {};
 	vm.validationErrDB = {};
@@ -87,9 +87,10 @@ function modalMenuitemController(
 				doSubmit
 				);
 		
-		$timeout(	function(){	$(DOM_FORM).validator('update');
-		}
-		);
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
 		}
 	
 	function initDom(){
@@ -258,7 +259,7 @@ function modalMenuitemController(
 					
 					menuitemService.deleteMenuitem()
 					.then(deleteMenuitemSuccessCallback)
-					.catch(deleteMenuitemFailedCallback);\
+					.catch(deleteMenuitemFailedCallback);
 					
 					function deleteMenuitemSuccessCallback(response){
 						hideBootstrapLoader($(DOM_MODAL));
@@ -276,7 +277,6 @@ function modalMenuitemController(
 							}
 							}
 					}
-		
 		vm.validationErr = {};
 		vm.validationErrDB = {};
 		}
@@ -287,7 +287,7 @@ function modalMenuitemController(
 		Object.keys(vm.menuitem).forEach(
 				function(menuitemKey){
 					if(
-							!(null == vm.dom2DbColumn[menuitemKey]) && 
+							!(null == vm.dom2DbColumn[menuitemKey]) &&
 							!(undefined == vm.dom2DbColumn[menuitemKey])
 							){	data[vm.dom2DbColumn[menuitemKey]] = vm.menuitem[menuitemKey];
 							}

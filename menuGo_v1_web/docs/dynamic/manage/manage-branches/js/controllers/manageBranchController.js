@@ -6,18 +6,18 @@ angular
 		);
 
 manageBranchController.$inject = [
-	'API_BASE_URL', 
-	'BRANCHES_DB_FIELDS', 
-	'BROADCAST_MESSAGES', 
-	'$compile', 
-	'$rootScope', 
-	'$scope', 
-	'$stateParams', 
-	'$uibModal', 
-	'DTColumnBuilder', 
-	'DTOptionsBuilder', 
-	'datatableService'
-	];
+                                  'API_BASE_URL', 
+                                  'BRANCHES_DB_FIELDS', 
+                                  'BROADCAST_MESSAGES', 
+                                  '$compile', 
+                                  '$rootScope', 
+                                  '$scope', 
+                                  '$stateParams', 
+                                  '$uibModal', 
+                                  'DTColumnBuilder', 
+                                  'DTOptionsBuilder', 
+                                  'datatableService'
+                                  ];
 
 function manageBranchController(
 		API_BASE_URL, 
@@ -131,7 +131,8 @@ function manageBranchController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateBranch(){
@@ -157,7 +158,8 @@ function manageBranchController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteBranch(){
@@ -183,7 +185,8 @@ function manageBranchController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -278,10 +281,10 @@ function manageBranchController(
 				'createdRow', 
 				createdRowCallback
 				)
-		.withOption(
-				'initComplete', 
-				initCompleteCallback
-				);
+				.withOption(
+						'initComplete', 
+						initCompleteCallback
+						);
 		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}

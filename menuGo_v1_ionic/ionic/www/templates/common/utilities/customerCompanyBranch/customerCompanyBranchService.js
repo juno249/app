@@ -6,12 +6,12 @@ angular
 		);
 
 customerCompanyBranchService.$inject = [
-	'API_BASE_URL', 
-	'CUSTOMERCOMPANYBRANCH_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                                        'API_BASE_URL', 
+                                        'CUSTOMERCOMPANYBRANCH_DB_FIELDS', 
+                                        '$http', 
+                                        '$localStorage', 
+                                        '$q'
+                                        ];
 
 function customerCompanyBranchService(
 		API_BASE_URL, 
@@ -39,9 +39,9 @@ function customerCompanyBranchService(
 				1: 'getCustomersCompaniesBranches', 
 				2: 'getCustomerCompanyBranch'
 					}, 
-			fetchCustomersCompaniesBranches: fetchCustomersCompaniesBranches, 
-			addCustomerCompanyBranch: addCustomerCompanyBranch
-			};
+					fetchCustomersCompaniesBranches: fetchCustomersCompaniesBranches, 
+					addCustomerCompanyBranch: addCustomerCompanyBranch
+					};
 	
 	function getCustomersCompaniesBranches(){	return customerCompanyBranchServiceObj.customersCompaniesBranches;
 	}

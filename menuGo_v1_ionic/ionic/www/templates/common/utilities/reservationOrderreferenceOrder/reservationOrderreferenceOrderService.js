@@ -6,9 +6,9 @@ angular
 		);
 
 reservationOrderreferenceOrderService.$inject = [
-	'$http', 
-	'$q'
-	];
+                                                 '$http', 
+                                                 '$q'
+                                                 ];
 
 function reservationOrderreferenceOrderService(
 		$http, 

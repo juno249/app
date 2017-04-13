@@ -6,9 +6,9 @@ angular
 		);
 
 googleplacesService.$inject = [
-	'$q', 
-	'NgMap'
-	];
+                               '$q', 
+                               'NgMap'
+                               ];
 
 function googleplacesService(
 		$q, 

@@ -6,12 +6,12 @@ angular
 		);
 
 tableService.$inject = [
-	'API_BASE_URL', 
-	'TABLES_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                        'API_BASE_URL', 
+                        'TABLES_DB_FIELDS', 
+                        '$http', 
+                        '$localStorage', 
+                        '$q'
+                        ];
 
 function tableService(
 		API_BASE_URL, 
@@ -39,11 +39,11 @@ function tableService(
 				1: 'getCompanyBranchTables', 
 				2: 'getCompanyBranchTable'
 					}, 
-			fetchTables: fetchTables, 
-			addTable: addTable, 
-			updateTable: updateTable, 
-			deleteTable: deleteTable
-			}
+					fetchTables: fetchTables, 
+					addTable: addTable, 
+					updateTable: updateTable, 
+					deleteTable: deleteTable
+					};
 	
 	function getTables(){	return tableServiceObj.tables;
 	}

@@ -6,16 +6,16 @@ angular
 		);
 
 modalCompanyController.$inject = [
-	'API_BASE_URL', 
-	'$uibModalInstance', 
-	'$scope', 
-	'$timeout', 
-	'companyService', 
-	'company', 
-	'formMode', 
-	'fromSignup', 
-	'modalHiddenFields'
-	];
+                                  'API_BASE_URL', 
+                                  '$uibModalInstance', 
+                                  '$scope', 
+                                  '$timeout', 
+                                  'companyService', 
+                                  'company', 
+                                  'formMode', 
+                                  'fromSignup', 
+                                  'modalHiddenFields'
+                                  ];
 
 function modalCompanyController(
 		API_BASE_URL, 

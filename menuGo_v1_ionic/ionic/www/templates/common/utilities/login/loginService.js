@@ -6,12 +6,12 @@ angular
 		);
 
 loginService.$inject = [
-	'API_BASE_URL', 
-	'USER_ROLES', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                        'API_BASE_URL', 
+                        'USER_ROLES', 
+                        '$http', 
+                        '$localStorage', 
+                        '$q'
+                        ];
 
 function loginService(
 		API_BASE_URL, 
@@ -31,14 +31,14 @@ function loginService(
 			role: undefined, 
 			name: undefined
 			}, 
-		getLoginUsername: getLoginUsername, 
-		getLoginPassword: getLoginPassword, 
-		getUser: getUser, 
-		setLoginUsername: setLoginUsername, 
-		setLoginPassword: setLoginPassword, 
-		setUser: setUser, 
-		doLogin: doLogin
-		};
+			getLoginUsername: getLoginUsername, 
+			getLoginPassword: getLoginPassword, 
+			getUser: getUser, 
+			setLoginUsername: setLoginUsername, 
+			setLoginPassword: setLoginPassword, 
+			setUser: setUser, 
+			doLogin: doLogin
+			};
 	
 	function getLoginUsername(){	return loginServiceObj.loginUsername;
 	}

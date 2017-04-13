@@ -6,13 +6,13 @@ angular
 		);
 
 customerHomeController.$inject = [
-	'dataService', 
-	'$ionicHistory', 
-	'$ionicSlideBoxDelegate', 
-	'$localStorage', 
-	'$scope', 
-	'$timeout'
-	];
+                                  'dataService', 
+                                  '$ionicHistory', 
+                                  '$ionicSlideBoxDelegate', 
+                                  '$localStorage', 
+                                  '$scope', 
+                                  '$timeout'
+                                  ];
 
 function customerHomeController(
 		dataService, 

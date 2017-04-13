@@ -6,17 +6,17 @@ angular
 		);
 
 manageOrderController.$inject = [
-	'API_BASE_URL', 
-	'BROADCAST_MESSAGES', 
-	'ORDERS_DB_FIELDS', 
-	'$compile', 
-	'$scope', 
-	'$stateParams', 
-	'$uibModal', 
-	'DTOptionsBuilder', 
-	'DTColumnBuilder', 
-	'datatableService'
-	];
+                                 'API_BASE_URL', 
+                                 'BROADCAST_MESSAGES', 
+                                 'ORDERS_DB_FIELDS', 
+                                 '$compile', 
+                                 '$scope', 
+                                 '$stateParams', 
+                                 '$uibModal', 
+                                 'DTOptionsBuilder', 
+                                 'DTColumnBuilder', 
+                                 'datatableService'
+                                 ];
 
 function manageOrderController(
 		API_BASE_URL, 
@@ -96,7 +96,8 @@ function manageOrderController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateOrder(){
@@ -119,7 +120,8 @@ function manageOrderController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteOrder(){
@@ -142,7 +144,8 @@ function manageOrderController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -227,10 +230,10 @@ function manageOrderController(
 				'createdRow', 
 				createdRowCallback
 				)
-		.withOption(
-				'initComplete', 
-				initCompleteCallback
-				);
+				.withOption(
+						'initComplete', 
+						initCompleteCallback
+						);
 		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}

@@ -6,12 +6,12 @@ angular
 		);
 
 companyService.$inject = [
-	'API_BASE_URL', 
-	'COMPANIES_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                          'API_BASE_URL', 
+                          'COMPANIES_DB_FIELDS', 
+                          '$http', 
+                          '$localStorage', 
+                          '$q'
+                          ];
 
 function companyService(
 		API_BASE_URL, 
@@ -34,14 +34,14 @@ function companyService(
 			2: 'getCompanies', 
 			3: 'getCompany'
 				}, 
-		fetchCompanies: fetchCompanies, 
-		addCompanyValidate: addCompanyValidate, 
-		addCompany: addCompany, 
-		updateCompanyValidate: updateCompanyValidate, 
-		updateCompany: updateCompany, 
-		deleteCompany: deleteCompany, 
-		uploadCompanyLogo: uploadCompanyLogo
-		}
+				fetchCompanies: fetchCompanies, 
+				addCompanyValidate: addCompanyValidate, 
+				addCompany: addCompany, 
+				updateCompanyValidate: updateCompanyValidate, 
+				updateCompany: updateCompany, 
+				deleteCompany: deleteCompany, 
+				uploadCompanyLogo: uploadCompanyLogo
+				}
 	
 	function getCompanies(){	return companyServiceObj.companies;
 	}

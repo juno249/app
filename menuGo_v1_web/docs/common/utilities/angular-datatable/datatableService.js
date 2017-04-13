@@ -6,10 +6,10 @@ angular
 		);
 
 datatableService.$inject = [
-	'$http', 
-	'$q', 
-	'$rootScope'
-	];
+                            '$http', 
+                            '$q', 
+                            '$rootScope'
+                            ];
 
 function datatableService(
 		$http, 
@@ -144,10 +144,10 @@ function datatableService(
 							return htmlStr;
 							}
 						)
-				.withClass('select-checkbox')
-				.withOption('width', '5%')
-				.withTitle('')
-				);
+						.withClass('select-checkbox')
+						.withOption('width', '5%')
+						.withTitle('')
+						);
 		
 		datatableServiceObj.dtColumns = dtColumns;
 		}

@@ -6,14 +6,14 @@ angular
 		);
 
 modalBranchController.$inject = [
-	'$uibModalInstance', 
-	'$timeout', 
-	'branchService', 
-	'branch', 
-	'formMode', 
-	'fromSignup', 
-	'modalHiddenFields'
-	];
+                                 '$uibModalInstance', 
+                                 '$timeout', 
+                                 'branchService', 
+                                 'branch', 
+                                 'formMode', 
+                                 'fromSignup', 
+                                 'modalHiddenFields'
+                                 ];
 
 function modalBranchController(
 		$uibModalInstance, 

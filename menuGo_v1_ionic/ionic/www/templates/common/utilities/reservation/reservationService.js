@@ -6,12 +6,12 @@ angular
 		);
 
 reservationService.$inject = [
-	'API_BASE_URL', 
-	'RESERVATIONS_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                              'API_BASE_URL', 
+                              'RESERVATIONS_DB_FIELDS', 
+                              '$http', 
+                              '$localStorage', 
+                              '$q'
+                              ];
 
 function reservationService(
 		API_BASE_URL, 
@@ -62,11 +62,11 @@ function reservationService(
 				15: 'getCustomerReservationsReservationStatus', 
 				16: 'getCustomerReservationsNotReservationStatus'
 					}, 
-			fetchReservations: fetchReservations, 
-			addReservation: addReservation, 
-			updateReservation: updateReservation, 
-			deleteReservation: deleteReservation
-			};
+					fetchReservations: fetchReservations, 
+					addReservation: addReservation, 
+					updateReservation: updateReservation, 
+					deleteReservation: deleteReservation
+					}
 	
 	function getReservations(){	return reservationServiceObj.reservations;
 	}

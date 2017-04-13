@@ -6,17 +6,17 @@ angular
 		);
 
 manageTableController.$inject = [
-	'API_BASE_URL', 
-	'BROADCAST_MESSAGES', 
-	'TABLES_DB_FIELDS', 
-	'$compile', 
-	'$scope', 
-	'$stateParams', 
-	'$uibModal', 
-	'DTColumnBuilder', 
-	'DTOptionsBuilder', 
-	'datatableService'
-	];
+                                 'API_BASE_URL', 
+                                 'BROADCAST_MESSAGES', 
+                                 'TABLES_DB_FIELDS', 
+                                 '$compile', 
+                                 '$scope', 
+                                 '$stateParams', 
+                                 '$uibModal', 
+                                 'DTColumnBuilder', 
+                                 'DTOptionsBuilder', 
+                                 'datatableService'
+                                 ];
 
 function manageTableController(
 		API_BASE_URL, 
@@ -98,7 +98,8 @@ function manageTableController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateTable(){
@@ -121,7 +122,8 @@ function manageTableController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteTable(){
@@ -144,7 +146,8 @@ function manageTableController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -164,7 +167,7 @@ function manageTableController(
 				);
 		
 		return data;
-	}
+		}
 	
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
@@ -180,7 +183,7 @@ function manageTableController(
 				);
 		
 		return modalHiddenFields;
-	}
+		}
 	
 	function uibModalClosedCallback(){
 		vm.dtInstance.reloadData();
@@ -229,10 +232,10 @@ function manageTableController(
 				'createdRow', 
 				createdRowCallback
 				)
-		.withOption(
-				'initComplete', 
-				initCompleteCallback
-				);
+				.withOption(
+						'initComplete', 
+						initCompleteCallback
+						);
 		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}

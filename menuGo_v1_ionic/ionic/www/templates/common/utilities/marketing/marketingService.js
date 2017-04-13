@@ -6,13 +6,13 @@ angular
 		);
 
 marketingService.$inject = [
-	'ADVERTISEMENTS_DB_FIELDS', 
-	'API_BASE_URL', 
-	'BLOGS_DB_FIELDS', 
-	'$http', 
-	'$localStorage', 
-	'$q'
-	];
+                            'ADVERTISEMENTS_DB_FIELDS', 
+                            'API_BASE_URL', 
+                            'BLOGS_DB_FIELDS', 
+                            '$http', 
+                            '$localStorage', 
+                            '$q'
+                            ];
 
 function marketingService(
 		ADVERTISEMENTS_DB_FIELDS, 
@@ -47,19 +47,19 @@ function marketingService(
 				3: 'getCompanyAdvertisements', 
 				4: 'getCompanyAdvertisement'
 					}, 
-			fetchAdvertisements: fetchAdvertisements, 
-			addAdvertisement: addAdvertisement, 
-			updateAdvertisement: updateAdvertisement, 
-			deleteAdvertisement: deleteAdvertisement, 
+					fetchAdvertisements: fetchAdvertisements, 
+					addAdvertisement: addAdvertisement, 
+					updateAdvertisement: updateAdvertisement, 
+					deleteAdvertisement: deleteAdvertisement, 
 			getOptionsBlogs: {
 				1: 'getBlogs', 
 				2: 'getBlog'
 					}, 
-			fetchBlogs: fetchBlogs, 
-			addBlog: addBlog, 
-			updateBlog: updateBlog, 
-			deleteBlog: deleteBlog
-			};
+					fetchBlogs: fetchBlogs, 
+					addBlog: addBlog, 
+					updateBlog: updateBlog, 
+					deleteBlog: deleteBlog
+					};
 	
 	function getAdvertisements(){	return marketingServiceObj.advertisements;
 	}

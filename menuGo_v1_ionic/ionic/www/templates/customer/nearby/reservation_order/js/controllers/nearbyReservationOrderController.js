@@ -6,10 +6,10 @@ angular
 		);
 
 nearbyReservationOrderController.$inject = [
-	'PAYMENT_MODES', 
-	'$localStorage', 
-	'$scope'
-	];
+                                            'PAYMENT_MODES', 
+                                            '$localStorage', 
+                                            '$scope'
+                                            ];
 
 function nearbyReservationOrderController(
 		PAYMENT_MODES, 

@@ -6,15 +6,15 @@ angular
 		);
 
 dataService.$inject = [
-	'$localStorage', 
-	'$q', 
-	'companyService', 
-	'branchService', 
-	'menuService', 
-	'tableService', 
-	'menuitemService', 
-	'marketingService'
-	];
+                       '$localStorage', 
+                       '$q', 
+                       'companyService', 
+                       'branchService', 
+                       'menuService', 
+                       'tableService', 
+                       'menuitemService', 
+                       'marketingService'
+                       ];
 
 function dataService(
 		$localStorage, 
@@ -60,8 +60,8 @@ function dataService(
 				2, 
 				{}
 				)
-		.then(fetchCompaniesSuccessCallback)
-		.catch(fetchCompaniesFailedCallback);
+				.then(fetchCompaniesSuccessCallback)
+				.catch(fetchCompaniesFailedCallback);
 		
 		function fetchCompaniesSuccessCallback(response){
 			companies = localStorage.getItem(COMPANIES_KEY);
@@ -87,8 +87,8 @@ function dataService(
 						1, 
 						{}
 						)
-				.then(fetchBranchesSuccessCallback)
-				.catch(fetchBranchesFailedCallback);
+						.then(fetchBranchesSuccessCallback)
+						.catch(fetchBranchesFailedCallback);
 				
 				function fetchBranchesSuccessCallback(response){
 					branches = localStorage.getItem(BRANCHES_KEY);
@@ -120,8 +120,8 @@ function dataService(
 								1, 
 								{}
 								)
-						.then(fetchTablesSuccessCallback)
-						.catch(fetchTablesFailedCallback);
+								.then(fetchTablesSuccessCallback)
+								.catch(fetchTablesFailedCallback);
 						
 						function fetchTablesSuccessCallback(response){
 							tables = localStorage.getItem(TABLES_KEY);
@@ -160,8 +160,8 @@ function dataService(
 						1, 
 						{}
 						)
-				.then(fetchMenusSuccessCallback)
-				.catch(fetchMenusFailedCallback);
+						.then(fetchMenusSuccessCallback)
+						.catch(fetchMenusFailedCallback);
 				
 				function fetchMenusSuccessCallback(response){
 					menus = localStorage.getItem(MENUS_KEY);
@@ -193,8 +193,8 @@ function dataService(
 								1, 
 								{}
 								)
-						.then(fetchMenuitemsSuccessCallback)
-						.catch(fetchMenuitemsFailedCallback);
+								.then(fetchMenuitemsSuccessCallback)
+								.catch(fetchMenuitemsFailedCallback);
 						
 						function fetchMenuitemsSuccessCallback(response){
 							menuitems = localStorage.getItem(MENUITEMS_KEY);
@@ -238,8 +238,8 @@ function dataService(
 				1, 
 				{}
 				)
-		.then(fetchAdvertisementsSuccessCallback)
-		.catch(fetchAdvertisementsFailedCallback);
+				.then(fetchAdvertisementsSuccessCallback)
+				.catch(fetchAdvertisementsFailedCallback);
 		
 		function fetchAdvertisementsSuccessCallback(response){
 			advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
@@ -268,8 +268,8 @@ function dataService(
 				1, 
 				{}
 				)
-		.then(fetchBlogsSuccessCallback)
-		.catch(fetchBlogsFailedCallback);
+				.then(fetchBlogsSuccessCallback)
+				.catch(fetchBlogsFailedCallback);
 		
 		function fetchBlogsSuccessCallback(response){
 			blogs = localStorage.getItem(BLOGS_KEY);

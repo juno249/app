@@ -6,17 +6,17 @@ angular
 		);
 
 manageMenuitemController.$inject = [
-	'API_BASE_URL', 
-	'BROADCAST_MESSAGES', 
-	'MENUITEMS_DB_FIELDS', 
-	'$compile', 
-	'$scope', 
-	'$stateParams', 
-	'$uibModal', 
-	'DTColumnBuilder', 
-	'DTOptionsBuilder', 
-	'datatableService'
-	];
+                                    'API_BASE_URL', 
+                                    'BROADCAST_MESSAGES', 
+                                    'MENUITEMS_DB_FIELDS', 
+                                    '$compile', 
+                                    '$scope', 
+                                    '$stateParams', 
+                                    '$uibModal', 
+                                    'DTColumnBuilder', 
+                                    'DTOptionsBuilder', 
+                                    'datatableService'
+                                    ];
 
 function manageMenuitemController(
 		API_BASE_URL, 
@@ -103,7 +103,8 @@ function manageMenuitemController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateMenuitem(){
@@ -126,7 +127,8 @@ function manageMenuitemController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteMenuitem(){
@@ -149,7 +151,8 @@ function manageMenuitemController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -234,10 +237,10 @@ function manageMenuitemController(
 				'createdRow', 
 				createdRowCallback
 				)
-		.withOption(
-				'initComplete', 
-				initCompleteCallback
-				);
+				.withOption(
+						'initComplete', 
+						initCompleteCallback
+						);
 		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}

@@ -6,18 +6,18 @@ angular
 		);
 
 manageCompanyController.$inject = [
-	'API_BASE_URL', 
-	'BROADCAST_MESSAGES', 
-	'COMPANIES_DB_FIELDS', 
-	'$compile', 
-	'$localStorage', 
-	'$rootScope', 
-	'$scope', 
-	'$uibModal', 
-	'DTColumnBuilder', 
-	'DTOptionsBuilder', 
-	'datatableService'
-	];
+                                   'API_BASE_URL', 
+                                   'BROADCAST_MESSAGES', 
+                                   'COMPANIES_DB_FIELDS', 
+                                   '$compile', 
+                                   '$localStorage', 
+                                   '$rootScope', 
+                                   '$scope', 
+                                   '$uibModal', 
+                                   'DTColumnBuilder', 
+                                   'DTOptionsBuilder', 
+                                   'datatableService'
+                                   ];
 
 function manageCompanyController(
 		API_BASE_URL, 
@@ -84,7 +84,7 @@ function manageCompanyController(
 					BROADCAST_MESSAGES.toggleMenu, 
 					{	companyName: vm.company.company_name	}
 					);
-			} else {	
+			} else {
 				vm.company = {};
 				
 				$rootScope.$broadcast(
@@ -118,7 +118,8 @@ function manageCompanyController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateCompany(){
@@ -144,7 +145,8 @@ function manageCompanyController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteCompany(){
@@ -170,7 +172,8 @@ function manageCompanyController(
 						}
 						}
 				}
-				).closed.then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -266,10 +269,10 @@ function manageCompanyController(
 				'createdRow', 
 				createdRowCallback
 				)
-		.withOption(
-				'initComplete', 
-				initCompleteCallback
-				);
+				.withOption(
+						'initComplete', 
+						initCompleteCallback
+						);
 		
 		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}

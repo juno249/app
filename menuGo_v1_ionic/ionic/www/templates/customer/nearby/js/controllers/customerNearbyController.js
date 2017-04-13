@@ -6,18 +6,18 @@ angular
 		);
 
 customerNearbyController.$inject = [
-	'$ionicHistory', 
-	'$ionicSlideBoxDelegate', 
-	'$localStorage', 
-	'$q', 
-	'$scope', 
-	'$state', 
-	'$timeout', 
-	'branchService', 
-	'dataService', 
-	'geolocationService', 
-	'googleplacesService'
-	];
+                                    '$ionicHistory', 
+                                    '$ionicSlideBoxDelegate', 
+                                    '$localStorage', 
+                                    '$q', 
+                                    '$scope', 
+                                    '$state', 
+                                    '$timeout', 
+                                    'branchService', 
+                                    'dataService', 
+                                    'geolocationService', 
+                                    'googleplacesService'
+                                    ];
 
 function customerNearbyController(
 		$ionicHistory, 
