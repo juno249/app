@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class fileConstants{
 	const fileGetSuccessMsg = 'FILE RETRIEVED SUCCESSFULLY';
@@ -61,6 +62,16 @@ class fileController extends Controller
 		$imgDirectory = '/companies/' . $CompanyName . '/';
 		$imgFile = $formRequest->file('imgFile');
 		$imgFileName = $imgDirectory . $CompanyName . '.jpg';
+		$imgStore = Image::make(File::get($imgFile))
+		->resize(
+				300, 
+				300, 
+				function($constraint){
+					$constraint->aspectRatio();
+					$constraint->upsize();
+				}
+		)
+		->stream();
 		$filesResponse = new Response();
 		
 		if(
@@ -79,7 +90,7 @@ class fileController extends Controller
 			Storage::disk('public')
 			->put(
 					$imgFileName, 
-					File::get($imgFile)
+					$imgStore
 					);
 					$filesResponse->setStatusCode(
 							200, 
@@ -180,6 +191,16 @@ class fileController extends Controller
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/';
 		$imgFile = $formRequest->file('imgFile');
 		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName .'.jpg';
+		$imgStore = Image::make(File::get($imgFile))
+		->resize(
+				300, 
+				300, 
+				function($constraint){
+					$constraint->aspectRatio();
+					$constraint->upsize();
+				}
+		)
+		->stream();
 		$filesResponse = new Response();
 		
 		if(
@@ -204,7 +225,7 @@ class fileController extends Controller
 			Storage::disk('public')
 			->put(
 					$imgFileName, 
-					File::get($imgFile)
+					$imgStore
 					);
 					$filesResponse->setStatusCode(
 							200, 
@@ -322,6 +343,16 @@ class fileController extends Controller
 		$imgDirectory = '/companies/' . $CompanyName . '/menus/' . $MenuName . '/menuitems/';
 		$imgFile = $formRequest->file('imgFile');
 		$imgFileName = $imgDirectory . $CompanyName . '_' . $MenuName . '_' . $MenuitemCode . '.jpg';
+		$imgStore = Image::make(File::get($imgFile))
+		->resize(
+				300, 
+				300, 
+				function($constraint){
+					$constraint->aspectRatio();
+					$constraint->upsize();
+				}
+		)
+		->stream();
 		$filesResponse = new Response();
 		
 		if(
@@ -350,7 +381,7 @@ class fileController extends Controller
 			Storage::disk('public')
 			->put(
 					$imgFileName, 
-					File::get($imgFile)
+					$imgStore
 					);
 					$filesResponse->setStatusCode(
 							200, 
