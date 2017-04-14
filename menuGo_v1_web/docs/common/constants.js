@@ -208,11 +208,9 @@ angular
 .constant(
 		'ORDER_STATUS', 
 		[
-			'sent', 
-			'acknowledged', 
+			'queue', 
 			'cooking', 
-			'served', 
-			'history'
+			'to serve'
 			]
 		)
 		
