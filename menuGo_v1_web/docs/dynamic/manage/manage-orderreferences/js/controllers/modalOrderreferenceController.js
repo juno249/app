@@ -109,8 +109,6 @@ function modalOrderreferenceController(
 		
 		showBootstrapLoader($(DOM_MODAL));
 		
-		showBootstrapLoader($(DOM_MODAL));
-		
 		if('I' == vm.formMode){
 			orderreferenceService.setCompanyName(vm.orderreference.companyName);
 			orderreferenceService.setBranchName(vm.orderreference.branchName);
