@@ -1,0 +1,162 @@
+<div 
+	class="modal-content">
+	<div 
+		class="modal-header font-family-1-size-medium">
+		Manage Order
+	</div>
+	<!--  *************** 
+			modalOrder (start)
+			*************** -->
+	<div 
+		class="modal-body" 
+		id="modalOrderContainer" 
+		name="modalOrderContainer" 
+		ng-init="modalOrderController.initBootstrapValidator(); modalOrderController.initDom();">
+		<div 
+			class="alert alert-danger font-family-2-size-medium" 
+			ng-hide="modalOrderController.isValidationErrDBHidden">
+			{{modalOrderController.validationErrDB}}
+		</div>
+		<!--  *************** 
+				modalOrder (start)
+				*************** -->
+		<form 
+			class="form-group" 
+			id="modalOrder" 
+			name="modalOrder">
+			<div 
+				class="container-fluid">
+				<div 
+					class="row" 
+					ng-hide="modalOrderController.modalHiddenFields['menuitemId']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Menuitem id
+							</span>
+							<!--  *************** 
+									menuitemId (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="menuitemId" 
+								name="menuitemId" 
+								ng-hide="modalOrderController.modalHiddenFields['menuitemId']" 
+								ng-model="modalOrderController.order.menuitemId" 
+								placeholder="Menuitem Id" 
+								required 
+								type="number">
+							<!--  *************** 
+									menuitemId (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalOrderController.validationErr[0]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalOrderController.modalHiddenFields['orderreferenceCode']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Orderreference code
+							</span>
+							<!--  *************** 
+									orderreferenceCode (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="orderreferenceCode" 
+								maxlength="40" 
+								name="orderreferenceCode" 
+								ng-hide="modalOrderController.modalHiddenFields['orderreferenceCode']" 
+								ng-model="modalOrderController.orderreference.orderreferenceCode" 
+								placeholder="Orderreference Code" 
+								required 
+								type="text">
+							<!--  *************** 
+									orderreferenceCode (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalOrderController.validationErr[1]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalOrderController.modalHiddenFields['orderStatus']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Status
+							</span>
+							<!--  *************** 
+									orderStatus (start)
+									*************** -->
+							<select 
+								class="font-family-2-size-small form-control" 
+								id="orderStatus" 
+								name="orderStatus" 
+								ng-hide="modalOrderController.modalHiddenFields['orderStatus']" 
+								ng-model="modalOrderController.order.orderStatus" 
+								ng-options="k as v for (k,v) in modalOrderController.orderStatusOptions" 
+								required>
+							</select>
+							<!--  *************** 
+									orderStatus (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalOrderController.validationErr[2]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row">
+			        <div 
+			        	class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							type="submit">
+							Submit
+						</button>
+					</div>
+			        
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							ng-click="modalOrderController.doCancel();" 
+							type="button">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!--  *************** 
+				modalOrder (end)
+				*************** -->
+	</div>
+	<!--  *************** 
+			modalOrder (end)
+			*************** -->
+</div>
