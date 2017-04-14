@@ -10,7 +10,7 @@ SET @reservation_diners_count = 5;
 SET @reservation_eta = "2017-03-14 12:37:00";
 SET @reservation_payment_mode = "cash";
 SET @reservation_service_time = "2017-03-14 12:37:00";
-SET @reservation_status = "pending";
+SET @reservation_status = "sent";
 SET @reservation_status_change_timestamp = "2017-03-14 12:37:00";
 
 INSERT INTO reservations(

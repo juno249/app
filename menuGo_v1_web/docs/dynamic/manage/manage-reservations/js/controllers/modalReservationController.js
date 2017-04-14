@@ -6,6 +6,8 @@ angular
 		);
 
 modalReservationController.$inject = [
+                                      'PAYMENT_MODES', 
+                                      'RESERVATION_STATUS', 
                                       '$uibModalInstance', 
                                       '$timeout', 
                                       'reservationService', 
@@ -16,6 +18,8 @@ modalReservationController.$inject = [
                                       ];
 
 function modalReservationController(
+		PAYMENT_MODES, 
+		RESERVATION_STATUS, 
 		$uibModalInstance, 
 		$timeout, 
 		reservationService, 
@@ -67,6 +71,8 @@ function modalReservationController(
 			reservation_service_time: 6,  
 			reservation_status: 7
 			};
+	vm.reservationPaymentModeOptions = PAYMENT_MODES;
+	vm.reservationStatusOptions = RESERVATION_STATUS;
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;

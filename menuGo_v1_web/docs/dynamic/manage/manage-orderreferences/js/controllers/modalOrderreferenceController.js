@@ -6,6 +6,7 @@ angular
 		);
 
 modalOrderreferenceController.$inject = [
+                                         'ORDERREFERENCE_STATUS', 
                                          '$uibModalInstance', 
                                          '$timeout', 
                                          'orderreferenceService', 
@@ -16,6 +17,7 @@ modalOrderreferenceController.$inject = [
                                          ];
 
 function modalOrderreferenceController(
+		ORDERREFERENCE_STATUS, 
 		$uibModalInstance, 
 		$timeout, 
 		orderreferenceService, 
@@ -55,6 +57,7 @@ function modalOrderreferenceController(
 			table_id: 2, 
 			orderreference_status: 3
 			};
+	vm.orderreferenceStatusOptions = ORDERREFERENCE_STATUS;
 	vm.validationErr = {};
 	vm.validationErrDB = {};
 	vm.isValidationErrDBHidden = true;

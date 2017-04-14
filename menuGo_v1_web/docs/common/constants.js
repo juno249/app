@@ -206,20 +206,38 @@ angular
 		)
 		
 .constant(
+		'ORDERREFERENCE_STATUS', 
+		{
+			sent: 'sent', 
+			in_progress: 'in progress', 
+			done: 'done'
+				}
+		)
+		
+.constant(
 		'ORDER_STATUS', 
-		[
-			'queue', 
-			'cooking', 
-			'to serve'
-			]
+		{
+			queue: 'queue', 
+			cooking: 'cooking', 
+			to_serve: 'to serve'
+				}
+		)
+		
+.constant(
+		'RESERVATION_STATUS', 
+		{
+			sent: 'sent', 
+			in_progress: 'in progress', 
+			done: 'done'
+				}
 		)
 		
 .constant(
 		'PAYMENT_MODES', 
-		[
-			'cash', 
-			'credit card'
-			]
+		{
+			cash: 'cash', 
+			credit_card: 'credit card'
+				}
 		)
 		
 .constant(
