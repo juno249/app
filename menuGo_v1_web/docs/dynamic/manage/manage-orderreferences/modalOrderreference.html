@@ -1,0 +1,198 @@
+<div 
+	class="modal-content">
+	<div 
+		class="modal-header font-family-1-size-medium">
+		Manage Orderreference
+	</div>
+	<!--  *************** 
+			modalOrderreferenceContainer (start)
+			*************** -->
+	<div 
+		class="modal-body" 
+		id="modalOrderreferenceContainer" 
+		name="modalOrderreferenceContainer" 
+		ng-init="modalOrderreferenceController.initBootstrapValidator(); modalOrderreferenceController.initDom();">
+		<div 
+			class="alert alert-danger font-family-2-size-medium" 
+			ng-hide="modalOrderreferenceController.isValidationErrDBHidden">
+			{{modalOrderreferenceController.validationErrDB}}
+		</div>
+		<!--  *************** 
+				modalOrderreference (start)
+				*************** -->
+		<form 
+			class="form-group" 
+			id="modalOrderreference" 
+			name="modalOrderreference">
+			<div 
+				class="container-fluid">
+				
+				<div 
+					class="row" 
+					ng-hide="modalOrderreferenceController.modalHiddenFields['orderreferenceCode']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Code
+							</span>
+							<!--  *************** 
+									orderreferenceCode (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="orderreferenceCode" 
+								maxlength="40" 
+								name="orderreferenceCode" 
+								ng-hide="modalOrderreferenceController.modalHiddenFields['orderreferenceCode']" 
+								ng-model="modalOrderreferenceController.orderreference.orderreferenceCode" 
+								placeholder="Code" 
+								required 
+								type="text">
+							<!--  *************** 
+									orderreferenceCode (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalOrderreferenceController.validationErr[0]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalOrderreferenceController.modalHiddenFields['customerUsername']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Customer username
+							</span>
+							<!--  *************** 
+									customerUsername (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="customerUsername" 
+								maxlength="30" 
+								name="customerUsername" 
+								ng-hide="modalOrderreferenceController.modalHiddenFields['customerUsername']" 
+								ng-model="modalOrderreferenceController.orderreference.customerUsername" 
+								placeholder="Customer Username" 
+								required 
+								type="text">
+							<!--  *************** 
+									customerUsername (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalOrderreferenceController.validationErr[1]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalOrderreferenceController.modalHiddenFields['tableId']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Table id
+							</span>
+							<!--  *************** 
+									tableId (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="tableId" 
+								name="tableId" 
+								ng-hide="modalOrderreferenceController.modalHiddenFields['tableId']" 
+								ng-model="modalOrderreferenceController.orderreference.tableId" 
+								placeholder="Table Id" 
+								required 
+								type="number">
+							<!--  *************** 
+									tableId (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalOrderreferenceController.validationErr[2]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalOrderreferenceController.modalHiddenFields['orderreferenceStatus']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Status
+							</span>
+							<!--  *************** 
+									orderreferenceStatus (start)
+									*************** -->
+							<select 
+								class="font-family-2-size-small form-control" 
+								id="orderreferenceStatus" 
+								name="orderreferenceStatus" 
+								ng-hide="modalOrderreferenceController.modalHiddenFields['orderreferenceStatus']" 
+								ng-model="modalOrderreferenceController.orderreference.orderreferenceStatus" 
+								ng-options="k as v for (k,v) in modalOrderreferenceController.orderreferenceStatusOptions" 
+								required>
+							</select>
+							<!--  *************** 
+									orderreferenceStatus (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalCustomerController.validationErr[5]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row">
+			        <div 
+			        	class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							type="submit">
+							Submit
+						</button>
+					</div>
+			        
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							ng-click="modalOrderreferenceController.doCancel();" 
+							type="button">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!--  *************** 
+				modalOrderreference (end)
+				*************** -->
+	</div>
+	<!--  *************** 
+			modalOrderreferenceContainer (end)
+			*************** -->
+</div>
