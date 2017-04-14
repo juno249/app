@@ -82,7 +82,7 @@ function manageOrderController(
 	function addOrder(){
 		var formMode = 'I';
 		
-		modalInstance = $uibModal.open(
+		var modalInstance = $uibModal.open(
 				{
 					animation: true, 
 					templateUrl: 'docs/dynamic/manage/manage-orders/modalOrder.html', 
