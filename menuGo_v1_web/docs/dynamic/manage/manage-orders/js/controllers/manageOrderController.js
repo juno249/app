@@ -31,6 +31,7 @@ function manageOrderController(
 		datatableService
 		){
 	const DOM_ORDER_TABLE = '#orderTable';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.companyName = $stateParams['companyName'];
@@ -57,8 +58,8 @@ function manageOrderController(
 			order_status: 'orderStatus'
 				};
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
 		vm.user= JSON.parse(vm.user);
 		}
 	

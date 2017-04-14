@@ -31,6 +31,7 @@ function manageTableController(
 		datatableService
 		){
 	const DOM_TABLE_TABLE = '#tableTable';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.tableId = '#tableTable';
@@ -58,8 +59,8 @@ function manageTableController(
 			table_status: 'tableStatus'
 				};
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
 		vm.user= JSON.parse(vm.user);
 		}
 	

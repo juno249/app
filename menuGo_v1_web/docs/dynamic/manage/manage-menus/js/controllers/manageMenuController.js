@@ -33,6 +33,7 @@ function manageMenuController(
 		datatableService
 		){
 	const DOM_MENU_TABLE = '#menuTable';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.companyName = $stateParams['companyName'];
@@ -57,8 +58,8 @@ function manageMenuController(
 			menu_image: 'menuImage'
 				};
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
 		vm.user= JSON.parse(vm.user);
 		}
 	

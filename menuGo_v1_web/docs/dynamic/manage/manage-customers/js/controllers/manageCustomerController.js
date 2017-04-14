@@ -31,6 +31,7 @@ function manageCustomerController(
 		datatableService
 		){
 	const DOM_CUSTOMER_TABLE = '#customerTable';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.customer = {};
@@ -80,8 +81,8 @@ function manageCustomerController(
 			customer_birthday_year: 'customerBirthdayYear'
 				};
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
 		vm.user= JSON.parse(vm.user);
 		}
 	

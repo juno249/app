@@ -31,6 +31,7 @@ function manageReservationController(
 		datatableService
 		){
 	const DOM_ORDERREFERENCE_TABLE = '#orderreferenceTable';
+	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.companyName = $stateParams['companyName'];
@@ -67,8 +68,8 @@ function manageReservationController(
 			reservation_status: 'reservationStatus'
 				};
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
 		vm.user = JSON.parse(vm.user);
 		}
 	
