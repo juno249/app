@@ -131,7 +131,7 @@ function modalCustomerController(
 		}
 	
 	function initBootstrapDatepicker(){
-		const DOM_CUSTOMER_BIRTHDAY = '#customerBirthday';
+		const DOM_CUSTOMER_BIRTHDAY = '#customerBirthdate';
 		
 		$(DOM_CUSTOMER_BIRTHDAY).datepicker(
 				{

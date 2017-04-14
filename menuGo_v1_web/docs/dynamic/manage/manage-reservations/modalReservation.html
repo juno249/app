@@ -1,0 +1,363 @@
+<div 
+	class="modal-content">
+	<div 
+		class="modal-header font-family-1-size-medium">
+		Manage Reservation
+	</div>
+	<!--  *************** 
+			modalReservation (start)
+			*************** -->
+	<div 
+		class="modal-body" 
+		id="modalReservationContainer" 
+		name="modalReservationContainer" 
+		ng-init="modalReservationController.initBootstrapValidator(); modalReservationController.initDom();">
+		<div 
+			class="alert alert-danger font-family-2-size-medium" 
+			ng-hide="modalReservationController.isValidationErrDBHidden">
+			{{modalReservationController.validationErrDB}}
+		</div>
+		<!--  *************** 
+				modalReservation (start)
+				*************** -->
+		<form 
+			class="form-group" 
+			id="modalReservation" 
+			name="modalReservation">
+			<div 
+				class="container-fluid">
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['reservationCode']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Code
+							</span>
+							<!--  *************** 
+									reservationCode (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="reservationCode" 
+								maxlength="40" 
+								name="reservationCode" 
+								ng-hide="modalReservationController.modalHiddenFields['reservationCode']" 
+								ng-model="modalReservationController.reservation.reservationCode" 
+								placeholder="Code" 
+								required 
+								type="text">
+							<!--  *************** 
+									reservationCode (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[0]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['customerUsername']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Customer username
+							</span>
+							<!--  *************** 
+									customerUsername (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="customerUsername" 
+								maxlength="30" 
+								name="customerUsername" 
+								ng-hide="modalReservationController.modalHiddenFields['customerUsername']" 
+								ng-model="modalReservationController.reservation.customerUsername" 
+								placeholder="Customer Username" 
+								required 
+								type="text">
+							<!--  *************** 
+									customerUsername (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[1]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['orderreferenceCode']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Orderreference code
+							</span>
+							<!--  *************** 
+									orderreferenceCode (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="orderreferenceCode" 
+								maxlength="40" 
+								name="orderreferenceCode" 
+								ng-hide="modalReservationController.modalHiddenFields['orderreferenceCode']" 
+								ng-model="modalReservationController.reservation.orderreferenceCode" 
+								placeholder="Orderreference Code" 
+								required 
+								type="text">
+							<!--  *************** 
+									orderreferenceCode (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[2]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['reservationDinersCount']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Reservation diners count
+							</span>
+							<!--  *************** 
+									reservationDinersCount (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="reservationDinersCount" 
+								name="reservationDinersCount" 
+								ng-hide="modalReservationController.modalHiddenFields['reservationDinersCount']" 
+								ng-model="modalReservationController.reservation.reservationDinersCount" 
+								placeholder="Reservation Diners Count" 
+								required 
+								type="number">
+							<!--  *************** 
+									reservationDinersCount (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[3]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['reservationEta']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Reseration eta
+							</span>
+							<!--  *************** 
+									reservationEta (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="reservationEta" 
+								name="reservationEta" 
+								placeholder="Reservation Eta" 
+								type="text">
+							<!--  *************** 
+									reservationEta (end)
+									*************** -->
+							<span 
+								class="input-group-btn">
+								<!--  *************** 
+										reservationEtaButton (start)
+										*************** -->
+								<button 
+									class="btn btn-default" 
+									id="reservationEtaButton" 
+									name="reservationEtaButton" 
+									type="button">
+									<i 
+										class="glyphicon glyphicon-calendar">
+									</i>
+								</button>
+								<!--  *************** 
+										reservationEtaButton (end)
+										*************** -->
+							</span>
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[4]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['reservationPaymentMode']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Reseration payment mode
+							</span>
+							<!--  *************** 
+									reservationPaymentMode (start)
+									*************** -->
+							<select 
+								class="font-family-2-size-small form-control" 
+								id="reservationPaymentMode" 
+								name="reservationPaymentMode" 
+								ng-hide="modalReservationController.modalHiddenFields['reservationPaymentMode']" 
+								ng-model="modalReservationController.reservation.reservationPaymyentMode" 
+								ng-options="k as v for (k,v) in modalReservationController.reservationPaymentModeOptions" 
+								required>
+							</select>
+							<!--  *************** 
+									reservationPaymentMode (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[5]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['reservationServiceTime']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Reservation service time
+							</span>
+							<!--  *************** 
+									reservationServiceTime (start)
+									*************** -->
+							<input 
+								class="font-family-2-size-small form-control" 
+								id="reservationServiceTime" 
+								name="reservationServiceTime" 
+								placeholder="Reservation Service Time" 
+								type="text">
+							<!--  *************** 
+									reservationServiceTime (end)
+									*************** -->
+							<span 
+								class="input-group-btn">
+								<!--  *************** 
+										reservationServiceTimeButton (start)
+										*************** -->
+								<button 
+									class="btn btn-default" 
+									id="reservationServiceTimeButton" 
+									name="reservationServiceTimeButton" 
+									type="button">
+									<i 
+										class="glyphicon glyphicon-calendar">
+									</i>
+								</button>
+								<!--  *************** 
+										reservationServiceTimeButton (end)
+										*************** -->
+							</span>
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[6]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row" 
+					ng-hide="modalReservationController.modalHiddenFields['reservationStatus']">
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12 form-group form-group-required">
+						<div 
+							class="input-group">
+							<span 
+								class="font-family-1-size-medium input-group-addon">
+								Reservation status
+							</span>
+							<!--  *************** 
+									reservationStatus (start)
+									*************** -->
+							<select 
+								class="font-family-2-size-small form-control" 
+								id="reservationStatus" 
+								name="reservationStatus" 
+								ng-hide="modalReservationController.modalHiddenFields['reservationStatus']" 
+								ng-model="modalReservationController.reservation.reservationStatus" 
+								ng-options="k as v for (k,v) in modalReservationController.reservationStatusOptions">
+							</select>
+							<!--  *************** 
+									reservationStatus (end)
+									*************** -->
+						</div>
+						<div 
+							class="font-family-2-size-small help-block with-errors">
+							{{modalReservationController.validationErr[7]}}
+						</div>
+					</div>
+				</div>
+				
+				<div 
+					class="row">
+			        <div 
+			        	class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							type="submit">
+							Submit
+						</button>
+					</div>
+			        
+					<div 
+						class="col-md-6 col-sm-6 col-xs-12">
+						<button 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							ng-click="modalReservationController.doCancel();" 
+							type="button">
+							Cancel
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!--  *************** 
+				modalReservation (end)
+				*************** -->
+	</div>
+	<!--  *************** 
+			modalReservation (end)
+			*************** -->
+</div>
