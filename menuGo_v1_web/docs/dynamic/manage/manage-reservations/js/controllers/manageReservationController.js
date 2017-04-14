@@ -8,7 +8,7 @@ angular
 manageReservationController.$inject = [
                                        'API_BASE_URL', 
                                        'BROADCAST_MESSAGES', 
-                                       'ORDERREFERENCES_DB_FIELDS', 
+                                       'RESERVATIONS_DB_FIELDS', 
                                        '$compile', 
                                        '$scope', 
                                        '$stateParams', 
