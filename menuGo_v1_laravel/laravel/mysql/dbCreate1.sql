@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_payment_mode VARCHAR(30) NOT NULL, 
 	reservation_service_time DATETIME NOT NULL, 
 	reservation_status VARCHAR(30) NOT NULL, 
+	reservation_status_change_timestamp DATETIME NOT NULL, 
 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(reservation_id), 
 	UNIQUE(reservation_code), 

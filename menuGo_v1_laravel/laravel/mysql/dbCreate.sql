@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_payment_mode VARCHAR(30) NOT NULL, 
 	reservation_service_time DATETIME NOT NULL, 
 	reservation_status VARCHAR(30) NOT NULL, 
+	reservation_status_change_timestamp DATETIME NOT NULL, 
 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(reservation_id), 
 	UNIQUE(reservation_code), 
@@ -1230,6 +1231,7 @@ SET @reservation_eta = "2017-03-14 12:37:00";
 SET @reservation_payment_mode = "cash";
 SET @reservation_service_time = "2017-03-14 12:37:00";
 SET @reservation_status = "pending";
+SET @reservation_status_change_timestamp = "2017-03-14 12:37:00";
 
 INSERT INTO reservations(
 	reservation_code, 
@@ -1239,7 +1241,8 @@ INSERT INTO reservations(
 	reservation_eta, 
 	reservation_payment_mode, 
 	reservation_service_time, 
-	reservation_status
+	reservation_status, 
+	reservation_status_change_timestamp
 	)
 VALUES(
 	@reservation_code, 
@@ -1249,7 +1252,8 @@ VALUES(
 	@reservation_eta, 
 	@reservation_payment_mode, 
 	@reservation_service_time, 
-	@reservation_status
+	@reservation_status, 
+	@reservation_status_change_timestamp
 	);
 	
 #customers_companies_branches_insert

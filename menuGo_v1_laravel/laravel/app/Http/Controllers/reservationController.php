@@ -26,6 +26,7 @@ class reservationConstants{
 	const dbReservationPaymentMode = 'reservation_payment_mode';
 	const dbReservationServiceTime = 'reservation_service_time';
 	const dbReservationStatus = 'reservation_status';
+	const dbReservationStatusChangeTimestamp = 'reservation_status_change_timestamp';
 	const dbLastChangeTimestamp = 'last_change_timestamp';
 	
 	const reqReservationId = 'ReservationId';
@@ -37,6 +38,7 @@ class reservationConstants{
 	const reqReservationPaymentMode = 'ReservationPaymentMode';
 	const reqReservationServiceTime = 'ReservationServiceTime';
 	const reqReservationStatus = 'ReservationStatus';
+	const reqReservationStatusChangeTimestamp = 'ReservationStatusChangeTimestamp';
 	const reqLastChangeTimestamp = 'LastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
@@ -1042,6 +1044,15 @@ class reservationController extends Controller
 				]
 				);
 		}
+		if(isset($_GET[reservationConstants::reqReservationStatusChangeTimestamp])){	array_push(
+				$mySqlWhere, 
+				[
+						reservationConstants::dbReservationStatusChangeTimestamp, 
+						'LIKE', 
+						'%' . $_GET[reservationConstants::reqReservationStatusChangeTimestamp] . '%'
+				]
+				);
+		}
 		if(isset($_GET[reservationConstants::reqLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
@@ -1088,7 +1099,8 @@ class reservationController extends Controller
 							'*.' . reservationConstants::dbReservationEta => 'required|date_format:Y-m-d H:i:s', 
 							'*.' . reservationConstants::dbReservationPaymentMode => 'required|string|max:30', 
 							'*.' . reservationConstants::dbReservationServiceTime => 'required|date_format:Y-m-d H:i:s', 
-							'*.' . reservationConstants::dbReservationStatus => 'required|string|max:30'
+							'*.' . reservationConstants::dbReservationStatus => 'required|string|max:30', 
+							'*.' . reservationConstants::dbReservationStatusChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
@@ -1103,6 +1115,7 @@ class reservationController extends Controller
 							'*.' . reservationConstants::dbReservationPaymentMode => 'sometimes|string|max:30', 
 							'*.' . reservationConstants::dbReservationServiceTime => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . reservationConstants::dbReservationStatus => 'sometimes|string|max:30', 
+							'*.' . reservationConstants::dbReservationStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . reservationConstants::dbLastChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s'
 					]
 					);

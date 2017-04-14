@@ -11,6 +11,7 @@ SET @reservation_eta = "2017-03-14 12:37:00";
 SET @reservation_payment_mode = "cash";
 SET @reservation_service_time = "2017-03-14 12:37:00";
 SET @reservation_status = "pending";
+SET @reservation_status_change_timestamp = "2017-03-14 12:37:00";
 
 INSERT INTO reservations(
 	reservation_code, 
@@ -20,7 +21,8 @@ INSERT INTO reservations(
 	reservation_eta, 
 	reservation_payment_mode, 
 	reservation_service_time, 
-	reservation_status
+	reservation_status, 
+	reservation_status_change_timestamp
 	)
 VALUES(
 	@reservation_code, 
@@ -30,5 +32,6 @@ VALUES(
 	@reservation_eta, 
 	@reservation_payment_mode, 
 	@reservation_service_time, 
-	@reservation_status
+	@reservation_status, 
+	@reservation_status_change_timestamp
 	);
