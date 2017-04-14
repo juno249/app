@@ -136,7 +136,8 @@ angular
 			6: 'reservation_payment_mode', 
 			7: 'reservation_service_time', 
 			8: 'reservation_status', 
-			9: 'last_change_timestamp'
+			9: 'reservation_status_change_timestamp', 
+			10: 'last_change_timestamp'
 				}
 		)
 		
