@@ -12,7 +12,6 @@ modalOrderreferenceController.$inject = [
                                          'orderreferenceService', 
                                          'orderreference', 
                                          'formMode', 
-                                         'fromSignup', 
                                          'modalHiddenFields'
                                          ];
 
@@ -23,7 +22,6 @@ function modalOrderreferenceController(
 		orderreferenceService, 
 		orderreference, 
 		formMode, 
-		fromSignup, 
 		modalHiddenFields
 		){
 	const ORDERREFERENCE_ADD_CATCH_MESSAGE = 'UNABLE TO ADD ORDERREFERENCE, DB EXCEPTION ENCOUNTERED';
@@ -35,7 +33,6 @@ function modalOrderreferenceController(
 	
 	var vm = this;
 	vm.formMode = formMode;
-	vm.fromSignup = fromSignup;
 	vm.orderreference = orderreference;
 	vm.orderreferenceSnapshot = JSON.parse(JSON.stringify(orderreference));
 	vm.modalHiddenFields = modalHiddenFields;

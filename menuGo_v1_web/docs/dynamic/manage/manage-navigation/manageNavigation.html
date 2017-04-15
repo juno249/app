@@ -73,6 +73,76 @@
 											Table
 										</div>
 									</a>
+									<ul 
+										class="nav nav-list">
+										<!--  *************** 
+												manageOrderreferenceListItem (start)
+												*************** -->
+										<li 
+											id="manageOrderreferenceListItem" 
+											name="manageOrderreferenceListItem" 
+											ng-hide="manageNavigationController.isManageOrderreferenceHidden">
+											<a 
+												ui-sref="manage.company.branch.table.orderreference({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName, tableNumber: manageNavigationController.tableNumber})">
+												<div 
+													class="lv4-node">
+													<span 
+														class="glyphicon">
+													</span>
+													Orderreference
+												</div>
+											</a>
+											<ul 
+												class="nav nav-list">
+												<!--  *************** 
+														manageOrderListItem (start)
+														*************** -->
+												<li 
+													id="manageOrderListItem" 
+													name="manageOrderListItem" 
+													ng-hide="manageNavigationController.isManageOrderHidden">
+													<a 
+														ui-sref="manage.company.branch.table.orderreference.order({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName, tableNumber: manageNavigationController.tableNumber, orderreferenceCode: manageNavigationController.orderreferenceCode})">
+														<div 
+															class="lv5-node">
+															<span 
+																class="glyphicon">
+															</span>
+															Order
+														</div>
+													</a>
+												</li>
+												<!--  *************** 
+														manageOrderListItem (end)
+														*************** -->
+												
+												<!--  *************** 
+														manageReservationListItem (start)
+														*************** -->
+												<li 
+													id="manageReservationListItem" 
+													name="manageReservationListItem" 
+													ng-hide="manageNavigationController.isManageReservationHidden">
+													<a 
+														ui-sref="manage.company.branch.table.orderreference.reservation({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName, tableNumber: manageNavigationController.tableNumber, orderreferenceCode: manageNavigationController.orderreferenceCode})">
+														<div 
+															class="lv5-node">
+															<span 
+																class="glyphicon">
+															</span>
+															Reservation
+														</div>
+													</a>
+												</li>
+												<!--  *************** 
+														manageReservationListItem (end)
+														*************** -->
+											</ul>
+										</li>
+										<!--  *************** 
+												manageOrderreferenceListItem (end)
+												*************** -->
+									</ul>
 								</li>
 								<!--  *************** 
 										manageTableListItem (end)
@@ -153,6 +223,69 @@
 				</li>
 				<!--  *************** 
 						manageUserListItem (end)
+						*************** -->
+				
+				<!--  *************** 
+						manageOrderreferenceListItem_main (start)
+						*************** -->
+				<li 
+					id="manageOrderreferenceListItem_main" 
+					name="manageOrderreferenceListItem_main">
+					<a 
+						ui-sref="manage.orderreference">
+						<div 
+							class="lv1-node">
+							<span 
+								class="glyphicon">
+							</span>
+							Orderreference
+						</div>
+					</a>
+				</li>
+				<!--  *************** 
+						manageOrderreferenceListItem_main (end)
+						*************** -->
+						
+				<!--  *************** 
+						manageOrderListItem_main (start)
+						*************** -->
+				<li 
+					id="manageOrderListItem_main" 
+					name="manageOrderListItem_main">
+					<a 
+						ui-sref="manage.order">
+						<div 
+							class="lv1-node">
+							<span 
+								class="glyphicon">
+							</span>
+							Order
+						</div>
+					</a>
+				</li>
+				<!--  *************** 
+						manageOrderListItem_main (end)
+						*************** -->
+						
+				<!--  *************** 
+						manageReservationListItem_main (start)
+						*************** -->
+				<li 
+					id="manageReservationListItem_main" 
+					name="manageReservationListItem_main">
+					<a 
+						ui-sref="manage.reservation">
+						<div 
+							class="lv1-node">
+							<span 
+								class="glyphicon">
+							</span>
+							Reservation
+						</div>
+					</a>
+				</li>
+				<!--  *************** 
+						manageReservationListItem_main (end)
 						*************** -->
 			</ul>
 		</div>

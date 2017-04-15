@@ -13,7 +13,6 @@ modalReservationController.$inject = [
                                       'reservationService', 
                                       'reservation', 
                                       'formMode', 
-                                      'fromSignup', 
                                       'modalHiddenFields'
                                       ];
 
@@ -25,7 +24,6 @@ function modalReservationController(
 		reservationService, 
 		reservation, 
 		formMode, 
-		fromSignup, 
 		modalHiddenFields
 		){
 	const RESERVATION_ADD_CATCH_MESSAGE = 'UNABLE TO ADD RESERVATION, DB EXCEPTION ENCOUNTERED';
@@ -37,7 +35,6 @@ function modalReservationController(
 	
 	var vm = this;
 	vm.formMode = formMode;
-	vm.fromSignup = fromSignup;
 	vm.reservation= reservation;
 	vm.reservationSnapshot = JSON.parse(JSON.stringify(reservation));
 	vm.modalHiddenFields = modalHiddenFields;

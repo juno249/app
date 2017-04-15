@@ -6,7 +6,9 @@ div.nav-divider{
 
 ul.nav.nav-list div.lv1-node, 
 ul.nav.nav-list div.lv2-node, 
-ul.nav.nav-list div.lv3-node{
+ul.nav.nav-list div.lv3-node, 
+ul.nav.nav-list div.lv4-node, 
+ul.nav.nav-list div.lv5-node{
 	color: #ffa500;
 	
 	font-size: 13px;
@@ -18,6 +20,14 @@ ul.nav.nav-list div.lv2-node{
 
 ul.nav.nav-list div.lv3-node{
 	padding-left: 50px;
+}
+
+ul.nav.nav-list div.lv4-node{
+	padding-left: 75px;
+}
+
+ul.nav.nav-list div.lv5-node{
+	padding-left: 100px;
 }
 
 ul.nav.nav-list li a{

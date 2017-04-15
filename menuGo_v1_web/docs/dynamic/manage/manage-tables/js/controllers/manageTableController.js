@@ -79,9 +79,29 @@ function manageTableController(
 		var eSrc = $event.currentTarget.parentElement.parentElement;
 		var eClassname = eSrc.className;
 		
-		if(-1 == eClassname.indexOf('selected')){	vm.table = data;
-		} else {	vm.table= {};
-		}
+		if(-1 == eClassname.indexOf('selected')){
+			vm.table = data;
+			
+			$rootScope.$broadcast(
+					BROADCAST_MESSAGES.toggleOrderreference, 
+					{
+						companyName: vm.companyName, 
+						branchName: vm.branchName, 
+						tableNumber: vm.table.tableNumber
+						}
+					);
+			} else {
+				vm.table= {};
+				
+				$rootScope.$broadcast(
+						BROADCAST_MESSAGES.toggleOrderreference, 
+						{
+							companyName: vm.companyName, 
+							branchName: vm.branchName, 
+							tableNumber: vm.table.tableNumber
+							}
+						);
+				}
 		}
 	
 	function addTable(){

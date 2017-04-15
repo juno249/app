@@ -18,6 +18,13 @@ function manageNavigationController(
 		$scope, 
 		$state
 		){
+	const BRANCH_KEY = 'Branch';
+	const MENU_KEY = 'Menu';
+	const TABLE_KEY = 'Table';
+	const MENUITEM_KEY = 'Menuitem';
+	const ORDERREFERENCE_KEY = 'Orderreference';
+	const ORDER_KEY = 'Order';
+	const RESERVATION_KEY = 'Reservation';
 	const USER_KEY = 'User';
 	
 	var vm = this;
@@ -25,6 +32,9 @@ function manageNavigationController(
 	vm.isManageMenuHidden = true;
 	vm.isManageTableHidden = true;
 	vm.isManageMenuitemHidden = true;
+	vm.isManageOrderreferenceHidden = true;
+	vm.isManageOrderHidden = true;
+	vm.isManageReservationHidden = true;
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
@@ -72,10 +82,13 @@ function manageNavigationController(
 								);
 						
 						function hideUsermenu(innerText){
-							if(0 < innerText.indexOf('Branch')){	vm.isManageBranchHidden = true;
-							} else if(0 < innerText.indexOf('Menuitem')){	vm.isManageMenuitemHidden = true;
-							} else if(0 < innerText.indexOf('Table')){	vm.isManageTableHidden = true;
-							} else if(0 < innerText.indexOf('Menu')){	vm.isManageMenuHidden = true;
+							if(0 < innerText.indexOf(BRANCH_KEY)){	vm.isManageBranchHidden = true;
+							} else if(0 < innerText.indexOf(MENUITEM_KEY)){	vm.isManageMenuitemHidden = true;
+							} else if(0 < innerText.indexOf(TABLE_KEY)){	vm.isManageTableHidden = true;
+							} else if(0 < innerText.indexOf(MENU_KEY)){	vm.isManageMenuHidden = true;
+							} else if(0 < innerText.indexOf(ORDERREFERENCE_KEY)){	vm.isManageOrderreference = true;
+							} else if(0 < innerText.indexOf(ORDER_KEY)){	vm.isManageOrder = true;
+							} else if(0 < innerText.indexOf(RESERVATION_KEY)){	vm.isManageReservation = true;
 							}
 							}
 						}
@@ -135,5 +148,52 @@ function manageNavigationController(
 		vm.companyName = args.companyName;
 		vm.menuName = args.menuName;
 		vm.isManageMenuitemHidden = !vm.isManageMenuitemHidden;
+		}
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleOrderreference, 
+			toggleOrderreferenceCallback
+			);
+	
+	function toggleOrderreferenceCallback(
+			e, 
+			args
+			){
+		vm.comapnyName = args.companyName;
+		vm.branchName = args.branchName;
+		vm.tableNumber = args.tableNumber;
+		vm.isManageOrderreferenceHidden = !vm.isManageOrderreferenceHidden;
+		}
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleOrder, 
+			toggleOrderCallback
+			);
+	
+	function toggleOrderCallback(
+			e, 
+			args
+			){
+		vm.companyName = args.companyName;
+		vm.branchName = args.branchName;
+		vm.tableNumber = args.tableNumber;
+		vm.orderreferenceCode = args.orderreferenceCode;
+		vm.isManageOrderHidden = !vm.isManageOrderHidden;
+		}
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.toggleReservation, 
+			toggleReservationCallback
+			);
+	
+	function toggleReservationCallback(
+			e, 
+			args
+			){
+		vm.companyName = args.companyName;
+		vm.branchName = args.branchName;
+		vm.tableNumber = args.tableNumber;
+		vm.orderreferenceCode = args.orderreferenceCode;
+		vm.isManageReservationHidden = !vm.isManageReservationHidden;
 		}
 	}

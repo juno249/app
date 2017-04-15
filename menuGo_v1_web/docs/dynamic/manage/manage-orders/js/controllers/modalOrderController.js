@@ -12,7 +12,6 @@ modalOrderController.$inject = [
                                 'orderService', 
                                 'order', 
                                 'formMode', 
-                                'fromSignup', 
                                 'modalHiddenFields'
                                 ];
 
@@ -23,7 +22,6 @@ function modalOrderController(
 		orderService, 
 		order, 
 		formMode, 
-		fromSignup, 
 		modalHiddenFields
 		){
 	const ORDER_ADD_CATCH_MESSAGE = 'UNABLE TO ADD ORDER, DB EXCEPTION ENCOUNTERED';
@@ -35,7 +33,6 @@ function modalOrderController(
 	
 	var vm = this;
 	vm.formMode = formMode;
-	vm.fromSignup = fromSignup;
 	vm.order = order;
 	vm.orderSnapshot = JSON.parse(JSON.stringify(order));
 	vm.modalHiddenFields = modalHiddenFields;
