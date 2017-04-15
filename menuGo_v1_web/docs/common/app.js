@@ -117,7 +117,85 @@ function doRouteConfig(
 																					}
 																	}
 																	}
-																	);
+																	)
+																	.state(
+																			'manage.orderreference', 
+																			{
+																				url: '/orderreference', 
+																				views: {
+																					'manage-datatable@manage': {
+																						templateUrl: 'docs/dynamic/manage/manage-orderreferences/manageOrderreference.html', 
+																						controller: 'manageOrderreferenceController', 
+																						controllerAs: 'manageOrderreferenceController'
+																					}
+																				}
+																			}
+																			)
+																			.state(
+																					'manage.company.branch.table.orderreference', 
+																					{
+																						url: '/:tableNumber/orderreference', 
+																						views: {
+																							'manage-datatable@manage': {
+																								templateUrl: 'docs/dynamic/manage/manage-orderreferences/manageOrderreference.html', 
+																								controller: 'manageOrderreferenceController', 
+																								controllerAs: 'manageOrderreferenceController'
+																									}
+																					}
+																					}
+																					)
+																					.state(
+																							'manage.order', 
+																							{
+																								url: '/order', 
+																								views: {
+																									'manage-datatable@manage': {
+																										templateUrl: 'docs/dynamic/manage/manage-orders/manageOrder.html', 
+																										controller: 'manageOrderController', 
+																										controllerAs: 'manageOrderController'
+																											}
+																							}
+																							}
+																							)
+																							.state(
+																									'manage.company.branch.table.orderreference.order', 
+																									{
+																										url: '/:orderreferenceCode/order', 
+																										views: {
+																											'manage-datatable@manage': {
+																												templateUrl: 'docs/dynamic/manage-orders/manageOrder.html', 
+																												controller: 'manageOrderController', 
+																												controllerAs: 'manageOrderController'
+																													}
+																									}
+																									}
+																									)
+																									.state(
+																											'manage.reservation', 
+																											{
+																												url: '/reservation', 
+																												views: {
+																													'manage-datatable@manage': {
+																														templateUrl: 'docs/dynamic/manage-reservations/manageReservation.html', 
+																														controller: 'manageReservationController', 
+																														controllerAs: 'manageReservationController'
+																															}
+																											}
+																											}
+																											)
+																											.state(
+																													'manage.company.branch.table.orderreference.reservation', 
+																													{
+																														url: '/:orderreferenceCode/reservation', 
+																														views: {
+																															'manage-datatable@manage': {
+																																templateUrl: 'docs/dynamic/manage-reservations/manageReservation.html', 
+																																controller: 'manageReservationController', 
+																																controllerAs: 'manageReservationController'
+																																	}
+																													}
+																													}
+																													);
 	
 	$urlRouterProvider
 	.otherwise("/home");
