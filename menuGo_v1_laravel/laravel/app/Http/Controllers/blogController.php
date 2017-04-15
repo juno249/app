@@ -52,7 +52,7 @@ class blogController extends Controller
 		try{
 			$blogs = DB::table(blogConstants::blogsTable)
 			->get();
-			if($blogs->isEmpty()){	$blogs->setStatusCode(
+			if($blogs->isEmpty()){	$blogsResponse->setStatusCode(
 					200, 
 					blogConstants::emptyResultSetErr
 					);
