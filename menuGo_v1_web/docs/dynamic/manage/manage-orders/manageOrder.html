@@ -1,22 +1,28 @@
 <div 
-	class="container-fluid" 
-	ng-controller="manageOrderController as manageOrderController">
+	class="panel panel-success">
 	<div 
-		class="row">
-		<!--  *************** 
-				orderTable (start)
-				*************** -->
-		<table 
-			class="hover row-border table" 
-			datatable="" 
-			dt-instance="manageOrderController.dtInstance" 
-			dt-options="manageOrderController.dtOptions" 
-			dt-columns="manageOrderController.dtColumns" 
-			id="orderTable" 
-			name="orderTable">
-		</table>
-		<!--  *************** 
-				orderTable (end)
-				*************** -->
+		class="font-family-1-size-medium panel-heading">
+		Manage Order
+	</div>
+	<div 
+		class="container-fluid">
+		<div 
+			class="row">
+			<!--  *************** 
+					orderTable (start)
+					*************** -->
+			<table 
+				class="hover row-border table" 
+				datatable="" 
+				dt-instance="manageOrderController.dtInstance" 
+				dt-options="manageOrderController.dtOptions" 
+				dt-columns="manageOrderController.dtColumns" 
+				id="orderTable" 
+				name="orderTable">
+			</table>
+			<!--  *************** 
+					orderTable (end)
+					*************** -->
+		</div>
 	</div>
 </div>

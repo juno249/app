@@ -66,6 +66,9 @@ function manageOrderreferenceController(
 	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences';
 	
+	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
+	}
+	
 	//controller_method
 	vm.dtAssignOnSelect = dtAssignOnSelect;
 	
@@ -213,7 +216,7 @@ function manageOrderreferenceController(
 	
 	function dtInitialize(){
 		datatableService.setDbColumnFields(vm.dbColumnFields);
-		datatableService.setDbColumn2Colheader(vm.dbColumn2Colheaeder);
+		datatableService.setDbColumn2Colheader(vm.dbColumn2Colheader);
 		datatableService.doDTInitOptions(
 				DTOptionsBuilder, 
 				vm.restApiSource, 

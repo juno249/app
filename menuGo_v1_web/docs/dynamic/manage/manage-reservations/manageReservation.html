@@ -1,22 +1,28 @@
 <div 
-	class="container-fluid" 
-	ng-controller="manageReservationController as manageReservationController">
+	class="panel panel-success">
 	<div 
-		class="row">
-		<!--  *************** 
-				reservationTable (start)
-				*************** -->
-		<table 
-			class="hover row-border table" 
-			datatable="" 
-			dt-instance="manageReservationController.dtInstance" 
-			dt-options="manageReservationController.dtOptions" 
-			dt-columns="manageReservationController.dtColumns" 
-			id="reservationTable" 
-			name="reservationTable">
-		</table>
-		<!--  *************** 
-				reservationTable (end)
-				*************** -->
+		class="font-family-1-size-medium panel-heading">
+		Manage Order
+	</div>
+	<div 
+		class="container-fluid">
+		<div 
+			class="row">
+			<!--  *************** 
+					reservationTable (start)
+					*************** -->
+			<table 
+				class="hover row-border table" 
+				datatable="" 
+				dt-instance="manageReservationController.dtInstance" 
+				dt-options="manageReservationController.dtOptions" 
+				dt-columns="manageReservationController.dtColumns" 
+				id="reservationTable" 
+				name="reservationTable">
+			</table>
+			<!--  *************** 
+					reservationTable (end)
+					*************** -->
+		</div>
 	</div>
 </div>

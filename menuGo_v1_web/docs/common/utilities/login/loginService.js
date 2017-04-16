@@ -91,8 +91,8 @@ function loginService(
 			function getCustomerCompanyBranch(){
 				var httpConfig = {
 						method: 'GET', 
-						url: API_BASE_URL + '/customers-companies-branches/query', 
-						params: {customerUsername: loginServiceObj.user.username}
+						url: API_BASE_URL + '/query/customers-companies-branches', 
+						params: {CustomerUsername: loginServiceObj.user.username}
 				};
 				
 				$http(httpConfig)

@@ -30,7 +30,7 @@ function manageReservationController(
 		DTColumnBuilder, 
 		datatableService
 		){
-	const DOM_ORDERREFERENCE_TABLE = '#orderreferenceTable';
+	const DOM_RESERVATION_TABLE = '#reservationTable';
 	const USER_KEY = 'User';
 	
 	var vm = this;
@@ -43,7 +43,7 @@ function manageReservationController(
 	vm.dtInstance = dtInstanceCallback;
 	vm.dtHiddenColumns = {};
 	vm.dbColumnFields = RESERVATIONS_DB_FIELDS;
-	vm.dbColumn2ColHeader = {
+	vm.dbColumn2Colheader = {
 			reservation_id: 'Id', 
 			reservation_code: 'Code', 
 			customer_username: 'Customer username', 
@@ -74,6 +74,9 @@ function manageReservationController(
 		}
 	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/reservations';
+	
+	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
+	}
 	
 	//controller_method
 	vm.dtAssignOnSelect = dtAssignOnSelect;
@@ -248,7 +251,7 @@ function manageReservationController(
 						initCompleteCallback
 						);
 		
-		function createRowCallback(row){	$compile(angular.element(row).contents())($scope);
+		function createdRowCallback(row){	$compile(angular.element(row).contents())($scope);
 		}
 		
 		function initCompleteCallback(row){

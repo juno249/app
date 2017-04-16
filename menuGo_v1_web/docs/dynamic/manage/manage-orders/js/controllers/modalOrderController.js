@@ -37,9 +37,9 @@ function modalOrderController(
 	vm.orderSnapshot = JSON.parse(JSON.stringify(order));
 	vm.modalHiddenFields = modalHiddenFields;
 	vm.dom2DbColumn = {
-			menuitemId = 'menuitem_id', 
-			orderreferenceCode = 'orderreference_code', 
-			orderStatus = 'order_status'
+			menuitemId: 'menuitem_id', 
+			orderreferenceCode: 'orderreference_code', 
+			orderStatus: 'order_status'
 				};
 	vm.dbColumn2Dom = {
 			menuitem_id: 'menuitemId', 

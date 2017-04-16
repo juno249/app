@@ -163,7 +163,7 @@ function doRouteConfig(
 																										url: '/:orderreferenceCode/order', 
 																										views: {
 																											'manage-datatable@manage': {
-																												templateUrl: 'docs/dynamic/manage-orders/manageOrder.html', 
+																												templateUrl: 'docs/dynamic/manage/manage-orders/manageOrder.html', 
 																												controller: 'manageOrderController', 
 																												controllerAs: 'manageOrderController'
 																													}
@@ -176,7 +176,7 @@ function doRouteConfig(
 																												url: '/reservation', 
 																												views: {
 																													'manage-datatable@manage': {
-																														templateUrl: 'docs/dynamic/manage-reservations/manageReservation.html', 
+																														templateUrl: 'docs/dynamic/manage/manage-reservations/manageReservation.html', 
 																														controller: 'manageReservationController', 
 																														controllerAs: 'manageReservationController'
 																															}
@@ -189,7 +189,7 @@ function doRouteConfig(
 																														url: '/:orderreferenceCode/reservation', 
 																														views: {
 																															'manage-datatable@manage': {
-																																templateUrl: 'docs/dynamic/manage-reservations/manageReservation.html', 
+																																templateUrl: 'docs/dynamic/manage/manage-reservations/manageReservation.html', 
 																																controller: 'manageReservationController', 
 																																controllerAs: 'manageReservationController'
 																																	}

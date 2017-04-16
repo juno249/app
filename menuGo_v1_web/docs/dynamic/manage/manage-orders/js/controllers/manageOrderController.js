@@ -65,6 +65,9 @@ function manageOrderController(
 	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences/' + vm.orderreferenceCode + '/orders';
 	
+	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
+	}
+	
 	//controller_method
 	vm.dtAssignOnSelect = dtAssignOnSelect;
 	
