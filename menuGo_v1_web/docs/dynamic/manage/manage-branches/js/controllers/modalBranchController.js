@@ -129,6 +129,8 @@ function modalBranchController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				$uibModalInstance.close(data);
+				
+				return;
 				}
 			
 			branchService.setCompanyName(vm.branch.companyName);
