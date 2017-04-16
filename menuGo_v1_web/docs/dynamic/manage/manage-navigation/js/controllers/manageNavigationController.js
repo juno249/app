@@ -86,9 +86,9 @@ function manageNavigationController(
 							} else if(0 < innerText.indexOf(MENUITEM_KEY)){	vm.isManageMenuitemHidden = true;
 							} else if(0 < innerText.indexOf(TABLE_KEY)){	vm.isManageTableHidden = true;
 							} else if(0 < innerText.indexOf(MENU_KEY)){	vm.isManageMenuHidden = true;
-							} else if(0 < innerText.indexOf(ORDERREFERENCE_KEY)){	vm.isManageOrderreference = true;
-							} else if(0 < innerText.indexOf(ORDER_KEY)){	vm.isManageOrder = true;
-							} else if(0 < innerText.indexOf(RESERVATION_KEY)){	vm.isManageReservation = true;
+							} else if(0 < innerText.indexOf(ORDERREFERENCE_KEY)){	vm.isManageOrderreferenceHidden = true;
+							} else if(0 < innerText.indexOf(ORDER_KEY)){	vm.isManageOrderHidden = true;
+							} else if(0 < innerText.indexOf(RESERVATION_KEY)){	vm.isManageReservationHidden = true;
 							}
 							}
 						}
