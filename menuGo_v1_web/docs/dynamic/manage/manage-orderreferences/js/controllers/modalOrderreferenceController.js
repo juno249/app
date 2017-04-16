@@ -110,6 +110,8 @@ function modalOrderreferenceController(
 		showBootstrapLoader($(DOM_MODAL));
 		
 		if('I' == vm.formMode){
+			data.orderreference_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+			
 			orderreferenceService.setCompanyName(vm.orderreference.companyName);
 			orderreferenceService.setBranchName(vm.orderreference.branchName);
 			orderreferenceService.setTableNumber(vm.orderreference.tableNumber);

@@ -107,6 +107,8 @@ function modalOrderController(
 		showBootstrapLoader($(DOM_MODAL));
 		
 		if('I' == vm.formMode){
+			data.order_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+			
 			orderService.setCompanyName(vm.order.companyName);
 			orderService.setBranchName(vm.order.branchName);
 			orderService.setTableNumber(vm.order.tableNumber);

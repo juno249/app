@@ -108,6 +108,8 @@ function modalTableController(
 		showBootstrapLoader($(DOM_MODAL));
 		
 		if('I' == vm.formMode){
+			data.table_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+			
 			tableService.setCompanyName(vm.table.companyName);
 			tableService.setBranchName(vm.table.branchName);
 			
