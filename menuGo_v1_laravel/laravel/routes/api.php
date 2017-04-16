@@ -178,7 +178,7 @@ Route::get('customers-companies-branches/{CustomerUsername}/{CompanyName}/{Branc
 ]);
 
 Route::get('query/customers-companies-branches', [
-		'uses' =>'customerCompanyBranchController@getByQuery'
+		'uses' => 'customerCompanyBranchController@getByQuery'
 ]);
 
 Route::post('customers-companies-branches', [
