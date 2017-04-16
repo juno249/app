@@ -107,7 +107,7 @@ function modalOrderController(
 		showBootstrapLoader($(DOM_MODAL));
 		
 		if('I' == vm.formMode){
-			data.order_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+			data.order_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 			
 			orderService.setCompanyName(vm.order.companyName);
 			orderService.setBranchName(vm.order.branchName);
@@ -145,9 +145,9 @@ function modalOrderController(
 					return;
 					}
 				
-				if(!(null == data.order_status)){	data.order_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				if(!(null == data.order_status)){	data.order_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data.last_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data.last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				orderService.setCompanyName(vm.orderSnapshot.companyName);
 				orderService.setBranchName(vm.orderSnapshot.branchName);

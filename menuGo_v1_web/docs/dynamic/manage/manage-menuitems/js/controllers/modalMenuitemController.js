@@ -208,7 +208,7 @@ function modalMenuitemController(
 					return;
 					}
 				
-				data.last_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data.last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				menuitemService.setCompanyName(vm.menuitemSnapshot.companyName);
 				menuitemService.setMenuName(vm.menuitemSnapshot.menuName);

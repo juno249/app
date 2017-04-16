@@ -125,7 +125,7 @@ function modalReservationController(
 		showBootstrapLoader($(DOM_MODAL));
 		
 		if('I' == vm.formMode){
-			data.reservation_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+			data.reservation_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 			
 			reservationService.setCompanyName(vm.reservation.companyName);
 			reservationService.setBranchName(vm.reservation.branchName);
@@ -163,9 +163,9 @@ function modalReservationController(
 					return;
 					}
 				
-				if(!(null == data.reservation_status)){	data.reservation_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				if(!(null == data.reservation_status)){	data.reservation_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data.last_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data.last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				reservationService.setCompanyName(vm.reservationSnapshot.companyName);
 				reservationService.setBranchName(vm.reservationSnapshot.branchName);

@@ -108,7 +108,7 @@ function modalTableController(
 		showBootstrapLoader($(DOM_MODAL));
 		
 		if('I' == vm.formMode){
-			data.table_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+			data.table_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 			
 			tableService.setCompanyName(vm.table.companyName);
 			tableService.setBranchName(vm.table.branchName);
@@ -144,9 +144,9 @@ function modalTableController(
 					return;
 					}
 				
-				if(!(null == data.table_status)){	data.table_status_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				if(!(null == data.table_status)){	data.table_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data.last_change_timestamp = momemt(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data.last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				tableService.setCompanyName(vm.tableSnapshot.companyName);
 				tableService.setBranchName(vm.tableSnapshot.branchName);
