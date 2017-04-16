@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Orderreference
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalOrderreferenceContainer" 
 		ng-init="modalOrderreferenceController.initBootstrapValidator(); modalOrderreferenceController.initDom();">
 		<div 
-			class="alert alert-danger font-family-2-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalOrderreferenceController.isValidationErrDBHidden">
 			{{modalOrderreferenceController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Code
 							</span>
 							<!--  *************** 
 									orderreferenceCode (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="orderreferenceCode" 
 								maxlength="40" 
 								name="orderreferenceCode" 
@@ -55,7 +55,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderreferenceController.validationErr[0]}}
 						</div>
 					</div>
@@ -69,14 +69,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Customer username
 							</span>
 							<!--  *************** 
 									customerUsername (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="customerUsername" 
 								maxlength="30" 
 								name="customerUsername" 
@@ -90,7 +90,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderreferenceController.validationErr[1]}}
 						</div>
 					</div>
@@ -104,14 +104,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Table id
 							</span>
 							<!--  *************** 
 									tableId (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="tableId" 
 								name="tableId" 
 								ng-hide="modalOrderreferenceController.modalHiddenFields['tableId']" 
@@ -124,7 +124,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderreferenceController.validationErr[2]}}
 						</div>
 					</div>
@@ -138,14 +138,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Status
 							</span>
 							<!--  *************** 
 									orderreferenceStatus (start)
 									*************** -->
 							<select 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="orderreferenceStatus" 
 								name="orderreferenceStatus" 
 								ng-hide="modalOrderreferenceController.modalHiddenFields['orderreferenceStatus']" 
@@ -158,7 +158,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderreferenceController.validationErr[3]}}
 						</div>
 					</div>
@@ -169,7 +169,7 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
 							type="submit">
 							Submit
 						</button>
@@ -178,7 +178,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalOrderreferenceController.doCancel();" 
 							type="button">
 							Cancel

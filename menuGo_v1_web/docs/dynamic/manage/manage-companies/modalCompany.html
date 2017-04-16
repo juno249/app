@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Company
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalCompanyContainer" 
 		ng-init="modalCompanyController.initBootstrapValidator(); modalCompanyController.initDom();">
 		<div 
-			class="alert alert-danger font-family-2-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalCompanyController.isValidationErrDBHidden">
 			{{modalCompanyController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Name
 							</span>
 							<!--  *************** 
 									companyName (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="companyName" 
 								maxlength="30" 
 								name="companyName" 
@@ -55,7 +55,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalCompanyController.validationErr[0]}}
 						</div>
 					</div>
@@ -69,14 +69,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Description
 							</span>
 							<!--  *************** 
 									companyDesc (start)
 									*************** -->
 							<textarea 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="companyDesc" 
 								maxlength="500" 
 								name="companyDesc" 
@@ -92,7 +92,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalCompanyController.validationErr[1]}}
 						</div>
 					</div>
@@ -106,14 +106,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Category
 							</span>
 							<!--  *************** 
 									companyCategory (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="companyCategory" 
 								maxlength="30" 
 								name="companyCategory" 
@@ -127,7 +127,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalCompanyController.validationErr[0]}}
 						</div>
 					</div>
@@ -141,14 +141,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Logo
 							</span>
 							<!--  *************** 
 									companyLogo (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="companyLogo" 
 								maxlength="500" 
 								name="companyLogo" 
@@ -172,7 +172,7 @@
 											companyLogoBrowse (start)
 											*************** -->
 									<input 
-										class="font-family-2-size-small form-control" 
+										class="font-family-3-size-medium form-control" 
 										id="companyLogoBrowse" 
 										name="companyLogoBrowse" 
 										type="file">
@@ -191,7 +191,7 @@
 							</span>
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalCompanyController.validationErr[2]}}
 						</div>
 					</div>
@@ -209,8 +209,8 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							type="submit" 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium">
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
+							type="submit">
 							<span 
 								ng-if="!modalCompanyController.fromSignup">
 								Submit
@@ -225,7 +225,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalCompanyController.doCancel();" 
 							type="button">
 							Cancel

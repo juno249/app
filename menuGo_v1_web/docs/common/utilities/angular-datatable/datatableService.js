@@ -160,25 +160,25 @@ function datatableService(
 		var colVis = {
 				extend: 'colvis', 
 				text: 'Columns', 
-				className: 'btn-control btn-success font-family-1-size-small'
+				className: 'btn-control btn-success font-family-3-size-medium'
 					}
 		var addButton = {
 				text: 'Add', 
 				action: function(){	$rootScope.$broadcast(broadcastMsgAdd);
 				}, 
-				className: 'btn-control btn-primary font-family-1-size-small'
+				className: 'btn-control btn-primary font-family-3-size-medium'
 					}
 		var updateButton = {
 				text: 'Update', 
 				action: function(){	$rootScope.$broadcast(broadcastMsgUpdate);
 				}, 
-				className: 'btn-control btn-warning font-family-1-size-small'
+				className: 'btn-control btn-warning font-family-3-size-medium'
 					}
 		var deleteButton = {
 				text: 'Delete', 
 				action: function(){	$rootScope.$broadcast(broadcastMsgDelete);
 				}, 
-				className: 'btn-control btn-danger font-family-1-size-small'
+				className: 'btn-control btn-danger font-family-3-size-medium'
 					}
 		return [
 		        colVis, 

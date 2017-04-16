@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Branch
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalBranchContainer" 
 		ng-init="modalBranchController.initBootstrapValidator(); modalBranchController.initDom();">
 		<div 
-			class="alert alert-danger font-family-2-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalBranchController.isValidationErrDBHidden">
 			{{modalBranchController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Name
 							</span>
 							<!--  *************** 
 									branchName (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="branchName" 
 								maxlength="30" 
 								name="branchName" 
@@ -55,7 +55,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[0]}}
 						</div>
 					</div>
@@ -69,14 +69,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Company name
 							</span>
 							<!--  *************** 
 									companyName (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="companyName" 
 								maxlength="30" 
 								name="companyName" 
@@ -90,7 +90,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[1]}}
 						</div>
 					</div>
@@ -104,14 +104,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Address
 							</span>
 							<!--  *************** 
 									branchAddressHouseBuilding (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="branchAddressHouseBuilding" 
 								maxlength="30" 
 								name="branchAddressHouseBuilding" 
@@ -125,7 +125,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[2]}}
 						</div>
 					</div>
@@ -140,7 +140,7 @@
 								branchAddressStreet (start)
 								*************** -->
 						<input 
-							class="font-family-2-size-small form-control" 
+							class="font-family-3-size-medium form-control" 
 							id="branchAddressStreet" 
 							maxlength="30" 
 							name="branchAddressStreet" 
@@ -153,7 +153,7 @@
 								branchAddressStreet (end)
 								*************** -->
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[3]}}
 						</div>
 					</div>
@@ -165,7 +165,7 @@
 								branchAddressDistrict (start)
 								*************** -->
 						<input 
-							class="font-family-2-size-small form-control" 
+							class="font-family-3-size-medium form-control" 
 							id="branchAddressDistrict" 
 							maxlength="30" 
 							name="branchAddressDistrict" 
@@ -178,7 +178,7 @@
 								branchAddressDistrict (end)
 								*************** -->
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[4]}}
 						</div>
 					</div>
@@ -190,7 +190,7 @@
 								branchAddressCity (start)
 								*************** -->
 						<input 
-							class="font-family-2-size-small form-control" 
+							class="font-family-3-size-medium form-control" 
 							id="branchAddressCity" 
 							maxlength="30" 
 							name="branchAddressCity" 
@@ -203,7 +203,7 @@
 								branchAddressCity (end)
 								*************** -->
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[5]}}
 						</div>
 					</div>
@@ -218,7 +218,7 @@
 								branchPostalcode (start)
 								*************** -->
 						<input 
-							class="font-family-2-size-small form-control" 
+							class="font-family-3-size-medium form-control" 
 							id="branchPostalcode" 
 							maxlength="30" 
 							name="branchPostalcode" 
@@ -230,7 +230,7 @@
 						<!--  *************** 
 								branchPostalcode (end)
 								*************** -->
-						<div class="font-family-2-size-small help-block with-errors">
+						<div class="font-family-3-size-medium help-block with-errors">
 						{{modalBranchController.validationErr[6]}}
 						</div>
 					</div>
@@ -242,7 +242,7 @@
 								branchCountry (start)
 								*************** -->
 						<input 
-							class="font-family-2-size-small form-control" 
+							class="font-family-3-size-medium form-control" 
 							id="branchCountry" 
 							maxlength="30" 
 							name="branchCountry" 
@@ -255,7 +255,7 @@
 								branchCountry (end)
 								*************** -->
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[7]}}
 						</div>
 					</div>
@@ -269,14 +269,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Hotline
 							</span>
 							<!--  *************** 
 									branchHotline (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="branchHotline" 
 								maxlength="10" 
 								name="branchHotline" 
@@ -290,7 +290,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalBranchController.validationErr[8]}}
 						</div>
 					</div>
@@ -301,7 +301,7 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
 							type="submit">
 							<span 
 								ng-if="!modalCustomerController.fromSignup">
@@ -317,7 +317,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control font-family-1-size-medium fill-parent-x" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalBranchController.doCancel();" 
 							type="button">
 							Cancel

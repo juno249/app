@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Table
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalTableContainer" 
 		ng-init="modalTableController.initBootstrapValidator(); initDom();">
 		<div 
-			class="alert alert-danger font-family-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalTableController.isValidationErrDBHidden">
 			{{modalTableController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Number
 							</span>
 							<!--  *************** 
 									tableNumber (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="tableNumber" 
 								name="tableNumber" 
 								ng-hide="modalTableController.modalHiddenFields['tableNumber']" 
@@ -54,7 +54,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalTableController.validationErr[0]}}
 						</div>
 					</div>
@@ -68,14 +68,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Capacity
 							</span>
 							<!--  *************** 
 									tableCapacity (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="tableCapacity" 
 								name="tableCapacity" 
 								ng-hide="modalTableController.modalHiddenFields['tableCapacity']" 
@@ -88,7 +88,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalTableController.validationErr[1]}}
 						</div>
 					</div>
@@ -102,14 +102,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Status
 							</span>
 							<!--  *************** 
 									tableStatus (start)
 									*************** -->
 							<select 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="tableStatus" 
 								name="tableStatus" 
 								ng-hide="modalTableController.modalHiddenFields['tableStatus']" 
@@ -122,7 +122,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalTableController.validationErr[2]}}
 						</div>
 					</div>
@@ -133,7 +133,7 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
 							type="submit">
 							Submit
 						</button>
@@ -142,7 +142,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalTableController.doCancel();" 
 							type="button">
 							Cancel

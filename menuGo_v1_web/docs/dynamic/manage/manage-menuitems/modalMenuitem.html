@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Menuitem
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalMenuitemContainer" 
 		ng-init="modalMenuitemController.initBootstrapValidator(); modalMenuitemController.initDom();">
 		<div 
-			class="alert alert-danger font-family-2-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalMenuitemController.isValidationErrDBHidden">
 			{{modalMenuitemController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Code
 							</span>
 							<!--  *************** 
 									menuitemCode (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="menuitemCode" 
 								maxlength="10" 
 								name="menuitemCode" 
@@ -55,7 +55,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalMenuitemController.validationErr[0]}}
 						</div>
 					</div>
@@ -69,14 +69,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Name
 							</span>
 							<!--  *************** 
 									menuitemName (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="menuitemName" 
 								maxlength="30" 
 								name="menuitemName" 
@@ -90,7 +90,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalMenuitemController.validationErr[1]}}
 						</div>
 					</div>
@@ -104,14 +104,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Description
 							</span>
 							<!--  *************** 
 									menuitemDesc (start)
 									*************** -->
 							<textarea 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="menuitemDesc" 
 								maxlength="500" 
 								name="menuitemDesc" 
@@ -127,7 +127,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalMenuitemController.validationErr[2]}}
 						</div>
 					</div>
@@ -141,14 +141,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Price
 							</span>
 							<!--  *************** 
 									menuitemPrice (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="menuitemPrice" 
 								name="menuitemPrice" 
 								ng-hide="modalMenuitemController.modalHiddenFields['menuitemPrice']" 
@@ -161,7 +161,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalMenuitemController.validationErr[3]}}
 						</div>
 					</div>
@@ -175,14 +175,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Featured
 							</span>
 							<!--  *************** 
 									menuitemFeatured (start)
 									*************** -->
 							<select 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="menuitemFeatured" 
 								name="menuitemFeatured" 
 								ng-hide="modalMenuitemController.modalHiddenFields['menuitemFeatured']" 
@@ -195,7 +195,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalMenuitemController.validationErr[3]}}
 						</div>
 					</div>
@@ -209,14 +209,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Image
 							</span>
 							<!--  *************** 
 									menuitemImage (start)
 									*************** -->
 							<input 
-								class="form-control font-family-2-size-small" 
+								class="form-control font-family-3-size-medium" 
 								id="menuitemImage" 
 								maxlength="500" 
 								name="menuitemImage" 
@@ -240,7 +240,7 @@
 											menuitemImageBrowse (start)
 											*************** -->
 									<input 
-										class="font-family-2-size-small form-control" 
+										class="font-family-3-size-medium form-control" 
 										id="menuitemImageBrowse" 
 										name="menuitemImageBrowse" 
 										type="file">
@@ -259,7 +259,7 @@
 							</span>
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalMenuitemController.validationErr[4]}}
 						</div>
 					</div>
@@ -277,7 +277,7 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
 							type="submit">
 							Submit
 						</button>
@@ -286,7 +286,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalMenuitemController.doCancel();" 
 							type="button">
 							Cancel

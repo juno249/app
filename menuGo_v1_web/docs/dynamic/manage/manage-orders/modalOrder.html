@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Order
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalOrderContainer" 
 		ng-init="modalOrderController.initBootstrapValidator(); modalOrderController.initDom();">
 		<div 
-			class="alert alert-danger font-family-2-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalOrderController.isValidationErrDBHidden">
 			{{modalOrderController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Menuitem id
 							</span>
 							<!--  *************** 
 									menuitemId (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="menuitemId" 
 								name="menuitemId" 
 								ng-hide="modalOrderController.modalHiddenFields['menuitemId']" 
@@ -54,7 +54,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderController.validationErr[0]}}
 						</div>
 					</div>
@@ -68,14 +68,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Orderreference code
 							</span>
 							<!--  *************** 
 									orderreferenceCode (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="orderreferenceCode" 
 								maxlength="40" 
 								name="orderreferenceCode" 
@@ -89,7 +89,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderController.validationErr[1]}}
 						</div>
 					</div>
@@ -103,14 +103,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Status
 							</span>
 							<!--  *************** 
 									orderStatus (start)
 									*************** -->
 							<select 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="orderStatus" 
 								name="orderStatus" 
 								ng-hide="modalOrderController.modalHiddenFields['orderStatus']" 
@@ -123,7 +123,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalOrderController.validationErr[2]}}
 						</div>
 					</div>
@@ -134,7 +134,7 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
 							type="submit">
 							Submit
 						</button>
@@ -143,7 +143,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalOrderController.doCancel();" 
 							type="button">
 							Cancel

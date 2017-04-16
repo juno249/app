@@ -10,21 +10,21 @@ div#dtWrapper{
 
 div.dataTables_filter label{
 	color: red;
-	font-family: 'Kaushan Script', cursive;
-	font-size: 15px;
+	font-family: 'Aclonica', sans-serif;
+	font-size: 12px;
 }
 
 div.dataTables_filter label input, 
 div.dataTables_info, 
 div.dataTables_paginate, 
 ul.dt-button-collection li.dt-button{
-	font-family: 'Lora', serif;
-	font-size: 13px;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 15px;
 }
 
 table.table tbody tr td.dt-table-cell{
-	font-family: 'Lora', serif;
-	font-size: 13px;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 15px;
 	
 	max-width: 125px;
 	min-width: 125px;
@@ -39,8 +39,8 @@ table.table tbody tr td.dt-table-cell{
 }
 
 table.table thead tr th.dt-table-cell{
-	font-family: 'Kaushan Script', cursive;
-	font-size: 15px;
+	font-family: 'Aclonica', sans-serif;
+	font-size: 12px;
 	font-weight: normal !important;
 	
 	max-width: 125px;
@@ -54,8 +54,8 @@ table.table thead tr th input{
 	border: solid 1px #ccc;
 	border-radius: 3px;
 	
-	font-family: 'Lora', serif;
-	font-size: 13px;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 15px;
 	
 	padding: 3px 5px 3px 5px;
 }

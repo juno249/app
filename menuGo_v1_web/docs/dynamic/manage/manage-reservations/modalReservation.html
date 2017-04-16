@@ -1,7 +1,7 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-medium">
+		class="modal-header font-family-1-size-small">
 		Manage Reservation
 	</div>
 	<!--  *************** 
@@ -13,7 +13,7 @@
 		name="modalReservationContainer" 
 		ng-init="modalReservationController.initBootstrapValidator(); modalReservationController.initDom();">
 		<div 
-			class="alert alert-danger font-family-2-size-medium" 
+			class="alert alert-danger font-family-3-size-medium" 
 			ng-hide="modalReservationController.isValidationErrDBHidden">
 			{{modalReservationController.validationErrDB}}
 		</div>
@@ -34,14 +34,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Code
 							</span>
 							<!--  *************** 
 									reservationCode (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="reservationCode" 
 								maxlength="40" 
 								name="reservationCode" 
@@ -55,7 +55,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[0]}}
 						</div>
 					</div>
@@ -69,14 +69,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Customer username
 							</span>
 							<!--  *************** 
 									customerUsername (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="customerUsername" 
 								maxlength="30" 
 								name="customerUsername" 
@@ -90,7 +90,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[1]}}
 						</div>
 					</div>
@@ -104,14 +104,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Orderreference code
 							</span>
 							<!--  *************** 
 									orderreferenceCode (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="orderreferenceCode" 
 								maxlength="40" 
 								name="orderreferenceCode" 
@@ -125,7 +125,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[2]}}
 						</div>
 					</div>
@@ -139,14 +139,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Reservation diners count
 							</span>
 							<!--  *************** 
 									reservationDinersCount (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="reservationDinersCount" 
 								name="reservationDinersCount" 
 								ng-hide="modalReservationController.modalHiddenFields['reservationDinersCount']" 
@@ -159,7 +159,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[3]}}
 						</div>
 					</div>
@@ -173,14 +173,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Reseration eta
 							</span>
 							<!--  *************** 
 									reservationEta (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="reservationEta" 
 								name="reservationEta" 
 								placeholder="Reservation Eta" 
@@ -208,7 +208,7 @@
 							</span>
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[4]}}
 						</div>
 					</div>
@@ -222,14 +222,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Reseration payment mode
 							</span>
 							<!--  *************** 
 									reservationPaymentMode (start)
 									*************** -->
 							<select 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="reservationPaymentMode" 
 								name="reservationPaymentMode" 
 								ng-hide="modalReservationController.modalHiddenFields['reservationPaymentMode']" 
@@ -242,7 +242,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[5]}}
 						</div>
 					</div>
@@ -256,14 +256,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Reservation service time
 							</span>
 							<!--  *************** 
 									reservationServiceTime (start)
 									*************** -->
 							<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="reservationServiceTime" 
 								name="reservationServiceTime" 
 								placeholder="Reservation Service Time" 
@@ -291,7 +291,7 @@
 							</span>
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[6]}}
 						</div>
 					</div>
@@ -305,14 +305,14 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-medium input-group-addon">
+								class="font-family-1-size-small input-group-addon">
 								Reservation status
 							</span>
 							<!--  *************** 
 									reservationStatus (start)
 									*************** -->
 							<select 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="reservationStatus" 
 								name="reservationStatus" 
 								ng-hide="modalReservationController.modalHiddenFields['reservationStatus']" 
@@ -324,7 +324,7 @@
 									*************** -->
 						</div>
 						<div 
-							class="font-family-2-size-small help-block with-errors">
+							class="font-family-3-size-medium help-block with-errors">
 							{{modalReservationController.validationErr[7]}}
 						</div>
 					</div>
@@ -335,7 +335,7 @@
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-1-size-medium" 
+							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
 							type="submit">
 							Submit
 						</button>
@@ -344,7 +344,7 @@
 					<div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-1-size-medium" 
+							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
 							ng-click="modalReservationController.doCancel();" 
 							type="button">
 							Cancel
