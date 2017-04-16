@@ -7,11 +7,11 @@
 			<a 
 				class="font-family-1-size-large navbar-brand" 
 				href="#">
-				MenuGO
+				ZipMenu
 			</a>
 		</div>
 		<ul 
-			class="font-family-1-size-medium nav navbar-nav navbar-right" 
+			class="font-family-2-size-medium nav navbar-nav navbar-right" 
 			ng-if="!bannerController.user.isAuthenticated">
 			<li>
 				<a 
@@ -41,7 +41,7 @@
 							loginUsername (start)
 							*************** -->
 					<input 
-								class="font-family-2-size-small form-control" 
+								class="font-family-3-size-medium form-control" 
 								id="loginUsername" 
 								maxlength="30" 
 								name="loginUsername" 
@@ -68,7 +68,7 @@
 							loginPassword (start)
 							*************** -->
 					<input 
-							class="font-family-2-size-small form-control" 
+							class="font-family-3-size-medium form-control" 
 							id="loginPassword" 
 							maxlength="30" 
 							name="loginPasssword" 
@@ -84,7 +84,7 @@
 			<div 
 				class="form-group">
 				<button 
-					class="btn btn-success font-family-1-size-medium" 
+					class="btn btn-success font-family-2-size-medium" 
 					ng-click="bannerController.doLogin();" 
 					type="button">
 					<span 
@@ -95,7 +95,7 @@
 			</div>
 		</form>
 		<ul 
-			class="font-family-1-size-medium nav navbar-nav navbar-right" 
+			class="font-family-2-size-medium nav navbar-nav navbar-right" 
 			ng-if="bannerController.user.isAuthenticated">
 			<li>
 				<a 
@@ -115,7 +115,7 @@
 	<div 
 		class="container">
 		<span 
-			class="font-family-1-size-small navbar-text">
+			class="font-family-2-size-small navbar-text">
 			Powered By:
 		</span>
 		<a 
