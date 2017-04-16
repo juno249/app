@@ -176,7 +176,7 @@ function manageOrderreferenceController(
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
 		
-		getDtHiddenColumns();
+		genDtHiddenColumns();
 		
 		if('I' == formMode){	return null;
 		}
@@ -190,16 +190,16 @@ function manageOrderreferenceController(
 		}
 	
 	function uibModalClosedCallback(){
-		vm.dtInstance.relaoadData();
+		vm.dtInstance.reloadData();
 		vm.orderreference = {};
 		}
 	
-	function getDtHiddenColumns(){
-		var orderreferenceDt = $(DOM_ORDERREFERENCE_TABLE).dataTable();
+	function genDtHiddenColumns(){
+		var tableDt = $(DOM_ORDERREFERENCE_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
 		
 		$.each(
-				orderreferenceDt.fnSettings().aoColumns, 
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
 					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
 					var aoColumnsRunnerMdata = aoColumnsRunner.mData;

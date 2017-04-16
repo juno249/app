@@ -69,6 +69,8 @@ function orderreferenceService(
 	}
 	function getTableNumber(){	return orderreferenceServiceObj.tableNumber;
 	}
+	function getCustomerUsername(){	return orderreferenceServiceObj.customerUsername;
+	}
 	function getOrderreferenceCode(){	return orderreferenceServiceObj.orderreferenceCode;
 	}
 	function setOrderreferences(orderreferences){	orderreferenceServiceObj.orderreferences = orderreferences;
@@ -78,6 +80,8 @@ function orderreferenceService(
 	function setBranchName(branchName){	orderreferenceServiceObj.branchName = branchName;
 	}
 	function setTableNumber(tableNumber){	orderreferenceServiceObj.tableNumber = tableNumber;
+	}
+	function setCustomerUsername(customerUsername){	orderreferenceServiceObj.customerUsername = customerUsername;
 	}
 	function setOrderreferenceCode(orderreferenceCode){	orderreferenceServiceObj.orderreferenceCode = orderreferenceCode;
 	}

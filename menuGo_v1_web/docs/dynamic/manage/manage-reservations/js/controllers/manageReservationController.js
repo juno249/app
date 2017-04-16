@@ -111,7 +111,7 @@ function manageReservationController(
 						}
 				}
 				)
-				.closed().then($uibModalClosedCallback);
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function updateReservation(){
@@ -135,7 +135,7 @@ function manageReservationController(
 						}
 				}
 				)
-				.closed().then($uibModalClosedCallback);
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteReservation(){
@@ -158,8 +158,8 @@ function manageReservationController(
 						}
 						}
 				}
-				).
-				closed().then(uibModalClosedCallback);
+				)
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){
@@ -186,7 +186,7 @@ function manageReservationController(
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
 		
-		getDtHiddenColumns();
+		genDtHiddenColumns();
 		
 		if('I' == formMode){	return null;
 		}
@@ -200,18 +200,18 @@ function manageReservationController(
 		}
 	
 	function uibModalClosedCallback(){
-		vm.dtiInstance.reloadData();
+		vm.dtInstance.reloadData();
 		vm.reservation = {};
 		}
 	
-	function getDtHiddenColumns(){
-		var reservationDt = $(DOM_RESERVATION_TABLE).dataTable();
+	function genDtHiddenColumns(){
+		var tableDt = $(DOM_RESERVATION_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
 		
 		$.each(
-				reservationDt.fnSettings().aoColumns, 
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
-					var aoColumnsRunner = reservationDt.fnSettings().aoColumns[aoColumn];
+					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
 					var aoColumnsRunnerMdata = aoColumnsRunner.mData;
 					
 					if(!(null == aoColumnsRunnerMdata)){

@@ -176,7 +176,7 @@ function manageOrderController(
 	function genModalHiddenFields(formMode){
 		var modalHiddenFields = {};
 		
-		getDtHiddenColumns();
+		genDtHiddenColumns();
 		
 		if('I' == formMode){	return null;
 		}
@@ -195,11 +195,11 @@ function manageOrderController(
 		}
 	
 	function genDtHiddenColumns(){
-		var orderDt = $(DOM_ORDER_TABLE).dataTable();
+		var tableDt = $(DOM_ORDER_TABLE).dataTable();
 		vm.dtHiddenColumns = {};
 		
 		$.each(
-				orderDt.fnSettings().aoColumns, 
+				tableDt.fnSettings().aoColumns, 
 				function(aoColumn){
 					var aoColumnsRunner = tableDt.fnSettings().aoColumns[aoColumn];
 					var aoColumnsRunnerMdata = aoColumnsRunner.mData;

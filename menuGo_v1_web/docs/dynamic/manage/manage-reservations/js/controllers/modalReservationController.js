@@ -81,6 +81,20 @@ function modalReservationController(
 	//controller_method
 	vm.doCancel = doCancel;
 	
+	function initBootstrapValidator(){
+		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
+		$(DOM_FORM).validator();
+		$(DOM_FORM).validator().on(
+				'submit', 
+				doSubmit
+				);
+		
+		$timeout(
+				function(){	$(DOM_FORM).validator('update');
+				}
+				);
+		}
+	
 	function initDom(){
 		if('D' == vm.formMode){
 			$('#modalReservationContainer input').prop(
