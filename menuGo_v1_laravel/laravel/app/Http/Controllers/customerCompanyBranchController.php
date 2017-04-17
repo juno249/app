@@ -18,6 +18,7 @@ class customerCompanyBranchConstants{
 	const keyCustomer = 'customer';
 	const keyCompany = 'company';
 	const keyBranch = 'branch';
+	const keyCustomerCompanyBranch = 'customerCompanyBranch';
 	
 	const dbCustomerUsername = 'customer_username';
 	const dbCompanyName = 'company_name';
@@ -413,6 +414,28 @@ class customerCompanyBranchController extends Controller
 								);
 						
 						return $customersCompaniesBranchesResponse;
+					}
+				} else {
+					if(array_key_exists(
+							customerCompanyBranchConstants::keyCustomerCompanyBranch, 
+							$customerCompanyBranchRunner
+							)
+							){
+						if($customerDbWrite){
+							$customerCompanyBranch = $customerCompanyBranchRunner[customerCompanyBranchConstants::keyCustomerCompanyBranch];
+							if($this->isDataValid(
+									[$customerCompanyBranch], 
+									$errorMsg, 
+									"ADD"
+									)
+									){
+								try{
+									DB::table(customerCompanyBranchConstants::customersCompaniesBranchesTable)
+									->insert($customerCompanyBranch);
+								} catch(\PDOException $e){	throw $e;
+								}
+							}
+						}
 					}
 				}
 				

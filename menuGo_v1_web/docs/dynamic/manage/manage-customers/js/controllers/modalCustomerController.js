@@ -227,7 +227,7 @@ function modalCustomerController(
 				customerCompanyBranch = {
 						customer_username: customer.customer_username, 
 						company_name: user.company, 
-						branch_name: user.branch
+						branch_id: user.branch
 						};
 				transParams = {
 						customer: customer, 

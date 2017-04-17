@@ -90,7 +90,7 @@ function manageBranchController(
 		var eClassname = eSrc.className;
 		var selectCboxClassname = 'td.select-checkbox';
 		
-		$(selectCboxClassname).get(0).click();
+		$(selectCboxClassname).get(eSrc._DT_RowIndex).click();
 		$event.stopPropagation();
 		
 		if(-1 == eClassname.indexOf('selected')){
