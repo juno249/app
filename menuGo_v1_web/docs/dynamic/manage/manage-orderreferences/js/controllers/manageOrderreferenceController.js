@@ -66,7 +66,31 @@ function manageOrderreferenceController(
 		vm.user = JSON.parse(vm.user);
 		}
 	
-	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences';
+	if(
+			!(null == vm.companyName) &&
+			!(null == vm.branchName) &&
+			!(null == vm.tableNumber)
+			){
+		vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences';
+		} else {
+			vm.companyName = vm.user.company;
+			var branchId = vm.user.branch;
+			var httpConfig = {
+					method: 'GET', 
+					url: API_BASE_URL + '/query/branches', 
+					params: {	BranchId: branchId	}
+			}
+			
+			$(httpConfig)
+			.then(getByQuerySuccessCallback)
+			.catch(getByQueryFailedCallback);
+			
+			function getByQuerySuccessCallback(response){
+			}
+			
+			function getByQueryFailedCallback(responseError){
+			}
+			}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
