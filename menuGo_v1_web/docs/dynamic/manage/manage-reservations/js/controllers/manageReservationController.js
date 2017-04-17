@@ -73,7 +73,32 @@ function manageReservationController(
 		vm.user = JSON.parse(vm.user);
 		}
 	
-	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/reservations';
+	if(
+			!(null == vm.companyName) &&
+			!(null == vm.branchName) &&
+			!(null == vm.tableNumber) &&
+			!(null == vm.orderreferenceCode)
+			){
+		vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orderreferences/' + vm.orderreferenceCode + '/reservations';
+		} else {
+			var branchId = vm.user.branch;
+			var httpConfig = {
+					method: 'GET', 
+					url: API_BASE_URL + '/query/branches', 
+					params: {	BranchId: branchId	}
+			};
+			vm.companyName = vm.user.company;
+			
+			$(httpConfig)
+			.then(getByQuerySuccessCallback)
+			.catch(getByQueryFailedCallback);
+			
+			function getByQuerySuccessCallback(response){
+			}
+			
+			function getByQueryFailedCallback(responseError){
+			}
+			}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
