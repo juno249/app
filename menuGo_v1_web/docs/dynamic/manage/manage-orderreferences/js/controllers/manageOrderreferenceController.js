@@ -73,13 +73,13 @@ function manageOrderreferenceController(
 			){
 		vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences';
 		} else {
-			vm.companyName = vm.user.company;
 			var branchId = vm.user.branch;
 			var httpConfig = {
 					method: 'GET', 
 					url: API_BASE_URL + '/query/branches', 
 					params: {	BranchId: branchId	}
-			}
+			};
+			vm.companyName = vm.user.company;
 			
 			$(httpConfig)
 			.then(getByQuerySuccessCallback)
