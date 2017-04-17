@@ -92,7 +92,7 @@ function loginService(
 				var httpConfig = {
 						method: 'GET', 
 						url: API_BASE_URL + '/query/customers-companies-branches', 
-						params: {CustomerUsername: loginServiceObj.user.username}
+						params: {	CustomerUsername: loginServiceObj.user.username	}
 				};
 				
 				$http(httpConfig)
