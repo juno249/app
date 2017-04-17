@@ -202,7 +202,7 @@ function modalOrderController(
 					orderService.setOrderreferenceCode(vm.order.orderreferenceCode);
 					orderService.setOrderId(vm.order.orderId);
 					
-					orderService.deleteBranch()
+					orderService.deleteOrder()
 					.then(deleteOrderSuccessCallback)
 					.catch(deleteOrderFailedCallback);
 					

@@ -113,7 +113,7 @@ function manageOrderController(
 		var modalInstance = $uibModal.open(
 				{
 					animation: true, 
-					templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
+					templateUrl: 'docs/dynamic/manage/manage-orders/modalOrder.html', 
 					controller: 'modalOrderController as modalOrderController', 
 					resolve: {
 						order: function(){	return doDbColumn2Dom(formMode);
@@ -137,7 +137,7 @@ function manageOrderController(
 		var modalInstance = $uibModal.open(
 				{
 					animation: true, 
-					templateUrl: 'docs/dynamic/manage/manage-modalOrder.html', 
+					templateUrl: 'docs/dynamic/manage/manage-orders/modalOrder.html', 
 					controller: 'modalOrderController as modalOrderController', 
 					resolve: {
 						order: function(){	return doDbColumn2Dom(formMode);
