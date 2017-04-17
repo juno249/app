@@ -159,7 +159,7 @@ function manageNavigationController(
 			e, 
 			args
 			){
-		vm.comapnyName = args.companyName;
+		vm.companyName = args.companyName;
 		vm.branchName = args.branchName;
 		vm.tableNumber = args.tableNumber;
 		vm.isManageOrderreferenceHidden = !vm.isManageOrderreferenceHidden;

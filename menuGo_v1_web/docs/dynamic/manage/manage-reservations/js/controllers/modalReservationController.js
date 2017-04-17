@@ -116,7 +116,7 @@ function modalReservationController(
 	}
 	
 	function doSubmit(e){
-		var data = {};
+		var data = [];
 		
 		data.push(doDom2DbColumn());
 		

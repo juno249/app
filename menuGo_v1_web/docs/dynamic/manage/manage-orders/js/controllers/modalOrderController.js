@@ -98,7 +98,7 @@ function modalOrderController(
 	}
 	
 	function doSubmit(e){
-		var data = {};
+		var data = [];
 		
 		data.push(doDom2DbColumn());
 		

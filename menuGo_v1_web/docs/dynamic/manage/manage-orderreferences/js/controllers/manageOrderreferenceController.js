@@ -10,6 +10,7 @@ manageOrderreferenceController.$inject = [
                                           'BROADCAST_MESSAGES', 
                                           'ORDERREFERENCES_DB_FIELDS', 
                                           '$compile', 
+                                          '$rootScope', 
                                           '$scope', 
                                           '$stateParams', 
                                           '$uibModal', 
@@ -23,6 +24,7 @@ function manageOrderreferenceController(
 		BROADCAST_MESSAGES, 
 		ORDERREFERENCES_DB_FIELDS, 
 		$compile, 
+		$rootScope, 
 		$scope, 
 		$stateParams, 
 		$uibModal, 
@@ -79,9 +81,49 @@ function manageOrderreferenceController(
 		var eSrc = $event.currentTarget.parentElement.parentElement;
 		var eClassname = eSrc.className;
 		
-		if(-1 == eClassname.indexOf('selected')){	vm.orderreference = data;
-		} else {	vm.orderreference = {};
-		}
+		if(-1 == eClassname.indexOf('selected')){
+			vm.orderreference = data;
+			
+			$rootScope.$broadcast(
+					BROADCAST_MESSAGES.toggleOrder, 
+					{
+						companyName: vm.companyName, 
+						branchName: vm.branchName, 
+						tableNumber: vm.tableNumber, 
+						orderreferenceCode: vm.orderreference.orderreference_code
+						}
+					);
+			$rootScope.$broadcast(
+					BROADCAST_MESSAGES.toggleReservation, 
+					{
+						companyName: vm.companyName, 
+						branchName: vm.branchName, 
+						tableNumber: vm.tableNumber, 
+						orderreferenceCode: vm.orderreference.orderreference_code
+						}
+					);
+			} else {
+				vm.orderreference = {};
+				
+				$rootScope.$broadcast(
+						BROADCAST_MESSAGES.toggleOrder, 
+						{
+							companyName: vm.companyName, 
+							branchName: vm.branchName, 
+							tableNumber: vm.tableNumber, 
+							orderreferenceCode: vm.orderreference.orderreference_code
+							}
+						);
+				$rootScope.$broadcast(
+						BROADCAST_MESSAGES.toggleReservation, 
+						{
+							companyName: vm.companyName, 
+							branchName: vm.branchName, 
+							tableNumber: vm.tableNumber, 
+							orderreferenceCode: vm.orderreference.orderreference_code
+							}
+						);
+				}
 		}
 	
 	function addOrderreference(){
@@ -126,7 +168,7 @@ function manageOrderreferenceController(
 						}
 				}
 				)
-				.closed(uibModalClosedCallback);
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function deleteOrderreference(){
@@ -150,7 +192,7 @@ function manageOrderreferenceController(
 						}
 				}
 				)
-				.closed().then(uibModalClosedCallback);
+				.closed.then(uibModalClosedCallback);
 		}
 	
 	function doDbColumn2Dom(formMode){

@@ -101,7 +101,7 @@ function modalOrderreferenceController(
 	}
 	
 	function doSubmit(e){
-		var data = {};
+		var data = [];
 		
 		data.push(doDom2DbColumn());
 		
@@ -130,7 +130,7 @@ function modalOrderreferenceController(
 				hideBootstrapLoader($(DOM_MODAL));
 				
 				try{
-					JSON.parsre(responseError.statusText);
+					JSON.parse(responseError.statusText);
 					genValidationErrorFromResponse(responseError);
 					} catch(e){	showBootstrapAlert(ORDERREFERENCE_ADD_CATCH_MESSAGE);
 					}
@@ -156,7 +156,7 @@ function modalOrderreferenceController(
 				orderreferenceService.setTableNumber(vm.orderreferenceSnapshot.tableNumber);
 				orderreferenceService.setOrderreferenceCode(vm.orderreferenceSnapshot.orderreferenceCode);
 				
-				orderreferenceService.updateOrder(data)
+				orderreferenceService.updateOrderreference(data)
 				.then(updateOrderreferenceSuccessCallback)
 				.catch(updateOrderreferenceFailedCallback);
 				

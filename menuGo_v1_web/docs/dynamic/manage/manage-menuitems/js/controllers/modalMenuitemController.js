@@ -144,6 +144,7 @@ function modalMenuitemController(
 		
 		menuitemService.setCompanyName(vm.menuitem.companyName);
 		menuitemService.setMenuName(vm.menuitem.menuName);
+		menuitemService.setMenuitemCode(vm.menuitem.menuitemCode);
 		
 		menuitemService.uploadMenuitemImage(menuitemImage)
 		.then(uploadMenuitemImageSuccessCallback)

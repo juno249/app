@@ -10,6 +10,7 @@ manageTableController.$inject = [
                                  'BROADCAST_MESSAGES', 
                                  'TABLES_DB_FIELDS', 
                                  '$compile', 
+                                 '$rootScope', 
                                  '$scope', 
                                  '$stateParams', 
                                  '$uibModal', 
@@ -23,6 +24,7 @@ function manageTableController(
 		BROADCAST_MESSAGES, 
 		TABLES_DB_FIELDS, 
 		$compile, 
+		$rootScope, 
 		$scope, 
 		$stateParams, 
 		$uibModal, 
@@ -87,7 +89,7 @@ function manageTableController(
 					{
 						companyName: vm.companyName, 
 						branchName: vm.branchName, 
-						tableNumber: vm.table.tableNumber
+						tableNumber: vm.table.table_number
 						}
 					);
 			} else {
@@ -98,7 +100,7 @@ function manageTableController(
 						{
 							companyName: vm.companyName, 
 							branchName: vm.branchName, 
-							tableNumber: vm.table.tableNumber
+							tableNumber: vm.table.table_number
 							}
 						);
 				}

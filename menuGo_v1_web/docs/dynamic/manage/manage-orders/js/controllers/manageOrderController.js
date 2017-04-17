@@ -54,7 +54,7 @@ function manageOrderController(
 	vm.dbColumn2Dom = {
 			order_id: 'orderId', 
 			menuitem_id: 'menuitemId', 
-			orderreference_code: 'Orderreference code', 
+			orderreference_code: 'orderreferenceCode', 
 			order_status: 'orderStatus'
 				};
 	
