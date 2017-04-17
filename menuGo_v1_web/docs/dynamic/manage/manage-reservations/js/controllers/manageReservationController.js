@@ -87,6 +87,10 @@ function manageReservationController(
 			){
 		var eSrc = $event.currentTarget.parentElement.parentElement;
 		var eClassname = eSrc.className;
+		var selectCboxClassname = 'td.select-checkbox';
+		
+		$(selectCboxClassname).get(0).click();
+		$event.stopPropagation();
 		
 		if(-1 == eClassname.indexOf('selected')){	vm.reservation = data;
 		} else {	vm.reservation = {};
