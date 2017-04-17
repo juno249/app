@@ -17,6 +17,7 @@ div.dataTables_filter label{
 div.dataTables_filter label input, 
 div.dataTables_info, 
 div.dataTables_paginate, 
+td.dataTables_empty, 
 ul.dt-button-collection li.dt-button{
 	font-family: 'Josefin Sans', sans-serif;
 	font-size: 15px;
