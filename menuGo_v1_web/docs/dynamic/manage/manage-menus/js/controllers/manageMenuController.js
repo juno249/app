@@ -113,7 +113,7 @@ function manageMenuController(
 					animation: true, 
 					templateUrl: 'docs/dynamic/manage/manage-menus/modalMenu.html', 
 					controller: 'modalMenuController as modalMenuController', 
-					resolve:	{
+					resolve: {
 						menu: function(){	return doDbColumn2Dom(formMode);
 						}, 
 						formMode: function(){	return formMode;
@@ -137,7 +137,7 @@ function manageMenuController(
 					animation: true, 
 					templateUrl: 'docs/dynamic/manage/manage-menus/modalMenu.html', 
 					controller: 'modalMenuController as modalMenuController', 
-					resolve:	{
+					resolve: {
 						menu: function(){	return doDbColumn2Dom(formMode);
 						}, 
 						formMode: function(){	return formMode;
@@ -161,7 +161,7 @@ function manageMenuController(
 					animation: true, 
 					templateUrl: 'docs/dynamic/manage/manage-menus/modalMenu.html', 
 					controller: 'modalMenuController as modalMenuController', 
-					resolve:	{
+					resolve: {
 						menu: function(){	return doDbColumn2Dom(formMode);
 						}, 
 						formMode: function(){	return formMode;
