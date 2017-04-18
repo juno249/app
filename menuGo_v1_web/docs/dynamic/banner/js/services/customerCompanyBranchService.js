@@ -25,16 +25,10 @@ function customerCompanyBranchService(
 	var customerCompanyBranchServiceObj = {
 			customersCompaniesBranches: {}, 
 			customerUsername: undefined, 
-			companyName: undefined, 
-			branchId: undefined, 
 			getCustomersCompaniesBranches, 
 			getCustomerUsername, 
-			getCompanyName, 
-			getBranchId, 
 			setCustomersCompaniesBranches, 
 			setCustomerUsername, 
-			setCompanyName, 
-			setBranchId, 
 			getOptions: {
 				1: 'getCustomersCompaniesBranches', 
 				2: 'getCustomerCompanyBranch'
@@ -47,17 +41,9 @@ function customerCompanyBranchService(
 	}
 	function getCustomerUsername(){	return customerCompanyBranchServiceObj.customerUsername;
 	}
-	function getCompanyName(){	return customerCompanyBranchServiceObj.companyName;
-	}
-	function getBranchId(){	return customerCompanyBranchServiceObj.branchId;
-	}
 	function setCustomersCompaniesBranches(customersCompaniesBranches){	customerCompanyBranchServiceObj.customersCompaniesBranches = customersCompaniesBranches;
 	}
 	function setCustomerUsername(customerUsername){	customerCompanyBranchServiceObj.customerUsername = customerUsername;
-	}
-	function setCompanyName(companyName){	customerCompanyBranchServiceObj.companyName = companyName;
-	}
-	function setBranchId(branchId){	customerCompanyBranchServiceObj.branchId = branchId;
 	}
 	
 	function fetchCustomersCompaniesBranches(
@@ -72,7 +58,7 @@ function customerCompanyBranchService(
 			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches';
 			break;
 		case 'getCustomerCompanyBranch':
-			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchId;
+			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername;
 			break;
 			default:
 				break;

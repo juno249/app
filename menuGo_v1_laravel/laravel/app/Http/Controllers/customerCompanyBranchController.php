@@ -98,11 +98,9 @@ class customerCompanyBranchController extends Controller
 		return $customersCompaniesBranchesResponse;
 	}
 	
-	//URL-->>/customers-companies-branches/{CustomerUsername}/{CompanyName}/{BranchId}
+	//URL-->>/customers-companies-branches/{CustomerUsername}
 	public function getCustomerCompanyBranch(
-			$CustomerUsername, 
-			$CompanyName, 
-			$BranchId
+			$CustomerUsername
 			){
 		$mySqlWhere = array();
 		
@@ -112,22 +110,6 @@ class customerCompanyBranchController extends Controller
 						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCustomerUsername, 
 						'=', 
 						$CustomerUsername
-				]
-				);
-		array_push(
-				$mySqlWhere, 
-				[
-						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbCompanyName, 
-						'=', 
-						$CompanyName
-				]
-				);
-		array_push(
-				$mySqlWhere, 
-				[
-						customerCompanyBranchConstants::customersCompaniesBranchesTable . '.' . customerCompanyBranchConstants::dbBranchId, 
-						'=', 
-						$BranchId
 				]
 				);
 		

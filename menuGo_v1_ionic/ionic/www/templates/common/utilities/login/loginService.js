@@ -91,9 +91,8 @@ function loginService(
 			function getCustomerCompanyBranch(){
 				var httpConfig = {
 						method: 'GET', 
-						url: API_BASE_URL + '/customers-companies-branches/query', 
-						params: {	customerUsername: loginServiceObj.user.username	}
-				};
+						url: API_BASE_URL + '/customers-companies-branches/' + loginServiceObj.user.username
+						};
 				
 				$http(httpConfig)
 				.then(getCustomerCompanyBranchSuccessCallback)
@@ -103,8 +102,9 @@ function loginService(
 					var responseData = response.data;
 					
 					responseData = responseData[0];
-					loginServiceObj.user.company = responseData.company_name;
-					loginServiceObj.user.branch = responseData.branch_id;
+					loginServiceObj.user.company_name = responseData.company_name;
+					loginServiceObj.user.branch_id = responseData.branch_id;
+					loginServiceObj.user.branch_name = responseData.branch_name;
 					
 					localStorage.setItem(
 							USER_KEY, 
