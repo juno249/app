@@ -36,9 +36,22 @@ function manageTableController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
-	vm.tableId = '#tableTable';
-	vm.companyName = $stateParams['companyName'];
-	vm.branchName = $stateParams['branchName'];
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user= JSON.parse(vm.user);
+		}
+	if(
+			!(null == $stateParams['companyName']) &&
+			!(null == $stateParams['branchName'])
+			){
+		vm.companyName = $stateParams['companyName'];
+		vm.branchName = $stateParams['branchName'];
+		} else {
+			if(!(null == vm.user)){
+				vm.companyName = vm.user.company_name;
+				vm.branchName = vm.user.branch_name;
+				}
+			}
 	vm.table =  {};
 	vm.controllerObjName = 'manageTableController';
 	vm.dtInstance = dtInstanceCallback;
@@ -60,12 +73,6 @@ function manageTableController(
 			table_capacity: 'tableCapacity', 
 			table_status: 'tableStatus'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user= JSON.parse(vm.user);
-		}
-	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables';
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;

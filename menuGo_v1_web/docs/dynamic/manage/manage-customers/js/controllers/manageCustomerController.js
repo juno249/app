@@ -34,6 +34,10 @@ function manageCustomerController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user= JSON.parse(vm.user);
+		}
 	vm.customer = {};
 	vm.controllerObjName = 'manageCustomerController';
 	vm.dtInstance = dtInstanceCallback;
@@ -80,13 +84,8 @@ function manageCustomerController(
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user= JSON.parse(vm.user);
-		}
-	
-	vm.restApiSource = API_BASE_URL + '/customers/companies/' + vm.user.company;
+	if(!(null == vm.user.company)){	vm.restApiSource = API_BASE_URL + '/customers/companies/' + vm.user.company;
+	}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}

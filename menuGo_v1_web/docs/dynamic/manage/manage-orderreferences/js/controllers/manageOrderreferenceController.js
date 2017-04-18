@@ -36,9 +36,24 @@ function manageOrderreferenceController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
-	vm.companyName = $stateParams['companyName'];
-	vm.branchName = $stateParams['branchName'];
-	vm.tableNumber = $stateParams['tableNumber'];
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user = JSON.parse(vm.user);
+		}
+	if(
+			!(null == $stateParams['companyName']) &&
+			!(null == $stateParams['branchName']) &&
+			!(null == $stateParams['tableNumber'])
+			){
+		vm.companyName = $stateParams['companyName'];
+		vm.branchName = $stateParams['branchName'];
+		vm.tableNumber = $stateParams['tableNumber'];
+		} else {
+			if(!(null == vm.user)){
+				vm.companyName = vm.user.company_name;
+				vm.branchName = vm.user.branch_name;
+				}
+			}
 	vm.orderreference = {};
 	vm.controllerObjName = 'manageOrderreferenceController';
 	vm.dtInstance = dtInstanceCallback;
@@ -60,13 +75,9 @@ function manageOrderreferenceController(
 			table_id: 'tableId', 
 			orderreference_status: 'orderreferenceStatus'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user = JSON.parse(vm.user);
-		}
-	
-	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences';
+	if(!(null == vm.tableNumber)){	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences';
+	} else {	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orderreferences';
+	}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
@@ -294,7 +305,7 @@ function manageOrderreferenceController(
 			var orderreferenceTableDom = $(DOM_ORDERREFERENCE_TABLE).DataTable();
 			
 			Object.keys(vm.dtHiddenColumns).forEach(
-					function(dtHiddenColumnsKey){	orderreferenceTableDom.column(vm.dtHiddenColumns[dtHiddenColumnKey]).visible(false);
+					function(dtHiddenColumnsKey){	orderreferenceTableDom.column(vm.dtHiddenColumns[dtHiddenColumnsKey]).visible(false);
 					}
 					);
 			}

@@ -36,6 +36,10 @@ function manageCompanyController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user= JSON.parse(vm.user);
+		}
 	vm.company = {};
 	vm.controllerObjName = 'manageCompanyController';
 	vm.dtInstance = dtInstanceCallback;
@@ -54,13 +58,8 @@ function manageCompanyController(
 			company_category: 'companyCategory', 
 			company_logo: 'companyLogo'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user= JSON.parse(vm.user);
-		}
-	
-	vm.restApiSource = API_BASE_URL + '/companies/customers/' + vm.user.username;
+	if(!(null == vm.user.username)){	vm.restApiSource = API_BASE_URL + '/companies/customers/' + vm.user.username;
+	}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}

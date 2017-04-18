@@ -36,7 +36,15 @@ function manageBranchController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
-	vm.companyName = $stateParams['companyName'];
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user= JSON.parse(vm.user);
+		}
+	if(!(null == $stateParams['companyName'])){	vm.companyName = $stateParams['companyName'];
+	} else {
+		if(!(null == vm.user)){		vm.companyName = vm.user.company_name;
+		}
+		}
 	vm.branch = {};
 	vm.controllerObjName = 'manageBranchController';
 	vm.dtInstance = dtInstanceCallback;
@@ -67,12 +75,6 @@ function manageBranchController(
 			branch_address_country: 'branchAddressCountry', 
 			branch_hotline: 'branchHotline'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user= JSON.parse(vm.user);
-		}
-	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches';
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;

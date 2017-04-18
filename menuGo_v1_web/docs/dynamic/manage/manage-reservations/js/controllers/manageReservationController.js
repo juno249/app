@@ -34,10 +34,26 @@ function manageReservationController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
-	vm.companyName = $stateParams['companyName'];
-	vm.branchName = $stateParams['branchName'];
-	vm.tableNumber = $stateParams['tableNumber'];
-	vm.orderreferenceCode = $stateParams['orderreferenceCode'];
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user = JSON.parse(vm.user);
+		}
+	if(
+			!(null == $stateParams['companyName']) &&
+			!(null == $stateParams['branchName']) &&
+			!(null == $stateParams['tableNumber']) &&
+			!(null == $stateParams['orderreferenceCode'])
+			){
+		vm.companyName = $stateParams['companyName'];
+		vm.branchName = $stateParams['branchName'];
+		vm.tableNumber = $stateParams['tableNumber'];
+		vm.orderreferenceCode = $stateParams['orderreferenceCode'];
+		} else {
+			if(!(null == vm.user)){
+				vm.companyName = vm.user.company_name;
+				vm.branchName = vm.user.branch_name;
+				}
+			}
 	vm.reservation = {};
 	vm.controllerObjName = 'manageReservationController';
 	vm.dtInstance = dtInstanceCallback;
@@ -67,13 +83,12 @@ function manageReservationController(
 			reservation_service_time: 'reservationServiceTime', 
 			reservation_status: 'reservationStatus'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user = JSON.parse(vm.user);
-		}
-	
-	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orderreferences/' + vm.orderreferenceCode + '/reservations';
+	if(
+			!(null == vm.tableNumber) &&
+			!(null == vm.orderreferenceCode)
+			){	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orderreferences/' + vm.orderreferenceCode + '/reservations';
+			} else {	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/reservations';
+			}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
