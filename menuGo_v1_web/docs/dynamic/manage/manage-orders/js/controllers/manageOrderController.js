@@ -63,32 +63,7 @@ function manageOrderController(
 		vm.user= JSON.parse(vm.user);
 		}
 	
-	if(
-			!(null == vm.companyName) &&
-			!(null == vm.branchName) &&
-			!(null == vm.tableNumber) &&
-			!(null == vm.orderreferenceCode)
-			){
-		vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences/' + vm.orderreferenceCode + '/orders';
-	} else {
-		var branchId = vm.user.branch;
-		var httpConfig = {
-			method: 'GET', 
-			url: API_BASE_URL + '/query/branches', 
-			params: {	BranchId: branchId	}
-		};
-		vm.companyName = vm.user.company;
-		
-		$(httpConfig)
-		.then(getByQuerySuccessCallback)
-		.catch(getByQueryFailedCallback);
-		
-		function getByQuerySuccessCallback(response){
-		}
-		
-		function getByQueryFailedCallback(responseError){
-		}
-		}
+	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences/' + vm.orderreferenceCode + '/orders';
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;
 	}
