@@ -18,14 +18,14 @@ class menuConstants{
 	const dbMenuName = 'menu_name';
 	const dbMenuDesc = 'menu_desc';
 	const dbMenuImage = 'menu_image';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbMenuLastChangeTimestamp = 'menu_last_change_timestamp';
 	
 	const reqMenuId = 'MenuId';
 	const reqCompanyName = 'CompanyName';
 	const reqMenuName = 'MenuName';
 	const reqMenuDesc = 'MenuDesc';
 	const reqMenuImage = 'MenuImage';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqMenuLastChangeTimestamp = 'MenuLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -179,12 +179,12 @@ class menuController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[menuConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[menuConstants::reqMenuLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						menuConstants::dbLastChangeTimestamp, 
+						menuConstants::dbMenuLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[menuConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[menuConstants::reqMenuLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -232,7 +232,7 @@ class menuController extends Controller
 							'*.' . menuConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
 							'*.' . menuConstants::dbMenuDesc => 'sometimes|string|max:500', 
 							'*.' . menuConstants::dbMenuImage => 'sometimes|string|max:1000', 
-							'*.' . menuConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . menuConstants::dbMenuLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -312,8 +312,8 @@ class menuController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][menuConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][menuConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][menuConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][menuConstants::dbMenuLastChangeTimestamp])){
+			try{	$jsonData[0][menuConstants::dbMenuLastChangeTimestamp] = Carbon::parse($jsonData[0][menuConstants::dbMenuLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$menusResponse->setStatusCode(

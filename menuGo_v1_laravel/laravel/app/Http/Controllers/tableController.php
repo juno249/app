@@ -20,7 +20,7 @@ class tableConstants{
 	const dbTableCapacity = 'table_capacity';
 	const dbTableStatus = 'table_status';
 	const dbTableStatusChangeTimestamp = 'table_status_change_timestamp';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbTableLastChangeTimestamp = 'table_last_change_timestamp';
 	
 	const reqTableId = 'TableId';
 	const reqBranchId = 'BranchId';
@@ -28,7 +28,7 @@ class tableConstants{
 	const reqTableCapacity = 'TableCapacity';
 	const reqTableStatus = 'TableStatus';
 	const reqTableStatusChangeTimestamp = 'TableStatusChangeTimestamp';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqTableLastChangeTimestamp = 'TableLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -219,12 +219,12 @@ class tableController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[tableConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[tableConstants::reqTableLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						tableConstants::dbLastChangeTimestamp, 
+						tableConstants::dbTableLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[tableConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[tableConstants::reqTableLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -274,7 +274,7 @@ class tableController extends Controller
 							'*.' . tableConstants::dbTableCapacity => 'sometimes|numeric', 
 							'*.' . tableConstants::dbTableStatus => 'sometimes|string|max:30', 
 							'*.' . tableConstants::dbTableStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . tableConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . tableConstants::dbTableLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -406,8 +406,8 @@ class tableController extends Controller
 				return $tablesResponse;
 			}
 		}
-		if(isset($jsonData[0][tableConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][tableConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][tableConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][tableConstants::dbTableLastChangeTimestamp])){
+			try{	$jsonData[0][tableConstants::dbTableLastChangeTimestamp] = Carbon::parse($jsonData[0][tableConstants::dbTableLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$tablesResponse->setStatusCode(
@@ -415,7 +415,7 @@ class tableController extends Controller
 						tableConstants::carbonParseErr
 						);
 				
-				return tableConstants::carbonParseErr;
+				return $tablesResponse;
 			}
 		}
 		

@@ -17,7 +17,7 @@ class blogConstants{
 	const dbBlogContent = 'blog_content';
 	const dbBlogImage = 'blog_image';
 	const dbBlogUrl = 'blog_url';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbBlogLastChangeTimestamp = 'blog_last_change_timestamp';
 	
 	const reqBlogId = 'BlogId';
 	const reqBlogTitle = 'BlogTitle';
@@ -25,7 +25,7 @@ class blogConstants{
 	const reqBlogContent = 'BlogContent';
 	const reqBlogImage = 'BlogImage';
 	const reqBlogUrl = 'BlogUrl';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqBlogLastChangeTimestamp = 'BlogLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -157,12 +157,12 @@ class blogController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[blogConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[blogConstants::reqBlogLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						blogConstants::dbLastChangeTimestamp, 
+						blogConstants::dbBlogLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[blogConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[blogConstants::reqBlogLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -212,7 +212,7 @@ class blogController extends Controller
 							'*.' . blogConstants::dbBlogContent => 'sometimes|string|max:1000', 
 							'*.' . blogConstants::dbBlogImage => 'sometimes|string|max:500', 
 							'*.' . blogConstants::dbBlogUrl => 'sometimes|string|max:500', 
-							'*.' . blogConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . blogConstants::dbBlogLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -287,8 +287,8 @@ class blogController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][blogConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][blogConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][blogConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][blogConstants::dbBlogLastChangeTimestamp])){
+			try{	$jsonData[0][blogConstants::dbBlogLastChangeTimestamp] = Carbon::parse($jsonData[0][blogConstants::dbBlogLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$blogsResponse->setStatusCode(

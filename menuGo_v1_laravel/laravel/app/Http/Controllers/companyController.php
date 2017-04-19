@@ -17,13 +17,13 @@ class companyConstants{
 	const dbCompanyDesc = 'company_desc';
 	const dbCompanyCategory = 'company_category';
 	const dbCompanyLogo = 'company_logo';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbCompanyLastChangeTimestamp = 'company_last_change_timestamp';
 	
 	const reqCompanyName = 'CompanyName';
 	const reqCompanyDesc = 'CompanyDesc';
 	const reqCompanyCategory = 'CompanyCategory';
 	const reqCompanyLogo = 'CompanyLogo';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqCompanyLastChangeTimestamp = 'CompanyLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -186,12 +186,12 @@ class companyController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[companyConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[companyConstants::reqCompanyLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						companyConstants::dbLastChangeTimestamp, 
+						companyConstants::dbCompanyLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[companyConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[companyConstants::reqCompanyLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -239,7 +239,7 @@ class companyController extends Controller
 							'*.' . companyConstants::dbCompanyDesc => 'sometimes|string|max:500', 
 							'*.' . companyConstants::dbCompanyCategory => 'sometimes|string|max:30', 
 							'*.' . companyConstants::dbCompanyLogo => 'sometimes|string|max:500', 
-							'*.' . companyConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . companyConstants::dbCompanyLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -342,8 +342,8 @@ class companyController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][companyConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][companyConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][companyConstants::dbCompanyLastChangeTimestamp])){
+			try{	$jsonData[0][companyConstants::dbCompanyLastChangeTimestamp] = Carbon::parse($jsonData[0][companyConstants::dbCompanyLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$companiesResponse->setStatusCode(
@@ -389,8 +389,8 @@ class companyController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][companyConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][companyConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][companyConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][companyConstants::dbCompanyLastChangeTimestamp])){
+			try{	$jsonData[0][companyConstants::dbCompanyLastChangeTimestamp] = Carbon::parse($jsonData[0][companyConstants::dbCompanyLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$companiesResponse->setStatusCode(

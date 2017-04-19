@@ -20,7 +20,7 @@ class advertisementConstants{
 	const dbAdvertisementPrice = 'advertisement_price';
 	const dbAdvertisementImage = 'advertisement_image';
 	const dbAdvertisementUrl = 'advertisement_url';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbAdvertisementLastChangeTimestamp = 'advertisement_last_change_timestamp';
 	
 	const reqAdvertisementId = 'AdvertisementId';
 	const reqCompanyName = 'CompanyName';
@@ -29,7 +29,7 @@ class advertisementConstants{
 	const reqAdvertisementPrice = 'AdvertisementPrice';
 	const reqAdvertisementImage = 'AdvertisementImage';
 	const reqAdvertisementUrl = 'AdvertisementUrl';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqAdvertisementLastChangeTimestamp = 'AdvertisementLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -255,12 +255,12 @@ class advertisementController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[advertisementConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[advertisementConstants::reqAdvertisementLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						advertisementConstants::dbLastChangeTimestamp, 
+						advertisementConstants::dbAdvertisementLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[advertisementConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[advertisementConstants::reqAdvertisementLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -312,7 +312,7 @@ class advertisementController extends Controller
 							'*.' . advertisementConstants::dbAdvertisementPrice => 'sometimes|numeric', 
 							'*.' . advertisementConstants::dbAdvertisementImage => 'sometimes|string|max:500', 
 							'*.' . advertisementConstants::dbAdvertisementUrl => 'sometimes|string|max:500', 
-							'*.' . advertisementConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . advertisementConstants::dbAdvertisementLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -387,8 +387,8 @@ class advertisementController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][advertisementConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][advertisementConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][advertisementConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][advertisementConstants::dbAdvertisementLastChangeTimestamp])){
+			try{	$jsonData[0][advertisementConstants::dbAdvertisementLastChangeTimestamp] = Carbon::parse($jsonData[0][advertisementConstants::dbAdvertisementLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$advertisementsResponse->setStatusCode(

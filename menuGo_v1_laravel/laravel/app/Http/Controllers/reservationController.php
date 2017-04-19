@@ -27,7 +27,7 @@ class reservationConstants{
 	const dbReservationServiceTime = 'reservation_service_time';
 	const dbReservationStatus = 'reservation_status';
 	const dbReservationStatusChangeTimestamp = 'reservation_status_change_timestamp';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbReservationLastChangeTimestamp = 'reservation_last_change_timestamp';
 	
 	const reqReservationId = 'ReservationId';
 	const reqReservationCode = 'ReservationCode';
@@ -39,7 +39,7 @@ class reservationConstants{
 	const reqReservationServiceTime = 'ReservationServiceTime';
 	const reqReservationStatus = 'ReservationStatus';
 	const reqReservationStatusChangeTimestamp = 'ReservationStatusChangeTimestamp';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqReservationLastChangeTimestamp = 'ReservationLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -1053,12 +1053,12 @@ class reservationController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[reservationConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[reservationConstants::reqReservationLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						reservationConstants::dbLastChangeTimestamp, 
+						reservationConstants::dbReservationLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[reservationConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[reservationConstants::reqReservationLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -1116,7 +1116,7 @@ class reservationController extends Controller
 							'*.' . reservationConstants::dbReservationServiceTime => 'sometimes|date_format:Y-m-d H:i:s', 
 							'*.' . reservationConstants::dbReservationStatus => 'sometimes|string|max:30', 
 							'*.' . reservationConstants::dbReservationStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . reservationConstants::dbLastChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s'
+							'*.' . reservationConstants::dbReservationLastChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -1283,10 +1283,9 @@ class reservationController extends Controller
 				return $reservationsResponse;
 			}
 		}
-		if(isset($jsonData[0][reservationConstants::dbLastChangeTimestamp])){
-			try{
-				$jsonData[0][reservationConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][reservationConstants::dbLastChangeTimestamp])
-				->format('Y-m-d H:i:s');
+		if(isset($jsonData[0][reservationConstants::dbReservationLastChangeTimestamp])){
+			try{	$jsonData[0][reservationConstants::dbReservationLastChangeTimestamp] = Carbon::parse($jsonData[0][reservationConstants::dbReservationLastChangeTimestamp])
+			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$reservationsResponse->setStatusCode(
 						400, 

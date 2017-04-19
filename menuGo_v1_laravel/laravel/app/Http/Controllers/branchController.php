@@ -23,7 +23,7 @@ class branchConstants{
 	const dbBranchAddressPostalcode = 'branch_address_postalcode';
 	const dbBranchAddressCountry = 'branch_address_country';
 	const dbBranchHotline = 'branch_hotline';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbBranchLastChangeTimestamp = 'branch_last_change_timestamp';
 	
 	const reqBranchId = 'BranchId';
 	const reqBranchName = 'BranchName';
@@ -35,7 +35,7 @@ class branchConstants{
 	const reqBranchAddressPostalcode = 'BranchAddressPostalcode';
 	const reqBranchAddressCountry = 'BranchAddressCountry';
 	const reqBranchHotline = 'BranchHotline';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqBranchLastChangeTimestamp = 'BranchLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -236,12 +236,12 @@ class branchController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[branchConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[branchConstants::reqBranchLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						branchConstants::dbLastChangeTimestamp, 
+						branchConstants::dbBranchLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[branchConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[branchConstants::reqBranchLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -299,7 +299,7 @@ class branchController extends Controller
 							'*.' . branchConstants::dbBranchAddressPostalcode => 'sometimes|string|max:30', 
 							'*.' . branchConstants::dbBranchAddressCountry => 'sometimes|string|max:30', 
 							'*.' . branchConstants::dbBranchHotline => 'sometimes|string|max:10', 
-							'*.' . branchConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . branchConstants::dbBranchLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -411,8 +411,8 @@ class branchController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][branchConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][branchConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][branchConstants::dbBranchLastChangeTimestamp])){
+			try{	$jsonData[0][branchConstants::dbBranchLastChangeTimestamp] = Carbon::parse($jsonData[0][branchConstants::dbBranchLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$branchesResponse->setStatusCode(
@@ -459,8 +459,8 @@ class branchController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][branchConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][branchConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][branchConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][branchConstants::dbBranchLastChangeTimestamp])){
+			try{	$jsonData[0][branchConstants::dbBranchLastChangeTimestamp] = Carbon::parse($jsonData[0][branchConstants::dbBranchLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$branchesResponse->setStatusCode(

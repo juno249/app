@@ -32,7 +32,7 @@ class customerConstants{
 	const dbCustomerBirthdayMonth = 'customer_birthday_month';
 	const dbCustomerBirthdayDate = 'customer_birthday_date';
 	const dbCustomerBirthdayYear = 'customer_birthday_year';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbCustomerLastChangeTimestamp = 'customer_last_change_timestamp';
 	
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqCustomerPassword = 'CustomerPassword';
@@ -52,7 +52,7 @@ class customerConstants{
 	const reqCustomerBirthdayMonth = 'CustomerBirthdayMonth';
 	const reqCustomerBirthdayDate = 'CustomerBirthdayDate';
 	const reqCustomerBirthdayYear = 'CustomerBirthdayYear';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqCustomerLastChangeTimestamp = 'CustomerLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -340,12 +340,12 @@ class customerController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[customerConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[customerConstants::reqCustomerLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						customerConstants::dbLastChangeTimestamp, 
+						customerConstants::dbCustomerLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[customerConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[customerConstants::reqCustomerLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -422,7 +422,7 @@ class customerController extends Controller
 							'*.' . customerConstants::dbCustomerBirthdayMonth => 'sometimes|string|max:30', 
 							'*.' . customerConstants::dbCustomerBirthdayDate => 'sometimes|numeric', 
 							'*.' . customerConstants::dbCustomerBirthdayYear => 'sometimes|numeric', 
-							'*.' . customerConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . customerConstants::dbCustomerLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -529,8 +529,8 @@ class customerController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][customerConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][customerConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][customerConstants::dbCustomerLastChangeTimestamp])){
+			try{	$jsonData[0][customerConstants::dbCustomerLastChangeTimestamp] = Carbon::parse($jsonData[0][customerConstants::dbCustomerLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$customersResponse->setStatusCode(
@@ -576,8 +576,8 @@ class customerController extends Controller
 				400, 
 				null
 				);
-		if(isset($jsonData[0][customerConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][customerConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][customerConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][customerConstants::dbCustomerLastChangeTimestamp])){
+			try{	$jsonData[0][customerConstants::dbCustomerLastChangeTimestamp] = Carbon::parse($jsonData[0][customerConstants::dbCustomerLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$customersResponse->setStatusCode(

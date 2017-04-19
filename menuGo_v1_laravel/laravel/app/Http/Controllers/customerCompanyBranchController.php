@@ -23,12 +23,12 @@ class customerCompanyBranchConstants{
 	const dbCustomerUsername = 'customer_username';
 	const dbCompanyName = 'company_name';
 	const dbBranchId = 'branch_id';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbCustomerCompanyBranchLastChangeTimestamp = 'customerCompanyBranch_last_change_timestamp';
 	
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqCompanyName = 'CompanyName';
 	const reqBranchId = 'BranchId';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqCustomerCompanyBranchLastChangeTimestamp = 'CustomerCompanyBranchLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -163,12 +163,12 @@ class customerCompanyBranchController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[customerCompanyBranchConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[customerCompanyBranchConstants::reqCustomerCompanyBranchLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						customerCompanyBranchConstants::dbLastChangeTimestamp, 
+						customerCompanyBranchConstants::dbCustomerCompanyBranchLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[customerCompanyBranchConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[customerCompanyBranchConstants::reqCustomerCompanyBranchLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -214,7 +214,7 @@ class customerCompanyBranchController extends Controller
 							'*.' . customerCompanyBranchConstants::dbCustomerUsername => 'exists:customers,customer_username|sometimes|string|max:30', 
 							'*.' . customerCompanyBranchConstants::dbCompanyName => 'exists:companies,company_name|sometimes|string|max:30', 
 							'*.' . customerCompanyBranchConstants::dbBranchId => 'exists:branches,branch_id|required|int', 
-							'*.' . customerCompanyBranchConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . customerCompanyBranchConstants::dbCustomerCompanyBranchLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}

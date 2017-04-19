@@ -21,14 +21,14 @@ class orderConstants{
 	const dbOrderreferenceCode = 'orderreference_code';
 	const dbOrderStatus = 'order_status';
 	const dbOrderStatusChangeTimestamp = 'order_status_change_timestamp';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbOrderLastChangeTimestamp = 'order_last_change_timestamp';
 	
 	const reqOrderId = 'OrderId';
 	const reqMenuitemId = 'MenuitemId';
 	const reqOrderreferenceCode = 'OrderreferenceCode';
 	const reqOrderStatus = 'OrderStatus';
 	const reqOrderStatusChangeTimestamp = 'OrderStatusChangeTimestamp';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqOrderLastChangeTimestamp = 'OrderLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -813,12 +813,12 @@ class orderController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[orderConstants::reqLastChangeTimestamp])){	array_push(
+		if(isset($_GET[orderConstants::reqOrderLastChangeTimestamp])){	array_push(
 				$mySqlWhere, 
 				[
-						orderConstants::dbLastChangeTimestamp, 
+						orderConstants::dbOrderLastChangeTimestamp, 
 						'LIKE', 
-						'%' . $_GET[orderConstants::reqLastChangeTimestamp] . '%'
+						'%' . $_GET[orderConstants::reqOrderLastChangeTimestamp] . '%'
 				]
 				);
 		}
@@ -866,7 +866,7 @@ class orderController extends Controller
 							'*.' . orderConstants::dbOrderreferenceCode => 'exists:orderreferences,orderreference_code|sometimes|string|max:40', 
 							'*.' . orderConstants::dbOrderStatus => 'sometimes|string|max:30', 
 							'*.' . orderConstants::dbOrderStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . orderConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . orderConstants::dbOrderLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -1006,8 +1006,8 @@ class orderController extends Controller
 				return $ordersResponse;
 			}
 		}
-		if(isset($jsonData[0][orderConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][orderConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][orderConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][orderConstants::dbOrderLastChangeTimestamp])){
+			try{	$jsonData[0][orderConstants::dbOrderLastChangeTimestamp] = Carbon::parse($jsonData[0][orderConstants::dbOrderLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$ordersResponse->setStatusCode(

@@ -22,7 +22,7 @@ class orderreferenceConstants{
 	const dbTableId = 'table_id';
 	const dbOrderreferenceStatus = 'orderreference_status';
 	const dbOrderreferenceStatusChangeTimestamp = 'orderreference_status_change_timestamp';
-	const dbLastChangeTimestamp = 'last_change_timestamp';
+	const dbOrderreferenceLastChangeTimestamp = 'orderreference_last_change_timestamp';
 	
 	const reqOrderreferenceId = 'OrderreferenceId';
 	const reqOrderreferenceCode = 'OrderreferenceCode';
@@ -30,7 +30,7 @@ class orderreferenceConstants{
 	const reqTableId = 'TableId';
 	const reqOrderreferenceStatus = 'OrderreferenceStatus';
 	const reqOrderreferenceStatusChangeTimestamp = 'OrderreferenceStatusChangeTimestamp';
-	const reqLastChangeTimestamp = 'LastChangeTimestamp';
+	const reqOrderreferenceLastChangeTimestamp = 'OrderreferenceLastChangeTimestamp';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -722,13 +722,13 @@ class orderreferenceController extends Controller
 				]
 				);
 		}
-		if(isset($_GET[orderreferenceConstants::reqLastChangeTimestamp])){
+		if(isset($_GET[orderreferenceConstants::reqOrderreferenceLastChangeTimestamp])){
 			array_push(
 					$mySqlWhere, 
 					[
-							orderreferenceConstants::dbLastChangeTimestamp, 
+							orderreferenceConstants::dbOrderreferenceLastChangeTimestamp, 
 							'LIKE', 
-							'%' . $_GET[orderreferenceConstants::reqLastChangeTimestamp] . '%'
+							'%' . $_GET[orderreferenceConstants::reqOrderreferenceLastChangeTimestamp] . '%'
 					]
 					);
 		}
@@ -778,7 +778,7 @@ class orderreferenceController extends Controller
 							'*.' . orderreferenceConstants::dbTableId => 'exists:tables,table_id|sometimes|numeric', 
 							'*.' . orderreferenceConstants::dbOrderreferenceStatus => 'sometimes|string|max:30', 
 							'*.' . orderreferenceConstants::dbOrderreferenceStatusChangeTimestamp => 'sometimes|date_format:Y-m-d H:i:s', 
-							'*.' . orderreferenceConstants::dbLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . orderreferenceConstants::dbOrderreferenceLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
 					]
 					);
 		}
@@ -915,8 +915,8 @@ class orderreferenceController extends Controller
 				return $orderreferencesResponse;
 			}
 		}
-		if(isset($jsonData[0][orderreferenceConstants::dbLastChangeTimestamp])){
-			try{	$jsonData[0][orderreferenceConstants::dbLastChangeTimestamp] = Carbon::parse($jsonData[0][orderreferenceConstants::dbLastChangeTimestamp])
+		if(isset($jsonData[0][orderreferenceConstants::dbOrderreferenceLastChangeTimestamp])){
+			try{	$jsonData[0][orderreferenceConstants::dbOrderreferenceLastChangeTimestamp] = Carbon::parse($jsonData[0][orderreferenceConstants::dbOrderreferenceLastChangeTimestamp])
 			->format('Y-m-d H:i:s');
 			} catch(\Exception $e){
 				$orderreferencesResponse->setStatusCode(
