@@ -34,8 +34,17 @@ function manageMenuitemController(
 	const USER_KEY = 'User';
 	
 	var vm = this;
-	vm.companyName = $stateParams['companyName'];
-	vm.menuName = $stateParams['menuName'];
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user= JSON.parse(vm.user);
+		}
+	if(
+			!(null == $stateParams['companyName']) &&
+			!(null == $stateParams['menuName'])
+			){
+		vm.companyName = $stateParams['companyName'];
+		vm.menuName = $stateParams['menuName'];
+		}
 	vm.menuitem = {};
 	vm.controllerObjName = 'manageMenuitemController';
 	vm.dtInstance = dtInstanceCallback;
@@ -62,12 +71,6 @@ function manageMenuitemController(
 			menuitem_featured: 'menuitemFeatured', 
 			menuitem_image: 'menuitemImage'
 				};
-	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user= JSON.parse(vm.user);
-		}
-	
 	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/menus/' + vm.menuName + '/menuitems';
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;

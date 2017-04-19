@@ -77,7 +77,7 @@ function manageOrderController(
 			!(null == vm.tableNumber) &&
 			!(null == vm.orderreferenceCode)
 			){	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences/' + vm.orderreferenceCode + '/orders';
-			} else {	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/reservations';
+			} else {	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orders';
 			}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;

@@ -84,7 +84,7 @@ function manageCustomerController(
 			customer_birthday_date: 'customerBirthdayDate', 
 			customer_birthday_year: 'customerBirthdayYear'
 				};
-	if(!(null == vm.user.company)){	vm.restApiSource = API_BASE_URL + '/customers/companies/' + vm.user.company;
+	if(!(null == vm.user.company_name)){	vm.restApiSource = API_BASE_URL + '/customers/companies/' + vm.user.company_name;
 	}
 	
 	function dtInstanceCallback(dtInstance){	vm.dtInstance = dtInstance;

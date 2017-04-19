@@ -86,7 +86,7 @@ function manageReservationController(
 	if(
 			!(null == vm.tableNumber) &&
 			!(null == vm.orderreferenceCode)
-			){	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/orderreferences/' + vm.orderreferenceCode + '/reservations';
+			){	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/tables/' + vm.tableNumber + '/orderreferences/' + vm.orderreferenceCode + '/reservations';
 			} else {	vm.restApiSource = API_BASE_URL + '/companies/' + vm.companyName + '/branches/' + vm.branchName + '/reservations';
 			}
 	

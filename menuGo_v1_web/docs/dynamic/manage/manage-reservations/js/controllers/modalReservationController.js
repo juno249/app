@@ -251,7 +251,7 @@ function modalReservationController(
 					if(
 							!(null == vm.dom2DbColumn[reservationKey]) &&
 							!(undefined == vm.dom2DbColumn[reservationKey])
-							){	data.vm.dom2DbColumn[reservationKey] = vm.reservation[reservationKey];
+							){	data[vm.dom2DbColumn[reservationKey]] = vm.reservation[reservationKey];
 							}
 					}
 				);

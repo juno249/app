@@ -183,6 +183,7 @@
 								class="font-family-3-size-medium form-control" 
 								id="reservationEta" 
 								name="reservationEta" 
+								ng-model="modalReservationController.reservation.reservationEta" 
 								placeholder="Reservation Eta" 
 								type="text">
 							<!--  *************** 
@@ -233,7 +234,7 @@
 								id="reservationPaymentMode" 
 								name="reservationPaymentMode" 
 								ng-hide="modalReservationController.modalHiddenFields['reservationPaymentMode']" 
-								ng-model="modalReservationController.reservation.reservationPaymyentMode" 
+								ng-model="modalReservationController.reservation.reservationPaymentMode" 
 								ng-options="k as v for (k,v) in modalReservationController.reservationPaymentModeOptions" 
 								required>
 							</select>
@@ -266,6 +267,7 @@
 								class="font-family-3-size-medium form-control" 
 								id="reservationServiceTime" 
 								name="reservationServiceTime" 
+								ng-model="modalReservationController.reservation.reservationServiceTime" 
 								placeholder="Reservation Service Time" 
 								type="text">
 							<!--  *************** 
