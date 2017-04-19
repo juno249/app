@@ -216,7 +216,7 @@ function modalCompanyController(
 					return;
 					}
 				
-				data[0].last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data[0].company_last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				companyService.setCompanyName(vm.companySnapshot.companyName);
 				

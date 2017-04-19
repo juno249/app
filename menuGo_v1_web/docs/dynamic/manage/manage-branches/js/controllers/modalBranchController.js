@@ -166,7 +166,7 @@ function modalBranchController(
 					return;
 					}
 				
-				data[0].last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data[0].branch_last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				branchService.setCompanyName(vm.branchSnapshot.companyName);
 				branchService.setBranchName(vm.branchSnapshot.branchName);

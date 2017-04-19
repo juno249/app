@@ -149,7 +149,7 @@ function modalOrderreferenceController(
 				
 				if(!(null == data.orderreference_status)){	data[0].orderreference_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data[0].last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data[0].orderreference_last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				orderreferenceService.setCompanyName(vm.orderreferenceSnapshot.companyName);
 				orderreferenceService.setBranchName(vm.orderreferenceSnapshot.branchName);

@@ -27,7 +27,7 @@ angular
 			15: 'customer_birthday_month', 
 			16: 'customer_birthday_date', 
 			17: 'customer_birthday_year', 
-			18: 'last_change_timestamp'
+			18: 'customer_last_change_timestamp'
 				}
 		)
 		
@@ -38,7 +38,7 @@ angular
 			1: 'company_desc', 
 			2: 'company_category', 
 			3: 'company_logo', 
-			4: 'last_change_timestamp'
+			4: 'company_last_change_timestamp'
 				}
 		)
 		
@@ -55,7 +55,7 @@ angular
 			7: 'branch_address_postalcode', 
 			8: 'branch_address_country', 
 			9: 'branch_hotline', 
-			10: 'last_change_timestamp'
+			10: 'branch_last_change_timestamp'
 				}
 		)
 		
@@ -67,7 +67,7 @@ angular
 			2: 'company_name', 
 			3: 'menu_desc', 
 			4: 'menu_image', 
-			5: 'last_change_timestamp'
+			5: 'menu_last_change_timestamp'
 				}
 		)
 		
@@ -80,7 +80,7 @@ angular
 			3: 'table_capacity', 
 			4: 'table_status', 
 			5: 'table_status_change_timestamp', 
-			6: 'last_change_timestamp'
+			6: 'table_last_change_timestamp'
 				}
 		)
 		
@@ -95,7 +95,7 @@ angular
 			5: 'menuitem_price', 
 			6: 'menuitem_featured', 
 			7: 'menuitem_image', 
-			8: 'last_change_timestamp'
+			8: 'menuitem_last_change_timestamp'
 				}
 		)
 		
@@ -108,7 +108,7 @@ angular
 			3: 'table_id', 
 			4: 'orderreference_status', 
 			5: 'orderreference_status_change_timestamp', 
-			6: 'last_change_timestamp'
+			6: 'orderreference_last_change_timestamp'
 				}
 		)
 		
@@ -120,7 +120,7 @@ angular
 			2: 'orderreference_code', 
 			3: 'order_status', 
 			4: 'order_status_change_timestamp', 
-			5: 'last_change_timestamp'
+			5: 'order_last_change_timestamp'
 				}
 		)
 		
@@ -137,7 +137,7 @@ angular
 			7: 'reservation_service_time', 
 			8: 'reservation_status', 
 			9: 'reservation_status_change_timestamp', 
-			10: 'last_change_timestamp'
+			10: 'reservation_last_change_timestamp'
 				}
 		)
 		
@@ -147,7 +147,7 @@ angular
 			0: 'customer_username', 
 			1: 'company_name', 
 			2: 'branch_name', 
-			3: 'last_change_timestamp'
+			3: 'customerCompanyBranch_last_change_timestamp'
 				}
 		)
 		
@@ -161,7 +161,7 @@ angular
 			4: 'advertisement_price', 
 			5: 'advertisement_image', 
 			6: 'advertisement_url', 
-			7: 'last_change_timestamp'
+			7: 'advertisement_last_change_timestamp'
 				}
 		)
 		
@@ -174,7 +174,7 @@ angular
 			3: 'blog_content', 
 			4: 'blog_image', 
 			5: 'blog_url', 
-			6: 'last_change_timestamp'
+			6: 'blog_last_change_timestamp'
 				}
 		)
 		

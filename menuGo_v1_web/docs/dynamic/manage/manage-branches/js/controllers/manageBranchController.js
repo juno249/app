@@ -61,7 +61,7 @@ function manageBranchController(
 			branch_address_postalcode: 'Address - postalcode', 
 			branch_address_country: 'Address - country', 
 			branch_hotline: 'Hotline', 
-			last_change_timestamp: 'Last change timestamp'
+			branch_last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			branch_id: 'branchId', 

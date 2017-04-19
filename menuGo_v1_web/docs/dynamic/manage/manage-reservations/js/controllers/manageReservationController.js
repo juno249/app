@@ -70,7 +70,7 @@ function manageReservationController(
 			reservation_service_time: 'Service time', 
 			reservation_status: 'Status', 
 			reservation_status_change_timestamp: 'Status change timestamp', 
-			last_change_timestamp: 'Last change timestamp'
+			reservation_last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			reservation_id: 'reservationId', 

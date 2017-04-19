@@ -147,7 +147,7 @@ function modalOrderController(
 				
 				if(!(null == data.order_status)){	data[0].order_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data[0].last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data[0].order_last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				orderService.setCompanyName(vm.orderSnapshot.companyName);
 				orderService.setBranchName(vm.orderSnapshot.branchName);

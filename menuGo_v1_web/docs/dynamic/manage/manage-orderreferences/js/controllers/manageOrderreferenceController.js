@@ -66,7 +66,7 @@ function manageOrderreferenceController(
 			table_id: 'Table Id', 
 			orderreference_status: 'Status', 
 			orderreference_status_change_timestamp: 'Status change timestamp', 
-			last_change_timestamp: 'Last change timestamp'
+			orderreference_last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			orderreference_id: 'orderreferenceId', 

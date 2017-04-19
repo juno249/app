@@ -59,7 +59,7 @@ function manageMenuitemController(
 			menuitem_price: 'Price', 
 			menuitem_featured: 'Featured', 
 			menuitem_image: 'Image', 
-			last_change_timestamp: 'Last change timestamp'
+			menuitem_last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			menuitem_id: 'menuitemId', 

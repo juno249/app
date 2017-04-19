@@ -64,7 +64,7 @@ function manageTableController(
 			table_capacity: 'Capacity', 
 			table_status: 'Status', 
 			table_status_change_timestamp: 'Status change timestamp', 
-			last_change_timestamp: 'Last change timestamp'
+			table_last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			table_id: 'tableId', 

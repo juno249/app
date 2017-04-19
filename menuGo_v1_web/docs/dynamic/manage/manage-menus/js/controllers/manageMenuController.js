@@ -56,7 +56,7 @@ function manageMenuController(
 			company_name: 'Company name', 
 			menu_desc: 'Description', 
 			menu_image: 'Image', 
-			last_change_timestamp: 'Last change timestamp'
+			menu_last_change_timestamp: 'Last change timestamp'
 				};
 	vm.dbColumn2Dom = {
 			menu_id: 'menuId', 

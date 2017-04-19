@@ -165,7 +165,7 @@ function modalReservationController(
 				
 				if(!(null == data.reservation_status)){	data[0].reservation_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data[0].last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data[0].reservation_last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				reservationService.setCompanyName(vm.reservationSnapshot.companyName);
 				reservationService.setBranchName(vm.reservationSnapshot.branchName);

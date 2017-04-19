@@ -146,7 +146,7 @@ function modalTableController(
 				
 				if(!(null == data.table_status)){	data[0].table_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				}
-				data[0].last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+				data[0].table_last_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
 				
 				tableService.setCompanyName(vm.tableSnapshot.companyName);
 				tableService.setBranchName(vm.tableSnapshot.branchName);
