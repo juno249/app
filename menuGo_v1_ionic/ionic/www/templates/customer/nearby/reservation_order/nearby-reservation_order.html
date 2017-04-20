@@ -186,7 +186,8 @@
 				<button 
 					class="button button-positive button-small child-content-center font-family-1-size-small" 
 					id="reserveBtn" 
-					name="reserveBtn">
+					name="reserveBtn" 
+					ng-if="keys(nearbyReservationOrderController.user.reservationOrders).length > 0">
 					Reserve
 				</button>
 				<!--  *************** 
