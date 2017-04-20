@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_birthday_month VARCHAR(10), 
  	customer_birthday_date INT, 
  	customer_birthday_year INT, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	customer_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(customer_username)
  	);
  	
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.companies(
  	company_desc VARCHAR(500) NOT NULL, 
  	company_category VARCHAR(30) NOT NULL, 
  	company_logo VARCHAR(500) NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	company_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(company_name)
  	);
  	
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.branches(
  	branch_address_postalcode VARCHAR(30) NOT NULL, 
  	branch_address_country VARCHAR(30) NOT NULL, 
  	branch_hotline VARCHAR(10) NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	branch_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(branch_id), 
  	UNIQUE(branch_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.menus(
  	company_name VARCHAR(30) NOT NULL, 
  	menu_desc VARCHAR(500) NOT NULL, 
  	menu_image VARCHAR(1000) NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	menu_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(menu_id), 
  	UNIQUE(menu_name, company_name), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.tables(
  	table_capacity INT NOT NULL, 
  	table_status VARCHAR(30), 
  	table_status_change_timestamp DATETIME NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	table_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(table_id), 
  	UNIQUE(table_number, branch_id), 
  	FOREIGN KEY(branch_id) REFERENCES ziplogic.branches(branch_id)
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.menuitems(
  	menuitem_price DOUBLE NOT NULL, 
  	menuitem_featured BOOLEAN NOT NULL, 
  	menuitem_image VARCHAR(500) NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	menuitem_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(menuitem_id), 
  	UNIQUE(menuitem_code, menu_id), 
 	FOREIGN KEY(menu_id) REFERENCES ziplogic.menus(menu_id)
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.orderreferences(
 	table_id INT NOT NULL, 
 	orderreference_status VARCHAR(30) NOT NULL, 
 	orderreference_status_change_timestamp DATETIME NOT NULL, 
-	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+	orderreference_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(orderreference_id), 
 	UNIQUE(orderreference_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.orders(
 	orderreference_code VARCHAR(40) NOT NULL, 
 	order_status VARCHAR(30) NOT NULL, 
 	order_status_change_timestamp DATETIME NOT NULL, 
-	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+	order_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(order_id), 
 	FOREIGN KEY(menuitem_id) REFERENCES ziplogic.menuitems(menuitem_id), 
 	FOREIGN KEY(orderreference_code) REFERENCES ziplogic.orderreferences(orderreference_code)
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.reservations(
 	reservation_service_time DATETIME NOT NULL, 
 	reservation_status VARCHAR(30) NOT NULL, 
 	reservation_status_change_timestamp DATETIME NOT NULL, 
-	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+	reservation_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(reservation_id), 
 	UNIQUE(reservation_code), 
 	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers_companies_branches(
  	customer_username VARCHAR(30) NOT NULL, 
  	company_name VARCHAR(30) NOT NULL, 
  	branch_id INT NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	customerCompanyBranch_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(customer_username), 
  	FOREIGN KEY(customer_username) REFERENCES ziplogic.customers(customer_username), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name), 
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.advertisements(
  	advertisement_price DOUBLE NOT NULL, 
  	advertisement_image VARCHAR(500) NOT NULL, 
  	advertisement_url VARCHAR(500) NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	advertisement_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
  	PRIMARY KEY(advertisement_id), 
  	FOREIGN KEY(company_name) REFERENCES ziplogic.companies(company_name)
  	);
@@ -178,6 +178,6 @@ CREATE TABLE IF NOT EXISTS ziplogic.blogs(
  	blog_content VARCHAR(1000) NOT NULL, 
  	blog_image VARCHAR(500) NOT NULL, 
  	blog_url VARCHAR(500) NOT NULL, 
- 	last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	blog_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
 	PRIMARY KEY(blog_id)
 	);
