@@ -208,7 +208,7 @@ function marketingService(
 		var deferred = $q.defer();
 		var httpConfig = {	method: 'GET'	};
 		
-		switch(marketingServiceObj.getOptions[getOption]){
+		switch(marketingServiceObj.getOptionsBlogs[getOption]){
 		case 'getBlogs':
 			httpConfig['url'] = API_BASE_URL + '/blogs';
 			break;

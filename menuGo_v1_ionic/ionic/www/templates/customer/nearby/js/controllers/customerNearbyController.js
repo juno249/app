@@ -97,7 +97,7 @@ function customerNearbyController(
 	}
 	
 	function toStringAddress(branch){
-		branchService.setBranch(branch);
+		branchService.setBranches(branch);
 		
 		return branchService.toStringAddress();
 		}

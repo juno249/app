@@ -216,7 +216,7 @@ function branchService(
 		const INDEX_START_ADDRESS = 3;
 		const INDEX_END_ADDRESS = 9;
 		
-		var branch = branchServiceObj.branch;
+		var branch = branchServiceObj.branches;
 		var branchLocArray = [];
 		var returnStr = '';
 		

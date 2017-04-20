@@ -75,7 +75,7 @@ function nearbyReservationMenuController(
 		}
 	
 	function toStringAddress(){
-		branchService.setBranch(vm.branch);
+		branchService.setBranches(vm.branch);
 		
 		return branchService.toStringAddress();
 		}
