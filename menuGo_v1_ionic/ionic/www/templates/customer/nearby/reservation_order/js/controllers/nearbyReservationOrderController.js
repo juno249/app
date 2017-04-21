@@ -33,6 +33,8 @@ function nearbyReservationOrderController(
 	vm.remReservationOrder = remReservationOrder;
 	//controller_method
 	vm.getTotalCost = getTotalCost;
+	//controller_method
+	vm.postReservation = postReservation;
 	
 	function remReservationOrder(menuitem){
 		delete vm.user.reservationOrders[menuitem.menuitem_code];
@@ -55,6 +57,15 @@ function nearbyReservationOrderController(
 					vm.totalCost += v.quantity * v.menuitem_price;
 					}
 				);
+		}
+	
+	function postReservation(){
+		var reservation = vm.user.reservation;
+		
+		if(!(null == reservation.eta)){	reservation.eta = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+		}
+		if(!(null == reservation.serviceTime)){	reservation.serviceTime = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
+		}
 		}
 	
 	$scope.$watchCollection(
