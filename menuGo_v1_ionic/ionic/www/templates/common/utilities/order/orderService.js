@@ -102,42 +102,42 @@ function orderService(
 		var httpConfig = {	method: 'GET'	};
 		
 		switch(orderServiceObj.getOptions[getOption]){
-			case 'getCompanyBranchOrders':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders';
-				break;
-			case 'getCompanyBranchOrder':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/' + orderServiceObj.orderId;
-				break;
-			case 'getCompanyBranchOrdersOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/status/' + getParams['OrderStatus'];
-				break;
-			case 'getCompanyBranchOrdersNotOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/status_not/' + getParams['OrderStatus'];
-				break;
-			case 'getCompanyBranchTableOrders':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders';
-				break;
-			case 'getCompanyBranchTableOrder':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId;
-				break;
-			case 'getCompanyBranchTableOrdersOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/status/' + getParams['OrderStatus'];
-				break;
-			case 'getCompanyBranchTableOrdersNotOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/status_not/' + getParams['OrderStatus'];
-				break;
-			case 'getCompanyBranchTableOrderreferenceOrders':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders';
-				break;
-			case 'getCompanyBranchTableOrderreferenceOrder':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/' + orderServiceObj.orderId;
-				break;
-			case 'getCompanyBranchTableOrderreferenceOrdersOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status/' + getParams['OrderStatus'];
-				break;
-			case 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus':
-				httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status_not/' + getParams['OrderStatus'];
-				break;
+		case 'getCompanyBranchOrders':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders';
+			break;
+		case 'getCompanyBranchOrder':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/' + orderServiceObj.orderId;
+			break;
+		case 'getCompanyBranchOrdersOrderStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/status/' + getParams['OrderStatus'];
+			break;
+		case 'getCompanyBranchOrdersNotOrderStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/orders/status_not/' + getParams['OrderStatus'];
+			break;
+		case 'getCompanyBranchTableOrders':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders';
+			break;
+		case 'getCompanyBranchTableOrder':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/' + orderServiceObj.orderId;
+			break;
+		case 'getCompanyBranchTableOrdersOrderStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/status/' + getParams['OrderStatus'];
+			break;
+		case 'getCompanyBranchTableOrdersNotOrderStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orders/status_not/' + getParams['OrderStatus'];
+			break;
+		case 'getCompanyBranchTableOrderreferenceOrders':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders';
+			break;
+		case 'getCompanyBranchTableOrderreferenceOrder':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/' + orderServiceObj.orderId;
+			break;
+		case 'getCompanyBranchTableOrderreferenceOrdersOrderStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status/' + getParams['OrderStatus'];
+			break;
+		case 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus':
+			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status_not/' + getParams['OrderStatus'];
+			break;
 			default: break;
 			}
 		
