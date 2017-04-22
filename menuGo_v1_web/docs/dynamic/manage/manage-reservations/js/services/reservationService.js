@@ -64,6 +64,7 @@ function reservationService(
 					}, 
 					fetchReservations: fetchReservations, 
 					addReservation: addReservation, 
+					addReservationValidate: addReservationValidate, 
 					updateReservation: updateReservation, 
 					deleteReservation: deleteReservation
 					}
@@ -212,6 +213,53 @@ function reservationService(
 		function addReservationFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
+		}
+	
+	function addReservationValidate(reservations){
+		var isReservationValid = true;
+		
+		if(!(null == reservations)){
+			angular.forEach(
+					reservations, 
+					function(
+							v, 
+							k
+							){
+						switch(k){
+						case 'customer_username':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+						case 'reservation_diners_count':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+						case 'reservation_eta':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+						case 'reservation_payment_mode':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+						case 'reservation_service_time':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+						case 'reservation_status':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+						case 'reservation_status_change_timestamp':
+							if(null == v){	isReservationValid = isReservationValid && false;
+							}
+							break;
+							}
+						}
+					);
+			} else {	isReservationValid = isReservationValid && false;
+			}
+		return isReservationValid;
 		}
 	
 	function updateReservation(reservation){

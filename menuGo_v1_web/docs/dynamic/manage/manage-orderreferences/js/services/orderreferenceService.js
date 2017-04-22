@@ -57,6 +57,7 @@ function orderreferenceService(
 			}, 
 			fetchOrderreferences: fetchOrderreferences, 
 			addOrderreference: addOrderreference, 
+			addOrderreferenceValidate: addOrderreferenceValidate, 
 			updateOrderreference: updateOrderreference, 
 			deleteOrderreference: deleteOrderreference
 			};
@@ -189,6 +190,41 @@ function orderreferenceService(
 		function addOrderreferenceFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
+		}
+	
+	function addOrderreferenceValidate(orderreferences){
+		var isOrderreferenceValid = true;
+		
+		if(!(null == orderreferences)){
+			angular.forEach(
+					orderreferences, 
+					function(
+							v, 
+							k
+							){
+						switch(k){
+						case 'customer_username':
+							if(null == v){	isOrderreferenceValid = isOrderreferenceValid && false;
+							}
+							break;
+						case 'table_id':
+							if(null == v){	isOrderreferenceValid = isOrderreferenceValid && false;
+							}
+							break;
+						case 'orderreference_status':
+							if(null == v){	isOrderreferenceValid = isOrderreferenceValid && false;
+							}
+							break;
+						case 'orderreference_status_change_timestamp':
+							if(null == v){	isOrderreferenceValid = isOrderreferenceValid && false;
+							}
+							break;
+							}
+						}
+					);
+			} else {	isOrderreferenceValid = isOrderreferenceValid && false;
+			}
+		return isOrderreferenceValid;
 		}
 	
 	function updateOrderreference(orderreference){

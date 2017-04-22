@@ -6,17 +6,26 @@ angular
 		);
 
 nearbyReservationOrderController.$inject = [
+                                            'ORDERREFERENCE_STATUS', 
                                             'PAYMENT_MODES', 
+                                            'RESERVATION_STATUS', 
                                             '$localStorage', 
-                                            '$scope'
+                                            '$scope', 
+                                            'orderreferenceService', 
+                                            'reservationService'
                                             ];
 
 function nearbyReservationOrderController(
+		ORDERREFERENCE_STATUS, 
 		PAYMENT_MODES, 
+		RESERVATION_STATUS, 
 		$localStorage, 
-		$scope
+		$scope, 
+		orderreferenceService, 
+		reservationService
 		){
 	const USER_KEY = 'User';
+	const RESERVATION_TABLE_ID = 9999999;
 	
 	var vm = this;
 	vm.paymentModeOptions = PAYMENT_MODES;
@@ -60,12 +69,22 @@ function nearbyReservationOrderController(
 		}
 	
 	function postReservation(){
-		var reservation = vm.user.reservation;
+		var reservation = {
+				customer_username: vm.user.username, 
+				reservation_diners_count: vm.user.reservation.dinersCount, 
+				reservation_eta: moment(vm.user.reservation.eta).format('YYYY-MM-DD h:mm:ss'), 
+				reservation_payment_mode: vm.user.reservation.paymentMode, 
+				reservation_service_time: moment(vm.user.reservation.serviceTime).format('YYYY-MM-DD h:mm:ss'), 
+				reservation_status: RESERVATION_STATUS.sent, 
+				reservation_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+				};
 		
-		if(!(null == reservation.eta)){	reservation.eta = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
-		}
-		if(!(null == reservation.serviceTime)){	reservation.serviceTime = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
-		}
+		var orderreference = {
+				customer_username: vm.user.username, 
+				table_id: RESERVATION_TABLE_ID, 
+				orderreference_status: ORDERREFERENCE_STATUS.sent, 
+				orderreference_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+				};
 		}
 	
 	$scope.$watchCollection(
