@@ -6,6 +6,7 @@ angular
 		);
 
 nearbyReservationOrderController.$inject = [
+                                            'ORDER_STATUS', 
                                             'ORDERREFERENCE_STATUS', 
                                             'PAYMENT_MODES', 
                                             'RESERVATION_STATUS', 
@@ -16,6 +17,7 @@ nearbyReservationOrderController.$inject = [
                                             ];
 
 function nearbyReservationOrderController(
+		ORDER_STATUS, 
 		ORDERREFERENCE_STATUS, 
 		PAYMENT_MODES, 
 		RESERVATION_STATUS, 
@@ -85,6 +87,22 @@ function nearbyReservationOrderController(
 				orderreference_status: ORDERREFERENCE_STATUS.sent, 
 				orderreference_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
 				};
+		
+		var orders = [];
+		var order = {};
+		angular.forEach(
+				vm.user.reservationOrders, 
+				function(
+						v, 
+						k
+						){
+					order = {
+							menuitem_id: v.menuitem_id, 
+							order_status: ORDER_STATUS.sent, 
+							order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+							};
+					}
+				);
 		}
 	
 	$scope.$watchCollection(
