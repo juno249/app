@@ -37,7 +37,7 @@ function nearbyReservationMenuController(
 		vm.user = localStorage.getItem(USER_KEY);
 		vm.user = JSON.parse(vm.user);
 		
-		if(null == vm.user.reservationOrders){	vm.user.reservationOrders = {};
+		if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
 		}
 		}
 	
@@ -121,7 +121,7 @@ function nearbyReservationMenuController(
 		menu.quantity++;
 		menuitem.quantity++;
 		
-		vm.user.reservationOrders[menuitem.menuitem_code] = menuitem;
+		vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
 		localStorage.setItem(
 				USER_KEY, 
 				JSON.stringify(vm.user)
@@ -138,8 +138,8 @@ function nearbyReservationMenuController(
 		if(0 >= --menuitem.quantity){
 			menuitem.quantity = 0;
 			
-			delete vm.user.reservationOrders[menuitem.menuitem_code];
-		} else {	vm.user.reservationOrders[menuitem.menuitem_code] = menuitem;
+			delete vm.user.reservationOrder[menuitem.menuitem_code];
+		} else {	vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
 		}
 		
 		localStorage.setItem(
@@ -162,8 +162,8 @@ function nearbyReservationMenuController(
 									j, 
 									i
 									){
-								if(!(null == vm.user.reservationOrders[j.menuitem_code])){
-									j.quantity = vm.user.reservationOrders[j.menuitem_code].quantity;
+								if(!(null == vm.user.reservationOrder[j.menuitem_code])){
+									j.quantity = vm.user.reservationOrder[j.menuitem_code].quantity;
 									v.quantity += j.quantity;
 								} else {	j.quantity = 0;
 								}
@@ -202,13 +202,13 @@ function nearbyReservationMenuController(
 				vm.user = localStorage.getItem(USER_KEY);
 				vm.user = JSON.parse(vm.user);
 				
-				if(null == vm.user.reservationOrders){	vm.user.reservationOrders = {};
+				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
 				}
 				}
 			);
 	
 	$scope.$watchCollection(
-			function(){	return vm.user.reservationOrders;
+			function(){	return vm.user.reservationOrder;
 			}, 
 			function(){	synchronize();
 			}

@@ -220,6 +220,14 @@ class reservationOrderreferenceOrderController extends Controller
 			}
 		}
 		
-		return reservationOrderreferenceOrderConstants::dbAddSuccessMsg;
+		$reservationsOrderreferencesOrdersResponse->setStatusCode(
+				200, 
+				reservationOrderreferenceOrderConstants::dbAddSuccessMsg
+				);
+		$reservationOrderreferenceCode = array(
+				'reservationCode' => $reservationCode, 
+				'orderreferenceCode' => $orderreferenceCode
+		);
+		return $reservationOrderreferenceCode;
 	}
 }

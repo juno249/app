@@ -13,7 +13,8 @@ nearbyReservationOrderController.$inject = [
                                             '$localStorage', 
                                             '$scope', 
                                             'orderreferenceService', 
-                                            'reservationService'
+                                            'reservationService', 
+                                            'reservationOrderreferenceOrderService'
                                             ];
 
 function nearbyReservationOrderController(
@@ -24,10 +25,11 @@ function nearbyReservationOrderController(
 		$localStorage, 
 		$scope, 
 		orderreferenceService, 
-		reservationService
+		reservationService, 
+		reservationOrderreferenceOrderService
 		){
 	const USER_KEY = 'User';
-	const RESERVATION_TABLE_ID = 9999999;
+	const RESERVATION_TABLE_ID = 999999;
 	
 	var vm = this;
 	vm.paymentModeOptions = PAYMENT_MODES;
@@ -48,7 +50,7 @@ function nearbyReservationOrderController(
 	vm.postReservation = postReservation;
 	
 	function remReservationOrder(menuitem){
-		delete vm.user.reservationOrders[menuitem.menuitem_code];
+		delete vm.user.reservationOrder[menuitem.menuitem_code];
 		
 		localStorage.setItem(
 				USER_KEY, 
@@ -60,7 +62,7 @@ function nearbyReservationOrderController(
 		vm.totalCost = 0;
 		
 		angular.forEach(
-				vm.user.reservationOrders, 
+				vm.user.reservationOrder, 
 				function(
 						v, 
 						k
@@ -71,6 +73,8 @@ function nearbyReservationOrderController(
 		}
 	
 	function postReservation(){
+		var transParams = [];
+		var transParam = {};
 		var reservation = {
 				customer_username: vm.user.username, 
 				reservation_diners_count: vm.user.reservation.dinersCount, 
@@ -91,22 +95,52 @@ function nearbyReservationOrderController(
 		var orders = [];
 		var order = {};
 		angular.forEach(
-				vm.user.reservationOrders, 
+				vm.user.reservationOrder, 
 				function(
 						v, 
 						k
 						){
 					order = {
 							menuitem_id: v.menuitem_id, 
-							order_status: ORDER_STATUS.sent, 
+							order_status: ORDER_STATUS.queue, 
 							order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
 							};
+					orders.push(order);
 					}
 				);
+		
+		if(
+				reservationService.addReservationValidate(reservation) &&
+				orderreferenceService.addOrderreferenceValidate(orderreference)
+				){
+			transParam.reservation = reservation;
+			transParam.orderreference = orderreference;
+			transParam.order = orders;
+			transParams.push(transParam);
+			
+			reservationOrderreferenceOrderService.addReservationOrderreferenceOrder(transParams)
+			.then(addReservationOrderreferenceOrderSuccessCallback)
+			.catch(addReservationOrderreferenceOrderFailedCallback);
+			}
+		
+		function addReservationOrderreferenceOrderSuccessCallback(response){
+			var responseData = response.data;
+			
+			reservation.reservation_code = responseData.reservationCode;
+			orderreference.orderreference_code = responseData.orderreferenceCode;
+			
+			vm.user.reservationOrder = {};
+			vm.user.reservation = reservation;
+			vm.user.orderreference = orderreference;
+			vm.user.order = orders;
+			}
+		
+		function addReservationOrderreferenceOrderFailedCallback(responseError){	//do something on failure
+		}
 		}
 	
 	$scope.$watchCollection(
-			function(){	return vm.user.reservationOrders;
+			function(){	return vm.user.reservationOrder;
 			}, 
 			function(){	getTotalCost();
 			}

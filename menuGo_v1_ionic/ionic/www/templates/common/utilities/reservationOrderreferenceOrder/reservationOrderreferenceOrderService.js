@@ -6,11 +6,13 @@ angular
 		);
 
 reservationOrderreferenceOrderService.$inject = [
+                                                 'API_BASE_URL', 
                                                  '$http', 
                                                  '$q'
                                                  ];
 
 function reservationOrderreferenceOrderService(
+		API_BASE_URL, 
 		$http, 
 		$q
 		){

@@ -20,7 +20,7 @@
 				class="orders-container list">
 				<div 
 					class="item" 
-					ng-repeat="(k, v) in nearbyReservationOrderController.user.reservationOrders">
+					ng-repeat="(k, v) in nearbyReservationOrderController.user.reservationOrder">
 					<span 
 						class="font-family-1-size-medium">
 						<underline><b>{{v.menuitem_name}}</b><underline>
@@ -52,7 +52,7 @@
 			</div>
 			<div 
 				class="child-content-right item" 
-				ng-if="keys(nearbyReservationOrderController.user.reservationOrders).length > 0">
+				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				<span 
 					class="font-family-2-size-medium">
 					Total: <underline><b>&#8369{{nearbyReservationOrderController.totalCost | number: 2}}</b></underline>
@@ -60,7 +60,7 @@
 			</div>
 			<div 
 				class="child-content-center container-header item item-divider" 
-				ng-if="keys(nearbyReservationOrderController.user.reservationOrders).length > 0">
+				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				<span 
 					class="font-family-1-size-medium">
 					Payment Details
@@ -68,7 +68,7 @@
 			</div>
 			<div 
 				class="payment-container list" 
-				ng-if="keys(nearbyReservationOrderController.user.reservationOrders).length > 0">
+				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				<div 
 					class="row">
 					<div 
@@ -188,7 +188,7 @@
 					id="reserveBtn" 
 					name="reserveBtn" 
 					ng-click="nearbyReservationOrderController.postReservation();" 
-					ng-if="keys(nearbyReservationOrderController.user.reservationOrders).length > 0">
+					ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 					Reserve
 				</button>
 				<!--  *************** 
