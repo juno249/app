@@ -7,6 +7,7 @@ angular
 
 reservationOrderreferenceOrderService.$inject = [
                                                  'API_BASE_URL', 
+                                                 'ORDERREFERENCE_STATUS', 
                                                  'RESERVATION_STATUS', 
                                                  '$http', 
                                                  '$q', 
@@ -17,6 +18,7 @@ reservationOrderreferenceOrderService.$inject = [
 
 function reservationOrderreferenceOrderService(
 		API_BASE_URL, 
+		ORDERREFERENCE_STATUS, 
 		RESERVATION_STATUS, 
 		$http, 
 		$q, 
@@ -41,9 +43,9 @@ function reservationOrderreferenceOrderService(
 	
 	function getReservationsOrderreferencesOrders(){	return reservationOrderreferenceOrderServiceObj.reservationsOrderreferencesOrders;
 	}
-	function setReservationsOrderreferencesOrders(reservationsOrderreferencesOrders){	reservationOrderreferenceOrderServiceObj.reservationsOrderreferencesOrders = reservationsOrderreferencesOrders;
-	}
 	function getCustomerUsername(){	return reservationOrderreferenceOrderServiceObj.customerUsername;
+	}
+	function setReservationsOrderreferencesOrders(reservationsOrderreferencesOrders){	reservationOrderreferenceOrderServiceObj.reservationsOrderreferencesOrders = reservationsOrderreferencesOrders;
 	}
 	function setCustomerUsername(customerUsername){	return reservationOrderreferenceOrderServiceObj.customerUsername = customerUsername;
 	}
@@ -69,7 +71,7 @@ function reservationOrderreferenceOrderService(
 			orderreferenceService.setCustomerUsername(reservationOrderreferenceOrderServiceObj.customerUsername);
 			orderreferenceService.fetchOrderreferences(	//getCustomerOrderreferencesNotOrderreferenceStatus
 					12, 
-					{	ReservationStatus: RESERVATION_STATUS.done	}
+					{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
 					)
 					.then(fetchOrderreferencesSuccessCallback)
 					.catch(fetchOrderreferencesFailedCallback);

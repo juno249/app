@@ -11,7 +11,8 @@ customerMenuController.$inject = [
 	'branchService', 
 	'companyService', 
 	'orderService', 
-	'reservationService'
+	'reservationService', 
+	'reservationOrderreferenceOrderService'
 	];
 
 function customerMenuController(
@@ -20,7 +21,8 @@ function customerMenuController(
 		branchService, 
 		companyService, 
 		orderService, 
-		reservationService
+		reservationService, 
+		reservationOrderreferenceOrderService
 		){
 	const USER_KEY = 'User';
 	//dummy data - test (start)
