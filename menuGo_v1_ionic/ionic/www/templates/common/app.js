@@ -94,7 +94,20 @@ function doRouteConfig(
 																	}
 													}
 													}
-													);
+													)
+													.state(
+															'customer.menu', 
+															{
+																url: '/menu', 
+																views: {
+																	'customer-menu': {
+																		templateUrl: 'templates/customer/menu/customer-menu.html', 
+																		controller: 'customerMenuController', 
+																		controllerAs: 'customerMenuController'
+																			}
+															}
+															}
+															);
 	
 	$urlRouterProvider
 	.otherwise('/');
