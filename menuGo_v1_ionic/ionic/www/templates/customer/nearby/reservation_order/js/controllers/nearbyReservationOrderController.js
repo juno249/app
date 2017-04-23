@@ -124,15 +124,16 @@ function nearbyReservationOrderController(
 			}
 		
 		function addReservationOrderreferenceOrderSuccessCallback(response){
-			var responseData = response.data;
+			reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
+			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 			
-			reservation.reservation_code = responseData.reservationCode;
-			orderreference.orderreference_code = responseData.orderreferenceCode;
+			function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+			}
 			
-			vm.user.reservationOrder = {};
-			vm.user.reservation = reservation;
-			vm.user.orderreference = orderreference;
-			vm.user.order = orders;
+			function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
+			}
 			}
 		
 		function addReservationOrderreferenceOrderFailedCallback(responseError){	//do something on failure

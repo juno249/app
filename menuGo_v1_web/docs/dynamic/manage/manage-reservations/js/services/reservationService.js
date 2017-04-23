@@ -188,7 +188,7 @@ function reservationService(
 				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){	reservationsDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
 				}
 				
-				var key = responseData[i][RESERVATIONS_DB_FIELDS[0]]; //reservation_code
+				var key = responseData[i][RESERVATIONS_DB_FIELDS[1]]; //reservation_code
 				reservationServiceObj.reservations[key] = reservationsDetails;
 				}
 			}

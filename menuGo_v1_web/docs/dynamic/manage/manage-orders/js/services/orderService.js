@@ -61,7 +61,8 @@ function orderService(
 				9: 'getCompanyBranchTableOrderreferenceOrders', 
 				10: 'getCompanyBranchTableOrderreferenceOrder', 
 				11: 'getCompanyBranchTableOrderreferenceOrdersOrderStatus', 
-				12: 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus'
+				12: 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus', 
+				13: 'getByQuery'
 					}, 
 					fetchOrders: fetchOrders, 
 					addOrder: addOrder, 
@@ -138,6 +139,8 @@ function orderService(
 		case 'getCompanyBranchTableOrderreferenceOrdersNotOrderStatus':
 			httpConfig['url'] = API_BASE_URL + '/companies/' + orderServiceObj.companyName + '/branches/' + orderServiceObj.branchName + '/tables/' + orderServiceObj.tableNumber + '/orderreferences/' + orderServiceObj.orderreferenceCode + '/orders/status_not/' + getParams['OrderStatus'];
 			break;
+		case 'getByQuery':
+			httpConfig['url'] = API_BASE_URL + '/query/orders' + getParams['queryString'];
 			default: break;
 			}
 		
