@@ -104,7 +104,7 @@ function reservationOrderreferenceOrderService(
 					localStorage.removeItem(ORDERS_KEY);
 					
 					deferred.resolve(reservationsOrderreferencesOrders);
-				}
+					}
 				
 				function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);
 				}
