@@ -7,33 +7,34 @@ angular
 
 customerMenuController.$inject = [
 	'RESERVATION_STATUS', 
-	'$stateParams', 
-	'branchService', 
-	'companyService', 
-	'orderService', 
-	'reservationService', 
-	'reservationOrderreferenceOrderService'
+	'dataService'
 	];
 
 function customerMenuController(
 		RESERVATION_STATUS, 
-		$stateParams, 
-		branchService, 
-		companyService, 
-		orderService, 
-		reservationService, 
-		reservationOrderreferenceOrderService
+		dataService
 		){
 	const USER_KEY = 'User';
-	//dummy data - test (start)
-	const QR_COMPANY_NAME = "Max's";
-	const QR_BRANCH_NAME = 'Ermita';
-	//dummy data - test (end)
+	const COMPANIES_KEY = 'Companies';
 	
 	var vm = this;
+	//dummy data - test (start)
+	vm.companyName = "Max's";
+	vm.branchName = 'Ermita';
+	//dummy data - test (end)
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
-		vm.user = JSON.parse(vm.user);
+	if(null == localStorage.getItem(COMPANIES_KEY)){	dataService.fetchCompanies();
+	} else {
+		vm.companies = localStorage.getItem(COMPANIES_KEY);
+		vm.companies = JSON.parse(vm.companies);
 		}
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(COMPANIES_KEY);
+			}, 
+			function(){
+				vm.companies = localStorage.getItem(COMPANIES_KEY);
+				vm.companies = JSON.parse(vm.companies);
+				}
+			);
 	}
