@@ -8,50 +8,50 @@ div.nearby-container div.search-result-container{
 	position: absolute;
 }
 
-div.nearby-container div.categories-container, 
-div.nearby-container div.companies-branches-container div#companies-name-container, 
+div.nearby-container div.category-container, 
+div.nearby-container div.company-branch-container div#company-name-container, 
 div.nearby-container div.search-container div.item{
 	background-color: #303030;
 	color: #f0f0f0;
 }
 
-div.nearby-container div.categories-container button{
+div.nearby-container div.category-container button{
 	margin: 10px;
 	
 	min-width: 100px;
 }
 
-div.nearby-container div.companies-branches-container div#branches-header, 
-div.nearby-container div.companies-branches-container div#featured-menus-header, 
-div.nearby-container div.companies-branches-container div#featured-menus-slidebox, 
+div.nearby-container div.company-branch-container div#branch-header, 
+div.nearby-container div.company-branch-container div#featured-menu-header, 
+div.nearby-container div.company-branch-container div#featured-menu-slidebox, 
 div.nearby-container div.search-container label, 
 div.nearby-container div.search-result-container ion-item{
 	padding-bottom: 5px;
 	padding-top: 5px;
 }
 
-div.nearby-container div.companies-branches-container div#companies-logo-image-container{
+div.nearby-container div.company-branch-container div#company-logo-image-container{
 	height: 100px;
 }
 
-div.nearby-container div.companies-branches-container div#companies-logo-image-container img, 
+div.nearby-container div.company-branch-container div#company-logo-image-container img, 
 div.nearby-container div.map-container ng-map#nearby-map{
 	height: 100%;
 }
 
-div.nearby-container div.companies-branches-container div#featured-menus-container{
+div.nearby-container div.company-branch-container div#featured-menu-container{
 	line-height: 13px;
 	
 	white-space: normal;
 }
 
-div.nearby-container div.companies-branches-container div#featured-menus-container img#featured-menus-image{
+div.nearby-container div.company-branch-container div#featured-menu-container img#featured-menu-image{
 	border-radius: 20px;
 	
 	object-fit: cover;
 }
 
-div.nearby-container div.companies-branches-container ion-list{
+div.nearby-container div.company-branch-container ion-list{
 	padding: 0px;
 }
 

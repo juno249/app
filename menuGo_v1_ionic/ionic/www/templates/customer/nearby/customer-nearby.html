@@ -77,7 +77,7 @@
 						*************** -->
 			</div>
 			<div 
-				class="categories-container child-content-center">
+				class="category-container child-content-center">
 				<button 
 					class="button button-assertive button-small font-family-1-size-small" 
 					ng-click="customerNearbyController.setCategory(undefined)">
@@ -98,80 +98,80 @@
 				<b>RESTAURANTS</b>
 			</div>
 			<div 
-				class="card companies-branches-container" 
+				class="card company-branch-container" 
 				ng-repeat="(k, v) in customerNearbyController.companies" 
 				ng-show="(customerNearbyController.category == undefined) || (customerNearbyController.category == v.company_category)">
 				<!--  *************** 
-						companies-name-container (start)
+						company-name-container (start)
 						*************** -->
 				<div 
 					class="child-content-center font-family-1-size-medium item item-divider" 
-					id="companies-name-container" 
-					name="companies-name-container">
+					id="company-name-container" 
+					name="company-name-container">
 					{{v.company_name}}
 				</div>
 				<!--  *************** 
-						companies-name-container (end)
+						company-name-container (end)
 						*************** -->
 				
 				<!--  *************** 
-						companies-logo-image-container (start)
+						company-logo-image-container (start)
 						*************** -->
 				<div 
 					class="child-content-center item" 
-					id="companies-logo-image-container" 
-					name="companies-logo-image-container">
+					id="company-logo-image-container" 
+					name="company-logo-image-container">
 					<img 
 						src={{v.company_logo}}>
 				</div>
 				<!--  *************** 
-						companies-logo-image-container (end)
+						company-logo-image-container (end)
 						*************** -->
 				
 				<!--  *************** 
-						featured-menus-header (start)
+						featured-menu-header (start)
 						*************** -->
 				<div 
 					class="child-content-center font-family-1-size-small item" 
-					id="featured-menus-header" 
-					name="featured-menus-header">
+					id="featured-menu-header" 
+					name="featured-menu-header">
 					<b>Featured Menus</b>
 				</div>
 				<!--  *************** 
-						featured-menus-header (end)
+						featured-menu-header (end)
 						*************** -->
 				
 				<!--  *************** 
-						featured-menus-slidebox (start)
+						featured-menu-slidebox (start)
 						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
 					class="item" 
-					delegate-handle="featured-menus-slidebox" 
+					delegate-handle="featured-menu-slidebox" 
 					direction="x" 
 					does-continue="true" 
-					id="featured-menus-slidebox" 
-					name="featured-menus-slidebox" 
+					id="featured-menu-slidebox" 
+					name="featured-menu-slidebox" 
 					ng-if="keys(customerNearbyController.companiesMenuitems[k]).length > 0" 
 					show-pager="false">
 					<ion-slide 
 						ng-repeat="(i, j) in customerNearbyController.companiesMenuitems[k]">
 						<!--  *************** 
-								featured-menus-container (start)
+								featured-menu-container (start)
 								*************** -->
 						<div 
-							id="featured-menus-container" 
-							name="featured-menus-container" 
+							id="featured-menu-container" 
+							name="featured-menu-container" 
 							class="item item-thumbnail-left">
 							<!--  *************** 
-									featured-menus-image (start)
+									featured-menu-image (start)
 									*************** -->
 							<img 
-								id="featured-menus-image" 
-								name="featured-menus-image" 
+								id="featured-menu-image" 
+								name="featured-menu-image" 
 								src={{j.menuitem_image}}>
 							<!--  *************** 
-									featured-menus-image (end)
+									featured-menu-image (end)
 									*************** -->
 							<span 
 								class="font-family-1-size-small">
@@ -183,25 +183,25 @@
 							</span>
 						</div>
 						<!--  *************** 
-								featured-menus-container (end)
+								featured-menu-container (end)
 								*************** -->
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 
-						featured-menus-slidebox (end)
+						featured-menu-slidebox (end)
 						*************** -->
 				
 				<!--  *************** 
-						branches-header (start)
+						branch-header (start)
 						*************** -->
 				<div 
 					class="child-content-center font-family-1-size-small item" 
-					id="branches-header" 
-					name="branches-header">
+					id="branch-header" 
+					name="branch-header">
 					<b>Branches</b>
 				</div>
 				<!--  *************** 
-						branches-header (end)
+						branch-header (end)
 						*************** -->
 						
 				<ion-list 

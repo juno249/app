@@ -35,7 +35,7 @@ function customerNearbyController(
 	$ionicHistory.clearHistory();
 	
 	const COMPANIES_KEY = 'Companies';
-	const DOM_FEATURED_MENUS_SLIDEBOX = 'featured-menus-slidebox';
+	const DOM_FEATURED_MENUS_SLIDEBOX = 'featured-menu-slidebox';
 	
 	var vm = this;
 	vm.mapConfig = {
