@@ -27,11 +27,11 @@ function nearbyReservationMenuController(
 	
 	var vm = this;
 	
-	if(null == localStorage.getItem(COMPANIES_KEY)){	dataService.fetchCompanies();
-	} else {
+	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-		}
+	} else {	dataService.fetchCompanies();
+	}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);

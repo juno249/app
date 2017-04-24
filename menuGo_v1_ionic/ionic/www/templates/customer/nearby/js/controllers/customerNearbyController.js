@@ -43,18 +43,18 @@ function customerNearbyController(
 				latitude: undefined, 
 				longitude: undefined
 				}, 
-			mapTypeControl: false, 
-			scaleControl: false, 
-			streetViewControl: false, 
-			zoom: 15, 
-			zoomControl: false
-			}
+				mapTypeControl: false, 
+				scaleControl: false, 
+				streetViewControl: false, 
+				zoom: 15, 
+				zoomControl: false
+				}
 	
-	if(null == localStorage.getItem(COMPANIES_KEY)){	dataService.fetchCompanies();
-	} else {
+	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-		}
+	} else {	dataService.fetchCompanies();
+	}
 	
 	//controller_method
 	vm.gotoState = gotoState;

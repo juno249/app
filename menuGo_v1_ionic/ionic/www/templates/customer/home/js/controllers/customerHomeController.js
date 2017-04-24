@@ -22,20 +22,20 @@ function customerHomeController(
 		$scope, 
 		$timeout
 		){
+	const MARKETING_KEY = 'Marketing';
 	const DOM_ADVERTISEMENTS_SLIDEBOX = 'advertisements-slidebox';
 	const DOM_BLOGS_SLIDEBOX = 'blogs-slidebox';
-	const MARKETING_KEY = 'Marketing';
 	
 	var vm = this;
 	
-	if(null == localStorage.getItem(MARKETING_KEY)){	dataService.fetchMarketing();
-	} else {
+	if(!(null == localStorage.getItem(MARKETING_KEY))){
 		vm.marketing = localStorage.getItem(MARKETING_KEY);
 		vm.marketing = JSON.parse(vm.marketing);
 		
 		vm.advertisements = vm.marketing.advertisements;
 		vm.blogs = vm.marketing.blogs;
-		}
+	} else {	dataService.fetchMarketing();
+	}
 	
 	$ionicHistory.clearHistory();
 	
