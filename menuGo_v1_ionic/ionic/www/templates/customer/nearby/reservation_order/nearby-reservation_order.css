@@ -14,19 +14,19 @@ div.reservation_order-container div.container-header{
 	color: #f0f0f0;
 }
 
-div.reservation_order-container div.orders-container{
+div.reservation_order-container div.order-container{
 	max-height: 300px;
 	
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
-div.reservation_order-container div.orders-container, 
+div.reservation_order-container div.order-container, 
 div.reservation_order-container div.payment-container{
 	margin-bottom: 0px;
 }
 
-div.reservation_order-container div.orders-container div.item{
+div.reservation_order-container div.order-container div.item{
 	padding: 5px 0px 5px 10px;
 }
 
