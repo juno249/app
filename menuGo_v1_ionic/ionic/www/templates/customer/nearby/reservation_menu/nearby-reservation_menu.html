@@ -17,7 +17,7 @@
 				</span>
 			</div>
 			<div 
-				class="company-details-container item item-thumbnail-left">
+				class="company-detail-container item item-thumbnail-left">
 				<img 
 					src={{nearbyReservationMenuController.company.company_logo}}>
 				<span 
@@ -43,7 +43,7 @@
 				class="list" 
 				ng-repeat="(k, v) in nearbyReservationMenuController.companyMenus">
 				<div 
-					class="menus-container" 
+					class="menu-container" 
 					ng-click="nearbyReservationMenuController.toggleVis(v);">
 					<i 
 						class="icon" 
@@ -55,7 +55,7 @@
 					</span>
 				</div>
 				<div 
-					class="menuitems-container" 
+					class="menuitem-container" 
 					ng-repeat="(i, j) in nearbyReservationMenuController.companyMenus[k].menuitems" 
 					ng-show="!v.isCompanyMenuHidden">
 					<div 
@@ -64,7 +64,7 @@
 								menuitem-image (start)
 								*************** -->
 						<img 
-							id="menuitems-image" 
+							id="menuitem-image" 
 							name="menuitem-image" 
 							src={{j.menuitem_image}}>
 						<!--  *************** 
@@ -75,7 +75,7 @@
 							<underline><b>{{j.menuitem_name}}</b></underline>
 						</span>
 						<div 
-							class='menuitems-desc-container'>
+							class='menuitem-desc-container'>
 							<span 
 								class="font-family-2-size-small">
 								{{j.menuitem_desc}}

@@ -9,14 +9,14 @@ button.back-button span.back-text{
 	font-size: 12px;
 }
 
-div.reservation_menu-container div.company-details-container div.branch-container, 
-div.reservation_menu-container div.menuitems-container div.menuitems-desc-container{
+div.reservation_menu-container div.company-detail-container div.branch-container, 
+div.reservation_menu-container div.menuitem-container div.menuitem-desc-container{
 	line-height: 13px;
 	
 	white-space: normal;
 }
 
-div.reservation_menu-container div.company-details-container img{
+div.reservation_menu-container div.company-detail-container img{
 	border-radius: 25px;
 	
 	object-fit: cover;
@@ -32,13 +32,13 @@ div.reservation_menu-container div.list{
 	margin-bottom: 0px;
 }
 
-div.reservation_menu-container div.menuitems-container img{
+div.reservation_menu-container div.menuitem-container img{
 	border-radius: 25px;
 	
 	object-fit: cover;
 }
 
-div.reservation_menu-container div.menus-container{
+div.reservation_menu-container div.menu-container{
 	background-color: #303030;
 	color: #f0f0f0;
 	
