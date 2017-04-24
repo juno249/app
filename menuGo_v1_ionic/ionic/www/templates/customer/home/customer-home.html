@@ -44,115 +44,115 @@
 			</div>
 			
 			<div 
-				class="advertisements-container">
+				class="advertisement-container">
 				<div 
 					class="child-content-center container-header font-family-1-size-medium">
 					<b>ADVERTISEMENTS</b>
 				</div>
 				<!--  *************** 
-						advertisements-slidebox (start)
+						advertisement-slidebox (start)
 						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
-					delegate-handle="advertisements-slidebox" 
+					delegate-handle="advertisement-slidebox" 
 					does-continue="true" 
-					id="advertisements-slidebox" 
-					name="advertisements-slidebox">
+					id="advertisement-slidebox" 
+					name="advertisement-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.advertisements">
 						<!--  *************** 
-								advertisements-title-container (start)
+								advertisement-title-container (start)
 								*************** -->
 						<div 
 							class="child-content-center font-family-2-size-small" 
-							id="advertisements-title-container" 
-							name="advertisements-title-container">
+							id="advertisement-title-container" 
+							name="advertisement-title-container">
 							{{k.advertisement_title}}
 						</div>
 						<!--  *************** 
-								advertisements-title-container (end)
+								advertisement-title-container (end)
 								*************** -->
 								
 						<!--  *************** 
-								advertisements-image-container (start)
+								advertisement-image-container (start)
 								*************** -->
 						<div 
 							class="child-content-center" 
-							id="advertisements-image-container" 
-							name="advertisements-image-container">
+							id="advertisement-image-container" 
+							name="advertisement-image-container">
 							<img 
 								src={{k.advertisement_image}}>
 						</div>
 						<!--  *************** 
-								advertisements-image-container (end)
+								advertisement-image-container (end)
 								*************** -->
 								
 						<!--  *************** 
-								advertisements-price-container (start)
+								advertisement-price-container (start)
 								*************** -->
 						<div 
 							class="child-content-center font-family-2-size-small" 
-							id="advertisements-price-container" 
-							name="advertisements-price-container">
+							id="advertisement-price-container" 
+							name="advertisement-price-container">
 							{{k.advertisement_price}}
 						</div>
 						<!--  *************** 
-								advertisements-price-container (end)
+								advertisement-price-container (end)
 								*************** -->
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 
-						advertisements-slidebox (end)
+						advertisement-slidebox (end)
 						*************** -->
 			</div>
 			
 			<div 
-				class="blogs-container">
+				class="blog-container">
 				<div 
 					class="child-content-center container-header font-family-1-size-medium">
 					<b>BLOGS</b>
 				</div>
 				<!--  *************** 
-						blogs-slidebox (start)
+						blog-slidebox (start)
 						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
-					delegate-handle="blogs-slidebox" 
+					delegate-handle="blog-slidebox" 
 					does-continue="true" 
-					id="blogs-slidebox" 
-					name="blogs-slidebox">
+					id="blog-slidebox" 
+					name="blog-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.blogs">
 						<!--  *************** 
-								blogs-title-container (start)
+								blog-title-container (start)
 								*************** -->
 						<div 
 							class="child-content-center font-family-2-size-small" 
-							id="blogs-title-container" 
-							name=blogs-title-container>
+							id="blog-title-container" 
+							name=blog-title-container>
 							{{k.blog_title}}
 						</div>
 						<!--  *************** 
-								blogs-title-container (end)
+								blog-title-container (end)
 								*************** -->
 								
 						<!--  *************** 
-								blogs-image-container (start)
+								blog-image-container (start)
 								*************** -->
 						<div 
 							class="child-content-center" 
-							id="blogs-image-container" 
-							name="blogs-image-container">
+							id="blog-image-container" 
+							name="blog-image-container">
 							<img 
 								src={{k.blog_image}}>
 						</div>
 						<!--  *************** 
-								blogs-image-container (end)
+								blog-image-container (end)
 								*************** -->
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 
-						blogs-slidebox (end)
+						blog-slidebox (end)
 						*************** -->
 			</div>
 		</div>

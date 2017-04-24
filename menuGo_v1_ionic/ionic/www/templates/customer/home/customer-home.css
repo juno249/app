@@ -1,24 +1,24 @@
-div.home-container div.advertisements-container div#advertisements-image-container, 
-div.home-container div.blogs-container div#blogs-image-container{
+div.home-container div.advertisement-container div#advertisement-image-container, 
+div.home-container div.blog-container div#blog-image-container{
 	background-color: #303030;
 	
 	height: 70%;
 }
 
-div.home-container div.advertisements-container div#advertisements-image-container img, 
-div.home-container div.blogs-container div#blogs-image-container img, 
+div.home-container div.advertisement-container div#advertisement-image-container img, 
+div.home-container div.blog-container div#blog-image-container img, 
 div.home-container div.company-logo-image-container img{
 	height: 100%;
 }
 
-div.home-container div.advertisements-container div#advertisements-price-container{
+div.home-container div.advertisement-container div#advertisement-price-container{
 	border-bottom: solid 1px #d3d3d3;
 	
 	height: 6%;
 }
 
-div.home-container div.advertisements-container div#advertisements-title-container, 
-div.home-container div.blogs-container div#blogs-title-container{
+div.home-container div.advertisement-container div#advertisement-title-container, 
+div.home-container div.blog-container div#blog-title-container{
 	height: 10%;
 	
 	padding-left: 10px;
@@ -29,13 +29,13 @@ div.home-container div.blogs-container div#blogs-title-container{
 	white-space: nowrap;
 }
 
-div.home-container div.advertisements-container div#advertisements-slidebox, 
-div.home-container div.blogs-container div#blogs-slidebox{
+div.home-container div.advertisement-container div#advertisement-slidebox, 
+div.home-container div.blog-container div#blog-slidebox{
 	height: 250px;
 }
 
-div.home-container div.advertisements-container div.container-header, 
-div.home-container div.blogs-container div.container-header{
+div.home-container div.advertisement-container div.container-header, 
+div.home-container div.blog-container div.container-header{
 	border-bottom: solid 1px #d3d3d3;
 }
 

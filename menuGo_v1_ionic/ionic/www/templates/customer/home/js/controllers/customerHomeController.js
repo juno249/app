@@ -23,8 +23,8 @@ function customerHomeController(
 		$timeout
 		){
 	const MARKETING_KEY = 'Marketing';
-	const DOM_ADVERTISEMENTS_SLIDEBOX = 'advertisements-slidebox';
-	const DOM_BLOGS_SLIDEBOX = 'blogs-slidebox';
+	const DOM_ADVERTISEMENTS_SLIDEBOX = 'advertisement-slidebox';
+	const DOM_BLOGS_SLIDEBOX = 'blog-slidebox';
 	
 	var vm = this;
 	
