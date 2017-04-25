@@ -96,14 +96,14 @@ function doRouteConfig(
 													}
 													)
 													.state(
-															'customer.menu', 
+															'customer.mymenu', 
 															{
-																url: '/menu', 
+																url: '/mymenu', 
 																views: {
-																	'customer-menu': {
-																		templateUrl: 'templates/customer/menu/customer-menu.html', 
-																		controller: 'customerMenuController', 
-																		controllerAs: 'customerMenuController'
+																	'customer-mymenu': {
+																		templateUrl: 'templates/customer/mymenu/customer-mymenu.html', 
+																		controller: 'customerMymenuController', 
+																		controllerAs: 'customerMymenuController'
 																			}
 															}
 															}
