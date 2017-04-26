@@ -2,12 +2,12 @@ angular
 .module(
 		'starter', 
 		[
-		 'ionic', 
-		 'ngCordova', 
-		 'ngMap', 
-		 'ngStorage', 
-		 'ion-datetime-picker'
-		 ]
+			'ionic', 
+			'ngCordova', 
+			'ngMap', 
+			'ngStorage', 
+			'ion-datetime-picker'
+			]
 		)
 		.config(doRouteConfig)
 		.config(doIonicConfig)
