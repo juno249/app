@@ -1,10 +1,14 @@
-div.mymenu-container div.container-header{
+div#button-container, 
+div#reservation-detail-container{
 	background-color: #303030;
 	color: #f0f0f0;
+	
+	position: fixed;
+	width: 101%;
 }
 
-div.mymenu-container div.button-container button#addOrderBtn, 
-div.mymenu-container div.button-container button#callWaiterBtn, 
-div.mymenu-container div.button-container button#myBillBtn{
+div#button-container button#addOrderBtn, 
+div#button-container button#callWaiterBtn, 
+div#button-container button#myBillBtn{
 	min-width: 100px;
 }

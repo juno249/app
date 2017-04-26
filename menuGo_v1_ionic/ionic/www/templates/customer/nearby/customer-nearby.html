@@ -64,6 +64,7 @@
 						*************** -->
 				<ng-map 
 					center="[{{customerNearbyController.mapConfig.center.latitude}}, {{customerNearbyController.mapConfig.center.longitude}}]" 
+					class="fill-parent-y" 
 					id="nearby-map" 
 					map-type-control={{customerNearbyController.mapTypeControl}} 
 					name="nearby-map" 
@@ -122,6 +123,7 @@
 					id="company-logo-image-container" 
 					name="company-logo-image-container">
 					<img 
+						class="fill-parent-y" 
 						src={{v.company_logo}}>
 				</div>
 				<!--  *************** 

@@ -5,12 +5,6 @@ div.home-container div.blog-container div#blog-image-container{
 	height: 70%;
 }
 
-div.home-container div.advertisement-container div#advertisement-image-container img, 
-div.home-container div.blog-container div#blog-image-container img, 
-div.home-container div.company-logo-image-container img{
-	height: 100%;
-}
-
 div.home-container div.advertisement-container div#advertisement-price-container{
 	border-bottom: solid 1px #d3d3d3;
 	

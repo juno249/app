@@ -34,11 +34,6 @@ div.nearby-container div.company-branch-container div#company-logo-image-contain
 	height: 100px;
 }
 
-div.nearby-container div.company-branch-container div#company-logo-image-container img, 
-div.nearby-container div.map-container ng-map#nearby-map{
-	height: 100%;
-}
-
 div.nearby-container div.company-branch-container div#featured-menu-container{
 	line-height: 13px;
 	

@@ -10,6 +10,7 @@
     "ion-datetime-picker": "0.5.1"
   },
   "dependencies": {
-    "moment": "momentjs#^2.18.1"
+    "moment": "momentjs#^2.18.1",
+    "jquery": "^3.1.1"
   }
 }

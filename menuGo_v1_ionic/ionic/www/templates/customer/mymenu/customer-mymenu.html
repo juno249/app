@@ -4,19 +4,77 @@
 <ion-view 
 	id="mymenu" 
 	name="mymenu" 
+	ng-init="customerMymenuController.initDom();" 
 	view-title="mymenu">
+	<!--  *************** 
+			reservation-detail-container (start)
+			*************** -->
+	<div 
+		class="child-content-center fill-parent-x item item-divider" 
+		id="reservation-detail-container" 
+		name="reservation-detail-container">
+		<span 
+			class="font-family-2-size-small">
+			CHECK - IN DETAILS: Reservation @ 
+			<underline>{{customerMymenuController.companyName}}</underline>, 
+			<underline>Table #: {{customerMymenuController.tableNumber}}</underline>
+		</span>
+	</div>
+	<!--  *************** 
+			reservation-detail-container (end)
+			*************** -->
 	<ion-content 
 		class="has-header">
-		<div 
-			class="child-content-center container-header item item-divider reservation-detail-container">
-			<span 
-				class="font-family-2-size-small">
-				CHECK - IN DETAILS: Reservation @ 
-				<underline>{{customerMymenuController.companyName}}</underline>, 
-				<underline>Table #: {{customerMymenuController.tableNumber}}</underline>
-			</span>
-		</div>
 	</ion-content>
+	<!--  *************** 
+			button-container (start)
+			*************** -->
+	<div 
+		class="child-content-center fill-parent-x item item-divider" 
+		id="button-container" 
+		name="button-container">
+		<!--  *************** 
+				addOrderBtn (start)
+				*************** -->
+		<button 
+			class="button button-small button-positive child-content-center font-family-1-size-small" 
+			id="addOrderBtn" 
+			name="addOrderBtn">
+			Add Order
+		</button>
+		<!--  *************** 
+				addOrderBtn (end)
+				*************** -->
+		
+		<!--  *************** 
+				callWaiterBtn (start)
+				*************** -->
+		<button 
+			class="button button-small button-positive child-content-center font-family-1-size-small" 
+			id="callWaiterBtn" 
+			name="callWaiterBtn">
+			Call Waiter
+		</button>
+		<!--  *************** 
+				callWaiterBtn (end)
+				*************** -->
+		
+		<!--  *************** 
+				myBillBtn (start)
+				*************** -->
+		<button 
+			class="button button-small button-positive child-content-center font-family-1-size-small" 
+			id="myBillBtn" 
+			name="myBillBtn">
+			My Bill
+		</button>
+		<!--  *************** 
+				myBillBtn (end)
+				*************** -->
+	</div>
+	<!--  *************** 
+			button-container (end)
+			*************** -->
 </ion-view>
 <!--  *************** 
 		mymenu (end)
