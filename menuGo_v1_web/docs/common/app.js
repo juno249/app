@@ -2,16 +2,16 @@ angular
 .module(
 		'starter', 
 		[
-		 'datatables.buttons', 
-		 'datatables.bootstrap', 
-		 'datatables.fixedcolumns', 
-		 'datatables.light-columnfilter', 
-		 'datatables.scroller', 
-		 'datatables.select', 
-		 'ngStorage', 
-		 'ui.bootstrap', 
-		 'ui.router'
-		 ]
+			'datatables.buttons', 
+			'datatables.bootstrap', 
+			'datatables.fixedcolumns', 
+			'datatables.light-columnfilter', 
+			'datatables.scroller', 
+			'datatables.select', 
+			'ngStorage', 
+			'ui.bootstrap', 
+			'ui.router'
+			]
 		)
 		
 .config(doRouteConfig)
