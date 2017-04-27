@@ -5,7 +5,7 @@
 	id="mymenu" 
 	name="mymenu" 
 	ng-init="customerMymenuController.initDom();" 
-	view-title="mymenu">
+	view-title="my menu">
 	<!--  *************** 
 			reservation-detail-container (start)
 			*************** -->
@@ -23,10 +23,20 @@
 	<!--  *************** 
 			reservation-detail-container (end)
 			*************** -->
+			
+	<!--  *************** 
+			mymenuContent (start)
+			*************** -->
 	<ion-content 
-		class="has-header">
-		<ng-include src="''"></ng-include>
+		class="has-header" 
+		id="mymenuContent" 
+		name="mymenuContent">
+		<ng-include src="customerMymenuController.mymenuContentSrc"></ng-include>
 	</ion-content>
+	<!--  *************** 
+			mymenuContent (end)
+			*************** -->
+			
 	<!--  *************** 
 			button-container (start)
 			*************** -->
@@ -40,7 +50,8 @@
 		<button 
 			class="button button-small button-positive child-content-center font-family-1-size-small" 
 			id="addOrderBtn" 
-			name="addOrderBtn">
+			name="addOrderBtn" 
+			ng-click="customerMymenuController.setSrcAsAddOrder();">
 			Add Order
 		</button>
 		<!--  *************** 
@@ -66,7 +77,8 @@
 		<button 
 			class="button button-small button-positive child-content-center font-family-1-size-small" 
 			id="myBillBtn" 
-			name="myBillBtn">
+			name="myBillBtn" 
+			ng-click="customerMymenuController.setSrcAsMyBill();">
 			My Bill
 		</button>
 		<!--  *************** 

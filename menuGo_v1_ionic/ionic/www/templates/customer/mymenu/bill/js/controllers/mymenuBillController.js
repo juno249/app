@@ -6,8 +6,10 @@ angular
 		);
 
 mymenuBillController.$inject = [
+	'$scope'
 	];
 
 function mymenuBillController(
+		$scope
 		){
 }

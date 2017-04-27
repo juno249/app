@@ -6,8 +6,10 @@ angular
 		);
 
 mymenuOrderController.$inject = [
+	'$scope'
 	];
 
 function mymenuOrderController(
+		$scope
 		){
 }
