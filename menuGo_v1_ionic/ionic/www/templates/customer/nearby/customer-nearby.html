@@ -81,12 +81,12 @@
 				class="category-container child-content-center">
 				<button 
 					class="button button-assertive button-small font-family-1-size-small" 
-					ng-click="customerNearbyController.setCategory(undefined)">
+					ng-click="customerNearbyController.setCategory(undefined);">
 					All
 				</button>
 				<button 
 					class="button button-assertive button-small font-family-1-size-small" 
-					ng-click="customerNearbyController.setCategory(k)" 
+					ng-click="customerNearbyController.setCategory(k);" 
 					ng-repeat="k in customerNearbyController.companiesCategoriesSelection" >
 					<i 
 						class="icon ion-pizza">
@@ -237,7 +237,7 @@
 		id="gotoMenusBtn" 
 		name="gotoMenusBtn" 
 		ng-if="customerNearbyController.companyBranch != undefined" 
-		ng-click="customerNearbyController.gotoState('customer.nearby.reservation_menu')">
+		ng-click="customerNearbyController.gotoState('customer.nearby.reservation_menu');">
 		<i 
 			class="icon ion-arrow-right-a">
 		</i>
