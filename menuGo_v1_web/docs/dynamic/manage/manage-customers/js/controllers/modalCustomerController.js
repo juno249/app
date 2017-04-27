@@ -34,8 +34,8 @@ function modalCustomerController(
 	const CUSTOMER_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DB EXCEPTION ENCOUNTERED';
 	const CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DATA IS EMPTY/UNCHANGED';
 	const CUSTOMER_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE CUSTOMER, DB EXCEPTION ENCOUNTERED';
-	const DOM_FORM = '#modalCustomer';
-	const DOM_MODAL = '#modalCustomerContainer';
+	const DOM_MODAL_CUSTOMER = '#modalCustomer';
+	const DOM_MODAL_CUSTOMER_CONTAINER = '#modalCustomerContainer';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -118,14 +118,14 @@ function modalCustomerController(
 	function initBootstrapValidator(){
 		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$(DOM_FORM).validator();
-		$(DOM_FORM).validator().on(
+		$(DOM_MODAL_CUSTOMER).validator();
+		$(DOM_MODAL_CUSTOMER).validator().on(
 				'submit', 
 				doSubmit
 				);
 		
 		$timeout(
-				function(){	$(DOM_FORM).validator('update');
+				function(){	$(DOM_MODAL_CUSTOMER).validator('update');
 				}
 				);
 		}
@@ -196,7 +196,7 @@ function modalCustomerController(
 		
 		hideBootstrapAlert();
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 		
 		if(vm.fromSignup){
 			customerService.addCustomerValidate(data)
@@ -204,13 +204,13 @@ function modalCustomerController(
 			.catch(addCustomerValidateFailedCallback);
 			
 			function addCustomerValidateSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 				
 				$uibModalInstance.close(data);
 				}
 			
 			function addCustomerValidateFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 				
 				genValidationErrorFromResponse(responseError);
 				}
@@ -240,13 +240,13 @@ function modalCustomerController(
 			.catch(addCustomerCompanyBranchFailedCallback);
 			
 			function addCustomerCompanyBranchSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 				
 				$uibModalInstance.close();
 				}
 			
 			function addCustomerCompanyBranchFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 				
 				try{
 					JSON.parse(responseError.statusText);
@@ -259,7 +259,7 @@ function modalCustomerController(
 				discardModalUnchangedFields();
 				
 				if(0 == Object.keys(data[0]).length){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 					
 					showBootstrapAlert(CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE);
 					
@@ -275,13 +275,13 @@ function modalCustomerController(
 				.catch(updateCustomerFailedCallback);
 				
 				function updateCustomerSuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 					
 					$uibModalInstance.close();
 					}
 				
 				function updateCustomerFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 					
 					try{
 						JSON.parse(responseError.statusText);
@@ -318,13 +318,13 @@ function modalCustomerController(
 					.catch(deleteCustomerFailedCallback);
 					
 					function deleteCustomerSuccessCallback(response){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 						
 						$uibModalInstance.close();
 						}
 					
 					function deleteCustomerFailedCallback(responseError){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_CUSTOMER_CONTAINER));
 						
 						try{
 							JSON.parse(responseError.statusText);
@@ -354,8 +354,8 @@ function modalCustomerController(
 		}
 	
 	function genValidationErrorFromResponse(responseError){
-		const CLASS_FORM_GROUP = '.form-group';
-		const CLASS_HAS_ERROR = 'has-error';
+		const DOM_FORM_GROUP_CLASS = '.form-group';
+		const DOM_HAS_ERROR_CLASS = 'has-error';
 		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
@@ -368,7 +368,7 @@ function modalCustomerController(
 					var dbColumnPasswordIndex = 1;
 					var domOffset = 1;
 					var errorMessage = statusTextObj[statusTextKey][0];
-					var formGroups = $(CLASS_FORM_GROUP);
+					var formGroups = $(DOM_FORM_GROUP_CLASS);
 					
 					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
 					
@@ -378,7 +378,7 @@ function modalCustomerController(
 					} else {	domOffset = 1;
 					}
 					
-					formGroups.eq(parseInt(dbColumnIndex+domOffset)).addClass(CLASS_HAS_ERROR);
+					formGroups.eq(parseInt(dbColumnIndex+domOffset)).addClass(DOM_HAS_ERROR_CLASS);
 					}
 				);
 		

@@ -32,8 +32,8 @@ function modalCompanyController(
 	const COMPANY_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE COMPANY, DB EXCEPTION ENCOUNTERED';
 	const COMPANY_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE COMPANY, DATA IS EMPTY/UNCHANGED';
 	const COMPANY_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE COMPANY, DB EXCEPTION ENCOUNTERED';
-	const DOM_FORM = '#modalCompany';
-	const DOM_MODAL = '#modalCompanyContainer';
+	const DOM_MODAL_COMPANY = '#modalCompany';
+	const DOM_MODAL_COMPANY_CONTAINER = '#modalCompanyContainer';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -76,14 +76,14 @@ function modalCompanyController(
 	function initBootstrapValidator(){
 		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$(DOM_FORM).validator();
-		$(DOM_FORM).validator().on(
+		$(DOM_MODAL_COMPANY).validator();
+		$(DOM_MODAL_COMPANY).validator().on(
 				'submit', 
 				doSubmit
 				);
 		
 		$timeout(
-				function(){	$(DOM_FORM).validator('update');
+				function(){	$(DOM_MODAL_COMPANY).validator('update');
 				}
 				);
 		}
@@ -141,7 +141,7 @@ function modalCompanyController(
 		.then(uploadCompanyLogoSuccessCallback)
 		.catch(uploadCompanyLogoFailedCallback);
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 		
 		function uploadCompanyLogoSuccessCallback(response){
 			var appQueryStr = '?timestamp=' + new Date().getTime();
@@ -149,10 +149,10 @@ function modalCompanyController(
 			vm.company.companyLogo = response.config.url + appQueryStr;
 			vm.isCompanyLogoImageHidden = false;
 			
-			hideBootstrapLoader($(DOM_MODAL));
+			hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 			}
 		
-		function uploadCompanyLogoFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL));
+		function uploadCompanyLogoFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 		}
 		}
 	
@@ -163,7 +163,7 @@ function modalCompanyController(
 		
 		hideBootstrapAlert();
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 		
 		if('I' == vm.formMode){
 			if(vm.fromSignup){
@@ -172,13 +172,13 @@ function modalCompanyController(
 				.catch(addCompanyValidateFailedCallback);
 				
 				function addCompanyValidateSuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 					
 					$uibModalInstance.close(data);
 					}
 				
 				function addCompanyValidateFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 					
 					genValidationErrorFromResponse(responseError);
 					}
@@ -190,13 +190,13 @@ function modalCompanyController(
 			.catch(addCompanyFailedCallback);
 			
 			function addCompanySuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 				
 				$uibModalInstance.close();
 				}
 			
 			function addCompanyFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 				
 				try{
 					JSON.parse(responseError.statusText);
@@ -209,7 +209,7 @@ function modalCompanyController(
 				discardModalUnchangedFields();
 				
 				if(0 == Object.keys(data[0]).length){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 					
 					showBootstrapAlert(COMPANY_UPDATE_CUSTOM_ERR_MESSAGE);
 					
@@ -225,13 +225,13 @@ function modalCompanyController(
 				.catch(updateCompanyFailedCallback);
 				
 				function updateCompanySuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 					
 					$uibModalInstance.close();
 					}
 				
 				function updateCompanyFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 					
 					try{
 						JSON.parse(responseError.statusText);
@@ -268,13 +268,13 @@ function modalCompanyController(
 					.catch(deleteCompanyFailedCallback);
 					
 					function deleteCompanySuccessCallback(response){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 						
 						$uibModalInstance.close();
 						}
 					
 					function deleteCompanyFailedCallback(responseError){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_COMPANY_CONTAINER));
 						
 						try{
 							JSON.parse(responseError.statusText)
@@ -303,8 +303,8 @@ function modalCompanyController(
 		}
 	
 	function genValidationErrorFromResponse(responseError){
-		const CLASS_FORM_GROUP = '.form-group';
-		const CLASS_HAS_ERROR = 'has-error';
+		const DOM_FORM_GROUP_CLASS = '.form-group';
+		const DOM_HAS_ERROR_CLASS = 'has-error';
 		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
@@ -315,13 +315,13 @@ function modalCompanyController(
 					var dbColumnName = statusTextKey.split('.')[1];
 					var dbColumnIndex = getDbColumnIndex(dbColumnName);
 					var errorMessage = statusTextObj[statusTextKey][0];
-					var formGroups = $(CLASS_FORM_GROUP);
+					var formGroups = $(DOM_FORM_GROUP_CLASS);
 					
 					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
 					
 					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
 					
-					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(DOM_HAS_ERROR_CLASS);
 					}
 				);
 		

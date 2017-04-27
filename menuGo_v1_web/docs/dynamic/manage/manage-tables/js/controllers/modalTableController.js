@@ -28,8 +28,8 @@ function modalTableController(
 	const TABLE_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE TABLE, DB EXCEPTION ENCOUNTERED';
 	const TABLE_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE TABLE, DATA IS EMPTY/UNCHANGED';
 	const TABLE_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE TABLE, DB EXCEPTION ENCOUNTERED';
-	const DOM_FORM = '#modalTable';
-	const DOM_MODAL = '#modalTableContainer';
+	const DOM_MODAL_TABLE = '#modalTable';
+	const DOM_MODAL_TABLE_CONTAINER = '#modalTableContainer';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -66,14 +66,14 @@ function modalTableController(
 	function initBootstrapValidator(){
 		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$(DOM_FORM).validator();
-		$(DOM_FORM).validator().on(
+		$(DOM_MODAL_TABLE).validator();
+		$(DOM_MODAL_TABLE).validator().on(
 				'submit', 
 				doSubmit
 				);
 		
 		$timeout(
-				function(){	$(DOM_FORM).validator('update');
+				function(){	$(DOM_MODAL_TABLE).validator('update');
 				}
 				);
 		}
@@ -105,7 +105,7 @@ function modalTableController(
 		
 		hideBootstrapAlert();
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 		
 		if('I' == vm.formMode){
 			data[0].table_status_change_timestamp = moment(new Date()).format('YYYY-MM-DD h:mm:ss');
@@ -118,13 +118,13 @@ function modalTableController(
 			.catch(addTableFailedCallback);
 			
 			function addTableSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 				
 				$uibModalInstance.close();
 				}
 			
 			function addTableFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 				
 				try{
 					JSON.parse(responseError.statusText);
@@ -137,7 +137,7 @@ function modalTableController(
 				discardModalUnchangedFields();
 				
 				if(0 == Object.keys(data).length){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 					
 					showBootstrapAlert(TABLE_UPDATE_CUSTOM_ERR_MESSAGE);
 					
@@ -157,13 +157,13 @@ function modalTableController(
 				.catch(updateTableFailedCallback);
 				
 				function updateTableSuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 					
 					$uibModalInstance.close();
 					}
 				
 				function updateTableFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 					
 					try{
 						JSON.parse(responseError.statusText);
@@ -202,13 +202,13 @@ function modalTableController(
 					.catch(deleteTableFailedCallback);
 					
 					function deleteTableSuccessCallback(response){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 						
 						$uibModalInstance.close();
 						}
 					
 					function deleteTableFailedCallback(responseError){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_TABLE_CONTAINER));
 						
 						try{
 							JSON.parse(responseError.statusText);
@@ -238,8 +238,8 @@ function modalTableController(
 		}
 	
 	function genValidationErrorFromResponse(responseError){
-		const CLASS_FORM_GROUP = '.form-group';
-		const CLASS_HAS_ERROR = 'has-error';
+		const DOM_FORM_GROUP_CLASS = '.form-group';
+		const DOM_HAS_ERROR_CLASS = 'has-error';
 		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
@@ -250,13 +250,13 @@ function modalTableController(
 					var dbColumnName = statusTextKey.split('.')[1];
 					var dbColumnIndex = getDbColumnIndex(dbColumnName);
 					var errorMessage = statusTextObj[statusTextKey][0];
-					var formGroups = $(CLASS_FORM_GROUP);
+					var formGroups = $(DOM_FORM_GROUP_CLASS);
 					
 					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
 					
 					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
 					
-					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(DOM_HAS_ERROR_CLASS);
 					}
 				);
 		

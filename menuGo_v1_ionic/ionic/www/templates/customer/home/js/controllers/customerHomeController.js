@@ -23,8 +23,8 @@ function customerHomeController(
 		$timeout
 		){
 	const MARKETING_KEY = 'Marketing';
-	const DOM_ADVERTISEMENTS_SLIDEBOX = 'advertisement-slidebox';
-	const DOM_BLOGS_SLIDEBOX = 'blog-slidebox';
+	const DOM_ADVERTISEMENT_SLIDEBOX = 'advertisement-slidebox';
+	const DOM_BLOG_SLIDEBOX = 'blog-slidebox';
 	
 	var vm = this;
 	
@@ -59,8 +59,8 @@ function customerHomeController(
 				
 				$timeout(
 						function(){
-							$ionicSlideBoxDelegate.$getByHandle(DOM_ADVERTISEMENTS_SLIDEBOX).update();
-							$ionicSlideBoxDelegate.$getByHandle(DOM_BLOGS_SLIDEBOX).update();
+							$ionicSlideBoxDelegate.$getByHandle(DOM_ADVERTISEMENT_SLIDEBOX).update();
+							$ionicSlideBoxDelegate.$getByHandle(DOM_BLOG_SLIDEBOX).update();
 							}
 						);
 				}

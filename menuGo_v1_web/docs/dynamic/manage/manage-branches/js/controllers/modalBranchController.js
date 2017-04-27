@@ -28,8 +28,8 @@ function modalBranchController(
 	const BRANCH_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE BRANCH, DB EXCEPTION ENCOUNTERED';
 	const BRANCH_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE BRANCH, DATA IS EMPTY/UNCHANGED';
 	const BRANCH_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE BRANCH, DB EXCEPTION ENCOUNTERED';
-	const DOM_FORM = '#modalBranch';
-	const DOM_MODAL = '#modalBranchContainer';
+	const DOM_MODAL_BRANCH = '#modalBranch';
+	const DOM_MODAL_BRANCH_CONTAINER = '#modalBranchContainer';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -83,14 +83,14 @@ function modalBranchController(
 	
 	function initBootstrapValidator(){
 		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
-		$(DOM_FORM).validator();
-		$(DOM_FORM).validator().on(
+		$(DOM_MODAL_BRANCH).validator();
+		$(DOM_MODAL_BRANCH).validator().on(
 				'submit', 
 				doSubmit
 				);
 		
 		$timeout(
-				function(){	$(DOM_FORM).validator('update');
+				function(){	$(DOM_MODAL_BRANCH).validator('update');
 				}
 				);
 		}
@@ -122,11 +122,11 @@ function modalBranchController(
 		
 		hideBootstrapAlert();
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 		
 		if('I' == vm.formMode){
 			if(vm.fromSignup){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 				
 				$uibModalInstance.close(data);
 				
@@ -140,13 +140,13 @@ function modalBranchController(
 			.catch(addBranchFailedCallback);
 			
 			function addBranchSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 				
 				$uibModalInstance.close();
 				}
 			
 			function addBranchFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 				
 				try{
 					JSON.parse(responseError.statusText);
@@ -159,7 +159,7 @@ function modalBranchController(
 				discardModalUnchangedFields();
 				
 				if(0 == Object.keys(data[0]).length){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 					
 					showBootstrapAlert(BRANCH_UPDATE_CUSTOM_ERR_MESSAGE);
 					
@@ -176,13 +176,13 @@ function modalBranchController(
 				.catch(updateBranchFailedCallback);
 				
 				function updateBranchSuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 					
 					$uibModalInstance.close();
 					}
 				
 				function updateBranchFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 					
 					try{
 						JSON.parse(responseError.statusText);
@@ -220,13 +220,13 @@ function modalBranchController(
 					.catch(deleteBranchFailedCallback);
 					
 					function deleteBranchSuccessCallback(response){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 						
 						$uibModalInstance.close();
 						}
 					
 					function deleteBranchFailedCallback(responseError){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_BRANCH_CONTAINER));
 						
 						try{
 							JSON.parse(responseError.statusText);

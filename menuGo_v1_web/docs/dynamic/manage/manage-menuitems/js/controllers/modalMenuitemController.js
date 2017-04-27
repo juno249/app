@@ -31,8 +31,8 @@ function modalMenuitemController(
 	const MENUITEM_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DB EXCEPTION ENCOUNTERED';
 	const MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DATA IS EMPTY/UNCHANGED';
 	const MENUITEM_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE MENUITEM, DB EXCEPTION ENCOUNTERED';
-	const DOM_FORM = '#modalMenuitem';
-	const DOM_MODAL = '#modalMenuitemContainer';
+	const DOM_MODAL_MENUITEM = '#modalMenuitem';
+	const DOM_MODAL_MENUITEM_CONTAINER = '#modalMenuitemContainer';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -81,14 +81,14 @@ function modalMenuitemController(
 	function initBootstrapValidator(){
 		$.fn.validator.Constructor.INPUT_SELECTOR = ':input:not(".ng-hide")';
 		
-		$(DOM_FORM).validator();
-		$(DOM_FORM).validator().on(
+		$(DOM_MODAL_MENUITEM).validator();
+		$(DOM_MODAL_MENUITEM).validator().on(
 				'submit', 
 				doSubmit
 				);
 		
 		$timeout(
-				function(){	$(DOM_FORM).validator('update');
+				function(){	$(DOM_MODAL_MENUITEM).validator('update');
 				}
 				);
 		}
@@ -150,7 +150,7 @@ function modalMenuitemController(
 		.then(uploadMenuitemImageSuccessCallback)
 		.catch(uploadMenuitemImageFailedCallback);
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 		
 		function uploadMenuitemImageSuccessCallback(response){
 			var appQueryStr = '?timestamp=' + new Date().getTime();
@@ -158,10 +158,10 @@ function modalMenuitemController(
 			vm.menuitem.menuitemImage = response.config.url + appQueryStr;
 			vm.isMenuitemImageImageHidden = false;
 			
-			hideBootstrapLoader($(DOM_MODAL));
+			hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 			}
 		
-		function uploadMenuitemImageFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL));
+		function uploadMenuitemImageFailedCallback(responseError){	hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 		}
 		}
 	
@@ -172,7 +172,7 @@ function modalMenuitemController(
 		
 		hideBootstrapAlert();
 		
-		showBootstrapLoader($(DOM_MODAL));
+		showBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 		
 		if('I' == vm.formMode){
 			menuitemService.setCompanyName(vm.menuitem.companyName);
@@ -183,13 +183,13 @@ function modalMenuitemController(
 			.catch(addMenuitemFailedCallback);
 			
 			function addMenuitemSuccessCallback(response){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 				
 				$uibModalInstance.close();
 				}
 			
 			function addMenuitemFailedCallback(responseError){
-				hideBootstrapLoader($(DOM_MODAL));
+				hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 				
 				try{
 					JSON.parse(responseError.statusText);
@@ -202,7 +202,7 @@ function modalMenuitemController(
 				discardModalUnchangedFields();
 				
 				if(0 == Object.keys(data).length){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 					
 					showBootstrapLoader(MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE);
 					
@@ -220,13 +220,13 @@ function modalMenuitemController(
 				.catch(updateMenuitemFailedCallback);
 				
 				function updateMenuitemSuccessCallback(response){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 					
 					$uibModalInstance.close();
 					}
 				
 				function updateMenuitemFailedCallback(responseError){
-					hideBootstrapLoader($(DOM_MODAL));
+					hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 					
 					try{
 						JSON.parse(responseError.statusText);
@@ -265,13 +265,13 @@ function modalMenuitemController(
 					.catch(deleteMenuitemFailedCallback);
 					
 					function deleteMenuitemSuccessCallback(response){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 						
 						$uibModalInstance.close();
 						}
 					
 					function deleteMenuitemFailedCallback(responseError){
-						hideBootstrapLoader($(DOM_MODAL));
+						hideBootstrapLoader($(DOM_MODAL_MENUITEM_CONTAINER));
 						
 						try{
 							JSON.parse(responseError.statusText);
@@ -301,8 +301,8 @@ function modalMenuitemController(
 		}
 	
 	function genValidationErrorFromResponse(responseError){
-		const CLASS_FORM_GROUP = '.form-group';
-		const CLASS_HAS_ERROR = 'has-error';
+		const DOM_FORM_GROUP_CLASS = '.form-group';
+		const DOM_HAS_ERROR_CLASS = 'has-error';
 		
 		var statusText = responseError.statusText;
 		var statusTextObj = JSON.parse(statusText);
@@ -313,13 +313,13 @@ function modalMenuitemController(
 					var dbColumnName = statusTextKey.split('.')[1];
 					var dbColumnIndex = getDbColumnIndex(dbColumnName);
 					var errorMessage = statusTextObj[statusTextKey][0];
-					var formGroups = $(CLASS_FORM_GROUP);
+					var formGroups = $(DOM_FORM_GROUP_CLASS);
 					
 					errorMessage = errorMessage.replace(statusTextKey, vm.dbColumn2Dom[dbColumnName]);
 					
 					vm.validationErr[parseInt(dbColumnIndex)] = errorMessage;
 					
-					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(CLASS_HAS_ERROR);
+					formGroups.eq(parseInt(dbColumnIndex+1)).addClass(DOM_HAS_ERROR_CLASS);
 					}
 				);
 		
