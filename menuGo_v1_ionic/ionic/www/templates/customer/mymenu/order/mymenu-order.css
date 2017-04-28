@@ -1,0 +1,19 @@
+div.order-container div.order_status-container img#menuitem-image{
+	border-radius: 25px;
+	
+	object-fit: cover;
+}
+
+div.order-container div.order_status-container div.order_status_indicator-container{
+	bottom: 10px;
+	position: absolute;
+}
+
+div.order-container div.order_status-container button{
+	min-width: 75px;
+}
+
+div.order-container div.order_status-container button.status-active{
+	background-color: #387ef5 !important;
+	color: #f0f0f0 !important;
+}

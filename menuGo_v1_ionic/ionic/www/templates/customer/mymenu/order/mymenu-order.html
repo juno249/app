@@ -1,8 +1,49 @@
+<!--  *************** 
+		order (start)
+		*************** -->
 <div 
 	class="order-container" 
 	ng-controller="mymenuOrderController as mymenuOrderController">
 	<div 
-		class="list order-container">
-		
+		class="list order_status-container">
+		<div 
+			class="item item-thumbnail-left" 
+			ng-repeat="(k, v) in mymenuOrderController.user.orderreference.order">
+			<!--  *************** 
+					menuitem-image (start)
+					*************** -->
+			<img 
+				id="menuitem-image" 
+				name="menuitem-image" 
+				src={{mymenuOrderController.companyMenuMenuitems[v.menuitem_id].menuitem_image}}>
+			<!--  *************** 
+					menuitem-image (end)
+					*************** -->
+			<span 
+				class="font-family-1-size-medium">
+				<underline>{{mymenuOrderController.companyMenuMenuitems[v.menuitem_id].menuitem_name}}</underline>
+			</span>
+			<div 
+				class="child-content-center order_status_indicator-container">
+				<button 
+					class="button button-positive button-outline button-small" 
+					ng-class="{'status-active': v.order_status == 'queue'}">
+					queue
+				</button>
+				<button 
+					class="button button-positive button-outline button-small" 
+					ng-class="{'status-active': v.order_status == 'cooking'}">
+					cooking
+				</button>
+				<button 
+					class="button button-positive button-outline button-small" 
+					ng-class="{'status-active': v.order_status == 'to serve'}">
+					to serve
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
+<!--  *************** 
+		order (end)
+		*************** -->
