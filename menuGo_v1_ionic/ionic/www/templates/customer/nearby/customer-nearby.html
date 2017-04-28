@@ -208,8 +208,8 @@
 						branch-header (end)
 						*************** -->
 						
-				<ion-list 
-					class="item">
+				<div 
+					class="list">
 					<ion-radio 
 						ng-model="customerNearbyController.companyBranch" 
 						ng-value="{'companyName': v.company_name, 'branchName': j.branch_name}" 
@@ -226,7 +226,7 @@
 							{{customerNearbyController.toStringAddress(j);}}
 						</span>
 					</ion-radio>
-				</ion-list>
+				</div>
 			</div>
 		</div>
 	</ion-content>
