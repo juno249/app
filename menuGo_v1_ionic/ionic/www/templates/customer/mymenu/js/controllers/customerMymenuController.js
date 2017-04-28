@@ -31,6 +31,8 @@ function customerMymenuController(
 	vm.setSrcAsAddOrder = setSrcAsAddOrder;
 	//controller_method
 	vm.setSrcAsMyBill = setSrcAsMyBill;
+	//controller_method
+	vm.gotoMymenuOrder = gotoMymenuOrder;
 	
 	function initDom(){
 		$(DOM_RESERVATION_DETAIL_CONTAINER).eq(0).css(
@@ -55,5 +57,8 @@ function customerMymenuController(
 	}
 	
 	function setSrcAsMyBill(){	vm.mymenuContentSrc = "templates/customer/mymenu/bill/mymenu-bill.html";
+	}
+	
+	function gotoMymenuOrder(){	vm.mymenuContentSrc = "templates/customer/mymenu/order/mymenu-order.html";
 	}
 	}

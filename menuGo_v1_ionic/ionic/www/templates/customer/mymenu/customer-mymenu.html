@@ -84,6 +84,23 @@
 		<!--  *************** 
 				myBillBtn (end)
 				*************** -->
+				
+		<!--  *************** 
+				gotoMymenuOrderBtn (start)
+				*************** -->
+		<button 
+			class="button button-positive button-small child-content-center" 
+			id="gotoMymenuOrderBtn" 
+			name="gotoMymenuOrderBtn" 
+			ng-if="customerMymenuController.mymenuContentSrc.indexOf('mymenu-order.html') == -1" 
+			ng-click="customerMymenuController.gotoMymenuOrder();">
+			<i 
+				class="icon ion-arrow-left-a">
+			</i>
+		</button>
+		<!--  *************** 
+				gotoMymenuOrderBtn (end)
+				*************** -->
 	</div>
 	<!--  *************** 
 			button-container (end)
