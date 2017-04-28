@@ -34,8 +34,8 @@ function customerHomeController(
 		
 		vm.advertisements = vm.marketing.advertisements;
 		vm.blogs = vm.marketing.blogs;
-	} else {	dataService.fetchMarketing();
-	}
+		} else {	dataService.fetchMarketing();
+		}
 	
 	$ionicHistory.clearHistory();
 	

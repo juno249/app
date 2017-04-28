@@ -66,9 +66,8 @@ function nearbyReservationOrderController(
 				function(
 						v, 
 						k
-						){
-					vm.totalCost += v.quantity * v.menuitem_price;
-					}
+						){	vm.totalCost += v.quantity * v.menuitem_price;
+						}
 				);
 		}
 	
@@ -100,12 +99,15 @@ function nearbyReservationOrderController(
 						v, 
 						k
 						){
-					order = {
-							menuitem_id: v.menuitem_id, 
-							order_status: ORDER_STATUS.queue, 
-							order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
-							};
-					orders.push(order);
+					for(var i=0; i<v.quantity; i++){
+						order = {
+								menuitem_id: v.menuitem_id, 
+								order_status: ORDER_STATUS.queue, 
+								order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+								};
+						
+						orders.push(order);
+						}
 					}
 				);
 		

@@ -27,8 +27,8 @@ function mymenuBillController(
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-	} else {	dataService.fetchCompanies();
-	}
+		} else {	dataService.fetchCompanies();
+		}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
@@ -53,6 +53,22 @@ function mymenuBillController(
 	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
 	}
 	
+	//controller_method
+	vm.getTotalCost = getTotalCost;
+	
+	function getTotalCost(){
+		vm.totalCost = 0;
+		
+		angular.forEach(
+				vm.user.orderreference.order, 
+				function(
+						v, 
+						k
+						){	vm.totalCost += v.cost;
+						}
+				);
+		}
+	
 	function genCompanyMenuMenuitems(){
 		var companyMenuMenuitems = {};
 		
@@ -74,6 +90,30 @@ function mymenuBillController(
 				);
 		
 		return companyMenuMenuitems;
+		}
+	
+	function appendQuantity(){
+		var menuitemOrderId = {};
+		
+		if(!(null == vm.user.orderreference.order)){
+			angular.forEach(
+					vm.user.orderreference.order, 
+					function(
+							v, 
+							k
+							){
+						if(!(null == menuitemOrderId[v.menuitem_id])){
+							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].quantity++;
+							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].cost += vm.companyMenuMenuitems[v.menuitem_id].menuitem_price;
+							delete vm.user.orderreference.order[k];
+							} else {
+								vm.user.orderreference.order[k].quantity = 1;
+								vm.user.orderreference.order[k].cost = vm.companyMenuMenuitems[v.menuitem_id].menuitem_price;
+								menuitemOrderId[v.menuitem_id] = k;
+								}
+						}
+					);
+			}
 		}
 	
 	$scope.$watch(
@@ -105,5 +145,12 @@ function mymenuBillController(
 				
 				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
 				}
+			);
+	
+	$scope.$watchCollection(
+			function(){	return vm.user.orderreference;
+			}, 
+			function(){	appendQuantity();
+			}
 			);
 	}

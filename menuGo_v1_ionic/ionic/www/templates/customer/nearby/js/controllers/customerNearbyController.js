@@ -53,8 +53,8 @@ function customerNearbyController(
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-	} else {	dataService.fetchCompanies();
-	}
+		} else {	dataService.fetchCompanies();
+		}
 	
 	//controller_method
 	vm.gotoState = gotoState;

@@ -30,8 +30,8 @@ function nearbyReservationMenuController(
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-	} else {	dataService.fetchCompanies();
-	}
+		} else {	dataService.fetchCompanies();
+		}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
@@ -139,8 +139,8 @@ function nearbyReservationMenuController(
 			menuitem.quantity = 0;
 			
 			delete vm.user.reservationOrder[menuitem.menuitem_code];
-		} else {	vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
-		}
+			} else {	vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
+			}
 		
 		localStorage.setItem(
 				USER_KEY, 
@@ -165,8 +165,8 @@ function nearbyReservationMenuController(
 								if(!(null == vm.user.reservationOrder[j.menuitem_code])){
 									j.quantity = vm.user.reservationOrder[j.menuitem_code].quantity;
 									v.quantity += j.quantity;
-								} else {	j.quantity = 0;
-								}
+									} else {	j.quantity = 0;
+									}
 								}
 							);
 					}
