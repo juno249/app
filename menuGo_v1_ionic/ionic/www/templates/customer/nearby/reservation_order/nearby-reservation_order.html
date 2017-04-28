@@ -23,19 +23,19 @@
 					ng-repeat="(k, v) in nearbyReservationOrderController.user.reservationOrder">
 					<span 
 						class="font-family-1-size-medium">
-						<underline><b>{{v.menuitem_name}}</b><underline>
+						<underline>{{v.menuitem_name}}<underline>
 					</span><br>
 					<span 
 						class="font-family-2-size-small">
-						Quantity: <underlIne><b>{{v.quantity}}</b></underlIne>
+						Quantity: <underlIne>{{v.quantity}}</underlIne>
 					</span>,
 					<span 
 						class="font-family-2-size-small">
-						Unit Price: <underline><b>&#8369{{v.menuitem_price}}</b></underline>
+						Unit Price: <underline>&#8369{{v.menuitem_price}}</underline>
 					</span>,
 					<span 
 						class="font-family-2-size-small">
-						Cost: <underline><b>&#8369{{v.quantity * v.menuitem_price}}</b></underline>
+						Cost: <underline>&#8369{{v.quantity * v.menuitem_price}}</underline>
 					</span><br>
 					<button 
 						class="button button-positive button-small" 
@@ -55,7 +55,7 @@
 				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				<span 
 					class="font-family-2-size-medium">
-					Total: <underline><b>&#8369{{nearbyReservationOrderController.totalCost | number: 2}}</b></underline>
+					Total: <underline>&#8369{{nearbyReservationOrderController.totalCost | number: 2}}</underline>
 				</span>
 			</div>
 			<div 
