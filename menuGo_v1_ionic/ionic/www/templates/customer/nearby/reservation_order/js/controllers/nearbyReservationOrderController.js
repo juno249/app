@@ -130,7 +130,14 @@ function nearbyReservationOrderController(
 			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 			
 			function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
-			}
+				vm.user.reservation = response.reservation;
+				vm.user.orderreference = response.orderreference;
+				
+				localStorage.setItem(
+						USER_KEY, 
+						JSON.stringify(vm.user)
+						);
+				}
 			
 			function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
 			}

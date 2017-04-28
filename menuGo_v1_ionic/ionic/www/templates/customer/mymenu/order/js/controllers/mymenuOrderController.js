@@ -40,9 +40,70 @@ function mymenuOrderController(
 	.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 	.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 	
-	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){	//do something on success
-	}
+	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+		vm.user.reservation = response.reservation;
+		vm.user.orderreference = response.orderreference;
+		
+		localStorage.setItem(
+				USER_KEY, 
+				JSON.stringify(vm.user)
+				);
+		}
 	
 	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
 	}
+	
+	function genCompanyMenuMenuitems(){
+		var companyMenuMenuitems = {};
+		
+		angular.forEach(
+				vm.companyMenus, 
+				function(
+						v, 
+						k
+						){
+					angular.forEach(
+							v.menuitems, 
+							function(
+									v, 
+									k
+									){	companyMenuMenuitems[k] = v;
+									}
+							);
+					}
+				);
+		
+		return companyMenuMenuitems;
+		}
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(COMPANIES_KEY);
+			}, 
+			function(){
+				vm.companies = localStorage.getItem(COMPANIES_KEY);
+				vm.companies = JSON.parse(vm.companies);
+				}
+			);
+	
+	$scope.$watchCollection(
+			function(){	return vm.companies;
+			}, 
+			function(){
+				if(!(null == vm.companies)){
+					vm.company = vm.companies[vm.companyName];
+					
+					if(!(null == vm.company.branches)){
+						vm.branch = vm.company.branches[vm.branchName];
+						
+						if(!(null == vm.branch.tables)){	vm.table = vm.branch.tables[vm.tableNumber];
+						}
+						}
+					
+					if(!(null == vm.company.menus)){	vm.companyMenus = vm.company.menus;
+					}
+					}
+				
+				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
+				}
+			);
 	}
