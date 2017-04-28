@@ -25,7 +25,7 @@ div.nearby-container div.company-branch-container div#branch-header,
 div.nearby-container div.company-branch-container div#featured-menu-header, 
 div.nearby-container div.company-branch-container div#featured-menu-slidebox, 
 div.nearby-container div.search-container label, 
-div.nearby-container div.search-result-container ion-item{
+div.nearby-container div.search-result-container div.item{
 	padding-bottom: 5px;
 	padding-top: 5px;
 }
@@ -46,7 +46,7 @@ div.nearby-container div.company-branch-container div#featured-menu-container im
 	object-fit: cover;
 }
 
-div.nearby-container div.company-branch-container ion-list{
+div.nearby-container div.company-branch-container div.list{
 	padding: 0px;
 }
 

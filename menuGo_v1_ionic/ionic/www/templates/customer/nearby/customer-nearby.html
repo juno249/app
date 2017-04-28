@@ -39,8 +39,10 @@
 			</div>
 			<div 
 				class="fill-parent-x search-result-container">
-				<ion-list>
-					<ion-item 
+				<div 
+					class="list">
+					<div 
+						class="item" 
 						ng-repeat="k in customerNearbyController.placePredictions">
 						<i 
 							class="icon ion-location">
@@ -53,8 +55,8 @@
 							class="font-family-2-size-small">
 							{{k.description}}
 						</span>
-					</ion-item>
-				</ion-list>
+					</div>
+				</div>
 			</div>
 			<div 
 				class="map-container" 

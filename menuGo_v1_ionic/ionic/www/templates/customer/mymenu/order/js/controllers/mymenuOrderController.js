@@ -67,7 +67,7 @@ function mymenuOrderController(
 							function(
 									v, 
 									k
-									){	companyMenuMenuitems[k] = v;
+									){	companyMenuMenuitems[v.menuitem_id] = v;
 									}
 							);
 					}
