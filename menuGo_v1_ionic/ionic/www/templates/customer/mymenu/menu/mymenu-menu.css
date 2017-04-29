@@ -1,3 +1,20 @@
+div.mymenu_menu-container div.menuitem-container div.menuitem-desc-container{
+	line-height: 12px;
+	
+	white-space: normal;
+}
+
+div.mymenu_menu-container div.menuitem-container div.menuitem-qty-container{
+	background-color: #303030;
+	color: #f0f0f0;
+}
+
+div.mymenu_menu-container div.menuitem-container img{
+	border-radius: 25px;
+	
+	object-fit: cover;
+}
+
 div.mymenu_menu-container ion-scroll.menu_link-container{
 	background-color: #303030;
 	color: #f0f0f0;

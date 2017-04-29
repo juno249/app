@@ -36,6 +36,76 @@ function mymenuMenuController(
 		}
 		}
 	
+	//controller_method
+	vm.setMenuName = setMenuName;
+	//controller_method
+	vm.getMenuIdFromName = getMenuIdFromName;
+	//controller_method
+	vm.addReservationOrder = addReservationOrder;
+	//controller_method
+	vm.subReservationOrder = subReservationOrder;
+	
+	function setMenuName(menuName){	vm.menuName = menuName;
+	}
+	
+	function getMenuIdFromName(){	return vm.companyMenus[vm.menuName].menu_id;
+	}
+	
+	function addReservationOrder(menuitem){
+		menuitem.quantity++;
+		
+		vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
+		localStorage.setItem(
+				USER_KEY, 
+				JSON.stringify(vm.user)
+				);
+		}
+	
+	function subReservationOrder(menuitem){
+		if(0 >= --menuitem.quantity){
+			menuitem.quantity = 0;
+			
+			delete vm.user.reservationOrder[menuitem.menuitem_code];
+			} else {	vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
+			}
+		}
+	
+	function genCompanyMenuMenuitems(){
+		var companyMenuMenuitems = {};
+		
+		angular.forEach(
+				vm.companyMenus, 
+				function(
+						v, 
+						k
+						){
+					if(null == vm.menuName){	vm.menuName = k;
+					}
+					angular.forEach(
+							v.menuitems, 
+							function(
+									v, 
+									k
+									){	companyMenuMenuitems[v.menuitem_code] = v;
+									}
+							);
+					}
+				);
+		
+		return companyMenuMenuitems;
+		}
+	
+	function resetCompanyMenuMenuitems(){
+		angular.forEach(
+				vm.companyMenuMenuitems, 
+				function(
+						v, 
+						k
+						){	v.quantity = 0;
+						}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -62,6 +132,9 @@ function mymenuMenuController(
 					if(!(null == vm.company.menus)){	vm.companyMenus = vm.company.menus;
 					}
 					}
+				
+				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
+				resetCompanyMenuMenuitems();
 				}
 			);
 	}
