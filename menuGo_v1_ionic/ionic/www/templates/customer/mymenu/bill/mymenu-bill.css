@@ -3,6 +3,6 @@ div.mymenu_bill-container div.order-container div.item{
 }
 
 div.mymenu_bill-container div.order-container div#button-container button#billoutCashBtn, 
-div.mymenu_bill-container div.order-container div#button-container button#billoutCashBtn{
+div.mymenu_bill-container div.order-container div#button-container button#billoutCCBtn{
 	min-width: 100px;
 }
