@@ -1,12 +1,12 @@
+button.back-button span.back-text{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 12px;
+}
+
 button#gotoOrdersBtn{
 	bottom: 100px;
 	position: absolute;
 	right: 10px;
-}
-
-button.back-button span.back-text{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 12px;
 }
 
 div.reservation_menu-container div.company-detail-container div.branch-container, 
