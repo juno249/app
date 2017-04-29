@@ -1,0 +1,22 @@
+div.mymenu_menu-container ion-scroll.menu_link-container{
+	background-color: #303030;
+	color: #f0f0f0;
+	
+	overflow-x: scroll;
+	
+	white-space: nowrap;
+}
+
+div.mymenu_menu-container ion-scroll.menu_link-container a.menu_link{
+	color: #f0f0f0;
+	
+	display: inline-block;
+	
+	line-height: 12px;
+	
+	padding: 5px 10px 5px 10px;
+	
+	white-space: normal;
+	
+	width: 100px;
+}

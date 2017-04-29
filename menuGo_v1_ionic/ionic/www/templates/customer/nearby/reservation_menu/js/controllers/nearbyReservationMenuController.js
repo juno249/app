@@ -50,7 +50,7 @@ function nearbyReservationMenuController(
 	//controller_method
 	vm.gotoState = gotoState;
 	//controller_method
-	vm.toggleVis = toggleVis;
+	vm.toggleVisibility = toggleVisibility;
 	//controller_method
 	vm.toStringAddress = toStringAddress;
 	//controller_method
@@ -68,8 +68,8 @@ function nearbyReservationMenuController(
 			}
 		}
 	
-	function toggleVis(menu){
-		resetVis(menu);
+	function toggleVisibility(menu){
+		resetVisibility(menu);
 		
 		menu.isCompanyMenuHidden = !menu.isCompanyMenuHidden;
 		}
@@ -80,7 +80,7 @@ function nearbyReservationMenuController(
 		return branchService.toStringAddress();
 		}
 	
-	function resetVis(exemptMenu){
+	function resetVisibility(exemptMenu){
 		angular.forEach(
 				vm.companyMenus, 
 				function(
@@ -93,7 +93,7 @@ function nearbyReservationMenuController(
 				);
 		}
 	
-	function resetCompanyMenus(){
+	function resetCompanyMenuMenuitems(){
 		angular.forEach(
 				vm.companyMenus, 
 				function(
@@ -190,8 +190,8 @@ function nearbyReservationMenuController(
 				vm.branch = vm.company.branches[vm.branchName];
 				vm.companyMenus = vm.company.menus;
 				
-				resetVis(new String(''));
-				resetCompanyMenus();
+				resetVisibility(new String(''));
+				resetCompanyMenuMenuitems();
 				}
 			);
 	

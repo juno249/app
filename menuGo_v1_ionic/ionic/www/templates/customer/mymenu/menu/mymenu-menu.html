@@ -1,4 +1,19 @@
+<!--  *************** 
+		menu (start)
+		*************** -->
 <div 
-	class="menu-container" 
+	class="mymenu_menu-container" 
 	ng-controller="mymenuMenuController as mymenuMenuController">
+	<ion-scroll 
+		class="menu_link-container" 
+		direction="x">
+		<a 
+			class="child-content-center font-family-1-size-small menu_link" 
+			ng-repeat="(k, v) in mymenuMenuController.companyMenus">
+			{{k}}
+		</a>
+	</ion-scroll>
 </div>
+<!--  *************** 
+		menu (end)
+		*************** -->
