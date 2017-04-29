@@ -50,13 +50,15 @@ function nearbyReservationMenuController(
 	//controller_method
 	vm.gotoState = gotoState;
 	//controller_method
-	vm.toggleVisibility = toggleVisibility;
+	vm.setMenuName = setMenuName;
 	//controller_method
-	vm.toStringAddress = toStringAddress;
+	vm.getMenuIdFromName = getMenuIdFromName;
 	//controller_method
 	vm.addReservationOrder = addReservationOrder;
 	//controller_method
 	vm.subReservationOrder = subReservationOrder;
+	//controller_method
+	vm.toStringAddress = toStringAddress;
 	
 	function gotoState(stateName){
 		if('customer.nearby.reservation_order' == stateName){
@@ -68,57 +70,13 @@ function nearbyReservationMenuController(
 			}
 		}
 	
-	function toggleVisibility(menu){
-		resetVisibility(menu);
-		
-		menu.isCompanyMenuHidden = !menu.isCompanyMenuHidden;
-		}
+	function setMenuName(menuName){	vm.menuName = menuName;
+	}
 	
-	function toStringAddress(){
-		branchService.setBranches(vm.branch);
-		
-		return branchService.toStringAddress();
-		}
+	function getMenuIdFromName(){	return vm.companyMenus[vm.menuName].menu_id;
+	}
 	
-	function resetVisibility(exemptMenu){
-		angular.forEach(
-				vm.companyMenus, 
-				function(
-						v, 
-						k
-						){
-					if(!(exemptMenu.menu_name == v.menu_name)){	v.isCompanyMenuHidden = true;
-					}
-					}
-				);
-		}
-	
-	function resetCompanyMenuMenuitems(){
-		angular.forEach(
-				vm.companyMenus, 
-				function(
-						v, 
-						k
-						){
-					v.quantity = 0;
-					angular.forEach(
-							v.menuitems, 
-							function(
-									j, 
-									i
-									){
-								j.quantity = 0;
-								}
-							);
-					}
-				);
-		}
-	
-	function addReservationOrder(
-			menu, 
-			menuitem
-			){
-		menu.quantity++;
+	function addReservationOrder(menuitem){
 		menuitem.quantity++;
 		
 		vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
@@ -128,13 +86,7 @@ function nearbyReservationMenuController(
 				);
 		}
 	
-	function subReservationOrder(
-			menu, 
-			menuitem
-			){
-		if(0 >= --menu.quantity){	menu.quantity = 0;
-		}
-		
+	function subReservationOrder(menuitem){
 		if(0 >= --menuitem.quantity){
 			menuitem.quantity = 0;
 			
@@ -148,27 +100,58 @@ function nearbyReservationMenuController(
 				);
 		}
 	
-	function synchronize(){
+	function toStringAddress(){
+		branchService.setBranches(vm.branch);
+		
+		return branchService.toStringAddress();
+		}
+	
+	function genCompanyMenuMenuitems(){
+		var companyMenuMenuitems = {};
+		
 		angular.forEach(
 				vm.companyMenus, 
 				function(
 						v, 
 						k
 						){
-					v.quantity = 0;
+					if(null == vm.menuName){	vm.menuName = k;
+					}
 					angular.forEach(
 							v.menuitems, 
 							function(
-									j, 
-									i
-									){
-								if(!(null == vm.user.reservationOrder[j.menuitem_code])){
-									j.quantity = vm.user.reservationOrder[j.menuitem_code].quantity;
-									v.quantity += j.quantity;
-									} else {	j.quantity = 0;
+									v, 
+									k
+									){	companyMenuMenuitems[v.menuitem_code] = v;
 									}
-								}
 							);
+					}
+				);
+		
+		return companyMenuMenuitems;
+		}
+	
+	function resetCompanyMenuMenuitems(){
+		angular.forEach(
+				vm.companyMenuMenuitems, 
+				function(
+						v, 
+						k
+						){	v.quantity = 0;
+						}
+				);
+		}
+	
+	function synchronize(){
+		angular.forEach(
+				vm.companyMenuMenuitems, 
+				function(
+						v, 
+						k
+						){
+					if(!(null == vm.user.reservationOrder[v.menuitem_code])){	v.quantity = vm.user.reservationOrder[v.menuitem_code].quantity;
+					} else {	v.quantity = 0;
+					}
 					}
 				);
 		}
@@ -186,11 +169,21 @@ function nearbyReservationMenuController(
 			function(){	return vm.companies;
 			}, 
 			function(){
-				vm.company = vm.companies[vm.companyName];
-				vm.branch = vm.company.branches[vm.branchName];
-				vm.companyMenus = vm.company.menus;
+				if(!(null == vm.companies)){
+					vm.company = vm.companies[vm.companyName];
+					
+					if(!(null == vm.company.branches)){
+						vm.branch = vm.company.branches[vm.branchName];
+						
+						if(!(null == vm.branch.tables)){	vm.table = vm.branch.tables[vm.tableNumber];
+						}
+						}
+					
+					if(!(null == vm.company.menus)){	vm.companyMenus = vm.company.menus;
+					}
+					}
 				
-				resetVisibility(new String(''));
+				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
 				resetCompanyMenuMenuitems();
 				}
 			);

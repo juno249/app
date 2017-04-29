@@ -68,6 +68,11 @@ function mymenuMenuController(
 			delete vm.user.reservationOrder[menuitem.menuitem_code];
 			} else {	vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
 			}
+		
+		localStorage.setItem(
+				USER_KEY, 
+				JSON.stringify(vm.user)
+				);
 		}
 	
 	function genCompanyMenuMenuitems(){
@@ -106,6 +111,20 @@ function mymenuMenuController(
 				);
 		}
 	
+	function synchronize(){
+		angular.forEach(
+				vm.companyMenuMenuitems, 
+				function(
+						v, 
+						k
+						){
+					if(!(null == vm.user.reservationOrder[v.menuitem_code])){	v.quantity = vm.user.reservationOrder[v.menuitem_code].quantity;
+					} else {	v.quantity = 0;
+					}
+					}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -136,5 +155,24 @@ function mymenuMenuController(
 				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
 				resetCompanyMenuMenuitems();
 				}
+			);
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(USER_KEY);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(USER_KEY);
+				vm.user = JSON.parse(vm.user);
+				
+				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
+				}
+				}
+			);
+	
+	$scope.$watchCollection(
+			function(){	return vm.user.reservationOrder;
+			}, 
+			function(){	synchronize();
+			}
 			);
 	}
