@@ -57,16 +57,18 @@ function mymenuBillController(
 	vm.getTotalCost = getTotalCost;
 	
 	function getTotalCost(){
-		vm.totalCost = 0;
+		var totalCost = 0;
 		
 		angular.forEach(
 				vm.user.orderreference.order, 
 				function(
 						v, 
 						k
-						){	vm.totalCost += v.cost;
+						){	totalCost += v.cost;
 						}
 				);
+		
+		return totalCost;
 		}
 	
 	function genCompanyMenuMenuitems(){

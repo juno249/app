@@ -23,5 +23,12 @@
 				Cost: <underline>&#8369{{mymenuBillController.user.orderreference.order[k].cost}}</underline>
 			</span>
 		</div>
+		<div 
+			class="child-content-right item">
+			<span 
+				class="font-family-2-size-medium">
+				&#8369{{mymenuBillController.getTotalCost() | number: 2}}
+			</span>
+		</div>
 	</div>
 </div>

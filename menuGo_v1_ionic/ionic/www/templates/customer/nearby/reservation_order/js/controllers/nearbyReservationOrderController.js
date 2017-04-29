@@ -59,16 +59,18 @@ function nearbyReservationOrderController(
 		}
 	
 	function getTotalCost(){
-		vm.totalCost = 0;
+		var totalCost = 0;
 		
 		angular.forEach(
 				vm.user.reservationOrder, 
 				function(
 						v, 
 						k
-						){	vm.totalCost += v.quantity * v.menuitem_price;
+						){	totalCost += v.quantity * v.menuitem_price;
 						}
 				);
+		
+		return totalCost;
 		}
 	
 	function postReservation(){

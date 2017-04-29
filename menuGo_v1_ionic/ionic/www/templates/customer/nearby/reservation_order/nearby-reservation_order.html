@@ -55,7 +55,7 @@
 				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				<span 
 					class="font-family-2-size-medium">
-					Total: <underline>&#8369{{nearbyReservationOrderController.totalCost | number: 2}}</underline>
+					Total: <underline>&#8369{{nearbyReservationOrderController.getTotalCost() | number: 2}}</underline>
 				</span>
 			</div>
 			<div 
