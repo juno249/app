@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<div 
-				class="fill-parent-x search-result-container">
+				class="fill-parent-x search_result-container">
 				<div 
 					class="list">
 					<div 
@@ -59,8 +59,7 @@
 				</div>
 			</div>
 			<div 
-				class="map-container" 
-				ng-init="customerNearbyController.initializeMapCoordinates();">
+				class="map-container">
 				<!--  *************** 
 						nearby-map (start)
 						*************** -->
@@ -79,174 +78,40 @@
 						nearby-map (end)
 						*************** -->
 			</div>
-			<div 
-				class="category-container child-content-center">
-				<button 
-					class="button button-assertive button-small font-family-1-size-small" 
-					ng-click="customerNearbyController.setCategory(undefined);">
-					All
-				</button>
-				<button 
-					class="button button-assertive button-small font-family-1-size-small" 
-					ng-click="customerNearbyController.setCategory(k);" 
-					ng-repeat="k in customerNearbyController.companiesCategoriesSelection" >
-					<i 
-						class="icon ion-pizza">
-					</i>
+			<ion-scroll 
+				class="category_link-container child-content-center" 
+				direction="x">
+				<a 
+					class="category_link child-content-center font-family-1-size-xsmall" 
+					ng-click="customerNearbyController.setCompanyCategory(k)" 
+					ng-repeat="k in customerNearbyController.companyCategories">
 					{{k}}
-				</button>
-			</div>
+				</a>
+			</ion-scroll>
 			<div 
-				class="child-content-center container-header font-family-1-size-medium">
-				RESTAURANTS
-			</div>
-			<div 
-				class="card company-branch-container" 
-				ng-repeat="(k, v) in customerNearbyController.companies" 
-				ng-show="(customerNearbyController.category == undefined) || (customerNearbyController.category == v.company_category)">
+				class="company-container" 
+				ng-repeat="(k, v) in customerNearbyController.companies">
 				<!--  *************** 
-						company-name-container (start)
-						*************** -->
-				<div 
-					class="child-content-center font-family-1-size-medium item item-divider" 
-					id="company-name-container" 
-					name="company-name-container">
-					{{v.company_name}}
-				</div>
-				<!--  *************** 
-						company-name-container (end)
-						*************** -->
-				
-				<!--  *************** 
-						company-logo-image-container (start)
-						*************** -->
-				<div 
-					class="child-content-center item" 
-					id="company-logo-image-container" 
-					name="company-logo-image-container">
-					<img 
-						class="fill-parent-y" 
-						src={{v.company_logo}}>
-				</div>
-				<!--  *************** 
-						company-logo-image-container (end)
-						*************** -->
-				
-				<!--  *************** 
-						featured-menu-header (start)
-						*************** -->
-				<div 
-					class="child-content-center font-family-1-size-small item" 
-					id="featured-menu-header" 
-					name="featured-menu-header">
-					Featured Menus
-				</div>
-				<!--  *************** 
-						featured-menu-header (end)
-						*************** -->
-				
-				<!--  *************** 
-						featured-menu-slidebox (start)
+						company-slidebox (start)
 						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
-					class="item" 
-					delegate-handle="featured-menu-slidebox" 
-					direction="x" 
+					delegate-handle="company-slidebox" 
 					does-continue="true" 
-					id="featured-menu-slidebox" 
-					name="featured-menu-slidebox" 
-					ng-if="keys(customerNearbyController.companiesMenuitems[k]).length > 0" 
-					show-pager="false">
+					id="company-slidebox" 
+					name="company-slidebox" 
+					ng-repeat="(i, j) in v.branches">
 					<ion-slide 
-						ng-repeat="(i, j) in customerNearbyController.companiesMenuitems[k]">
-						<!--  *************** 
-								featured-menu-container (start)
-								*************** -->
-						<div 
-							class="item item-thumbnail-left" 
-							id="featured-menu-container" 
-							name="featured-menu-container">
-							<!--  *************** 
-									featured-menu-image (start)
-									*************** -->
-							<img 
-								id="featured-menu-image" 
-								name="featured-menu-image" 
-								src={{j.menuitem_image}}>
-							<!--  *************** 
-									featured-menu-image (end)
-									*************** -->
-							<span 
-								class="font-family-1-size-small">
-								<underline>{{j.menuitem_name}}</underline>
-							</span><br>
-							<span 
-								class="font-family-2-size-small">
-								{{j.menuitem_desc}}
-							</span>
-						</div>
-						<!--  *************** 
-								featured-menu-container (end)
-								*************** -->
+						ng-repeat="(a, b) in customerNearbyController.companyMenuMenuitems[k]">
+						{{b.menuitem_name}}
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 
-						featured-menu-slidebox (end)
+						company-slidebox (end)
 						*************** -->
-				
-				<!--  *************** 
-						branch-header (start)
-						*************** -->
-				<div 
-					class="child-content-center font-family-1-size-small item" 
-					id="branch-header" 
-					name="branch-header">
-					Branches
-				</div>
-				<!--  *************** 
-						branch-header (end)
-						*************** -->
-						
-				<div 
-					class="list">
-					<ion-radio 
-						ng-model="customerNearbyController.companyBranch" 
-						ng-value="{'companyName': v.company_name, 'branchName': j.branch_name}" 
-						ng-repeat="(i, j) in customerNearbyController.companiesBranches[k]">
-						<i 
-							class="icon ion-map">
-						</i>
-						<span 
-							class="font-family-1-size-medium">
-							{{j.branch_name}}
-						</span><br>
-						<span 
-							class="font-family-2-size-small">
-							{{customerNearbyController.toStringAddress(j);}}
-						</span>
-					</ion-radio>
-				</div>
 			</div>
 		</div>
 	</ion-content>
-	
-	<!--  *************** 
-			gotoMenusBtn (start)
-			*************** -->
-	<button 
-		class="button button-medium button-positive child-content-center" 
-		id="gotoMenusBtn" 
-		name="gotoMenusBtn" 
-		ng-if="customerNearbyController.companyBranch != undefined" 
-		ng-click="customerNearbyController.gotoState('customer.nearby.reservation_menu');">
-		<i 
-			class="icon ion-arrow-right-a">
-		</i>
-	</button>
-	<!--  *************** 
-			gotoMenusBtn (end)
-			*************** -->
 </ion-view>
 <!--  *************** 
 		nearby (end)

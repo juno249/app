@@ -31,7 +31,7 @@ function customerNearbyController(
 	$ionicHistory.clearHistory();
 	
 	const COMPANIES_KEY = 'Companies';
-	const DOM_FEATURED_MENU_SLIDEBOX = 'featured-menu-slidebox';
+	const DOM_COMPANY_SLIDEBOX = 'company-slidebox';
 	
 	var vm = this;
 	vm.mapConfig = {
@@ -88,24 +88,36 @@ function customerNearbyController(
 		var companyMenuMenuitems = {};
 		
 		angular.forEach(
-				vm.companyMenus, 
+				vm.companies, 
 				function(
 						v, 
 						k
 						){
 					angular.forEach(
-							v.menuitems, 
+							v.menus, 
 							function(
-									v, 
-									k
-									){	companyMenuMenuitems[v.menuitem_id] = v;
-									}
+									j, 
+									i
+									){
+								angular.forEach(
+										j.menuitems, 
+										function(
+												j, 
+												i
+												){
+											if(null == companyMenuMenuitems[k]){	companyMenuMenuitems[k] = {};
+											}
+											if(1 == j.menuitem_featured){	companyMenuMenuitems[k][j.menuitem_code] = j;
+											}
+											}
+										);
+								}
 							);
 					}
 				);
 		
 		$timeout(
-				function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENU_SLIDEBOX).update();
+				function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_COMPANY_SLIDEBOX).update();
 				}
 				);
 		
