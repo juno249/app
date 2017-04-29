@@ -89,26 +89,45 @@
 				</a>
 			</ion-scroll>
 			<div 
-				class="company-container" 
+				class="card company-container" 
 				ng-repeat="(k, v) in customerNearbyController.companies">
-				<!--  *************** 
+				<div 
+					class="branch-container" 
+					ng-repeat="(i, j) in v.branches">
+					<div 
+						class="company_name-container font-family-1-size-xsmall">
+						Restaurant: {{k}}
+					</div>
+					<div 
+						class="branch_name-container font-family-1-size-xsmall">
+						Location: {{customerNearbyController.toStringBranchAddress(j)}}
+					</div>
+					<!--  *************** 
 						company-slidebox (start)
 						*************** -->
-				<ion-slide-box 
-					auto-play="true" 
-					delegate-handle="company-slidebox" 
-					does-continue="true" 
-					id="company-slidebox" 
-					name="company-slidebox" 
-					ng-repeat="(i, j) in v.branches">
-					<ion-slide 
-						ng-repeat="(a, b) in customerNearbyController.companyMenuMenuitems[k]">
-						{{b.menuitem_name}}
-					</ion-slide>
-				</ion-slide-box>
-				<!--  *************** 
-						company-slidebox (end)
-						*************** -->
+					<ion-slide-box 
+						auto-play="true" 
+						delegate-handle="company-slidebox" 
+						does-continue="true" 
+						id="company-slidebox" 
+						name="company-slidebox">
+						<ion-slide 
+							ng-repeat="(a, b) in customerNearbyController.companyMenuMenuitems[k]">
+							<div 
+								class="child-content-center menuitem_image-container">
+								<img 
+									src={{b.menuitem_image}}>
+							</div>
+							<div 
+								class="child-content-right font-family-1-size-small menuitem_price-container">
+								Price: &#8369{{b.menuitem_price}}
+							</div>
+						</ion-slide>
+					</ion-slide-box>
+					<!--  *************** 
+							company-slidebox (end)
+							*************** -->
+				</div>
 			</div>
 		</div>
 	</ion-content>

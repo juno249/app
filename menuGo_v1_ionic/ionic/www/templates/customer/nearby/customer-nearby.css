@@ -1,5 +1,33 @@
+div.nearby-container div.company-container div.branch-container div.branch_name-container, 
+div.nearby-container div.company-container div.branch-container div.company_name-container, 
+div.nearby-container div.company-container div.branch-container div.menuitem_price-container{
+	border-bottom: solid 1px;
+	
+	padding: 0px 10px 0px 10px;
+}
+
+div.nearby-container div.company-container div.branch-container div.branch_name-container, 
+div.nearby-container div.company-container div.branch-container div.company_name-container, 
+div.nearby-container div.search-container div.item, 
+div.nearby-container ion-scroll.category_link-container{
+	background-color: #303030;
+	color: #f0f0f0;
+}
+
+div.nearby-container div.company-container div.branch-container div.menuitem_image-container{
+	height: 60%;
+}
+
+div.nearby-container div.company-container div.branch-container div.menuitem_image-container img{
+	border-radius: 25px;
+	
+	height: 100%;
+}
+
 div.nearby-container div.company-container div#company-slidebox{
-	height: 250px;
+	height: 150px;
+	
+	margin-top: 5px;
 }
 
 div.nearby-container div.map-container{
@@ -8,12 +36,6 @@ div.nearby-container div.map-container{
 	left: 0px;
 	position: absolute;
 	top: 0px;
-}
-
-div.nearby-container div.search-container div.item, 
-div.nearby-container ion-scroll.category_link-container{
-	background-color: #303030;
-	color: #f0f0f0;
 }
 
 div.nearby-container div.search-container label, 
