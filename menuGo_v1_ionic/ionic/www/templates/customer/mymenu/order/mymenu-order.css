@@ -2,7 +2,9 @@ div.order-container div.order_status-container button{
 	min-width: 75px;
 }
 
-div.order-container div.order_status-container button.status-active{
+div.order-container div.order_status-container button#queueOrderStatusBtn.status-active, 
+div.order-container div.order_status-container button#cookingOrderStatusBtn.status-active, 
+div.order-container div.order_status-container button#toserveOrderStatusBtn.status-active{
 	background-color: #387ef5 !important;
 	color: #f0f0f0 !important;
 }

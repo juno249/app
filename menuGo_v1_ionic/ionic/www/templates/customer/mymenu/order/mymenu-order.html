@@ -25,21 +25,47 @@
 			</span>
 			<div 
 				class="child-content-center order_status_indicator-container">
+				<!--  *************** 
+						queueOrderStatusBtn (start)
+						*************** -->
 				<button 
 					class="button button-positive button-outline button-small" 
+					id="queueOrderStatusBtn" 
+					name="queueOrderStatusBtn" 
 					ng-class="{'status-active': v.order_status == 'queue'}">
 					queue
 				</button>
+				<!--  *************** 
+						queueOrderStatusBtn (end)
+						*************** -->
+						
+				<!--  *************** 
+						cookingOrderStatusBtn (start)
+						*************** -->
 				<button 
 					class="button button-positive button-outline button-small" 
+					id="cookingOrderStatusBtn" 
+					name="cookingOrderStatusBtn" 
 					ng-class="{'status-active': v.order_status == 'cooking'}">
 					cooking
 				</button>
+				<!--  *************** 
+						cookingOrderStatusBtn (end)
+						*************** -->
+						
+				<!--  *************** 
+						toserveOrderStatusBtn (start)
+						*************** -->
 				<button 
 					class="button button-positive button-outline button-small" 
+					id="toserveOrderStatusBtn" 
+					name="toserveOrderStatusBtn" 
 					ng-class="{'status-active': v.order_status == 'to serve'}">
 					to serve
 				</button>
+				<!--  *************** 
+						toserveOrderStatusBtn (end)
+						*************** -->
 			</div>
 		</div>
 	</div>
