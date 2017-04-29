@@ -89,10 +89,11 @@
 				</a>
 			</ion-scroll>
 			<div 
-				class="card company-container" 
+				class="company-container" 
 				ng-repeat="(k, v) in customerNearbyController.companies">
 				<div 
-					class="branch-container" 
+					class="branch-container card" 
+					ng-click="customerNearbyController.gotoState('customer.nearby.reservation_menu', {companyName: k, branchName: i});" 
 					ng-repeat="(i, j) in v.branches">
 					<div 
 						class="company_name-container font-family-1-size-xsmall">

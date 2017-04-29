@@ -65,6 +65,9 @@ function mymenuBillController(
 	function getTotalCost(){
 		var totalCost = 0;
 		
+		if(null == vm.user.orderreference){	return;
+		}
+		
 		angular.forEach(
 				vm.user.orderreference.order, 
 				function(
