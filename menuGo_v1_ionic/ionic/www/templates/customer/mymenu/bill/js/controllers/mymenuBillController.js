@@ -6,12 +6,14 @@ angular
 		);
 
 mymenuBillController.$inject = [
+	'ORDER_STATUS', 
 	'$scope', 
 	'dataService', 
 	'reservationOrderreferenceOrderService'
 	];
 
 function mymenuBillController(
+		ORDER_STATUS, 
 		$scope, 
 		dataService, 
 		reservationOrderreferenceOrderService
@@ -55,6 +57,10 @@ function mymenuBillController(
 	
 	//controller_method
 	vm.getTotalCost = getTotalCost;
+	//controller_method
+	vm.doBilloutCash = doBilloutCash;
+	//controller_method
+	vm.doBilloutCC = doBilloutCC;
 	
 	function getTotalCost(){
 		var totalCost = 0;
@@ -69,6 +75,16 @@ function mymenuBillController(
 				);
 		
 		return totalCost;
+		}
+	
+	function doBilloutCash(){
+		if(!orderOrderstatusValid()){
+		}
+		}
+	
+	function doBilloutCC(){
+		if(!orderOrderstatusValid()){
+		}
 		}
 	
 	function genCompanyMenuMenuitems(){
@@ -116,6 +132,23 @@ function mymenuBillController(
 						}
 					);
 			}
+		}
+	
+	function orderOrderstatusValid(){
+		var isOrderOrderstatusValid = true;
+		
+		angular.forEach(
+				vm.user.orderreference.order, 
+				function(
+						v, 
+						k
+						){
+					if(!(ORDER_STATUS.to_serve == v.order_status)){	isOrderOrderstatusValid = false;
+					}
+					}
+				);
+		
+		return isOrderOrderstatusValid;
 		}
 	
 	$scope.$watch(
