@@ -11,7 +11,7 @@ button.back-button span.back-text{
 
 div.reservation_menu-container div.company-detail-container div.branch-container, 
 div.reservation_menu-container div.menuitem-container div.menuitem-desc-container{
-	line-height: 13px;
+	line-height: 12px;
 	
 	white-space: normal;
 }
@@ -23,7 +23,8 @@ div.reservation_menu-container div.company-detail-container img{
 }
 
 div.reservation_menu-container div.container-header, 
-div.reservation_menu-container div.menuitem-qty-container{
+div.reservation_menu-container div.menuitem-container div.menuitem-qty-container, 
+div.reservation_menu-container ion-scroll.menu_link-container{
 	background-color: #303030;
 	color: #f0f0f0;
 }
@@ -38,9 +39,22 @@ div.reservation_menu-container div.menuitem-container img{
 	object-fit: cover;
 }
 
-div.reservation_menu-container div.menu-container{
-	background-color: #303030;
+div.reservation_menu-container ion-scroll.menu_link-container{
+	overflow-x: scroll;
+	
+	white-space: nowrap;
+}
+
+div.reservation_menu-container ion-scroll.menu_link-container a.menu_link{
 	color: #f0f0f0;
 	
-	padding: 5px 0px 5px 10px;
+	display: inline-block;
+	
+	line-height: 12px;
+	
+	padding: 5px 10px 5px 10px;
+	
+	white-space: normal;
+	
+	width: 100px;
 }

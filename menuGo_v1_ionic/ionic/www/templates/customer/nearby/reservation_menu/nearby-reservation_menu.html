@@ -39,55 +39,49 @@
 					Menu Details
 				</span>
 			</div>
+			<ion-scroll 
+				class="menu_link-container" 
+				direction="x">
+				<a 
+					class="child-content-center font-family-1-size-small menu_link" 
+					ng-click="nearbyReservationMenuController.setMenuName(k)" 
+					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenus">
+					{{k}}
+				</a>
+			</ion-scroll>
 			<div 
-				class="list" 
-				ng-repeat="(k, v) in nearbyReservationMenuController.companyMenus">
+				class="list menuitem-container">
 				<div 
-					class="menu-container" 
-					ng-click="nearbyReservationMenuController.toggleVisibility(v);">
-					<i 
-						class="icon" 
-						ng-class="v.isCompanyMenuHidden?'ion-plus':'ion-minus'">
-					</i>
+					class="item item-thumbnail-left" 
+					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenuMenuitems" 
+					ng-show="v.menu_id == nearbyReservationMenuController.getMenuIdFromName()">
+					<!--  *************** 
+							menuitem-image (start)
+							*************** -->
+					<img 
+						id="menuitem-image" 
+						name="menuitem-image" 
+						src={{v.menuitem_image}}>
+					<!--  *************** 
+							menuitem-image (end)
+							*************** -->
 					<span 
 						class="font-family-1-size-small">
-						<underline>{{v.menu_name}}</underline>
+						<underline>{{v.menuitem_name}}</underline>
 					</span>
-				</div>
-				<div 
-					class="menuitem-container" 
-					ng-repeat="(i, j) in nearbyReservationMenuController.companyMenus[k].menuitems" 
-					ng-show="!v.isCompanyMenuHidden">
 					<div 
-						class="item item-thumbnail-left">
-						<!--  *************** 
-								menuitem-image (start)
-								*************** -->
-						<img 
-							id="menuitem-image" 
-							name="menuitem-image" 
-							src={{j.menuitem_image}}>
-						<!--  *************** 
-								menuitem-image (end)
-								*************** -->
+						class='menuitem-desc-container'>
 						<span 
-							class="font-family-1-size-small">
-							<underline>{{j.menuitem_name}}</underline>
+							class="font-family-2-size-small">
+							{{v.menuitem_desc}}
 						</span>
-						<div 
-							class='menuitem-desc-container'>
-							<span 
-								class="font-family-2-size-small">
-								{{j.menuitem_desc}}
-							</span>
-						</div>
-						<div 
-							class="child-content-right">
-							<span 
-								class="font-family-1-size-medium">
-								&#8369{{j.menuitem_price}}
-							</span>
-						</div>
+					</div>
+					<div 
+						class="child-content-right">
+						<span 
+							class="font-family-1-size-medium">
+							&#8369{{v.menuitem_price}}
+						</span>
 					</div>
 					<div 
 						class="row">
@@ -95,7 +89,7 @@
 							class="child-content-right col">
 							<button 
 								class="button button-positive button-small" 
-								ng-click="nearbyReservationMenuController.addReservationOrder(v, j);">
+								ng-click="nearbyReservationMenuController.addReservationOrder(v);">
 								<i 
 									class="icon ion-plus">
 								</i>
@@ -106,7 +100,7 @@
 							</button>
 							<button 
 								class="button button-positive button-small" 
-								ng-click="nearbyReservationMenuController.subReservationOrder(v, j);">
+								ng-click="nearbyReservationMenuController.subReservationOrder(v);">
 								<i 
 									class="icon ion-minus">
 								</i>
@@ -118,10 +112,10 @@
 						</div>
 						<div 
 							class="col item item-input-wrapper menuitem-qty-container">
-								<input 
-									class="child-content-center fill-parent-x font-family-1-size-small" 
-									ng-model="j.quantity" 
-									type="number">
+							<input 
+								class="child-content-center fill-parent-x font-family-2-size-small" 
+								ng-model="v.quantity" 
+								type="number">
 						</div>
 					</div>
 				</div>
@@ -136,7 +130,7 @@
 		class="button button-medium button-positive child-content-center" 
 		id="gotoOrdersBtn" 
 		name="gotoOrdersbtn" 
-		ng-click="nearbyReservationMenuController.gotoState('customer.nearby.reservation_order');"
+		ng-click="nearbyReservationMenuController.gotoState('customer.nearby.reservation_order');" 
 		ng-if="keys(nearbyReservationMenuController.user.reservationOrder).length > 0">
 		<i 
 			class="icon ion-arrow-right-a">
