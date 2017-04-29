@@ -12,7 +12,7 @@
 			<div 
 				class="child-content-center container-header item item-divider">
 				<span 
-					class="font-family-1-size-medium">
+					class="font-family-1-size-small">
 					Company Details
 				</span>
 			</div>
@@ -28,14 +28,14 @@
 					class="branch-container">
 					<span 
 						class="font-family-2-size-small">
-						{{nearbyReservationMenuController.toStringAddress();}}
+						{{nearbyReservationMenuController.toStringBranchAddress();}}
 					</span>
 				</div>
 			</div>
 			<div 
 				class="child-content-center container-header item item-divider">
 				<span 
-					class="font-family-1-size-medium">
+					class="font-family-1-size-small">
 					Menu Details
 				</span>
 			</div>
@@ -43,7 +43,7 @@
 				class="menu_link-container" 
 				direction="x">
 				<a 
-					class="child-content-center font-family-1-size-small menu_link" 
+					class="child-content-center font-family-1-size-xsmall menu_link" 
 					ng-click="nearbyReservationMenuController.setMenuName(k)" 
 					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenus">
 					{{k}}

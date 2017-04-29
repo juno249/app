@@ -9,13 +9,11 @@ customerNearbyController.$inject = [
                                     '$ionicHistory', 
                                     '$ionicSlideBoxDelegate', 
                                     '$localStorage', 
-                                    '$q', 
                                     '$scope', 
                                     '$state', 
                                     '$timeout', 
                                     'branchService', 
                                     'dataService', 
-                                    'geolocationService', 
                                     'googleplacesService'
                                     ];
 
@@ -23,13 +21,11 @@ function customerNearbyController(
 		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
 		$localStorage, 
-		$q, 
 		$scope, 
 		$state, 
 		$timeout, 
 		branchService, 
 		dataService, 
-		geolocationService, 
 		googleplacesService
 		){
 	$ionicHistory.clearHistory();
@@ -59,103 +55,52 @@ function customerNearbyController(
 	//controller_method
 	vm.gotoState = gotoState;
 	//controller_method
-	vm.initializeMapCoordinates = initializeMapCoordinates;
+	vm.setCompanyCategory = setCompanyCategory;
 	//controller_method
-	vm.setCategory = setCategory;
-	//controller_method
-	vm.toStringAddress = toStringAddress;
+	vm.toStringBranchAddress = toStringBranchAddress;
 	
-	function gotoState(stateName){
+	function gotoState(
+			stateName, 
+			stateParams
+			){
 		if('customer.nearby.reservation_menu' == stateName){
 			$state.go(
 					stateName, 
 					{
-						companyName: vm.companyBranch.companyName, 
-						branchName: vm.companyBranch.branchName
+						companyName: stateParams.companyName, 
+						branchName: stateParams.branchName
 						}, 
-					{	reload: true	}
+						{	reload: true	}
 						);
 			}
 		}
 	
-	function initializeMapCoordinates(){
-		var deferred = $q.defer();
-		
-		geolocationService.getPosition()
-		.then(getPositionSuccessCallback)
-		.catch(getPositionFailedCallback);
-		
-		function getPositionSuccessCallback(coordinates){	vm.mapConfig.center = coordinates;
-		}
-		
-		function getPositionFailedCallback(status){	//do something on failure
-		}
-		return deferred.promise;
-		}
-	
-	function setCategory(category){	vm.category = category;
+	function setCompanyCategory(companyCategory){	vm.companyCategory = companyCategory;
 	}
 	
-	function toStringAddress(branch){
+	function toStringBranchAddress(branch){
 		branchService.setBranches(branch);
 		
 		return branchService.toStringAddress();
 		}
 	
-	function loadCompaniesBranches(){
-		vm.companiesBranches = {};
+	function genCompanyMenuMenuitems(){
+		var companyMenuMenuitems = {};
 		
 		angular.forEach(
-				vm.companies, 
+				vm.companyMenus, 
 				function(
 						v, 
 						k
 						){
-					var company = v;
-					var companyBranches = company.branches;
-					
-					vm.companiesBranches[k] = companyBranches;
-					}
-				);
-		}
-	
-	function loadCompaniesMenuitems(){
-		vm.companiesMenuitems = {};
-		
-		angular.forEach(
-				vm.companies, 
-				function(
-						v, 
-						k
-						){
-					var company = v;
-					var companyMenus = company.menus;
-					var companyMenuitems = [];
-					
 					angular.forEach(
-							companyMenus, 
+							v.menuitems, 
 							function(
 									v, 
 									k
-									){
-								var companyMenu = v;
-								var companyMenuMenuitems = v.menuitems;
-								
-								angular.forEach(
-										companyMenuMenuitems, 
-										function(
-												v, 
-												k
-												){
-											var companyMenuMenuitem = v;
-											
-											if(1 == companyMenuMenuitem.menuitem_featured){	companyMenuitems.push(companyMenuMenuitem);
-											}
-											}
-										);
-								}
+									){	companyMenuMenuitems[v.menuitem_id] = v;
+									}
 							);
-					vm.companiesMenuitems[k] = companyMenuitems;
 					}
 				);
 		
@@ -163,10 +108,12 @@ function customerNearbyController(
 				function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_FEATURED_MENU_SLIDEBOX).update();
 				}
 				);
+		
+		return companyMenuMenuitems;
 		}
 	
-	function loadCompaniesCategoriesSelection(){
-		vm.companiesCategoriesSelection = [];
+	function genCompanyCategories(){
+		var companyCategories = [];
 		
 		angular.forEach(
 				vm.companies, 
@@ -176,10 +123,12 @@ function customerNearbyController(
 						){
 					var company = v;
 					
-					if(-1 == vm.companiesCategoriesSelection.indexOf(v.company_category)){	vm.companiesCategoriesSelection.push(v.company_category);
+					if(-1 == companyCategories.indexOf(v.company_category)){	companyCategories.push(v.company_category);
 					}
 					}
 				);
+		
+		return companyCategories;
 		}
 	
 	$scope.$watch(
@@ -195,9 +144,8 @@ function customerNearbyController(
 			function(){	return vm.companies;
 			}, 
 			function(){
-				loadCompaniesBranches();
-				loadCompaniesMenuitems();
-				loadCompaniesCategoriesSelection();
+				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
+				vm.companyCategories = genCompanyCategories();
 				}
 			);
 	

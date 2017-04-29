@@ -58,7 +58,7 @@ function nearbyReservationMenuController(
 	//controller_method
 	vm.subReservationOrder = subReservationOrder;
 	//controller_method
-	vm.toStringAddress = toStringAddress;
+	vm.toStringBranchAddress = toStringBranchAddress;
 	
 	function gotoState(stateName){
 		if('customer.nearby.reservation_order' == stateName){
@@ -100,7 +100,7 @@ function nearbyReservationMenuController(
 				);
 		}
 	
-	function toStringAddress(){
+	function toStringBranchAddress(){
 		branchService.setBranches(vm.branch);
 		
 		return branchService.toStringAddress();
