@@ -6,8 +6,10 @@ angular
 		);
 
 dataService.$inject = [
+                       'BROADCAST_MESSAGES', 
                        '$localStorage', 
                        '$q', 
+                       '$rootScope', 
                        'companyService', 
                        'branchService', 
                        'menuService', 
@@ -17,8 +19,10 @@ dataService.$inject = [
                        ];
 
 function dataService(
+		BROADCAST_MESSAGES, 
 		$localStorage, 
 		$q, 
+		$rootScope, 
 		companyService, 
 		branchService, 
 		menuService, 
@@ -53,6 +57,11 @@ function dataService(
 	
 	function fetchCompanies(){
 		var companies = undefined;
+		var isGetCompanies = false;
+		var isGetBranches = false;
+		var isGetMenus = false;
+		var isGetTables = false;
+		var isGetMenuitems = false;
 		
 		reset();
 		
@@ -64,6 +73,7 @@ function dataService(
 				.catch(fetchCompaniesFailedCallback);
 		
 		function fetchCompaniesSuccessCallback(response){
+			isGetCompanies = true;
 			companies = localStorage.getItem(COMPANIES_KEY);
 			companies = JSON.parse(companies);
 			
@@ -91,6 +101,7 @@ function dataService(
 						.catch(fetchBranchesFailedCallback);
 				
 				function fetchBranchesSuccessCallback(response){
+					isGetBranches = true;
 					branches = localStorage.getItem(BRANCHES_KEY);
 					branches = JSON.parse(branches);
 					
@@ -124,6 +135,7 @@ function dataService(
 								.catch(fetchTablesFailedCallback);
 						
 						function fetchTablesSuccessCallback(response){
+							isGetTables = true;
 							tables = localStorage.getItem(TABLES_KEY);
 							tables = JSON.parse(tables);
 							
@@ -140,15 +152,28 @@ function dataService(
 							
 							localStorage.removeItem(BRANCHES_KEY);
 							localStorage.removeItem(TABLES_KEY);
+							
+							if(
+									isGetCompanies &&
+									isGetBranches &&
+									isGetMenus &&
+									isGetTables &&
+									isGetMenuitems
+									){	$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
+									}
 							}
 						
-						function fetchTablesFailedCallback(responseError){	reset();
-						}
+						function fetchTablesFailedCallback(responseError){
+							reset();
+							$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+							}
 						}
 					}
 				
-				function fetchBranchesFailedCallback(responseError){	reset();
-				}
+				function fetchBranchesFailedCallback(responseError){
+					reset();
+					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+					}
 				}
 			
 			function fetchMenus(companyName){
@@ -164,6 +189,7 @@ function dataService(
 						.catch(fetchMenusFailedCallback);
 				
 				function fetchMenusSuccessCallback(response){
+					isGetMenus = true;
 					menus = localStorage.getItem(MENUS_KEY);
 					menus = JSON.parse(menus);
 					
@@ -197,6 +223,7 @@ function dataService(
 								.catch(fetchMenuitemsFailedCallback);
 						
 						function fetchMenuitemsSuccessCallback(response){
+							isGetMenuitems = true;
 							menuitems = localStorage.getItem(MENUITEMS_KEY);
 							menuitems = JSON.parse(menuitems);
 							
@@ -213,26 +240,43 @@ function dataService(
 							
 							localStorage.removeItem(MENUS_KEY);
 							localStorage.removeItem(MENUITEMS_KEY);
+							
+							if(
+									isGetCompanies &&
+									isGetBranches &&
+									isGetMenus &&
+									isGetTables &&
+									isGetMenuitems
+									){	$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
+									}
 							}
 						
-						function fetchMenuitemsFailedCallback(responseError){	reset();
-						}
+						function fetchMenuitemsFailedCallback(responseError){
+							reset();
+							$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+							}
 						}
 					}
 				
-				function fetchMenusFailedCallback(responseError){	reset();
-				}
+				function fetchMenusFailedCallback(responseError){
+					reset();
+					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+					}
 				}
 			}
 		
-		function fetchCompaniesFailedCallback(responseError){	reset();
-		}
+		function fetchCompaniesFailedCallback(responseError){
+			reset();
+			$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+			}
 		}
 	
 	function fetchMarketing(){
 		var marketing = undefined;
 		var advertisements = undefined;
 		var blogs = undefined;
+		var isGetAdvertisements = false;
+		var isGetBlogs = false;
 		
 		marketingService.fetchAdvertisements(	//fetchAdvertisements
 				1, 
@@ -242,6 +286,7 @@ function dataService(
 				.catch(fetchAdvertisementsFailedCallback);
 		
 		function fetchAdvertisementsSuccessCallback(response){
+			isGetAdvertisements = true;
 			advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
 			advertisements = JSON.parse(advertisements);
 			
@@ -259,10 +304,18 @@ function dataService(
 					);
 			
 			localStorage.removeItem(ADVERTISEMENTS_KEY);
+			
+			if(
+					isGetAdvertisements &&
+					isGetBlogs
+					){	$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingSuccess);
+					}
 			}
 		
-		function fetchAdvertisementsFailedCallback(responseError){	reset();
-		}
+		function fetchAdvertisementsFailedCallback(responseError){
+			reset();
+			$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingFailed);
+			}
 		
 		marketingService.fetchBlogs(	//getBlogs
 				1, 
@@ -272,6 +325,7 @@ function dataService(
 				.catch(fetchBlogsFailedCallback);
 		
 		function fetchBlogsSuccessCallback(response){
+			isGetBlogs = true;
 			blogs = localStorage.getItem(BLOGS_KEY);
 			blogs = JSON.parse(blogs);
 			
@@ -289,10 +343,18 @@ function dataService(
 					);
 			
 			localStorage.removeItem(BLOGS_KEY);
+			
+			if(
+					isGetAdvertisements &&
+					isGetBlogs
+					){	$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingSuccess);
+					}
 			}
 		
-		function fetchBlogsFailedCallback(responseError){	reset();
-		}
+		function fetchBlogsFailedCallback(responseError){
+			reset();
+			$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingFailed);
+			}
 		}
 	
 	function reset(){

@@ -6,9 +6,12 @@ angular
 		);
 
 customerHomeController.$inject = [
+                                  'BROADCAST_MESSAGES', 
                                   'ERROR_MESSAGES', 
                                   'LOADING_MESSAGES', 
                                   '$ionicHistory', 
+                                  '$ionicLoading', 
+                                  '$ionicPopup', 
                                   '$ionicSlideBoxDelegate', 
                                   '$localStorage', 
                                   '$scope', 
@@ -17,9 +20,12 @@ customerHomeController.$inject = [
                                   ];
 
 function customerHomeController(
+		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		LOADING_MESSAGES, 
 		$ionicHistory, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$ionicSlideBoxDelegate, 
 		$localStorage, 
 		$scope, 
@@ -38,8 +44,11 @@ function customerHomeController(
 		
 		vm.advertisements = vm.marketing.advertisements;
 		vm.blogs = vm.marketing.blogs;
-		} else {	dataService.fetchMarketing();
-		}
+		} else {
+			dataService.fetchMarketing();
+			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
+			}
 	
 	$ionicHistory.clearHistory();
 	
@@ -89,6 +98,23 @@ function customerHomeController(
 							$ionicSlideBoxDelegate.$getByHandle(DOM_BLOG_SLIDEBOX).update();
 							}
 						);
+				}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getMarketingSuccess, 
+			function(){	hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getMarketingFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
 				}
 			);
 	}

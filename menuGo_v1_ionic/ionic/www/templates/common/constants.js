@@ -285,14 +285,19 @@ angular
 			addReservation: 'addReservation', 
 			updateReservation: 'updateReservation', 
 			deleteReservation: 'deleteReservation', 
-			remReservationOrder: 'remReservationOrder'
+			remReservationOrder: 'remReservationOrder', 
+			getMarketingSuccess: 'getMarketingSuccess', 
+			getMarketingFailed: 'getMarketingFailed', 
+			getCompaniesSuccess: 'getCompaniesSuccess', 
+			getCompaniesFailed: 'getCompaniesFailed'
 				}
 		)
 
 .constant(
 		'ERROR_MESSAGES', 
 		{
-			authenticationFailed: 'authentication failed: invalid username/password'
+			authenticationFailed: 'authentication failed: invalid username/password', 
+			getFailed: 'get failed: unable to retrieve data from server'
 				}
 		)
 		
