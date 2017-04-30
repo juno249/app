@@ -6,10 +6,15 @@ angular
 		);
 
 nearbyReservationOrderController.$inject = [
+                                            'BROADCAST_MESSAGES', 
+                                            'ERROR_MESSAGES', 
+                                            'LOADING_MESSAGES', 
                                             'ORDER_STATUS', 
                                             'ORDERREFERENCE_STATUS', 
                                             'PAYMENT_MODES', 
                                             'RESERVATION_STATUS', 
+                                            '$ionicLoading', 
+                                            '$ionicPopup', 
                                             '$localStorage', 
                                             '$scope', 
                                             'orderreferenceService', 
@@ -18,10 +23,15 @@ nearbyReservationOrderController.$inject = [
                                             ];
 
 function nearbyReservationOrderController(
+		BROADCAST_MESSAGES, 
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		ORDERREFERENCE_STATUS, 
 		PAYMENT_MODES, 
 		RESERVATION_STATUS, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$localStorage, 
 		$scope, 
 		orderreferenceService, 
@@ -128,15 +138,23 @@ function nearbyReservationOrderController(
 			reservationOrderreferenceOrderService.addReservationOrderreferenceOrder(transParams)
 			.then(addReservationOrderreferenceOrderSuccessCallback)
 			.catch(addReservationOrderreferenceOrderFailedCallback);
+			
+			dispIonicLoading(LOADING_MESSAGES.sendingReservation);
 			}
 		
 		function addReservationOrderreferenceOrderSuccessCallback(response){
+			hideIonicLoading();
+			
 			reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
 			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
 			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
+			
 			function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+				hideIonicLoading();
+				
 				vm.user.reservation = response.reservation;
 				vm.user.orderreference = response.orderreference;
 				
@@ -146,12 +164,40 @@ function nearbyReservationOrderController(
 						);
 				}
 			
-			function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
+			function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+				hideIonicLoading();
+				
+				dispIonicPopup(ERROR_MESSAGES.getFailed);
 			}
 			}
 		
-		function addReservationOrderreferenceOrderFailedCallback(responseError){	//do something on failure
+		function addReservationOrderreferenceOrderFailedCallback(responseError){
+			hideIonicLoading();
+			
+			dispIonicPopup(ERROR_MESSAGES.sendFailed);
 		}
+		}
+	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
 		}
 	
 	$scope.$watchCollection(

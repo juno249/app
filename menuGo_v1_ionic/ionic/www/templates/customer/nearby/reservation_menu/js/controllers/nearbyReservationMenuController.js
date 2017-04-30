@@ -256,6 +256,7 @@ function nearbyReservationMenuController(
 			function(){
 				var DOM_POPUP_CLASS = '.popup';
 				
+				hideIonicLoading();
 				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 				}

@@ -297,7 +297,8 @@ angular
 		'ERROR_MESSAGES', 
 		{
 			authenticationFailed: 'authentication failed: invalid username/password', 
-			getFailed: 'get failed: unable to retrieve data from server'
+			getFailed: 'get failed: unable to retrieve data from server', 
+			sendFailed: 'send failed: unable to post reservation/orders to server'
 				}
 		)
 		
@@ -305,6 +306,7 @@ angular
 		'LOADING_MESSAGES', 
 		{
 			authenticatingUser: 'authenticating user', 
-			gettingData: 'getting data'
+			gettingData: 'getting data', 
+			sendingReservation: 'sending reservation'
 				}
 		)
