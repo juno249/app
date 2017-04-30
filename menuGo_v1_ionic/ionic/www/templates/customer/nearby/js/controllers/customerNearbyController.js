@@ -6,7 +6,12 @@ angular
 		);
 
 customerNearbyController.$inject = [
+                                    'BROADCAST_MESSAGES', 
+                                    'ERROR_MESSAGES', 
+                                    'LOADING_MESSAGES', 
                                     '$ionicHistory', 
+                                    '$ionicLoading', 
+                                    '$ionicPopup', 
                                     '$ionicSlideBoxDelegate', 
                                     '$localStorage', 
                                     '$scope', 
@@ -18,7 +23,12 @@ customerNearbyController.$inject = [
                                     ];
 
 function customerNearbyController(
+		BROADCAST_MESSAGES, 
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
 		$ionicHistory, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$ionicSlideBoxDelegate, 
 		$localStorage, 
 		$scope, 
@@ -49,8 +59,11 @@ function customerNearbyController(
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-		} else {	dataService.fetchCompanies();
-		}
+		} else {
+			dataService.fetchCompanies();
+			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
+			}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -143,6 +156,28 @@ function customerNearbyController(
 		return companyCategories;
 		}
 	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -181,6 +216,22 @@ function customerNearbyController(
 				}
 				
 				function getPlacePredictionsFailedCallback(status){	//do something on failure
+				}
+				}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
+			function(){	hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 				}
 			);
