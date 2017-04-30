@@ -12,7 +12,7 @@
 			<div 
 				class="child-content-center container-header item item-divider">
 				<span 
-					class="font-family-1-size-medium">
+					class="font-family-1-size-small">
 					My Orders
 				</span>
 			</div>
@@ -62,7 +62,7 @@
 				class="child-content-center container-header item item-divider" 
 				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				<span 
-					class="font-family-1-size-medium">
+					class="font-family-1-size-small">
 					Payment Details
 				</span>
 			</div>
@@ -74,7 +74,7 @@
 					<div 
 						class="child-content-right col">
 						<span 
-							class="font-family-2-size-medium">
+							class="font-family-2-size-small">
 							<underline>Reservation For</underline>: 
 						</span>
 					</div>
@@ -98,8 +98,8 @@
 					<div 
 						class="child-content-right col">
 						<span 
-							class="font-family-2-size-medium">
-							<underline>ETA</underline>: <br>(estimated time of arrival)
+							class="font-family-2-size-small">
+							<underline>ETA</underline>: <br>
 						</span>
 					</div>
 					<div 
@@ -114,7 +114,7 @@
 							<div 
 								class="child-content-center fill-parent-x">
 								<span 
-									class="font-family-2-size-medium">
+									class="font-family-2-size-small">
 									{{nearbyReservationOrderController.user.reservation.eta | date: 'yyyy-MM-dd H:mm'}}
 								</span>
 							</div>
@@ -126,7 +126,7 @@
 					<div 
 						class="child-content-right col">
 						<span 
-							class="font-family-2-size-medium">
+							class="font-family-2-size-small">
 							<underline>Payment Mode</underline>: 
 						</span>
 					</div>
@@ -138,7 +138,7 @@
 								class="icon ion-cash">
 							</i>
 							<select 
-								class="child-content-center fill-parent-x font-family-2-size-medium" 
+								class="child-content-center fill-parent-x font-family-2-size-small" 
 								ng-model="nearbyReservationOrderController.user.reservation.paymentMode">
 								<option 
 									ng-repeat="i in nearbyReservationOrderController.paymentModeOptions" 
@@ -154,7 +154,7 @@
 					<div 
 						class="child-content-right col">
 						<span 
-							class="font-family-2-size-medium">
+							class="font-family-2-size-small">
 							<underline>Service Time</underline>: 
 						</span>
 					</div>
@@ -170,7 +170,7 @@
 							<div 
 								class="child-content-center fill-parent-x">
 								<span 
-									class="font-family-2-size-medium">
+									class="font-family-2-size-small">
 									{{nearbyReservationOrderController.user.reservation.serviceTime | date: 'yyyy-MM-dd H:mm'}}
 								</span>
 							</div>
