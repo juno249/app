@@ -41,7 +41,8 @@ function customerNearbyController(
 	$ionicHistory.clearHistory();
 	
 	const COMPANIES_KEY = 'Companies';
-	const DOM_COMPANY_SLIDEBOX = 'company-slidebox';
+	const USER_KEY = 'User';
+	const DOM_COMPANY_SLIDEBOX_HANDLE = 'company-slidebox';
 	
 	var vm = this;
 	vm.mapConfig = {
@@ -64,6 +65,11 @@ function customerNearbyController(
 			
 			dispIonicLoading(LOADING_MESSAGES.gettingData);
 			}
+	
+	if(!(null == localStorage.getItem(USER_KEY))){
+		vm.user = localStorage.getItem(USER_KEY);
+		vm.user = JSON.parse(vm.user);
+		}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -133,7 +139,7 @@ function customerNearbyController(
 				);
 		
 		$timeout(
-				function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_COMPANY_SLIDEBOX).update();
+				function(){	$ionicSlideBoxDelegate.$getByHandle(DOM_COMPANY_SLIDEBOX_HANDLE).update();
 				}
 				);
 		
@@ -236,6 +242,20 @@ function customerNearbyController(
 				
 				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
+				}
+			);
+	
+	$scope.$on(
+			'$ionicView.beforeEnter', 
+			function(){
+				if(!(null == vm.user)){
+					vm.user.reservationOrder = {};
+					
+					localStorage.setItem(
+							USER_KEY, 
+							JSON.stringify(vm.user)
+							);
+					}
 				}
 			);
 	}
