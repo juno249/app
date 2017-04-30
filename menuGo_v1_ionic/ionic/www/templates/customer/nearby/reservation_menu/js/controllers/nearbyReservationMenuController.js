@@ -44,7 +44,7 @@ function nearbyReservationMenuController(
 			dataService.fetchCompanies();
 			
 			dispIonicLoading(LOADING_MESSAGES.gettingData);
-		}
+			}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
@@ -246,7 +246,7 @@ function nearbyReservationMenuController(
 			);
 	
 	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesSucces, 
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
 			function(){	hideIonicLoading();
 			}
 			);

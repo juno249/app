@@ -6,12 +6,22 @@ angular
 		);
 
 mymenuOrderController.$inject = [
+	'BROADCAST_MESSAGES', 
+	'ERROR_MESSAGES', 
+	'LOADING_MESSAGES', 
+	'$ionicLoading', 
+	'$ionicPopup', 
 	'$scope', 
 	'dataService', 
 	'reservationOrderreferenceOrderService'
 	];
 
 function mymenuOrderController(
+		BROADCAST_MESSAGES, 
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$scope, 
 		dataService, 
 		reservationOrderreferenceOrderService
@@ -27,8 +37,11 @@ function mymenuOrderController(
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-		} else {	dataService.fetchCompanies();
-		}
+		} else {
+			dataService.fetchCompanies();
+			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
+			}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
@@ -76,6 +89,28 @@ function mymenuOrderController(
 		return companyMenuMenuitems;
 		}
 	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -106,4 +141,21 @@ function mymenuOrderController(
 				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
 				}
 			);
-	}
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
+			function(){	hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
+				}
+			);
+		}
