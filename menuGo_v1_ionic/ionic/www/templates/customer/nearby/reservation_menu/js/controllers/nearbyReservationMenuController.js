@@ -6,6 +6,11 @@ angular
 		);
 
 nearbyReservationMenuController.$inject = [
+                                           'BROADCAST_MESSAGES', 
+                                           'ERROR_MESSAGES', 
+                                           'LOADING_MESSAGES', 
+                                           '$ionicLoading', 
+                                           '$ionicPopup', 
                                            '$localStorage', 
                                            '$scope', 
                                            '$state', 
@@ -15,6 +20,11 @@ nearbyReservationMenuController.$inject = [
                                            ];
 
 function nearbyReservationMenuController(
+		BROADCAST_MESSAGES, 
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$localStorage, 
 		$scope, 
 		$state, 
@@ -25,12 +35,17 @@ function nearbyReservationMenuController(
 	const COMPANIES_KEY = 'Companies';
 	const USER_KEY = 'User';
 	
+	localStorage.removeItem(COMPANIES_KEY);
+	
 	var vm = this;
 	
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
-		} else {	dataService.fetchCompanies();
+		} else {
+			dataService.fetchCompanies();
+			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
 		}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){
@@ -101,6 +116,9 @@ function nearbyReservationMenuController(
 		}
 	
 	function toStringBranchAddress(){
+		if(null == vm.branch){	return;
+		}
+		
 		branchService.setBranches(vm.branch);
 		
 		return branchService.toStringAddress();
@@ -156,6 +174,28 @@ function nearbyReservationMenuController(
 				);
 		}
 	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -205,5 +245,21 @@ function nearbyReservationMenuController(
 			}, 
 			function(){	synchronize();
 			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSucces, 
+			function(){	hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
+				}
 			);
 	}
