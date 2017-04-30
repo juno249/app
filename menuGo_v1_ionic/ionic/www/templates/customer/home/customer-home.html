@@ -10,7 +10,7 @@
 		<div 
 			class="home-container">
 			<div 
-				class="child-content-center company-logo-image-container">
+				class="child-content-center company_logo_image-container">
 				<img 
 					class="company-logo-image fill-parent-y" 
 					src="templates/login/res/img/companyLogo.png">
@@ -42,13 +42,8 @@
 					</div>
 				</div>
 			</div>
-			
 			<div 
-				class="advertisement-container">
-				<div 
-					class="child-content-center container-header font-family-1-size-medium">
-					ADVERTISEMENTS
-				</div>
+				class="advertisement-container card">
 				<!--  *************** 
 						advertisement-slidebox (start)
 						*************** -->
@@ -60,59 +55,19 @@
 					name="advertisement-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.advertisements">
-						<!--  *************** 
-								advertisement-title-container (start)
-								*************** -->
 						<div 
-							class="child-content-center font-family-2-size-small" 
-							id="advertisement-title-container" 
-							name="advertisement-title-container">
-							{{k.advertisement_title}}
-						</div>
-						<!--  *************** 
-								advertisement-title-container (end)
-								*************** -->
-								
-						<!--  *************** 
-								advertisement-image-container (start)
-								*************** -->
-						<div 
-							class="child-content-center" 
-							id="advertisement-image-container" 
-							name="advertisement-image-container">
+							class="advertisement_image-container child-content-center">
 							<img 
-								class="fill-parent-y" 
 								src={{k.advertisement_image}}>
 						</div>
-						<!--  *************** 
-								advertisement-image-container (end)
-								*************** -->
-								
-						<!--  *************** 
-								advertisement-price-container (start)
-								*************** -->
-						<div 
-							class="child-content-center font-family-2-size-small" 
-							id="advertisement-price-container" 
-							name="advertisement-price-container">
-							{{k.advertisement_price}}
-						</div>
-						<!--  *************** 
-								advertisement-price-container (end)
-								*************** -->
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 
 						advertisement-slidebox (end)
 						*************** -->
 			</div>
-			
 			<div 
-				class="blog-container">
-				<div 
-					class="child-content-center container-header font-family-1-size-medium">
-					BLOGS
-				</div>
+				class="blog-container card">
 				<!--  *************** 
 						blog-slidebox (start)
 						*************** -->
@@ -124,33 +79,11 @@
 					name="blog-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.blogs">
-						<!--  *************** 
-								blog-title-container (start)
-								*************** -->
 						<div 
-							class="child-content-center font-family-2-size-small" 
-							id="blog-title-container" 
-							name=blog-title-container>
-							{{k.blog_title}}
-						</div>
-						<!--  *************** 
-								blog-title-container (end)
-								*************** -->
-								
-						<!--  *************** 
-								blog-image-container (start)
-								*************** -->
-						<div 
-							class="child-content-center" 
-							id="blog-image-container" 
-							name="blog-image-container">
+							class="blog_image-container child-content-center">
 							<img 
-								class="fill-parent-y" 
 								src={{k.blog_image}}>
 						</div>
-						<!--  *************** 
-								blog-image-container (end)
-								*************** -->
 					</ion-slide>
 				</ion-slide-box>
 				<!--  *************** 

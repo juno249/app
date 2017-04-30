@@ -1,26 +1,13 @@
-div.home-container div.advertisement-container div#advertisement-image-container, 
-div.home-container div.blog-container div#blog-image-container{
-	background-color: #303030;
-	
+div.home-container div.advertisement-container div.advertisement_image-container, 
+div.home-container div.blog-container div.blog_image-container{
 	height: 70%;
 }
 
-div.home-container div.advertisement-container div#advertisement-price-container{
-	border-bottom: solid 1px #d3d3d3;
+div.home-container div.advertisement-container div.advertisement_image-container img, 
+div.home-container div.blog-container div.blog_image-container img{
+	border-radius: 25px;
 	
-	height: 6%;
-}
-
-div.home-container div.advertisement-container div#advertisement-title-container, 
-div.home-container div.blog-container div#blog-title-container{
-	height: 10%;
-	
-	padding-left: 10px;
-	padding-right: 10px;
-	
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+	height: 100%;
 }
 
 div.home-container div.advertisement-container div#advertisement-slidebox, 
@@ -28,12 +15,7 @@ div.home-container div.blog-container div#blog-slidebox{
 	height: 250px;
 }
 
-div.home-container div.advertisement-container div.container-header, 
-div.home-container div.blog-container div.container-header{
-	border-bottom: solid 1px #d3d3d3;
-}
-
-div.home-container div.company-logo-image-container{
+div.home-container div.company_logo_image-container{
 	height: 100px;
 }
 
