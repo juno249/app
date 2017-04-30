@@ -1,10 +1,10 @@
-div.mymenu_menu-container div.menuitem-container div.menuitem-desc-container{
+div.mymenu_menu-container div.menuitem-container div.menuitem_desc-container{
 	line-height: 12px;
 	
 	white-space: normal;
 }
 
-div.mymenu_menu-container div.menuitem-container div.menuitem-qty-container{
+div.mymenu_menu-container div.menuitem-container div.menuitem_qty-container{
 	background-color: #303030;
 	color: #f0f0f0;
 }

@@ -61,7 +61,7 @@ function nearbyReservationOrderController(
 	function getTotalCost(){
 		var totalCost = 0;
 		
-		if(null == vm.user.orderreference){	return;
+		if(null == vm.user.reservationOrder){	return;
 		}
 		
 		angular.forEach(

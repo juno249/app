@@ -1,4 +1,4 @@
-div.menuitem-image-image-container{
+div.menuitem_image_image-container{
 	height: 150px;
 	width: 150px;
 	
@@ -6,6 +6,6 @@ div.menuitem-image-image-container{
 	padding: 0px 10px 10px 10px;
 }
 
-div.menuitem-image-image-container img.menuitem-image-image{
+div.menuitem_image_image-container img.menuitem-image-image{
 	width: 100%;
 }

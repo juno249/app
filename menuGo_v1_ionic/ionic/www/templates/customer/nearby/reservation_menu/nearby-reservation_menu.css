@@ -9,21 +9,21 @@ button#gotoOrdersBtn{
 	right: 10px;
 }
 
-div.reservation_menu-container div.company-detail-container div.branch-container, 
-div.reservation_menu-container div.menuitem-container div.menuitem-desc-container{
+div.reservation_menu-container div.company_detail-container div.branch-container, 
+div.reservation_menu-container div.menuitem-container div.menuitem_desc-container{
 	line-height: 12px;
 	
 	white-space: normal;
 }
 
-div.reservation_menu-container div.company-detail-container img{
+div.reservation_menu-container div.company_detail-container img{
 	border-radius: 25px;
 	
 	object-fit: cover;
 }
 
 div.reservation_menu-container div.container-header, 
-div.reservation_menu-container div.menuitem-container div.menuitem-qty-container, 
+div.reservation_menu-container div.menuitem-container div.menuitem_qty-container, 
 div.reservation_menu-container ion-scroll.menu_link-container{
 	background-color: #303030;
 	color: #f0f0f0;

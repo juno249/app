@@ -44,12 +44,12 @@ ul.nav li a.active{
 }
 
 div.panel-about div.company-logo-image-container, 
-div.user-avatar-container{
+div.user_avatar-container{
 	height: 100px;
 }
 
 div.panel-about div.company-logo-image-container img.company-logo-image, 
-div.user-avatar-container img.user-avatar{
+div.user_avatar-container img.user-avatar{
 	height: 90%;
 	margin: auto;
 }
