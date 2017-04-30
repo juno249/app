@@ -35,8 +35,6 @@ function nearbyReservationMenuController(
 	const COMPANIES_KEY = 'Companies';
 	const USER_KEY = 'User';
 	
-	localStorage.removeItem(COMPANIES_KEY);
-	
 	var vm = this;
 	
 	if(!(null == localStorage.getItem(COMPANIES_KEY))){
