@@ -6,14 +6,22 @@ angular
 		);
 
 loginController.$inject = [
+                           'ERROR_MESSAGES', 
+                           'LOADING_MESSAGES', 
                            'USER_ROLES', 
+                           '$ionicLoading', 
+                           '$ionicPopup', 
                            '$localStorage', 
                            '$state', 
                            'loginService'
                            ];
 
 function loginController(
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
 		USER_ROLES, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$localStorage, 
 		$state, 
 		loginService
@@ -42,7 +50,11 @@ function loginController(
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);
 		
+		dispIonicLoading(LOADING_MESSAGES.authenticatingUser);
+		
 		function doLoginSuccessCallback(response){
+			hideIonicLoading();
+			
 			vm.user = localStorage.getItem('User');
 			vm.user = JSON.parse(vm.user);
 			
@@ -55,10 +67,35 @@ function loginController(
 				}
 			}
 		
-		function doLoginFailedCallback(responseError){	//do something on failure
-		}
+		function doLoginFailedCallback(responseError){
+			hideIonicLoading();
+			
+			dispIonicPopup(ERROR_MESSAGES.authenticationFailed);
+			}
 		}
 	
 	function doSignup(){	
 	}
+	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
+		}
 	}

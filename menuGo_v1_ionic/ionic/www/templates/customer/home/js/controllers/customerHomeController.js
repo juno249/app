@@ -6,21 +6,25 @@ angular
 		);
 
 customerHomeController.$inject = [
-                                  'dataService', 
+                                  'ERROR_MESSAGES', 
+                                  'LOADING_MESSAGES', 
                                   '$ionicHistory', 
                                   '$ionicSlideBoxDelegate', 
                                   '$localStorage', 
                                   '$scope', 
-                                  '$timeout'
+                                  '$timeout', 
+                                  'dataService'
                                   ];
 
 function customerHomeController(
-		dataService, 
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
 		$ionicHistory, 
 		$ionicSlideBoxDelegate, 
 		$localStorage, 
 		$scope, 
-		$timeout
+		$timeout, 
+		dataService
 		){
 	const MARKETING_KEY = 'Marketing';
 	const DOM_ADVERTISEMENT_SLIDEBOX = 'advertisement-slidebox';
@@ -38,6 +42,28 @@ function customerHomeController(
 		}
 	
 	$ionicHistory.clearHistory();
+	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
+		}
 	
 	$scope.$watch(
 			function(){	return localStorage.getItem(MARKETING_KEY);

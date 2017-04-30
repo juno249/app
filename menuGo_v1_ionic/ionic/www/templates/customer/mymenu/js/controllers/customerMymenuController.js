@@ -12,7 +12,7 @@ function customerMymenuController(
 		){
 	const DOM_ION_HEADER_BAR_TAG = 'ion-header-bar';
 	const DOM_ION_TABS_CLASS = '.tab-nav.tabs';
-	const DOM_RESERVATION_DETAIL_CONTAINER = '#reservation-detail-container';
+	const DOM_RESERVATION_DETAIL_CONTAINER = '#reservation_detail-container';
 	const DOM_MYMENU_CONTENT = '#mymenuContent';
 	const DOM_BUTTON_CONTAINER = '#button-container';
 	

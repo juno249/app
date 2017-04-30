@@ -4,8 +4,8 @@ ion-view#login{
 	padding-top: 50px;
 }
 
-div.login-container div.company-logo-image-container, 
-div.login-container div.login-form-container{
+div.login-container div.company_logo_image-container, 
+div.login-container div.login_form-container{
 	background-color: #f9f9f9;
 	
 	margin: 20px;
@@ -13,20 +13,20 @@ div.login-container div.login-form-container{
 	margin-top: 0px;
 }
 
-div.login-container div.company-logo-image-container{
+div.login-container div.company_logo_image-container{
 	border-bottom-right-radius: 35px;
 	border-top-left-radius: 35px;
 	
 	height: 250px;
 }
 
-div.login-container div.company-logo-image-container img{
+div.login-container div.company_logo_image-container img{
 	height: 70%;
 	
 	margin-top: 50px;
 }
 
-div.login-container div.login-form-container{
+div.login-container div.login_form-container{
 	border-bottom-left-radius: 35px;
 	border-top-right-radius: 35px;
 	
@@ -34,7 +34,7 @@ div.login-container div.login-form-container{
 	padding-bottom: 20px;
 }
 
-div.login-container div.login-form-container div.item{
+div.login-container div.login_form-container div.item{
 	border: none;
 	
 	margin: 20px;
@@ -42,7 +42,7 @@ div.login-container div.login-form-container div.item{
 	margin-top: 0px;
 }
 
-div.login-container div.login-form-container label{
+div.login-container div.login_form-container label{
 	background-color: #f9f9f9;
 	
 	padding-top: 5px;

@@ -116,7 +116,7 @@ function reservationOrderreferenceOrderService(
 			}
 			}
 		
-		function fetchReservationsFailedCallback(responseError){	deffered.reject(responseError);
+		function fetchReservationsFailedCallback(responseError){	deferred.reject(responseError);
 		}
 		return deferred.promise;
 		}

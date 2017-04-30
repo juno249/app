@@ -288,3 +288,18 @@ angular
 			remReservationOrder: 'remReservationOrder'
 				}
 		)
+
+.constant(
+		'ERROR_MESSAGES', 
+		{
+			authenticationFailed: 'authentication failed: invalid username/password'
+				}
+		)
+		
+.constant(
+		'LOADING_MESSAGES', 
+		{
+			authenticatingUser: 'authenticating user', 
+			gettingData: 'getting data'
+				}
+		)
