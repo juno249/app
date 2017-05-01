@@ -54,6 +54,7 @@ function mymenuBillController(
 		vm.user.orderreference = response.orderreferences;
 		vm.user.orderreference.order = vm.user.orderreference.orders;
 		delete vm.user.orderreference.orders;
+		localStorage.removeItem(KEYS.Reservations);
 		
 		localStorage.setItem(
 				KEYS.User, 

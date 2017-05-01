@@ -10,10 +10,13 @@ mymenuMenuController.$inject = [
 	'ERROR_MESSAGES', 
 	'KEYS', 
 	'LOADING_MESSAGES', 
+	'ORDER_STATUS', 
 	'$ionicLoading', 
 	'$ionicPopup', 
 	'$scope', 
-	'dataService'
+	'dataService', 
+	'orderService', 
+	'reservationOrderreferenceOrderService'
 	];
 
 function mymenuMenuController(
@@ -21,24 +24,18 @@ function mymenuMenuController(
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
+		ORDER_STATUS, 
 		$ionicLoading, 
 		$ionicPopup, 
 		$scope, 
-		dataService
+		dataService, 
+		orderService, 
+		reservationOrderreferenceOrderService
 		){
 	var vm = this;
 	vm.companyName = $scope.$parent.customerMymenuController.companyName;
 	vm.branchName = $scope.$parent.customerMymenuController.branchName;
 	vm.tableNumber = $scope.$parent.customerMymenuController.tableNumber;
-	
-	if(!(null == localStorage.getItem(KEYS.Companies))){
-		vm.company = localStorage.getItem(KEYS.Companies);
-		vm.company = JSON.parse(vm.company);
-		} else {
-			dataService.fetchCompanies();
-			
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
-			}
 	
 	if(!(null == localStorage.getItem(KEYS.User))){
 		vm.user = localStorage.getItem(KEYS.User);
@@ -46,6 +43,43 @@ function mymenuMenuController(
 		
 		if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
 		}
+		}
+	
+	dispIonicLoading(LOADING_MESSAGES.gettingData);
+	
+	reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+	reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
+	.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+	.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+	
+	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+		hideIonicLoading();
+		
+		vm.user.reservation = response.reservations;
+		vm.user.orderreference = response.orderreferences;
+		vm.user.orderreference.order = vm.user.orderreference.orders;
+		delete vm.user.orderreference.orders;
+		localStorage.removeItem(KEYS.Reservation);
+		
+		localStorage.setItem(
+				KEYS.User, 
+				JSON.stringify(vm.user)
+				);
+		
+		if(!(null == localStorage.getItem(KEYS.Companies))){
+			vm.company = localStorage.getItem(KEYS.Companies);
+			vm.company = JSON.parse(vm.company);
+			} else {
+				dataService.fetchCompanies();
+				
+				dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
+		}
+	
+	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+		hideIonicLoading();
+		
+		dispIonicPopup(ERROR_MESSAGES.getFailed);
 		}
 	
 	//controller_method
@@ -56,6 +90,8 @@ function mymenuMenuController(
 	vm.addReservationOrder = addReservationOrder;
 	//controller_method
 	vm.subReservationOrder = subReservationOrder;
+	//controller_method
+	vm.postOrder = postOrder;
 	
 	function setMenuName(menuName){	vm.menuName = menuName;
 	}
@@ -85,6 +121,73 @@ function mymenuMenuController(
 				KEYS.User, 
 				JSON.stringify(vm.user)
 				);
+		}
+	
+	function postOrder(){
+		var orders = [];
+		var order = {};
+		
+		angular.forEach(
+				vm.user.reservationOrder, 
+				function(
+						v, 
+						k
+						){
+					for(var i=0; i<v.quantity; i++){
+						order = {
+								menuitem_id: v.menuitem_id, 
+								orderreference_code: Object.keys(vm.user.orderreference).orderreference_code, 
+								order_status: ORDER_STATUS.queue, 
+								order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+								}
+						
+						orders.push(order);
+						}
+					}
+				);
+		
+		orderService.setCompanyName(vm._company.company_name);
+		orderService.setBranchName(vm._branch.branch_name);
+		orderService.setTableNumber(vm._table.table_number);
+		orderService.setOrderreferenceCode(vm.user.orderreference.orderreference_code);
+		orderService.addOrder(orders)
+		.then(addOrderSuccessCallback)
+		.catch(addOrderFailedCallback);
+		
+		function addOrderSuccessCallback(response){
+			hideIonicLoading();
+			
+			reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
+			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
+			
+			function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+				hideIonicLoading();
+				
+				vm.user.reservation = response.reservations;
+				vm.user.orderreference = response.orderreferences;
+				delete vm.user.reservationOrder;
+				localStorage.removeItem(KEYS.Reservations);
+				
+				localStorage.setItem(
+						KEYS.User, 
+						JSON.stringify(vm.user)
+						);
+				}
+			
+			function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+				hideIonicLoading();
+				
+				dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
+			}
+		
+		function addOrderFailedCallback(responseError){
+			hideIonicLoading();
+			}
 		}
 	
 	function genCompanyMenuMenuitem(){

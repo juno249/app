@@ -307,7 +307,8 @@ angular
 		{
 			authenticatingUser: 'authenticating user', 
 			gettingData: 'getting data', 
-			sendingReservation: 'sending reservation'
+			sendingReservation: 'sending reservation', 
+			sendingOrder: 'sending order'
 				}
 		)
 

@@ -159,6 +159,7 @@ function nearbyReservationOrderController(
 				vm.user.reservation = response.reservations;
 				vm.user.orderreference = response.orderreferences;
 				delete vm.user.reservationOrder;
+				localStorage.removeItem(KEYS.Reservations);
 				
 				localStorage.setItem(
 						KEYS.User, 
@@ -170,7 +171,7 @@ function nearbyReservationOrderController(
 				hideIonicLoading();
 				
 				dispIonicPopup(ERROR_MESSAGES.getFailed);
-			}
+				}
 			}
 		
 		function addReservationOrderreferenceOrderFailedCallback(responseError){
