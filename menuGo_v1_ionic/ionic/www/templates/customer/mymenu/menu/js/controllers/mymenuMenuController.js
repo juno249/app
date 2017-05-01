@@ -36,9 +36,9 @@ function mymenuMenuController(
 		vm.companies = localStorage.getItem(COMPANIES_KEY);
 		vm.companies = JSON.parse(vm.companies);
 		} else {
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
-			
 			dataService.fetchCompanies();
+			
+			dispIonicLoading(LOADING_MESSAGES.gettingData);
 			}
 	
 	if(!(null == localStorage.getItem(USER_KEY))){

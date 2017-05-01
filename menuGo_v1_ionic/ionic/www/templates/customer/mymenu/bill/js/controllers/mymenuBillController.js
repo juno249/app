@@ -6,14 +6,24 @@ angular
 		);
 
 mymenuBillController.$inject = [
+	'BROADCAST_MESSAGES', 
+	'ERROR_MESSAGES', 
+	'LOADING_MESSAGES', 
 	'ORDER_STATUS', 
+	'$ionicLoading', 
+	'$ionicPopup', 
 	'$scope', 
 	'dataService', 
 	'reservationOrderreferenceOrderService'
 	];
 
 function mymenuBillController(
+		BROADCAST_MESSAGES, 
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
 		ORDER_STATUS, 
+		$ionicLoading, 
+		$ionicPopup, 
 		$scope, 
 		dataService, 
 		reservationOrderreferenceOrderService
@@ -26,23 +36,21 @@ function mymenuBillController(
 	vm.branchName = $scope.$parent.customerMymenuController.branchName;
 	vm.tableNumber = $scope.$parent.customerMymenuController.tableNumber;
 	
-	if(!(null == localStorage.getItem(COMPANIES_KEY))){
-		vm.companies = localStorage.getItem(COMPANIES_KEY);
-		vm.companies = JSON.parse(vm.companies);
-		} else {	dataService.fetchCompanies();
-		}
-	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
 		vm.user = JSON.parse(vm.user);
-		
-		reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
-		reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
-		.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
-		.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
-		}
+	}
+	
+	dispIonicLoading(LOADING_MESSAGES.gettingData);
+	
+	reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+	reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
+	.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+	.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 	
 	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+		hideIonicLoading();
+		
 		vm.user.reservation = response.reservation;
 		vm.user.orderreference = response.orderreference;
 		
@@ -50,10 +58,22 @@ function mymenuBillController(
 				USER_KEY, 
 				JSON.stringify(vm.user)
 				);
+		
+		if(!(null == localStorage.getItem(COMPANIES_KEY))){
+			vm.companies = localStorage.getItem(COMPANIES_KEY);
+			vm.companies = JSON.parse(vm.companies);
+			} else {
+				dataService.fetchCompanies();
+				
+				dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
 		}
 	
-	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
-	}
+	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+		hideIonicLoading();
+		
+		dispIonicPopup(ERROR_MESSAGES.getFailed);
+		}
 	
 	//controller_method
 	vm.getTotalCost = getTotalCost;
@@ -154,6 +174,28 @@ function mymenuBillController(
 		return isOrderOrderstatusValid;
 		}
 	
+	function dispIonicLoading(msg){
+		var templateString = '';
+		templateString += '<ion-spinner></ion-spinner><br>';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicLoading.show(
+				{	template: templateString	}
+				);
+		}
+	
+	function hideIonicLoading(){	$ionicLoading.hide();
+	}
+	
+	function dispIonicPopup(msg){
+		var templateString = '';
+		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
+		
+		$ionicPopup.alert(
+				{	template: templateString	}
+				);
+		}
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(COMPANIES_KEY);
 			}, 
@@ -190,5 +232,22 @@ function mymenuBillController(
 			}, 
 			function(){	appendQuantity();
 			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
+			function(){	hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
+				}
 			);
 	}
