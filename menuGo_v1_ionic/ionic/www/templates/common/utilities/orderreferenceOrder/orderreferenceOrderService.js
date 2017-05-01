@@ -58,35 +58,26 @@ function orderreferenceOrderService(
 				.catch(fetchOrderreferencesFailedCallback);
 		
 		function fetchOrderreferencesSuccessCallback(response){
-			var orderreferenceCode = undefined;
-			var orderreference = localStorage.getItem(ORDERREFERENCES_KEY);
-			orderreference = JSON.parse(orderreference);
-			orderreferencesOrders.orderreference = orderreference;
-			localStorage.removeItem(ORDERREFERENCES_KEY);
+			var orderreferences = localStorage.getItem(ORDERREFERENCES_KEY);
+			orderreferences = JSON.parse(orderreferences);
+			var orderreferencesKey = Object.keys(orderreferences);
 			
-			angular.forEach(
-					orderreference, 
-					function(
-							v, 
-							k
-							){	orderreferenceCode = k;
-							}
-					);
+			orderreferencesOrders.orderreferences = orderreferences[orderreferencesKey[0]][ORDERREFERENCES_KEY];
 			
 			orderService.fetchOrders(	//getByQuery
 					13, 
-					{	queryString: ('?OrderreferenceCode='+orderreferenceCode)	}
+					{	queryString: ('?OrderreferenceCode='+orderreferencesOrders.orderreferences.orderreference_code)	}
 					)
 					.then(fetchOrdersSuccessCallback)
 					.catch(fetchOrdersFailedCallback);
 			
 			function fetchOrdersSuccessCallback(response){
-				var order = localStorage.getItem(ORDERS_KEY);
-				order = JSON.parse(order);
-				orderreferencesOrders.orderreference.order = order;
+				var orders = localStorage.getItem(ORDERS_KEY);
+				orders = JSON.parse(orders);
+				reservationsOrderreferencesOrders.orderreferences.orders = orders;
 				localStorage.removeItem(ORDERS_KEY);
 				
-				deferred.resolve(orderreferencesOrders);
+				deferred.resolve(reservationsOrderreferencesOrders);
 				}
 			
 			function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);

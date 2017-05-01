@@ -155,8 +155,8 @@ function nearbyReservationOrderController(
 			function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
 				hideIonicLoading();
 				
-				vm.user.reservation = response.reservation;
-				vm.user.orderreference = response.orderreference;
+				vm.user.reservation = response.reservations;
+				vm.user.orderreference = response.orderreferences;
 				
 				localStorage.setItem(
 						USER_KEY, 

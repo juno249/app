@@ -7,7 +7,12 @@ angular
 
 reservationService.$inject = [
                               'API_BASE_URL', 
+                              'BRANCHES_DB_FIELDS', 
+                              'COMPANIES_DB_FIELDS', 
+                              'CUSTOMERS_DB_FIELDS', 
+                              'ORDERREFERENCES_DB_FIELDS', 
                               'RESERVATIONS_DB_FIELDS', 
+                              'TABLES_DB_FIELDS', 
                               '$http', 
                               '$localStorage', 
                               '$q'
@@ -15,11 +20,21 @@ reservationService.$inject = [
 
 function reservationService(
 		API_BASE_URL, 
+		BRANCHES_DB_FIELDS, 
+		COMPANIES_DB_FIELDS, 
+		CUSTOMERS_DB_FIELDS, 
+		ORDERREFERENCES_DB_FIELDS, 
 		RESERVATIONS_DB_FIELDS, 
+		TABLES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
+	const CUSTOMERS_KEY = 'Customers';
+	const COMPANIES_KEY = 'Companies';
+	const BRANCHES_KEY = 'Branches';
+	const TABLES_KEY = 'Tables';
+	const ORDERREFERENCES_KEY = 'Orderreferences';
 	const RESERVATIONS_KEY = 'Reservations';
 	
 	reservationServiceObj = {
@@ -185,8 +200,36 @@ function reservationService(
 				var reservationsDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){	reservationsDetails[RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
-				}
+				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
+					if(null == reservationsDetails[CUSTOMERS_KEY]){	reservationsDetails[CUSTOMERS_KEY] = {};
+					}
+					reservationsDetails[CUSTOMERS_KEY][CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
+					if(null == reservationsDetails[COMPANIES_KEY]){	reservationsDetails[COMPANIES_KEY] = {};
+					}
+					reservationsDetails[COMPANIES_KEY][COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){
+					if(null == reservationsDetails[BRANCHES_KEY]){	reservationsDetails[BRANCHES_KEY] = {};
+					}
+					reservationsDetails[BRANCHES_KEY][BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){
+					if(null == reservationsDetails[TABLES_KEY]){	reservationsDetails[TABLES_KEY] = {};
+					}
+					reservationsDetails[TABLES_KEY][TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
+					if(null == reservationsDetails[ORDERREFERENCES_KEY]){	reservationsDetails[ORDERREFERENCES_KEY] = {};
+					}
+					reservationsDetails[ORDERREFERENCES_KEY][ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){
+					if(null == reservationsDetails[RESERVATIONS_KEY]){	reservationsDetails[RESERVATIONS_KEY] = {};
+					}
+					reservationsDetails[RESERVATIONS_KEY][RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
+					}
 				
 				var key = responseData[i][RESERVATIONS_DB_FIELDS[1]]; //reservation_code
 				reservationServiceObj.reservations[key] = reservationsDetails;

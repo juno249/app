@@ -7,7 +7,11 @@ angular
 
 orderreferenceService.$inject = [
                                  'API_BASE_URL', 
+                                 'BRANCHES_DB_FIELDS', 
+                                 'COMPANIES_DB_FIELDS', 
+                                 'CUSTOMERS_DB_FIELDS', 
                                  'ORDERREFERENCES_DB_FIELDS', 
+                                 'TABLES_DB_FIELDS', 
                                  '$http', 
                                  '$localStorage', 
                                  '$q'
@@ -15,11 +19,19 @@ orderreferenceService.$inject = [
 
 function orderreferenceService(
 		API_BASE_URL, 
+		BRANCHES_DB_FIELDS, 
+		COMPANIES_DB_FIELDS, 
+		CUSTOMERS_DB_FIELDS, 
 		ORDERREFERENCES_DB_FIELDS, 
+		TABLES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
+	const CUSTOMERS_KEY = 'Customers';
+	const COMPANIES_KEY = 'Companies';
+	const BRANCHES_KEY = 'Branches';
+	const TABLES_KEY = 'Tables';
 	const ORDERREFERENCES_KEY = 'Orderreferences';
 	
 	var orderreferenceServiceObj = {
@@ -162,8 +174,31 @@ function orderreferenceService(
 				var orderreferencesDetails = {};
 				var key = undefined;
 				
-				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){	orderreferencesDetails[ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
-				}
+				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
+					if(null == orderreferencesDetails[CUSTOMERS_KEY]){	orderreferencesDetails[CUSTOMERS_KEY] = {};
+					}
+					orderreferencesDetails[CUSTOMERS_KEY][CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
+					if(null == orderreferencesDetails[COMPANIES_KEY]){	orderreferencesDetails[COMPANIES_KEY] = {};
+					}
+					orderreferencesDetails[COMPANIES_KEY][COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){
+					if(null == orderreferencesDetails[BRANCHES_KEY]){	orderreferencesDetails[BRANCHES_KEY] = {};
+					}
+					orderreferencesDetails[BRANCHES_KEY][BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){
+					if(null == orderreferencesDetails[TABLES_KEY]){	orderreferencesDetails[TABLES_KEY] = {};
+					}
+					orderreferencesDetails[TABLES_KEY][TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
+					}
+				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
+					if(null == orderreferencesDetails[ORDERREFERENCES_KEY]){	orderreferencesDetails[ORDERREFERENCES_KEY] = {};
+					}
+					orderreferencesDetails[ORDERREFERENCES_KEY][ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
+					}
 				
 				key = responseData[i][ORDERREFERENCES_DB_FIELDS[1]]; //orderreference_code
 				orderreferenceServiceObj.orderreferences[key] = orderreferencesDetails;
