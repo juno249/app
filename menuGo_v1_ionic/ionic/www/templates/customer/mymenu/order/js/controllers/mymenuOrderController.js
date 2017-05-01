@@ -41,7 +41,7 @@ function mymenuOrderController(
 	dispIonicLoading(LOADING_MESSAGES.gettingData);
 	
 	reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
-	reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
+	reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
 	.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 	.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 	

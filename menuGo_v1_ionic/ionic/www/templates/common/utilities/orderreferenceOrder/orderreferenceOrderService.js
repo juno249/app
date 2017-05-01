@@ -44,24 +44,30 @@ function orderreferenceOrderService(
 	function setCustomerUsername(customerUsername){	orderreferenceOrderServiceObj.customerUsername = customerUsername;
 	}
 	
-	function fetchOrderreferencesOrders(){
+	function fetchOrderreferencesOrders(getOptionOrderreference){
 		var deferred = $q.defer();
 		var orderreferencesOrders = {};
 		
-		orderreferenceService.setCustomerUsername(orderreferenceOrderServiceObj.customerUsername);
-		orderreferenceService.fetchOrderreferences(	//getCustomerOrderreferencesNotOrderreferenceStatus
-				12, 
-				{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
-				)
-				.then(fetchOrderreferencesSuccessCallback)
-				.catch(fetchOrderreferencesFailedCallback);
+		if(12 == getOptionOrderreference){
+			orderreferenceService.setCustomerUsername(orderreferenceOrderServiceObj.customerUsername);
+			orderreferenceService.fetchOrderreferences(	//getCustomerOrderreferencesNotOrderreferenceStatus
+					12, 
+					{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
+					)
+					.then(fetchOrderreferencesSuccessCallback)
+					.catch(fetchOrderreferencesFailedCallback);
+			}
 		
 		function fetchOrderreferencesSuccessCallback(response){
 			var orderreferences = localStorage.getItem(KEYS.Orderreferences);
 			orderreferences = JSON.parse(orderreferences);
 			var orderreferencesKey = Object.keys(orderreferences);
 			
-			orderreferencesOrders.orderreferences = orderreferences[orderreferencesKey[0]][KEYS.Orderreferences];
+			orderreferencesOrders.orderreferences[KEYS.Customers] = orderreferences[orderreferencesKey[0]][KEYS.Customers];
+			orderreferencesOrders.orderreferences[KEYS.Companies] = orderreferences[orderreferencesKey[0]][KEYS.Companies];
+			orderreferencesOrders.orderreferences[KEYS.Branches] = orderreferences[orderreferencesKey[0]][KEYS.Branches];
+			orderreferencesOrders.orderreferences[KEYS.Tables] = orderreferences[orderreferencesKey[0]][KEYS.Tables];
+			orderreferencesOrders.orderreferences[KEYS.Orderreferences] = orderreferences[orderreferencesKey[0]][KEYS.Orderreferences];
 			
 			orderService.fetchOrders(	//getByQuery
 					13, 

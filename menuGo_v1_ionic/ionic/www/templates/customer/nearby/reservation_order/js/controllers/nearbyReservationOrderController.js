@@ -158,6 +158,7 @@ function nearbyReservationOrderController(
 				
 				vm.user.reservation = response.reservations;
 				vm.user.orderreference = response.orderreferences;
+				delete vm.user.reservationOrder;
 				
 				localStorage.setItem(
 						KEYS.User, 

@@ -10,9 +10,9 @@ customerReservationController.$inject = [
 	'KEYS', 
 	'LOADING_MESSAGES', 
 	'$ionicLoading', 
-	'$ionicPopup',  
+	'$ionicPopup', 
 	'$scope', 
-	'reservationService'
+	'reservationOrderreferenceOrderService'
 	];
 
 function customerReservationController(
@@ -22,9 +22,15 @@ function customerReservationController(
 		$ionicLoading, 
 		$ionicPopup, 
 		$scope, 
-		reservationService
+		reservationOrderreferenceOrderService
 		){
 	var vm = this;
+	
+	//controller_method
+	vm.setReservationStatus = setReservationStatus;
+	
+	function setReservationStatus(reservationStatus){	vm.reservationStatus = reservationStatus;
+	}
 	
 	function dispIonicLoading(msg){
 		var templateString = '';
@@ -48,30 +54,11 @@ function customerReservationController(
 				);
 		}
 	
-	function fetchReservationsSuccessCallback(response){
+	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
 		hideIonicLoading();
-		
-		var reservation = localStorage.getItem(KEYS.Reservations);
-		reservation = JSON.parse(reservation);
-		localStorage.removeItem(KEYS.Reservations);
-		vm.user.reservations = {};
-		
-		angular.forEach(
-				reservation, 
-				function(
-						v, 
-						k
-						){
-					vm.user.reservations[k] = {};
-					vm.user.reservations[k].company = v[KEYS.Companies];
-					vm.user.reservations[k].branch = v[KEYS.Branches];
-					vm.user.reservations[k].orderreference = v[KEYS.Orderreferences];
-					vm.user.reservations[k].reservation = v[KEYS.Reservations];
-					}
-				);
 		}
 	
-	function fetchReservationsFailedCallback(responseError){
+	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
 		hideIonicLoading();
 		}
 	
@@ -85,13 +72,13 @@ function customerReservationController(
 				
 				dispIonicLoading(LOADING_MESSAGES.gettingData);
 				
-				reservationService.setCustomerUsername(vm.user.username);
-				reservationService.fetchReservations(	//getCustomerReservations
+				reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+				reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(	//getCustomerReservations
 						13, 
 						{}
 						)
-				.then(fetchReservationsSuccessCallback)
-				.catch(fetchReservationsFailedCallback);
+				.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+				.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 				}
 			);
 	}

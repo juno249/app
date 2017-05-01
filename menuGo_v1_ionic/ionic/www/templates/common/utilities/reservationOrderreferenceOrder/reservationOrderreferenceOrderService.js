@@ -46,25 +46,39 @@ function reservationOrderreferenceOrderService(
 	function setCustomerUsername(customerUsername){	return reservationOrderreferenceOrderServiceObj.customerUsername = customerUsername;
 	}
 	
-	function fetchReservationsOrderreferencesOrders(){
+	function fetchReservationsOrderreferencesOrders(getOptionReservation){
 		var deferred = $q.defer();
 		var reservationsOrderreferencesOrders = {};
 		
-		reservationService.setCustomerUsername(reservationOrderreferenceOrderServiceObj.customerUsername);
-		reservationService.fetchReservations(	//getCustomerReservationsNotReservationStatus
-				16, 
-				{	ReservationStatus: RESERVATION_STATUS.done	}
-				)
-				.then(fetchReservationsSuccessCallback)
-				.catch(fetchReservationsFailedCallback);
+		if(16 == getOptionReservation){
+			reservationService.setCustomerUsername(reservationOrderreferenceOrderServiceObj.customerUsername);
+			reservationService.fetchReservations(	//getCustomerReservationsNotReservationStatus
+					16, 
+					{	ReservationStatus: RESERVATION_STATUS.done	}
+					)
+					.then(fetchReservationsSuccessCallback)
+					.catch(fetchReservationsFailedCallback);
+			} else if(13 == getOptionReservation){
+				reservationService.setCustomerUsername(reservationOrderreferenceOrderServiceObj.customerUsername);
+				reservationService.fetchReservations(	//getCustomerReservations
+						13, 
+						{}
+						)
+						.then(fetchReservationsSuccessCallback)
+						.catch(fetchReservationsFailedCallback);
+				}
 		
 		function fetchReservationsSuccessCallback(response){
 			var reservations = localStorage.getItem(KEYS.Reservations);
 			reservations = JSON.parse(reservations);
 			var reservationsKey = Object.keys(reservations);
 			
-			reservationsOrderreferencesOrders.reservations = reservations[reservationsKey[0]][KEYS.Reservations];
-			reservationsOrderreferencesOrders.orderreferences = reservations[reservationsKey[0]][KEYS.Orderreferences];
+			reservationsOrderreferencesOrders[KEYS.Customers] = reservations[reservationsKey[0]][KEYS.Customers];
+			reservationsOrderreferencesOrders[KEYS.Companies] = reservations[reservationsKey[0]][KEYS.Companies];
+			reservationsOrderreferencesOrders[KEYS.Branches] = reservations[reservationsKey[0]][KEYS.Branches];
+			reservationsOrderreferencesOrders[KEYS.Tables] = reservations[reservationsKey[0]][KEYS.Tables];
+			reservationsOrderreferencesOrders[KEYS.Reservations] = reservations[reservationsKey[0]][KEYS.Reservations];
+			reservationsOrderreferencesOrders[KEYS.Orderreferences] = reservations[reservationsKey[0]][KEYS.Orderreferences];
 			
 			orderService.fetchOrders(	//getByQuery
 					13, 
@@ -72,19 +86,19 @@ function reservationOrderreferenceOrderService(
 					)
 					.then(fetchOrdersSuccessCallback)
 					.catch(fetchOrdersFailedCallback);
-			}
-		
-		function fetchOrdersSuccessCallback(response){
-			var orders = localStorage.getItem(KEYS.Orders);
-			orders = JSON.parse(orders);
-			reservationsOrderreferencesOrders.orderreferences.orders = orders;
-			localStorage.removeItem(KEYS.Orders);
 			
-			deferred.resolve(reservationsOrderreferencesOrders);
+			function fetchOrdersSuccessCallback(response){
+				var orders = localStorage.getItem(KEYS.Orders);
+				orders = JSON.parse(orders);
+				reservationsOrderreferencesOrders.orderreferences.orders = orders;
+				localStorage.removeItem(KEYS.Orders);
+				
+				deferred.resolve(reservationsOrderreferencesOrders);
+				}
+			
+			function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);
 			}
-		
-		function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);
-		}
+			}
 		
 		function fetchReservationsFailedCallback(responseError){	deferred.reject(responseError);
 		}
