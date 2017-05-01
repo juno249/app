@@ -8,6 +8,7 @@ angular
 customerNearbyController.$inject = [
                                     'BROADCAST_MESSAGES', 
                                     'ERROR_MESSAGES', 
+                                    'KEYS', 
                                     'LOADING_MESSAGES', 
                                     '$ionicHistory', 
                                     '$ionicLoading', 
@@ -25,6 +26,7 @@ customerNearbyController.$inject = [
 function customerNearbyController(
 		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
 		$ionicHistory, 
 		$ionicLoading, 
@@ -40,8 +42,6 @@ function customerNearbyController(
 		){
 	$ionicHistory.clearHistory();
 	
-	const COMPANIES_KEY = 'Companies';
-	const USER_KEY = 'User';
 	const DOM_COMPANY_SLIDEBOX_HANDLE = 'company-slidebox';
 	
 	var vm = this;
@@ -57,17 +57,17 @@ function customerNearbyController(
 				zoomControl: false
 				}
 	
-	if(!(null == localStorage.getItem(COMPANIES_KEY))){
-		vm.companies = localStorage.getItem(COMPANIES_KEY);
-		vm.companies = JSON.parse(vm.companies);
+	if(!(null == localStorage.getItem(KEYS.Companies))){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
 		} else {
 			dataService.fetchCompanies();
 			
 			dispIonicLoading(LOADING_MESSAGES.gettingData);
 			}
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		}
 	
@@ -94,7 +94,7 @@ function customerNearbyController(
 			}
 		}
 	
-	function setCompanyCategory(companyCategory){	vm.companyCategory = companyCategory;
+	function setCompanyCategory(companyCategoryVal){	vm.companyCategoryVal = companyCategoryVal;
 	}
 	
 	function toStringBranchAddress(branch){
@@ -106,11 +106,11 @@ function customerNearbyController(
 		return branchService.toStringAddress();
 		}
 	
-	function genCompanyMenuMenuitems(){
-		var companyMenuMenuitems = {};
+	function genCompanyMenuMenuitem(){
+		var companyMenuMenuitem = {};
 		
 		angular.forEach(
-				vm.companies, 
+				vm.company, 
 				function(
 						v, 
 						k
@@ -127,9 +127,9 @@ function customerNearbyController(
 												j, 
 												i
 												){
-											if(null == companyMenuMenuitems[k]){	companyMenuMenuitems[k] = {};
+											if(null == companyMenuMenuitem[k]){	companyMenuMenuitem[k] = {};
 											}
-											if(1 == j.menuitem_featured){	companyMenuMenuitems[k][j.menuitem_code] = j;
+											if(1 == j.menuitem_featured){	companyMenuMenuitem[k][j.menuitem_code] = j;
 											}
 											}
 										);
@@ -143,26 +143,26 @@ function customerNearbyController(
 				}
 				);
 		
-		return companyMenuMenuitems;
+		return companyMenuMenuitem;
 		}
 	
-	function genCompanyCategories(){
-		var companyCategories = [];
+	function genCompanyCategory(){
+		var companyCategory = [];
 		
 		angular.forEach(
-				vm.companies, 
+				vm.company, 
 				function(
 						v, 
 						k
 						){
 					var company = v;
 					
-					if(-1 == companyCategories.indexOf(v.company_category)){	companyCategories.push(v.company_category);
+					if(-1 == companyCategory.indexOf(v.company_category)){	companyCategory.push(v.company_category);
 					}
 					}
 				);
 		
-		return companyCategories;
+		return companyCategory;
 		}
 	
 	function dispIonicLoading(msg){
@@ -188,20 +188,20 @@ function customerNearbyController(
 		}
 	
 	$scope.$watch(
-			function(){	return localStorage.getItem(COMPANIES_KEY);
+			function(){	return localStorage.getItem(KEYS.Companies);
 			}, 
 			function(){
-				vm.companies = localStorage.getItem(COMPANIES_KEY);
-				vm.companies = JSON.parse(vm.companies);
+				vm.company = localStorage.getItem(KEYS.Companies);
+				vm.company = JSON.parse(vm.company);
 				}
 			);
 	
 	$scope.$watchCollection(
-			function(){	return vm.companies;
+			function(){	return vm.company;
 			}, 
 			function(){
-				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
-				vm.companyCategories = genCompanyCategories();
+				vm.companyMenuMenuitem = genCompanyMenuMenuitem();
+				vm.companyCategory = genCompanyCategory();
 				}
 			);
 	
@@ -213,7 +213,7 @@ function customerNearbyController(
 						null == vm.search ||
 						0 == vm.search.trim().length
 						){
-					vm.placePredictions = undefined;
+					vm.placePrediction = undefined;
 					return;
 					}
 				
@@ -221,7 +221,7 @@ function customerNearbyController(
 				.then(getPlacePredictionsSuccessCallback)
 				.catch(getPlacePredictionsFailedCallback);
 				
-				function getPlacePredictionsSuccessCallback(predictions){		vm.placePredictions = predictions;
+				function getPlacePredictionsSuccessCallback(predictions){		vm.placePrediction = predictions;
 				}
 				
 				function getPlacePredictionsFailedCallback(status){	//do something on failure
@@ -253,7 +253,7 @@ function customerNearbyController(
 					vm.user.reservationOrder = {};
 					
 					localStorage.setItem(
-							USER_KEY, 
+							KEYS.User, 
 							JSON.stringify(vm.user)
 							);
 					}

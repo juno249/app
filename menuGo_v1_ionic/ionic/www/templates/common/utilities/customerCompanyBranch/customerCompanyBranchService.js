@@ -8,6 +8,7 @@ angular
 customerCompanyBranchService.$inject = [
                                         'API_BASE_URL', 
                                         'CUSTOMERCOMPANYBRANCH_DB_FIELDS', 
+                                        'KEYS', 
                                         '$http', 
                                         '$localStorage', 
                                         '$q'
@@ -16,12 +17,11 @@ customerCompanyBranchService.$inject = [
 function customerCompanyBranchService(
 		API_BASE_URL, 
 		CUSTOMERCOMPANYBRANCH_DB_FIELDS, 
+		KEYS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const CUSTOMERS_COMPANIES_BRANCHES_KEY = 'CustomersCompaniesBranches';
-	
 	var customerCompanyBranchServiceObj = {
 			customersCompaniesBranches: {}, 
 			customerUsername: undefined, 
@@ -90,7 +90,7 @@ function customerCompanyBranchService(
 			customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
 			customersCompaniesBranches = JSON.stringify(customersCompaniesBranches);
 			localStorage.setItem(
-					CUSTOMERS_COMPANIES_BRANCHES_KEY, 
+					KEYS.CustomersCompaniesBranches, 
 					customersCompaniesBranches
 					);
 			

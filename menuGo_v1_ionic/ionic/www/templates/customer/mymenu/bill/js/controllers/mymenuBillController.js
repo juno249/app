@@ -8,6 +8,7 @@ angular
 mymenuBillController.$inject = [
 	'BROADCAST_MESSAGES', 
 	'ERROR_MESSAGES', 
+	'KEYS', 
 	'LOADING_MESSAGES', 
 	'ORDER_STATUS', 
 	'$ionicLoading', 
@@ -20,6 +21,7 @@ mymenuBillController.$inject = [
 function mymenuBillController(
 		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		$ionicLoading, 
@@ -28,16 +30,13 @@ function mymenuBillController(
 		dataService, 
 		reservationOrderreferenceOrderService
 		){
-	const COMPANIES_KEY = 'Companies';
-	const USER_KEY = 'User';
-	
 	var vm = this;
 	vm.companyName = $scope.$parent.customerMymenuController.companyName;
 	vm.branchName = $scope.$parent.customerMymenuController.branchName;
 	vm.tableNumber = $scope.$parent.customerMymenuController.tableNumber;
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		}
 	
@@ -53,15 +52,17 @@ function mymenuBillController(
 		
 		vm.user.reservation = response.reservations;
 		vm.user.orderreference = response.orderreferences;
+		vm.user.orderreference.order = vm.user.orderreference.orders;
+		delete vm.user.orderreference.orders;
 		
 		localStorage.setItem(
-				USER_KEY, 
+				KEYS.User, 
 				JSON.stringify(vm.user)
 				);
 		
-		if(!(null == localStorage.getItem(COMPANIES_KEY))){
-			vm.companies = localStorage.getItem(COMPANIES_KEY);
-			vm.companies = JSON.parse(vm.companies);
+		if(!(null == localStorage.getItem(KEYS.Companies))){
+			vm.company = localStorage.getItem(KEYS.Companies);
+			vm.company = JSON.parse(vm.company);
 			} else {
 				dataService.fetchCompanies();
 				
@@ -110,11 +111,11 @@ function mymenuBillController(
 		}
 		}
 	
-	function genCompanyMenuMenuitems(){
-		var companyMenuMenuitems = {};
+	function genCompanyMenuMenuitem(){
+		var companyMenuMenuitem = {};
 		
 		angular.forEach(
-				vm.companyMenus, 
+				vm.companyMenu, 
 				function(
 						v, 
 						k
@@ -124,13 +125,13 @@ function mymenuBillController(
 							function(
 									v, 
 									k
-									){	companyMenuMenuitems[v.menuitem_id] = v;
+									){	companyMenuMenuitem[v.menuitem_id] = v;
 									}
 							);
 					}
 				);
 		
-		return companyMenuMenuitems;
+		return companyMenuMenuitem;
 		}
 	
 	function appendQuantity(){
@@ -145,11 +146,11 @@ function mymenuBillController(
 							){
 						if(!(null == menuitemOrderId[v.menuitem_id])){
 							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].quantity++;
-							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].cost += vm.companyMenuMenuitems[v.menuitem_id].menuitem_price;
+							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].cost += vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
 							delete vm.user.orderreference.order[k];
 							} else {
 								vm.user.orderreference.order[k].quantity = 1;
-								vm.user.orderreference.order[k].cost = vm.companyMenuMenuitems[v.menuitem_id].menuitem_price;
+								vm.user.orderreference.order[k].cost = vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
 								menuitemOrderId[v.menuitem_id] = k;
 								}
 						}
@@ -197,33 +198,33 @@ function mymenuBillController(
 		}
 	
 	$scope.$watch(
-			function(){	return localStorage.getItem(COMPANIES_KEY);
+			function(){	return localStorage.getItem(KEYS.Companies);
 			}, 
 			function(){
-				vm.companies = localStorage.getItem(COMPANIES_KEY);
-				vm.companies = JSON.parse(vm.companies);
+				vm.company = localStorage.getItem(KEYS.Companies);
+				vm.company = JSON.parse(vm.company);
 				}
 			);
 	
 	$scope.$watchCollection(
-			function(){	return vm.companies;
+			function(){	return vm.company;
 			}, 
 			function(){
-				if(!(null == vm.companies)){
-					vm.company = vm.companies[vm.companyName];
+				if(!(null == vm.company)){
+					vm._company = vm.company[vm.companyName];
 					
-					if(!(null == vm.company.branches)){
-						vm.branch = vm.company.branches[vm.branchName];
+					if(!(null == vm._company.branches)){
+						vm._branch = vm._company.branches[vm.branchName];
 						
-						if(!(null == vm.branch.tables)){	vm.table = vm.branch.tables[vm.tableNumber];
+						if(!(null == vm._branch.tables)){	vm._table = vm._branch.tables[vm.tableNumber];
 						}
 						}
 					
-					if(!(null == vm.company.menus)){	vm.companyMenus = vm.company.menus;
+					if(!(null == vm._company.menus)){	vm.companyMenu = vm._company.menus;
 					}
 					}
 				
-				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
+				vm.companyMenuMenuitem = genCompanyMenuMenuitem();
 				}
 			);
 	

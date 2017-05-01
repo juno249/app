@@ -9,6 +9,7 @@ marketingService.$inject = [
                             'ADVERTISEMENTS_DB_FIELDS', 
                             'API_BASE_URL', 
                             'BLOGS_DB_FIELDS', 
+                            'KEYS', 
                             '$http', 
                             '$localStorage', 
                             '$q'
@@ -18,13 +19,11 @@ function marketingService(
 		ADVERTISEMENTS_DB_FIELDS, 
 		API_BASE_URL, 
 		BLOGS_DB_FIELDS, 
+		KEYS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const ADVERTISEMENTS_KEY = 'Advertisements';
-	const BLOGS_KEY = 'Blogs';
-	
 	var marketingServiceObj = {
 			advertisements: {}, 
 			blogs: {}, 
@@ -117,7 +116,7 @@ function marketingService(
 			advertisements = marketingServiceObj.advertisements;
 			advertisements = JSON.stringify(advertisements);
 			localStorage.setItem(
-					ADVERTISEMENTS_KEY, 
+					KEYS.Advertisements, 
 					advertisements
 					);
 			
@@ -230,7 +229,7 @@ function marketingService(
 			blogs  = marketingServiceObj.blogs;
 			blogs = JSON.stringify(blogs);
 			localStorage.setItem(
-					BLOGS_KEY, 
+					KEYS.Blogs, 
 					blogs
 					);
 			

@@ -8,6 +8,7 @@ angular
 mymenuMenuController.$inject = [
 	'BROADCAST_MESSAGES', 
 	'ERROR_MESSAGES', 
+	'KEYS', 
 	'LOADING_MESSAGES', 
 	'$ionicLoading', 
 	'$ionicPopup', 
@@ -18,31 +19,29 @@ mymenuMenuController.$inject = [
 function mymenuMenuController(
 		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
 		$ionicLoading, 
 		$ionicPopup, 
 		$scope, 
 		dataService
 		){
-	const COMPANIES_KEY = 'Companies';
-	const USER_KEY = 'User';
-	
 	var vm = this;
 	vm.companyName = $scope.$parent.customerMymenuController.companyName;
 	vm.branchName = $scope.$parent.customerMymenuController.branchName;
 	vm.tableNumber = $scope.$parent.customerMymenuController.tableNumber;
 	
-	if(!(null == localStorage.getItem(COMPANIES_KEY))){
-		vm.companies = localStorage.getItem(COMPANIES_KEY);
-		vm.companies = JSON.parse(vm.companies);
+	if(!(null == localStorage.getItem(KEYS.Companies))){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
 		} else {
 			dataService.fetchCompanies();
 			
 			dispIonicLoading(LOADING_MESSAGES.gettingData);
 			}
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		
 		if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
@@ -61,7 +60,7 @@ function mymenuMenuController(
 	function setMenuName(menuName){	vm.menuName = menuName;
 	}
 	
-	function getMenuIdFromName(){	return vm.companyMenus[vm.menuName].menu_id;
+	function getMenuIdFromName(){	return vm.companyMenu[vm.menuName].menu_id;
 	}
 	
 	function addReservationOrder(menuitem){
@@ -69,7 +68,7 @@ function mymenuMenuController(
 		
 		vm.user.reservationOrder[menuitem.menuitem_code] = menuitem;
 		localStorage.setItem(
-				USER_KEY, 
+				KEYS.User, 
 				JSON.stringify(vm.user)
 				);
 		}
@@ -83,16 +82,16 @@ function mymenuMenuController(
 			}
 		
 		localStorage.setItem(
-				USER_KEY, 
+				KEYS.User, 
 				JSON.stringify(vm.user)
 				);
 		}
 	
-	function genCompanyMenuMenuitems(){
-		var companyMenuMenuitems = {};
+	function genCompanyMenuMenuitem(){
+		var companyMenuMenuitem = {};
 		
 		angular.forEach(
-				vm.companyMenus, 
+				vm.companyMenu, 
 				function(
 						v, 
 						k
@@ -104,18 +103,18 @@ function mymenuMenuController(
 							function(
 									v, 
 									k
-									){	companyMenuMenuitems[v.menuitem_code] = v;
+									){	companyMenuMenuitem[v.menuitem_code] = v;
 									}
 							);
 					}
 				);
 		
-		return companyMenuMenuitems;
+		return companyMenuMenuitem;
 		}
 	
-	function resetCompanyMenuMenuitems(){
+	function resetCompanyMenuMenuitem(){
 		angular.forEach(
-				vm.companyMenuMenuitems, 
+				vm.companyMenuMenuitem, 
 				function(
 						v, 
 						k
@@ -126,7 +125,7 @@ function mymenuMenuController(
 	
 	function synchronize(){
 		angular.forEach(
-				vm.companyMenuMenuitems, 
+				vm.companyMenuMenuitem, 
 				function(
 						v, 
 						k
@@ -161,42 +160,42 @@ function mymenuMenuController(
 		}
 	
 	$scope.$watch(
-			function(){	return localStorage.getItem(COMPANIES_KEY);
+			function(){	return localStorage.getItem(KEYS.Companies);
 			}, 
 			function(){
-				vm.companies = localStorage.getItem(COMPANIES_KEY);
-				vm.companies = JSON.parse(vm.companies);
+				vm.company = localStorage.getItem(KEYS.Companies);
+				vm.company = JSON.parse(vm.company);
 				}
 			);
 	
 	$scope.$watchCollection(
-			function(){	return vm.companies;
+			function(){	return vm.company;
 			}, 
 			function(){
-				if(!(null == vm.companies)){
-					vm.company = vm.companies[vm.companyName];
+				if(!(null == vm.company)){
+					vm._company = vm.company[vm.companyName];
 					
-					if(!(null == vm.company.branches)){
-						vm.branch = vm.company.branches[vm.branchName];
+					if(!(null == vm._company.branches)){
+						vm._branch = vm._company.branches[vm.branchName];
 						
-						if(!(null == vm.branch.tables)){	vm.table = vm.branch.tables[vm.tableNumber];
+						if(!(null == vm._branch.tables)){	vm._table = vm._branch.tables[vm.tableNumber];
 						}
 						}
 					
-					if(!(null == vm.company.menus)){	vm.companyMenus = vm.company.menus;
+					if(!(null == vm._company.menus)){	vm.companyMenu = vm._company.menus;
 					}
 					}
 				
-				vm.companyMenuMenuitems = genCompanyMenuMenuitems();
-				resetCompanyMenuMenuitems();
+				vm.companyMenuMenuitem = genCompanyMenuMenuitem();
+				resetCompanyMenuMenuitem();
 				}
 			);
 	
 	$scope.$watch(
-			function(){	return localStorage.getItem(USER_KEY);
+			function(){	return localStorage.getItem(KEYS.User);
 			}, 
 			function(){
-				vm.user = localStorage.getItem(USER_KEY);
+				vm.user = localStorage.getItem(KEYS.User);
 				vm.user = JSON.parse(vm.user);
 				
 				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};

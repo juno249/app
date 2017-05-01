@@ -7,6 +7,7 @@ angular
 
 loginController.$inject = [
                            'ERROR_MESSAGES', 
+                           'KEYS', 
                            'LOADING_MESSAGES', 
                            'USER_ROLES', 
                            '$ionicLoading', 
@@ -18,6 +19,7 @@ loginController.$inject = [
 
 function loginController(
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
 		USER_ROLES, 
 		$ionicLoading, 
@@ -26,13 +28,12 @@ function loginController(
 		$state, 
 		loginService
 		){
-	const USER_KEY = 'User';
 	const STATE_CUSTOMER_HOME = 'customer.home';
 	
 	var vm = this;
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		vm.isAuthenticated = vm.user.isAuthenticated;
 		}
@@ -57,7 +58,7 @@ function loginController(
 		function doLoginSuccessCallback(response){
 			hideIonicLoading();
 			
-			vm.user = localStorage.getItem('User');
+			vm.user = localStorage.getItem(KEYS.User);
 			vm.user = JSON.parse(vm.user);
 			
 			if(USER_ROLES.customer == vm.user.role){

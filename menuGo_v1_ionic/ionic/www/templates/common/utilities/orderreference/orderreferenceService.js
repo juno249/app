@@ -10,6 +10,7 @@ orderreferenceService.$inject = [
                                  'BRANCHES_DB_FIELDS', 
                                  'COMPANIES_DB_FIELDS', 
                                  'CUSTOMERS_DB_FIELDS', 
+                                 'KEYS', 
                                  'ORDERREFERENCES_DB_FIELDS', 
                                  'TABLES_DB_FIELDS', 
                                  '$http', 
@@ -22,18 +23,13 @@ function orderreferenceService(
 		BRANCHES_DB_FIELDS, 
 		COMPANIES_DB_FIELDS, 
 		CUSTOMERS_DB_FIELDS, 
+		KEYS, 
 		ORDERREFERENCES_DB_FIELDS, 
 		TABLES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const CUSTOMERS_KEY = 'Customers';
-	const COMPANIES_KEY = 'Companies';
-	const BRANCHES_KEY = 'Branches';
-	const TABLES_KEY = 'Tables';
-	const ORDERREFERENCES_KEY = 'Orderreferences';
-	
 	var orderreferenceServiceObj = {
 			orderreferences: {}, 
 			companyName: undefined, 
@@ -159,7 +155,7 @@ function orderreferenceService(
 			orderreferences = orderreferenceServiceObj.orderreferences;
 			orderreferences = JSON.stringify(orderreferences);
 			localStorage.setItem(
-					ORDERREFERENCES_KEY, 
+					KEYS.Orderreferences, 
 					orderreferences
 					);
 			
@@ -175,29 +171,29 @@ function orderreferenceService(
 				var key = undefined;
 				
 				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
-					if(null == orderreferencesDetails[CUSTOMERS_KEY]){	orderreferencesDetails[CUSTOMERS_KEY] = {};
+					if(null == orderreferencesDetails[KEYS.Customers]){	orderreferencesDetails[KEYS.Customers] = {};
 					}
-					orderreferencesDetails[CUSTOMERS_KEY][CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
+					orderreferencesDetails[KEYS.Customers][CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
-					if(null == orderreferencesDetails[COMPANIES_KEY]){	orderreferencesDetails[COMPANIES_KEY] = {};
+					if(null == orderreferencesDetails[KEYS.Companies]){	orderreferencesDetails[KEYS.Companies] = {};
 					}
-					orderreferencesDetails[COMPANIES_KEY][COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
+					orderreferencesDetails[KEYS.Companies][COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){
-					if(null == orderreferencesDetails[BRANCHES_KEY]){	orderreferencesDetails[BRANCHES_KEY] = {};
+					if(null == orderreferencesDetails[KEYS.Branches]){	orderreferencesDetails[KEYS.Branches] = {};
 					}
-					orderreferencesDetails[BRANCHES_KEY][BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
+					orderreferencesDetails[KEYS.Branches][BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){
-					if(null == orderreferencesDetails[TABLES_KEY]){	orderreferencesDetails[TABLES_KEY] = {};
+					if(null == orderreferencesDetails[KEYS.Tables]){	orderreferencesDetails[KEYS.Tables] = {};
 					}
-					orderreferencesDetails[TABLES_KEY][TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
+					orderreferencesDetails[KEYS.Tables][TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
-					if(null == orderreferencesDetails[ORDERREFERENCES_KEY]){	orderreferencesDetails[ORDERREFERENCES_KEY] = {};
+					if(null == orderreferencesDetails[KEYS.Orderreferences]){	orderreferencesDetails[KEYS.Orderreferences] = {};
 					}
-					orderreferencesDetails[ORDERREFERENCES_KEY][ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
+					orderreferencesDetails[KEYS.Orderreferences][ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 					}
 				
 				key = responseData[i][ORDERREFERENCES_DB_FIELDS[1]]; //orderreference_code

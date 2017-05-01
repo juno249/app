@@ -8,6 +8,7 @@ angular
 branchService.$inject = [
                          'API_BASE_URL', 
                          'BRANCHES_DB_FIELDS', 
+                         'KEYS', 
                          '$http', 
                          '$localStorage', 
                          '$q'
@@ -16,12 +17,11 @@ branchService.$inject = [
 function branchService(
 		API_BASE_URL, 
 		BRANCHES_DB_FIELDS, 
+		KEYS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const BRANCHES_KEY = 'Branches';
-	
 	var branchServiceObj = {
 			branches: {}, 
 			companyName: undefined, 
@@ -88,7 +88,7 @@ function branchService(
 			branches = branchServiceObj.branches;
 			branches = JSON.stringify(branches);
 			localStorage.setItem(
-					BRANCHES_KEY, 
+					KEYS.Branches, 
 					branches
 					);
 			

@@ -7,6 +7,7 @@ angular
 
 dataService.$inject = [
                        'BROADCAST_MESSAGES', 
+                       'KEYS', 
                        '$localStorage', 
                        '$q', 
                        '$rootScope', 
@@ -20,6 +21,7 @@ dataService.$inject = [
 
 function dataService(
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		$localStorage, 
 		$q, 
 		$rootScope, 
@@ -30,15 +32,6 @@ function dataService(
 		menuitemService, 
 		marketingService
 		){
-	const COMPANIES_KEY = 'Companies';
-	const BRANCHES_KEY = 'Branches'; 
-	const MENUS_KEY = 'Menus';
-	const TABLES_KEY = 'Tables';
-	const MENUITEMS_KEY = 'Menuitems';
-	const MARKETING_KEY = 'Marketing';
-	const ADVERTISEMENTS_KEY = 'Advertisements';
-	const BLOGS_KEY = 'Blogs';
-	
 	var dataServiceObj = {
 			companies: {}, 
 			marketing: {}, 
@@ -74,7 +67,7 @@ function dataService(
 		
 		function fetchCompaniesSuccessCallback(response){
 			isGetCompanies = true;
-			companies = localStorage.getItem(COMPANIES_KEY);
+			companies = localStorage.getItem(KEYS.Companies);
 			companies = JSON.parse(companies);
 			
 			angular.forEach(
@@ -102,7 +95,7 @@ function dataService(
 				
 				function fetchBranchesSuccessCallback(response){
 					isGetBranches = true;
-					branches = localStorage.getItem(BRANCHES_KEY);
+					branches = localStorage.getItem(KEYS.Branches);
 					branches = JSON.parse(branches);
 					
 					angular.forEach(
@@ -119,7 +112,7 @@ function dataService(
 					} catch(e){
 					}
 					
-					companies[companyName][BRANCHES_KEY.toLowerCase()] = branches;
+					companies[companyName][KEYS.Branches] = branches;
 					
 					function fetchTables(branchName){
 						var tables = undefined;
@@ -136,22 +129,22 @@ function dataService(
 						
 						function fetchTablesSuccessCallback(response){
 							isGetTables = true;
-							tables = localStorage.getItem(TABLES_KEY);
+							tables = localStorage.getItem(KEYS.Tables);
 							tables = JSON.parse(tables);
 							
 							try{	companies = JSON.parse(companies);
 							} catch(e){
 							}
 							
-							companies[companyName][BRANCHES_KEY.toLowerCase()][branchName][TABLES_KEY.toLowerCase()] = tables;
+							companies[companyName][KEYS.Branches][branchName][KEYS.Tables] = tables;
 							companies = JSON.stringify(companies);
 							localStorage.setItem(
-									COMPANIES_KEY, 
+									KEYS.Companies, 
 									companies
 									);
 							
-							localStorage.removeItem(BRANCHES_KEY);
-							localStorage.removeItem(TABLES_KEY);
+							localStorage.removeItem(KEYS.Branches);
+							localStorage.removeItem(KEYS.Tables);
 							
 							if(
 									isGetCompanies &&
@@ -190,7 +183,7 @@ function dataService(
 				
 				function fetchMenusSuccessCallback(response){
 					isGetMenus = true;
-					menus = localStorage.getItem(MENUS_KEY);
+					menus = localStorage.getItem(KEYS.Menus);
 					menus = JSON.parse(menus);
 					
 					angular.forEach(
@@ -207,7 +200,7 @@ function dataService(
 					} catch(e){
 					}
 					
-					companies[companyName][MENUS_KEY.toLowerCase()] = menus;
+					companies[companyName][KEYS.Menus] = menus;
 					
 					function fetchMenuitems(menuName){
 						var menuitems = undefined;
@@ -224,22 +217,22 @@ function dataService(
 						
 						function fetchMenuitemsSuccessCallback(response){
 							isGetMenuitems = true;
-							menuitems = localStorage.getItem(MENUITEMS_KEY);
+							menuitems = localStorage.getItem(KEYS.Menuitems);
 							menuitems = JSON.parse(menuitems);
 							
 							try{	companies = JSON.parse(companies);
 							} catch(e){
 							}
 							
-							companies[companyName][MENUS_KEY.toLowerCase()][menuName][MENUITEMS_KEY.toLowerCase()] = menuitems;
+							companies[companyName][KEYS.Menus][menuName][KEYS.Menuitems] = menuitems;
 							companies = JSON.stringify(companies);
 							localStorage.setItem(
-									COMPANIES_KEY, 
+									KEYS.Companies, 
 									companies
 									);
 							
-							localStorage.removeItem(MENUS_KEY);
-							localStorage.removeItem(MENUITEMS_KEY);
+							localStorage.removeItem(KEYS.Menus);
+							localStorage.removeItem(KEYS.Menuitems);
 							
 							if(
 									isGetCompanies &&
@@ -287,23 +280,23 @@ function dataService(
 		
 		function fetchAdvertisementsSuccessCallback(response){
 			isGetAdvertisements = true;
-			advertisements = localStorage.getItem(ADVERTISEMENTS_KEY);
+			advertisements = localStorage.getItem(KEYS.Advertisements);
 			advertisements = JSON.parse(advertisements);
 			
-			if(!(null == localStorage.getItem(MARKETING_KEY))){
-				marketing = localStorage.getItem(MARKETING_KEY);
+			if(!(null == localStorage.getItem(KEYS.Marketing))){
+				marketing = localStorage.getItem(KEYS.Marketing);
 				marketing = JSON.parse(marketing);
 			} else {	marketing = {};
 			}
 			
-			marketing[ADVERTISEMENTS_KEY.toLowerCase()] = advertisements;
+			marketing[KEYS.Advertisements] = advertisements;
 			marketing = JSON.stringify(marketing);
 			localStorage.setItem(
-					MARKETING_KEY, 
+					KEYS.Marketing, 
 					marketing
 					);
 			
-			localStorage.removeItem(ADVERTISEMENTS_KEY);
+			localStorage.removeItem(KEYS.Advertisements);
 			
 			if(
 					isGetAdvertisements &&
@@ -326,23 +319,23 @@ function dataService(
 		
 		function fetchBlogsSuccessCallback(response){
 			isGetBlogs = true;
-			blogs = localStorage.getItem(BLOGS_KEY);
+			blogs = localStorage.getItem(KEYS.Blogs);
 			blogs = JSON.parse(blogs);
 			
-			if(!(null == localStorage.getItem(MARKETING_KEY))){
-				marketing = localStorage.getItem(MARKETING_KEY);
+			if(!(null == localStorage.getItem(KEYS.Marketing))){
+				marketing = localStorage.getItem(KEYS.Marketing);
 				marketing = JSON.parse(marketing);
 			} else {	marketing = {};
 			}
 			
-			marketing[BLOGS_KEY.toLowerCase()] = blogs;
+			marketing[KEYS.Blogs] = blogs;
 			marketing = JSON.stringify(marketing);
 			localStorage.setItem(
-					MARKETING_KEY, 
+					KEYS.Marketing, 
 					marketing
 					);
 			
-			localStorage.removeItem(BLOGS_KEY);
+			localStorage.removeItem(KEYS.Blogs);
 			
 			if(
 					isGetAdvertisements &&
@@ -358,13 +351,13 @@ function dataService(
 		}
 	
 	function reset(){
-		localStorage.removeItem(COMPANIES_KEY);
-		localStorage.removeItem(BRANCHES_KEY);
-		localStorage.removeItem(MENUS_KEY);
-		localStorage.removeItem(TABLES_KEY);
-		localStorage.removeItem(MENUITEMS_KEY);
-		localStorage.removeItem(ADVERTISEMENTS_KEY);
-		localStorage.removeItem(BLOGS_KEY);
+		localStorage.removeItem(KEYS.Companies);
+		localStorage.removeItem(KEYS.Branches);
+		localStorage.removeItem(KEYS.Menus);
+		localStorage.removeItem(KEYS.Tables);
+		localStorage.removeItem(KEYS.Menuitems);
+		localStorage.removeItem(KEYS.Advertisements);
+		localStorage.removeItem(KEYS.Blogs);
 		}
 	
 	return dataServiceObj;

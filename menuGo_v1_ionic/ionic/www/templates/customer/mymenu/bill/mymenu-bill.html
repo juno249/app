@@ -5,14 +5,14 @@
 		class="list order-container">
 		<div 
 			class="item" 
-			ng-repeat="(k, v) in mymenuBillController.user.orderreference.orders">
+			ng-repeat="(k, v) in mymenuBillController.user.orderreference.order">
 			<span 
 				class="font-family-1-size-medium">
-				<underline>{{mymenuBillController.companyMenuMenuitems[k].menuitem_name}}</underline>
+				<underline>{{mymenuBillController.companyMenuMenuitem[k].menuitem_name}}</underline>
 			</span><br>
 			<span 
 				class="font-family-2-size-small">
-				Unit Price: <underline>&#8369{{mymenuBillController.companyMenuMenuitems[k].menuitem_price}}</underline>
+				Unit Price: <underline>&#8369{{mymenuBillController.companyMenuMenuitem[k].menuitem_price}}</underline>
 			</span>,
 			<span 
 				class="font-family-2-size-small">

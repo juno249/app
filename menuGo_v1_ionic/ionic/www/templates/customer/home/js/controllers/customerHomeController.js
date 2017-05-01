@@ -8,6 +8,7 @@ angular
 customerHomeController.$inject = [
                                   'BROADCAST_MESSAGES', 
                                   'ERROR_MESSAGES', 
+                                  'KEYS', 
                                   'LOADING_MESSAGES', 
                                   '$ionicHistory', 
                                   '$ionicLoading', 
@@ -22,6 +23,7 @@ customerHomeController.$inject = [
 function customerHomeController(
 		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
 		$ionicHistory, 
 		$ionicLoading, 
@@ -32,18 +34,17 @@ function customerHomeController(
 		$timeout, 
 		dataService
 		){
-	const MARKETING_KEY = 'Marketing';
 	const DOM_ADVERTISEMENT_SLIDEBOX_HANDLE = 'advertisement-slidebox';
 	const DOM_BLOG_SLIDEBOX_HANDLE = 'blog-slidebox';
 	
 	var vm = this;
 	
-	if(!(null == localStorage.getItem(MARKETING_KEY))){
-		vm.marketing = localStorage.getItem(MARKETING_KEY);
+	if(!(null == localStorage.getItem(KEYS.Marketing))){
+		vm.marketing = localStorage.getItem(KEYS.Marketing);
 		vm.marketing = JSON.parse(vm.marketing);
 		
-		vm.advertisements = vm.marketing.advertisements;
-		vm.blogs = vm.marketing.blogs;
+		vm.advertisement = vm.marketing.advertisements;
+		vm.blog = vm.marketing.blogs;
 		} else {
 			dataService.fetchMarketing();
 			
@@ -75,10 +76,10 @@ function customerHomeController(
 		}
 	
 	$scope.$watch(
-			function(){	return localStorage.getItem(MARKETING_KEY);
+			function(){	return localStorage.getItem(KEYS.Marketing);
 			}, 
 			function(){
-				vm.marketing = localStorage.getItem(MARKETING_KEY);
+				vm.marketing = localStorage.getItem(KEYS.Marketing);
 				vm.marketing = JSON.parse(vm.marketing);
 				}
 			);
@@ -88,8 +89,8 @@ function customerHomeController(
 			}, 
 			function(){
 				if(!(null == vm.marketing)){
-					vm.advertisements = vm.marketing.advertisements;
-					vm.blogs = vm.marketing.blogs;
+					vm.advertisement = vm.marketing.advertisements;
+					vm.blog = vm.marketing.blogs;
 					}
 				
 				$timeout(

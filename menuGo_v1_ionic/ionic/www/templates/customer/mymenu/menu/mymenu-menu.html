@@ -10,7 +10,7 @@
 		<a 
 			class="child-content-center font-family-1-size-xsmall menu_link" 
 			ng-click="mymenuMenuController.setMenuName(k)" 
-			ng-repeat="(k, v) in mymenuMenuController.companyMenus">
+			ng-repeat="(k, v) in mymenuMenuController.companyMenu">
 			{{k}}
 		</a>
 	</ion-scroll>
@@ -18,7 +18,7 @@
 		class="list menuitem-container">
 		<div 
 			class="item item-thumbnail-left" 
-			ng-repeat="(k, v) in mymenuMenuController.companyMenuMenuitems" 
+			ng-repeat="(k, v) in mymenuMenuController.companyMenuMenuitem" 
 			ng-show="v.menu_id == mymenuMenuController.getMenuIdFromName()">
 			<!--  *************** 
 					menuitem-image (start)

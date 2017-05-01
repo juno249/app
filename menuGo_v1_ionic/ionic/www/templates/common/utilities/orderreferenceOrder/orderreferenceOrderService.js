@@ -7,6 +7,7 @@ angular
 
 orderreferenceOrderService.$inject = [
                                       'API_BASE_URL', 
+                                      'KEYS', 
                                       'ORDERREFERENCE_STATUS', 
                                       '$http', 
                                       '$q', 
@@ -16,15 +17,13 @@ orderreferenceOrderService.$inject = [
 
 function orderreferenceOrderService(
 		API_BASE_URL, 
+		KEYS, 
 		ORDERREFERENCE_STATUS, 
 		$http, 
 		$q, 
 		orderService, 
 		orderreferenceService
 		){
-	const ORDERS_KEY = 'Orders';
-	const ORDERREFERENCES_KEY = 'Orderreferences';
-	
 	var orderreferenceOrderServiceObj = {
 			orderreferencesOrders: {}, 
 			customerUsername: undefined, 
@@ -58,11 +57,11 @@ function orderreferenceOrderService(
 				.catch(fetchOrderreferencesFailedCallback);
 		
 		function fetchOrderreferencesSuccessCallback(response){
-			var orderreferences = localStorage.getItem(ORDERREFERENCES_KEY);
+			var orderreferences = localStorage.getItem(KEYS.Orderreferences);
 			orderreferences = JSON.parse(orderreferences);
 			var orderreferencesKey = Object.keys(orderreferences);
 			
-			orderreferencesOrders.orderreferences = orderreferences[orderreferencesKey[0]][ORDERREFERENCES_KEY];
+			orderreferencesOrders.orderreferences = orderreferences[orderreferencesKey[0]][KEYS.Orderreferences];
 			
 			orderService.fetchOrders(	//getByQuery
 					13, 
@@ -72,10 +71,10 @@ function orderreferenceOrderService(
 					.catch(fetchOrdersFailedCallback);
 			
 			function fetchOrdersSuccessCallback(response){
-				var orders = localStorage.getItem(ORDERS_KEY);
+				var orders = localStorage.getItem(KEYS.Orders);
 				orders = JSON.parse(orders);
 				reservationsOrderreferencesOrders.orderreferences.orders = orders;
-				localStorage.removeItem(ORDERS_KEY);
+				localStorage.removeItem(KEYS.Orders);
 				
 				deferred.resolve(reservationsOrderreferencesOrders);
 				}

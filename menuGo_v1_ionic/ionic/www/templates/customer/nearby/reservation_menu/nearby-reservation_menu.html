@@ -19,10 +19,10 @@
 			<div 
 				class="company_detail-container item item-thumbnail-left">
 				<img 
-					src={{nearbyReservationMenuController.company.company_logo}}>
+					src={{nearbyReservationMenuController._company.company_logo}}>
 				<span 
 					class="font-family-1-size-small">
-					<underline>{{nearbyReservationMenuController.company.company_name}}</underline>
+					<underline>{{nearbyReservationMenuController._company.company_name}}</underline>
 				</span><br>
 				<div 
 					class="branch-container">
@@ -45,7 +45,7 @@
 				<a 
 					class="child-content-center font-family-1-size-xsmall menu_link" 
 					ng-click="nearbyReservationMenuController.setMenuName(k)" 
-					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenus">
+					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenu">
 					{{k}}
 				</a>
 			</ion-scroll>
@@ -53,7 +53,7 @@
 				class="list menuitem-container">
 				<div 
 					class="item item-thumbnail-left" 
-					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenuMenuitems" 
+					ng-repeat="(k, v) in nearbyReservationMenuController.companyMenuMenuitem" 
 					ng-show="v.menu_id == nearbyReservationMenuController.getMenuIdFromName()">
 					<!--  *************** 
 							menuitem-image (start)

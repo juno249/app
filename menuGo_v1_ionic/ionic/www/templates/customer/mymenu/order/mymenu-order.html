@@ -8,20 +8,20 @@
 		class="list order_status-container">
 		<div 
 			class="item item-thumbnail-left" 
-			ng-repeat="(k, v) in mymenuOrderController.user.orderreference.orders">
+			ng-repeat="(k, v) in mymenuOrderController.user.orderreference.order">
 			<!--  *************** 
 					menuitem-image (start)
 					*************** -->
 			<img 
 				id="menuitem-image" 
 				name="menuitem-image" 
-				src={{mymenuOrderController.companyMenuMenuitems[v.menuitem_id].menuitem_image}}>
+				src={{mymenuOrderController.companyMenuMenuitem[v.menuitem_id].menuitem_image}}>
 			<!--  *************** 
 					menuitem-image (end)
 					*************** -->
 			<span 
 				class="font-family-1-size-small">
-				<underline>{{mymenuOrderController.companyMenuMenuitems[v.menuitem_id].menuitem_name}}</underline>
+				<underline>{{mymenuOrderController.companyMenuMenuitem[v.menuitem_id].menuitem_name}}</underline>
 			</span>
 			<div 
 				class="child-content-center order_status_indicator-container">

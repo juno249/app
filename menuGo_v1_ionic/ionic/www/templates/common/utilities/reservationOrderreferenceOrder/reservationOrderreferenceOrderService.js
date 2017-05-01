@@ -7,6 +7,7 @@ angular
 
 reservationOrderreferenceOrderService.$inject = [
                                                  'API_BASE_URL', 
+                                                 'KEYS', 
                                                  'ORDERREFERENCE_STATUS', 
                                                  'RESERVATION_STATUS', 
                                                  '$http', 
@@ -17,6 +18,7 @@ reservationOrderreferenceOrderService.$inject = [
 
 function reservationOrderreferenceOrderService(
 		API_BASE_URL, 
+		KEYS, 
 		ORDERREFERENCE_STATUS, 
 		RESERVATION_STATUS, 
 		$http, 
@@ -24,10 +26,6 @@ function reservationOrderreferenceOrderService(
 		orderService, 
 		reservationService
 		){
-	const ORDERS_KEY = 'Orders';
-	const ORDERREFERENCES_KEY = 'Orderreferences';
-	const RESERVATIONS_KEY = 'Reservations';
-	
 	var reservationOrderreferenceOrderServiceObj = {
 			reservationsOrderreferencesOrders: {}, 
 			customerUsername: undefined, 
@@ -61,12 +59,12 @@ function reservationOrderreferenceOrderService(
 				.catch(fetchReservationsFailedCallback);
 		
 		function fetchReservationsSuccessCallback(response){
-			var reservations = localStorage.getItem(RESERVATIONS_KEY);
+			var reservations = localStorage.getItem(KEYS.Reservations);
 			reservations = JSON.parse(reservations);
 			var reservationsKey = Object.keys(reservations);
 			
-			reservationsOrderreferencesOrders.reservations = reservations[reservationsKey[0]][RESERVATIONS_KEY];
-			reservationsOrderreferencesOrders.orderreferences = reservations[reservationsKey[0]][ORDERREFERENCES_KEY];
+			reservationsOrderreferencesOrders.reservations = reservations[reservationsKey[0]][KEYS.Reservations];
+			reservationsOrderreferencesOrders.orderreferences = reservations[reservationsKey[0]][KEYS.Orderreferences];
 			
 			orderService.fetchOrders(	//getByQuery
 					13, 
@@ -77,10 +75,10 @@ function reservationOrderreferenceOrderService(
 			}
 		
 		function fetchOrdersSuccessCallback(response){
-			var orders = localStorage.getItem(ORDERS_KEY);
+			var orders = localStorage.getItem(KEYS.Orders);
 			orders = JSON.parse(orders);
 			reservationsOrderreferencesOrders.orderreferences.orders = orders;
-			localStorage.removeItem(ORDERS_KEY);
+			localStorage.removeItem(KEYS.Orders);
 			
 			deferred.resolve(reservationsOrderreferencesOrders);
 			}

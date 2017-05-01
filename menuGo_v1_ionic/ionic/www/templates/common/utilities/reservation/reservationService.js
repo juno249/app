@@ -10,6 +10,7 @@ reservationService.$inject = [
                               'BRANCHES_DB_FIELDS', 
                               'COMPANIES_DB_FIELDS', 
                               'CUSTOMERS_DB_FIELDS', 
+                              'KEYS', 
                               'ORDERREFERENCES_DB_FIELDS', 
                               'RESERVATIONS_DB_FIELDS', 
                               'TABLES_DB_FIELDS', 
@@ -23,6 +24,7 @@ function reservationService(
 		BRANCHES_DB_FIELDS, 
 		COMPANIES_DB_FIELDS, 
 		CUSTOMERS_DB_FIELDS, 
+		KEYS, 
 		ORDERREFERENCES_DB_FIELDS, 
 		RESERVATIONS_DB_FIELDS, 
 		TABLES_DB_FIELDS, 
@@ -30,13 +32,6 @@ function reservationService(
 		$localStorage, 
 		$q
 		){
-	const CUSTOMERS_KEY = 'Customers';
-	const COMPANIES_KEY = 'Companies';
-	const BRANCHES_KEY = 'Branches';
-	const TABLES_KEY = 'Tables';
-	const ORDERREFERENCES_KEY = 'Orderreferences';
-	const RESERVATIONS_KEY = 'Reservations';
-	
 	reservationServiceObj = {
 			reservations: {}, 
 			companyName: undefined, 
@@ -185,7 +180,7 @@ function reservationService(
 			reservations = reservationServiceObj.reservations;
 			reservations = JSON.stringify(reservations);
 			localStorage.setItem(
-					RESERVATIONS_KEY, 
+					KEYS.Reservations, 
 					reservations
 					);
 			
@@ -201,34 +196,34 @@ function reservationService(
 				var key = undefined;
 				
 				for(var j=0; j<Object.keys(CUSTOMERS_DB_FIELDS).length; j++){
-					if(null == reservationsDetails[CUSTOMERS_KEY]){	reservationsDetails[CUSTOMERS_KEY] = {};
+					if(null == reservationsDetails[KEYS.Customers]){	reservationsDetails[KEYS.Customers] = {};
 					}
-					reservationsDetails[CUSTOMERS_KEY][CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
+					reservationsDetails[KEYS.Customers][CUSTOMERS_DB_FIELDS[j]] = responseData[i][CUSTOMERS_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(COMPANIES_DB_FIELDS).length; j++){
-					if(null == reservationsDetails[COMPANIES_KEY]){	reservationsDetails[COMPANIES_KEY] = {};
+					if(null == reservationsDetails[KEYS.Companies]){	reservationsDetails[KEYS.Companies] = {};
 					}
-					reservationsDetails[COMPANIES_KEY][COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
+					reservationsDetails[KEYS.Companies][COMPANIES_DB_FIELDS[j]] = responseData[i][COMPANIES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(BRANCHES_DB_FIELDS).length; j++){
-					if(null == reservationsDetails[BRANCHES_KEY]){	reservationsDetails[BRANCHES_KEY] = {};
+					if(null == reservationsDetails[KEYS.Branches]){	reservationsDetails[KEYS.Branches] = {};
 					}
-					reservationsDetails[BRANCHES_KEY][BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
+					reservationsDetails[KEYS.Branches][BRANCHES_DB_FIELDS[j]] = responseData[i][BRANCHES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(TABLES_DB_FIELDS).length; j++){
-					if(null == reservationsDetails[TABLES_KEY]){	reservationsDetails[TABLES_KEY] = {};
+					if(null == reservationsDetails[KEYS.Tables]){	reservationsDetails[KEYS.Tables] = {};
 					}
-					reservationsDetails[TABLES_KEY][TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
+					reservationsDetails[KEYS.Tables][TABLES_DB_FIELDS[j]] = responseData[i][TABLES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(ORDERREFERENCES_DB_FIELDS).length; j++){
-					if(null == reservationsDetails[ORDERREFERENCES_KEY]){	reservationsDetails[ORDERREFERENCES_KEY] = {};
+					if(null == reservationsDetails[KEYS.Orderreferences]){	reservationsDetails[KEYS.Orderreferences] = {};
 					}
-					reservationsDetails[ORDERREFERENCES_KEY][ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
+					reservationsDetails[KEYS.Orderreferences][ORDERREFERENCES_DB_FIELDS[j]] = responseData[i][ORDERREFERENCES_DB_FIELDS[j]];
 					}
 				for(var j=0; j<Object.keys(RESERVATIONS_DB_FIELDS).length; j++){
-					if(null == reservationsDetails[RESERVATIONS_KEY]){	reservationsDetails[RESERVATIONS_KEY] = {};
+					if(null == reservationsDetails[KEYS.Reservations]){	reservationsDetails[KEYS.Reservations] = {};
 					}
-					reservationsDetails[RESERVATIONS_KEY][RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
+					reservationsDetails[KEYS.Reservations][RESERVATIONS_DB_FIELDS[j]] = responseData[i][RESERVATIONS_DB_FIELDS[j]];
 					}
 				
 				var key = responseData[i][RESERVATIONS_DB_FIELDS[1]]; //reservation_code

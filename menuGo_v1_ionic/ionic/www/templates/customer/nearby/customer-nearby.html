@@ -43,7 +43,7 @@
 					class="list">
 					<div 
 						class="item" 
-						ng-repeat="k in customerNearbyController.placePredictions">
+						ng-repeat="k in customerNearbyController.placePrediction">
 						<i 
 							class="icon ion-location">
 						</i>
@@ -84,13 +84,13 @@
 				<a 
 					class="category_link child-content-center font-family-1-size-xsmall" 
 					ng-click="customerNearbyController.setCompanyCategory(k)" 
-					ng-repeat="k in customerNearbyController.companyCategories">
+					ng-repeat="k in customerNearbyController.companyCategory">
 					{{k}}
 				</a>
 			</ion-scroll>
 			<div 
 				class="company-container" 
-				ng-repeat="(k, v) in customerNearbyController.companies">
+				ng-repeat="(k, v) in customerNearbyController.company">
 				<div 
 					class="branch-container card" 
 					ng-click="customerNearbyController.gotoState('customer.nearby.reservation_menu', {companyName: k, branchName: i});" 
@@ -113,7 +113,7 @@
 						id="company-slidebox" 
 						name="company-slidebox">
 						<ion-slide 
-							ng-repeat="(a, b) in customerNearbyController.companyMenuMenuitems[k]">
+							ng-repeat="(a, b) in customerNearbyController.companyMenuMenuitem[k]">
 							<div 
 								class="child-content-center menuitem_image-container">
 								<img 

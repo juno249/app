@@ -310,3 +310,23 @@ angular
 			sendingReservation: 'sending reservation'
 				}
 		)
+
+.constant(
+		'KEYS', 
+		{
+			Customers: 'customers', 
+			Companies: 'companies', 
+			Branches: 'branches', 
+			Menus: 'menus', 
+			Tables: 'tables', 
+			Menuitems: 'menuitems', 
+			Orderreferences: 'orderreferences', 
+			Orders: 'orders', 
+			Reservations: 'reservations', 
+			CustomersCompaniesBranches: 'customers_companies_branches', 
+			Marketing: 'marketing', 
+			Advertisements: 'advertisements', 
+			Blogs: 'blogs', 
+			User: 'user'
+		}
+		);

@@ -8,6 +8,7 @@ angular
 nearbyReservationOrderController.$inject = [
                                             'BROADCAST_MESSAGES', 
                                             'ERROR_MESSAGES', 
+                                            'KEYS', 
                                             'LOADING_MESSAGES', 
                                             'ORDER_STATUS', 
                                             'ORDERREFERENCE_STATUS', 
@@ -25,6 +26,7 @@ nearbyReservationOrderController.$inject = [
 function nearbyReservationOrderController(
 		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		ORDERREFERENCE_STATUS, 
@@ -38,14 +40,13 @@ function nearbyReservationOrderController(
 		reservationService, 
 		reservationOrderreferenceOrderService
 		){
-	const USER_KEY = 'User';
 	const RESERVATION_TABLE_ID = 999999;
 	
 	var vm = this;
-	vm.paymentModeOptions = PAYMENT_MODES;
+	vm.paymentModeOption = PAYMENT_MODES;
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		
 		if(null == vm.user.reservation){	vm.user.reservation = {};
@@ -63,7 +64,7 @@ function nearbyReservationOrderController(
 		delete vm.user.reservationOrder[menuitem.menuitem_code];
 		
 		localStorage.setItem(
-				USER_KEY, 
+				KEYS.User, 
 				JSON.stringify(vm.user)
 				);
 		}
@@ -159,7 +160,7 @@ function nearbyReservationOrderController(
 				vm.user.orderreference = response.orderreferences;
 				
 				localStorage.setItem(
-						USER_KEY, 
+						KEYS.User, 
 						JSON.stringify(vm.user)
 						);
 				}

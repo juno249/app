@@ -8,6 +8,7 @@ angular
 companyService.$inject = [
                           'API_BASE_URL', 
                           'COMPANIES_DB_FIELDS', 
+                          'KEYS', 
                           '$http', 
                           '$localStorage', 
                           '$q'
@@ -16,12 +17,11 @@ companyService.$inject = [
 function companyService(
 		API_BASE_URL, 
 		COMPANIES_DB_FIELDS, 
+		KEYS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const COMPANIES_KEY = 'Companies';
-	
 	var companyServiceObj = {
 		companies: {}, 
 		companyName: undefined, 
@@ -84,7 +84,7 @@ function companyService(
 			companies = companyServiceObj.companies;
 			companies = JSON.stringify(companies);
 			localStorage.setItem(
-					COMPANIES_KEY, 
+					KEYS.Companies, 
 					companies
 					);
 			
