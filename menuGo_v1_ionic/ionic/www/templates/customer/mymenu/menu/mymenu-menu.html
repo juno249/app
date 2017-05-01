@@ -85,6 +85,25 @@
 			</div>
 		</div>
 	</div>
+	<div 
+		class="child-content-center" 
+		ng-if="keys(mymenuMenuController.user.reservationOrder).length > 0">
+		<!--  *************** 
+				postOrderBtn (start)
+				*************** -->
+		<button 
+			class="button button-medium button-positive child-content-center fill-parent-x" 
+			id="postOrderBtn" 
+			name="postOrderBtn" 
+			ng-click="mymenuMenuController.postOrder();">
+			<i 
+				class="icon ion-arrow-right-a">
+			</i>
+		</button>
+		<!--  *************** 
+				postOrderBtn (end)
+				*************** -->
+	</div>
 </div>
 <!--  *************** 
 		menu (end)

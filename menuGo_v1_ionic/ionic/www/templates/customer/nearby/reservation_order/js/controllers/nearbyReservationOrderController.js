@@ -147,7 +147,7 @@ function nearbyReservationOrderController(
 			hideIonicLoading();
 			
 			reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
-			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
+			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
 			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 			
