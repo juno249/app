@@ -79,18 +79,36 @@ class orderreferenceController extends Controller
 		return $companyBranchTableOrderreference;
 	}
 	
-	public function getJoinCustomerOrderreferences($mySqlWhere){
-		$customerOrderreference = DB::table(orderreferenceConstants::orderreferencesTable)
+	public function getJoinCustomerCompanyBranchTableOrderreferences($mySqlWhere){
+		$customerCompanyBranchTableOrderreferences = DB::table(orderreferenceConstants::orderreferencesTable)
 		->join(
 				customerConstants::customersTable, 
 				orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbCustomerUsername, 
 				'=', 
 				customerConstants::customersTable . '.' . customerConstants::dbCustomerUsername
 				)
-				->where($mySqlWhere)
+				->join(
+						tableConstants::tablesTable, 
+						orderreferenceConstants::orderreferencesTable . '.' . orderreferenceConstants::dbTableId, 
+						'=', 
+						tableConstants::tablesTable . '.' . tableConstants::dbTableId
+						)
+						->join(
+								branchConstants::branchesTable, 
+								tableConstants::tablesTable . '.' . tableConstants::dbBranchId, 
+								'=', 
+								branchConstants::branchesTable . '.' . branchConstants::dbBranchId
+								)
+								->join(
+										companyConstants::companiesTable, 
+										branchConstants::branchesTable . '.' . branchConstants::dbCompanyName, 
+										'=', 
+										companyConstants::companiesTable . '.' . companyConstants::dbCompanyName
+										)
+										->where($mySqlWhere)
 		->get();
 		
-		return $customerOrderreference;
+		return $customerCompanyBranchTableOrderreferences;
 	}
 	
 	//URL-->>/companies/{CompanyName}/branches/{BranchName}/orderreferences
@@ -525,7 +543,7 @@ class orderreferenceController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$customerOrderreferences = $this->getJoinCustomerOrderreferences($mySqlWhere);
+			$customerOrderreferences = $this->getJoinCustomerCompanyBranchTableOrderreferences($mySqlWhere);
 			if($customerOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferenceConstants::emptyResultSetErr
@@ -566,7 +584,7 @@ class orderreferenceController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$customerOrderreference = $this->getJoinCustomerOrderreferences($mySqlWhere);
+			$customerOrderreference = $this->getJoinCustomerCompanyBranchTableOrderreferences($mySqlWhere);
 			if($customerOrderreference->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferenceConstants::emptyResultSetErr
@@ -607,7 +625,7 @@ class orderreferenceController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$customerOrderreferences = $this->getJoinCustomerOrderreferences($mySqlWhere);
+			$customerOrderreferences = $this->getJoinCustomerCompanyBranchTableOrderreferences($mySqlWhere);
 			if($customerOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferenceConstants::emptyResultSetErr
@@ -648,7 +666,7 @@ class orderreferenceController extends Controller
 		
 		$orderreferencesResponse = new Response();
 		try{
-			$customerOrderreferences = $this->getJoinCustomerOrderreferences($mySqlWhere);
+			$customerOrderreferences = $this->getJoinCustomerCompanyBranchTableOrderreferences($mySqlWhere);
 			if($customerOrderreferences->isEmpty()){	$orderreferencesResponse->setStatusCode(
 					200, 
 					orderreferenceConstants::emptyResultSetErr
