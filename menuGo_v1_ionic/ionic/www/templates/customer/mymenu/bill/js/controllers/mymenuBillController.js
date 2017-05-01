@@ -39,7 +39,7 @@ function mymenuBillController(
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
 		vm.user = JSON.parse(vm.user);
-	}
+		}
 	
 	dispIonicLoading(LOADING_MESSAGES.gettingData);
 	
@@ -53,8 +53,6 @@ function mymenuBillController(
 		
 		vm.user.reservation = response.reservations;
 		vm.user.orderreference = response.orderreferences;
-		vm.user.orderreference.order = vm.user.orderreference.orders;
-		delete vm.user.orderreference.orders;
 		
 		localStorage.setItem(
 				USER_KEY, 

@@ -107,7 +107,20 @@ function doRouteConfig(
 																			}
 															}
 															}
-															);
+															)
+															.state(
+																	'customer.reservation', 
+																	{
+																		url: '/reservation', 
+																		views: {
+																			'customer-reservation': {
+																				templateUrl: 'templates/customer/reservation/customer-reservation.html', 
+																				controller: 'customerReservationController', 
+																				controllerAs: 'customerReservationController'
+																					}
+																	}
+																	}
+																	);
 	
 	$urlRouterProvider
 	.otherwise('/');
