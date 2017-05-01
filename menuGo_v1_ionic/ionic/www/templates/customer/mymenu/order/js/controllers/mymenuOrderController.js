@@ -34,19 +34,12 @@ function mymenuOrderController(
 	vm.branchName = $scope.$parent.customerMymenuController.branchName;
 	vm.tableNumber = $scope.$parent.customerMymenuController.tableNumber;
 	
-	if(!(null == localStorage.getItem(COMPANIES_KEY))){
-		vm.companies = localStorage.getItem(COMPANIES_KEY);
-		vm.companies = JSON.parse(vm.companies);
-		} else {
-			dataService.fetchCompanies();
-			
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
-			}
-	
 	if(!(null == localStorage.getItem(USER_KEY))){
 		vm.user = localStorage.getItem(USER_KEY);
 		vm.user = JSON.parse(vm.user);
 		}
+	
+	dispIonicLoading(LOADING_MESSAGES.gettingData);
 	
 	reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
 	reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders()
@@ -54,6 +47,8 @@ function mymenuOrderController(
 	.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 	
 	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+		hideIonicLoading();
+		
 		vm.user.reservation = response.reservation;
 		vm.user.orderreference = response.orderreference;
 		
@@ -61,10 +56,22 @@ function mymenuOrderController(
 				USER_KEY, 
 				JSON.stringify(vm.user)
 				);
+		
+		if(!(null == localStorage.getItem(COMPANIES_KEY))){
+			vm.companies = localStorage.getItem(COMPANIES_KEY);
+			vm.companies = JSON.parse(vm.companies);
+			} else {
+				dataService.fetchCompanies();
+				
+				dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
 		}
 	
-	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){	//do something on failure
-	}
+	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+		hideIonicLoading();
+		
+		dispIonicPopup(ERROR_MESSAGES.getFailed);
+		}
 	
 	function genCompanyMenuMenuitems(){
 		var companyMenuMenuitems = {};
