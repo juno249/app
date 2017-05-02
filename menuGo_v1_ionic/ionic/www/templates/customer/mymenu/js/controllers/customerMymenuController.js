@@ -6,9 +6,13 @@ angular
 		);
 
 customerMymenuController.$inject = [
-	];
+                                    'KEYS', 
+                                    '$scope'
+                                    ];
 
 function customerMymenuController(
+		KEYS, 
+		$scope
 		){
 	const DOM_ION_HEADER_BAR_TAG = 'ion-header-bar';
 	const DOM_ION_TABS_CLASS = '.tab-nav.tabs';
@@ -17,12 +21,6 @@ function customerMymenuController(
 	const DOM_BUTTON_CONTAINER = '#button-container';
 	
 	var vm = this;
-	
-	//dummy data - test (start)
-	vm.companyName = "Max's";
-	vm.branchName = 'Ermita';
-	vm.tableNumber = 1;
-	//dummy data - test (end)
 	vm.mymenuContentSrc = "templates/customer/mymenu/order/mymenu-order.html";
 	
 	//controller_method
@@ -61,4 +59,16 @@ function customerMymenuController(
 	
 	function gotoMymenuOrder(){	vm.mymenuContentSrc = "templates/customer/mymenu/order/mymenu-order.html";
 	}
+	
+	$scope.$on(
+			function(){	return localStorage.getItem(KEYS.ReservationsDetails);
+			}, 
+			function(){
+				vm.reservationsDetails = localStorage.getItem(KEYS.ReservationsDetails);
+				
+				vm.companyName = vm.reservationsDetails.companyName;
+				vm.branchName = vm.reservationsDetails.branchName;
+				vm.tableNumber = vm.reservationsDetails.tableNumber;
+				}
+			);
 	}
