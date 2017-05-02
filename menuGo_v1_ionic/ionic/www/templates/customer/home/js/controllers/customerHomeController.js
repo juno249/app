@@ -11,8 +11,6 @@ customerHomeController.$inject = [
                                   'KEYS', 
                                   'LOADING_MESSAGES', 
                                   '$ionicHistory', 
-                                  '$ionicLoading', 
-                                  '$ionicPopup', 
                                   '$ionicSlideBoxDelegate', 
                                   '$localStorage', 
                                   '$scope', 
@@ -26,8 +24,6 @@ function customerHomeController(
 		KEYS, 
 		LOADING_MESSAGES, 
 		$ionicHistory, 
-		$ionicLoading, 
-		$ionicPopup, 
 		$ionicSlideBoxDelegate, 
 		$localStorage, 
 		$scope, 
@@ -52,28 +48,6 @@ function customerHomeController(
 			}
 	
 	$ionicHistory.clearHistory();
-	
-	function dispIonicLoading(msg){
-		var templateString = '';
-		templateString += '<ion-spinner></ion-spinner><br>';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicLoading.show(
-				{	template: templateString	}
-				);
-		}
-	
-	function hideIonicLoading(){	$ionicLoading.hide();
-	}
-	
-	function dispIonicPopup(msg){
-		var templateString = '';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicPopup.alert(
-				{	template: templateString	}
-				);
-		}
 	
 	$scope.$watch(
 			function(){	return localStorage.getItem(KEYS.Marketing);

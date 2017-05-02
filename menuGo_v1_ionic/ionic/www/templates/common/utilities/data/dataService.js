@@ -286,8 +286,8 @@ function dataService(
 			if(!(null == localStorage.getItem(KEYS.Marketing))){
 				marketing = localStorage.getItem(KEYS.Marketing);
 				marketing = JSON.parse(marketing);
-			} else {	marketing = {};
-			}
+				} else {	marketing = {};
+				}
 			
 			marketing[KEYS.Advertisements] = advertisements;
 			marketing = JSON.stringify(marketing);
@@ -325,8 +325,8 @@ function dataService(
 			if(!(null == localStorage.getItem(KEYS.Marketing))){
 				marketing = localStorage.getItem(KEYS.Marketing);
 				marketing = JSON.parse(marketing);
-			} else {	marketing = {};
-			}
+				} else {	marketing = {};
+				}
 			
 			marketing[KEYS.Blogs] = blogs;
 			marketing = JSON.stringify(marketing);
