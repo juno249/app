@@ -10,8 +10,8 @@ loginController.$inject = [
                            'KEYS', 
                            'LOADING_MESSAGES', 
                            'USER_ROLES', 
-                           '$state', 
                            '$localStorage', 
+                           '$state', 
                            'loginService', 
                            'popupService'
                            ];
