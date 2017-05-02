@@ -285,6 +285,49 @@ angular
 			addReservation: 'addReservation', 
 			updateReservation: 'updateReservation', 
 			deleteReservation: 'deleteReservation', 
-			remReservationOrder: 'remReservationOrder'
+			remReservationOrder: 'remReservationOrder', 
+			getMarketingSuccess: 'getMarketingSuccess', 
+			getMarketingFailed: 'getMarketingFailed', 
+			getCompaniesSuccess: 'getCompaniesSuccess', 
+			getCompaniesFailed: 'getCompaniesFailed'
 				}
 		)
+
+.constant(
+		'ERROR_MESSAGES', 
+		{
+			authenticationFailed: 'authentication failed: invalid username/password', 
+			getFailed: 'get failed: unable to retrieve data from server', 
+			sendFailed: 'send failed: unable to post reservation/orders to server'
+				}
+		)
+		
+.constant(
+		'LOADING_MESSAGES', 
+		{
+			authenticatingUser: 'authenticating user', 
+			gettingData: 'getting data', 
+			sendingReservation: 'sending reservation', 
+			sendingOrder: 'sending order'
+				}
+		)
+
+.constant(
+		'KEYS', 
+		{
+			Customers: 'customers', 
+			Companies: 'companies', 
+			Branches: 'branches', 
+			Menus: 'menus', 
+			Tables: 'tables', 
+			Menuitems: 'menuitems', 
+			Orderreferences: 'orderreferences', 
+			Orders: 'orders', 
+			Reservations: 'reservations', 
+			CustomersCompaniesBranches: 'customers_companies_branches', 
+			Marketing: 'marketing', 
+			Advertisements: 'advertisements', 
+			Blogs: 'blogs', 
+			User: 'user'
+				}
+		);
