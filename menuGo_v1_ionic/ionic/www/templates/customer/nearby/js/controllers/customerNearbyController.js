@@ -11,8 +11,6 @@ customerNearbyController.$inject = [
                                     'KEYS', 
                                     'LOADING_MESSAGES', 
                                     '$ionicHistory', 
-                                    '$ionicLoading', 
-                                    '$ionicPopup', 
                                     '$ionicSlideBoxDelegate', 
                                     '$localStorage', 
                                     '$scope', 
@@ -20,7 +18,9 @@ customerNearbyController.$inject = [
                                     '$timeout', 
                                     'branchService', 
                                     'dataService', 
-                                    'googleplacesService'
+                                    'googleplacesService', 
+                                    'networkService', 
+                                    'popupService'
                                     ];
 
 function customerNearbyController(
@@ -29,8 +29,6 @@ function customerNearbyController(
 		KEYS, 
 		LOADING_MESSAGES, 
 		$ionicHistory, 
-		$ionicLoading, 
-		$ionicPopup, 
 		$ionicSlideBoxDelegate, 
 		$localStorage, 
 		$scope, 
@@ -38,7 +36,9 @@ function customerNearbyController(
 		$timeout, 
 		branchService, 
 		dataService, 
-		googleplacesService
+		googleplacesService, 
+		networkService, 
+		popupService
 		){
 	$ionicHistory.clearHistory();
 	
@@ -57,19 +57,24 @@ function customerNearbyController(
 				zoomControl: false
 				}
 	
-	if(!(null == localStorage.getItem(KEYS.Companies))){
+	if(
+			networkService.deviceIsOffline() &&
+			!(null == localStorage.getItem(KEYS.Companies))
+			){
 		vm.company = localStorage.getItem(KEYS.Companies);
 		vm.company = JSON.parse(vm.company);
-		} else {
-			dataService.fetchCompanies();
-			
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
-			}
-	
-	if(!(null == localStorage.getItem(KEYS.User))){
-		vm.user = localStorage.getItem(KEYS.User);
-		vm.user = JSON.parse(vm.user);
-		}
+		} else if(
+				networkService.deviceIsOffline() &&
+				null == localStorage.getItem(KEYS.Companies)
+				){
+			vm.company = {};
+			vm.companyMenuMenuitem = {};
+			vm.companyCategory = {};
+			} else {
+				dataService.fetchCompanies();
+				
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -94,7 +99,7 @@ function customerNearbyController(
 			}
 		}
 	
-	function setCompanyCategory(companyCategoryVal){	vm.companyCategoryVal = companyCategoryVal;
+	function setCompanyCategory(_companyCategory){	vm._companyCategory = _companyCategory;
 	}
 	
 	function toStringBranchAddress(branch){
@@ -165,28 +170,6 @@ function customerNearbyController(
 		return companyCategory;
 		}
 	
-	function dispIonicLoading(msg){
-		var templateString = '';
-		templateString += '<ion-spinner></ion-spinner><br>';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicLoading.show(
-				{	template: templateString	}
-				);
-		}
-	
-	function hideIonicLoading(){	$ionicLoading.hide();
-	}
-	
-	function dispIonicPopup(msg){
-		var templateString = '';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicPopup.alert(
-				{	template: templateString	}
-				);
-		}
-	
 	$scope.$watch(
 			function(){	return localStorage.getItem(KEYS.Companies);
 			}, 
@@ -231,7 +214,7 @@ function customerNearbyController(
 	
 	$scope.$on(
 			BROADCAST_MESSAGES.getCompaniesSuccess, 
-			function(){	hideIonicLoading();
+			function(){	popupService.hideIonicLoading();
 			}
 			);
 	
@@ -240,8 +223,8 @@ function customerNearbyController(
 			function(){
 				var DOM_POPUP_CLASS = '.popup';
 				
-				hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 				}
 			);

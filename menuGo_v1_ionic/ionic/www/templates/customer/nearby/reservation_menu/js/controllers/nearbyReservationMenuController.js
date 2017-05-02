@@ -10,14 +10,14 @@ nearbyReservationMenuController.$inject = [
                                            'ERROR_MESSAGES', 
                                            'KEYS', 
                                            'LOADING_MESSAGES', 
-                                           '$ionicLoading', 
-                                           '$ionicPopup', 
                                            '$localStorage', 
                                            '$scope', 
                                            '$state', 
                                            '$stateParams', 
                                            'branchService', 
-                                           'dataService'
+                                           'dataService', 
+                                           'networkService', 
+                                           'popupService'
                                            ];
 
 function nearbyReservationMenuController(
@@ -25,39 +25,41 @@ function nearbyReservationMenuController(
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
-		$ionicLoading, 
-		$ionicPopup, 
 		$localStorage, 
 		$scope, 
 		$state, 
 		$stateParams, 
 		branchService, 
-		dataService
+		dataService, 
+		networkService, 
+		popupService
 		){
 	var vm = this;
 	
-	if(!(null == localStorage.getItem(KEYS.Companies))){
-		vm.company = localStorage.getItem(KEYS.Companies);
-		vm.company = JSON.parse(vm.company);
-		} else {
-			dataService.fetchCompanies();
-			
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
-			}
-	
-	if(!(null == localStorage.getItem(KEYS.User))){
-		vm.user = localStorage.getItem(KEYS.User);
-		vm.user = JSON.parse(vm.user);
-		
-		if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
-		}
-		}
-	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
-	
 	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
 	}
+	
+	if(
+			networkService.deviceIsOffline() &&
+			!(null == localStorage.getItem(KEYS.Companies))
+			){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
+		} else if(
+				networkService.deviceIsOffline() &&
+				null == localStorage.getItem(KEYS.Companies)
+				){
+			vm.company = {};
+			vm._company = {};
+			vm.companyMenu = {};
+			vm.companyMenuMenuitem = {};
+			} else {
+				dataService.fetchCompanies();
+				
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -171,28 +173,6 @@ function nearbyReservationMenuController(
 				);
 		}
 	
-	function dispIonicLoading(msg){
-		var templateString = '';
-		templateString += '<ion-spinner></ion-spinner><br>';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicLoading.show(
-				{	template: templateString	}
-				);
-		}
-	
-	function hideIonicLoading(){	$ionicLoading.hide();
-	}
-	
-	function dispIonicPopup(msg){
-		var templateString = '';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicPopup.alert(
-				{	template: templateString	}
-				);
-		}
-	
 	$scope.$watch(
 			function(){	return localStorage.getItem(KEYS.Companies);
 			}, 
@@ -208,9 +188,13 @@ function nearbyReservationMenuController(
 			function(){
 				if(!(null == vm.company)){
 					vm._company = vm.company[vm.companyName];
+					if(null == vm._company){	return;
+					}
 					
 					if(!(null == vm._company.branches)){
 						vm._branch = vm._company.branches[vm.branchName];
+						if(null == vm._branch){	return;
+						}
 						
 						if(!(null == vm._branch.tables)){	vm._table = vm._branch.tables[vm.tableNumber];
 						}
@@ -246,7 +230,7 @@ function nearbyReservationMenuController(
 	
 	$scope.$on(
 			BROADCAST_MESSAGES.getCompaniesSuccess, 
-			function(){	hideIonicLoading();
+			function(){	popupService.hideIonicLoading();
 			}
 			);
 	
@@ -255,8 +239,8 @@ function nearbyReservationMenuController(
 			function(){
 				var DOM_POPUP_CLASS = '.popup';
 				
-				hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 				}
 			);

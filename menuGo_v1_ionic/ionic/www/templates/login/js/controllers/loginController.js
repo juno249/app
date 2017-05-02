@@ -30,12 +30,6 @@ function loginController(
 	
 	var vm = this;
 	
-	if(!(null == localStorage.getItem(KEYS.User))){
-		vm.user = localStorage.getItem(KEYS.User);
-		vm.user = JSON.parse(vm.user);
-		vm.isAuthenticated = vm.user.isAuthenticated;
-		}
-	
 	//controller_method
 	vm.doLogin = doLogin;
 	//controller_method
