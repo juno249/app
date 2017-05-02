@@ -10,11 +10,10 @@ loginController.$inject = [
                            'KEYS', 
                            'LOADING_MESSAGES', 
                            'USER_ROLES', 
-                           '$ionicLoading', 
-                           '$ionicPopup', 
                            '$localStorage', 
                            '$state', 
-                           'loginService'
+                           'loginService', 
+                           'popupService'
                            ];
 
 function loginController(
@@ -22,11 +21,10 @@ function loginController(
 		KEYS, 
 		LOADING_MESSAGES, 
 		USER_ROLES, 
-		$ionicLoading, 
-		$ionicPopup, 
 		$localStorage, 
 		$state, 
-		loginService
+		loginService, 
+		popupService
 		){
 	const STATE_CUSTOMER_HOME = 'customer.home';
 	
@@ -53,10 +51,10 @@ function loginController(
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);
 		
-		dispIonicLoading(LOADING_MESSAGES.authenticatingUser);
+		popupService.dispIonicLoading(LOADING_MESSAGES.authenticatingUser);
 		
 		function doLoginSuccessCallback(response){
-			hideIonicLoading();
+			popupService.hideIonicLoading();
 			
 			vm.user = localStorage.getItem(KEYS.User);
 			vm.user = JSON.parse(vm.user);
@@ -71,34 +69,12 @@ function loginController(
 			}
 		
 		function doLoginFailedCallback(responseError){
-			hideIonicLoading();
+			popupService.hideIonicLoading();
 			
-			dispIonicPopup(ERROR_MESSAGES.authenticationFailed);
+			popupService.dispIonicPopup(ERROR_MESSAGES.authenticationFailed);
 			}
 		}
 	
 	function doSignup(){
 	}
-	
-	function dispIonicLoading(msg){
-		var templateString = '';
-		templateString += '<ion-spinner></ion-spinner><br>';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicLoading.show(
-				{	template: templateString	}
-				);
-		}
-	
-	function hideIonicLoading(){	$ionicLoading.hide();
-	}
-	
-	function dispIonicPopup(msg){
-		var templateString = '';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicPopup.alert(
-				{	template: templateString	}
-				);
-		}
 	}
