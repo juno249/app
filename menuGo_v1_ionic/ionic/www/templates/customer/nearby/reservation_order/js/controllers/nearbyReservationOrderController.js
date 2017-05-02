@@ -6,7 +6,6 @@ angular
 		);
 
 nearbyReservationOrderController.$inject = [
-                                            'BROADCAST_MESSAGES', 
                                             'ERROR_MESSAGES', 
                                             'KEYS', 
                                             'LOADING_MESSAGES', 
@@ -14,17 +13,15 @@ nearbyReservationOrderController.$inject = [
                                             'ORDERREFERENCE_STATUS', 
                                             'PAYMENT_MODES', 
                                             'RESERVATION_STATUS', 
-                                            '$ionicLoading', 
-                                            '$ionicPopup', 
                                             '$localStorage', 
                                             '$scope', 
                                             'orderreferenceService', 
+                                            'popupService', 
                                             'reservationService', 
                                             'reservationOrderreferenceOrderService'
                                             ];
 
 function nearbyReservationOrderController(
-		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
@@ -32,11 +29,10 @@ function nearbyReservationOrderController(
 		ORDERREFERENCE_STATUS, 
 		PAYMENT_MODES, 
 		RESERVATION_STATUS, 
-		$ionicLoading, 
-		$ionicPopup, 
 		$localStorage, 
 		$scope, 
 		orderreferenceService, 
+		popupService, 
 		reservationService, 
 		reservationOrderreferenceOrderService
 		){
@@ -44,14 +40,6 @@ function nearbyReservationOrderController(
 	
 	var vm = this;
 	vm.paymentModeOption = PAYMENT_MODES;
-	
-	if(!(null == localStorage.getItem(KEYS.User))){
-		vm.user = localStorage.getItem(KEYS.User);
-		vm.user = JSON.parse(vm.user);
-		
-		if(null == vm.user.reservation){	vm.user.reservation = {};
-		}
-		}
 	
 	//controller_method
 	vm.remReservationOrder = remReservationOrder;
@@ -140,21 +128,21 @@ function nearbyReservationOrderController(
 			.then(addReservationOrderreferenceOrderSuccessCallback)
 			.catch(addReservationOrderreferenceOrderFailedCallback);
 			
-			dispIonicLoading(LOADING_MESSAGES.sendingReservation);
+			popupService.dispIonicLoading(LOADING_MESSAGES.sendingReservation);
 			}
 		
 		function addReservationOrderreferenceOrderSuccessCallback(response){
-			hideIonicLoading();
+			popupService.hideIonicLoading();
 			
 			reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
 			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
 			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 			
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
+			popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
 			
 			function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
-				hideIonicLoading();
+				popupService.hideIonicLoading();
 				
 				vm.user.reservation = response.reservations;
 				vm.user.orderreference = response.orderreferences;
@@ -168,40 +156,30 @@ function nearbyReservationOrderController(
 				}
 			
 			function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
-				hideIonicLoading();
+				popupService.hideIonicLoading();
 				
-				dispIonicPopup(ERROR_MESSAGES.getFailed);
+				popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 			}
 		
 		function addReservationOrderreferenceOrderFailedCallback(responseError){
-			hideIonicLoading();
+			popupService.hideIonicLoading();
 			
-			dispIonicPopup(ERROR_MESSAGES.sendFailed);
+			popupService.dispIonicPopup(ERROR_MESSAGES.sendFailed);
 		}
 		}
 	
-	function dispIonicLoading(msg){
-		var templateString = '';
-		templateString += '<ion-spinner></ion-spinner><br>';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicLoading.show(
-				{	template: templateString	}
-				);
-		}
-	
-	function hideIonicLoading(){	$ionicLoading.hide();
-	}
-	
-	function dispIonicPopup(msg){
-		var templateString = '';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicPopup.alert(
-				{	template: templateString	}
-				);
-		}
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.User);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(KEYS.User);
+				vm.user = JSON.parse(vm.user);
+				
+				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
+				}
+				}
+			);
 	
 	$scope.$watchCollection(
 			function(){	return vm.user.reservationOrder;
