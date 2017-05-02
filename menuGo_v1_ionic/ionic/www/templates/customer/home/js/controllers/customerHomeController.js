@@ -15,7 +15,9 @@ customerHomeController.$inject = [
                                   '$localStorage', 
                                   '$scope', 
                                   '$timeout', 
-                                  'dataService'
+                                  'dataService', 
+                                  'networkService', 
+                                  'popupService'
                                   ];
 
 function customerHomeController(
@@ -28,24 +30,36 @@ function customerHomeController(
 		$localStorage, 
 		$scope, 
 		$timeout, 
-		dataService
+		dataService, 
+		networkService, 
+		popupService
 		){
 	const DOM_ADVERTISEMENT_SLIDEBOX_HANDLE = 'advertisement-slidebox';
 	const DOM_BLOG_SLIDEBOX_HANDLE = 'blog-slidebox';
 	
 	var vm = this;
 	
-	if(!(null == localStorage.getItem(KEYS.Marketing))){
+	if(
+			networkService.deviceIsOffline() &&
+			!(null == localStorage.getItem(KEYS.Marketing))
+			){
 		vm.marketing = localStorage.getItem(KEYS.Marketing);
 		vm.marketing = JSON.parse(vm.marketing);
 		
 		vm.advertisement = vm.marketing.advertisements;
 		vm.blog = vm.marketing.blogs;
-		} else {
-			dataService.fetchMarketing();
-			
-			dispIonicLoading(LOADING_MESSAGES.gettingData);
-			}
+		} else if(
+				networkService.deviceIsOffline() &&
+				null == localStorage.getItem(KEYS.Marketing)
+				){
+			vm.marketing = {};
+			vm.marketing.advertisement = {};
+			vm.marketing.blog = {};
+			} else {
+				dataService.fetchMarketing();
+				
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
 	
 	$ionicHistory.clearHistory();
 	
@@ -78,7 +92,7 @@ function customerHomeController(
 	
 	$scope.$on(
 			BROADCAST_MESSAGES.getMarketingSuccess, 
-			function(){	hideIonicLoading();
+			function(){	popupService.hideIonicLoading();
 			}
 			);
 	
@@ -87,8 +101,8 @@ function customerHomeController(
 			function(){
 				var DOM_POPUP_CLASS = '.popup';
 				
-				hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	dispIonicPopup(ERROR_MESSAGES.getFailed);
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 				}
 			);
