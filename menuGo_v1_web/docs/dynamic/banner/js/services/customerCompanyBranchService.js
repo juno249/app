@@ -8,6 +8,7 @@ angular
 customerCompanyBranchService.$inject = [
                                         'API_BASE_URL', 
                                         'CUSTOMERCOMPANYBRANCH_DB_FIELDS', 
+                                        'KEYS', 
                                         '$http', 
                                         '$localStorage', 
                                         '$q'
@@ -16,19 +17,24 @@ customerCompanyBranchService.$inject = [
 function customerCompanyBranchService(
 		API_BASE_URL, 
 		CUSTOMERCOMPANYBRANCH_DB_FIELDS, 
+		KEYS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const CUSTOMERS_COMPANIES_BRANCHES_KEY = 'CustomersCompaniesBranches';
-	
 	var customerCompanyBranchServiceObj = {
 			customersCompaniesBranches: {}, 
 			customerUsername: undefined, 
-			getCustomersCompaniesBranches, 
-			getCustomerUsername, 
-			setCustomersCompaniesBranches, 
-			setCustomerUsername, 
+			companyName: undefined, 
+			branchId: undefined, 
+			getCustomersCompaniesBranches: getCustomersCompaniesBranches, 
+			getCustomerUsername: getCustomerUsername, 
+			getCompanyName: getCompanyName, 
+			getBranchId: getBranchId, 
+			setCustomersCompaniesBranches: setCustomersCompaniesBranches, 
+			setCustomerUsername: setCustomerUsername, 
+			setCompanyName: setCompanyName, 
+			setBranchId: setBranchId, 
 			getOptions: {
 				1: 'getCustomersCompaniesBranches', 
 				2: 'getCustomerCompanyBranch'
@@ -41,9 +47,17 @@ function customerCompanyBranchService(
 	}
 	function getCustomerUsername(){	return customerCompanyBranchServiceObj.customerUsername;
 	}
+	function getCompanyName(){	return customerCompanyBranchServiceObj.companyName;
+	}
+	function getBranchId(){	return customerCompanyBranchServiceObj.branchId;
+	}
 	function setCustomersCompaniesBranches(customersCompaniesBranches){	customerCompanyBranchServiceObj.customersCompaniesBranches = customersCompaniesBranches;
 	}
 	function setCustomerUsername(customerUsername){	customerCompanyBranchServiceObj.customerUsername = customerUsername;
+	}
+	function setCompanyName(companyName){	customerCompanyBranchServiceObj.companyName = companyName;
+	}
+	function setBranchId(branchId){	customerCompanyBranchServiceObj.branchId = branchId;
 	}
 	
 	function fetchCustomersCompaniesBranches(
@@ -76,7 +90,7 @@ function customerCompanyBranchService(
 			customersCompaniesBranches = customerCompanyBranchServiceObj.customersCompaniesBranches;
 			customersCompaniesBranches = JSON.stringify(customersCompaniesBranches);
 			localStorage.setItem(
-					CUSTOMERS_COMPANIES_BRANCHES_KEY, 
+					KEYS.CustomersCompaniesBranches, 
 					customersCompaniesBranches
 					);
 			

@@ -328,6 +328,6 @@ angular
 			Marketing: 'marketing', 
 			Advertisements: 'advertisements', 
 			Blogs: 'blogs', 
-			User: 'user'
-		}
+			User: 'user'	
+				}
 		);

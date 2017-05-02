@@ -8,6 +8,7 @@ angular
 orderService.$inject = [
                         'API_BASE_URL', 
                         'BROADCAST_MESSAGES', 
+                        'KEYS', 
                         'ORDER_STATUS', 
                         'ORDERS_DB_FIELDS', 
                         '$rootScope', 
@@ -20,6 +21,7 @@ orderService.$inject = [
 function orderService(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		ORDER_STATUS, 
 		ORDERS_DB_FIELDS, 
 		$rootScope, 
@@ -28,8 +30,6 @@ function orderService(
 		$q, 
 		loginService
 		){
-	const ORDERS_KEY = 'Orders';
-	
 	var orderServiceObj = {
 			orders: {}, 
 			companyName: undefined, 
@@ -156,7 +156,7 @@ function orderService(
 			orders = orderServiceObj.orders;
 			orders = JSON.stringify(orders);
 			localStorage.setItem(
-					ORDERS_KEY, 
+					KEYS.Orders, 
 					orders
 					);
 			

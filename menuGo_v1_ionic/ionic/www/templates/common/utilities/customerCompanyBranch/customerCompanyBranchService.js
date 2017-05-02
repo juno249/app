@@ -72,7 +72,7 @@ function customerCompanyBranchService(
 			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches';
 			break;
 		case 'getCustomerCompanyBranch':
-			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername + '/' + customerCompanyBranchServiceObj.companyName + '/' + customerCompanyBranchServiceObj.branchId;
+			httpConfig['url'] = API_BASE_URL + '/customers-companies-branches/' + customerCompanyBranchServiceObj.customerUsername;
 			break;
 			default:
 				break;

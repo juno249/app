@@ -8,6 +8,7 @@ angular
 customerService.$inject = [
                            'API_BASE_URL', 
                            'CUSTOMERS_DB_FIELDS', 
+                           'KEYS', 
                            '$http', 
                            '$localStorage', 
                            '$q'
@@ -16,12 +17,11 @@ customerService.$inject = [
 function customerService(
 		API_BASE_URL, 
 		CUSTOMERS_DB_FIELDS, 
+		KEYS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const CUSTOMERS_KEY = 'Customers';
-	
 	var customerServiceObj = {
 			customers: {}, 
 			customerUsername: undefined, 
@@ -84,7 +84,7 @@ function customerService(
 			customers = customerServiceObj.customers;
 			customers = JSON.stringify(customers);
 			localStorage.setItem(
-					CUSTOMERS_KEY, 
+					KEYS.Customers, 
 					customers
 					);
 			

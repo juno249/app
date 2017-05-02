@@ -7,6 +7,7 @@ angular
 
 menuService.$inject = [
                        'API_BASE_URL', 
+                       'KEYS', 
                        'MENUS_DB_FIELDS', 
                        '$http', 
                        '$localStorage', 
@@ -15,13 +16,12 @@ menuService.$inject = [
 
 function menuService(
 		API_BASE_URL, 
+		KEYS, 
 		MENUS_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const MENUS_KEY = 'Menus';
-	
 	var menuServiceObj = {
 		menus: {}, 
 		companyName: undefined, 
@@ -86,7 +86,7 @@ function menuService(
 			menus = menuServiceObj.menus;
 			menus = JSON.stringify(menus);
 			localStorage.setItem(
-					MENUS_KEY, 
+					KEYS.Menus, 
 					menus
 					);
 			

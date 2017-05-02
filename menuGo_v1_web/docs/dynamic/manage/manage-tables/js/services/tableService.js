@@ -7,6 +7,7 @@ angular
 
 tableService.$inject = [
                         'API_BASE_URL', 
+                        'KEYS', 
                         'TABLES_DB_FIELDS', 
                         '$http', 
                         '$localStorage', 
@@ -15,13 +16,12 @@ tableService.$inject = [
 
 function tableService(
 		API_BASE_URL, 
+		KEYS, 
 		TABLES_DB_FIELDS, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const TABLES_KEY = 'Tables';
-	
 	var tableServiceObj = {
 			tables: {}, 
 			companyName: undefined, 
@@ -96,7 +96,7 @@ function tableService(
 			tables = tableServiceObj.tables;
 			tables = JSON.stringify(tables);
 			localStorage.setItem(
-					TABLES_KEY, 
+					KEYS.Tables, 
 					tables
 					);
 			
