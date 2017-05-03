@@ -146,6 +146,8 @@ function nearbyReservationOrderController(
 				
 				vm.user.reservation = response.reservations;
 				vm.user.orderreference = response.orderreferences;
+				vm.user.orderreference.order = vm.user.orderreference.orders;
+				delete vm.user.orderreference.orders;
 				delete vm.user.reservationOrder;
 				localStorage.removeItem(KEYS.Reservations);
 				

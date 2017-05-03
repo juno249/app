@@ -6,13 +6,21 @@ angular
 		);
 
 customerMymenuController.$inject = [
+                                    'ERROR_MESSAGES', 
+                                    'LOADING_MESSAGES', 
                                     'KEYS', 
-                                    '$scope'
+                                    '$scope', 
+                                    'popupService', 
+                                    'reservationOrderreferenceOrderService'
                                     ];
 
 function customerMymenuController(
+		ERROR_MESSAGES, 
+		LOADING_MESSAGES, 
 		KEYS, 
-		$scope
+		$scope, 
+		popupService, 
+		reservationOrderreferenceOrderService
 		){
 	const DOM_ION_HEADER_BAR_TAG = 'ion-header-bar';
 	const DOM_ION_TABS_CLASS = '.tab-nav.tabs';
@@ -60,6 +68,40 @@ function customerMymenuController(
 	function gotoMymenuOrder(){	vm.mymenuContentSrc = "templates/customer/mymenu/order/mymenu-order.html";
 	}
 	
+	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+		popupService.hideIonicLoading();
+		
+		vm.user.reservation = response.reservations;
+		vm.user.orderreference = response.orderreferences;
+		vm.user.orderreference.order = vm.user.orderreference.orders;
+		delete vm.user.orderreference.orders;
+		delete vm.user.reservationOrder;
+		localStorage.removeItem(KEYS.Reservations);
+		
+		localStorage.setItem(
+				KEYS.User, 
+				JSON.stringify(vm.user)
+				);
+		}
+	
+	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+		popupService.hideIonicLoading();
+		
+		popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
+		}
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.User);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(KEYS.User);
+				vm.user = JSON.parse(vm.user);
+				
+				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
+				}
+				}
+			);
+	
 	$scope.$on(
 			function(){	return localStorage.getItem(KEYS.ReservationsDetails);
 			}, 
@@ -69,6 +111,20 @@ function customerMymenuController(
 				vm.companyName = vm.reservationsDetails.companyName;
 				vm.branchName = vm.reservationsDetails.branchName;
 				vm.tableNumber = vm.reservationsDetails.tableNumber;
+				}
+			);
+	
+	$scope.$on(
+			'$ionicView.afterEnter', 
+			function(){
+				if(!(null == vm.user)){
+					popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+					
+					reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+					reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
+					.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+					.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+					}
 				}
 			);
 	}
