@@ -9,9 +9,9 @@ customerReservationController.$inject = [
 	'ERROR_MESSAGES', 
 	'KEYS', 
 	'LOADING_MESSAGES', 
-	'$ionicLoading', 
-	'$ionicPopup', 
 	'$scope', 
+	'networkService', 
+	'popupService', 
 	'reservationOrderreferenceOrderService'
 	];
 
@@ -19,9 +19,9 @@ function customerReservationController(
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
-		$ionicLoading, 
-		$ionicPopup, 
 		$scope, 
+		networkService, 
+		popupService, 
 		reservationOrderreferenceOrderService
 		){
 	var vm = this;
@@ -32,53 +32,48 @@ function customerReservationController(
 	function setReservationStatus(reservationStatus){	vm.reservationStatus = reservationStatus;
 	}
 	
-	function dispIonicLoading(msg){
-		var templateString = '';
-		templateString += '<ion-spinner></ion-spinner><br>';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicLoading.show(
-				{	template: templateString	}
-				);
-		}
-	
-	function hideIonicLoading(){	$ionicLoading.hide();
-	}
-	
-	function dispIonicPopup(msg){
-		var templateString = '';
-		templateString += "<span class='font-family-1-size-small'>" + msg + '</span>';
-		
-		$ionicPopup.alert(
-				{	template: templateString	}
-				);
-		}
-	
-	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
-		hideIonicLoading();
-		}
-	
-	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
-		hideIonicLoading();
-		}
+	$scope.$on(
+			function(){	return localStorage.getItem(KEYS.User);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(KEYS.User);
+				vm.user = JSON.parse(vm.user);
+				}
+			);
 	
 	$scope.$on(
-			'$ionicView.beforeEnter', 
+			'$ionicView.afterEnter', 
 			function(){
-				if(!(null == localStorage.getItem(KEYS.User))){
-					vm.user = localStorage.getItem(KEYS.User);
-					vm.user = JSON.parse(vm.user);
+				if(!(null == vm.user)){
+					popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+					
+					reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
+					reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
+					.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+					.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 					}
 				
-				dispIonicLoading(LOADING_MESSAGES.gettingData);
+				function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+					popupService.hideIonicLoading();
+					
+					vm.user.reservation = response.reservations;
+					vm.user.orderreference = response.orderreferences;
+					vm.user.orderreference.order = vm.user.orderreference.orders;
+					delete vm.user.orderreference.orders;
+					delete vm.user.reservationOrder;
+					localStorage.removeItem(KEYS.Reservations);
+					
+					localStorage.setItem(
+							KEYS.User, 
+							JSON.stringify(vm.user)
+							);
+					}
 				
-				reservationOrderreferenceOrderService.setCustomerUsername(vm.user.username);
-				reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(	//getCustomerReservations
-						13, 
-						{}
-						)
-				.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
-				.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+				function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+					popupService.hideIonicLoading();
+					
+					popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
+					}
 				}
 			);
 	}

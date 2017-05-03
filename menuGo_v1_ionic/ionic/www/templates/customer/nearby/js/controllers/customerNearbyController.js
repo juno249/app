@@ -229,8 +229,17 @@ function customerNearbyController(
 				}
 			);
 	
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.User);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(KEYS.User);
+				vm.user = JSON.parse(vm.user);
+				}
+			);
+	
 	$scope.$on(
-			'$ionicView.beforeEnter', 
+			'$ionicView.afterEnter', 
 			function(){
 				if(!(null == vm.user)){
 					vm.user.reservationOrder = {};

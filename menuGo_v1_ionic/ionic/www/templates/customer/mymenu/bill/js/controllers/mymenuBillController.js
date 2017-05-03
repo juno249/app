@@ -12,6 +12,7 @@ mymenuBillController.$inject = [
 	'LOADING_MESSAGES', 
 	'ORDER_STATUS', 
 	'$scope', 
+	'$timeout', 
 	'dataService', 
 	'networkService', 
 	'popupService', 
@@ -25,6 +26,7 @@ function mymenuBillController(
 		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		$scope, 
+		$timeout, 
 		dataService, 
 		networkService, 
 		popupService, 
@@ -123,14 +125,28 @@ function mymenuBillController(
 							k
 							){
 						if(!(null == menuitemOrderId[v.menuitem_id])){
-							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].quantity++;
-							vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].cost += vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
-							delete vm.user.orderreference.order[k];
-							} else {
-								vm.user.orderreference.order[k].quantity = 1;
-								vm.user.orderreference.order[k].cost = vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
-								menuitemOrderId[v.menuitem_id] = k;
-								}
+							try{
+								vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].quantity++;
+								vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].cost += vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
+								delete vm.user.orderreference.order[k];
+								} catch(e){
+									$timeout(
+											appendQuantity, 
+											1000
+											);
+									}
+								} else {
+									try{
+										vm.user.orderreference.order[k].quantity = 1;
+										vm.user.orderreference.order[k].cost = vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
+										menuitemOrderId[v.menuitem_id] = k;
+										} catch(e){
+											$timeout(
+													appendQuantity, 
+													1000
+													);
+											}
+										}
 						}
 					);
 			}

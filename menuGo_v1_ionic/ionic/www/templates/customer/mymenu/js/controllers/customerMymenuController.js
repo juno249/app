@@ -68,28 +68,6 @@ function customerMymenuController(
 	function gotoMymenuOrder(){	vm.mymenuContentSrc = "templates/customer/mymenu/order/mymenu-order.html";
 	}
 	
-	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
-		popupService.hideIonicLoading();
-		
-		vm.user.reservation = response.reservations;
-		vm.user.orderreference = response.orderreferences;
-		vm.user.orderreference.order = vm.user.orderreference.orders;
-		delete vm.user.orderreference.orders;
-		delete vm.user.reservationOrder;
-		localStorage.removeItem(KEYS.Reservations);
-		
-		localStorage.setItem(
-				KEYS.User, 
-				JSON.stringify(vm.user)
-				);
-		}
-	
-	function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
-		popupService.hideIonicLoading();
-		
-		popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
-		}
-	
 	$scope.$watch(
 			function(){	return localStorage.getItem(KEYS.User);
 			}, 
@@ -124,6 +102,28 @@ function customerMymenuController(
 					reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(16)
 					.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 					.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+					}
+				
+				function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
+					popupService.hideIonicLoading();
+					
+					vm.user.reservation = response.reservations;
+					vm.user.orderreference = response.orderreferences;
+					vm.user.orderreference.order = vm.user.orderreference.orders;
+					delete vm.user.orderreference.orders;
+					delete vm.user.reservationOrder;
+					localStorage.removeItem(KEYS.Reservations);
+					
+					localStorage.setItem(
+							KEYS.User, 
+							JSON.stringify(vm.user)
+							);
+					}
+				
+				function fetchReservationsOrderreferencesOrdersFailedCallback(responseError){
+					popupService.hideIonicLoading();
+					
+					popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 					}
 				}
 			);
