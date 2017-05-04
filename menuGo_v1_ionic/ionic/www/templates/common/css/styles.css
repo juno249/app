@@ -14,8 +14,43 @@
 	text-align: right;
 }
 
+div.button-container button{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 15px;
+	
+	width: 100%;
+}
+
 div.dataTables_wrapper{
 	padding: 0px 25px 0px 25px;
+}
+
+div.form-container{
+	background-color: #f9f9f9;
+}
+
+div.form-container input, 
+div.search-container input{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 15px;
+	
+	width: 100%;
+}
+
+div.form-container label, 
+div.search-container label{
+	padding: 5px;
+}
+
+div.image-container{
+	background-color: #f9f9f9;
+	
+	text-align: center;
+}
+
+div.image-container > img{
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .font-family-1-size-large{

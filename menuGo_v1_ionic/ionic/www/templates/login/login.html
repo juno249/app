@@ -6,81 +6,68 @@
 	name="login">
 	<div 
 		class="login-container">
+		<!--  *************** 
+				company_image-container (start)
+				*************** -->
 		<div 
-			class="child-content-center company_logo_image-container">
+			class="child-content-center image-container" 
+			id="company_image-container" 
+			name="company_image-container">
 			<img 
-				class="company-logo-image" 
 				src="templates/login/res/img/companyLogo.png">
 		</div>
+		<!--  *************** 
+				company_image-container (end)
+				*************** -->
+	</div>
+	<div 
+		class="form-container">
 		<div 
-			class="login_form-container">
+			class="item item-input-inset">
+			<label 
+				class="item item-input-wrapper">
+				<i 
+					class="icon ion-person">
+				</i>
+				<input 
+					ng-model="loginController.loginUsername" 
+					placeholder="Username" 
+					type="text">
+			</label>
+		</div>
+	</div>
+	<div 
+		class="form-container">
+		<div 
+			class="item item-input-inset">
+			<label 
+				class="item item-input-wrapper">
+				<i 
+					class="icon ion-lock-combination">
+				</i>
+				<input 
+					ng-model="loginController.loginPassword" 
+					placeholder="Password" 
+					type="password">
+			</label>
+		</div>
+		<div 
+			class="button-container row">
 			<div 
-				class="list">
-				<div 
-					class="item item-input-inset">
-					<label 
-						class="item item-input-wrapper">
-						<i 
-							class="icon ion-person">
-						</i>
-						<!--  *************** 
-								loginUsername (start)
-								*************** -->
-						<input 
-							class="fill-parent-x font-family-2-size-medium login-username"
-							id="loginUsername" 
-							name="loginUsername" 
-							ng-model="loginController.loginUsername" 
-							placeholder="Username" 
-							type="text">
-						<!--  *************** 
-								loginUsername (end)
-								*************** -->
-					</label>
-				</div>
-				<div 
-					class="item item-input-inset">
-					<label 
-						class="item item-input-wrapper">
-						<i 
-							class="icon ion-lock-combination">
-						</i>
-						<!--  *************** 
-								loginPassword (start)
-								*************** -->
-						<input 
-							class="font-family-2-size-medium fill-parent-x login-password" 
-							id="loginPassword" 
-							name="loginPassword" 
-							ng-model="loginController.loginPassword" 
-							placeholder="Password" 
-							type="password">
-						<!--  *************** 
-								loginPassword (end)
-								*************** -->
-					</label>
-				</div>
-				<div 
-					class="item item-input-inset">
-					<div 
-						class="row">
-						<div 
-							class="col">
-							<button 
-								ng-click="loginController.doLogin();"
-								class="button button-small button-positive fill-parent-x font-family-2-size-medium">
-								Sign in
-							</button>
-						</div>
-						<div 
-							class="col">
-							<button 
-								class="button button-small button-positive fill-parent-x font-family-2-size-medium">
-								Sign Up
-							</button>
-						</div>
-					</div>
-				</div>
+				class="col">
+				<button 
+					ng-click="loginController.doLogin();" 
+					class="button button-small button-positive">
+					Sign in
+				</button>
+			</div>
+			<div 
+				class="col">
+				<button 
+					ng-click="" 
+					class="button button-small button-positive">
+					Sign Up
+				</button>
 			</div>
 		</div>
 	</div>

@@ -10,53 +10,45 @@
 		<div 
 			class="home-container">
 			<div 
-				class="child-content-center company_logo_image-container">
+				class="child-content-center image-container" 
+				id="company_image-container" 
+				name="company_image-container">
 				<img 
-					class="company-logo-image fill-parent-y" 
 					src="templates/login/res/img/companyLogo.png">
 			</div>
 			<div 
 				class="search-container">
 				<div 
-					class="list">
-					<div 
-						class="item item-input-inset">
-						<label 
-							class="item item-input-wrapper">
-							<i 
-								class="icon ion-ios-search">
-							</i>
-							<!--  *************** 
-									search (start)
-									*************** -->
-							<input 
-								class="fill-parent-x font-family-2-size-medium" 
-								id="search" 
-								name="search" 
-								placeholder="Search" 
-								type="text">
-							<!--  *************** 
-									search (end)
-									*************** -->
-						</label>
-					</div>
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-ios-search">
+						</i>
+						<input 
+							class="fill-parent-x font-family-2-size-medium" 
+							placeholder="Search" 
+							type="text">
+					</label>
 				</div>
 			</div>
 			<div 
-				class="advertisement-container card">
+				class="card">
 				<!--  *************** 
 						advertisement-slidebox (start)
 						*************** -->
 				<ion-slide-box 
 					auto-play="true" 
-					delegate-handle="advertisement-slidebox" 
+					delegate-handle="blog-slidebox" 
 					does-continue="true" 
 					id="advertisement-slidebox" 
 					name="advertisement-slidebox">
 					<ion-slide 
 						ng-repeat="k in customerHomeController.advertisement">
 						<div 
-							class="advertisement_image-container child-content-center">
+							class="image-container" 
+							id="advertisement_image-container" 
+							name="advertisement_image-container">
 							<img 
 								src={{k.advertisement_image}}>
 						</div>
@@ -67,7 +59,7 @@
 						*************** -->
 			</div>
 			<div 
-				class="blog-container card">
+				class="card">
 				<!--  *************** 
 						blog-slidebox (start)
 						*************** -->
@@ -80,7 +72,9 @@
 					<ion-slide 
 						ng-repeat="k in customerHomeController.blog">
 						<div 
-							class="blog_image-container child-content-center">
+							class="image-container" 
+							id="blog_image-container" 
+							name="blog_image-container">
 							<img 
 								src={{k.blog_image}}>
 						</div>

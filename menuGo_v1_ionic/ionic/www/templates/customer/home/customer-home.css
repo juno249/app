@@ -1,32 +1,9 @@
-div.home-container div.advertisement-container div.advertisement_image-container, 
-div.home-container div.blog-container div.blog_image-container{
+div#advertisement-slidebox, 
+div#blog-slidebox{
+	height: 200px;
+}
+
+div#advertisement-slidebox div#advertisement_image-container, 
+div#blog-slidebox div#blog_image-container{
 	height: 70%;
-}
-
-div.home-container div.advertisement-container div.advertisement_image-container img, 
-div.home-container div.blog-container div.blog_image-container img{
-	border-radius: 25px;
-	
-	height: 100%;
-}
-
-div.home-container div.advertisement-container div#advertisement-slidebox, 
-div.home-container div.blog-container div#blog-slidebox{
-	height: 250px;
-}
-
-div.home-container div.company_logo_image-container{
-	height: 100px;
-}
-
-div.home-container div.search-container div.item{
-	background-color: #303030;
-	color: #f0f0f0;
-}
-
-div.home-container div.search-container label{
-	background-color: #f9f9f9;
-	
-	padding-bottom: 5px;
-	padding-top: 5px;
 }
