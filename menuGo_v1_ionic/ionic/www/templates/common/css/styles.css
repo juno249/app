@@ -21,6 +21,26 @@ div.button-container button{
 	width: 100%;
 }
 
+div.card div.title{
+	overflow: hidden;
+	
+	padding: 5px 25px;
+	
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+div.card div.body{
+	overflow: hidden;
+	
+	padding: 5px 25px;
+	
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 div.dataTables_wrapper{
 	padding: 0px 25px 0px 25px;
 }

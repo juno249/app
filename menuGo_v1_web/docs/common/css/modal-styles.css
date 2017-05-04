@@ -1,24 +1,18 @@
-div.form-group input.form-control, 
-div.form-group select.form-control, 
-div.form-group textarea.form-control{
+div.form-group .form-control{
 	color: #ff6347;
 }
 
-div.form-group input.form-control[disabled], 
-div.form-group select.form-control[disabled], 
-div.form-group textarea.form-control[disabled], 
-div.form-group input.form-control[readonly], 
-div.form-group select.form-control[readonly], 
-div.form-group textarea.form-control[readonly]{
-	background-color: #fff;
+div.form-group .form-control[disabled], 
+div.form-group .form-control[readonly]{
+	background-color: #f0f0f0;
 }
 
-div.form-group span.input-group-addon, 
-div.modal-header{
+div.form-group span.input-group-addon{
 	background-color: #dff0d8;
 }
 
 div.modal-header{
+	background-color: #dff0d8;
 	border-radius: 5px;
 }
 
