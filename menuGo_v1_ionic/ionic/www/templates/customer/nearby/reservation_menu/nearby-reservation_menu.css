@@ -1,60 +1,16 @@
-button.back-button span.back-text{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 12px;
-}
-
 button#gotoOrdersBtn{
 	bottom: 100px;
+	
+	opacity: 0.7;
+	
 	position: absolute;
 	right: 10px;
 }
 
-div.reservation_menu-container div.company_detail-container div.branch-container, 
-div.reservation_menu-container div.menuitem-container div.menuitem_desc-container{
-	line-height: 12px;
-	
-	white-space: normal;
-}
-
-div.reservation_menu-container div.company_detail-container img{
-	border-radius: 25px;
-	
-	object-fit: cover;
-}
-
-div.reservation_menu-container div.container-header, 
-div.reservation_menu-container div.menuitem-container div.menuitem_qty-container, 
-div.reservation_menu-container ion-scroll.menu_link-container{
-	background-color: #303030;
-	color: #f0f0f0;
-}
-
-div.reservation_menu-container div.list{
-	margin-bottom: 0px;
-}
-
-div.reservation_menu-container div.menuitem-container img{
-	border-radius: 25px;
-	
-	object-fit: cover;
-}
-
-div.reservation_menu-container ion-scroll.menu_link-container{
-	overflow-x: scroll;
-	
-	white-space: nowrap;
-}
-
-div.reservation_menu-container ion-scroll.menu_link-container a.menu_link{
-	color: #f0f0f0;
-	
+div.quantity-container{
 	display: inline-block;
 	
-	line-height: 12px;
+	text-align: center;
 	
-	padding: 5px 10px 5px 10px;
-	
-	white-space: normal;
-	
-	width: 100px;
+	width: 50px;
 }

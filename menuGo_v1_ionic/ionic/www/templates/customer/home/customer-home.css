@@ -1,17 +1,22 @@
-div#advertisement-slidebox, 
-div#blog-slidebox{
+div.card-container div#advertisement-slidebox, 
+div.card-container div#blog-slidebox{
 	height: 200px;
 }
 
-div#advertisement-slidebox div#advertisement_image-container, 
-div#blog-slidebox div#blog_image-container{
+div.card-container div#advertisement_image-container, 
+div.card-container div#blog_image-container{
 	height: 70%;
 }
 
-div.card div#advertisement-title, 
-div.card div#blog-title{
+div.card-container div#advertisement-title, 
+div.card-container div#blog-title{
+	text-align: center;
 }
 
-div.card div#advertisement-body, 
-div.card div#blog-body{
+div.card-container div#advertisement-body{
+	text-align: right;	
+}
+
+div.card-container div#blog-body{
+	text-align: left;
 }

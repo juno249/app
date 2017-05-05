@@ -1,36 +1,4 @@
-div.nearby-container div.company-container div.branch-container div.branch_name-container, 
-div.nearby-container div.company-container div.branch-container div.company_name-container, 
-div.nearby-container div.company-container div.branch-container div.menuitem_price-container{
-	border-bottom: solid 1px;
-	
-	padding: 0px 10px 0px 10px;
-}
-
-div.nearby-container div.company-container div.branch-container div.branch_name-container, 
-div.nearby-container div.company-container div.branch-container div.company_name-container, 
-div.nearby-container div.search-container div.item, 
-div.nearby-container ion-scroll.category_link-container{
-	background-color: #303030;
-	color: #f0f0f0;
-}
-
-div.nearby-container div.company-container div.branch-container div.menuitem_image-container{
-	height: 60%;
-}
-
-div.nearby-container div.company-container div.branch-container div.menuitem_image-container img{
-	border-radius: 25px;
-	
-	height: 100%;
-}
-
-div.nearby-container div.company-container div#company-slidebox{
-	height: 150px;
-	
-	margin-top: 5px;
-}
-
-div.nearby-container div.map-container{
+div.map-container{
 	display: none;
 	
 	left: 0px;
@@ -38,32 +6,20 @@ div.nearby-container div.map-container{
 	top: 0px;
 }
 
-div.nearby-container div.search-container label, 
-div.nearby-container div.search_result-container div.item{
-	padding-bottom: 5px;
-	padding-top: 5px;
-}
-
-div.nearby-container div.search_result-container{
-	position: absolute;
-}
-
-div.nearby-container ion-scroll.category_link-container{
-	overflow-x: scroll;
-	
-	white-space: nowrap;
-}
-
-div.nearby-container ion-scroll.category_link-container a.category_link{
-	color: #f0f0f0;
-	
-	display: inline-block;
-	
+div.card-container div#branch_name{
 	line-height: 12px;
 	
-	padding: 5px 10px 5px 10px;
-	
 	white-space: normal;
-	
-	width: 100px;
+}
+
+div.card-container div#featured_menu_image-container{
+	height: 70%;
+}
+
+div.card-container div#featured_menu-slidebox{
+	height: 200px;
+}
+
+div.card-container div#menuitem_price{
+	text-align: right;
 }
