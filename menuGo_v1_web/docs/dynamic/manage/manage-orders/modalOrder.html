@@ -1,29 +1,29 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-small">
+		class="modal-header">
 		Manage Order
 	</div>
 	<!--  *************** 
-			modalOrder (start)
+			modal_order-container (start)
 			*************** -->
 	<div 
 		class="modal-body" 
-		id="modalOrderContainer" 
-		name="modalOrderContainer" 
+		id="modal_order-container" 
+		name="modal_order-container" 
 		ng-init="modalOrderController.initBootstrapValidator(); modalOrderController.initDom();">
 		<div 
-			class="alert alert-danger font-family-3-size-medium" 
+			class="alert alert-danger" 
 			ng-hide="modalOrderController.isValidationErrDBHidden">
 			{{modalOrderController.validationErrDB}}
 		</div>
 		<!--  *************** 
-				modalOrder (start)
+				modal_order (start)
 				*************** -->
 		<form 
 			class="form-group" 
-			id="modalOrder" 
-			name="modalOrder">
+			id="modal_order" 
+			name="modal_order">
 			<div 
 				class="container-fluid">
 				<div 
@@ -34,32 +34,23 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Menuitem id
 							</span>
-							<!--  *************** 
-									menuitemId (start)
-									*************** -->
 							<input 
-								class="font-family-3-size-medium form-control" 
-								id="menuitemId" 
-								name="menuitemId" 
+								class="form-control" 
 								ng-hide="modalOrderController.modalHiddenFields['menuitemId']" 
 								ng-model="modalOrderController.order.menuitemId" 
 								placeholder="Menuitem Id" 
 								required 
 								type="number">
-							<!--  *************** 
-									menuitemId (end)
-									*************** -->
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalOrderController.validationErr[0]}}
 						</div>
 					</div>
 				</div>
-				
 				<div 
 					class="row" 
 					ng-hide="modalOrderController.modalHiddenFields['orderreferenceCode']">
@@ -68,33 +59,24 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Orderreference code
 							</span>
-							<!--  *************** 
-									orderreferenceCode (start)
-									*************** -->
 							<input 
-								class="font-family-3-size-medium form-control" 
-								id="orderreferenceCode" 
+								class="form-control" 
 								maxlength="40" 
-								name="orderreferenceCode" 
 								ng-hide="modalOrderController.modalHiddenFields['orderreferenceCode']" 
 								ng-model="modalOrderController.order.orderreferenceCode" 
 								placeholder="Orderreference Code" 
 								required 
 								type="text">
-							<!--  *************** 
-									orderreferenceCode (end)
-									*************** -->
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalOrderController.validationErr[1]}}
 						</div>
 					</div>
 				</div>
-				
 				<div 
 					class="row" 
 					ng-hide="modalOrderController.modalHiddenFields['orderStatus']">
@@ -103,47 +85,37 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Status
 							</span>
-							<!--  *************** 
-									orderStatus (start)
-									*************** -->
 							<select 
-								class="font-family-3-size-medium form-control" 
-								id="orderStatus" 
-								name="orderStatus" 
+								class="form-control" 
 								ng-hide="modalOrderController.modalHiddenFields['orderStatus']" 
 								ng-model="modalOrderController.order.orderStatus" 
-								ng-options="k as v for (k,v) in modalOrderController.orderStatusOptions" 
+								ng-options="k as v for (k, v) in modalOrderController.orderStatusOptions" 
 								required>
 							</select>
-							<!--  *************** 
-									orderStatus (end)
-									*************** -->
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalOrderController.validationErr[2]}}
 						</div>
 					</div>
 				</div>
-				
 				<div 
-					class="row">
+					class="button-container row">
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
+							class="btn btn-success" 
 							type="submit">
 							Submit
 						</button>
 					</div>
-			        
-					<div 
+			        <div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
+							class="btn btn-danger" 
 							ng-click="modalOrderController.doCancel();" 
 							type="button">
 							Cancel
@@ -153,10 +125,10 @@
 			</div>
 		</form>
 		<!--  *************** 
-				modalOrder (end)
+				modal_order (end)
 				*************** -->
 	</div>
 	<!--  *************** 
-			modalOrder (end)
+			modal_order-container (end)
 			*************** -->
 </div>

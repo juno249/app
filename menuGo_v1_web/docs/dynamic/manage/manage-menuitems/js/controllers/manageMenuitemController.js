@@ -30,7 +30,7 @@ function manageMenuitemController(
 		DTOptionsBuilder, 
 		datatableService
 		){
-	const DOM_MENUITEM_TABLE = '#menuitemTable';
+	const DOM_MENUITEM_TABLE = '#menuitem_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

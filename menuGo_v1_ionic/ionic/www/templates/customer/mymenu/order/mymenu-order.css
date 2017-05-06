@@ -1,21 +1,9 @@
-div.mymenu_order-container div.order_status-container button{
-	min-width: 75px;
-}
-
-div.mymenu_order-container div.order_status-container button#queueOrderStatusBtn.status-active, 
-div.mymenu_order-container div.order_status-container button#cookingOrderStatusBtn.status-active, 
-div.mymenu_order-container div.order_status-container button#toserveOrderStatusBtn.status-active{
+div.button-container button.status-active{
 	background-color: #387ef5 !important;
 	color: #f0f0f0 !important;
 }
 
-div.mymenu_order-container div.order_status-container div.order_status_indicator-container{
-	bottom: 10px;
-	position: absolute;
-}
-
-div.mymenu_order-container div.order_status-container img#menuitem-image{
-	border-radius: 25px;
-	
-	object-fit: cover;
+div.mymenu_order-container div#menuitem_name{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 15px;
 }

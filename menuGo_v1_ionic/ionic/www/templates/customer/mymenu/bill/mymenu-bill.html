@@ -1,72 +1,62 @@
 <div 
 	class="mymenu_bill-container" 
 	ng-controller="mymenuBillController as mymenuBillController">
-	<div 
-		class="list order-container">
+	<!--  *************** 
+			mymenu_bill-container (start)
+			*************** -->
+	<ion-scroll 
+		class="order-container" 
+		id="mymenu_bill-container" 
+		name="mymenu_bill-container" 
+		direction="y">
 		<div 
-			class="item" 
+			class="item item-container" 
 			ng-repeat="(k, v) in mymenuBillController.user.orderreference.order">
-			<span 
-				class="font-family-1-size-medium">
-				<underline>{{mymenuBillController.companyMenuMenuitem[k].menuitem_name}}</underline>
-			</span><br>
-			<span 
-				class="font-family-2-size-small">
-				Unit Price: <underline>&#8369{{mymenuBillController.companyMenuMenuitem[k].menuitem_price}}</underline>
-			</span>,
-			<span 
-				class="font-family-2-size-small">
-				Quantity: <underline>{{mymenuBillController.user.orderreference.order[k].quantity}}</underline>
-			</span>,
-			<span 
-				class="font-family-2-size-small">
-				Cost: <underline>&#8369{{mymenuBillController.user.orderreference.order[k].cost}}</underline>
-			</span>
-		</div>
-		<div 
-			class="child-content-right item">
-			<span 
-				class="font-family-2-size-medium">
-				&#8369{{mymenuBillController.getTotalCost() | number: 2}}
-			</span>
-		</div>
-		<!--  *************** 
-				button-container (start)
-				*************** -->
-		<div 
-			class="child-content-center item item-divider" 
-			id="button-container" 
-			name="button-container">
-			<!--  *************** 
-					billoutCashBtn (start)
-					*************** -->
-			<button 
-				class="button button-positive button-small font-family-1-size-small" 
-				id="billoutCashBtn" 
-				name="billoutCashBtn" 
-				ng-click="mymenuBillController.doBilloutCash();">
-				Billout: Cash
-			</button>
-			<!--  *************** 
-					billoutCashBtn (end)
-					*************** -->
-					
-			<!--  *************** 
-					billoutCCBtn (start)
-					*************** -->
-			<button 
-				class="button button-positive button-small font-family-1-size-small" 
-				id="billoutCCBtn" 
-				name="billoutCCBtn" 
-				ng-click="mymenuBillController.doBilloutCC();">
-				Billout: CC
-			</button>
-			<!--  *************** 
-					billoutCCBtn (start)
-					*************** -->
+			<div 
+				class="title">
+				{{mymenuBillController.companyMenuMenuitem[v.menuitem_id].menuitem_name}}
+			</div>
+			<div 
+				class="body">
+				{{mymenuBillController.companyMenuMenuitem[v.menuitem_id].menuitem_desc}}
+			</div>
+			<div 
+				class="body child-content-right">
+				<span 
+					class="font-family-2-size-small">
+					UNIT PRICE: &#8369{{mymenuBillController.companyMenuMenuitem[v.menuitem_id].menuitem_price}}
+				</span>
+			</div>
+			<div 
+				class="body child-content-right">
+				<span 
+					class="font-family-2-size-small">
+					QUANTITY: {{mymenuBillController.user.orderreference.order[k].quantity}}
+				</span>
+			</div>
+			<div 
+				class="body child-content-right">
+				<span 
+					class="font-family-2-size-small">
+					PRICE: &#8369{{mymenuBillController.user.orderreference.order[k].cost}}
+				</span>
+			</div>
 		</div>
 		<!--  *************** 
-				button-container (end)
+				nearby_reservation_order_total-container (start)
 				*************** -->
-	</div>
+		<div 
+			class="child-content-right font-family-1-size-medium" 
+			id="mymenu_bill_total-container" 
+			name="mymenu_bill_total-container" 
+			ng-if="keys(mymenuBillController.user.reservationOrder).length > 0">
+			Total: &#8369{{mymenuBillController.getTotalCost() | number: 2}}
+		</div>
+		<!--  *************** 
+				nearby_reservation_order_total-container (end)
+				*************** -->
+	</ion-scroll>
+	<!--  *************** 
+			mymenu_bill-container (end)
+			*************** -->
 </div>

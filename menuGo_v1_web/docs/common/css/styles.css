@@ -1,5 +1,5 @@
 body{
-	background-color: #333;
+	background-color: #303030;
 }
 
 .child-content-center{
@@ -16,10 +16,6 @@ body{
 
 .child-content-right{
 	text-align: right;
-}
-
-div.dataTables_wrapper{
-	padding: 0px 25px 0px 25px;
 }
 
 .font-family-1-size-large{
@@ -93,6 +89,10 @@ div.dataTables_wrapper{
 .fill-parent-xy{
 	height: 100%;
 	width: 100%;
+}
+
+div.dataTables_wrapper{
+	padding: 0px 25px;
 }
 
 underline{

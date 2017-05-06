@@ -3,9 +3,11 @@ div.company_logo_image-container{
 	width: 150px;
 	
 	margin: auto;
-	padding: 0px 10px 10px 10px;
+	padding: 0px 10px;
+	
+	text-align: center;
 }
 
-div.company_logo_image-container img.company-logo-image{
+div.company_logo_image-container > img{
 	width: 100%;
 }

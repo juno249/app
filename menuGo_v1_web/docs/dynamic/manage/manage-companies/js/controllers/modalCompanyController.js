@@ -32,8 +32,8 @@ function modalCompanyController(
 	const COMPANY_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE COMPANY, DB EXCEPTION ENCOUNTERED';
 	const COMPANY_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE COMPANY, DATA IS EMPTY/UNCHANGED';
 	const COMPANY_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE COMPANY, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_COMPANY = '#modalCompany';
-	const DOM_MODAL_COMPANY_CONTAINER = '#modalCompanyContainer';
+	const DOM_MODAL_COMPANY = '#modal_company';
+	const DOM_MODAL_COMPANY_CONTAINER = '#modal_company-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -89,7 +89,7 @@ function modalCompanyController(
 		}
 	
 	function initDom(){
-		const COMPANY_LOGO_BROWSE = '#companyLogoBrowse';
+		const COMPANY_LOGO_BROWSE = '#company_logo_browse';
 		
 		$(COMPANY_LOGO_BROWSE).css(
 				'display', 
@@ -112,15 +112,15 @@ function modalCompanyController(
 			}
 		
 		if('D' == vm.formMode){
-			$('#modalCompanyContainer input').prop(
+			$('#modal_company-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalCompanyContainer textarea').prop(
+			$('#modal_company-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalCompanyContainer select').prop(
+			$('#modal_company-container select').prop(
 					'disabled', 
 					true
 					);
@@ -131,7 +131,7 @@ function modalCompanyController(
 	}
 	
 	function uploadCompanyLogo(){
-		const COMPANY_LOGO_BROWSE = '#companyLogoBrowse';
+		const COMPANY_LOGO_BROWSE = '#company_logo_browse';
 		
 		var companyLogo = $(COMPANY_LOGO_BROWSE)[0].files[0];
 		

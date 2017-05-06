@@ -1,110 +1,71 @@
-<!--  *************** 
-		menu (start)
-		*************** -->
 <div 
 	class="mymenu_menu-container" 
 	ng-controller="mymenuMenuController as mymenuMenuController">
 	<ion-scroll 
-		class="menu_link-container" 
+		class="tab-container" 
 		direction="x">
-		<a 
-			class="child-content-center font-family-1-size-xsmall menu_link" 
+		<div 
+			class="link" 
 			ng-click="mymenuMenuController.setMenuName(k)" 
 			ng-repeat="(k, v) in mymenuMenuController.companyMenu">
 			{{k}}
-		</a>
+		</div>
 	</ion-scroll>
 	<div 
-		class="list menuitem-container">
+		class="item item-container item-thumbnail-left" 
+		ng-repeat="(k, v) in mymenuMenuController.companyMenuMenuitem" 
+		ng-show="v.menu_id == mymenuMenuController.getMenuIdFromName()">
+		<img 
+			src={{v.menuitem_image}}>
 		<div 
-			class="item item-thumbnail-left" 
-			ng-repeat="(k, v) in mymenuMenuController.companyMenuMenuitem" 
-			ng-show="v.menu_id == mymenuMenuController.getMenuIdFromName()">
-			<!--  *************** 
-					menuitem-image (start)
-					*************** -->
-			<img 
-				id="menuitem-image" 
-				name="menuitem-image" 
-				src={{v.menuitem_image}}>
-			<!--  *************** 
-					menuitem-image (end)
-					*************** -->
-			<span 
-				class="font-family-1-size-small">
-				<underline>{{v.menuitem_name}}</underline>
-			</span>
+			class="title">
+			{{v.menuitem_name}}
+		</div>
+		<div 
+			class="body">
+			{{v.menuitem_desc}}
+		</div>
+		<div 
+			class="row">
 			<div 
-				class='menuitem_desc-container'>
-				<span 
-					class="font-family-2-size-small">
-					{{v.menuitem_desc}}
-				</span>
-			</div>
-			<div 
-				class="child-content-right">
-				<span 
-					class="font-family-1-size-medium">
-					&#8369{{v.menuitem_price}}
-				</span>
-			</div>
-			<div 
-				class="row">
+				class="child-content-right col">
+				<button 
+					class="button button-positive button-small" 
+					ng-click="mymenuMenuController.addReservationOrder(v);">
+					<i 
+						class="icon ion-plus">
+					</i>
+					<span 
+						class="font-family-1-size-small">
+						Add
+					</span>
+				</button>
+				<!--  *************** 
+						nearby_reservation_menu_quantity-container (start)
+						*************** -->
 				<div 
-					class="child-content-right col">
-					<button 
-						class="button button-positive button-small" 
-						ng-click="mymenuMenuController.addReservationOrder(v);">
-						<i 
-							class="icon ion-plus">
-						</i>
-						<span 
-							class="font-family-1-size-small">
-							Add
-						</span>
-					</button>
-					<button 
-						class="button button-positive button-small" 
-						ng-click="mymenuMenuController.subReservationOrder(v);">
-						<i 
-							class="icon ion-minus">
-						</i>
-						<span 
-							class="font-family-1-size-small">
-							Sub
-						</span>
-					</button>
+					id="nearby_reservation_menu_quantity-container" 
+					name="nearby_reservation_menu_quantity-container">
+					<span 
+						class="font-family-1-size-medium">
+						{{v.quantity}}
+					</span>
 				</div>
-				<div 
-					class="col item item-input-wrapper menuitem_qty-container">
-					<input 
-						class="child-content-center fill-parent-x font-family-2-size-small" 
-						ng-model="v.quantity" 
-						type="number">
-				</div>
+				<!--  *************** 
+						nearby_reservation_menu_quantity-container (end)
+						*************** -->
+				<button 
+					class="button button-positive button-small" 
+					ng-click="mymenuMenuController.subReservationOrder(v);">
+					<i 
+						class="icon ion-minus">
+					</i>
+					<span 
+						class="font-family-1-size-small">
+						Sub
+					</span>
+				</button>
 			</div>
 		</div>
 	</div>
-	<div 
-		class="child-content-center" 
-		ng-if="keys(mymenuMenuController.user.reservationOrder).length > 0">
-		<!--  *************** 
-				postOrderBtn (start)
-				*************** -->
-		<button 
-			class="button button-medium button-positive child-content-center fill-parent-x" 
-			id="postOrderBtn" 
-			name="postOrderBtn" 
-			ng-click="mymenuMenuController.postOrder();">
-			<i 
-				class="icon ion-arrow-right-a">
-			</i>
-		</button>
-		<!--  *************** 
-				postOrderBtn (end)
-				*************** -->
-	</div>
 </div>
-<!--  *************** 
-		menu (end)
-		*************** -->

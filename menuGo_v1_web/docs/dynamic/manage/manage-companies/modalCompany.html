@@ -1,29 +1,29 @@
 <div 
 	class="modal-content">
 	<div 
-		class="modal-header font-family-1-size-small">
+		class="modal-header">
 		Manage Company
 	</div>
 	<!--  *************** 
-			modalCompanyContainer (start)
+			modal_company-container (start)
 			*************** -->
 	<div 
 		class="modal-body" 
-		id="modalCompanyContainer" 
-		name="modalCompanyContainer" 
+		id="modal_company-container" 
+		name="modal_company-container" 
 		ng-init="modalCompanyController.initBootstrapValidator(); modalCompanyController.initDom();">
 		<div 
-			class="alert alert-danger font-family-3-size-medium" 
+			class="alert alert-danger" 
 			ng-hide="modalCompanyController.isValidationErrDBHidden">
 			{{modalCompanyController.validationErrDB}}
 		</div>
 		<!--  *************** 
-				modalCompany (start)
+				modal_company (start)
 				*************** -->
 		<form 
 			class="form-group" 
-			id="modalCompany" 
-			name="modalCompany">
+			id="modal_company" 
+			name="modal_company">
 			<div 
 				class="container-fluid">
 				<div 
@@ -34,33 +34,24 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Name
 							</span>
-							<!--  *************** 
-									companyName (start)
-									*************** -->
 							<input 
-								class="font-family-3-size-medium form-control" 
-								id="companyName" 
+								class="form-control" 
 								maxlength="30" 
-								name="companyName" 
 								ng-hide="modalCompanyController.modalHiddenFields['companyName']" 
 								ng-model="modalCompanyController.company.companyName" 
 								placeholder="Name" 
 								required 
 								type="text">
-							<!--  *************** 
-									companyName (end)
-									*************** -->
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalCompanyController.validationErr[0]}}
 						</div>
 					</div>
 				</div>
-				
 				<div 
 					class="row" 
 					ng-hide="modalCompanyController.modalHiddenFields['companyDesc']">
@@ -69,17 +60,12 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Description
 							</span>
-							<!--  *************** 
-									companyDesc (start)
-									*************** -->
 							<textarea 
-								class="font-family-3-size-medium form-control" 
-								id="companyDesc" 
+								class="form-control" 
 								maxlength="500" 
-								name="companyDesc" 
 								ng-hide="modalCompanyController.modalHiddenFields['companyDesc']" 
 								ng-model="modalCompanyController.company.companyDesc" 
 								placeholder="Description" 
@@ -87,17 +73,13 @@
 								rows="5" 
 								type="text">
 							</textarea>
-							<!--  *************** 
-									companyDesc (end)
-									*************** -->
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalCompanyController.validationErr[1]}}
 						</div>
 					</div>
 				</div>
-				
 				<div 
 					class="row" 
 					ng-hide="modalCompanyController.modalHiddenFields['companyCategory']">
@@ -106,33 +88,24 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Category
 							</span>
-							<!--  *************** 
-									companyCategory (start)
-									*************** -->
 							<input 
-								class="font-family-3-size-medium form-control" 
-								id="companyCategory" 
+								class="form-control" 
 								maxlength="30" 
-								name="companyCategory" 
 								ng-hide="modalCompanyController.modalHiddenFields['companyCategory']" 
 								ng-model="modalCompanyController.company.companyCategory" 
 								placeholder="Category" 
 								required 
 								type="text">
-							<!--  *************** 
-									companyCategory (end)
-									*************** -->
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalCompanyController.validationErr[0]}}
 						</div>
 					</div>
 				</div>
-				
 				<div 
 					class="row" 
 					ng-hide="modalCompanyController.modalHiddenFields['companyLogo']">
@@ -141,26 +114,18 @@
 						<div 
 							class="input-group">
 							<span 
-								class="font-family-1-size-small input-group-addon">
+								class="input-group-addon">
 								Logo
 							</span>
-							<!--  *************** 
-									companyLogo (start)
-									*************** -->
 							<input 
-								class="font-family-3-size-medium form-control" 
-								id="companyLogo" 
+								class="form-control" 
 								maxlength="500" 
-								name="companyLogo" 
 								ng-hide="modalCompanyController.modalHiddenFields['companyLogo']" 
 								ng-model="modalCompanyController.company.companyLogo" 
 								placeholder="Logo" 
 								readonly 
 								required 
 								type="url">
-							<!--  *************** 
-									companyLogo (end)
-									*************** -->
 							<span 
 								class="input-group-btn">
 								<label 
@@ -169,15 +134,15 @@
 										class="glyphicon glyphicon-search">
 									</i>
 									<!--  *************** 
-											companyLogoBrowse (start)
+											company_logo_browse (start)
 											*************** -->
 									<input 
-										class="font-family-3-size-medium form-control" 
-										id="companyLogoBrowse" 
-										name="companyLogoBrowse" 
+										class="form-control" 
+										id="company_logo_browse" 
+										name="company_logo_browse" 
 										type="file">
 									<!--  *************** 
-											companyLogoBrowse (end)
+											company_logo_browse (end)
 											*************** -->
 								</label>
 								<button 
@@ -191,25 +156,23 @@
 							</span>
 						</div>
 						<div 
-							class="font-family-3-size-medium help-block with-errors">
+							class="help-block with-errors">
 							{{modalCompanyController.validationErr[2]}}
 						</div>
 					</div>
 				</div>
 				<div 
-					class="child-content-center company_logo_image-container" 
+					class="company_logo_image-container" 
 					ng-hide="modalCompanyController.isCompanyLogoImageHidden">
 					<img 
-						class="company-logo-image" 
 						src={{modalCompanyController.company.companyLogo}}>
 				</div>
-				
 				<div 
-					class="row">
+					class="button-container row">
 			        <div 
 			        	class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-modal-control btn-success fill-parent-x font-family-3-size-medium" 
+							class="btn btn-success" 
 							type="submit">
 							<span 
 								ng-if="!modalCompanyController.fromSignup">
@@ -221,11 +184,10 @@
 							</span>
 						</button>
 					</div>
-			        
-					<div 
+			        <div 
 						class="col-md-6 col-sm-6 col-xs-12">
 						<button 
-							class="btn btn-danger btn-modal-control fill-parent-x font-family-3-size-medium" 
+							class="btn btn-danger" 
 							ng-click="modalCompanyController.doCancel();" 
 							type="button">
 							Cancel
@@ -235,10 +197,10 @@
 			</div>
 		</form>
 		<!--  *************** 
-				modalCompany (start)
+				modal_company (start)
 				*************** -->
 	</div>
 	<!--  *************** 
-			modalCompanyContainer (end)
+			modal_company-container (end)
 			*************** -->
 </div>

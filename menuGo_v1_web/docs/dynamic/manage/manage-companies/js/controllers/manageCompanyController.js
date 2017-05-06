@@ -32,7 +32,7 @@ function manageCompanyController(
 		DTOptionsBuilder, 
 		datatableService
 		){
-	const DOM_COMPANY_TABLE = '#companyTable';
+	const DOM_COMPANY_TABLE = '#company_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

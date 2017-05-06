@@ -10,14 +10,12 @@
 			reservation_detail-container (start)
 			*************** -->
 	<div 
-		class="child-content-center fill-parent-x item item-divider" 
+		class="item item-divider page_header-container" 
 		id="reservation_detail-container" 
 		name="reservation_detail-container">
 		<span 
-			class="font-family-2-size-small">
-			CHECK - IN DETAILS: Reservation @ 
-			<underline>{{customerMymenuController.companyName}}</underline>, 
-			<underline>Table #: {{customerMymenuController.tableNumber}}</underline>
+			class="font-family-2-size-medium">
+			Reservation @: <underline>{{customerMymenuController.companyName}}</underline>, table # <underline>{{customerMymenuController.tableNumber}}</underline>
 		</span>
 	</div>
 	<!--  *************** 
@@ -25,85 +23,71 @@
 			*************** -->
 			
 	<!--  *************** 
-			mymenuContent (start)
+			mymenu_content (start)
 			*************** -->
 	<ion-content 
 		class="has-header" 
-		id="mymenuContent" 
-		name="mymenuContent">
+		id="mymenu_content" 
+		name="mymenu_content">
 		<ng-include src="customerMymenuController.mymenuContentSrc"></ng-include>
 	</ion-content>
 	<!--  *************** 
-			mymenuContent (end)
+			mymenu_content (end)
 			*************** -->
 			
 	<!--  *************** 
-			button-container (start)
+			mymenu_button-container (start)
 			*************** -->
 	<div 
-		class="child-content-center fill-parent-x item item-divider" 
-		id="button-container" 
-		name="button-container">
-		<!--  *************** 
-				addOrderBtn (start)
-				*************** -->
-		<button 
-			class="button button-small button-positive child-content-center font-family-1-size-small" 
-			id="addOrderBtn" 
-			name="addOrderBtn" 
-			ng-click="customerMymenuController.setSrcAsAddOrder();">
-			Add Order
-		</button>
-		<!--  *************** 
-				addOrderBtn (end)
-				*************** -->
-		
-		<!--  *************** 
-				callWaiterBtn (start)
-				*************** -->
-		<button 
-			class="button button-small button-positive child-content-center font-family-1-size-small" 
-			id="callWaiterBtn" 
-			name="callWaiterBtn">
-			Call Waiter
-		</button>
-		<!--  *************** 
-				callWaiterBtn (end)
-				*************** -->
-		
-		<!--  *************** 
-				myBillBtn (start)
-				*************** -->
-		<button 
-			class="button button-small button-positive child-content-center font-family-1-size-small" 
-			id="myBillBtn" 
-			name="myBillBtn" 
-			ng-click="customerMymenuController.setSrcAsMyBill();">
-			My Bill
-		</button>
-		<!--  *************** 
-				myBillBtn (end)
-				*************** -->
-				
-		<!--  *************** 
-				gotoMymenuOrderBtn (start)
-				*************** -->
-		<button 
-			class="button button-positive button-small child-content-center" 
-			id="gotoMymenuOrderBtn" 
-			name="gotoMymenuOrderBtn" 
-			ng-if="customerMymenuController.mymenuContentSrc.indexOf('mymenu-order.html') == -1" 
-			ng-click="customerMymenuController.gotoMymenuOrder();">
-			<i 
-				class="icon ion-arrow-left-a">
-			</i>
-		</button>
-		<!--  *************** 
-				gotoMymenuOrderBtn (end)
-				*************** -->
+		class="row" 
+		id="mymenu_button-container" 
+		name="mymenu_button-container">
+		<div 
+			class="button-container col">
+			<button 
+				class="button button-small button-positive" 
+				ng-click="customerMymenuController.setSrcAsAddOrder();">
+				<i 
+					class="icon ion-plus">
+				</i>
+				Add Order
+			</button>
+		</div>
+		<div 
+			class="button-container col">
+			<button 
+				class="button button-small button-positive">
+				<i 
+					class="icon ion-android-call">
+				</i>
+				Call Waiter
+			</button>
+		</div>
+		<div 
+			class="button-container col">
+			<button 
+				class="button button-small button-positive" 
+				ng-click="customerMymenuController.setSrcAsMyBill();">
+				<i 
+					class="icon ion-cash">
+				</i>
+				My Bill
+			</button>
+		</div>
+		<div 
+			class="button-container col col-10" 
+			ng-if="customerMymenuController.mymenuContentSrc.indexOf('mymenu-order.html') == -1">
+			<button 
+				class="button button-positive button-small" 
+				ng-click="customerMymenuController.gotoMymenuOrder();">
+				<i 
+					class="icon ion-arrow-left-a">
+				</i>
+			</button>
+		</div>
 	</div>
 	<!--  *************** 
-			button-container (end)
+			mymenu_button-container (end)
 			*************** -->
 </ion-view>
 <!--  *************** 

@@ -32,7 +32,7 @@ function manageOrderreferenceController(
 		DTColumnBuilder, 
 		datatableService
 		){
-	const DOM_ORDERREFERENCE_TABLE = '#orderreferenceTable';
+	const DOM_ORDERREFERENCE_TABLE = '#orderreference_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;
