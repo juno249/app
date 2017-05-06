@@ -2,6 +2,14 @@ div.dataTables_wrapper a.btn-control{
 	width: 75px;
 }
 
+div.dataTables_wrapper div.dataTables_filter label input, 
+div.dataTables_wrapper div.dataTables_info, 
+div.dataTables_wrapper div.dataTables_paginate, 
+div.dataTables_wrapper td.dataTables_empty{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 15px;
+}
+
 div.dataTables_wrapper div#dtWrapper{
 	margin: 0px;
 	
@@ -9,14 +17,6 @@ div.dataTables_wrapper div#dtWrapper{
 }
 
 div.dataTables_wrapper label{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 15px;
-}
-
-div.dataTables_wrapper div.dataTables_filter label input, 
-div.dataTables_wrapper div.dataTables_info, 
-div.dataTables_wrapper div.dataTables_paginate, 
-div.dataTables_wrapper td.dataTables_empty{
 	font-family: 'Pavanam', sans-serif;
 	font-size: 15px;
 }
