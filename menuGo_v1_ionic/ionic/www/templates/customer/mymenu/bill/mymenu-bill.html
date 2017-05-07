@@ -1,13 +1,8 @@
 <div 
 	class="mymenu_bill-container" 
 	ng-controller="mymenuBillController as mymenuBillController">
-	<!--  *************** 
-			mymenu_bill-container (start)
-			*************** -->
 	<ion-scroll 
 		class="order-container" 
-		id="mymenu_bill-container" 
-		name="mymenu_bill-container" 
 		direction="y">
 		<div 
 			class="item item-container" 
@@ -43,7 +38,7 @@
 			</div>
 		</div>
 		<!--  *************** 
-				nearby_reservation_order_total-container (start)
+				mymenu_bill_total-container (start)
 				*************** -->
 		<div 
 			class="child-content-right font-family-1-size-medium" 
@@ -53,7 +48,7 @@
 			Total: &#8369{{mymenuBillController.getTotalCost() | number: 2}}
 		</div>
 		<!--  *************** 
-				nearby_reservation_order_total-container (end)
+				mymenu_bill_total-container (end)
 				*************** -->
 	</ion-scroll>
 	<!--  *************** 

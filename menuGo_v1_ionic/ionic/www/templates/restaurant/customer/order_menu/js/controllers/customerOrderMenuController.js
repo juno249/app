@@ -12,6 +12,7 @@ customerOrderMenuController.$inject = [
 	'LOADING_MESSAGES', 
 	'$localStorage', 
 	'$scope', 
+	'$state', 
 	'dataService', 
 	'networkService', 
 	'popupService'
@@ -24,6 +25,7 @@ function customerOrderMenuController(
 		LOADING_MESSAGES, 
 		$localStorage, 
 		$scope, 
+		$state, 
 		dataService, 
 		networkService, 
 		popupService
@@ -68,7 +70,14 @@ function customerOrderMenuController(
 	vm.subReservationOrder = subReservationOrder;
 	
 	function gotoState(stateName){
-	}
+		if('restaurant.customer-order_order' == stateName){
+			$state.go(
+					stateName, 
+					{}, 
+					{	reload: true	}
+					);
+			}
+		}
 	
 	function setMenuName(menuName){	vm.menuName = menuName;
 	}

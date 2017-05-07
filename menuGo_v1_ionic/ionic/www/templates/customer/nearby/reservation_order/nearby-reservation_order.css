@@ -1,7 +1,3 @@
-div.order-container div#nearby_reservation_order_total-container{
-	padding-right: 20px;
-}
-
 div.reservation_order-container ion-scroll#nearby_reservation_order-container{
 	max-height: 300px;
 }
@@ -12,4 +8,8 @@ div.reservation_order-container span.datetime_picker{
 	font-size: 15px;
 	
 	width: 100%;
+}
+
+ion-scroll.order-container div#nearby_reservation_order_total-container{
+	padding-right: 20px;
 }
