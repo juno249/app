@@ -1,4 +1,4 @@
-div.map-container{
+div.nearby-container div.map-container{
 	display: none;
 	
 	left: 0px;
@@ -6,20 +6,20 @@ div.map-container{
 	top: 0px;
 }
 
-div.card-container div#branch_name{
+div.nearby-container div#branch_name{
 	line-height: 12px;
 	
 	white-space: normal;
 }
 
-div.card-container div#featured_menu_image-container{
+div.nearby-container div#featured_menu_image-container{
 	height: 70%;
 }
 
-div.card-container div#featured_menu-slidebox{
+div.nearby-container div#featured_menu-slidebox{
 	height: 200px;
 }
 
-div.card-container div#menuitem_price{
+div.nearby-container div#menuitem_price{
 	text-align: right;
 }

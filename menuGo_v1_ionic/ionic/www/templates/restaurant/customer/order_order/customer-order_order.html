@@ -8,7 +8,7 @@
 	<ion-content 
 		class="has-header">
 		<div 
-			class="customer_order-container">
+			class="order_order-container">
 			<div 
 				class="item item-divider page_header-container">
 				Order Details
@@ -70,7 +70,7 @@
 					class="child-content-right font-family-1-size-medium" 
 					id="customer_order_order_total-container" 
 					name="customer_order_order_total-container" 
-					ng-if="keys(customerOrderOrderController.user.reservationOrder).length > 0">
+					ng-show="keys(customerOrderOrderController.user.reservationOrder).length > 0">
 					Total: &#8369{{customerOrderOrderController.getTotalCost() | number: 2}}
 				</div>
 				<!--  *************** 

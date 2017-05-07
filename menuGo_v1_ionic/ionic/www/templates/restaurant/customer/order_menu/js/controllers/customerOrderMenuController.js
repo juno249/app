@@ -43,7 +43,6 @@ function customerOrderMenuController(
 				null == localStorage.getItem(KEYS.Companies)
 				){
 			vm.company = {};
-			vm._company = {};
 			vm.companyMenu = {};
 			vm.companyMenuMenuitem = {};
 			} else {

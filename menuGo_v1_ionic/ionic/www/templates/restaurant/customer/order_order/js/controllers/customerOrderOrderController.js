@@ -34,6 +34,23 @@ function customerOrderOrderController(
 		){
 	var vm = this;
 	
+	if(
+			networkService.deviceIsOffline() &&
+			!(null == localStorage.getItem(KEYS.Companies))
+			){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
+		} else if(
+				networkService.deviceIsOffline() &&
+				null == localStorage.getItem(KEYS.Companies)
+				){
+			vm._table = {};
+			} else {
+				dataService.fetchCompanies();
+				
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
+	
 	//controller_method
 	vm.remReservationOrder = remReservationOrder;
 	//controller_method

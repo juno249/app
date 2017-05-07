@@ -1,0 +1,69 @@
+<!--  *************** 
+		mymenu (start)
+		*************** -->
+<ion-view 
+	id="qr" 
+	name="qr" 
+	view-title="my menu">
+	<ion-content 
+		class="has-header">
+		<div 
+			class="customer_qr-container">
+			<!--  *************** 
+					company_image-container (start)
+					*************** -->
+			<div 
+				class="child-content-center image-container" 
+				id="company_image-container" 
+				name="company_image-container">
+				<img 
+					src={{restaurantHomeController._company.company_logo}}>
+			</div>
+			<!--  *************** 
+					company_image-container (end)
+					*************** -->
+			<div 
+				class="child-content-center font-family-2-size-small">
+				Powered By: <underline>ZipLogic</underline>
+			</div>
+			<div 
+				class="button-container row">
+				<button 
+					class="'button button-positive button-small" 
+					ng-click="customerQrController.doScan();">
+					Scan QR Code
+				</button>
+			</div>
+		</div>
+		<div 
+			class="font-family-2-size-medium" 
+			ng-show="keys(customerQrController.reservationDetails).length > 0">
+			Currently reserved @:<br>
+			Restaurant <underline>{{cusotmerQrController.reservationDetails.companyName}}</underline><br>
+			Table # <underline>{{customerQrController.reservationDetails.tableNumber}}</underline>
+		</div>
+		<div 
+			class="button-container" 
+			ng-show="keys(customerQrController.reservationDetails).length > 0">
+			<div 
+				class="row">
+				<button 
+					class="button button-positive button-small" 
+					ng-click="">
+					Acknowledge
+				</button>
+			</div>
+			<div 
+				class="row">
+				<button 
+					class="button button-positive button-small" 
+					ng-click="">
+					Scan
+				</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
+<!--  *************** 
+		mymenu (end)
+		*************** -->

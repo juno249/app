@@ -13,8 +13,10 @@ nearbyReservationOrderController.$inject = [
                                             'ORDERREFERENCE_STATUS', 
                                             'PAYMENT_MODES', 
                                             'RESERVATION_STATUS', 
+                                            '$ionicHistory', 
                                             '$localStorage', 
                                             '$scope', 
+                                            '$state', 
                                             'orderreferenceService', 
                                             'popupService', 
                                             'reservationService', 
@@ -29,13 +31,16 @@ function nearbyReservationOrderController(
 		ORDERREFERENCE_STATUS, 
 		PAYMENT_MODES, 
 		RESERVATION_STATUS, 
+		$ionicHistory, 
 		$localStorage, 
 		$scope, 
+		$state, 
 		orderreferenceService, 
 		popupService, 
 		reservationService, 
 		reservationOrderreferenceOrderService
 		){
+	const STATE_CUSTOMER_HOME = 'customer.home';
 	const RESERVATION_TABLE_ID = 999999;
 	
 	var vm = this;
@@ -154,6 +159,13 @@ function nearbyReservationOrderController(
 				localStorage.setItem(
 						KEYS.User, 
 						JSON.stringify(vm.user)
+						);
+				
+				$ionicHistory.clearHistory();
+				$state.go(
+						STATE_CUSTOMER_HOME, 
+						{}, 
+						{	reload: true	}
 						);
 				}
 			

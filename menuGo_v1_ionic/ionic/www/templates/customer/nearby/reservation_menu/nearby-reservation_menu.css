@@ -7,7 +7,7 @@ button#gotoOrdersBtn{
 	right: 10px;
 }
 
-div.item-container div#nearby_reservation_menu_quantity-container{
+div.reservation_menu-container div#nearby_reservation_menu_quantity-container{
 	display: inline-block;
 	
 	text-align: center;

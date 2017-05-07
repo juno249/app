@@ -75,7 +75,7 @@
 					class="child-content-right font-family-1-size-medium" 
 					id="nearby_reservation_order_total-container" 
 					name="nearby_reservation_order_total-container" 
-					ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
+					ng-show="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 					Total: &#8369{{nearbyReservationOrderController.getTotalCost() | number: 2}}
 				</div>
 				<!--  *************** 
@@ -91,7 +91,7 @@
 			</div>
 			<div 
 				class="child-content-center font-family-1-size-small form-container" 
-				ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
+				ng-show="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 				Diner's Count
 				<div 
 					class="item item-input-inset">
@@ -171,7 +171,7 @@
 				<button 
 					class="button button-positive button-small" 
 					ng-click="nearbyReservationOrderController.postReservation();" 
-					ng-if="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
+					ng-show="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
 					<i 
 						class="icon ion-checkmark">
 					</i>

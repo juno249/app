@@ -44,7 +44,7 @@
 			class="child-content-right font-family-1-size-medium" 
 			id="mymenu_bill_total-container" 
 			name="mymenu_bill_total-container" 
-			ng-if="keys(mymenuBillController.user.orderreference.order).length > 0">
+			ng-show="keys(mymenuBillController.user.orderreference.order).length > 0">
 			Total: &#8369{{mymenuBillController.getTotalCost() | number: 2}}
 		</div>
 		<!--  *************** 
