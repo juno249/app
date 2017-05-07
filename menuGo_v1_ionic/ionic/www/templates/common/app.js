@@ -145,7 +145,33 @@ function doRouteConfig(
 											}
 							}
 							}
-							);
+							)
+							.state(
+									'restaurant.customer-qr', 
+									{
+										url: '/customer-qr', 
+										views: {
+											'restaurant-content': {
+												templateUrl: 'templates/restaurant/customer/qr/customer-qr.html', 
+												controller: 'customerQrController', 
+												controllerAs: 'customerQrController'
+													}
+									}
+									}
+									)
+									.state(
+											'restaurant.customer-order_menu', 
+											{
+												url: '/customer-order_menu', 
+												views: {
+													'restaurant-content': {
+														templateUrl: 'templates/restaurant/customer/order_menu/customer-order_menu.html', 
+														controller: 'customerOrderMenuController', 
+														controllerAs: 'customerOrderMenuController'
+															}
+											}
+											}
+											);
 	
 	$urlRouterProvider
 	.otherwise('/');
