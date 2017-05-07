@@ -27,7 +27,9 @@ function loginController(
 		popupService
 		){
 	const STATE_CUSTOMER_HOME = 'customer.home';
-	const STATE_RESTAURANT_HOME = 'restaurant.home';
+	/* test_data (start) */
+	const STATE_RESTAURANT_HOME = 'restaurant.customer-order_menu';
+	/* test_data (start) */
 	
 	var vm = this;
 	
