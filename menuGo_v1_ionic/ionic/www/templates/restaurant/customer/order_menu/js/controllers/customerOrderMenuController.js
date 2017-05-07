@@ -32,12 +32,6 @@ function customerOrderMenuController(
 		){
 	var vm = this;
 	
-	/* test_data (start) */
-	vm.companyName = "Max's";
-	vm.branchName = "Ermita";
-	vm.tableNumber = 1;
-	/* test_data (end) */
-	
 	if(
 			networkService.deviceIsOffline() &&
 			!(null == localStorage.getItem(KEYS.Companies))

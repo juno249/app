@@ -171,7 +171,20 @@ function doRouteConfig(
 															}
 											}
 											}
-											);
+											)
+											.state(
+													'restaurant.customer-order_order', 
+													{
+														url: '/customer-order_order', 
+														views: {
+															'restaurant-content': {
+																templateUrl: 'templates/restaurant/customer/order_order/customer-order_order.html', 
+																controller: 'customerOrderOrderController', 
+																controllerAs: 'customerOrderOrderController'
+																	}
+													}
+													}
+													);
 	
 	$urlRouterProvider
 	.otherwise('/');

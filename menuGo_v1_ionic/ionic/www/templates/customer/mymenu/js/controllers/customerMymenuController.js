@@ -31,12 +31,6 @@ function customerMymenuController(
 	var vm = this;
 	vm.mymenuContentSrc = "templates/customer/mymenu/order/mymenu-order.html";
 	
-	/* test_data (start) */
-	vm.companyName = "Max's";
-	vm.branchName = "Ermita";
-	vm.tableNumber = 1;
-	/* test_data (end) */
-	
 	//controller_method
 	vm.initDom = initDom;
 	//controller_method
