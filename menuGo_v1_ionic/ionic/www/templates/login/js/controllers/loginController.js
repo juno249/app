@@ -27,6 +27,7 @@ function loginController(
 		popupService
 		){
 	const STATE_CUSTOMER_HOME = 'customer.home';
+	const STATE_RESTAURANT_HOME = 'restaurant.home';
 	
 	var vm = this;
 	
@@ -57,9 +58,20 @@ function loginController(
 				$state.go(
 					STATE_CUSTOMER_HOME, 
 					{}, 
-					{reload: true}
+					{	reload: true	}
 					);
-				}
+				} else if(
+						USER_ROLES.administrator == vm.user.role ||
+						USER_ROLES.manager == vm.user.role ||
+						USER_ROLES.cook == vm.user.role ||
+						USER_ROLES.waiter == vm.user.role
+						){
+					$state.go(
+							STATE_RESTAURANT_HOME, 
+							{}, 
+							{	reload: true	}
+							);
+					}
 			}
 		
 		function doLoginFailedCallback(responseError){

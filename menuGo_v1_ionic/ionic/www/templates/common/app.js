@@ -120,7 +120,32 @@ function doRouteConfig(
 																					}
 																	}
 																	}
-																	);
+																	)
+			.state(
+					'restaurant', 
+					{
+						url: '/restaurant', 
+						abstract: true, 
+						views: {
+							'main': {
+								templateUrl: 'templates/restaurant/restaurant.html'
+									}
+					}
+					}
+					)
+					.state(
+							'restaurant.home', 
+							{
+								url: '/home', 
+								views: {
+									'restaurant-content': {
+										templateUrl: 'templates/restaurant/home/restaurant-home.html', 
+										controller: 'restaurantHomeController', 
+										controllerAs: 'restaurantHomeController'
+											}
+							}
+							}
+							);
 	
 	$urlRouterProvider
 	.otherwise('/');

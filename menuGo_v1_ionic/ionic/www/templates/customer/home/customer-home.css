@@ -20,3 +20,7 @@ div.card-container div#advertisement-body{
 div.card-container div#blog-body{
 	text-align: left;
 }
+
+div.home-container div#company_logo_image-container{
+	height: 250px;
+}
