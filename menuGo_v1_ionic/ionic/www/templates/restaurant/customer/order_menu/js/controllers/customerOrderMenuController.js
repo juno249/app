@@ -1,11 +1,11 @@
 angular
 .module('starter')
 .controller(
-		'orderMenuController', 
-		orderMenuController
+		'customerOrderMenuController', 
+		customerOrderMenuController
 		);
 
-orderMenuController.$inject = [
+customerOrderMenuController.$inject = [
 	'BROADCAST_MESSAGES', 
 	'ERROR_MESSAGES', 
 	'KEYS', 
@@ -17,7 +17,7 @@ orderMenuController.$inject = [
 	'popupService'
 	];
 
-function orderMenuController(
+function customerOrderMenuController(
 		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 

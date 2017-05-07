@@ -1,11 +1,11 @@
 angular
 .module('starter')
 .controller(
-		'orderOrderController', 
-		orderOrderController
+		'customerOrderOrderController', 
+		customerOrderOrderController
 		);
 
-orderOrderController.$inject = [
+customerOrderOrderController.$inject = [
 	'ERROR_MESSAGES', 
 	'KEYS', 
 	'LOADING_MESSAGES', 
@@ -20,7 +20,7 @@ orderOrderController.$inject = [
 	'popupService'
 	];
 
-function orderOrderController(
+function customerOrderOrderController(
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
