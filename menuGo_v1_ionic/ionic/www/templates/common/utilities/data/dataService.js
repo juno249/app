@@ -8,6 +8,7 @@ angular
 dataService.$inject = [
                        'BROADCAST_MESSAGES', 
                        'KEYS', 
+                       'ORDERREFERENCE_STATUS', 
                        '$localStorage', 
                        '$q', 
                        '$rootScope', 
@@ -16,12 +17,16 @@ dataService.$inject = [
                        'menuService', 
                        'tableService', 
                        'menuitemService', 
+                       'orderreferenceService', 
+                       'orderService', 
+                       'reservationService', 
                        'marketingService'
                        ];
 
 function dataService(
 		BROADCAST_MESSAGES, 
 		KEYS, 
+		ORDERREFERENCE_STATUS, 
 		$localStorage, 
 		$q, 
 		$rootScope, 
@@ -30,13 +35,17 @@ function dataService(
 		menuService, 
 		tableService, 
 		menuitemService, 
+		orderreferenceService, 
+		orderService, 
+		reservationService, 
 		marketingService
 		){
 	var dataServiceObj = {
 			companies: {}, 
 			marketing: {}, 
 			fetchCompanies: fetchCompanies, 
-			fetchMarketing: fetchMarketing
+			fetchMarketing: fetchMarketing, 
+			fetchCompanyBranchOrderreferences: fetchCompanyBranchOrderreferences
 			};
 	
 	function getCompanies(){	return dataServiceObj.companies;
@@ -350,6 +359,90 @@ function dataService(
 			}
 		}
 	
+	function fetchCompanyBranchOrderreferences(
+			companyName, 
+			branchName
+			){
+		var isGetCompanyBranchOrderreferences = false;
+		var isGetOrders = false;
+		var isGetReservations = false;
+		
+		orderreferenceService.setCompanyName(companyName);
+		orderreferenceService.setBranchName(branchName);
+		orderreferenceService.fetchOrderreferences(	//getCompanyBranchOrderreferencesNotOrderreferenceStatus
+				4, 
+				{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
+				)
+				.then(fetchOrderreferenceSuccessCallback)
+				.catch(fetchOrderreferenceFailedCallback);
+		
+		function fetchOrderreferenceSuccessCallback(response){
+			isGetCompanyBranchOrderreferences = true;
+			companyBranchOrderreferences = localStorage.getItem(KEYS.Orderreferences);
+			companyBranchOrderreferences = JSON.parse(companyBranchOrderreferences);
+			
+			angular.forEach(
+					companyBranchOrderreferences, 
+					function(
+							v, 
+							k
+							){
+						fetchOrders(v.orderreference_code);
+						fetchReservations(v.orderreference_code);
+						}
+					);
+			
+			function fetchOrders(orderreferenceCode){
+				var queryString = '?OrderreferenceCode=' + orderreferenceCode;
+				var getParams = {};
+				getParams.queryString = queryString;
+				
+				orderService.fetchOrders(	//getByQuery
+						13, 
+						getParams
+						)
+						.then(fetchOrdersSuccessCallback)
+						.catch(fetchOrdersFailedCallback);
+				
+				function fetchOrdersSuccessCallback(response){
+					isGetOrders = true;
+					}
+				
+				function fetchOrdersFailedCallback(responseError){
+					resetOrderreferences();
+					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+					}
+				}
+			
+			function fetchReservations(orderreferenceCode){
+				var queryString = '?OrderreferenceCode=' + orderreferenceCode;
+				var getParams = {};
+				getParams.queryString = queryString;
+				
+				reservationService.fetchReservations(	//getByQuery
+						17, 
+						getParams
+						)
+						.then(fetchReservationsSuccessCallback)
+						.catch(fetchReservationsFailedCallback);
+				
+				function fetchReservationsSuccessCallback(response){
+					isGetReservations = true;
+					}
+				
+				function fetchReservationsFailedCallback(responseError){
+					resetOrderreferences();
+					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+					}
+				}
+			}
+		
+		function fetchOrderreferenceFailedCallback(responseError){
+			resetOrderreferences();
+			$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+			}
+		}
+	
 	function reset(){
 		localStorage.removeItem(KEYS.Companies);
 		localStorage.removeItem(KEYS.Branches);
@@ -358,6 +451,12 @@ function dataService(
 		localStorage.removeItem(KEYS.Menuitems);
 		localStorage.removeItem(KEYS.Advertisements);
 		localStorage.removeItem(KEYS.Blogs);
+		}
+	
+	function resetOrderreferences(){
+		localStorage.removeItem(KEYS.Orderreferences);
+		localStorage.removeItem(KEYS.Orders);
+		localStorage.removeItem(KEYS.Reservations);
 		}
 	
 	return dataServiceObj;
