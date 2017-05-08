@@ -30,7 +30,7 @@ function manageCustomerController(
 		DTOptionsBuilder, 
 		datatableService
 		){
-	const DOM_CUSTOMER_TABLE = '#customerTable';
+	const DOM_CUSTOMER_TABLE = '#customer_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

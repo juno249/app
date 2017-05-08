@@ -31,8 +31,8 @@ function modalMenuitemController(
 	const MENUITEM_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DB EXCEPTION ENCOUNTERED';
 	const MENUITEM_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE MENUITEM, DATA IS EMPTY/UNCHANGED';
 	const MENUITEM_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE MENUITEM, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_MENUITEM = '#modalMenuitem';
-	const DOM_MODAL_MENUITEM_CONTAINER = '#modalMenuitemContainer';
+	const DOM_MODAL_MENUITEM = '#modal_menuitem';
+	const DOM_MODAL_MENUITEM_CONTAINER = '#modal_menuitem-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -94,9 +94,7 @@ function modalMenuitemController(
 		}
 	
 	function initDom(){
-		const MENUITEM_IMAGE_BROWSE = '#menuitemImageBrowse';
-		
-		var menuitemImageBrowse = $(MENUITEM_IMAGE_BROWSE);
+		const MENUITEM_IMAGE_BROWSE = '#menuitem_image_browse';
 		
 		$(MENUITEM_IMAGE_BROWSE).css(
 				'display', 
@@ -119,15 +117,15 @@ function modalMenuitemController(
 			}
 		
 		if('D' == vm.formMode){
-			$('#modalMenuitemContainer input').prop(
+			$('#modal_menuitem-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalMenuitemContainer textarea').prop(
+			$('#modal_menuitem-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalMenuitemContainer select').prop(
+			$('#modal_menuitem-container select').prop(
 					'disabled', 
 					true
 					);
@@ -138,7 +136,7 @@ function modalMenuitemController(
 	}
 	
 	function uploadMenuitemImage(){
-		const MENUITEM_IMAGE_BROWSE = '#menuitemImageBrowse';
+		const MENUITEM_IMAGE_BROWSE = '#menuitem_image_browse';
 		
 		var menuitemImage = $(MENUITEM_IMAGE_BROWSE)[0].files[0];
 		

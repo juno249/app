@@ -13,21 +13,170 @@
 				class="item item-divider page_header-container">
 				Order Details
 			</div>
-			<div 
-				class="item item-container" 
-				ng-repeat="(k, v) in nearbyReservationOrderController.user.reservationOrder">
+			<!--  *************** 
+					nearby_reservation_order-container (start)
+					*************** -->
+			<ion-scroll 
+				class="order-container" 
+				id="nearby_reservation_order-container" 
+				name="nearby_reservation_order-container" 
+				direction="y">
 				<div 
-					class="title">
-					{{v.menuitem_name}}
+					class="item item-container" 
+					ng-repeat="(k, v) in nearbyReservationOrderController.user.reservationOrder">
+					<div 
+						class="title">
+						{{v.menuitem_name}}
+					</div>
+					<div 
+						class="body">
+						{{v.menuitem_desc}}
+					</div>
+					<div 
+						class="body child-content-right">
+						<span 
+							class="font-family-2-size-small">
+							UNIT PRICE: &#8369{{v.menuitem_price}}
+						</span>
+					</div>
+					<div 
+						class="body child-content-right">
+						<span 
+							class="font-family-2-size-small">
+							QUANTITY: {{v.quantity}}
+						</span>
+					</div>
+					<div 
+						class="body child-content-right">
+						<span 
+							class="font-family-2-size-small">
+							PRICE: &#8369{{v.quantity * v.menuitem_price}}
+						</span>
+					</div>
+					<div 
+						class="child-content-right">
+						<button 
+							class="button button-positive button-small" 
+							ng-click="nearbyReservationOrderController.remReservationOrder(v);">
+							<i 
+								class="icon ion-close">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								Remove
+							</span>
+						</button>
+					</div>
 				</div>
+				<!--  *************** 
+						nearby_reservation_order_total-container (start)
+						*************** -->
 				<div 
-					class="body">
-					{{v.menuitem_desc}}
+					class="child-content-right font-family-1-size-medium" 
+					id="nearby_reservation_order_total-container" 
+					name="nearby_reservation_order_total-container" 
+					ng-show="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
+					Total: &#8369{{nearbyReservationOrderController.getTotalCost() | number: 2}}
 				</div>
-			</div>
+				<!--  *************** 
+						nearby_reservation_order_total-container (end)
+						*************** -->
+			</ion-scroll>
+			<!--  *************** 
+					nearby_reservation_order-container (end)
+					*************** -->
 			<div 
 				class="item item-divider page_header-container">
 				Payment Details
+			</div>
+			<div 
+				class="child-content-center font-family-1-size-small form-container" 
+				ng-show="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
+				Diner's Count
+				<div 
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-person-stalker">
+						</i>
+						<input 
+							class="child-content-center" 
+							ng-model="nearbyReservationOrderController.user.reservation.dinersCount" 
+							placeholder="0" 
+							type="number">
+					</label>
+				</div>
+				Reservation ETA
+				<div 
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper" 
+						ion-datetime-picker 
+						ng-model="nearbyReservationOrderController.user.reservation.eta">
+						<i 
+							class="icon ion-ios-clock">
+						</i>
+						<span 
+							class="datetime_picker">
+							{{nearbyReservationOrderController.user.reservation.eta | date: 'yyyy-MM-dd H:mm'}}
+						</span>
+					</label>
+				</div>
+				Payment Mode
+				<div 
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper">
+						<i 
+							class="icon ion-cash">
+						</i>
+						<!--  *************** 
+								payment_mode (start)
+								*************** -->
+						<select 
+							id="payment_mode" 
+							name="payment_mode" 
+							ng-model="nearbyReservationOrderController.user.reservation.paymentMode">
+							<option 
+								ng-repeat="i in nearbyReservationOrderController.paymentModeOption" 
+								value={{i}}>
+								{{i}}
+							</option>
+						</select>
+						<!--  *************** 
+								payment_mode (end)
+								*************** -->
+					</label>
+				</div>
+				Service Time
+				<div 
+					class="item item-input-inset">
+					<label 
+						class="item item-input-wrapper" 
+						ion-datetime-picker 
+						ng-model="nearbyReservationOrderController.user.reservation.eta">
+						<i 
+							class="icon ion-ios-clock">
+						</i>
+						<span 
+							class="datetime_picker">
+							{{nearbyReservationOrderController.user.reservation.eta | date: 'yyyy-MM-dd H:mm'}}
+						</span>
+					</label>
+				</div>
+			</div>
+			<div 
+				class="button-container">
+				<button 
+					class="button button-positive button-small" 
+					ng-click="nearbyReservationOrderController.postReservation();" 
+					ng-show="keys(nearbyReservationOrderController.user.reservationOrder).length > 0">
+					<i 
+						class="icon ion-checkmark">
+					</i>
+					Post Reservation
+				</button>
 			</div>
 		</div>
 	</ion-content>

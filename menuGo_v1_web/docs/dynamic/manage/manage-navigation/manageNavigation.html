@@ -5,26 +5,20 @@
 	<div 
 		class="panel panel-success">
 		<div 
-			class="child-content-center font-family-3-size-medium panel-heading user_avatar-container">
+			class="panel-heading user_avatar-container">
 			<img 
-				class="img-responsive user-avatar" 
-				src="docs/dynamic/manage/manage-navigation/res/img/userAvatar.png">
+				src="docs/dynamic/manage/manage-navigation/res/img/userAvatar.png"><br>
 			{{manageNavigationController.customerUsername}}
 		</div>
 		<div 
-			class="font-family-3-size-medium panel-body">
+			class="font-family-2-size-medium panel-body">
 			<div 
-				class="child-content-center font-family-2-size-medium nav-divider">
+				class="nav-divider">
 				Manage
 			</div>
 			<ul 
-				class="nav nav-list">
-				<!--  *************** 
-						manageRestaurantListItem (start)
-						*************** -->
-				<li 
-					id="manageRestaurantListItem" 
-					name="manageRestaurantListItem">
+				class="nav nav_list-container">
+				<li>
 					<a 
 						ui-sref="manage.company">
 						<div 
@@ -36,13 +30,8 @@
 						</div>
 					</a>
 					<ul 
-						class="nav nav-list">
-						<!--  *************** 
-								manageBranchListItem (start)
-								*************** -->
+						class="nav nav_list-container">
 						<li 
-							id="manageBranchListItem" 
-							name="manageBranchListItem" 
 							ng-hide="manageNavigationController.isManageBranchHidden">
 							<a 
 								ui-sref="manage.company.branch({companyName: manageNavigationController.companyName})">
@@ -55,13 +44,8 @@
 								</div>
 							</a>
 							<ul 
-								class="nav nav-list">
-								<!--  *************** 
-										manageTableListItem (start)
-										*************** -->
+								class="nav nav_list-container">
 								<li 
-									id="manageTableListItem" 
-									name="manageTableListItem" 
 									ng-hide="manageNavigationController.isManageTableHidden">
 									<a 
 										ui-sref="manage.company.branch.table({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName})">
@@ -74,13 +58,8 @@
 										</div>
 									</a>
 									<ul 
-										class="nav nav-list">
-										<!--  *************** 
-												manageOrderreferenceListItem (start)
-												*************** -->
+										class="nav nav_list-container">
 										<li 
-											id="manageOrderreferenceListItem" 
-											name="manageOrderreferenceListItem" 
 											ng-hide="manageNavigationController.isManageOrderreferenceHidden">
 											<a 
 												ui-sref="manage.company.branch.table.orderreference({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName, tableNumber: manageNavigationController.tableNumber})">
@@ -93,13 +72,8 @@
 												</div>
 											</a>
 											<ul 
-												class="nav nav-list">
-												<!--  *************** 
-														manageOrderListItem (start)
-														*************** -->
+												class="nav nav_list-container">
 												<li 
-													id="manageOrderListItem" 
-													name="manageOrderListItem" 
 													ng-hide="manageNavigationController.isManageOrderHidden">
 													<a 
 														ui-sref="manage.company.branch.table.orderreference.order({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName, tableNumber: manageNavigationController.tableNumber, orderreferenceCode: manageNavigationController.orderreferenceCode})">
@@ -112,16 +86,7 @@
 														</div>
 													</a>
 												</li>
-												<!--  *************** 
-														manageOrderListItem (end)
-														*************** -->
-												
-												<!--  *************** 
-														manageReservationListItem (start)
-														*************** -->
 												<li 
-													id="manageReservationListItem" 
-													name="manageReservationListItem" 
 													ng-hide="manageNavigationController.isManageReservationHidden">
 													<a 
 														ui-sref="manage.company.branch.table.orderreference.reservation({companyName: manageNavigationController.companyName, branchName: manageNavigationController.branchName, tableNumber: manageNavigationController.tableNumber, orderreferenceCode: manageNavigationController.orderreferenceCode})">
@@ -134,31 +99,13 @@
 														</div>
 													</a>
 												</li>
-												<!--  *************** 
-														manageReservationListItem (end)
-														*************** -->
 											</ul>
 										</li>
-										<!--  *************** 
-												manageOrderreferenceListItem (end)
-												*************** -->
 									</ul>
 								</li>
-								<!--  *************** 
-										manageTableListItem (end)
-										*************** -->
 							</ul>
 						</li>
-						<!--  *************** 
-								manageBranchListItem (end)
-								*************** -->
-								
-						<!--  *************** 
-								manageMenuListItem (start)
-								*************** -->
 						<li 
-							id="manageMenuListItem" 
-							name="manageMenuListItem" 
 							ng-hide="manageNavigationController.isManageMenuHidden">
 							<a 
 								ui-sref="manage.company.menu({companyName: manageNavigationController.companyName})">
@@ -171,13 +118,8 @@
 								</div>
 							</a>
 							<ul 
-								class="nav nav-list">
-								<!--  *************** 
-										manageMenuitemListItem (start)
-										*************** -->
+								class="nav nav_list-container">
 								<li 
-									id="manageMenuitemListItem" 
-									name="manageMenuitemListItem" 
 									ng-hide="manageNavigationController.isManageMenuitemHidden">
 									<a 
 										ui-sref="manage.company.menu.menuitem({companyName: manageNavigationController.companyName, menuName: manageNavigationController.menuName})">
@@ -190,26 +132,11 @@
 										</div>
 									</a>
 								</li>
-								<!--  *************** 
-										manageMenuitemListItem (end)
-										*************** -->
 							</ul>
 						</li>
-						<!--  *************** 
-								manageMenuListItem (end)
-								*************** -->
 					</ul>
 				</li>
-				<!--  *************** 
-						manageRestaurantListItem (end)
-						*************** -->
-						
-				<!--  *************** 
-						manageUserListItem (start)
-						*************** -->
-				<li 
-					id="manageUserListItem" 
-					name="manageUserListItem">
+				<li>
 					<a 
 						ui-sref="manage.customer">
 						<div 
@@ -221,16 +148,7 @@
 						</div>
 					</a>
 				</li>
-				<!--  *************** 
-						manageUserListItem (end)
-						*************** -->
-				
-				<!--  *************** 
-						manageOrderreferenceListItem_main (start)
-						*************** -->
-				<li 
-					id="manageOrderreferenceListItem_main" 
-					name="manageOrderreferenceListItem_main">
+				<li>
 					<a 
 						ui-sref="manage.orderreference">
 						<div 
@@ -242,16 +160,7 @@
 						</div>
 					</a>
 				</li>
-				<!--  *************** 
-						manageOrderreferenceListItem_main (end)
-						*************** -->
-						
-				<!--  *************** 
-						manageOrderListItem_main (start)
-						*************** -->
-				<li 
-					id="manageOrderListItem_main" 
-					name="manageOrderListItem_main">
+				<li>
 					<a 
 						ui-sref="manage.order">
 						<div 
@@ -263,16 +172,7 @@
 						</div>
 					</a>
 				</li>
-				<!--  *************** 
-						manageOrderListItem_main (end)
-						*************** -->
-						
-				<!--  *************** 
-						manageReservationListItem_main (start)
-						*************** -->
-				<li 
-					id="manageReservationListItem_main" 
-					name="manageReservationListItem_main">
+				<li>
 					<a 
 						ui-sref="manage.reservation">
 						<div 
@@ -284,9 +184,6 @@
 						</div>
 					</a>
 				</li>
-				<!--  *************** 
-						manageReservationListItem_main (end)
-						*************** -->
 			</ul>
 		</div>
 	</div>

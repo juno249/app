@@ -1,22 +1,26 @@
-div.card-container div#advertisement-slidebox, 
-div.card-container div#blog-slidebox{
+div.home-container div#advertisement-slidebox, 
+div.home-container div#blog-slidebox{
 	height: 200px;
 }
 
-div.card-container div#advertisement_image-container, 
-div.card-container div#blog_image-container{
+div.home-container div#advertisement_image-container, 
+div.home-container div#blog_image-container{
 	height: 70%;
 }
 
-div.card-container div#advertisement-title, 
-div.card-container div#blog-title{
+div.home-container div#advertisement-title, 
+div.home-container div#blog-title{
 	text-align: center;
 }
 
-div.card-container div#advertisement-body{
+div.home-container div#advertisement-body{
 	text-align: right;	
 }
 
-div.card-container div#blog-body{
+div.home-container div#blog-body{
 	text-align: left;
+}
+
+div.home-container div#company_logo_image-container{
+	height: 250px;
 }

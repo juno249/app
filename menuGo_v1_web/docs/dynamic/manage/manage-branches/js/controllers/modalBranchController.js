@@ -28,8 +28,8 @@ function modalBranchController(
 	const BRANCH_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE BRANCH, DB EXCEPTION ENCOUNTERED';
 	const BRANCH_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE BRANCH, DATA IS EMPTY/UNCHANGED';
 	const BRANCH_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE BRANCH, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_BRANCH = '#modalBranch';
-	const DOM_MODAL_BRANCH_CONTAINER = '#modalBranchContainer';
+	const DOM_MODAL_BRANCH = '#modal_branch';
+	const DOM_MODAL_BRANCH_CONTAINER = '#modal_branch-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -97,15 +97,15 @@ function modalBranchController(
 	
 	function initDom(){
 		if('D' == vm.formMode){
-			$('#modalBranchContainer input').prop(
+			$('#modal_branch-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalBranchContainer textarea').prop(
+			$('#modal_branch-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalBranchContainer select').prop(
+			$('#modal_branch-container select').prop(
 					'disabled', 
 					true
 					);

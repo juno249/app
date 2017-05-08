@@ -28,8 +28,8 @@ function modalOrderController(
 	const ORDER_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE ORDER, DB EXCEPTION ENCOUNTERED';
 	const ORDER_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE ORDER, DATA IS EMPTY/UNCHANGED';
 	const ORDER_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE ORDER, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_ORDER = '#modalOrder';
-	const DOM_MODAL_ORDER_CONTAINER = '#modalOrderContainer';
+	const DOM_MODAL_ORDER = '#modal_order';
+	const DOM_MODAL_ORDER_CONTAINER = '#modal_order-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -79,15 +79,15 @@ function modalOrderController(
 	
 	function initDom(){
 		if('D' == vm.formMode){
-			$('#modalOrderContainer input').prop(
+			$('#modal_order-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalOrderContainer textarea').prop(
+			$('#modal_order-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalOrderContainer select').prop(
+			$('#modal_order-container select').prop(
 					'disabled', 
 					true
 					);

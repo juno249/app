@@ -120,7 +120,71 @@ function doRouteConfig(
 																					}
 																	}
 																	}
-																	);
+																	)
+			.state(
+					'restaurant', 
+					{
+						url: '/restaurant', 
+						abstract: true, 
+						views: {
+							'main': {
+								templateUrl: 'templates/restaurant/restaurant.html'
+									}
+					}
+					}
+					)
+					.state(
+							'restaurant.home', 
+							{
+								url: '/home', 
+								views: {
+									'restaurant-content': {
+										templateUrl: 'templates/restaurant/home/restaurant-home.html', 
+										controller: 'restaurantHomeController', 
+										controllerAs: 'restaurantHomeController'
+											}
+							}
+							}
+							)
+							.state(
+									'restaurant.customer-qr', 
+									{
+										url: '/customer-qr', 
+										views: {
+											'restaurant-content': {
+												templateUrl: 'templates/restaurant/customer/qr/customer-qr.html', 
+												controller: 'customerQrController', 
+												controllerAs: 'customerQrController'
+													}
+									}
+									}
+									)
+									.state(
+											'restaurant.customer-order_menu', 
+											{
+												url: '/customer-order_menu', 
+												views: {
+													'restaurant-content': {
+														templateUrl: 'templates/restaurant/customer/order_menu/customer-order_menu.html', 
+														controller: 'customerOrderMenuController', 
+														controllerAs: 'customerOrderMenuController'
+															}
+											}
+											}
+											)
+											.state(
+													'restaurant.customer-order_order', 
+													{
+														url: '/customer-order_order', 
+														views: {
+															'restaurant-content': {
+																templateUrl: 'templates/restaurant/customer/order_order/customer-order_order.html', 
+																controller: 'customerOrderOrderController', 
+																controllerAs: 'customerOrderOrderController'
+																	}
+													}
+													}
+													);
 	
 	$urlRouterProvider
 	.otherwise('/');

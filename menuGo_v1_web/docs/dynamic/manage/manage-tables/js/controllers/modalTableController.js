@@ -28,8 +28,8 @@ function modalTableController(
 	const TABLE_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE TABLE, DB EXCEPTION ENCOUNTERED';
 	const TABLE_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE TABLE, DATA IS EMPTY/UNCHANGED';
 	const TABLE_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE TABLE, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_TABLE = '#modalTable';
-	const DOM_MODAL_TABLE_CONTAINER = '#modalTableContainer';
+	const DOM_MODAL_TABLE = '#modal_table';
+	const DOM_MODAL_TABLE_CONTAINER = '#modal_table-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -80,15 +80,15 @@ function modalTableController(
 	
 	function initDom(){
 		if('D' == vm.formMode){
-			$('#modalTableController input').prop(
+			$('#modal_table-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalTableController textarea').prop(
+			$('#modal_table-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalTableController select').prop(
+			$('#modal_table-container select').prop(
 					'disabled', 
 					true
 					);

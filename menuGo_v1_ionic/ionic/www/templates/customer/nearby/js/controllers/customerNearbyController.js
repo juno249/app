@@ -187,6 +187,15 @@ function customerNearbyController(
 				vm.companyCategory = genCompanyCategory();
 				}
 			);
+
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.User);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(KEYS.User);
+				vm.user = JSON.parse(vm.user);
+				}
+			);
 	
 	$scope.$watch(
 			function(){	return vm.search;
@@ -226,15 +235,6 @@ function customerNearbyController(
 				popupService.hideIonicLoading();
 				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
-				}
-			);
-	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.User);
-			}, 
-			function(){
-				vm.user = localStorage.getItem(KEYS.User);
-				vm.user = JSON.parse(vm.user);
 				}
 			);
 	

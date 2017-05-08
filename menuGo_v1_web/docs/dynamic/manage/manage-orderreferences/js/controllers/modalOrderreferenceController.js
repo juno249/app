@@ -28,8 +28,8 @@ function modalOrderreferenceController(
 	const ORDERREFERENCE_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE ORDERREFERENCE, DB EXCEPTION ENCOUNTERED';
 	const ORDERREFERENCE_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE ORDERREFERENCE, DATA IS EMPTY/UNCHANGED';
 	const ORDERREFERENCE_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE ORDERREFERENCE, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_ORDERREFERENCE = '#modalOrderreference';
-	const DOM_MODAL_ORDERREFERENCE_CONTAINER = '#modalOrderreferenceContainer';
+	const DOM_MODAL_ORDERREFERENCE = '#modal_orderreference';
+	const DOM_MODAL_ORDERREFERENCE_CONTAINER = '#modal_orderreference-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -82,15 +82,15 @@ function modalOrderreferenceController(
 	
 	function initDom(){
 		if('D' == vm.formMode){
-			$('#modalOrderreferenceContainer input').prop(
+			$('#modal_orderreference-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalOrderreferenceContainer textarea').prop(
+			$('#modal_orderreference-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalOrderreferenceContainer select').prop(
+			$('#modal_orderreference-container select').prop(
 					'disabled', 
 					true
 					);

@@ -30,7 +30,7 @@ function manageOrderController(
 		DTColumnBuilder, 
 		datatableService
 		){
-	const DOM_ORDER_TABLE = '#orderTable';
+	const DOM_ORDER_TABLE = '#order_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

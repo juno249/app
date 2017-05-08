@@ -34,8 +34,8 @@ function modalCustomerController(
 	const CUSTOMER_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DB EXCEPTION ENCOUNTERED';
 	const CUSTOMER_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE CUSTOMER, DATA IS EMPTY/UNCHANGED';
 	const CUSTOMER_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE CUSTOMER, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_CUSTOMER = '#modalCustomer';
-	const DOM_MODAL_CUSTOMER_CONTAINER = '#modalCustomerContainer';
+	const DOM_MODAL_CUSTOMER = '#modal_customer';
+	const DOM_MODAL_CUSTOMER_CONTAINER = '#modal_customer-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -131,9 +131,9 @@ function modalCustomerController(
 		}
 	
 	function initBootstrapDatepicker(){
-		const DOM_CUSTOMER_BIRTHDAY = '#customerBirthdate';
+		const DOM_CUSTOMER_BIRTHDATE = '#customer_birthdate';
 		
-		$(DOM_CUSTOMER_BIRTHDAY).datepicker(
+		$(DOM_CUSTOMER_BIRTHDATE).datepicker(
 				{
 					onSelect: function(){
 						var date = $(this).datepicker('getDate');
@@ -166,15 +166,15 @@ function modalCustomerController(
 	
 	function initDom(){
 		if('D' == vm.formMode){
-			$('#modalCustomerContainer input').prop(
+			$('#modal_customer-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalCustomerContainer textarea').prop(
+			$('#modal_customer-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalCustomerContainer select').prop(
+			$('#modal_customer-container select').prop(
 					'disabled', 
 					true
 					);

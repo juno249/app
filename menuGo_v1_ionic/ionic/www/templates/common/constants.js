@@ -298,7 +298,8 @@ angular
 		{
 			authenticationFailed: 'authentication failed: invalid username/password', 
 			getFailed: 'get failed: unable to retrieve data from server', 
-			sendFailed: 'send failed: unable to post reservation/orders to server'
+			sendFailed: 'send failed: unable to post reservation/orders to server', 
+			scanFailed: 'scan failed: unable to retrieve data from QR code'
 				}
 		)
 		
@@ -328,6 +329,7 @@ angular
 			Marketing: 'marketing', 
 			Advertisements: 'advertisements', 
 			Blogs: 'blogs', 
-			User: 'user'	
+			User: 'user', 
+			ReservationDetails: 'reservationDetails'
 				}
 		);

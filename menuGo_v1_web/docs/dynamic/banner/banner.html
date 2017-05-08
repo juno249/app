@@ -12,7 +12,7 @@
 		</div>
 		<ul 
 			class="font-family-2-size-medium nav navbar-nav navbar-right" 
-			ng-if="!bannerController.user.isAuthenticated">
+			ng-show="!bannerController.user.isAuthenticated">
 			<li>
 				<a 
 					ng-click="bannerController.doSignup();" 
@@ -26,7 +26,7 @@
 		</ul>
 		<form 
 			class="form-inline navbar-form navbar-right" 
-			ng-if="!bannerController.user.isAuthenticated">
+			ng-show="!bannerController.user.isAuthenticated">
 			<div 
 				class="form-group required">
 				<div 
@@ -37,21 +37,13 @@
 							class="glyphicon glyphicon-user">
 						</i>
 					</span>
-					<!--  *************** 
-							loginUsername (start)
-							*************** -->
 					<input 
-								class="font-family-3-size-medium form-control" 
-								id="loginUsername" 
-								maxlength="30" 
-								name="loginUsername" 
-								ng-model="bannerController.loginUsername" 
-								placeholder="Username" 
-								required 
-								type="text">
-					<!--  *************** 
-							loginUsername (end)
-							*************** -->
+						class="form-control" 
+						maxlength="30" 
+						ng-model="bannerController.loginUsername" 
+						placeholder="Username" 
+						required 
+						type="text">
 				</div>
 			</div>
 			<div
@@ -64,27 +56,19 @@
 							class="glyphicon glyphicon-lock">
 						</i>
 					</span>
-					<!--  *************** 
-							loginPassword (start)
-							*************** -->
 					<input 
-							class="font-family-3-size-medium form-control" 
-							id="loginPassword" 
-							maxlength="30" 
-							name="loginPasssword" 
-							ng-model="bannerController.loginPassword" 
-							placeholder="Password" 
-							required 
-							type="password">
-					<!--  *************** 
-							loginPassword (end)
-							*************** -->
+						class="form-control" 
+						maxlength="30" 
+						ng-model="bannerController.loginPassword" 
+						placeholder="Password" 
+						required 
+						type="password">
 				</div>
 			</div>
 			<div 
-				class="form-group">
+				class="button-container form-group">
 				<button 
-					class="btn btn-success font-family-2-size-medium" 
+					class="btn btn-success" 
 					ng-click="bannerController.doLogin();" 
 					type="button">
 					<span 
@@ -96,7 +80,7 @@
 		</form>
 		<ul 
 			class="font-family-2-size-medium nav navbar-nav navbar-right" 
-			ng-if="bannerController.user.isAuthenticated">
+			ng-show="bannerController.user.isAuthenticated">
 			<li>
 				<a 
 					href="#">
@@ -109,7 +93,6 @@
 		</ul>
 	</div>
 </nav>
-
 <nav 
 	class="navbar navbar-fixed-bottom navbar-inverse">
 	<div 
@@ -121,7 +104,7 @@
 		<a 
 			href="#">
 			<img 
-				class="img-responsive company-logo-image" 
+				class="img-responsive company_logo_image" 
 				src="docs/dynamic/banner/res/img/zipLogic.png">
 		</a>
 	</div>

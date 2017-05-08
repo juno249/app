@@ -1,4 +1,4 @@
-.child-content-center{
+c.child-content-center{
 	text-align: center;
 }
 
@@ -12,6 +12,79 @@
 
 .child-content-right{
 	text-align: right;
+}
+
+.font-family-1-size-large{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 20px;
+}
+
+.font-family-1-size-medium{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 15px;
+}
+
+.font-family-1-size-small{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 12px;
+}
+
+.font-family-1-size-xsmall{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 10px;
+}
+
+.font-family-2-size-large{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 20px;
+}
+
+.font-family-2-size-medium{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 15px;
+}
+
+.font-family-2-size-small{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 12px;
+}
+
+.font-family-2-size-xsmall{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 10px;
+}
+
+.font-family-3-size-large{
+	font-family: 'Antic', sans-serif;
+	font-size: 20px;
+}
+
+.font-family-3-size-medium{
+	font-family: 'Antic', sans-serif;
+	font-size: 15px;
+}
+
+.font-family-3-size-small{
+	font-family: 'Antic', sans-serif;
+	font-size: 12px;
+}
+
+.font-family-3-size-xsmall{
+	font-family: 'Antic', sans-serif;
+	font-size: 10px;
+}
+
+.fill-parent-x{
+	width: 100%;
+}
+
+.fill-parent-y{
+	height: 100%;
+}
+
+.fill-parent-xy{
+	height: 100%;
+	width: 100%;
 }
 
 div.button-container button{
@@ -115,77 +188,9 @@ div.search_result-container div.item{
 	padding-top: 5px;
 }
 
-.font-family-1-size-large{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 20px;
-}
-
-.font-family-1-size-medium{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 15px;
-}
-
-.font-family-1-size-small{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 12px;
-}
-
-.font-family-1-size-xsmall{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 10px;
-}
-
-.font-family-2-size-large{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 20px;
-}
-
-.font-family-2-size-medium{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 15px;
-}
-
-.font-family-2-size-small{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 12px;
-}
-
-.font-family-2-size-xsmall{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 10px;
-}
-
-.font-family-3-size-large{
-	font-family: 'Antic', sans-serif;
-	font-size: 20px;
-}
-
-.font-family-3-size-medium{
-	font-family: 'Antic', sans-serif;
-	font-size: 15px;
-}
-
-.font-family-3-size-small{
-	font-family: 'Antic', sans-serif;
-	font-size: 12px;
-}
-
-.font-family-3-size-xsmall{
-	font-family: 'Antic', sans-serif;
-	font-size: 10px;
-}
-
-.fill-parent-x{
-	width: 100%;
-}
-
-.fill-parent-y{
-	height: 100%;
-}
-
-.fill-parent-xy{
-	height: 100%;
-	width: 100%;
+ion-scroll.order-container{
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 ion-scroll.tab-container{

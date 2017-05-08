@@ -32,7 +32,7 @@ function manageBranchController(
 		DTOptionsBuilder, 
 		datatableService
 		){
-	const DOM_BRANCH_TABLE = '#branchTable';
+	const DOM_BRANCH_TABLE = '#branch_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

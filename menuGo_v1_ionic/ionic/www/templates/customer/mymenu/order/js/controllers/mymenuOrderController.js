@@ -11,9 +11,9 @@ mymenuOrderController.$inject = [
 	'KEYS', 
 	'LOADING_MESSAGES', 
 	'$scope', 
-	'networkService', 
-	'popupService', 
 	'dataService', 
+	'networkService', 
+	'popupService'
 	];
 
 function mymenuOrderController(
@@ -22,9 +22,9 @@ function mymenuOrderController(
 		KEYS, 
 		LOADING_MESSAGES, 
 		$scope, 
+		dataService, 
 		networkService, 
-		popupService, 
-		dataService
+		popupService
 		){
 	var vm = this;
 	vm.companyName = $scope.$parent.customerMymenuController.companyName;

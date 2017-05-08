@@ -1,75 +1,49 @@
-<!--  *************** 
-		order (start)
-		*************** -->
 <div 
 	class="mymenu_order-container" 
 	ng-controller="mymenuOrderController as mymenuOrderController">
 	<div 
-		class="list order_status-container">
+		class="item item-thumbnail-left" 
+		ng-repeat="(k, v) in mymenuOrderController.user.orderreference.order">
+		<img 
+			src={{mymenuOrderController.companyMenuMenuitem[v.menuitem_id].menuitem_image}}>
+		<!--  *************** 
+				menuitem_name (start)
+				*************** -->
 		<div 
-			class="item item-thumbnail-left" 
-			ng-repeat="(k, v) in mymenuOrderController.user.orderreference.order">
-			<!--  *************** 
-					menuitem-image (start)
-					*************** -->
-			<img 
-				id="menuitem-image" 
-				name="menuitem-image" 
-				src={{mymenuOrderController.companyMenuMenuitem[v.menuitem_id].menuitem_image}}>
-			<!--  *************** 
-					menuitem-image (end)
-					*************** -->
-			<span 
-				class="font-family-1-size-small">
-				<underline>{{mymenuOrderController.companyMenuMenuitem[v.menuitem_id].menuitem_name}}</underline>
-			</span>
+			class="title" 
+			id="menuitem_name" 
+			name="menuitem_name">
+			<underline>{{mymenuOrderController.companyMenuMenuitem[v.menuitem_id].menuitem_name}}</underline>
+		</div>
+		<!--  *************** 
+				menuitem_name (end)
+				*************** -->
+		<div 
+			class="button-container row">
 			<div 
-				class="child-content-center order_status_indicator-container">
-				<!--  *************** 
-						queueOrderStatusBtn (start)
-						*************** -->
+				class="col">
 				<button 
-					class="button button-positive button-outline button-small" 
-					id="queueOrderStatusBtn" 
-					name="queueOrderStatusBtn" 
+					class="button button-outline button-positive button-small" 
 					ng-class="{'status-active': v.order_status == 'queue'}">
 					queue
 				</button>
-				<!--  *************** 
-						queueOrderStatusBtn (end)
-						*************** -->
-						
-				<!--  *************** 
-						cookingOrderStatusBtn (start)
-						*************** -->
+			</div>
+			<div 
+				class="col">
 				<button 
-					class="button button-positive button-outline button-small" 
-					id="cookingOrderStatusBtn" 
-					name="cookingOrderStatusBtn" 
+					class="button button-outline button-positive button-small" 
 					ng-class="{'status-active': v.order_status == 'cooking'}">
 					cooking
 				</button>
-				<!--  *************** 
-						cookingOrderStatusBtn (end)
-						*************** -->
-						
-				<!--  *************** 
-						toserveOrderStatusBtn (start)
-						*************** -->
+			</div>
+			<div 
+				class="col">
 				<button 
-					class="button button-positive button-outline button-small" 
-					id="toserveOrderStatusBtn" 
-					name="toserveOrderStatusBtn" 
+					class="button button-outline button-positive button-small" 
 					ng-class="{'status-active': v.order_status == 'to serve'}">
 					to serve
 				</button>
-				<!--  *************** 
-						toserveOrderStatusBtn (end)
-						*************** -->
 			</div>
 		</div>
 	</div>
 </div>
-<!--  *************** 
-		order (end)
-		*************** -->

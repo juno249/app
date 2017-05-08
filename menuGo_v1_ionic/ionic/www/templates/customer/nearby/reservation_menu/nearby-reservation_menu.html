@@ -70,7 +70,8 @@
 							</span>
 						</button>
 						<div 
-							class="quantity-container">
+							id="nearby_reservation_menu_quantity-container" 
+							name="nearby_reservation_menu_quantity-container">
 							<span 
 								class="font-family-1-size-medium">
 								{{v.quantity}}
@@ -100,7 +101,7 @@
 		id="gotoOrdersBtn" 
 		name="gotoOrdersbtn" 
 		ng-click="nearbyReservationMenuController.gotoState('customer.nearby.reservation_order');" 
-		ng-if="keys(nearbyReservationMenuController.user.reservationOrder).length > 0">
+		ng-show="keys(nearbyReservationMenuController.user.reservationOrder).length > 0">
 		<i 
 			class="icon ion-arrow-right-a">
 		</i>

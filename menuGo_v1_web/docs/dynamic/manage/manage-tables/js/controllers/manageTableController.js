@@ -32,7 +32,7 @@ function manageTableController(
 		DTOptionsBuilder, 
 		datatableService
 		){
-	const DOM_TABLE_TABLE = '#tableTable';
+	const DOM_TABLE_TABLE = '#table_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

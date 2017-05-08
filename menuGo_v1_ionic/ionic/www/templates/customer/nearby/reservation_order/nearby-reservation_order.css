@@ -1,0 +1,15 @@
+div.reservation_order-container ion-scroll#nearby_reservation_order-container{
+	max-height: 300px;
+}
+
+div.reservation_order-container select#payment_mode, 
+div.reservation_order-container span.datetime_picker{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 15px;
+	
+	width: 100%;
+}
+
+div.reservation_order-container div#nearby_reservation_order_total-container{
+	padding-right: 20px;
+}

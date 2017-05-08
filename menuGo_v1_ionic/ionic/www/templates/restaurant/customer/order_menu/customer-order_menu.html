@@ -1,0 +1,100 @@
+<!--  *************** 
+		order_menu (start)
+		*************** -->
+<ion-view 
+	id="order_menu" 
+	name="order_menu" 
+	view-title="order_menu">
+	<ion-content 
+		class="has-header">
+		<div 
+			class="order_menu-container">
+			<ion-scroll 
+				class="tab-container" 
+				direction="x">
+				<div 
+					class="link" 
+					ng-click="customerOrderMenuController.setMenuName(k)" 
+					ng-repeat="(k, v) in customerOrderMenuController.companyMenu">
+					{{k}}
+				</div>
+			</ion-scroll>
+			<div 
+				class="item item-container item-thumbnail-left" 
+				ng-repeat="(k, v) in customerOrderMenuController.companyMenuMenuitem" 
+				ng-show="v.menu_id == customerOrderMenuController.getMenuIdFromName()">
+				<img 
+					src={{v.menuitem_image}}>
+				<div 
+					class="title">
+					{{v.menuitem_name}}
+				</div>
+				<div 
+					class="body">
+					{{v.menuitem_desc}}
+				</div>
+				<div 
+					class="row">
+					<div 
+						class="child-content-right col">
+						<button 
+							class="button button-positive button-small" 
+							ng-click="customerOrderMenuController.addReservationOrder(v);">
+							<i 
+								class="icon ion-plus">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								Add
+							</span>
+						</button>
+						<!--  *************** 
+								customer-order_menu_quantity-container (start)
+								*************** -->
+						<div 
+							id="customer-order_menu_quantity-container" 
+							name="customer-order_menu_quantity-container">
+							<span 
+								class="font-family-1-size-medium">
+								{{v.quantity}}
+							</span>
+						</div>
+						<!--  *************** 
+								customer-order_menu_quantity-container (end)
+								*************** -->
+						<button 
+							class="button button-positive button-small" 
+							ng-click="customerOrderMenuController.subReservationOrder(v);">
+							<i 
+								class="icon ion-minus">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								Sub
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<!--  *************** 
+			gotoOrdersBtn (start)
+			*************** -->
+	<button 
+		class="button button-medium button-positive child-content-center" 
+		id="gotoOrdersBtn" 
+		name="gotoOrdersbtn" 
+		ng-click="customerOrderMenuController.gotoState('restaurant.customer-order_order');" 
+		ng-show="keys(customerOrderMenuController.user.reservationOrder).length > 0">
+		<i 
+			class="icon ion-arrow-right-a">
+		</i>
+	</button>
+	<!--  *************** 
+			gotoOrdersBtn (end)
+			*************** -->
+</ion-view>
+<!--  *************** 
+		order_menu (end)
+		*************** -->

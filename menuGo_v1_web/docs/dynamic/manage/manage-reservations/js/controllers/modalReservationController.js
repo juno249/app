@@ -30,8 +30,8 @@ function modalReservationController(
 	const RESERVATION_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE RESERVATION, DB EXCEPTION ENCOUNTERED';
 	const RESERVATION_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE RESERVATION, DATA IS EMPTY/UNCHANGED';
 	const RESERVATION_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE RESERVATION, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_RESERVATION = '#modalReservation';
-	const DOM_MODAL_RESERVATION_CONTAINER = '#modalReservationContainer';
+	const DOM_MODAL_RESERVATION = '#modal_reservation';
+	const DOM_MODAL_RESERVATION_CONTAINER = '#modal_reservation-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -97,15 +97,15 @@ function modalReservationController(
 	
 	function initDom(){
 		if('D' == vm.formMode){
-			$('#modalReservationContainer input').prop(
+			$('#modal_reservation-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalReservationContainer textarea').prop(
+			$('#modal_reservation-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalReservationContainer select').prop(
+			$('#modal_reservation-container select').prop(
 					'disabled', 
 					true
 					);

@@ -30,7 +30,7 @@ function manageReservationController(
 		DTColumnBuilder, 
 		datatableService
 		){
-	const DOM_RESERVATION_TABLE = '#reservationTable';
+	const DOM_RESERVATION_TABLE = '#reservation_table';
 	const USER_KEY = 'User';
 	
 	var vm = this;

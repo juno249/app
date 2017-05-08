@@ -28,8 +28,8 @@ function modalMenuController(
 	const MENU_UPDATE_CATCH_MESSAGE = 'UNABLE TO UPDATE MENU, DB EXCEPTION ENCOUNTERED';
 	const MENU_UPDATE_CUSTOM_ERR_MESSAGE = 'UNABLE TO UPDATE MENU, DATA IS EMPTY/UNCHANGED';
 	const MENU_DELETE_CATCH_MESSAGE = 'UNABLE TO DELETE MENU, DB EXCEPTION ENCOUNTERED';
-	const DOM_MODAL_MENU = '#modalMenu';
-	const DOM_MODAL_MENU_CONTAINER = 'modalMenuContainer';
+	const DOM_MODAL_MENU = '#modal_menu';
+	const DOM_MODAL_MENU_CONTAINER = 'modal_menu-container';
 	
 	var vm = this;
 	vm.formMode = formMode;
@@ -84,7 +84,7 @@ function modalMenuController(
 		}
 	
 	function initDom(){
-		const MENU_IMAGE_BROWSE = '#menuImageBrowse';
+		const MENU_IMAGE_BROWSE = '#menu_image_browse';
 		
 		$(MENU_IMAGE_BROWSE).css(
 				'display', 
@@ -107,15 +107,15 @@ function modalMenuController(
 			}
 		
 		if('D' == vm.formMode){
-			$('#modalMenuContainer input').prop(
+			$('#modal_menu-container input').prop(
 					'disabled', 
 					true
 					);
-			$('#modalMenuContainer textarea').prop(
+			$('#modal_menu-container textarea').prop(
 					'disabled', 
 					true
 					);
-			$('#modalMenuContainer select').prop(
+			$('#modal_menu-container select').prop(
 					'disabled', 
 					true
 					);
@@ -126,7 +126,7 @@ function modalMenuController(
 	}
 	
 	function uploadMenuImage(){
-		const MENU_IMAGE_BROWSE = '#menuImageBrowse';
+		const MENU_IMAGE_BROWSE = '#menu_image_browse';
 		
 		var menuImage = $(MENU_IMAGE_BROWSE)[0].files[0];
 		
