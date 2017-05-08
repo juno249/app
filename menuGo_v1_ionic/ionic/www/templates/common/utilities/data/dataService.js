@@ -43,6 +43,7 @@ function dataService(
 	var dataServiceObj = {
 			companies: {}, 
 			marketing: {}, 
+			companyBranchOrderreferences: {}, 
 			fetchCompanies: fetchCompanies, 
 			fetchMarketing: fetchMarketing, 
 			fetchCompanyBranchOrderreferences: fetchCompanyBranchOrderreferences
@@ -363,6 +364,7 @@ function dataService(
 			companyName, 
 			branchName
 			){
+		var companyBranchOrderreferences = undefined;
 		var isGetCompanyBranchOrderreferences = false;
 		var isGetOrders = false;
 		var isGetReservations = false;
@@ -393,6 +395,7 @@ function dataService(
 					);
 			
 			function fetchOrders(orderreferenceCode){
+				var orders = undefined;
 				var queryString = '?OrderreferenceCode=' + orderreferenceCode;
 				var getParams = {};
 				getParams.queryString = queryString;
@@ -406,15 +409,37 @@ function dataService(
 				
 				function fetchOrdersSuccessCallback(response){
 					isGetOrders = true;
+					orders = localStorage.getItem(KEYS.Orders);
+					orders = JSON.parse(orders);
+					
+					try{	companyBranchOrderreferences = JSON.parse(companyBranchOrderreferences);
+					} catch(e){
+					}
+					
+					companyBranchOrderreferences[KEYS.Orders] = orders;
+					companyBranchOrderreferences = JSON.stringify(companyBranchOrderreferences);
+					localStorage.setItem(
+							KEYS.Orderreferences, 
+							companyBranchOrderreferences
+							);
+					
+					localStorage.removeItem(KEYS.Orders);
+					
+					if(
+							isGetOrders &&
+							isGetReservations
+							){	$rootScope.$broadcast(BROADCAST_MESSAGES.getCompanyBranchOrderreferencesSuccess);
+							}
 					}
 				
 				function fetchOrdersFailedCallback(responseError){
 					resetOrderreferences();
-					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompanyBranchOrderreferencesFailed);
 					}
 				}
 			
 			function fetchReservations(orderreferenceCode){
+				var reservations = undefined;
 				var queryString = '?OrderreferenceCode=' + orderreferenceCode;
 				var getParams = {};
 				getParams.queryString = queryString;
@@ -428,18 +453,39 @@ function dataService(
 				
 				function fetchReservationsSuccessCallback(response){
 					isGetReservations = true;
+					reservations = localStorage.getItem(KEYS.Reservations);
+					reservations = JSON.parse(reservations);
+					
+					try{	companyBranchOrderreferences = JSON.parse(companyBranchOrderreferences);
+					} catch(e){
+					}
+					
+					companyBranchOrderreferences[KEYS.Reservations] = reservations;
+					companyBranchOrderreferences = JSON.stringify(companyBranchOrderreferences);
+					localStorage.setItem(
+							KEYS.Orderreferences, 
+							companyBranchOrderreferences
+							);
+					
+					localStorage.removeItem(KEYS.Reservations);
+					
+					if(
+							isGetOrders &&
+							isGetReservations
+							){	$rootScope.$broadcast(BROADCAST_MESSAGES.getCompanyBranchOrderreferencesSuccess);
+							}
 					}
 				
 				function fetchReservationsFailedCallback(responseError){
 					resetOrderreferences();
-					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+					$rootScope.$broadcast(BROADCAST_MESSAGES.getCompanyBranchOrderreferencesFailed);
 					}
 				}
 			}
 		
 		function fetchOrderreferenceFailedCallback(responseError){
 			resetOrderreferences();
-			$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesFailed);
+			$rootScope.$broadcast(BROADCAST_MESSAGES.getCompanyBranchOrderreferencesFailed);
 			}
 		}
 	
