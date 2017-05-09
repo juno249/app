@@ -380,8 +380,18 @@ function dataService(
 		
 		function fetchOrderreferenceSuccessCallback(response){
 			isGetCompanyBranchOrderreferences = true;
-			companyBranchOrderreferences = localStorage.getItem(KEYS.Orderreferences);
-			companyBranchOrderreferences = JSON.parse(companyBranchOrderreferences);
+			companyBranchOrderreferences = {};
+			var _companyBranchOrderreferences = localStorage.getItem(KEYS.Orderreferences);
+			_companyBranchOrderreferences = JSON.parse(_companyBranchOrderreferences);
+			
+			angular.forEach(
+					_companyBranchOrderreferences, 
+					function(
+							v, 
+							k
+							){	companyBranchOrderreferences[k] = v.orderreferences;
+							}
+					);
 			
 			angular.forEach(
 					companyBranchOrderreferences, 
@@ -416,7 +426,7 @@ function dataService(
 					} catch(e){
 					}
 					
-					companyBranchOrderreferences[KEYS.Orders] = orders;
+					companyBranchOrderreferences[orderreferenceCode][KEYS.Orders] = orders;
 					companyBranchOrderreferences = JSON.stringify(companyBranchOrderreferences);
 					localStorage.setItem(
 							KEYS.Orderreferences, 
@@ -460,8 +470,6 @@ function dataService(
 					} catch(e){
 					}
 					
-					companyBranchOrderreferences[KEYS.Reservations] = reservations;
-					companyBranchOrderreferences = JSON.stringify(companyBranchOrderreferences);
 					localStorage.setItem(
 							KEYS.Orderreferences, 
 							companyBranchOrderreferences

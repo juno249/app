@@ -166,7 +166,7 @@ function reservationService(
 			httpConfig['url'] = API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/status_not/' + getParams['ReservationStatus'];
 			break;
 		case 'getByQuery':
-			httpConfig['url'] = API_BASE_URL + '/query/reservations/' + getParams['queryString'];
+			httpConfig['url'] = API_BASE_URL + '/query/reservations' + getParams['queryString'];
 			default:
 				break;
 			}
