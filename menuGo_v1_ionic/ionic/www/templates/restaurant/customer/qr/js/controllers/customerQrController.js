@@ -31,7 +31,7 @@ function customerQrController(
 		.catch(doScanFailedCallback);
 		
 		function doScanSuccessCallback(data){
-			const DELIMETER = ';'; 
+			const DELIMETER = ';';
 			var reservationDetails = {};
 			var dataSplit = data.split(DELIMETER);
 			
