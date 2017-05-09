@@ -289,7 +289,9 @@ angular
 			getMarketingSuccess: 'getMarketingSuccess', 
 			getMarketingFailed: 'getMarketingFailed', 
 			getCompaniesSuccess: 'getCompaniesSuccess', 
-			getCompaniesFailed: 'getCompaniesFailed'
+			getCompaniesFailed: 'getCompaniesFailed', 
+			getCompanyBranchOrderreferencesSuccess: 'getCompanyBranchOrderreferencesSuccess', 
+			getCompanyBranchOrderreferencesFailed: 'getCompanyBranchOrderreferencesFailed'
 				}
 		)
 

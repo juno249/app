@@ -293,11 +293,12 @@ function dataService(
 			advertisements = localStorage.getItem(KEYS.Advertisements);
 			advertisements = JSON.parse(advertisements);
 			
-			if(!(null == localStorage.getItem(KEYS.Marketing))){
-				marketing = localStorage.getItem(KEYS.Marketing);
-				marketing = JSON.parse(marketing);
-				} else {	marketing = {};
-				}
+			if(null == marketing){	marketing = {};
+			}
+			
+			try{	marketing = JSON.parse(marketing);
+			} catch(e){
+			}
 			
 			marketing[KEYS.Advertisements] = advertisements;
 			marketing = JSON.stringify(marketing);
@@ -332,11 +333,12 @@ function dataService(
 			blogs = localStorage.getItem(KEYS.Blogs);
 			blogs = JSON.parse(blogs);
 			
-			if(!(null == localStorage.getItem(KEYS.Marketing))){
-				marketing = localStorage.getItem(KEYS.Marketing);
-				marketing = JSON.parse(marketing);
-				} else {	marketing = {};
-				}
+			if(null == marketing){	marketing = {};
+			}
+			
+			try{	marketing = JSON.parse(marketing);
+			} catch(e){
+			}
 			
 			marketing[KEYS.Blogs] = blogs;
 			marketing = JSON.stringify(marketing);
@@ -463,13 +465,24 @@ function dataService(
 				
 				function fetchReservationsSuccessCallback(response){
 					isGetReservations = true;
-					reservations = localStorage.getItem(KEYS.Reservations);
-					reservations = JSON.parse(reservations);
+					var _reservations = localStorage.getItem(KEYS.Reservations);
+					_reservations = JSON.parse(reservations);
+					
+					angular.forEach(
+							_reservations, 
+							function(
+									v, 
+									k
+									){	reservations[k] = v.reservations;
+									}
+							);
 					
 					try{	companyBranchOrderreferences = JSON.parse(companyBranchOrderreferences);
 					} catch(e){
 					}
 					
+					companyBranchOrderreferences[orderreferenceCode][KEYS.Reservations] = reservations;
+					companyBranchOrderreferences = JSON.stringify(companyBranchOrderreferences);
 					localStorage.setItem(
 							KEYS.Orderreferences, 
 							companyBranchOrderreferences
