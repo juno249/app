@@ -10,6 +10,7 @@ customerQrController.$inject = [
                                 'KEYS', 
                                 '$localStorage', 
                                 '$scope', 
+                                '$state', 
                                 'dataService', 
                                 'popupService', 
                                 'qrService'
@@ -20,14 +21,35 @@ function customerQrController(
 		KEYS, 
 		$localStorage, 
 		$scope, 
+		$state, 
 		dataService, 
 		popupService, 
 		qrService
 		){
+	const STATE_CUSTOMER_ORDER_MENU = 'restaurant.customer-order_menu';
+	
 	var vm = this;
 	
 	//controller_method
+	vm.gotoState = gotoState;
+	//controller_method
 	vm.doScan = doScan;
+	
+	function gotoState(
+			stateName, 
+			stateParams
+			){
+		if(STATE_CUSTOMER_ORDER_MENU == stateName){
+			$state.go(
+					STATE_CUSTOMER_ORDER_MENU, 
+					{
+						companyName: vm.companyName, 
+						branchName: vm.branchName, 
+						tableNumber: vm.tableNumber
+						}
+					);
+			}
+		}
 	
 	function doScan(){
 		qrService.doScan()
@@ -69,6 +91,36 @@ function customerQrController(
 			function(){
 				vm.user = localStorage.getItem(KEYS.User);
 				vm.user = JSON.parse(vm.user);
+				}
+			);
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.ReservationDetails);
+			}, 
+			function(){
+				vm.reservationDetails = localStorage.getItem(KEYS.ReservationDetails);
+				vm.reservationDetails = JSON.parse(vm.reservationDetails);
+				}
+			);
+	
+	$scope.$watch(
+			function(){	return vm.reservationDetails;
+			}, 
+			function(){
+				if(0 == Object.keys(vm.reservationDetails)){	return;
+				}
+				
+				vm.companyName = vm.reservationDetails.companyName;
+				vm.branchName = vm.reservationDetails.branchName;
+				vm.tableNumber = vm.reservationDetails.tableNumber;
+				}
+			);
+	
+	$scope.$on(
+			'$ionicView:afterEnter', 
+			function(){
+				if(null == vm.reservationDetails){	vm.reservationDetails = {};
+				}
 				}
 			);
 	}
