@@ -9,6 +9,8 @@ customerQrController.$inject = [
                                 'ERROR_MESSAGES', 
                                 'KEYS', 
                                 '$localStorage', 
+                                '$scope', 
+                                'dataService', 
                                 'popupService', 
                                 'qrService'
                                 ];
@@ -17,6 +19,8 @@ function customerQrController(
 		ERROR_MESSAGES, 
 		KEYS, 
 		$localStorage, 
+		$scope, 
+		dataService, 
 		popupService, 
 		qrService
 		){
@@ -49,4 +53,22 @@ function customerQrController(
 		function doScanFailedCallback(e){	popupService.dispIonicPopup(ERROR_MESSAGES.scanFailed);
 		}
 		}
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.Companies);
+			}, 
+			function(){
+				vm.company = localStorage.getItem(KEYS.Companies);
+				vm.company = JSON.parse(vm.company);
+				}
+			);
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.User);
+			}, 
+			function(){
+				vm.user = localStorage.getItem(KEYS.User);
+				vm.user = JSON.parse(vm.user);
+				}
+			);
 	}

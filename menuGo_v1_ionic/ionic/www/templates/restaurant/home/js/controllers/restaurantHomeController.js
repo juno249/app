@@ -9,6 +9,7 @@ restaurantHomeController.$inject = [
 	'LOADING_MESSAGES', 
 	'$ionicHistory', 
 	'$scope', 
+	'$state', 
 	'$timeout', 
 	'dataService', 
 	'networkService', 
@@ -22,14 +23,30 @@ function restaurantHomeController(
 		LOADING_MESSAGES, 
 		$ionicHistory, 
 		$scope, 
+		$state, 
 		$timeout, 
 		dataService, 
 		networkService, 
 		popupService
 		){
+	const STATE_RESTAURANT_CUSTOMER_QR = 'restaurant.customer-qr';
+	
 	$ionicHistory.clearHistory();
 	
 	var vm = this;
+	
+	//controller_method
+	vm.gotoState = gotoState;
+	
+	function gotoState(stateName){
+		if(STATE_RESTAURANT_CUSTOMER_QR == stateName){
+			$state.go(
+					stateName, 
+					{}, 
+					{	reload: true	}
+					);
+			}
+		}
 	
 	if(
 			networkService.deviceIsOffline() &&

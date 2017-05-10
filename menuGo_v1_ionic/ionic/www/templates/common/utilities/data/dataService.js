@@ -466,7 +466,8 @@ function dataService(
 				function fetchReservationsSuccessCallback(response){
 					isGetReservations = true;
 					var _reservations = localStorage.getItem(KEYS.Reservations);
-					_reservations = JSON.parse(reservations);
+					_reservations = JSON.parse(_reservations);
+					reservations = {};
 					
 					angular.forEach(
 							_reservations, 
