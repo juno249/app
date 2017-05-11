@@ -17,7 +17,7 @@
 				id="company_image-container" 
 				name="company_image-container">
 				<img 
-					src={{restaurantHomeController._company.company_logo}}>
+					src={{customerQrController._company.company_logo}}>
 			</div>
 			<!--  *************** 
 					company_image-container (end)
@@ -39,7 +39,7 @@
 			class="font-family-2-size-medium" 
 			ng-show="keys(customerQrController.reservationDetails).length > 0">
 			Currently reserved @:<br>
-			Restaurant <underline>{{cusotmerQrController.reservationDetails.companyName}}</underline><br>
+			Restaurant <underline>{{customerQrController.reservationDetails.companyName}}</underline><br>
 			Table # <underline>{{customerQrController.reservationDetails.tableNumber}}</underline>
 		</div>
 		<div 
@@ -63,6 +63,22 @@
 			</div>
 		</div>
 	</ion-content>
+	<!--  *************** 
+			gotoMenusBtn (start)
+			*************** -->
+	<button 
+		class="button button-medium button-positive child-content-center" 
+		id="gotoMenusBtn" 
+		name="gotoMenusBtn" 
+		ng-click="customerQrController.gotoState('restaurant.customer-order_menu');" 
+		ng-show="keys(customerQrController.reservationDetails).length > 0">
+		<i 
+			class="icon ion-arrow-right-a">
+		</i>
+	</button>
+	<!--  *************** 
+			gotoMenusBtn (end)
+			*************** -->
 </ion-view>
 <!--  *************** 
 		mymenu (end)

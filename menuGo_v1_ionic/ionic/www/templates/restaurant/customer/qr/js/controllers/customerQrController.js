@@ -85,6 +85,15 @@ function customerQrController(
 				}
 			);
 	
+	$scope.$watchCollection(
+			function(){	return vm.company;
+			}, 
+			function(){
+				if(!(null == vm.company)){	vm._company = vm.company[vm.companyName];
+				}
+				}
+			);
+	
 	$scope.$watch(
 			function(){	return localStorage.getItem(KEYS.User);
 			}, 
@@ -107,20 +116,14 @@ function customerQrController(
 			function(){	return vm.reservationDetails;
 			}, 
 			function(){
-				if(0 == Object.keys(vm.reservationDetails)){	return;
-				}
+				if(null == vm.reservationDetails){
+					vm.reservationDetails = {};
+					return;
+					}
 				
 				vm.companyName = vm.reservationDetails.companyName;
 				vm.branchName = vm.reservationDetails.branchName;
 				vm.tableNumber = vm.reservationDetails.tableNumber;
-				}
-			);
-	
-	$scope.$on(
-			'$ionicView:afterEnter', 
-			function(){
-				if(null == vm.reservationDetails){	vm.reservationDetails = {};
-				}
 				}
 			);
 	}
