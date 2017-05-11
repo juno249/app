@@ -4,7 +4,7 @@
 <ion-view 
 	id="qr" 
 	name="qr" 
-	view-title="my menu">
+	view-title="QR Scan">
 	<ion-content 
 		class="has-header">
 		<div 
@@ -38,9 +38,9 @@
 		<div 
 			class="font-family-2-size-medium" 
 			ng-show="keys(customerQrController.reservationDetails).length > 0">
-			Currently reserved @:<br>
-			Restaurant <underline>{{customerQrController.reservationDetails.companyName}}</underline><br>
-			Table # <underline>{{customerQrController.reservationDetails.tableNumber}}</underline>
+			RESERVATION @:<br>
+			Restaurant: <underline>{{customerQrController.reservationDetails.companyName}}</underline><br>
+			Table #: <underline>{{customerQrController.reservationDetails.tableNumber}}</underline>
 		</div>
 		<div 
 			class="button-container" 

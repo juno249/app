@@ -8,9 +8,12 @@ angular
 customerQrController.$inject = [
                                 'ERROR_MESSAGES', 
                                 'KEYS', 
+                                'LOADING_MESSAGES', 
+                                'ORDERREFERENCE_STATUS', 
                                 '$localStorage', 
                                 '$scope', 
                                 '$state', 
+                                '$stateParams', 
                                 'dataService', 
                                 'popupService', 
                                 'qrService'
@@ -19,9 +22,12 @@ customerQrController.$inject = [
 function customerQrController(
 		ERROR_MESSAGES, 
 		KEYS, 
+		LOADING_MESSAGES, 
+		ORDERREFERENCE_STATUS, 
 		$localStorage, 
 		$scope, 
 		$state, 
+		$stateParams, 
 		dataService, 
 		popupService, 
 		qrService
@@ -29,6 +35,9 @@ function customerQrController(
 	const STATE_CUSTOMER_ORDER_MENU = 'restaurant.customer-order_menu';
 	
 	var vm = this;
+	
+	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
+	}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -70,6 +79,22 @@ function customerQrController(
 					KEYS.ReservationDetails, 
 					reservationDetails
 					);
+			
+			popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+			
+			dataService.fetchCompanyBranchOrderreferences(
+					reservationDetails.companyName, 
+					reservationDetails.branchName, 
+					ORDERREFERENCE_STATUS.done
+					)
+					.then(fetchCompanyBranchOrderreferencesSuccessCallback)
+					.catch(fetchCompanyBranchOrderreferencesFailedCallback);
+			
+			function fetchCompanyBranchOrderreferencesSuccessCallback(response){
+			}
+			
+			function fetchCompanyBranchOrderreferencesFailedCallback(responseError){
+			}
 			}
 		
 		function doScanFailedCallback(e){	popupService.dispIonicPopup(ERROR_MESSAGES.scanFailed);
@@ -124,6 +149,23 @@ function customerQrController(
 				vm.companyName = vm.reservationDetails.companyName;
 				vm.branchName = vm.reservationDetails.branchName;
 				vm.tableNumber = vm.reservationDetails.tableNumber;
+				}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompanyBranchOrderreferencesSuccess, 
+			function(){	popupService.hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompanyBranchOrderreferencesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
 				}
 			);
 	}

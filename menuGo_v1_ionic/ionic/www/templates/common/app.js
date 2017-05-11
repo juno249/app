@@ -147,44 +147,55 @@ function doRouteConfig(
 							}
 							)
 							.state(
-									'restaurant.customer-qr', 
+									'restaurant.customer-launch', 
 									{
-										url: '/customer-qr', 
+										url: '/customer-launch', 
 										views: {
-											'restaurant-content': {
-												templateUrl: 'templates/restaurant/customer/qr/customer-qr.html', 
-												controller: 'customerQrController', 
-												controllerAs: 'customerQrController'
-													}
-									}
+											templateUrl: 'templates/restaurant/customer/launch/customer-launch.html', 
+											controller: 'customerLaunchController', 
+											controllerAs: 'customerLaunchController'
+												}
 									}
 									)
 									.state(
-											'restaurant.customer-order_menu', 
+											'restaurant.customer-qr', 
 											{
-												url: '/customer-order_menu/:companyName/:branchName/:tableNumber', 
+												url: '/customer-qr/:companyName', 
 												views: {
 													'restaurant-content': {
-														templateUrl: 'templates/restaurant/customer/order_menu/customer-order_menu.html', 
-														controller: 'customerOrderMenuController', 
-														controllerAs: 'customerOrderMenuController'
+														templateUrl: 'templates/restaurant/customer/qr/customer-qr.html', 
+														controller: 'customerQrController', 
+														controllerAs: 'customerQrController'
 															}
 											}
 											}
 											)
 											.state(
-													'restaurant.customer-order_order', 
+													'restaurant.customer-order_menu', 
 													{
-														url: '/customer-order_order/:companyName/:branchName/:tableNumber', 
+														url: '/customer-order_menu/:companyName/:branchName/:tableNumber', 
 														views: {
 															'restaurant-content': {
-																templateUrl: 'templates/restaurant/customer/order_order/customer-order_order.html', 
-																controller: 'customerOrderOrderController', 
-																controllerAs: 'customerOrderOrderController'
+																templateUrl: 'templates/restaurant/customer/order_menu/customer-order_menu.html', 
+																controller: 'customerOrderMenuController', 
+																controllerAs: 'customerOrderMenuController'
 																	}
 													}
 													}
-													);
+													)
+													.state(
+															'restaurant.customer-order_order', 
+															{
+																url: '/customer-order_order/:companyName/:branchName/:tableNumber', 
+																views: {
+																	'restaurant-content': {
+																		templateUrl: 'templates/restaurant/customer/order_order/customer-order_order.html', 
+																		controller: 'customerOrderOrderController', 
+																		controllerAs: 'customerOrderOrderController'
+																			}
+															}
+															}
+															);
 	
 	$urlRouterProvider
 	.otherwise('/');

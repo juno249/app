@@ -8,7 +8,6 @@ angular
 dataService.$inject = [
                        'BROADCAST_MESSAGES', 
                        'KEYS', 
-                       'ORDERREFERENCE_STATUS', 
                        '$localStorage', 
                        '$q', 
                        '$rootScope', 
@@ -26,7 +25,6 @@ dataService.$inject = [
 function dataService(
 		BROADCAST_MESSAGES, 
 		KEYS, 
-		ORDERREFERENCE_STATUS, 
 		$localStorage, 
 		$q, 
 		$rootScope, 
@@ -364,7 +362,8 @@ function dataService(
 	
 	function fetchCompanyBranchOrderreferences(
 			companyName, 
-			branchName
+			branchName, 
+			orderreferenceStatus
 			){
 		var companyBranchOrderreferences = undefined;
 		var isGetCompanyBranchOrderreferences = false;
@@ -375,7 +374,7 @@ function dataService(
 		orderreferenceService.setBranchName(branchName);
 		orderreferenceService.fetchOrderreferences(	//getCompanyBranchOrderreferencesNotOrderreferenceStatus
 				4, 
-				{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
+				{	OrderreferenceStatus: orderreferenceStatus	}
 				)
 				.then(fetchOrderreferenceSuccessCallback)
 				.catch(fetchOrderreferenceFailedCallback);
