@@ -183,8 +183,10 @@ function customerNearbyController(
 			function(){	return vm.company;
 			}, 
 			function(){
-				vm.companyMenuMenuitem = genCompanyMenuMenuitem();
-				vm.companyCategory = genCompanyCategory();
+				if(!(null == vm.company)){
+					vm.companyMenuMenuitem = genCompanyMenuMenuitem();
+					vm.companyCategory = genCompanyCategory();
+					}
 				}
 			);
 
