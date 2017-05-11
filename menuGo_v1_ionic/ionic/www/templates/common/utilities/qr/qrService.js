@@ -22,7 +22,7 @@ function qrService(
 		var deferred = $q.defer();
 		
 		$cordovaBarcodeScanner.scan()
-		.then(scanSuccssCallback)
+		.then(scanSuccessCallback)
 		.catch(scanFailedCallback);
 		
 		function scanSuccessCallback(data){	deferred.resolve(data);
@@ -30,6 +30,8 @@ function qrService(
 		
 		function scanFailedCallback(e){	deferred.reject(e);
 		}
+		
+		return deferred.promise;
 		}
 	
 	return  qrServiceObj;

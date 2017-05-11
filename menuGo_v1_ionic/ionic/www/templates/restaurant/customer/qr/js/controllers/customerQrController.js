@@ -53,13 +53,13 @@ function customerQrController(
 	
 	function doScan(){
 		qrService.doScan()
-		then(doScanSuccessCallback)
+		.then(doScanSuccessCallback)
 		.catch(doScanFailedCallback);
 		
 		function doScanSuccessCallback(data){
 			const DELIMETER = ';';
 			var reservationDetails = {};
-			var dataSplit = data.split(DELIMETER);
+			var dataSplit = data.text.split(DELIMETER);
 			
 			reservationDetails.companyName = dataSplit[0];
 			reservationDetails.branchName = dataSplit[1];
