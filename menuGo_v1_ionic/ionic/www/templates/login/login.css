@@ -3,5 +3,27 @@ div.login-container{
 }
 
 div.login-container div#company_image-container{
-	height: 250px;
+	background-color: darkslategray;
+	
+	border-radius: 25px;
+}
+
+ion-view#login{
+	background-color: darkcyan;
+}
+
+ion-view#login div.button-container{
+	background-color: darkslategray;
+}
+
+ion-view#login div.button-container button{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 12px;
+}
+
+ion-view#login div.form-container label{
+	background-color: white;
+	border: solid 1px darkcyan;
+	
+	padding-left: 20px;
 }

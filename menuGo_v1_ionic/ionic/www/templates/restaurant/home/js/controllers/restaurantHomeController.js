@@ -10,6 +10,7 @@ restaurantHomeController.$inject = [
 	'$ionicHistory', 
 	'$scope', 
 	'$state', 
+	'$stateParams', 
 	'$timeout', 
 	'dataService', 
 	'networkService', 
@@ -24,25 +25,29 @@ function restaurantHomeController(
 		$ionicHistory, 
 		$scope, 
 		$state, 
+		$stateParams, 
 		$timeout, 
 		dataService, 
 		networkService, 
 		popupService
 		){
-	const STATE_RESTAURANT_CUSTOMER_QR = 'restaurant.customer-qr';
+	const STATE_RESTAURANT_CUSTOMER_LAUNCH = 'restaurant.customer-launch';
 	
 	$ionicHistory.clearHistory();
 	
 	var vm = this;
 	
+	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
+	}
+	
 	//controller_method
 	vm.gotoState = gotoState;
 	
 	function gotoState(stateName){
-		if(STATE_RESTAURANT_CUSTOMER_QR == stateName){
+		if(STATE_RESTAURANT_CUSTOMER_LAUNCH == stateName){
 			$state.go(
 					stateName, 
-					{}, 
+					{	companyName: vm.user.company_name	}, 
 					{	reload: true	}
 					);
 			}
@@ -79,7 +84,7 @@ function restaurantHomeController(
 			function(){	return vm.company;
 			}, 
 			function(){
-				if(!(null == vm.company)){	vm._company = vm._company = vm.company[vm.user.company_name];
+				if(!(null == vm.company)){	vm._company = vm._company = vm.company[vm.companyName];
 				}
 				}
 			);

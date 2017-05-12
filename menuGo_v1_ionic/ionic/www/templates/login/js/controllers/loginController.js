@@ -68,7 +68,7 @@ function loginController(
 						){
 					$state.go(
 							STATE_RESTAURANT_HOME, 
-							{}, 
+							{	companyName: vm.user.company_name	}, 
 							{	reload: true	}
 							);
 					}

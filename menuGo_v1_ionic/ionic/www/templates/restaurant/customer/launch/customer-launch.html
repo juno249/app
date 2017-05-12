@@ -7,6 +7,73 @@
 	view-title="Customer">
 	<ion-content 
 		class="has-header">
+		<div 
+			class="customer_launch-container">
+			<!--  *************** 
+					company_image-container (start)
+					*************** -->
+			<div 
+				class="child-content-center image-container" 
+				id="company_image-container" 
+				name="company_image-container">
+				<img 
+					src={{customerLaunchController._company.company_logo}}>
+			</div>
+			<!--  *************** 
+					company_image-container (end)
+					*************** -->
+					
+			<!--  *************** 
+					company_name (start)
+					*************** -->
+			<div 
+				class="child-content-right font-family-1-size-small" 
+				id="company_name" 
+				name="company_name">
+				Powered By: <underline>ZipLogic</underline>
+			</div><hr>
+			<!--  *************** 
+					company_name (end)
+					*************** -->
+			<div 
+				class="child-content-center" 
+				id="greetings-container" 
+				name="greetings-container">
+				<span 
+					class="font-family-2-size-medium">
+					Welcome 
+				</span>
+				<span 
+					class="font-family-1-size-medium">
+					<ul_>{{customerLaunchController.user.username}}</ul_>
+				</span>
+				@
+				<span 
+					class="font-family-1-size-medium">
+					<ul_>{{customerLaunchController._company.company_name}}</ul_>
+				</span>
+			</div>
+			<div 
+				class="button-container">
+				<div 
+					class="row">
+					<div 
+						class = "col">
+						<button 
+							class="button button-small button-positive" 
+							ng-click="customerLaunchController.gotoState('restaurant.customer-qr')">
+							<i 
+								class="icon ion-pizza">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								<ul_>I'm Hungry Let's Eat</ul_>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</ion-content>
 </ion-view>
 <!--  *************** 

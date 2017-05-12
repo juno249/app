@@ -6,6 +6,7 @@ angular
 		);
 
 customerQrController.$inject = [
+                                'BROADCAST_MESSAGES', 
                                 'ERROR_MESSAGES', 
                                 'KEYS', 
                                 'LOADING_MESSAGES', 
@@ -20,6 +21,7 @@ customerQrController.$inject = [
                                 ];
 
 function customerQrController(
+		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 

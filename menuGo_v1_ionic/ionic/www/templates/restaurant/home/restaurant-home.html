@@ -22,10 +22,19 @@
 			<!--  *************** 
 					company_image-container (end)
 					*************** -->
+			
+			<!--  *************** 
+					company_name (start)
+					*************** -->
 			<div 
-				class="child-content-center font-family-2-size-small">
+				class="child-content-right font-family-1-size-small" 
+				id="company_name" 
+				name="company_name">
 				Powered By: <underline>ZipLogic</underline>
-			</div>
+			</div><hr>
+			<!--  *************** 
+					company_name (end)
+					*************** -->
 			<div 
 				class="button-container">
 				<div 
@@ -34,13 +43,19 @@
 						class="col">
 						<button 
 							class="button button-small button-positive" 
-							ng-click="restaurantHomeController.gotoState('restaurant.customer-qr')">
+							ng-click="restaurantHomeController.gotoState('restaurant.customer-launch')">
 							<i 
 								class="icon ion-ios-people">
 							</i>
-							Customer
+							<span 
+								class="font-family-1-size-small">
+								<ul_>Customer</ul_>
+							</span>
 						</button>
 					</div>
+				</div>
+				<div 
+					class="row">
 					<div 
 						class="col">
 						<button 
@@ -49,7 +64,10 @@
 							<i 
 								class="icon ion-clipboard">
 							</i>
-							Table
+							<span 
+								class="font-family-1-size-small">
+								<ul_>Table</ul_>
+							</span>
 						</button>
 					</div>
 				</div>
@@ -63,9 +81,15 @@
 							<i 
 								class="icon ion-ios-cart">
 							</i>
-							Order
+							<span 
+								class="font-family-1-size-small">
+								<ul_>Order</ul_>
+							</span>
 						</button>
 					</div>
+				</div>
+				<div 
+					class="row">
 					<div 
 						class="col">
 						<button 
@@ -74,7 +98,10 @@
 							<i 
 								class="icon ion-android-call">
 							</i>
-							Waiter Call
+							<span 
+								class="font-family-1-size-small">
+								<ul_>Call Waiter</ul_>
+							</span>
 						</button>
 					</div>
 				</div>

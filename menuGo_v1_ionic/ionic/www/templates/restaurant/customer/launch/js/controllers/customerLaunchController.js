@@ -6,15 +6,24 @@ angular
 		);
 
 customerLaunchController.$inject = [
-                                    '$state'
+                                    'KEYS', 
+                                    '$scope', 
+                                    '$state', 
+                                    '$stateParams'
                                     ];
 
 function customerLaunchController(
-		$state
+		KEYS, 
+		$scope, 
+		$state, 
+		$stateParams
 		){
 	const STATE_CUSTOMER_QR = 'restaurant.customer-qr';
 	
 	var vm = this;
+	
+	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
+	}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -31,6 +40,24 @@ function customerLaunchController(
 					);
 			}
 		}
+	
+	$scope.$watch(
+			function(){	return localStorage.getItem(KEYS.Companies);
+			}, 
+			function(){
+				vm.company = localStorage.getItem(KEYS.Companies);
+				vm.company = JSON.parse(vm.company);
+				}
+			);
+	
+	$scope.$watch(
+			function(){	return vm.company;
+			}, 
+			function(){
+				if(!(null == vm.company)){	vm._company = vm._company = vm.company[vm.companyName];
+				}
+				}
+			);
 	
 	$scope.$watch(
 			function(){	return localStorage.getItem(KEYS.User);

@@ -1,3 +1,7 @@
+body{
+	background-color: darkcyan;
+}
+
 .child-content-center{
 	text-align: center;
 }
@@ -87,63 +91,15 @@
 	width: 100%;
 }
 
+div.button-container{
+	text-align: center;
+}
+
 div.button-container button{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 15px;
-	
-	width: 100%;
-}
-
-div.card-container div.body{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 12px;
-	
-	overflow: hidden;
-	
-	padding: 5px 25px;
-	
-	text-align: left;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-div.card-container div.title{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 15px;
-	
-	overflow: hidden;
-	
-	padding: 5px 25px;
-	
-	text-align: left;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-div.dataTables_wrapper{
-	padding: 0px 25px;
-}
-
-div.form-container{
-	background-color: #f9f9f9;
-}
-
-div.form-container input, 
-div.search-container input{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 15px;
-	
-	width: 100%;
-}
-
-div.form-container label, 
-div.search-container label{
-	padding: 5px;
+	width: 90%;
 }
 
 div.image-container{
-	background-color: #f9f9f9;
-	
 	text-align: center;
 }
 
@@ -152,72 +108,14 @@ div.image-container > img{
 	max-width: 100%;
 }
 
-div.item > img{
-	object-fit: cover;
+div.form-container label{
+	padding: 5px;
 }
 
-div.item-container div.body{
-	font-family: 'Pavanam', sans-serif;
-	font-size: 12px;
-	
-	line-height: 12px;
-	
-	white-space: normal;
-}
-
-div.item-container div.title{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 15px;
-}
-
-div.page_header-container{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 15px;
-	
-	text-align: center;
-}
-
-div.search_result-container{
-	position: absolute;
-	
+div.form-container input{
 	width: 100%;
 }
 
-div.search_result-container div.item{
-	padding-bottom: 5px;
-	padding-top: 5px;
-}
-
-ion-scroll.order-container{
-	overflow-x: hidden;
-	overflow-y: scroll;
-}
-
-ion-scroll.tab-container{
-	background-color: #ef473a;
-	color: #f0f0f0;
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 10px;
-	
-	overflow-x: scroll;
-	
-	text-align: center;
-	
-	white-space: nowrap;
-}
-
-ion-scroll.tab-container div.link{
-	display: inline-block;
-	
-	line-height: 12px;
-	
-	padding: 5px 10px;
-	
-	white-space: normal;
-	
-	width: 100px;
-}
-
-underline{
+ul_{
 	text-decoration: underline;
 }

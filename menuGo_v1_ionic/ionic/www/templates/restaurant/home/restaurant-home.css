@@ -1,8 +1,20 @@
 div.restaurant_home-container div#company_image-container{
-	border: solid 1px #303030;
+	background-color: white;
+	border-radius: 25px;
 	
-	height: 100px;
+	height: 125px;
 	
-	margin: 10px;
-	margin-bottom: 0px;
+	margin: 10px 10px 0px 10px;
+	
+	opacity: 0.7;
+}
+
+div.restaurant_home-container div#company_name{
+	color: white;
+	
+	margin-right: 25px;
+}
+
+ion-view#home{
+	background-color: darkslategray;
 }
