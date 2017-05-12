@@ -3,7 +3,7 @@ angular
 
 .constant(
 		'API_BASE_URL', 
-		'http://localhost/api'
+		'http://192.168.137.1/api'
 		)
 		
 .constant(
