@@ -35,7 +35,7 @@ function customerLaunchController(
 		if(STATE_CUSTOMER_QR == stateName){
 			$state.go(
 					STATE_CUSTOMER_QR, 
-					{	companyName: vm.user.companyName	}, 
+					{	companyName: vm.user.company_name	}, 
 					{	reload: true	}
 					);
 			}

@@ -22,63 +22,59 @@
 			<!--  *************** 
 					company_image-container (end)
 					*************** -->
+					
+			<!--  *************** 
+					company_name (start)
+					*************** -->
 			<div 
-				class="child-content-center font-family-2-size-small">
+				class="child-content-right font-family-1-size-small" 
+				id="company_name" 
+				name="company_name">
 				Powered By: <underline>ZipLogic</underline>
+			</div><hr>
+			<!--  *************** 
+					company_name (end)
+					*************** -->
+			<div 
+				class="child-content-center" 
+				id="qr_instructions-container" 
+				name="qr_instructions-container">
+				<span 
+					class="font-family-2-size-medium">
+					Scan 
+				</span>
+				<span 
+					class="font-family-1-size-medium">
+					QR Code 
+				</span>
+				<span 
+					class="font-family-2-size-medium">
+					located on your table
+				</span>
 			</div>
 			<div 
-				class="button-container row">
-				<button 
-					class="'button button-positive button-small" 
-					ng-click="customerQrController.doScan();">
-					Scan QR Code
-				</button>
-			</div>
-		</div>
-		<div 
-			class="font-family-2-size-medium" 
-			ng-show="keys(customerQrController.reservationDetails).length > 0">
-			RESERVATION @:<br>
-			Restaurant: <underline>{{customerQrController.reservationDetails.companyName}}</underline><br>
-			Table #: <underline>{{customerQrController.reservationDetails.tableNumber}}</underline>
-		</div>
-		<div 
-			class="button-container" 
-			ng-show="keys(customerQrController.reservationDetails).length > 0">
-			<div 
-				class="row">
-				<button 
-					class="button button-positive button-small" 
-					ng-click="">
-					Acknowledge
-				</button>
-			</div>
-			<div 
-				class="row">
-				<button 
-					class="button button-positive button-small" 
-					ng-click="">
-					Scan
-				</button>
+				class="button-container">
+				<div 
+					class="row">
+					<div 
+						class="col">
+						<button 
+							class="button button-small button-positive" 
+							on-touch="customerQrController.doScan();">
+							<i 
+								class="icon ion-ios-search">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								<ul_>QR Scan</ul_>
+							</span>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</ion-content>
-	<!--  *************** 
-			gotoMenusBtn (start)
-			*************** -->
-	<button 
-		class="button button-medium button-positive child-content-center" 
-		id="gotoMenusBtn" 
-		name="gotoMenusBtn" 
-		ng-click="customerQrController.gotoState('restaurant.customer-order_menu');" 
-		ng-show="keys(customerQrController.reservationDetails).length > 0">
-		<i 
-			class="icon ion-arrow-right-a">
-		</i>
-	</button>
-	<!--  *************** 
-			gotoMenusBtn (end)
-			*************** -->
+	
 </ion-view>
 <!--  *************** 
 		mymenu (end)
