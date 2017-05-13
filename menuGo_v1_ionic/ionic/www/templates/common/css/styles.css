@@ -116,6 +116,26 @@ div.form-container input{
 	width: 100%;
 }
 
+ion-scroll.tab-container{
+	overflow-x: scroll;
+	
+	text-align: center;
+	
+	white-space: nowrap;
+}
+
+ion-scroll.tab-container div.link{
+	display: inline-block;
+	
+	line-height: 12px;
+	
+	padding: 5px 10px;
+	
+	white-space: normal;
+	
+	width: 100px;
+}
+
 ul_{
 	text-decoration: underline;
 }
