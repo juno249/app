@@ -33,6 +33,7 @@ class customerConstants{
 	const dbCustomerBirthdayDate = 'customer_birthday_date';
 	const dbCustomerBirthdayYear = 'customer_birthday_year';
 	const dbCustomerLastChangeTimestamp = 'customer_last_change_timestamp';
+	const dbCustomerDeviceToken = 'customer_device_token';
 	
 	const reqCustomerUsername = 'CustomerUsername';
 	const reqCustomerPassword = 'CustomerPassword';
@@ -53,6 +54,7 @@ class customerConstants{
 	const reqCustomerBirthdayDate = 'CustomerBirthdayDate';
 	const reqCustomerBirthdayYear = 'CustomerBirthdayYear';
 	const reqCustomerLastChangeTimestamp = 'CustomerLastChangeTimestamp';
+	const reqCustomerDeviceToken = 'CustomerDeviceToken';
 	
 	const dbReadCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO READ RECORD';
 	const dbAddCatchMsg = 'DB EXCEPTION ENCOUNTERED, UNABLE TO ADD RECORD';
@@ -349,6 +351,15 @@ class customerController extends Controller
 				]
 				);
 		}
+		if(isset($_GET[customerConstants::reqCustomerDeviceToken])){	array_push(
+				$mySqlWhere, 
+				[
+						customerConstants::dbCustomerDeviceToken, 
+						'=', 
+						$_GET[customerConstants::reqCustomerDeviceToken]
+				]
+				);
+		}
 		
 		$customersResponse = new Response();
 		try{
@@ -397,7 +408,8 @@ class customerController extends Controller
 							'*.' . customerConstants::dbCustomerEmail => 'string|email|max:30', 
 							'*.' . customerConstants::dbCustomerBirthdayMonth => 'string|max:30', 
 							'*.' . customerConstants::dbCustomerBirthdayDate => 'numeric', 
-							'*.' . customerConstants::dbCustomerBirthdayYear => 'numeric'
+							'*.' . customerConstants::dbCustomerBirthdayYear => 'numeric', 
+							'*.' . customerConstants::dbCustomerDeviceToken => 'string|max:1000'
 					]
 					);
 		} else if("UPDATE" == $dbOperation){
@@ -422,7 +434,8 @@ class customerController extends Controller
 							'*.' . customerConstants::dbCustomerBirthdayMonth => 'sometimes|string|max:30', 
 							'*.' . customerConstants::dbCustomerBirthdayDate => 'sometimes|numeric', 
 							'*.' . customerConstants::dbCustomerBirthdayYear => 'sometimes|numeric', 
-							'*.' . customerConstants::dbCustomerLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s'
+							'*.' . customerConstants::dbCustomerLastChangeTimestamp => 'required|date_format:Y-m-d H:i:s', 
+							'*.' . customerConstants::dbCustomerDeviceToken => 'sometimes|string|max:1000'
 					]
 					);
 		}
