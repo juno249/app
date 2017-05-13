@@ -126,12 +126,14 @@ function loginService(
 								JSON.stringify(loginServiceObj.user)
 								);
 						
-						customerService.setCustomerUsername(loginServiceObj.user.customer_username);
+						customerService.setCustomerUsername(loginServiceObj.user.username);
 						customerService.updateCustomer(
-								{
-									customer_device_token: loginServiceObj.user.device_token, 
-									customer_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
-									}
+								[
+									{
+										customer_device_token: loginServiceObj.user.device_token.token, 
+										customer_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+										}
+									]
 								)
 								.then(updateCustomerSuccessCallback)
 								.catch(updateCustomerFailedCallback);
