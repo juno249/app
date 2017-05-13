@@ -6,11 +6,13 @@ angular
 			'ngCordova', 
 			'ngMap', 
 			'ngStorage', 
-			'ion-datetime-picker'
+			'ion-datetime-picker', 
+			'ionic.cloud'
 			]
 		)
 		.config(doRouteConfig)
 		.config(doIonicConfig)
+		.config(doIonicCloudConfig)
 		.run(doRunConfig);
 
 function doRouteConfig(
@@ -136,7 +138,7 @@ function doRouteConfig(
 					.state(
 							'restaurant.home', 
 							{
-								url: '/home', 
+								url: '/home/:companyName', 
 								views: {
 									'restaurant-content': {
 										templateUrl: 'templates/restaurant/home/restaurant-home.html', 
@@ -149,12 +151,14 @@ function doRouteConfig(
 							.state(
 									'restaurant.customer-launch', 
 									{
-										url: '/customer-launch', 
+										url: '/customer-launch/:companyName', 
 										views: {
-											templateUrl: 'templates/restaurant/customer/launch/customer-launch.html', 
-											controller: 'customerLaunchController', 
-											controllerAs: 'customerLaunchController'
-												}
+											'restaurant-content': {
+												templateUrl: 'templates/restaurant/customer/launch/customer-launch.html', 
+												controller: 'customerLaunchController', 
+												controllerAs: 'customerLaunchController'
+													}
+									}
 									}
 									)
 									.state(
@@ -204,8 +208,31 @@ function doRouteConfig(
 function doIonicConfig($ionicConfigProvider){	$ionicConfigProvider.tabs.position('bottom');
 }
 
+function doIonicCloudConfig($ionicCloudProvider){
+	var ionicCloudConfig = {
+			'core': {
+				'app_id': 'bdc472d0'
+			}, 
+			'push': {
+				'sender_id': '965409630264', 
+				'pluginConfig': {
+					'ios': {
+						'badge': true, 
+						'sound': true
+					}, 
+					'android': {
+						'iconColor': '#303030'
+							}
+					}
+			}
+			}
+	
+	$ionicCloudProvider.init(ionicCloudConfig);
+	}
+
 function doRunConfig(
 		$ionicPlatform, 
+		$ionicPush, 
 		$rootScope
 		){
 	$ionicPlatform.ready(
@@ -230,7 +257,34 @@ function doRunConfig(
 					fromState, 
 					fromStateParams
 					){
-				//do something here
 				}
 			);
+	
+	$rootScope.$on(
+			'cloud:push:notification', 
+			function(
+					event, 
+					data
+					){
+			}
+			);
+	
+	$rootScope.$on(
+			'cloud:push:register', 
+			function(){
+			}
+			);
+	
+	$ionicPush.register()
+	.then(registerSuccessCallback)
+	.catch(registerFailedCallback);
+	
+	function registerSuccessCallback(objToken){
+		$ionicPush.saveToken(objToken);
+		
+		console.log(objToken.token);
+		}
+	
+	function registerFailedCallback(err){
+	}
 	}

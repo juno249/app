@@ -129,7 +129,7 @@ function mymenuBillController(
 								vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].quantity++;
 								vm.user.orderreference.order[menuitemOrderId[v.menuitem_id]].cost += vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
 								delete vm.user.orderreference.order[k];
-								} catch(e){
+								} catch(err){
 									$timeout(
 											appendQuantity, 
 											1000
@@ -140,7 +140,7 @@ function mymenuBillController(
 										vm.user.orderreference.order[k].quantity = 1;
 										vm.user.orderreference.order[k].cost = vm.companyMenuMenuitem[v.menuitem_id].menuitem_price;
 										menuitemOrderId[v.menuitem_id] = k;
-										} catch(e){
+										} catch(err){
 											$timeout(
 													appendQuantity, 
 													1000

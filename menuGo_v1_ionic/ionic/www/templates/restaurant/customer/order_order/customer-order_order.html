@@ -11,71 +11,49 @@
 			class="order_order-container">
 			<div 
 				class="item item-divider page_header-container">
-				Order Details
+				<ul_>Order Details</ul_>
 			</div>
 			<ion-scroll 
-				class="order-container" 
 				direction="y">
 				<div 
-					class="item item-container" 
+					class="item" 
 					ng-repeat="(k, v) in customerOrderOrderController.user.reservationOrder">
 					<div 
 						class="title">
-						{{v.menuitem_name}}
+						<ul_>{{v.menuitem_name}}</ul_>
 					</div>
 					<div 
 						class="body">
 						{{v.menuitem_desc}}
 					</div>
 					<div 
-						class="body child-content-right">
+						class="body" 
+						id="price" 
+						name="price">
 						<span 
 							class="font-family-2-size-small">
 							UNIT PRICE: &#8369{{v.menuitem_price}}
 						</span>
 					</div>
 					<div 
-						class="body child-content-right">
+						class="body" 
+						id="quantity" 
+						name="quantity">
 						<span 
 							class="font-family-2-size-small">
 							QUANTITY: {{v.quantity}}
 						</span>
 					</div>
 					<div 
-						class="body child-content-right">
+						class="body" 
+						id="cost" 
+						name="cost">
 						<span 
 							class="font-family-2-size-small">
 							PRICE: &#8369{{v.quantity * v.menuitem_price}}
 						</span>
 					</div>
-					<div 
-						class="child-content-right">
-						<button 
-							class="button button-positive button-small" 
-							ng-click="customerOrderOrderController.remReservationOrder(v);">
-							<i 
-								class="icon ion-close">
-							</i>
-							<span 
-								class="font-family-1-size-small">
-								Remove
-							</span>
-						</button>
-					</div>
 				</div>
-				<!--  *************** 
-						customer_order_order_total-container (start)
-						*************** -->
-				<div 
-					class="child-content-right font-family-1-size-medium" 
-					id="customer_order_order_total-container" 
-					name="customer_order_order_total-container" 
-					ng-show="keys(customerOrderOrderController.user.reservationOrder).length > 0">
-					Total: &#8369{{customerOrderOrderController.getTotalCost() | number: 2}}
-				</div>
-				<!--  *************** 
-						customer_order_order_total-container (end)
-						*************** -->
 			</ion-scroll>
 		</div>
 	</ion-content>

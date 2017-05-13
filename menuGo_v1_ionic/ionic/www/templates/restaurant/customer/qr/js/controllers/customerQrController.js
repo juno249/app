@@ -48,10 +48,7 @@ function customerQrController(
 	//controller_method
 	vm.doScan = doScan;
 	
-	function gotoState(
-			stateName, 
-			stateParams
-			){
+	function gotoState(stateName){
 		if(STATE_CUSTOMER_ORDER_MENU == stateName){
 			$state.go(
 					STATE_CUSTOMER_ORDER_MENU, 
@@ -65,6 +62,18 @@ function customerQrController(
 		}
 	
 	function doScan(){
+		/*
+		 * test (start)
+		 * */
+		vm.companyName = "Max's";
+		vm.branchName = 'Ermita';
+		vm.tableNumber =1;
+		
+		gotoState(STATE_CUSTOMER_ORDER_MENU);
+		return;
+		/*
+		 * test (end)
+		 * */
 		qrService.doScan()
 		.then(doScanSuccessCallback)
 		.catch(doScanFailedCallback);

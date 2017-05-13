@@ -116,6 +116,12 @@ div.form-container input{
 	width: 100%;
 }
 
+div.page_header-container{
+	background-color: antiquewhite;
+	
+	text-align: center;
+}
+
 ion-scroll.tab-container{
 	overflow-x: scroll;
 	

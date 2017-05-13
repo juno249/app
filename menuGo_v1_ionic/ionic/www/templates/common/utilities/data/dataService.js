@@ -104,6 +104,7 @@ function dataService(
 					isGetBranches = true;
 					branches = localStorage.getItem(KEYS.Branches);
 					branches = JSON.parse(branches);
+					var branchesIdx = 0;
 					
 					angular.forEach(
 							branches, 
@@ -116,7 +117,7 @@ function dataService(
 							);
 					
 					try{	companies = JSON.parse(companies);
-					} catch(e){
+					} catch(err){
 					}
 					
 					companies[companyName][KEYS.Branches] = branches;
@@ -135,12 +136,15 @@ function dataService(
 								.catch(fetchTablesFailedCallback);
 						
 						function fetchTablesSuccessCallback(response){
-							isGetTables = true;
 							tables = localStorage.getItem(KEYS.Tables);
 							tables = JSON.parse(tables);
+							branchesIdx++;
+							
+							if(branchesIdx == Object.keys(branches).length){	isGetTables = true;
+							}
 							
 							try{	companies = JSON.parse(companies);
-							} catch(e){
+							} catch(err){
 							}
 							
 							companies[companyName][KEYS.Branches][branchName][KEYS.Tables] = tables;
@@ -192,6 +196,7 @@ function dataService(
 					isGetMenus = true;
 					menus = localStorage.getItem(KEYS.Menus);
 					menus = JSON.parse(menus);
+					var menusIdx = 0;
 					
 					angular.forEach(
 							menus, 
@@ -204,7 +209,7 @@ function dataService(
 							);
 					
 					try{	companies = JSON.parse(companies);
-					} catch(e){
+					} catch(err){
 					}
 					
 					companies[companyName][KEYS.Menus] = menus;
@@ -223,12 +228,15 @@ function dataService(
 								.catch(fetchMenuitemsFailedCallback);
 						
 						function fetchMenuitemsSuccessCallback(response){
-							isGetMenuitems = true;
 							menuitems = localStorage.getItem(KEYS.Menuitems);
 							menuitems = JSON.parse(menuitems);
+							menusIdx++;
+							
+							if(menusIdx == Object.keys(menus).length){	isGetMenuitems = true;
+							}
 							
 							try{	companies = JSON.parse(companies);
-							} catch(e){
+							} catch(err){
 							}
 							
 							companies[companyName][KEYS.Menus][menuName][KEYS.Menuitems] = menuitems;
@@ -294,7 +302,7 @@ function dataService(
 			}
 			
 			try{	marketing = JSON.parse(marketing);
-			} catch(e){
+			} catch(err){
 			}
 			
 			marketing[KEYS.Advertisements] = advertisements;
@@ -334,7 +342,7 @@ function dataService(
 			}
 			
 			try{	marketing = JSON.parse(marketing);
-			} catch(e){
+			} catch(err){
 			}
 			
 			marketing[KEYS.Blogs] = blogs;

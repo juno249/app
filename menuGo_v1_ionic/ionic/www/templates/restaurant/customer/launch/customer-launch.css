@@ -9,14 +9,14 @@ div.customer_launch-container div#company_image-container{
 	opacity: 0.7;
 }
 
-div.customer_launch-container div#greetings-container{
-	color: white;
-}
-
 div.customer_launch-container div#company_name{
 	color: white;
 	
 	margin-right: 25px;
+}
+
+div.customer_launch-container div#greetings-container{
+	color: white;
 }
 
 ion-view#launch{

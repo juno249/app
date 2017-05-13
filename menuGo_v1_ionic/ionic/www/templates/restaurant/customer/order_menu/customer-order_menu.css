@@ -1,14 +1,3 @@
-ion-view#order_menu{
-	background-color: darkslategray;
-}
-
-ion-view#order_menu button#gotoOrdersBtn{
-	position: absolute;
-	
-	bottom: 50px;
-	right: 50px;
-}
-
 div.order_menu-container div#customer-order_menu_quantity-container{
 	display: inline-block;
 	
@@ -31,6 +20,8 @@ div.order_menu-container div.item-thumbnail-left div.body{
 	
 	margin-top: 5px;
 	
+	text-align: justify;
+	
 	white-space: normal;
 }
 
@@ -51,4 +42,15 @@ div.order_menu-container ion-scroll.tab-container div.link{
 	font-size: 12px;
 	
 	vertical-align: middle;
+}
+
+ion-view#order_menu{
+	background-color: darkslategray;
+}
+
+ion-view#order_menu button#gotoOrdersBtn{
+	position: absolute;
+	
+	bottom: 50px;
+	right: 50px;
 }

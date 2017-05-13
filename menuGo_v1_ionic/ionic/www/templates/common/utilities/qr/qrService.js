@@ -28,7 +28,7 @@ function qrService(
 		function scanSuccessCallback(data){	deferred.resolve(data);
 		}
 		
-		function scanFailedCallback(e){	deferred.reject(e);
+		function scanFailedCallback(err){	deferred.reject(err);
 		}
 		
 		return deferred.promise;

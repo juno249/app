@@ -6,6 +6,7 @@ angular
 		);
 
 customerOrderOrderController.$inject = [
+	'BROADCAST_MESSAGES', 
 	'ERROR_MESSAGES', 
 	'KEYS', 
 	'LOADING_MESSAGES', 
@@ -22,6 +23,7 @@ customerOrderOrderController.$inject = [
 	];
 
 function customerOrderOrderController(
+		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
@@ -210,5 +212,22 @@ function customerOrderOrderController(
 			}, 
 			function(){	getTotalCost();
 			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
+			function(){	popupService.hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
+				}
 			);
 	}

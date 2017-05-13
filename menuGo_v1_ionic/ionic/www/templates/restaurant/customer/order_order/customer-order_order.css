@@ -1,3 +1,43 @@
-div.order_order-container div#customer_order_order_total-container{
-	padding-right: 20px;
+div.order_order-container div.item{
+	border-radius: 25px;
+	
+	margin: 5px;
+}
+
+div.order_order-container div.item div.body{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 12px;
+	
+	line-height: 12px;
+	
+	margin-top: 5px;
+	
+	text-align: justify;
+	
+	white-space: normal;
+}
+
+div.order_order-container div.item div.title{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 12px;
+}
+
+div.order_order-container div.page_header-container{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 15px;
+}
+
+div.order_order-container div#price, 
+div.order_order-container div#cost{
+	text-align: right !important;
+}
+
+div.order_order-container div#quantity{
+	border-bottom: solid black;
+	
+	text-align: right !important;
+}
+
+ion-view#order_order{
+	background-color: darkslategray;
 }

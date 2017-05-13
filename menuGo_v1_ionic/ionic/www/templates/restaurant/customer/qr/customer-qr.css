@@ -1,7 +1,3 @@
-ion-view #qr{
-	background-color: darkslategray;
-}
-
 div.customer_qr-container div#company_image-container{
 	background-color: white;
 	border-radius: 25px;
@@ -21,4 +17,8 @@ div.customer_qr-container div#company_name{
 
 div.customer_qr-container div#qr_instructions-container{
 	color: white;
+}
+
+ion-view #qr{
+	background-color: darkslategray;
 }
