@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
     	Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
     	Intervention\Image\ImageServiceProvider::class,
+    	Ixudra\Curl\CurlServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -230,6 +231,7 @@ return [
     	'JWTFactory' => Tymon\JWTAuthFacades\JWTFactory::class,
     	'Uuid' => Webpatser\Uuid\Uuid::class,
     	'Image' => Intervention\Image\Facades\Image::class,
+    	'Curl' => Ixudra\Curl\Facades\Curl::class,
     ],
 
 ];

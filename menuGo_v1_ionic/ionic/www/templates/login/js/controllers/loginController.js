@@ -10,7 +10,9 @@ loginController.$inject = [
                            'KEYS', 
                            'LOADING_MESSAGES', 
                            'USER_ROLES', 
+                           '$ionicPush', 
                            '$localStorage', 
+                           '$rootScope', 
                            '$state', 
                            'loginService', 
                            'popupService'
@@ -21,7 +23,9 @@ function loginController(
 		KEYS, 
 		LOADING_MESSAGES, 
 		USER_ROLES, 
+		$ionicPush, 
 		$localStorage, 
+		$rootScope, 
 		$state, 
 		loginService, 
 		popupService
@@ -83,4 +87,13 @@ function loginController(
 	
 	function doSignup(){
 	}
+	
+	$rootScope.$on(
+			'cloud:push:notification', 
+			function(
+					event, 
+					data
+					){
+			}
+			);
 	}

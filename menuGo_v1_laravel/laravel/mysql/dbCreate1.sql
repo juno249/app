@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_birthday_date INT, 
  	customer_birthday_year INT, 
  	customer_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	customer_device_token VARCHAR(1000), 
  	PRIMARY KEY(customer_username)
  	);
  	

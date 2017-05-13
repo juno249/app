@@ -10,8 +10,10 @@ loginService.$inject = [
                         'KEYS', 
                         'USER_ROLES', 
                         '$http', 
+                        '$ionicPush', 
                         '$localStorage', 
-                        '$q'
+                        '$q', 
+                        'customerService'
                         ];
 
 function loginService(
@@ -19,8 +21,10 @@ function loginService(
 		KEYS, 
 		USER_ROLES, 
 		$http, 
+		$ionicPush, 
 		$localStorage, 
-		$q
+		$q, 
+		customerService
 		){
 	var loginServiceObj = {
 		loginUsername: undefined, 
@@ -106,11 +110,41 @@ function loginService(
 					loginServiceObj.user.branch_id = responseData.branch_id;
 					loginServiceObj.user.branch_name = responseData.branch_name;
 					
-					localStorage.setItem(
-							KEYS.User, 
-							JSON.stringify(loginServiceObj.user)
-							);
-					deferred.resolve();
+					$ionicPush.register()
+					.then(registerSuccessCallback)
+					.catch(registerFailedCallback);
+					
+					function registerSuccessCallback(objToken){
+						$ionicPush.saveToken(objToken);
+						
+						console.log(objToken.token);
+						
+						loginServiceObj.user.device_token = objToken;
+						
+						localStorage.setItem(
+								KEYS.User, 
+								JSON.stringify(loginServiceObj.user)
+								);
+						
+						customerService.setCustomerUsername(loginServiceObj.user.customer_username);
+						customerService.updateCustomer(
+								{
+									customer_device_token: loginServiceObj.user.device_token, 
+									customer_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+									}
+								)
+								.then(updateCustomerSuccessCallback)
+								.catch(updateCustomerFailedCallback);
+						
+						function updateCustomerSuccessCallback(response){	deferred.resolve(response);
+						}
+						
+						function updateCustomerFailedCallback(responseError){	deferred.reject(responseError);
+						}
+						}
+					
+					function registerFailedCallback(err){	deferred.reject(err);
+					}
 					}
 				
 				function getCustomerCompanyBranchFailedCallback(responseError){	deferred.reject(responseError);

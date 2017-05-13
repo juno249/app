@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS ziplogic.customers(
  	customer_birthday_date INT, 
  	customer_birthday_year INT, 
  	customer_last_change_timestamp DATETIME NOT NULL DEFAULT NOW(), 
+ 	customer_device_token VARCHAR(1000), 
  	PRIMARY KEY(customer_username)
  	);
  	
@@ -206,6 +207,7 @@ SET @customer_email = "johnvictorlim01@gmail.com";
 SET @customer_birthday_month = "October";
 SET @customer_birthday_date = 12;
 SET @customer_birthday_year = 1992;
+SET @customer_device_token = null;
 
 INSERT INTO customers(
 	customer_username, 
@@ -225,7 +227,8 @@ INSERT INTO customers(
 	customer_email, 
 	customer_birthday_month, 
 	customer_birthday_date, 
-	customer_birthday_year
+	customer_birthday_year, 
+	customer_device_token
 	)
 VALUES(
 	@customer_username, 
@@ -245,7 +248,8 @@ VALUES(
 	@customer_email, 
 	@customer_birthday_month, 
 	@customer_birthday_date, 
-	@customer_birthday_year
+	@customer_birthday_year, 
+	@customer_device_token
 	);
 	
 # ==========
@@ -269,6 +273,7 @@ SET @customer_email = null;
 SET @customer_birthday_month = null;
 SET @customer_birthday_date = null;
 SET @customer_birthday_year = null;
+SET @customer_device_token = null;
 
 INSERT INTO customers(
 	customer_username, 
@@ -288,7 +293,8 @@ INSERT INTO customers(
 	customer_email, 
 	customer_birthday_month, 
 	customer_birthday_date, 
-	customer_birthday_year
+	customer_birthday_year, 
+	customer_device_token
 	)
 VALUES(
 	@customer_username, 
@@ -308,7 +314,8 @@ VALUES(
 	@customer_email, 
 	@customer_birthday_month, 
 	@customer_birthday_date, 
-	@customer_birthday_year
+	@customer_birthday_year, 
+	@customer_device_token
 	);
 	
 #companies_insert

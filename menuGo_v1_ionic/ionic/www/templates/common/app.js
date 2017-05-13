@@ -259,32 +259,4 @@ function doRunConfig(
 					){
 				}
 			);
-	
-	$rootScope.$on(
-			'cloud:push:notification', 
-			function(
-					event, 
-					data
-					){
-			}
-			);
-	
-	$rootScope.$on(
-			'cloud:push:register', 
-			function(){
-			}
-			);
-	
-	$ionicPush.register()
-	.then(registerSuccessCallback)
-	.catch(registerFailedCallback);
-	
-	function registerSuccessCallback(objToken){
-		$ionicPush.saveToken(objToken);
-		
-		console.log(objToken.token);
-		}
-	
-	function registerFailedCallback(err){
-	}
 	}

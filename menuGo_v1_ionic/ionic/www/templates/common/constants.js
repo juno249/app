@@ -27,7 +27,8 @@ angular
 			15: 'customer_birthday_month', 
 			16: 'customer_birthday_date', 
 			17: 'customer_birthday_year', 
-			18: 'customer_last_change_timestamp'
+			18: 'customer_last_change_timestamp', 
+			19: 'customer_device_token'
 				}
 		)
 		
