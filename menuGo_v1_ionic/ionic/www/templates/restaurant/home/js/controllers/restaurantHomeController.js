@@ -41,6 +41,25 @@ function restaurantHomeController(
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
 	
+	if(
+			networkService.deviceIsOffline() &&
+			!(null == localStorage.getItem(KEYS.Companies))
+			){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
+		vm._company = vm.company[vm.companyName];
+		} else if(
+				networkService.deviceIsOffline() &&
+				null == localStorage.getItem(KEYS.Companies)
+				){
+			vm.company = {};
+			vm._company = {};
+			} else {
+				dataService.fetchCompanies();
+				
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
+	
 	//controller_method
 	vm.gotoState = gotoState;
 	

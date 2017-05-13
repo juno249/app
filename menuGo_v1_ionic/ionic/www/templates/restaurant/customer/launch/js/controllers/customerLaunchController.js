@@ -6,17 +6,29 @@ angular
 		);
 
 customerLaunchController.$inject = [
+                                    'BROADCAST_MESSAGES', 
+                                    'ERROR_MESSAGES', 
                                     'KEYS', 
+                                    'LOADING_MESSAGES', 
                                     '$scope', 
                                     '$state', 
-                                    '$stateParams'
+                                    '$stateParams', 
+                                    'dataService', 
+                                    'networkService', 
+                                    'popupService'
                                     ];
 
 function customerLaunchController(
+		BROADCAST_MESSAGES, 
+		ERROR_MESSAGES, 
 		KEYS, 
+		LOADING_MESSAGES, 
 		$scope, 
 		$state, 
-		$stateParams
+		$stateParams, 
+		dataService, 
+		networkService, 
+		popupService
 		){
 	const STATE_CUSTOMER_QR = 'restaurant.customer-qr';
 	
@@ -24,6 +36,25 @@ function customerLaunchController(
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
+	
+	if(
+			networkService.deviceIsOffline() &&
+			!(null == localStorage.getItem(KEYS.Companies))
+			){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
+		vm._company = vm.company[vm.companyName];
+		} else if(
+				networkService.deviceIsOffline() &&
+				null == localStorage.getItem(KEYS.Companies)
+				){
+			vm.company = {};
+			vm._company = {};
+			} else {
+				dataService.fetchCompanies();
+				
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -65,6 +96,23 @@ function customerLaunchController(
 			function(){
 				vm.user = localStorage.getItem(KEYS.User);
 				vm.user = JSON.parse(vm.user);
+				}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
+			function(){	popupService.hideIonicLoading();
+			}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
 				}
 			);
 	}
