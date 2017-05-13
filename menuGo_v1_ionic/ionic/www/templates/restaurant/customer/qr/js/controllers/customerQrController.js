@@ -16,6 +16,7 @@ customerQrController.$inject = [
                                 '$state', 
                                 '$stateParams', 
                                 'dataService', 
+                                'orderreferenceOrderService', 
                                 'popupService', 
                                 'qrService'
                                 ];
@@ -31,6 +32,7 @@ function customerQrController(
 		$state, 
 		$stateParams, 
 		dataService, 
+		orderreferenceOrderService, 
 		popupService, 
 		qrService
 		){
@@ -72,9 +74,9 @@ function customerQrController(
 			var reservationDetails = {};
 			var dataSplit = data.text.split(DELIMETER);
 			
-			reservationDetails.companyName = dataSplit[0];
-			reservationDetails.branchName = dataSplit[1];
-			reservationDetails.tableNumber = dataSplit[2];
+			reservationDetails.companyName = vm.companyName = dataSplit[0];
+			reservationDetails.branchName = vm.branchName = dataSplit[1];
+			reservationDetails.tableNumber = vm.tableNumber = dataSplit[2];
 			reservationDetails = JSON.stringify(reservationDetails);
 			
 			localStorage.setItem(
@@ -84,19 +86,23 @@ function customerQrController(
 			
 			popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
 			
-			dataService.fetchCompanyBranchOrderreferences(
-					reservationDetails.companyName, 
-					reservationDetails.branchName, 
-					ORDERREFERENCE_STATUS.done
-					)
-					.then(fetchCompanyBranchOrderreferencesSuccessCallback)
-					.catch(fetchCompanyBranchOrderreferencesFailedCallback);
+			orderreferenceOrderService.setCompanyName(vm.companyName);
+			orderreferenceOrderService.setBranchName(vm.branchName);
+			orderreferenceOrderService.setTableNumber(vm.tableNumber);
 			
-			function fetchCompanyBranchOrderreferencesSuccessCallback(response){
-			}
+			orderreferenceOrderService.fetchOrderreferencesOrders(8)
+			.then(fetchOrderreferencesOrdersSuccessCallback)
+			.catch(fetchOrderreferencesOrdersFailedCallback);
 			
-			function fetchCompanyBranchOrderreferencesFailedCallback(responseError){
-			}
+			function fetchOrderreferencesOrdersSuccessCallback(response){
+				popupService.hideIonicLoading();
+				}
+			
+			function fetchOrderreferencesOrdersFailedCallback(responseError){
+				popupService.hideIonicLoading();
+				
+				popupService.dispIonidPopup(ERROR_MESSAGES.getFailed);
+				}
 			}
 		
 		function doScanFailedCallback(e){	popupService.dispIonicPopup(ERROR_MESSAGES.scanFailed);
@@ -151,23 +157,6 @@ function customerQrController(
 				vm.companyName = vm.reservationDetails.companyName;
 				vm.branchName = vm.reservationDetails.branchName;
 				vm.tableNumber = vm.reservationDetails.tableNumber;
-				}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompanyBranchOrderreferencesSuccess, 
-			function(){	popupService.hideIonicLoading();
-			}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompanyBranchOrderreferencesFailed, 
-			function(){
-				var DOM_POPUP_CLASS = '.popup';
-				
-				popupService.hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
-				}
 				}
 			);
 	}
