@@ -13,6 +13,7 @@ customerOrderMenuController.$inject = [
 	'$localStorage', 
 	'$scope', 
 	'$state', 
+	'$stateParams', 
 	'dataService', 
 	'networkService', 
 	'popupService'
@@ -26,11 +27,19 @@ function customerOrderMenuController(
 		$localStorage, 
 		$scope, 
 		$state, 
+		$stateParams, 
 		dataService, 
 		networkService, 
 		popupService
 		){
 	var vm = this;
+	
+	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
+	}
+	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
+	}
+	if(!(null == $stateParams.tableNumber)){	vm.tableNumber = $stateParams.tableNumber;
+	}
 	
 	if(
 			networkService.deviceIsOffline() &&

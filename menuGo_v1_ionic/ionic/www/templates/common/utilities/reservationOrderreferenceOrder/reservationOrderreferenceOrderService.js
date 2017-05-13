@@ -71,29 +71,51 @@ function reservationOrderreferenceOrderService(
 		function fetchReservationsSuccessCallback(response){
 			var reservations = localStorage.getItem(KEYS.Reservations);
 			reservations = JSON.parse(reservations);
-			var reservationsKey = Object.keys(reservations);
+			var reservationsKeyIdx = 0;
 			
-			reservationsOrderreferencesOrders[KEYS.Customers] = reservations[reservationsKey[0]][KEYS.Customers];
-			reservationsOrderreferencesOrders[KEYS.Companies] = reservations[reservationsKey[0]][KEYS.Companies];
-			reservationsOrderreferencesOrders[KEYS.Branches] = reservations[reservationsKey[0]][KEYS.Branches];
-			reservationsOrderreferencesOrders[KEYS.Tables] = reservations[reservationsKey[0]][KEYS.Tables];
-			reservationsOrderreferencesOrders[KEYS.Reservations] = reservations[reservationsKey[0]][KEYS.Reservations];
-			reservationsOrderreferencesOrders[KEYS.Orderreferences] = reservations[reservationsKey[0]][KEYS.Orderreferences];
-			
-			orderService.fetchOrders(	//getByQuery
-					13, 
-					{	queryString: ('?OrderreferenceCode='+reservationsOrderreferencesOrders.orderreferences.orderreference_code)	}
-					)
-					.then(fetchOrdersSuccessCallback)
-					.catch(fetchOrdersFailedCallback);
+			angular.forEach(
+					reservations, 
+					function(
+							v, 
+							k
+							){
+						reservationsOrderreferencesOrders[k] = {};
+						reservationsOrderreferencesOrders[k][KEYS.Customers] = reservations[k][KEYS.Customers];
+						reservationsOrderreferencesOrders[k][KEYS.Companies] = reservations[k][KEYS.Companies];
+						reservationsOrderreferencesOrders[k][KEYS.Branches] = reservations[k][KEYS.Branches];
+						reservationsOrderreferencesOrders[k][KEYS.Tables] = reservations[k][KEYS.Tables];
+						reservationsOrderreferencesOrders[k][KEYS.Reservations] = reservations[k][KEYS.Reservations];
+						reservationsOrderreferencesOrders[k][KEYS.Orderreferences] = reservations[k][KEYS.Orderreferences];
+						
+						orderService.fetchOrders(	//getByQuery
+								13, 
+								{	queryString: ('?OrderreferenceCode='+reservationsOrderreferencesOrders[k][KEYS.Orderreferences].orderreference_code)	}
+								)
+								.then(fetchOrdersSuccessCallback)
+								.catch(fetchOrdersFailedCallback);
+						}
+					);
 			
 			function fetchOrdersSuccessCallback(response){
 				var orders = localStorage.getItem(KEYS.Orders);
 				orders = JSON.parse(orders);
-				reservationsOrderreferencesOrders.orderreferences.orders = orders;
+				var orderreferenceCode;
 				localStorage.removeItem(KEYS.Orders);
 				
-				deferred.resolve(reservationsOrderreferencesOrders);
+				angular.forEach(
+						orders, 
+						function(
+								v, 
+								k
+								){	orderreferenceCode = v.orderreference_code;
+								}
+						);
+				
+				reservationsOrderreferencesOrders[orderreferenceCode][KEYS.Orders] = orders;
+				reservationsKeyIdx++;
+				
+				if(reservationsKeyIdx == Object.keys(reservations).length){	deferred.resolve(reservationsOrderreferencesOrders);
+				}
 				}
 			
 			function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);

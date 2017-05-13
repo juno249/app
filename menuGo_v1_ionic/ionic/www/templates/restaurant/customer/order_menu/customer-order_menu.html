@@ -18,16 +18,16 @@
 					ng-repeat="(k, v) in customerOrderMenuController.companyMenu">
 					{{k}}
 				</div>
-			</ion-scroll>
+			</ion-scroll><hr>
 			<div 
-				class="item item-container item-thumbnail-left" 
+				class="item item-thumbnail-left" 
 				ng-repeat="(k, v) in customerOrderMenuController.companyMenuMenuitem" 
 				ng-show="v.menu_id == customerOrderMenuController.getMenuIdFromName()">
 				<img 
 					src={{v.menuitem_image}}>
 				<div 
 					class="title">
-					{{v.menuitem_name}}
+					<ul_>{{v.menuitem_name}}</ul_>
 				</div>
 				<div 
 					class="body">
@@ -43,10 +43,6 @@
 							<i 
 								class="icon ion-plus">
 							</i>
-							<span 
-								class="font-family-1-size-small">
-								Add
-							</span>
 						</button>
 						<!--  *************** 
 								customer-order_menu_quantity-container (start)
@@ -68,10 +64,6 @@
 							<i 
 								class="icon ion-minus">
 							</i>
-							<span 
-								class="font-family-1-size-small">
-								Sub
-							</span>
 						</button>
 					</div>
 				</div>

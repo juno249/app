@@ -1,7 +1,54 @@
+ion-view#order_menu{
+	background-color: darkslategray;
+}
+
+ion-view#order_menu button#gotoOrdersBtn{
+	position: absolute;
+	
+	bottom: 50px;
+	right: 50px;
+}
+
 div.order_menu-container div#customer-order_menu_quantity-container{
 	display: inline-block;
 	
 	text-align: center;
 	
 	width: 50px;
+}
+
+div.order_menu-container div.item-thumbnail-left{
+	border-radius: 10px;
+	
+	margin: 5px;
+}
+
+div.order_menu-container div.item-thumbnail-left div.body{
+	font-family: 'Pavanam', sans-serif;
+	font-size: 12px;
+	
+	line-height: 12px;
+	
+	margin-top: 5px;
+	
+	white-space: normal;
+}
+
+div.order_menu-container div.item-thumbnail-left div.title{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 15px;
+}
+
+div.order_menu-container div.item-thumbnail-left > img{
+	border-radius: 10px;
+	
+	object-fit: cover;
+}
+
+div.order_menu-container ion-scroll.tab-container div.link{
+	color: white;
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 12px;
+	
+	vertical-align: middle;
 }

@@ -27,10 +27,19 @@ function orderreferenceOrderService(
 	var orderreferenceOrderServiceObj = {
 			orderreferencesOrders: {}, 
 			customerUsername: undefined, 
+			companyName: undefined, 
+			branchName: undefined, 
+			TableNumber: undefined, 
 			getOrderreferencesOrders: getOrderreferencesOrders, 
 			getCustomerUsername: getCustomerUsername, 
+			getCompanyName: getCompanyName, 
+			getBranchName: getBranchName, 
+			getTableNumber: getTableNumber, 
 			setOrderreferencesOrders: setOrderreferencesOrders, 
 			setCustomerUsername: setCustomerUsername, 
+			setCompanyName: setCompanyName, 
+			setBranchName: setBranchName, 
+			setTableNumber: setTableNumber, 
 			fetchOrderreferencesOrders: fetchOrderreferencesOrders, 
 			addOrderreferenceOrder: addOrderreferenceOrder
 			}
@@ -39,9 +48,21 @@ function orderreferenceOrderService(
 	}
 	function getCustomerUsername(){	return orderreferenceOrderServiceObj.customerUsername;
 	}
+	function getCompanyName(){	return orderreferenceOrderServiceObj.companyName;
+	}
+	function getBranchName(){	return orderreferenceOrderServiceObj.branchName;
+	}
+	function getTableNumber(){	return orderreferenceOrderServiceObj.tableNumber;
+	}
 	function setOrderreferencesOrders(orderreferencesOrders){	orderreferenceOrderServiceObj.orderreferencesOrders = orderreferencesOrders;
 	}
 	function setCustomerUsername(customerUsername){	orderreferenceOrderServiceObj.customerUsername = customerUsername;
+	}
+	function setCompanyName(companyName){	orderreferenceOrderServiceObj.companyName = companyName;
+	}
+	function setBranchName(branchName){	orderreferenceOrderServiceObj.branchName = branchName;
+	}
+	function setTableNumber(tableNumber){	orderreferenceOrderServiceObj.tableNumber = tableNumber;
 	}
 	
 	function fetchOrderreferencesOrders(getOptionOrderreference){
@@ -56,33 +77,66 @@ function orderreferenceOrderService(
 					)
 					.then(fetchOrderreferencesSuccessCallback)
 					.catch(fetchOrderreferencesFailedCallback);
-			}
+			} else if(8 == getOptionOrderreference){	//getCompanyBranchTableOrderreferencesNotOrderreferenceStatus
+				orderreferenceService.setCompanyName(orderreferenceOrderServiceObj.companyName);
+				orderreferenceService.setBranchName(orderreferenceOrderServiceObj.branchName);
+				orderreferenceService.setTableNumber(orderreferenceOrderServiceObj.tableNumber);
+				orderreferenceService.fetchOrderreferences(
+						8, 
+						{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
+						)
+						.then(fetchOrderreferencesSuccessCallback)
+						.catch(fetchOrderreferencesSuccessCallback);
+				}
 		
 		function fetchOrderreferencesSuccessCallback(response){
 			var orderreferences = localStorage.getItem(KEYS.Orderreferences);
 			orderreferences = JSON.parse(orderreferences);
-			var orderreferencesKey = Object.keys(orderreferences);
+			var orderreferencesKeyIdx = 0;
 			
-			orderreferencesOrders.orderreferences[KEYS.Customers] = orderreferences[orderreferencesKey[0]][KEYS.Customers];
-			orderreferencesOrders.orderreferences[KEYS.Companies] = orderreferences[orderreferencesKey[0]][KEYS.Companies];
-			orderreferencesOrders.orderreferences[KEYS.Branches] = orderreferences[orderreferencesKey[0]][KEYS.Branches];
-			orderreferencesOrders.orderreferences[KEYS.Tables] = orderreferences[orderreferencesKey[0]][KEYS.Tables];
-			orderreferencesOrders.orderreferences[KEYS.Orderreferences] = orderreferences[orderreferencesKey[0]][KEYS.Orderreferences];
-			
-			orderService.fetchOrders(	//getByQuery
-					13, 
-					{	queryString: ('?OrderreferenceCode='+orderreferencesOrders.orderreferences.orderreference_code)	}
-					)
-					.then(fetchOrdersSuccessCallback)
-					.catch(fetchOrdersFailedCallback);
+			angular.forEach(
+					orderreferences, 
+					function(
+							v, 
+							k
+							){
+						orderreferencesOrders[k] = {};
+						orderreferencesOrders[k][KEYS.Customers] = orderreferences[k][KEYS.Customers];
+						orderreferencesOrders[k][KEYS.Companies] = orderreferences[k][KEYS.Companies];
+						orderreferencesOrders[k][KEYS.Branches] = orderreferences[k][KEYS.Branches];
+						orderreferencesOrders[k][KEYS.Tables] = orderreferences[k][KEYS.Tables];
+						orderreferencesOrders[k][KEYS.Orderreferences] = orderreferences[k][KEYS.Orderreferences];
+						
+						orderService.fetchOrders(	//getByQuery
+								13, 
+								{	queryString: ('?OrderreferenceCode='+orderreferencesOrders[k][KEYS.Orderreferences].orderreference_code)	}
+								)
+								.then(fetchOrdersSuccessCallback)
+								.catch(fetchOrdersFailedCallback);
+						}
+					);
 			
 			function fetchOrdersSuccessCallback(response){
 				var orders = localStorage.getItem(KEYS.Orders);
 				orders = JSON.parse(orders);
-				reservationsOrderreferencesOrders.orderreferences.orders = orders;
+				var orderreferenceCode;
 				localStorage.removeItem(KEYS.Orders);
 				
-				deferred.resolve(reservationsOrderreferencesOrders);
+				angular.forEach(
+						orders, 
+						function(
+								v, 
+								k
+								){	orderreferenceCode = v.orderreference_code;
+								}
+						);
+				
+				orderreferencesOrders[orderreferenceCode][KEYS.Orders] = orders;
+				orderreferencesKeyIdx++;
+				
+				if(orderreferencesKeyIdx == Object.keys(orderreferences).length){
+					deferred.resolve(orderreferencesOrders);
+					}
 				}
 			
 			function fetchOrdersFailedCallback(responseError){	deferred.reject(responseError);
