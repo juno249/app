@@ -307,6 +307,13 @@ angular
 		)
 		
 .constant(
+		'SUCCESS_MESSAGES', {
+			postReservationSuccess: 'post success: reservation submitted', 
+			postOrderSuccess: 'post success: order submitted'
+				}
+		)
+		
+.constant(
 		'LOADING_MESSAGES', 
 		{
 			authenticatingUser: 'authenticating user', 

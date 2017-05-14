@@ -137,8 +137,7 @@ function customerQrController(
 								}
 						);
 				
-				if(null == orderreferenceCode){
-					
+				if(null == orderreferenceCode){	gotoState(STATE_CUSTOMER_ORDER_MENU);
 				} else {
 				}
 				}
