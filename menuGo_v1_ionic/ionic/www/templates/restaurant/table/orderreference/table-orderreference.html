@@ -7,6 +7,41 @@
 	view-title="Orders">
 	<ion-content 
 		class="has-header">
+		<div 
+			class="orderreference-container">
+			<div 
+				class="item" 
+				ng-repeat="(k, v) in tableOrderreferenceController.companyBranchReservation" 
+				ng-if="tableOrderreferenceController.isReservation">
+			</div>
+			<div 
+				class="item" 
+				ng-repeat="(k, v) in tableOrderreferenceController.companyBranchOrderreference" 
+				ng-if="!tableOrderreferenceController.isReservation">
+				<div 
+					class="row">
+					<div 
+						class="col col-33">
+						<ul_>Reference</ul_>
+					</div>
+					<div 
+						class="col col-67">
+						{{k}}
+					</div>
+				</div>
+				<div 
+					class="row">
+					<div 
+						class="col col-33">
+						<ul_>Username</ul_>
+					</div>
+					<div 
+						class="col col-67">
+						{{v.orderreference[keys(v.orderreference)[0]].customer_username}}
+					</div>
+				</div>
+			</div>
+		</div>
 	</ion-content>
 </ion-view>
 <!--  *************** 
