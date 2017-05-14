@@ -12,6 +12,7 @@
 			<div 
 				class="item" 
 				ng-repeat="(k, v) in tableOrderreferenceController.companyBranchReservation" 
+				ng-click="tableOrderreferenceController.gotoState(v);" 
 				ng-if="tableOrderreferenceController.isReservation">
 			</div>
 			<div 

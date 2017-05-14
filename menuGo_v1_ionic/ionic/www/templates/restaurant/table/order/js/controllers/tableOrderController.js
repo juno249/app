@@ -16,4 +16,4 @@ function tableOrderController(
 	
 	if(!(null == $stateParams.orderreference)){	vm.orderreference = $stateParams.orderreference;
 	}
-}
+	}
