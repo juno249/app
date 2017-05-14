@@ -45,7 +45,6 @@ function loginController(
 	function doLogin(){
 		loginService.setLoginUsername(vm.loginUsername);
 		loginService.setLoginPassword(vm.loginPassword);
-		
 		loginService.doLogin()
 		.then(doLoginSuccessCallback)
 		.catch(doLoginFailedCallback);

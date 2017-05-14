@@ -98,7 +98,6 @@ function customerQrController(
 			orderreferenceOrderService.setCompanyName(vm.companyName);
 			orderreferenceOrderService.setBranchName(vm.branchName);
 			orderreferenceOrderService.setTableNumber(vm.tableNumber);
-			
 			orderreferenceOrderService.fetchOrderreferencesOrders(8)
 			.then(fetchOrderreferencesOrdersSuccessCallback)
 			.catch(fetchOrderreferencesOrdersFailedCallback);

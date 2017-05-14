@@ -177,20 +177,18 @@ function orderreferenceOrderService(
 		.catch(addOrderreferenceOrderFailedCallback);
 		
 		function addOrderreferenceOrderSuccessCallback(response){
+			var table = {
+					table_status: TABLE_STATUS.occupied, 
+					table_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
+					table_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+					}
+			
 			tableService.setCompanyName(orderreferenceOrderServiceObj.companyName);
 			tableService.setBranchName(orderreferenceOrderServiceObj.branchName);
 			tableService.setTableNumber(orderreferenceOrderServiceObj.tableNumber);
-			tableService.updateTable(
-					[
-						{
-							table_status: TABLE_STATUS.occupied, 
-							table_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
-							table_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
-							}
-						]
-					)
-					.then(updateTableSuccessCallback)
-					.catch(updateTableFailedCallback);
+			tableService.updateTable([table])
+			.then(updateTableSuccessCallback)
+			.catch(updateTableFailedCallback);
 			
 			function updateTableSuccessCallback(response){	deferred.resolve(response);
 			}

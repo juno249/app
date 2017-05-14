@@ -92,7 +92,6 @@ function dataService(
 				var branches = undefined;
 				
 				branchService.setCompanyName(companyName)
-				
 				branchService.fetchBranches(	//getCompanyBranches
 						1, 
 						{}
@@ -123,7 +122,6 @@ function dataService(
 						
 						tableService.setCompanyName(companyName);
 						tableService.setBranchName(branchName);
-						
 						tableService.fetchTables(	//getCompanyBranchTables
 								1, 
 								{}
@@ -179,7 +177,6 @@ function dataService(
 				var menus = undefined;
 				
 				menuService.setCompanyName(companyName);
-				
 				menuService.fetchMenus(	//getCompanyMenus
 						1, 
 						{}
@@ -210,7 +207,6 @@ function dataService(
 						
 						menuitemService.setCompanyName(companyName);
 						menuitemService.setMenuName(menuName);
-						
 						menuitemService.fetchMenuitems(	//getCompanyMenuMenuitems
 								1, 
 								{}

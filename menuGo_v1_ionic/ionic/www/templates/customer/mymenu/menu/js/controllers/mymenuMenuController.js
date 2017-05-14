@@ -127,7 +127,6 @@ function mymenuMenuController(
 		orderService.setBranchName(vm._branch.branch_name);
 		orderService.setTableNumber(vm._table.table_number);
 		orderService.setOrderreferenceCode(vm.user.orderreference.orderreference_code);
-		
 		orderService.addOrder(orders)
 		.then(addOrderSuccessCallback)
 		.catch(addOrderFailedCallback);

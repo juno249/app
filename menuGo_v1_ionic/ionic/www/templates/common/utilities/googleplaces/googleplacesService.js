@@ -81,11 +81,11 @@ function googleplacesService(
 		var mapInstance = undefined;
 		var service = undefined;
 		
-		NgMap.getMap({id: domMapId}).then(
+		NgMap.getMap({id: domMapId})
+		.then(
 				function(map){
 					mapInstance = map;
 					service = new google.maps.places.PlacesService(mapInstance);
-					
 					service.getDetails(
 							config, 
 							getDetailsCallback
@@ -123,7 +123,8 @@ function googleplacesService(
 		var mapInstance = undefined;
 		var service = undefined;
 		
-		NgMap.getMap({id: domMapId}).then(
+		NgMap.getMap({id: domMapId})
+		.then(
 				function(map){
 					mapInstance = map;
 					service = new google.maps.places.PlacesService(mapInstance);
@@ -166,7 +167,8 @@ function googleplacesService(
 		var mapInstance = undefined;
 		var service = undefined;
 		
-		NgMap.getMap({id: domMapId}).then(
+		NgMap.getMap({id: domMapId})
+		.then(
 				function(map){
 					mapInstance = map;
 					service = new google.maps.places.PlacesService(mapInstance);
