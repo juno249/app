@@ -76,7 +76,8 @@ function customerQrController(
 					{
 						companyName: vm.companyName, 
 						branchName: vm.branchName, 
-						tableNumber: vm.tableNumber
+						tableNumber: vm.tableNumber, 
+						orderreferenceCode: vm.orderreferenceCode
 						}
 					);
 			}
@@ -125,6 +126,21 @@ function customerQrController(
 			
 			function fetchOrderreferencesOrdersSuccessCallback(response){
 				popupService.hideIonicLoading();
+				
+				var orderreferenceCode = undefined;
+				angular.forEach(
+						response, 
+						function(
+								v, 
+								k
+								){	orderreferenceCode = k;
+								}
+						);
+				
+				if(null == orderreferenceCode){
+					
+				} else {
+				}
 				}
 			
 			function fetchOrderreferencesOrdersFailedCallback(responseError){

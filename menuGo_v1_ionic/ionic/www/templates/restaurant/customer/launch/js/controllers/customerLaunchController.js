@@ -59,10 +59,7 @@ function customerLaunchController(
 	//controller_method
 	vm.gotoState = gotoState;
 	
-	function gotoState(
-			stateName, 
-			stateParams
-			){
+	function gotoState(stateName){
 		if(STATE_CUSTOMER_QR == stateName){
 			$state.go(
 					STATE_CUSTOMER_QR, 

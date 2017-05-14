@@ -40,6 +40,8 @@ function customerOrderMenuController(
 	}
 	if(!(null == $stateParams.tableNumber)){	vm.tableNumber = $stateParams.tableNumber;
 	}
+	if(!(null == $stateParams.orderreferenceCode)){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
+	}
 	
 	if(
 			networkService.deviceIsOffline() &&
@@ -78,7 +80,8 @@ function customerOrderMenuController(
 					{
 						companyName: vm.companyName, 
 						branchName: vm.branchName, 
-						tableNumber: vm.tableNumber
+						tableNumber: vm.tableNumber, 
+						orderreferenceCode: vm.orderreferenceCode
 					}, 
 					{	reload: true	}
 					);

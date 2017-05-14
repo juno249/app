@@ -18,8 +18,8 @@ customerOrderOrderController.$inject = [
 	'dataService', 
 	'networkService', 
 	'orderService', 
-	'orderreferenceService', 
 	'orderreferenceOrderService', 
+	'orderreferenceService', 
 	'popupService'
 	];
 
@@ -36,8 +36,8 @@ function customerOrderOrderController(
 		dataService, 
 		networkService, 
 		orderService, 
-		orderreferenceService, 
 		orderreferenceOrderService, 
+		orderreferenceService, 
 		popupService
 		){
 	var vm = this;
@@ -47,6 +47,8 @@ function customerOrderOrderController(
 	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
 	}
 	if(!(null == $stateParams.tableNumber)){	vm.tableNumber = $stateParams.tableNumber;
+	}
+	if(!(null == $stateParams.orderreferenceCode)){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
 	}
 	
 	if(
@@ -132,7 +134,7 @@ function customerOrderOrderController(
 					}
 				);
 		
-		if(null == vm.user.orderreference){
+		if(null == vm.orderreferenceCode){
 			if(orderreferenceService.addOrderreferenceValidate(orderreference)){
 				transParam.orderreference = orderreference;
 				transParam.order = orders;
