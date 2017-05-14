@@ -212,7 +212,20 @@ function doRouteConfig(
 																					}
 																	}
 																	}
-																	);
+																	)
+																	.state(
+																			'restaurant.table-order', 
+																			{
+																				url: '/table-order/:orderreference', 
+																				views: {
+																					'restaurant-container': {
+																						templateUrl: 'templates/restaurant/table/order/table-order.html', 
+																						controller: 'tableOrderController', 
+																						controllerAs: 'tableOrderController'
+																							}
+																			}
+																			}
+																			);
 	
 	$urlRouterProvider
 	.otherwise('/');
