@@ -26,6 +26,9 @@
 						class="body">
 						{{v.menuitem_desc}}
 					</div>
+					<!--  *************** 
+							price (start)
+							*************** -->
 					<div 
 						class="body" 
 						id="price" 
@@ -35,6 +38,13 @@
 							UNIT PRICE: &#8369{{v.menuitem_price}}
 						</span>
 					</div>
+					<!--  *************** 
+							price (end)
+							*************** -->
+							
+					<!--  *************** 
+							quantity (start)
+							*************** -->
 					<div 
 						class="body" 
 						id="quantity" 
@@ -44,6 +54,13 @@
 							QUANTITY: {{v.quantity}}
 						</span>
 					</div>
+					<!--  *************** 
+							quantity (end)
+							*************** -->
+							
+					<!--  *************** 
+							cost (start)
+							*************** -->
 					<div 
 						class="body" 
 						id="cost" 
@@ -53,8 +70,46 @@
 							PRICE: &#8369{{v.quantity * v.menuitem_price}}
 						</span>
 					</div>
+					<!--  *************** 
+							cost (end)
+							*************** -->
 				</div>
 			</ion-scroll>
+			<!--  *************** 
+					total (start)
+					*************** -->
+			<div 
+				class="child-content-right" 
+				id="total" 
+				name="total">
+				<span 
+					class="font-family-2-size-small">
+					TOTAL: &#8369{{customerOrderOrderController.getTotalCost() | number: 2}}
+				</span>
+			</div>
+			<!--  *************** 
+					total (end)
+					*************** -->
+			<div 
+				class="button-container">
+				<div 
+					class="row">
+					<div 
+						class="col">
+						<button 
+							class="button button-small button-positive" 
+							ng-click="customerOrderOrderController.postOrderreference();">
+							<i 
+								class="icon ion-paper-airplane">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								<ul_>Send</ul_>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</ion-content>
 </ion-view>

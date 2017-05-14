@@ -29,10 +29,19 @@ function reservationOrderreferenceOrderService(
 	var reservationOrderreferenceOrderServiceObj = {
 			reservationsOrderreferencesOrders: {}, 
 			customerUsername: undefined, 
+			companyName: undefined, 
+			branchName: undefined, 
+			tableNumber: undefined, 
 			getReservationsOrderreferencesOrders: getReservationsOrderreferencesOrders, 
 			getCustomerUsername: getCustomerUsername, 
+			getCompanyName: getCompanyName, 
+			getBranchName: getBranchName, 
+			getTableNumber: getTableNumber, 
 			setReservationsOrderreferencesOrders: setReservationsOrderreferencesOrders, 
 			setCustomerUsername: setCustomerUsername, 
+			setCompanyName: setCompanyName, 
+			setBranchName: setBranchName, 
+			setTableNumber: setTableNumber, 
 			fetchReservationsOrderreferencesOrders: fetchReservationsOrderreferencesOrders, 
 			addReservationOrderreferenceOrder: addReservationOrderreferenceOrder
 			}
@@ -41,9 +50,21 @@ function reservationOrderreferenceOrderService(
 	}
 	function getCustomerUsername(){	return reservationOrderreferenceOrderServiceObj.customerUsername;
 	}
+	function getCompanyName(){	return reservationOrderreferenceOrderServiceObj.companyName;
+	}
+	function getBranchName(){	return reservationOrderreferenceOrderServiceObj.branchName;
+	}
+	function getTableNumber(){	return reservationOrderreferenceOrderServiceObj.tableNumber;
+	}
 	function setReservationsOrderreferencesOrders(reservationsOrderreferencesOrders){	reservationOrderreferenceOrderServiceObj.reservationsOrderreferencesOrders = reservationsOrderreferencesOrders;
 	}
-	function setCustomerUsername(customerUsername){	return reservationOrderreferenceOrderServiceObj.customerUsername = customerUsername;
+	function setCustomerUsername(customerUsername){	reservationOrderreferenceOrderServiceObj.customerUsername = customerUsername;
+	}
+	function setCompanyName(companyName){	reservationOrderreferenceOrderServiceObj.companyName = companyName;
+	}
+	function setBranchName(branchName){	reservationOrderreferenceOrderServiceObj.branchName = branchName;
+	}
+	function setTableNumber(tableNumber){	reservationOrderreferenceOrderServiceObj.tableNumber = tableNumber;
 	}
 	
 	function fetchReservationsOrderreferencesOrders(getOptionReservation){
@@ -66,12 +87,24 @@ function reservationOrderreferenceOrderService(
 						)
 						.then(fetchReservationsSuccessCallback)
 						.catch(fetchReservationsFailedCallback);
-				}
+				} else if(4 == getOptionReservation){	//getCompanyBranchReservationsNotReservationStatus
+					reservationService.setCompanyName(reservationOrderreferenceOrderServiceObj.companyName);
+					reservationService.setBranchName(reservationOrderreferenceOrderServiceObj.branchName);
+					reservationService.fetchReservations(
+							4, 
+							{	ReservationStatus: RESERVATION_STATUS.done	}
+							)
+							.then(fetchReservationsSuccessCallback)
+							.catch(fetchReservationsFailedCallback);
+					}
 		
 		function fetchReservationsSuccessCallback(response){
 			var reservations = localStorage.getItem(KEYS.Reservations);
 			reservations = JSON.parse(reservations);
 			var reservationsKeyIdx = 0;
+			
+			if(0 == Object.keys(reservations).length){	deferred.resolve();
+			}
 			
 			angular.forEach(
 					reservations, 

@@ -87,12 +87,24 @@ function orderreferenceOrderService(
 						)
 						.then(fetchOrderreferencesSuccessCallback)
 						.catch(fetchOrderreferencesSuccessCallback);
-				}
+				} else if(4 == getOptionOrderreference){	//getCompanyBranchOrderreferencesNotOrderreferenceStatus
+					orderreferenceService.setCompanyName(orderreferenceOrderServiceObj.companyName);
+					orderreferenceService.setBranchName(orderreferenceOrderServiceObj.branchName);
+					orderreferenceService.fetchOrderreferences(
+							4, 
+							{	OrderreferenceStatus: ORDERREFERENCE_STATUS.done	}
+							)
+							.then(fetchOrderreferencesSuccessCallback)
+							.catch(fetchOrderreferencesSuccessCallback);
+					}
 		
 		function fetchOrderreferencesSuccessCallback(response){
 			var orderreferences = localStorage.getItem(KEYS.Orderreferences);
 			orderreferences = JSON.parse(orderreferences);
 			var orderreferencesKeyIdx = 0;
+			
+			if(0 == Object.keys(orderreferences).length){	deferred.resolve();
+			}
 			
 			angular.forEach(
 					orderreferences, 
@@ -160,7 +172,7 @@ function orderreferenceOrderService(
 		.then(addOrderreferenceOrderSuccessCallback)
 		.catch(addOrderreferenceOrderFailedCallback);
 		
-		function addOrderreferenceOrderSuccessCallback(response){	deferred.promise(response);
+		function addOrderreferenceOrderSuccessCallback(response){	deferred.resolve(response);
 		}
 		
 		function addOrderreferenceOrderFailedCallback(responseError){	deferred.reject(responseError);

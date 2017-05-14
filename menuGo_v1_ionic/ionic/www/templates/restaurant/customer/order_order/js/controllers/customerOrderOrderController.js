@@ -14,6 +14,7 @@ customerOrderOrderController.$inject = [
 	'ORDERREFERENCE_STATUS', 
 	'$localStorage', 
 	'$scope', 
+	'$stateParams', 
 	'dataService', 
 	'networkService', 
 	'orderService', 
@@ -31,6 +32,7 @@ function customerOrderOrderController(
 		ORDERREFERENCE_STATUS, 
 		$localStorage, 
 		$scope, 
+		$stateParams, 
 		dataService, 
 		networkService, 
 		orderService, 
@@ -39,6 +41,13 @@ function customerOrderOrderController(
 		popupService
 		){
 	var vm = this;
+	
+	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
+	}
+	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
+	}
+	if(!(null == $stateParams.tableNumber)){	vm.tableNumber = $stateParams.tableNumber;
+	}
 	
 	if(
 			networkService.deviceIsOffline() &&
@@ -98,7 +107,7 @@ function customerOrderOrderController(
 				customer_username: vm.user.username, 
 				table_id: vm._table.table_id, 
 				orderreference_status: ORDERREFERENCE_STATUS.sent, 
-				orderreference_status_change_timestamp: (new Date()).format('YYYY-MM-DD h:mm:ss')
+				orderreference_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
 				};
 		
 		var orders = [];
@@ -129,9 +138,9 @@ function customerOrderOrderController(
 				transParam.order = orders;
 				transParams.push(transParam);
 				
-				reservationOrderreferenceOrderService.addReservationOrderreferenceOrder(transParams)
-				.then(addReservationOrderreferenceOrderSuccessCallback)
-				.catch(addReservationOrderreferenceOrderFailedCallback);
+				orderreferenceOrderService.addOrderreferenceOrder(transParams)
+				.then(addOrderreferenceOrderSuccessCallback)
+				.catch(addOrderreferenceOrderFailedCallback);
 				
 				popupService.dispIonicLoading(LOADING_MESSAGES.sendingReservation);
 				}
@@ -146,10 +155,10 @@ function customerOrderOrderController(
 				popupService.dispIonicLoading(LOADING_MESSAGES.sendingReservation);
 				}
 		
-		function addReservationOrderreferenceOrderSuccessCallback(response){	popupService.hideIonicLoading();
+		function addOrderreferenceOrderSuccessCallback(response){	popupService.hideIonicLoading();
 		}
 		
-		function addReservationOrderreferenceOrderFailedCallback(responseError){
+		function addOrderreferenceOrderFailedCallback(responseError){
 			popupService.hideIonicLoading();
 			
 			popupService.dispIonicPopup(ERROR_MESSAGES.sendFailed);

@@ -116,10 +116,6 @@ function dataService(
 								}
 							);
 					
-					try{	companies = JSON.parse(companies);
-					} catch(err){
-					}
-					
 					companies[companyName][KEYS.Branches] = branches;
 					
 					function fetchTables(branchName){
@@ -143,16 +139,7 @@ function dataService(
 							if(branchesIdx == Object.keys(branches).length){	isGetTables = true;
 							}
 							
-							try{	companies = JSON.parse(companies);
-							} catch(err){
-							}
-							
 							companies[companyName][KEYS.Branches][branchName][KEYS.Tables] = tables;
-							companies = JSON.stringify(companies);
-							localStorage.setItem(
-									KEYS.Companies, 
-									companies
-									);
 							
 							localStorage.removeItem(KEYS.Branches);
 							localStorage.removeItem(KEYS.Tables);
@@ -163,8 +150,16 @@ function dataService(
 									isGetMenus &&
 									isGetTables &&
 									isGetMenuitems
-									){	$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
-									}
+									){
+								companies = JSON.stringify(companies);
+								
+								localStorage.setItem(
+										KEYS.Companies, 
+										companies
+										);
+								
+								$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
+								}
 							}
 						
 						function fetchTablesFailedCallback(responseError){
@@ -208,10 +203,6 @@ function dataService(
 								}
 							);
 					
-					try{	companies = JSON.parse(companies);
-					} catch(err){
-					}
-					
 					companies[companyName][KEYS.Menus] = menus;
 					
 					function fetchMenuitems(menuName){
@@ -235,16 +226,7 @@ function dataService(
 							if(menusIdx == Object.keys(menus).length){	isGetMenuitems = true;
 							}
 							
-							try{	companies = JSON.parse(companies);
-							} catch(err){
-							}
-							
 							companies[companyName][KEYS.Menus][menuName][KEYS.Menuitems] = menuitems;
-							companies = JSON.stringify(companies);
-							localStorage.setItem(
-									KEYS.Companies, 
-									companies
-									);
 							
 							localStorage.removeItem(KEYS.Menus);
 							localStorage.removeItem(KEYS.Menuitems);
@@ -255,8 +237,16 @@ function dataService(
 									isGetMenus &&
 									isGetTables &&
 									isGetMenuitems
-									){	$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
-									}
+									){
+								companies = JSON.stringify(companies);
+								
+								localStorage.setItem(
+										KEYS.Companies, 
+										companies
+										);
+								
+								$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
+								}
 							}
 						
 						function fetchMenuitemsFailedCallback(responseError){
@@ -301,24 +291,23 @@ function dataService(
 			if(null == marketing){	marketing = {};
 			}
 			
-			try{	marketing = JSON.parse(marketing);
-			} catch(err){
-			}
-			
 			marketing[KEYS.Advertisements] = advertisements;
-			marketing = JSON.stringify(marketing);
-			localStorage.setItem(
-					KEYS.Marketing, 
-					marketing
-					);
 			
 			localStorage.removeItem(KEYS.Advertisements);
 			
 			if(
 					isGetAdvertisements &&
 					isGetBlogs
-					){	$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingSuccess);
-					}
+					){
+				marketing = JSON.stringify(marketing);
+				
+				localStorage.setItem(
+						KEYS.Marketing, 
+						marketing
+						);
+				
+				$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingSuccess);
+				}
 			}
 		
 		function fetchAdvertisementsFailedCallback(responseError){
@@ -341,24 +330,22 @@ function dataService(
 			if(null == marketing){	marketing = {};
 			}
 			
-			try{	marketing = JSON.parse(marketing);
-			} catch(err){
-			}
-			
-			marketing[KEYS.Blogs] = blogs;
-			marketing = JSON.stringify(marketing);
-			localStorage.setItem(
-					KEYS.Marketing, 
-					marketing
-					);
-			
 			localStorage.removeItem(KEYS.Blogs);
 			
 			if(
 					isGetAdvertisements &&
 					isGetBlogs
-					){	$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingSuccess);
-					}
+					){
+				marketing[KEYS.Blogs] = blogs;
+				
+				marketing = JSON.stringify(marketing);
+				localStorage.setItem(
+						KEYS.Marketing, 
+						marketing
+						);
+				
+				$rootScope.$broadcast(BROADCAST_MESSAGES.getMarketingSuccess);
+				}
 			}
 		
 		function fetchBlogsFailedCallback(responseError){

@@ -75,7 +75,11 @@ function customerOrderMenuController(
 		if('restaurant.customer-order_order' == stateName){
 			$state.go(
 					stateName, 
-					{}, 
+					{
+						companyName: vm.companyName, 
+						branchName: vm.branchName, 
+						tableNumber: vm.tableNumber
+					}, 
 					{	reload: true	}
 					);
 			}
@@ -194,6 +198,7 @@ function customerOrderMenuController(
 				
 				vm.companyMenuMenuitem = genCompanyMenuMenuitem();
 				resetCompanyMenuMenuitem();
+				synchronize();
 				}
 			);
 	

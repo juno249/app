@@ -32,6 +32,7 @@ function restaurantHomeController(
 		popupService
 		){
 	const STATE_RESTAURANT_CUSTOMER_LAUNCH = 'restaurant.customer-launch';
+	const STATE_RESTAURANT_TABLE_ORDERREFERENCE = 'restaurant.table-orderreference';
 	
 	$ionicHistory.clearHistory();
 	
@@ -50,7 +51,16 @@ function restaurantHomeController(
 					{	companyName: vm.user.company_name	}, 
 					{	reload: true	}
 					);
-			}
+			} else if(STATE_RESTAURANT_TABLE_ORDERREFERENCE == stateName){
+				$state.go(
+						stateName, 
+						{
+							companyName: vm.user.company_name, 
+							branchName: vm.user.branch_name
+							}, 
+							{	reload: true	}
+							);
+				}
 		}
 	
 	if(

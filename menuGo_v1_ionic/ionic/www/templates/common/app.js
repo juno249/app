@@ -199,7 +199,20 @@ function doRouteConfig(
 																			}
 															}
 															}
-															);
+															)
+															.state(
+																	'restaurant.table-orderreference', 
+																	{
+																		url: '/table-orderreference/:companyName/:branchName', 
+																		views: {
+																			'restaurant-content': {
+																				templateUrl: 'templates/restaurant/table/orderreference/table-orderreference.html', 
+																				controller: 'tableOrderreferenceController', 
+																				controllerAs: 'tableOrderreferenceController'
+																					}
+																	}
+																	}
+																	);
 	
 	$urlRouterProvider
 	.otherwise('/');

@@ -38,6 +38,14 @@ div.order_order-container div#quantity{
 	text-align: right !important;
 }
 
+div.order_order-container div#total{
+	background-color: white;
+	border-radius: 25px;
+	
+	margin: 5px;
+	padding-right: 25px;
+}
+
 ion-view#order_order{
 	background-color: darkslategray;
 }
