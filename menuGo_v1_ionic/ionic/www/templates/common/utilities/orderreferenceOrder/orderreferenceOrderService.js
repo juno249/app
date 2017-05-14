@@ -9,20 +9,24 @@ orderreferenceOrderService.$inject = [
                                       'API_BASE_URL', 
                                       'KEYS', 
                                       'ORDERREFERENCE_STATUS', 
+                                      'TABLE_STATUS', 
                                       '$http', 
                                       '$q', 
                                       'orderService', 
-                                      'orderreferenceService'
+                                      'orderreferenceService', 
+                                      'tableService'
                                       ];
 
 function orderreferenceOrderService(
 		API_BASE_URL, 
 		KEYS, 
 		ORDERREFERENCE_STATUS, 
+		TABLE_STATUS, 
 		$http, 
 		$q, 
 		orderService, 
-		orderreferenceService
+		orderreferenceService, 
+		tableService
 		){
 	var orderreferenceOrderServiceObj = {
 			orderreferencesOrders: {}, 
@@ -172,8 +176,28 @@ function orderreferenceOrderService(
 		.then(addOrderreferenceOrderSuccessCallback)
 		.catch(addOrderreferenceOrderFailedCallback);
 		
-		function addOrderreferenceOrderSuccessCallback(response){	deferred.resolve(response);
-		}
+		function addOrderreferenceOrderSuccessCallback(response){
+			tableService.setCompanyName(orderreferenceOrderServiceObj.companyName);
+			tableService.setBranchName(orderreferenceOrderServiceObj.branchName);
+			tableService.setTableNumber(orderreferenceOrderServiceObj.tableNumber);
+			tableService.updateTable(
+					[
+						{
+							table_status: TABLE_STATUS.occupied, 
+							table_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
+							table_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+							}
+						]
+					)
+					.then(updateTableSuccessCallback)
+					.catch(updateTableFailedCallback);
+			
+			function updateTableSuccessCallback(response){	deferred.resolve(response);
+			}
+			
+			function updateTableFailedCallback(responseError){	deferred.reject(responseError);
+			}
+			}
 		
 		function addOrderreferenceOrderFailedCallback(responseError){	deferred.reject(responseError);
 		}

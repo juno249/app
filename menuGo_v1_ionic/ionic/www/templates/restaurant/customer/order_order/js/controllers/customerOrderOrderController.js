@@ -138,6 +138,9 @@ function customerOrderOrderController(
 				transParam.order = orders;
 				transParams.push(transParam);
 				
+				orderreferenceOrderService.setCompanyName(vm.companyName);
+				orderreferenceOrderService.setBranchName(vm.branchName);
+				orderreferenceOrderService.setTableNumber(vm.tableNumber);
 				orderreferenceOrderService.addOrderreferenceOrder(transParams)
 				.then(addOrderreferenceOrderSuccessCallback)
 				.catch(addOrderreferenceOrderFailedCallback);
