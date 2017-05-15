@@ -218,7 +218,7 @@ function doRouteConfig(
 																			{
 																				url: '/table-order/:orderreference', 
 																				views: {
-																					'restaurant-container': {
+																					'restaurant-content': {
 																						templateUrl: 'templates/restaurant/table/order/table-order.html', 
 																						controller: 'tableOrderController', 
 																						controllerAs: 'tableOrderController'
