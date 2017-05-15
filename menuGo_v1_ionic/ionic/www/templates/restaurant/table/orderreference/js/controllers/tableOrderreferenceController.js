@@ -33,22 +33,6 @@ function tableOrderreferenceController(
 	var vm = this;
 	vm.isReservation = false;
 	
-	//controller_method
-	vm.gotoState = gotoState;
-	
-	function gotoState(
-			stateName, 
-			stateParams
-			){
-		if('restaurant.table-order' == stateName){
-			$state.go(
-					stateName, 
-					{	orderreference: stateParams.orderreference	}, 
-					{	reload: true	}
-					);
-			}
-		}
-		
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
 	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
@@ -65,6 +49,22 @@ function tableOrderreferenceController(
 		reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
 		.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
 		.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+		}
+	
+	//controller_method
+	vm.gotoState = gotoState;
+	
+	function gotoState(
+			stateName, 
+			stateParams
+			){
+		if('restaurant.table-order' == stateName){
+			$state.go(
+					stateName, 
+					{	orderreference: JSON.stringify(stateParams.orderreference)	}, 
+					{	reload: true	}
+					);
+			}
 		}
 	
 	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){

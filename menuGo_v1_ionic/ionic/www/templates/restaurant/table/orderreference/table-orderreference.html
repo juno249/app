@@ -12,33 +12,31 @@
 			<div 
 				class="item" 
 				ng-repeat="(k, v) in tableOrderreferenceController.companyBranchReservation" 
-				ng-click="tableOrderreferenceController.gotoState(v);" 
 				ng-if="tableOrderreferenceController.isReservation">
 			</div>
 			<div 
 				class="item" 
 				ng-repeat="(k, v) in tableOrderreferenceController.companyBranchOrderreference" 
+				ng-click="tableOrderreferenceController.gotoState('restaurant.table-order', v);" 
 				ng-if="!tableOrderreferenceController.isReservation">
 				<div 
 					class="row">
 					<div 
-						class="col col-33">
-						<ul_>Reference</ul_>
+						class="col col-75">
+						Orderreference Id:<br>
+						<ul_>{{k}}</ul_><br><br>
+						Username:<br>
+						<ul_>{{v.orderreference[keys(v.orderreference)[0]].customer_username}}</ul_><br><br>
+						Status:<br>
+						<ul_>{{v.orderreference[keys(v.orderreference)[0]].orderreference_status}}</ul_>
 					</div>
 					<div 
-						class="col col-67">
-						{{k}}
-					</div>
-				</div>
-				<div 
-					class="row">
-					<div 
-						class="col col-33">
-						<ul_>Username</ul_>
-					</div>
-					<div 
-						class="col col-67">
-						{{v.orderreference[keys(v.orderreference)[0]].customer_username}}
+						class="col col-25 child-content-center">
+						<span 
+							class="font-family-1-size-small">
+							<ul_>Table #:</ul_><br><br>
+						</span>
+						{{v.table[keys(v.table)[0]].table_number}}
 					</div>
 				</div>
 			</div>

@@ -8,22 +8,20 @@ div.orderreference-container div.item{
 	margin: 5px;
 }
 
-div.orderreference-container div.item div.row div.col-33{
-	font-family: 'Julius Sans One', sans-serif;
-	font-size: 12px;
-	
-	text-align: center;
-	
-	white-space: normal;
-}
-
-div.orderreference-container div.item div.row div.col-67{
+div.orderreference-container div.item div.row div.col-75{
 	font-family: 'Julius Sans One', sans-serif;
 	font-size: 12px;
 	
 	line-height: 12px;
 	
-	text-align: center;
+	text-align: left;
+}
+
+div.orderreference-container div.item div.row div.col-25{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 20px;
 	
-	white-space: normal;
+	line-height: 12px;
+	
+	text-align: center;
 }

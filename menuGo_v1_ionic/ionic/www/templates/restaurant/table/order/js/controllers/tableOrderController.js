@@ -1,19 +1,36 @@
 angular
 .module('starter')
-.contorller(
+.controller(
 		'tableOrderController', 
 		tableOrderController
 		);
 
 tableOrderController.$inject = [
-                                '$stateParams'
+                                '$stateParams', 
+                                'orderService'
                                 ];
 
 function tableOrderController(
-		$stateParams
+		$stateParams, 
+		orderService
 		){
 	var vm = this;
 	
-	if(!(null == $stateParams.orderreference)){	vm.orderreference = $stateParams.orderreference;
+	if(!(null == $stateParams.orderreference)){
+		vm.orderreference = $stateParams.orderreference;
+		vm.orderreference = JSON.parse(vm.orderreference);
+		}
+	
+	//controller_method
+	vm.updateOrderStatus = updateOrderStatus;
+	
+	function updateOrderStatus(orderStatus){
+		var order = {
+				order_status: orderStatus, 
+				order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
+				order_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+				};
+		
 	}
+	
 	}
