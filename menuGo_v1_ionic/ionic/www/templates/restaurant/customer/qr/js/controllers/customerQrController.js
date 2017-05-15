@@ -136,7 +136,21 @@ function customerQrController(
 				
 				if(null == orderreferenceCode){	gotoState(STATE_CUSTOMER_ORDER_MENU);
 				} else {
-				}
+					$ionicPopup.confirm(
+							{	template: "<span class='font-family-1-size-small'>" + PROMPT_MESSAGES.yesNoExistingOrderreference	+ "</span>"
+								}
+							)
+							.then(promptCallback);
+					
+					function promptCallback(response){
+						if(response){
+							vm.orderreferenceCode = orderreferenceCode;
+							
+							gotoState(STATE_CUSTOMER_ORDER_MENU);
+						} else{
+						}
+						}
+					}
 				}
 			
 			function fetchOrderreferencesOrdersFailedCallback(responseError){
