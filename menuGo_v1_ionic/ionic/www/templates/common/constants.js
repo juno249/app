@@ -314,6 +314,12 @@ angular
 		)
 		
 .constant(
+		'PROMPT_MESSAGES', {
+			yesNoExistingOrderreference: 'there\'s an existing orderreference, continue?'
+				}
+		)
+		
+.constant(
 		'LOADING_MESSAGES', 
 		{
 			authenticatingUser: 'authenticating user', 

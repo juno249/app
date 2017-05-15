@@ -11,6 +11,8 @@ customerQrController.$inject = [
                                 'KEYS', 
                                 'LOADING_MESSAGES', 
                                 'ORDERREFERENCE_STATUS', 
+                                'PROMPT_MESSAGES', 
+                                '$ionicPopup', 
                                 '$localStorage', 
                                 '$scope', 
                                 '$state', 
@@ -28,6 +30,8 @@ function customerQrController(
 		KEYS, 
 		LOADING_MESSAGES, 
 		ORDERREFERENCE_STATUS, 
+		PROMPT_MESSAGES, 
+		$ionicPopup, 
 		$localStorage, 
 		$scope, 
 		$state, 
@@ -71,31 +75,24 @@ function customerQrController(
 	
 	function gotoState(stateName){
 		if(STATE_CUSTOMER_ORDER_MENU == stateName){
+			var stateParams = {
+					companyName: vm.companyName, 
+					branchName: vm.branchName, 
+					tableNumber: vm.tableNumber
+					}
+			
+			if(!(null == vm.orderreferenceCode)){	stateParams.orderreferenceCode = vm.orderreferenceCode;
+			}
+			
 			$state.go(
 					STATE_CUSTOMER_ORDER_MENU, 
-					{
-						companyName: vm.companyName, 
-						branchName: vm.branchName, 
-						tableNumber: vm.tableNumber, 
-						orderreferenceCode: vm.orderreferenceCode
-						}
+					stateParams, 
+					{	reload: true	}
 					);
 			}
 		}
 	
 	function doScan(){
-		/*
-		 * test (start)
-		 * */
-		vm.companyName = "Max's";
-		vm.branchName = 'Ermita';
-		vm.tableNumber =1;
-		
-		gotoState(STATE_CUSTOMER_ORDER_MENU);
-		return;
-		/*
-		 * test (end)
-		 * */
 		qrService.doScan()
 		.then(doScanSuccessCallback)
 		.catch(doScanFailedCallback);

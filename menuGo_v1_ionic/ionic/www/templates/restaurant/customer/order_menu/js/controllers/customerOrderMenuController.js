@@ -40,8 +40,11 @@ function customerOrderMenuController(
 	}
 	if(!(null == $stateParams.tableNumber)){	vm.tableNumber = $stateParams.tableNumber;
 	}
-	if(!(null == $stateParams.orderreferenceCode)){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
-	}
+	if(
+			!(null == $stateParams.orderreferenceCode) &&
+			!(0 == $stateParams.orderreferenceCode.length)
+			){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
+			}
 	
 	if(
 			networkService.deviceIsOffline() &&
@@ -75,14 +78,18 @@ function customerOrderMenuController(
 	
 	function gotoState(stateName){
 		if('restaurant.customer-order_order' == stateName){
+			var stateParams = {
+					companyName: vm.companyName, 
+					branchName: vm.branchName, 
+					tableNumber: vm.tableNumber
+					}
+			
+			if(!(null == vm.orderreferenceCode)){	stateParams.orderreferenceCode = vm.orderreferenceCode;
+			}
+			
 			$state.go(
 					stateName, 
-					{
-						companyName: vm.companyName, 
-						branchName: vm.branchName, 
-						tableNumber: vm.tableNumber, 
-						orderreferenceCode: vm.orderreferenceCode
-					}, 
+					stateParams, 
 					{	reload: true	}
 					);
 			}

@@ -12,8 +12,10 @@ customerOrderOrderController.$inject = [
 	'LOADING_MESSAGES', 
 	'ORDER_STATUS', 
 	'ORDERREFERENCE_STATUS', 
+	'SUCCESS_MESSAGES', 
 	'$localStorage', 
 	'$scope', 
+	'$state', 
 	'$stateParams', 
 	'dataService', 
 	'networkService', 
@@ -30,8 +32,10 @@ function customerOrderOrderController(
 		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		ORDERREFERENCE_STATUS, 
+		SUCCESS_MESSAGES, 
 		$localStorage, 
 		$scope, 
+		$state, 
 		$stateParams, 
 		dataService, 
 		networkService, 
@@ -40,7 +44,22 @@ function customerOrderOrderController(
 		orderreferenceService, 
 		popupService
 		){
+	const STATE_RESTAURANT_HOME = 'restaurant.home';
+	
 	var vm = this;
+	
+	//controller_method
+	vm.gotoState = gotoState;
+	
+	function gotoState(stateName){
+		if(STATE_RESTAURANT_HOME == stateName){
+			$state.go(
+					STATE_RESTAURANT_HOME, 
+					{}, 
+					{	reload: true	}
+					);
+		}
+	}
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
@@ -48,8 +67,11 @@ function customerOrderOrderController(
 	}
 	if(!(null == $stateParams.tableNumber)){	vm.tableNumber = $stateParams.tableNumber;
 	}
-	if(!(null == $stateParams.orderreferenceCode)){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
-	}
+	if(
+			!(null == $stateParams.orderreferenceCode) &&
+			!(0 == $stateParams.orderreferenceCode.length)
+			){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
+			}
 	
 	if(
 			networkService.deviceIsOffline() &&
@@ -153,6 +175,10 @@ function customerOrderOrderController(
 				transParam.order = orders;
 				transParams.push(transParam);
 				
+				orderService.setCompanyName(vm.companyName);
+				orderService.setBranchName(vm.branchName);
+				orderService.setTableNumber(vm.tableNumber);
+				orderService.setOrderreferenceCode(vm.orderreferenceCode);
 				orderService.addOrder(orders)
 				.then(addOrderSuccessCallback)
 				.catch(addOrderFailedCallback);
@@ -160,8 +186,12 @@ function customerOrderOrderController(
 				popupService.dispIonicLoading(LOADING_MESSAGES.sendingReservation);
 				}
 		
-		function addOrderreferenceOrderSuccessCallback(response){	popupService.hideIonicLoading();
-		}
+		function addOrderreferenceOrderSuccessCallback(response){
+			popupService.hideIonicLoading();
+			
+			popupService.dispIonicPopup(SUCCESS_MESSAGES.postOrderSuccess);
+			gotoState(STATE_RESTAURANT_HOME);
+			}
 		
 		function addOrderreferenceOrderFailedCallback(responseError){
 			popupService.hideIonicLoading();
@@ -169,8 +199,12 @@ function customerOrderOrderController(
 			popupService.dispIonicPopup(ERROR_MESSAGES.sendFailed);
 			}
 		
-		function addOrderSuccessCallback(response){	popupService.hideIonicLoading();
-		}
+		function addOrderSuccessCallback(response){
+			popupService.hideIonicLoading();
+			
+			popupService.dispIonicPopup(SUCCESS_MESSAGES.postOrderSuccess);
+			gotoState(STATE_RESTAURANT_HOME);
+			}
 		
 		function addOrderFailedCallback(responseError){
 			popupService.hideIonicLoading();
