@@ -122,6 +122,11 @@ div.page_header-container{
 	text-align: center;
 }
 
+div.popup div.popup-buttons button{
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 12px;
+}
+
 ion-scroll.tab-container{
 	overflow-x: scroll;
 	

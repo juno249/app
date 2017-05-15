@@ -110,19 +110,6 @@ function loginService(
 					loginServiceObj.user.branch_id = responseData.branch_id;
 					loginServiceObj.user.branch_name = responseData.branch_name;
 					
-					/*
-					 * test (start)
-					 * */
-					localStorage.setItem(
-							KEYS.User, 
-							JSON.stringify(loginServiceObj.user)
-							);
-					
-					deferred.resolve();
-					/*
-					 * test (end)
-					 * */
-					
 					$ionicPush.register()
 					.then(registerSuccessCallback)
 					.catch(registerFailedCallback);
