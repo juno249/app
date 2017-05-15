@@ -6,27 +6,29 @@ angular
 		);
 
 loginController.$inject = [
+                           'BROADCAST_MESSAGES', 
                            'ERROR_MESSAGES', 
                            'KEYS', 
                            'LOADING_MESSAGES', 
                            'USER_ROLES', 
-                           '$ionicPush', 
-                           '$localStorage', 
                            '$rootScope', 
+                           '$scope', 
                            '$state', 
+                           'dataService', 
                            'loginService', 
                            'popupService'
                            ];
 
 function loginController(
+		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
 		USER_ROLES, 
-		$ionicPush, 
-		$localStorage, 
 		$rootScope, 
+		$scope, 
 		$state, 
+		dataService, 
 		loginService, 
 		popupService
 		){
@@ -69,11 +71,9 @@ function loginController(
 						USER_ROLES.cook == vm.user.role ||
 						USER_ROLES.waiter == vm.user.role
 						){
-					$state.go(
-							STATE_RESTAURANT_HOME, 
-							{	companyName: vm.user.company_name	}, 
-							{	reload: true	}
-							);
+					dataService.fetchCompanies();
+					
+					popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
 					}
 			}
 		
@@ -87,12 +87,37 @@ function loginController(
 	function doSignup(){
 	}
 	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesSuccess, 
+			function(){
+				popupService.hideIonicLoading();
+				
+				$state.go(
+						STATE_RESTAURANT_HOME, 
+						{	companyName: vm.user.company_name	}, 
+						{	reload: true	}
+						);
+				}
+			);
+	
+	$scope.$on(
+			BROADCAST_MESSAGES.getCompaniesFailed, 
+			function(){
+				var DOM_POPUP_CLASS = '.popup';
+				
+				popupService.hideIonicLoading();
+				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
+				}
+				}
+			);
+	
 	$rootScope.$on(
 			'cloud:push:notification', 
 			function(
 					event, 
 					data
 					){
-			}
+				//do something on push notif
+				}
 			);
 	}

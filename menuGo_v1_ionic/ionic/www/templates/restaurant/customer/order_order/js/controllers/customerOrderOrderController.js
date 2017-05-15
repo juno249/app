@@ -6,7 +6,6 @@ angular
 		);
 
 customerOrderOrderController.$inject = [
-	'BROADCAST_MESSAGES', 
 	'ERROR_MESSAGES', 
 	'KEYS', 
 	'LOADING_MESSAGES', 
@@ -17,8 +16,6 @@ customerOrderOrderController.$inject = [
 	'$scope', 
 	'$state', 
 	'$stateParams', 
-	'dataService', 
-	'networkService', 
 	'orderService', 
 	'orderreferenceOrderService', 
 	'orderreferenceService', 
@@ -26,7 +23,6 @@ customerOrderOrderController.$inject = [
 	];
 
 function customerOrderOrderController(
-		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
@@ -37,8 +33,6 @@ function customerOrderOrderController(
 		$scope, 
 		$state, 
 		$stateParams, 
-		dataService, 
-		networkService, 
 		orderService, 
 		orderreferenceOrderService, 
 		orderreferenceService, 
@@ -72,23 +66,14 @@ function customerOrderOrderController(
 			!(0 == $stateParams.orderreferenceCode.length)
 			){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
 			}
-	
-	if(
-			networkService.deviceIsOffline() &&
-			!(null == localStorage.getItem(KEYS.Companies))
-			){
+	if(!(null == localStorage.getItem(KEYS.Companies))){
 		vm.company = localStorage.getItem(KEYS.Companies);
 		vm.company = JSON.parse(vm.company);
-		} else if(
-				networkService.deviceIsOffline() &&
-				null == localStorage.getItem(KEYS.Companies)
-				){
-			vm._table = {};
-			} else {
-				dataService.fetchCompanies();
-				
-				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
-				}
+		}
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
+		vm.user = JSON.parse(vm.user);
+		}
 	
 	//controller_method
 	vm.remReservationOrder = remReservationOrder;
@@ -213,15 +198,6 @@ function customerOrderOrderController(
 			}
 		}
 	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.Companies);
-			}, 
-			function(){
-				vm.company = localStorage.getItem(KEYS.Companies);
-				vm.company = JSON.parse(vm.company);
-				}
-			);
-	
 	$scope.$watchCollection(
 			function(){	return vm.company;
 			}, 
@@ -243,39 +219,10 @@ function customerOrderOrderController(
 				}
 			);
 	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.User);
-			}, 
-			function(){
-				vm.user = localStorage.getItem(KEYS.User);
-				vm.user = JSON.parse(vm.user);
-				
-				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
-				}
-				}
-			);
-	
 	$scope.$watchCollection(
 			function(){	return vm.user.reservationOrder;
 			}, 
 			function(){	getTotalCost();
 			}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesSuccess, 
-			function(){	popupService.hideIonicLoading();
-			}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesFailed, 
-			function(){
-				var DOM_POPUP_CLASS = '.popup';
-				
-				popupService.hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
-				}
-				}
 			);
 	}

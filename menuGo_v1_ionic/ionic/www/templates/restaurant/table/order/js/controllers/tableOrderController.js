@@ -30,7 +30,5 @@ function tableOrderController(
 				order_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
 				order_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
 				};
-		
-	}
-	
+		}
 	}

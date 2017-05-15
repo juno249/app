@@ -7,9 +7,7 @@ angular
 
 tableOrderreferenceController.$inject = [
                                          'ERROR_MESSAGES', 
-                                         'KEYS', 
                                          'LOADING_MESSAGES', 
-                                         '$scope', 
                                          '$state', 
                                          '$stateParams', 
                                          'networkService', 
@@ -20,9 +18,7 @@ tableOrderreferenceController.$inject = [
 
 function tableOrderreferenceController(
 		ERROR_MESSAGES, 
-		KEYS, 
 		LOADING_MESSAGES, 
-		$scope, 
 		$state, 
 		$stateParams, 
 		networkService, 
@@ -30,6 +26,8 @@ function tableOrderreferenceController(
 		popupService, 
 		reservationOrderreferenceOrderService
 		){
+	const STATE_RESTAURANT_TABLE_ORDER = 'restaurant.table-order';
+	
 	var vm = this;
 	vm.isReservation = false;
 	
@@ -58,7 +56,7 @@ function tableOrderreferenceController(
 			stateName, 
 			stateParams
 			){
-		if('restaurant.table-order' == stateName){
+		if(STATE_RESTAURANT_TABLE_ORDER == stateName){
 			$state.go(
 					stateName, 
 					{	orderreference: JSON.stringify(stateParams.orderreference)	}, 

@@ -6,32 +6,22 @@ angular
 		);
 
 customerOrderMenuController.$inject = [
-	'BROADCAST_MESSAGES', 
-	'ERROR_MESSAGES', 
 	'KEYS', 
-	'LOADING_MESSAGES', 
 	'$localStorage', 
 	'$scope', 
 	'$state', 
-	'$stateParams', 
-	'dataService', 
-	'networkService', 
-	'popupService'
+	'$stateParams'
 	];
 
 function customerOrderMenuController(
-		BROADCAST_MESSAGES, 
-		ERROR_MESSAGES, 
 		KEYS, 
-		LOADING_MESSAGES, 
 		$localStorage, 
 		$scope, 
 		$state, 
-		$stateParams, 
-		dataService, 
-		networkService, 
-		popupService
+		$stateParams
 		){
+	const STATE_RESTAURANT_CUSTOMER_ORDER_ORDER = 'restaurant.customer-order_order';
+	
 	var vm = this;
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
@@ -45,25 +35,14 @@ function customerOrderMenuController(
 			!(0 == $stateParams.orderreferenceCode.length)
 			){	vm.orderreferenceCode = $stateParams.orderreferenceCode;
 			}
-	
-	if(
-			networkService.deviceIsOffline() &&
-			!(null == localStorage.getItem(KEYS.Companies))
-			){
+	if(!(null == localStorage.getItem(KEYS.Companies))){
 		vm.company = localStorage.getItem(KEYS.Companies);
 		vm.company = JSON.parse(vm.company);
-		} else if(
-				networkService.deviceIsOffline() &&
-				null == localStorage.getItem(KEYS.Companies)
-				){
-			vm.company = {};
-			vm.companyMenu = {};
-			vm.companyMenuMenuitem = {};
-			} else {
-				dataService.fetchCompanies();
-				
-				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
-				}
+		}
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
+		vm.user = JSON.parse(vm.user);
+		}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -77,7 +56,7 @@ function customerOrderMenuController(
 	vm.subReservationOrder = subReservationOrder;
 	
 	function gotoState(stateName){
-		if('restaurant.customer-order_order' == stateName){
+		if(STATE_RESTAURANT_CUSTOMER_ORDER_ORDER == stateName){
 			var stateParams = {
 					companyName: vm.companyName, 
 					branchName: vm.branchName, 
@@ -175,15 +154,6 @@ function customerOrderMenuController(
 				);
 		}
 	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.Companies);
-			}, 
-			function(){
-				vm.company = localStorage.getItem(KEYS.Companies);
-				vm.company = JSON.parse(vm.company);
-				}
-			);
-	
 	$scope.$watchCollection(
 			function(){	return vm.company;
 			}, 
@@ -212,39 +182,10 @@ function customerOrderMenuController(
 				}
 			);
 	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.User);
-			}, 
-			function(){
-				vm.user = localStorage.getItem(KEYS.User);
-				vm.user = JSON.parse(vm.user);
-				
-				if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
-				}
-				}
-			);
-	
 	$scope.$watchCollection(
 			function(){	return vm.user.reservationOrder;
 			}, 
 			function(){	synchronize();
 			}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesSuccess, 
-			function(){	popupService.hideIonicLoading();
-			}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesFailed, 
-			function(){
-				var DOM_POPUP_CLASS = '.popup';
-				
-				popupService.hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
-				}
-				}
 			);
 	}

@@ -6,67 +6,48 @@ angular
 		);
 
 customerQrController.$inject = [
-                                'BROADCAST_MESSAGES', 
                                 'ERROR_MESSAGES', 
                                 'KEYS', 
                                 'LOADING_MESSAGES', 
-                                'ORDERREFERENCE_STATUS', 
                                 'PROMPT_MESSAGES', 
                                 '$ionicPopup', 
                                 '$localStorage', 
                                 '$scope', 
                                 '$state', 
                                 '$stateParams', 
-                                'dataService', 
-                                'networkService', 
                                 'orderreferenceOrderService', 
                                 'popupService', 
                                 'qrService'
                                 ];
 
 function customerQrController(
-		BROADCAST_MESSAGES, 
 		ERROR_MESSAGES, 
 		KEYS, 
 		LOADING_MESSAGES, 
-		ORDERREFERENCE_STATUS, 
 		PROMPT_MESSAGES, 
 		$ionicPopup, 
 		$localStorage, 
 		$scope, 
 		$state, 
 		$stateParams, 
-		dataService, 
-		networkService, 
 		orderreferenceOrderService, 
 		popupService, 
 		qrService
 		){
-	const STATE_CUSTOMER_ORDER_MENU = 'restaurant.customer-order_menu';
+	const STATE_RESTAURANT_CUSTOMER_ORDER_MENU = 'restaurant.customer-order_menu';
 	
 	var vm = this;
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
 	}
-	
-	if(
-			networkService.deviceIsOffline() &&
-			!(null == localStorage.getItem(KEYS.Companies))
-			){
+	if(!(null == localStorage.getItem(KEYS.Companies))){
 		vm.company = localStorage.getItem(KEYS.Companies);
 		vm.company = JSON.parse(vm.company);
-		vm._company = vm.company[vm.companyName];
-		} else if(
-				networkService.deviceIsOffline() &&
-				null == localStorage.getItem(KEYS.Companies)
-				){
-			vm.company = {};
-			vm._company = {};
-			} else {
-				dataService.fetchCompanies();
-				
-				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
-				}
+		}
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
+		vm.user = JSON.parse(vm.user);
+		}
 	
 	//controller_method
 	vm.gotoState = gotoState;
@@ -74,7 +55,7 @@ function customerQrController(
 	vm.doScan = doScan;
 	
 	function gotoState(stateName){
-		if(STATE_CUSTOMER_ORDER_MENU == stateName){
+		if(STATE_RESTAURANT_CUSTOMER_ORDER_MENU == stateName){
 			var stateParams = {
 					companyName: vm.companyName, 
 					branchName: vm.branchName, 
@@ -85,7 +66,7 @@ function customerQrController(
 			}
 			
 			$state.go(
-					STATE_CUSTOMER_ORDER_MENU, 
+					STATE_RESTAURANT_CUSTOMER_ORDER_MENU, 
 					stateParams, 
 					{	reload: true	}
 					);
@@ -134,7 +115,7 @@ function customerQrController(
 								}
 						);
 				
-				if(null == orderreferenceCode){	gotoState(STATE_CUSTOMER_ORDER_MENU);
+				if(null == orderreferenceCode){	gotoState(STATE_RESTAURANT_CUSTOMER_ORDER_MENU);
 				} else {
 					$ionicPopup.confirm(
 							{	template: "<span class='font-family-1-size-small'>" + PROMPT_MESSAGES.yesNoExistingOrderreference	+ "</span>"
@@ -146,7 +127,7 @@ function customerQrController(
 						if(response){
 							vm.orderreferenceCode = orderreferenceCode;
 							
-							gotoState(STATE_CUSTOMER_ORDER_MENU);
+							gotoState(STATE_RESTAURANT_CUSTOMER_ORDER_MENU);
 						} else{
 						}
 						}
@@ -164,30 +145,12 @@ function customerQrController(
 		}
 		}
 	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.Companies);
-			}, 
-			function(){
-				vm.company = localStorage.getItem(KEYS.Companies);
-				vm.company = JSON.parse(vm.company);
-				}
-			);
-	
 	$scope.$watchCollection(
 			function(){	return vm.company;
 			}, 
 			function(){
 				if(!(null == vm.company)){	vm._company = vm.company[vm.companyName];
 				}
-				}
-			);
-	
-	$scope.$watch(
-			function(){	return localStorage.getItem(KEYS.User);
-			}, 
-			function(){
-				vm.user = localStorage.getItem(KEYS.User);
-				vm.user = JSON.parse(vm.user);
 				}
 			);
 	
@@ -212,23 +175,6 @@ function customerQrController(
 				vm.companyName = vm.reservationDetails.companyName;
 				vm.branchName = vm.reservationDetails.branchName;
 				vm.tableNumber = vm.reservationDetails.tableNumber;
-				}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesSuccess, 
-			function(){	popupService.hideIonicLoading();
-			}
-			);
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.getCompaniesFailed, 
-			function(){
-				var DOM_POPUP_CLASS = '.popup';
-				
-				popupService.hideIonicLoading();
-				if(0 == $(DOM_POPUP_CLASS).length){	popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
-				}
 				}
 			);
 	}
