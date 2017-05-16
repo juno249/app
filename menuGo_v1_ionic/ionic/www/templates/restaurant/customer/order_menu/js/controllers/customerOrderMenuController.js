@@ -42,6 +42,9 @@ function customerOrderMenuController(
 	if(!(null == localStorage.getItem(KEYS.User))){
 		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
+		
+		if(null == vm.user.reservationOrder){	vm.user.reservationOrder = {};
+		}
 		}
 	
 	//controller_method

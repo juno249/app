@@ -1,3 +1,26 @@
 ion-view#order{
 	background-color: darkslategray;
 }
+
+div.order-container div.item{
+	border-radius: 25px;
+	
+	line-height: 12px;
+	
+	margin: 5px;
+}
+
+div.order-container div.item div.row div.col .statusQueue{
+	background-color: firebrick;
+	color: white;
+}
+
+div.order-container div.item div.row div.col .statusInProgress{
+	background-color: chocolate;
+	color: white;
+}
+
+div.order-container div.item div.row div.col .statusDone{
+	background-color: cadetblue;
+	color: white;
+}

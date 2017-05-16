@@ -302,7 +302,8 @@ angular
 			authenticationFailed: 'authentication failed: invalid username/password', 
 			getFailed: 'get failed: unable to retrieve data from server', 
 			sendFailed: 'send failed: unable to post reservation/orders to server', 
-			scanFailed: 'scan failed: unable to retrieve data from QR code'
+			scanFailed: 'scan failed: unable to retrieve data from QR code', 
+			updateFailed: 'update failed: unable to update reservation/orders'
 				}
 		)
 		
@@ -325,7 +326,9 @@ angular
 			authenticatingUser: 'authenticating user', 
 			gettingData: 'getting data', 
 			sendingReservation: 'sending reservation', 
-			sendingOrder: 'sending order'
+			sendingOrder: 'sending order', 
+			updatingOrderreference: 'updating orderreference', 
+			updatingOrder: 'updating order'
 				}
 		)
 

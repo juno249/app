@@ -74,9 +74,19 @@ function customerQrController(
 		}
 	
 	function doScan(){
+		/*
+		 * test (start)
+		 * */
+		/*
 		qrService.doScan()
 		.then(doScanSuccessCallback)
 		.catch(doScanFailedCallback);
+		*/
+		/*
+		 * test (end)
+		 * */
+		
+		doScanSuccessCallback({text: "Max's;Ermita;1"});
 		
 		function doScanSuccessCallback(data){
 			const DELIMETER = ';';

@@ -7,10 +7,14 @@ angular
 
 tableOrderreferenceController.$inject = [
                                          'ERROR_MESSAGES', 
+                                         'KEYS', 
                                          'LOADING_MESSAGES', 
+                                         'ORDERREFERENCE_STATUS', 
+                                         '$scope', 
                                          '$state', 
                                          '$stateParams', 
                                          'networkService', 
+                                         'orderreferenceService', 
                                          'orderreferenceOrderService', 
                                          'popupService', 
                                          'reservationOrderreferenceOrderService'
@@ -18,10 +22,14 @@ tableOrderreferenceController.$inject = [
 
 function tableOrderreferenceController(
 		ERROR_MESSAGES, 
+		KEYS, 
 		LOADING_MESSAGES, 
+		ORDERREFERENCE_STATUS, 
+		$scope, 
 		$state, 
 		$stateParams, 
 		networkService, 
+		orderreferenceService, 
 		orderreferenceOrderService, 
 		popupService, 
 		reservationOrderreferenceOrderService
@@ -35,6 +43,14 @@ function tableOrderreferenceController(
 	}
 	if(!(null == $stateParams.branchName)){	vm.branchName = $stateParams.branchName;
 	}
+	if(!(null == localStorage.getItem(KEYS.Companies))){
+		vm.company = localStorage.getItem(KEYS.Companies);
+		vm.company = JSON.parse(vm.company);
+		}
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
+		vm.user = JSON.parse(vm.user);
+		}
 	
 	if(networkService.deviceIsOffline()){
 		vm.companyBranchReservation = {};
@@ -51,6 +67,8 @@ function tableOrderreferenceController(
 	
 	//controller_method
 	vm.gotoState = gotoState;
+	//controller_method
+	vm.acknowledge = acknowledge;
 	
 	function gotoState(
 			stateName, 
@@ -59,9 +77,69 @@ function tableOrderreferenceController(
 		if(STATE_RESTAURANT_TABLE_ORDER == stateName){
 			$state.go(
 					stateName, 
-					{	orderreference: JSON.stringify(stateParams.orderreference)	}, 
-					{	reload: true	}
-					);
+					{
+						orderreference: JSON.stringify(stateParams), 
+						companyName: vm.companyName, 
+						branchName: vm.branchName
+						}, 
+						{	reload: true	}
+						);
+			}
+		}
+	
+	function getTableNumberFromId(tableId){
+		var tableNumber = undefined;
+		
+		angular.forEach(
+				vm._branch.tables, 
+				function(
+						v, 
+						k
+						){
+					if(k == tableId){	tableNumber = v.table_number;
+					}
+					}
+				);
+		
+		return tableNumber;
+		}
+	
+	function acknowledge(
+			orderreference
+			){
+		orderreferenceService.setCompanyName(vm.companyName);
+		orderreferenceService.setBranchName(vm.branchName);
+		orderreferenceService.setTableNumber(getTableNumberFromId(orderreference.table_id));
+		orderreferenceService.setOrderreferenceCode(orderreference.orderreference_code);
+		
+		var _orderreference = {
+				orderreference_status: ORDERREFERENCE_STATUS.in_progress, 
+				orderreference_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
+				orderreference_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+				}
+		
+		orderreferenceService.updateOrderreference([_orderreference])
+		.then(updateOrderreferenceSuccessCallback)
+		.catch(updateOrderreferenceFailedCallback);
+		
+		popupService.dispIonicLoading(LOADING_MESSAGES.updatingOrderreference);
+		
+		function updateOrderreferenceSuccessCallback(response){
+			popupService.hideIonicLoading();
+			
+			popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+			
+			reservationOrderreferenceOrderService.setCompanyName(vm.companyName);
+			reservationOrderreferenceOrderService.setBranchName(vm.branchName);
+			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
+			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+			}
+		
+		function updateOrderreferenceFailedCallback(responseError){
+			popupService.hideIonicLoading();
+			
+			popupService.dispIonicPopup(ERROR_MESSAGES.updateFailed);
 			}
 		}
 	
@@ -145,4 +223,22 @@ function tableOrderreferenceController(
 		
 		popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 		}
+	
+	$scope.$watchCollection(
+			function(){	return vm.company;
+			}, 
+			function(){
+				if(!(null == vm.company)){
+					vm._company = vm.company[vm.companyName];
+					if(null == vm._company){	return;
+					}
+					
+					if(!(null == vm._company.branches)){
+						vm._branch = vm._company.branches[vm.branchName];
+						if(null == vm._branch){	return;
+						}
+						}
+					}
+				}
+			);
 	}

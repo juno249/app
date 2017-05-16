@@ -216,7 +216,7 @@ function doRouteConfig(
 																	.state(
 																			'restaurant.table-order', 
 																			{
-																				url: '/table-order/:orderreference', 
+																				url: '/table-order/:companyName/:branchName/:orderreference', 
 																				views: {
 																					'restaurant-content': {
 																						templateUrl: 'templates/restaurant/table/order/table-order.html', 

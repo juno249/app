@@ -9,6 +9,64 @@
 		class="has-header">
 		<div 
 			class="order-container">
+			<div 
+				class="item" 
+				ng-repeat="(k, v) in tableOrderController.order">
+				<div 
+					class="row">
+					<div 
+						class="col">
+						<span 
+							class="font-family-1-size-small">
+							<ul_>{{tableOrderController.getMenuitemFromId(v.menuitem_id).menuitem_name}}</ul_><br><br>
+							Order Status:<br>
+							<span 
+								ng-class="{statusQueue: 'queue' == v.order_status, statusInProgress: 'in progress' == v.order_status, statusDone: 'done' == v.order_status}">
+								<ul_>{{v.order_status}}</ul_>
+							</span>
+						</span>
+					</div>
+				</div>
+				<div 
+					class="button-container">
+					<div 
+						class="row">
+						<div 
+							class="col">
+							<button 
+								class="button button-small button-positive" 
+								ng-click="tableOrderController.updateOrderStatus(k, 'queue');">
+								<span 
+									class="font-family-1-size-small">
+									<ul_>Queue</ul_>
+								</span>
+							</button>
+						</div>
+						<div 
+							class="col">
+							<button 
+								class="button button-small button-positive" 
+								ng-click="tableOrderController.updateOrderStatus(k, 'in progress');">
+								<span 
+									class="font-family-1-size-small">
+									<ul_>In Progress</ul_>
+								</span>
+							</button>
+						</div>
+						<div 
+							class="col">
+							<button 
+								class="button button-small button-positive" 
+								ng-click="tableOrderController.updateOrderStatus(k, 'done');">
+								<span 
+									class="font-family-1-size-small">
+									<ul_>Done</ul_>
+								</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</ion-content>
 </ion-view>

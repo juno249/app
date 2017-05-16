@@ -17,6 +17,21 @@ div.orderreference-container div.item div.row div.col-75{
 	text-align: left;
 }
 
+div.orderreference-container div.item div.row div.col-75 .statusSent{
+	background-color: firebrick;
+	color: white;
+}
+
+div.orderreference-container div.item div.row div.col-75 .statusInProgress{
+	background-color: chocolate;
+	color: white;
+}
+
+div.orderreference-container div.item div.row div.col-75 .statusDone{
+	background-color: cadetblue;
+	color: white;
+}
+
 div.orderreference-container div.item div.row div.col-25{
 	font-family: 'Julius Sans One', sans-serif;
 	font-size: 20px;

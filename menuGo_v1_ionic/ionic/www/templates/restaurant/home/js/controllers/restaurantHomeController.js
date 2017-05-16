@@ -7,6 +7,7 @@ angular
 
 restaurantHomeController.$inject = [
 	'KEYS', 
+	'$ionicHistory', 
 	'$scope', 
 	'$state', 
 	'$stateParams'
@@ -14,6 +15,7 @@ restaurantHomeController.$inject = [
 
 function restaurantHomeController(
 		KEYS, 
+		$ionicHistory, 
 		$scope, 
 		$state, 
 		$stateParams

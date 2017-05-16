@@ -28,7 +28,10 @@
 						Username:<br>
 						<ul_>{{v.orderreference[keys(v.orderreference)[0]].customer_username}}</ul_><br><br>
 						Status:<br>
-						<ul_>{{v.orderreference[keys(v.orderreference)[0]].orderreference_status}}</ul_>
+						<span 
+							ng-class="{statusSent: 'sent' == v.orderreference[keys(v.orderreference)[0]].orderreference_status, statusInProgress: 'in progress' == v.orderreference[keys(v.orderreference)[0]].orderreference_status, statusDone: 'done' == v.orderreference[keys(v.orderreference)[0]].orderreference_status}">
+							<ul_>{{v.orderreference[keys(v.orderreference)[0]].orderreference_status}}</ul_>
+						</span>
 					</div>
 					<div 
 						class="col col-25 child-content-center">
@@ -37,6 +40,27 @@
 							<ul_>Table #:</ul_><br><br>
 						</span>
 						{{v.table[keys(v.table)[0]].table_number}}
+					</div>
+				</div>
+				<div 
+					class="button-container">
+					<div 
+						class="row" 
+						ng-if="'sent' == v.orderreference[keys(v.orderreference)[0]].orderreference_status">
+						<div 
+							class="col">
+							<button 
+								class="button button-positive button-small" 
+								ng-click="tableOrderreferenceController.acknowledge(v.orderreference[keys(v.orderreference)[0]]);">
+								<i 
+									class="icon ion-thumbsup">
+								</i>
+								<span 
+									class="font-family-1-size-small">
+									Acknowledge
+								</span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
