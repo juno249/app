@@ -79,23 +79,6 @@ function tableOrderreferenceController(
 			}
 		}
 	
-	function getTableNumberFromId(tableId){
-		var tableNumber = undefined;
-		
-		angular.forEach(
-				vm._branch.tables, 
-				function(
-						v, 
-						k
-						){
-					if(k == tableId){	tableNumber = v.table_number;
-					}
-					}
-				);
-		
-		return tableNumber;
-		}
-	
 	function acknowledge(
 			orderreference
 			){
@@ -121,11 +104,7 @@ function tableOrderreferenceController(
 			
 			popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
 			
-			reservationOrderreferenceOrderService.setCompanyName(vm.companyName);
-			reservationOrderreferenceOrderService.setBranchName(vm.branchName);
-			reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
-			.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
-			.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+			doFetchReservationsOrderreferencesOrders();
 			}
 		
 		function updateOrderreferenceFailedCallback(responseError){
@@ -133,6 +112,14 @@ function tableOrderreferenceController(
 			
 			popupService.dispIonicPopup(ERROR_MESSAGES.updateFailed);
 			}
+		}
+	
+	function doFetchReservationsOrderreferencesOrders(){
+		reservationOrderreferenceOrderService.setCompanyName(vm.companyName);
+		reservationOrderreferenceOrderService.setBranchName(vm.branchName);
+		reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
+		.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+		.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 		}
 	
 	function fetchReservationsOrderreferencesOrdersSuccessCallback(response){
@@ -216,6 +203,23 @@ function tableOrderreferenceController(
 		popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 		}
 	
+	function getTableNumberFromId(tableId){
+		var tableNumber = undefined;
+		
+		angular.forEach(
+				vm._branch.tables, 
+				function(
+						v, 
+						k
+						){
+					if(k == tableId){	tableNumber = v.table_number;
+					}
+					}
+				);
+		
+		return tableNumber;
+		}
+	
 	$scope.$watchCollection(
 			function(){	return vm.company;
 			}, 
@@ -239,11 +243,7 @@ function tableOrderreferenceController(
 			function(){
 				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
 				
-				reservationOrderreferenceOrderService.setCompanyName(vm.companyName);
-				reservationOrderreferenceOrderService.setBranchName(vm.branchName);
-				reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
-				.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
-				.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+				doFetchReservationsOrderreferencesOrders();
 				}
 			);
 	
