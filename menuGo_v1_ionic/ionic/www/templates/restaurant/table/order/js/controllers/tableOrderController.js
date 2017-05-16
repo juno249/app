@@ -9,21 +9,31 @@ tableOrderController.$inject = [
                                 'KEYS', 
                                 'ERROR_MESSAGES', 
                                 'LOADING_MESSAGES', 
+                                'ORDER_STATUS', 
+                                'ORDERREFERENCE_STATUS', 
                                 '$scope', 
                                 '$stateParams', 
                                 'orderService', 
-                                'popupService'
+                                'orderreferenceService', 
+                                'popupService', 
+                                'tableService'
                                 ];
 
 function tableOrderController(
 		KEYS, 
 		ERROR_MESSAGES, 
 		LOADING_MESSAGES, 
+		ORDER_STATUS, 
+		ORDERREFERENCE_STATUS, 
 		$scope, 
 		$stateParams, 
 		orderService, 
-		popupService
+		orderreferenceService, 
+		popupService, 
+		tableService
 		){
+	const STATE_RESTAURANT_TABLE_ORDERREFERENCE = 'restaurant.table-orderreference';
+	
 	var vm = this;
 	
 	if(!(null == $stateParams.companyName)){	vm.companyName = $stateParams.companyName;
@@ -45,9 +55,23 @@ function tableOrderController(
 		}
 	
 	//controller_method
+	vm.gotoState = gotoState;
+	//controller_method
 	vm.updateOrderStatus = updateOrderStatus;
 	//controller_method
 	vm.getMenuitemFromId = getMenuitemFromId;
+	//controller_method
+	vm.doDone = doDone;
+	
+	function gotoState(stateName){
+		if(STATE_RESTAURANT_TABLE_ORDERREFERENCE == stateName){
+			$state.go(
+					stateName, 
+					{	companyName: vm.companyName	}, 
+					{	reload: true	}
+					);
+			}
+		}
 	
 	function updateOrderStatus(
 			orderId, 
@@ -111,6 +135,57 @@ function tableOrderController(
 		return companyMenuMenuitem;
 		}
 	
+	function doDone(){
+		var orderreference = {
+				orderreference_status: ORDERREFERENCE_STATUS.done, 
+				orderreference_status_change_timestamp: (new Date()).format('YYYY-MM-DD h:mm:ss'), 
+				orderreference_last_change_timestampe: (new Date()).format('YYYY-MM-DD h:mm:ss')
+				}
+		
+		orderreferenceService.setCompanyName(vm.companyName);
+		orderreferenceService.setBranchName(vm.branchName);
+		orderreferenceService.setTableNumber(getTableNumberFromId(vm.orderreference[Object.keys(vm.orderreference)[0]].table_id));
+		orderreferenceService.setOrderreferenceCode(Object.keys(vm.orderreference)[0]);
+		orderreferenceService.updateOrderreference(orderreference)
+		.then(updateOrderreferenceSuccessCallback)
+		.catch(updateOrderreferenceFailedCallback);
+		
+		popupService.dispIonicLoading();
+		
+		function updateOrderreferenceSuccessCallback(response){
+			var table = {
+					table_status: TABLE_STATUS.vacant, 
+					table_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
+					table_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
+					};
+			
+			tableService.setCompanyName(vm.companyName);
+			tableService.setBranchName(vm.branchName);
+			tableService.setTableNumber(getTableNumberFromId(vm.orderreference[Object.keys(vm.orderreference)[0]].table_id));
+			tableService.updateTable(table)
+			.then(updateTableSuccessCallback)
+			.catch(updateTableFailedCallback);
+			
+			function updateTableSuccessCallback(response){
+				popupService.hideIonicLoading();
+				
+				gotoState(STATE_RESTAURANT_TABLE_ORDERREFERENCE);
+				}
+			
+			function updateTableFailedCallback(responseError){
+				popupService.hideIonicLoading();
+				
+				popupService.dispIonicPopup(ERROR_MESSAGES.updateFailed);
+				}
+			}
+		
+		function updateOrderreferenceFailedCallback(responseError){
+			popupService.hideIonicLoading();
+			
+			popupService.dispIonicPopup(ERROR_MESSAGES.updateFailed);
+			}
+		}
+	
 	function getTableNumberFromId(tableId){
 		var tableNumber = undefined;
 		
@@ -145,6 +220,23 @@ function tableOrderController(
 		return menuitem;
 		}
 	
+	function isOrderDone(){
+		var isDone = true;
+		
+		angular.forEach(
+				vm.order, 
+				function(
+						v, 
+						k
+						){
+					if(!(ORDER_STATUS.done == v.order_status)){	var isDone = false;
+					}
+					}
+				);
+		
+		return isDone;
+		}
+	
 	$scope.$watchCollection(
 			function(){	return vm.company;
 			}, 
@@ -168,5 +260,21 @@ function tableOrderController(
 				}
 				vm.companyMenuMenuitem = genCompanyMenuMenuitem();
 			}
+			);
+	
+	$scope.$watchCollection(
+			function(){	return vm.order;
+			}, 
+			function(){	vm.isOrderDone = isOrderDone();
+			}
+			);
+	
+	$scope.$on(
+			'cloud:push:notification', 
+			function(
+					event, 
+					data
+					){
+				}
 			);
 	}

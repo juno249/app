@@ -55,14 +55,6 @@ function tableOrderreferenceController(
 	if(networkService.deviceIsOffline()){
 		vm.companyBranchReservation = {};
 		vm.companyBranchOrderreference = {};
-	} else {
-		popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
-		
-		reservationOrderreferenceOrderService.setCompanyName(vm.companyName);
-		reservationOrderreferenceOrderService.setBranchName(vm.branchName);
-		reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
-		.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
-		.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
 		}
 	
 	//controller_method
@@ -239,6 +231,29 @@ function tableOrderreferenceController(
 						}
 						}
 					}
+				}
+			);
+	
+	$scope.$on(
+			'$ionicView.afterEnter', 
+			function(){
+				popupService.dispIonicLoading(LOADING_MESSAGES.gettingData);
+				
+				reservationOrderreferenceOrderService.setCompanyName(vm.companyName);
+				reservationOrderreferenceOrderService.setBranchName(vm.branchName);
+				reservationOrderreferenceOrderService.fetchReservationsOrderreferencesOrders(4)
+				.then(fetchReservationsOrderreferencesOrdersSuccessCallback)
+				.catch(fetchReservationsOrderreferencesOrdersFailedCallback);
+				}
+			);
+	
+	$scope.$on(
+			'cloud:push:notification', 
+			function(
+					event, 
+					data
+					){
+				//do something on push notif
 				}
 			);
 	}
