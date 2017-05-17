@@ -20,7 +20,7 @@ div.order-container div.item div.row div.col .statusInProgress{
 	color: white;
 }
 
-div.order-container div.item div.row div.col .statusDone{
+div.order-container div.item div.row div.col .statusToServe{
 	background-color: cadetblue;
 	color: white;
 }

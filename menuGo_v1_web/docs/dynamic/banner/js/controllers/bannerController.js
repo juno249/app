@@ -65,8 +65,14 @@ function bannerController(
 		}
 		}
 	
-	function doLogout(){	//do something on logout
-	}
+	function doLogout(){
+		localStorage.clear();
+		$state.go(
+				'home', 
+				{}, 
+				{	reload: true	}
+				);
+		}
 	
 	function doSignup(){
 		var formMode = 'I';
@@ -188,22 +194,19 @@ function bannerController(
 			}
 		}
 	
-	function authAuthenticatedCallback(){
-		const USER_KEY = 'User';
-		
-		if(!(null == localStorage.getItem(USER_KEY))){
-			vm.user = localStorage.getItem(USER_KEY);
-			vm.user = JSON.parse(vm.user);
-			}
-		
-		$timeout(
-				function(){	$state.go('manage');
+	$scope.$watch(
+			function(){	return localStorage.getItem('User');
+			}, 
+			function(){
+				if(!(null == localStorage.getItem('User'))){
+					vm.user = localStorage.getItem('User');
+					vm.user = JSON.parse(vm.user);
+					
+					$timeout(
+							function(){	$state.go('manage');
+							}
+							);
+					}
 				}
-				);
-		}
-	
-	$scope.$on(
-			BROADCAST_MESSAGES.authAuthenticated, 
-			authAuthenticatedCallback
 			);
 	}

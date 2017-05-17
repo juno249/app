@@ -11,7 +11,9 @@ tableOrderController.$inject = [
                                 'LOADING_MESSAGES', 
                                 'ORDER_STATUS', 
                                 'ORDERREFERENCE_STATUS', 
+                                'TABLE_STATUS', 
                                 '$scope', 
+                                '$state', 
                                 '$stateParams', 
                                 'orderService', 
                                 'orderreferenceService', 
@@ -25,7 +27,9 @@ function tableOrderController(
 		LOADING_MESSAGES, 
 		ORDER_STATUS, 
 		ORDERREFERENCE_STATUS, 
+		TABLE_STATUS, 
 		$scope, 
+		$state, 
 		$stateParams, 
 		orderService, 
 		orderreferenceService, 
@@ -67,9 +71,12 @@ function tableOrderController(
 		if(STATE_RESTAURANT_TABLE_ORDERREFERENCE == stateName){
 			$state.go(
 					stateName, 
-					{	companyName: vm.companyName	}, 
-					{	reload: true	}
-					);
+					{
+						companyName: vm.companyName, 
+						branchName: vm.branchName
+						}, 
+						{	reload: true	}
+						);
 			}
 		}
 	
@@ -138,19 +145,19 @@ function tableOrderController(
 	function doDone(){
 		var orderreference = {
 				orderreference_status: ORDERREFERENCE_STATUS.done, 
-				orderreference_status_change_timestamp: (new Date()).format('YYYY-MM-DD h:mm:ss'), 
-				orderreference_last_change_timestampe: (new Date()).format('YYYY-MM-DD h:mm:ss')
+				orderreference_status_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss'), 
+				orderreference_last_change_timestamp: moment(new Date()).format('YYYY-MM-DD h:mm:ss')
 				}
 		
 		orderreferenceService.setCompanyName(vm.companyName);
 		orderreferenceService.setBranchName(vm.branchName);
 		orderreferenceService.setTableNumber(getTableNumberFromId(vm.orderreference[Object.keys(vm.orderreference)[0]].table_id));
 		orderreferenceService.setOrderreferenceCode(Object.keys(vm.orderreference)[0]);
-		orderreferenceService.updateOrderreference(orderreference)
+		orderreferenceService.updateOrderreference([orderreference])
 		.then(updateOrderreferenceSuccessCallback)
 		.catch(updateOrderreferenceFailedCallback);
 		
-		popupService.dispIonicLoading();
+		popupService.dispIonicLoading(LOADING_MESSAGES.updatingOrderreference);
 		
 		function updateOrderreferenceSuccessCallback(response){
 			var table = {
@@ -162,7 +169,7 @@ function tableOrderController(
 			tableService.setCompanyName(vm.companyName);
 			tableService.setBranchName(vm.branchName);
 			tableService.setTableNumber(getTableNumberFromId(vm.orderreference[Object.keys(vm.orderreference)[0]].table_id));
-			tableService.updateTable(table)
+			tableService.updateTable([table])
 			.then(updateTableSuccessCallback)
 			.catch(updateTableFailedCallback);
 			
@@ -221,7 +228,7 @@ function tableOrderController(
 		}
 	
 	function isOrderDone(){
-		var isDone = true;
+		var _isOrderDone = true;
 		
 		angular.forEach(
 				vm.order, 
@@ -229,12 +236,12 @@ function tableOrderController(
 						v, 
 						k
 						){
-					if(!(ORDER_STATUS.done == v.order_status)){	var isDone = false;
+					if(!(ORDER_STATUS.to_serve == v.order_status)){	_isOrderDone = false;
 					}
 					}
 				);
 		
-		return isDone;
+		return _isOrderDone;
 		}
 	
 	$scope.$watchCollection(
@@ -262,11 +269,12 @@ function tableOrderController(
 			}
 			);
 	
-	$scope.$watchCollection(
+	$scope.$watch(
 			function(){	return vm.order;
 			}, 
 			function(){	vm.isOrderDone = isOrderDone();
-			}
+			}, 
+			true
 			);
 	
 	$scope.$on(

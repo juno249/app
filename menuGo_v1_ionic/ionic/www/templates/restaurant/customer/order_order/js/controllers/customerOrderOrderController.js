@@ -49,7 +49,7 @@ function customerOrderOrderController(
 		if(STATE_RESTAURANT_HOME == stateName){
 			$state.go(
 					STATE_RESTAURANT_HOME, 
-					{}, 
+					{	companyName: vm.companyName	}, 
 					{	reload: true	}
 					);
 		}
@@ -175,6 +175,13 @@ function customerOrderOrderController(
 			popupService.hideIonicLoading();
 			
 			popupService.dispIonicPopup(SUCCESS_MESSAGES.postOrderSuccess);
+			
+			vm.user.reservationOrder = {};
+			localStorage.setItem(
+					KEYS.User, 
+					JSON.stringify(vm.user)
+					);
+			
 			gotoState(STATE_RESTAURANT_HOME);
 			}
 		
@@ -188,6 +195,13 @@ function customerOrderOrderController(
 			popupService.hideIonicLoading();
 			
 			popupService.dispIonicPopup(SUCCESS_MESSAGES.postOrderSuccess);
+			
+			vm.user.reservationOrder = {};
+			localStorage.setItem(
+					KEYS.User, 
+					JSON.stringify(vm.user)
+					);
+			
 			gotoState(STATE_RESTAURANT_HOME);
 			}
 		

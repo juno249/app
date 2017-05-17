@@ -21,7 +21,7 @@
 							<ul_>{{tableOrderController.getMenuitemFromId(v.menuitem_id).menuitem_name}}</ul_><br><br>
 							Order Status:<br>
 							<span 
-								ng-class="{statusQueue: 'queue' == v.order_status, statusInProgress: 'in progress' == v.order_status, statusDone: 'done' == v.order_status}">
+								ng-class="{statusQueue: 'queue' == v.order_status, statusInProgress: 'in progress' == v.order_status, statusToServe: 'to serve' == v.order_status}">
 								<ul_>{{v.order_status}}</ul_>
 							</span>
 						</span>
@@ -57,10 +57,10 @@
 							class="col">
 							<button 
 								class="button button-small button-positive" 
-								ng-click="tableOrderController.updateOrderStatus(k, 'done');">
+								ng-click="tableOrderController.updateOrderStatus(k, 'to serve');">
 								<span 
 									class="font-family-1-size-small">
-									<ul_>Done</ul_>
+									<ul_>To Serve</ul_>
 								</span>
 							</button>
 						</div>
@@ -77,6 +77,13 @@
 						<button 
 							class="button button-small button-positive" 
 							ng-click="tableOrderController.doDone();">
+							<i 
+								class="icon ion-thumbsup">
+							</i>
+							<span 
+								class="font-family-1-size-small">
+								Done
+							</span>
 						</button>
 					</div>
 				</div>
