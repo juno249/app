@@ -3,7 +3,7 @@ angular
 
 .constant(
 		'API_BASE_URL', 
-		'http://localhost/api'
+		'http://192.168.137.1/api'
 		)
 		
 .constant(
@@ -27,7 +27,8 @@ angular
 			15: 'customer_birthday_month', 
 			16: 'customer_birthday_date', 
 			17: 'customer_birthday_year', 
-			18: 'customer_last_change_timestamp'
+			18: 'customer_last_change_timestamp', 
+			19: 'customer_device_token'
 				}
 		)
 		
@@ -289,7 +290,9 @@ angular
 			getMarketingSuccess: 'getMarketingSuccess', 
 			getMarketingFailed: 'getMarketingFailed', 
 			getCompaniesSuccess: 'getCompaniesSuccess', 
-			getCompaniesFailed: 'getCompaniesFailed'
+			getCompaniesFailed: 'getCompaniesFailed', 
+			getCompanyBranchOrderreferencesSuccess: 'getCompanyBranchOrderreferencesSuccess', 
+			getCompanyBranchOrderreferencesFailed: 'getCompanyBranchOrderreferencesFailed'
 				}
 		)
 
@@ -298,7 +301,22 @@ angular
 		{
 			authenticationFailed: 'authentication failed: invalid username/password', 
 			getFailed: 'get failed: unable to retrieve data from server', 
-			sendFailed: 'send failed: unable to post reservation/orders to server'
+			sendFailed: 'send failed: unable to post reservation/orders to server', 
+			scanFailed: 'scan failed: unable to retrieve data from QR code', 
+			updateFailed: 'update failed: unable to update reservation/orders'
+				}
+		)
+		
+.constant(
+		'SUCCESS_MESSAGES', {
+			postReservationSuccess: 'post success: reservation submitted', 
+			postOrderSuccess: 'post success: order submitted'
+				}
+		)
+		
+.constant(
+		'PROMPT_MESSAGES', {
+			yesNoExistingOrderreference: 'there\'s an existing orderreference, continue?'
 				}
 		)
 		
@@ -308,7 +326,9 @@ angular
 			authenticatingUser: 'authenticating user', 
 			gettingData: 'getting data', 
 			sendingReservation: 'sending reservation', 
-			sendingOrder: 'sending order'
+			sendingOrder: 'sending order', 
+			updatingOrderreference: 'updating orderreference', 
+			updatingOrder: 'updating order'
 				}
 		)
 
@@ -328,6 +348,7 @@ angular
 			Marketing: 'marketing', 
 			Advertisements: 'advertisements', 
 			Blogs: 'blogs', 
-			User: 'user'
+			User: 'user', 
+			ReservationDetails: 'reservationDetails'
 				}
 		);
