@@ -70,7 +70,8 @@ function reservationService(
 				13: 'getCustomerReservations', 
 				14: 'getCustomerReservation', 
 				15: 'getCustomerReservationsReservationStatus', 
-				16: 'getCustomerReservationsNotReservationStatus'
+				16: 'getCustomerReservationsNotReservationStatus', 
+				17: 'getByQuery'
 					}, 
 					fetchReservations: fetchReservations, 
 					addReservation: addReservation, 
@@ -164,6 +165,8 @@ function reservationService(
 		case 'getCustomerReservationsNotReservationStatus':
 			httpConfig['url'] = API_BASE_URL + '/customers/' + reservationServiceObj.customerUsername + '/reservations/status_not/' + getParams['ReservationStatus'];
 			break;
+		case 'getByQuery':
+			httpConfig['url'] = API_BASE_URL + '/query/reservations' + getParams['queryString'];
 			default:
 				break;
 			}

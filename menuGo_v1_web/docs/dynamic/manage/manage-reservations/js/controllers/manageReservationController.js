@@ -8,6 +8,7 @@ angular
 manageReservationController.$inject = [
                                        'API_BASE_URL', 
                                        'BROADCAST_MESSAGES', 
+                                       'KEYS', 
                                        'RESERVATIONS_DB_FIELDS', 
                                        '$compile', 
                                        '$scope', 
@@ -21,6 +22,7 @@ manageReservationController.$inject = [
 function manageReservationController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		RESERVATIONS_DB_FIELDS, 
 		$compile, 
 		$scope, 
@@ -31,11 +33,10 @@ function manageReservationController(
 		datatableService
 		){
 	const DOM_RESERVATION_TABLE = '#reservation_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		}
 	if(

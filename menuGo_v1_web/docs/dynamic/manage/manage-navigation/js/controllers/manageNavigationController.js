@@ -7,6 +7,7 @@ angular
 
 manageNavigationController.$inject = [
                                       'BROADCAST_MESSAGES', 
+                                      'KEYS', 
                                       '$localStorage', 
                                       '$scope', 
                                       '$state'
@@ -14,6 +15,7 @@ manageNavigationController.$inject = [
 
 function manageNavigationController(
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		$localStorage, 
 		$scope, 
 		$state
@@ -25,7 +27,6 @@ function manageNavigationController(
 	const ORDERREFERENCE_KEY = 'Orderreference';
 	const ORDER_KEY = 'Order';
 	const RESERVATION_KEY = 'Reservation';
-	const USER_KEY = 'User';
 	
 	var vm = this;
 	vm.isManageBranchHidden = true;
@@ -36,8 +37,8 @@ function manageNavigationController(
 	vm.isManageOrderHidden = true;
 	vm.isManageReservationHidden = true;
 	
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	

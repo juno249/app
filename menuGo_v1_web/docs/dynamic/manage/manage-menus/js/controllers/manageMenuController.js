@@ -8,6 +8,7 @@ angular
 manageMenuController.$inject = [
                                 'API_BASE_URL', 
                                 'BROADCAST_MESSAGES', 
+                                'KEYS', 
                                 'MENUS_DB_FIELDS', 
                                 '$compile', 
                                 '$rootScope', 
@@ -22,6 +23,7 @@ manageMenuController.$inject = [
 function manageMenuController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		MENUS_DB_FIELDS, 
 		$compile, 
 		$rootScope, 
@@ -33,11 +35,10 @@ function manageMenuController(
 		datatableService
 		){
 	const DOM_MENU_TABLE = '#menu_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	if(!(null == $stateParams['companyName'])){	vm.companyName = $stateParams['companyName'];

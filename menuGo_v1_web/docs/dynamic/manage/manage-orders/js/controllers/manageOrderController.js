@@ -8,6 +8,7 @@ angular
 manageOrderController.$inject = [
                                  'API_BASE_URL', 
                                  'BROADCAST_MESSAGES', 
+                                 'KEYS', 
                                  'ORDERS_DB_FIELDS', 
                                  '$compile', 
                                  '$scope', 
@@ -21,6 +22,7 @@ manageOrderController.$inject = [
 function manageOrderController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		ORDERS_DB_FIELDS, 
 		$compile, 
 		$scope, 
@@ -31,11 +33,10 @@ function manageOrderController(
 		datatableService
 		){
 	const DOM_ORDER_TABLE = '#order_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	if(
