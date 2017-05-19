@@ -12,6 +12,7 @@ customerOrderOrderController.$inject = [
 	'ORDER_STATUS', 
 	'ORDERREFERENCE_STATUS', 
 	'SUCCESS_MESSAGES', 
+	'$ionicHistory', 
 	'$localStorage', 
 	'$scope', 
 	'$state', 
@@ -29,6 +30,7 @@ function customerOrderOrderController(
 		ORDER_STATUS, 
 		ORDERREFERENCE_STATUS, 
 		SUCCESS_MESSAGES, 
+		$ionicHistory, 
 		$localStorage, 
 		$scope, 
 		$state, 
@@ -182,6 +184,7 @@ function customerOrderOrderController(
 					JSON.stringify(vm.user)
 					);
 			
+			$ionicHistory.clearHistory();
 			gotoState(STATE_RESTAURANT_HOME);
 			}
 		
@@ -202,6 +205,7 @@ function customerOrderOrderController(
 					JSON.stringify(vm.user)
 					);
 			
+			$ionicHistory.clearHistory();
 			gotoState(STATE_RESTAURANT_HOME);
 			}
 		

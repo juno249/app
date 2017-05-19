@@ -133,7 +133,7 @@ function tableOrderController(
 							function(
 									v, 
 									k
-									){	companyMenuMenuitem[v.menuitem_code] = v;
+									){	companyMenuMenuitem[v.menuitem_id] = v;
 									}
 							);
 					}

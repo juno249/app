@@ -3,7 +3,7 @@ angular
 
 .constant(
 		'API_BASE_URL', 
-		'http://192.168.137.1/api'
+		'http://139.59.115.191/laravel/api'
 		)
 		
 .constant(

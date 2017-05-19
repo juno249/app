@@ -139,7 +139,7 @@ function customerQrController(
 			function fetchOrderreferencesOrdersFailedCallback(responseError){
 				popupService.hideIonicLoading();
 				
-				popupService.dispIonidPopup(ERROR_MESSAGES.getFailed);
+				popupService.dispIonicPopup(ERROR_MESSAGES.getFailed);
 				}
 			}
 		
