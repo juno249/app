@@ -149,11 +149,9 @@ function dataService(
 									isGetTables &&
 									isGetMenuitems
 									){
-								companies = JSON.stringify(companies);
-								
 								localStorage.setItem(
 										KEYS.Companies, 
-										companies
+										JSON.stringify(companies)
 										);
 								
 								$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);
@@ -234,11 +232,9 @@ function dataService(
 									isGetTables &&
 									isGetMenuitems
 									){
-								companies = JSON.stringify(companies);
-								
 								localStorage.setItem(
 										KEYS.Companies, 
-										companies
+										JSON.stringify(companies)
 										);
 								
 								$rootScope.$broadcast(BROADCAST_MESSAGES.getCompaniesSuccess);

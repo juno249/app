@@ -48,7 +48,7 @@ function manageNavigationController(
 	vm.initDom = initDom;
 	
 	function initDom(){
-		const SELECTOR_USERMENU = 'ul.nav.nav-list > li > a';
+		const SELECTOR_USERMENU = 'ul.nav.nav_list-container > li > a';
 		
 		$(SELECTOR_USERMENU).each(
 				function(){

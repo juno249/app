@@ -218,7 +218,7 @@ function doRunConfig(
 				const USER = 'user';
 				const STATE_HOME = 'home';
 				
-				var user = localStorage.getItem(User);
+				var user = localStorage.getItem(USER);
 				
 				if(null == user){	$timeout(
 						function(){	$state.go(STATE_HOME);

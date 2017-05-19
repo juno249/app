@@ -35,7 +35,9 @@ function datatableService(
 		doDTConfigButton: doDTConfigButton, 
 		doDTConfigDom: doDTConfigDom, 
 		doDTConfigLightColumnFilter: doDTConfigLightColumnFilter, 
-		doDTConfigSelect: doDTConfigSelect
+		doDTConfigSelect: doDTConfigSelect, 
+		//other methods
+		isRecHighlighted: isRecHighlighted
 		};
 	
 	function getDtOptions(){	return datatableServiceObj.dtOptions;
@@ -225,6 +227,28 @@ function datatableService(
 			style: 'os', 
 			selector: 'td:first-child'
 				}
+		}
+	
+	function isRecHighlighted(
+			rows, 
+			eIndex
+			){
+		var _isRecHighlighted = false;
+		
+		rows.each(
+				function(
+						idx, 
+						domObj
+						){
+					if(eIndex == idx){	return;
+					}
+					
+					if(!(-1 == domObj.className.indexOf('selected'))){	_isRecHighlighted = true;
+					}
+					}
+				);
+		
+		return _isRecHighlighted;
 		}
 	
 	return datatableServiceObj;

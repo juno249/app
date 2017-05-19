@@ -86,15 +86,24 @@ function manageTableController(
 			data, 
 			$event
 			){
+		const DOM_TD_SELECT_CHECKBOX_CLASS = 'td.select-checkbox';
+		const DOM_ROWS = 'table.dataTable tbody tr';
+		
 		var eSrc = $event.currentTarget.parentElement.parentElement;
 		var eClassname = eSrc.className;
-		var selectCboxClassname = 'td.select-checkbox';
+		var isRecHighlighted = datatableService.isRecHighlighted(
+				$(DOM_ROWS), 
+				eSrc._DT_RowIndex
+				);
 		
-		$(selectCboxClassname).get(eSrc._DT_RowIndex).click();
+		$(DOM_SELECT_CHECKBOX_CLASS).get(eSrc._DT_RowIndex).click();
 		$event.stopPropagation();
 		
 		if(-1 == eClassname.indexOf('selected')){
 			vm.table = data;
+			
+			if(isRecHighlighted){	return;
+			}
 			
 			$rootScope.$broadcast(
 					BROADCAST_MESSAGES.toggleOrderreference, 
