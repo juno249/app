@@ -9,6 +9,7 @@ manageCustomerController.$inject = [
                                     'API_BASE_URL', 
                                     'BROADCAST_MESSAGES', 
                                     'CUSTOMERS_DB_FIELDS', 
+                                    'KEYS', 
                                     '$compile', 
                                     '$localStorage', 
                                     '$scope', 
@@ -22,6 +23,7 @@ function manageCustomerController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
 		CUSTOMERS_DB_FIELDS, 
+		KEYS, 
 		$compile, 
 		$localStorage, 
 		$scope, 
@@ -31,11 +33,10 @@ function manageCustomerController(
 		datatableService
 		){
 	const DOM_CUSTOMER_TABLE = '#customer_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	vm.customer = {};

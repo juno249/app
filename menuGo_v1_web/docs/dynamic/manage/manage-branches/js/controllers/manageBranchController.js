@@ -9,6 +9,7 @@ manageBranchController.$inject = [
                                   'API_BASE_URL', 
                                   'BRANCHES_DB_FIELDS', 
                                   'BROADCAST_MESSAGES', 
+                                  'KEYS', 
                                   '$compile', 
                                   '$rootScope', 
                                   '$scope', 
@@ -23,6 +24,7 @@ function manageBranchController(
 		API_BASE_URL, 
 		BRANCHES_DB_FIELDS, 
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		$compile, 
 		$rootScope, 
 		$scope, 
@@ -33,11 +35,10 @@ function manageBranchController(
 		datatableService
 		){
 	const DOM_BRANCH_TABLE = '#branch_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	if(!(null == $stateParams['companyName'])){	vm.companyName = $stateParams['companyName'];

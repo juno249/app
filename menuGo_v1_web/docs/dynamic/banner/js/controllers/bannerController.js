@@ -7,6 +7,7 @@ angular
 
 bannerController.$inject = [
                             'BROADCAST_MESSAGES', 
+                            'KEYS', 
                             'USER_ROLES', 
                             '$localStorage', 
                             '$rootScope', 
@@ -23,6 +24,7 @@ bannerController.$inject = [
 
 function bannerController(
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		USER_ROLES, 
 		$localStorage, 
 		$rootScope, 
@@ -36,10 +38,13 @@ function bannerController(
 		customerCompanyBranchService, 
 		loginService
 		){
+	const STATE_HOME = 'home';
+	const STATE_MANAGE = 'manage';
+	
 	var vm = this;
 	
-	if(!(null == localStorage.getItem('User'))){
-		vm.user = localStorage.getItem('User');
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	
@@ -68,7 +73,7 @@ function bannerController(
 	function doLogout(){
 		localStorage.clear();
 		$state.go(
-				'home', 
+				STATE_HOME, 
 				{}, 
 				{	reload: true	}
 				);
@@ -195,15 +200,15 @@ function bannerController(
 		}
 	
 	$scope.$watch(
-			function(){	return localStorage.getItem('User');
+			function(){	return localStorage.getItem(KEYS.User);
 			}, 
 			function(){
-				if(!(null == localStorage.getItem('User'))){
-					vm.user = localStorage.getItem('User');
+				if(!(null == localStorage.getItem(KEYS.User))){
+					vm.user = localStorage.getItem(KEYS.User);
 					vm.user = JSON.parse(vm.user);
 					
 					$timeout(
-							function(){	$state.go('manage');
+							function(){	$state.go(STATE_MANAGE);
 							}
 							);
 					}

@@ -9,6 +9,7 @@ manageCompanyController.$inject = [
                                    'API_BASE_URL', 
                                    'BROADCAST_MESSAGES', 
                                    'COMPANIES_DB_FIELDS', 
+                                   'KEYS', 
                                    '$compile', 
                                    '$localStorage', 
                                    '$rootScope', 
@@ -23,6 +24,7 @@ function manageCompanyController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
 		COMPANIES_DB_FIELDS, 
+		KEYS, 
 		$compile, 
 		$localStorage, 
 		$rootScope, 
@@ -33,11 +35,10 @@ function manageCompanyController(
 		datatableService
 		){
 	const DOM_COMPANY_TABLE = '#company_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user= JSON.parse(vm.user);
 		}
 	vm.company = {};

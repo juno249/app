@@ -8,6 +8,7 @@ angular
 manageOrderreferenceController.$inject = [
                                           'API_BASE_URL', 
                                           'BROADCAST_MESSAGES', 
+                                          'KEYS', 
                                           'ORDERREFERENCES_DB_FIELDS', 
                                           '$compile', 
                                           '$rootScope', 
@@ -22,6 +23,7 @@ manageOrderreferenceController.$inject = [
 function manageOrderreferenceController(
 		API_BASE_URL, 
 		BROADCAST_MESSAGES, 
+		KEYS, 
 		ORDERREFERENCES_DB_FIELDS, 
 		$compile, 
 		$rootScope, 
@@ -33,11 +35,10 @@ function manageOrderreferenceController(
 		datatableService
 		){
 	const DOM_ORDERREFERENCE_TABLE = '#orderreference_table';
-	const USER_KEY = 'User';
 	
 	var vm = this;
-	if(!(null == localStorage.getItem(USER_KEY))){
-		vm.user = localStorage.getItem(USER_KEY);
+	if(!(null == localStorage.getItem(KEYS.User))){
+		vm.user = localStorage.getItem(KEYS.User);
 		vm.user = JSON.parse(vm.user);
 		}
 	if(

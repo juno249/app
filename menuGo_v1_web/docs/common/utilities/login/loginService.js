@@ -7,6 +7,7 @@ angular
 
 loginService.$inject = [
                         'API_BASE_URL', 
+                        'KEYS', 
                         'USER_ROLES', 
                         '$http', 
                         '$localStorage', 
@@ -15,13 +16,12 @@ loginService.$inject = [
 
 function loginService(
 		API_BASE_URL, 
+		KEYS, 
 		USER_ROLES, 
 		$http, 
 		$localStorage, 
 		$q
 		){
-	const USER_KEY = 'User';
-	
 	var loginServiceObj = {
 		loginUsername: undefined, 
 		loginPassword: undefined, 
@@ -81,7 +81,7 @@ function loginService(
 			
 			if(USER_ROLES.customer == loginServiceObj.user.role){
 				localStorage.setItem(
-						USER_KEY, 
+						KEYS.User, 
 						JSON.stringify(loginServiceObj.user)
 						);
 				deferred.resolve();
@@ -107,7 +107,7 @@ function loginService(
 					loginServiceObj.user.branch_name = responseData.branch_name;
 					
 					localStorage.setItem(
-							USER_KEY, 
+							KEYS.User, 
 							JSON.stringify(loginServiceObj.user)
 							);
 					deferred.resolve();
