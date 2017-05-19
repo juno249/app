@@ -78,8 +78,6 @@ function customerQrController(
 		.then(doScanSuccessCallback)
 		.catch(doScanFailedCallback);
 		
-		doScanSuccessCallback({text: "Max's;Ermita;1"});
-		
 		function doScanSuccessCallback(data){
 			const DELIMETER = ';';
 			var reservationDetails = {};
